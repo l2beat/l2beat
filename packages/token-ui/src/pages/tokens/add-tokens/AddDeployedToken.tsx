@@ -158,6 +158,7 @@ export function AddDeployedToken() {
         deploymentTimestamp: dateTimeInputToUnixTimestamp(
           values.deploymentTimestamp,
         ),
+        metadata: null,
       },
     })
   }
@@ -259,6 +260,11 @@ export function AddDeployedToken() {
                   onClick={() => {
                     const next = queue.at(0)
                     setQueue((prev) => prev.slice(1))
+                    form.resetField('symbol')
+                    form.resetField('decimals')
+                    form.resetField('deploymentTimestamp')
+                    form.resetField('abstractTokenId')
+                    form.resetField('comment')
 
                     if (next) {
                       setSearchParams((prev) => {
@@ -287,6 +293,7 @@ export function AddDeployedToken() {
           <SheetTrigger asChild>
             <Button
               variant="outline"
+              size="icon"
               type="button"
               className="absolute top-2 left-full ml-2"
             >
@@ -352,6 +359,7 @@ function Suggestions({
                   ) : (
                     <Button
                       variant="link"
+                      size="icon"
                       onClick={() =>
                         addToQueue(suggestion.chain, suggestion.address)
                       }
@@ -360,7 +368,7 @@ function Suggestions({
                     </Button>
                   )}
 
-                  <Button variant="link" asChild>
+                  <Button variant="link" size="icon" asChild>
                     <Link
                       to={buildUrlWithParams('/tokens/new', {
                         tab: 'deployed',
@@ -454,7 +462,7 @@ function Queue({
             }}
             placeholder="ethereum,0x1234567890123456789012345678901234567890&#10;arbitrum,0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
             rows={10}
-            className="font-mono text-sm"
+            className="max-h-[192px] font-mono text-sm"
           />
           {error && <p className="text-destructive text-sm">{error}</p>}
         </div>

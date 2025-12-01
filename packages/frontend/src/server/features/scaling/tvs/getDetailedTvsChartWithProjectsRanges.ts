@@ -2,16 +2,16 @@ import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getTimestampedValuesRange } from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
   type SummedTvsValues,
 } from './utils/getSummedTvsValues'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
   includeRwaRestrictedTokens: v.boolean(),
   projects: v.array(
@@ -69,15 +69,11 @@ export async function getDetailedTvsChartWithProjectsRanges({
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
-    getSummedTvsValues(
-      projects,
-      { type: range },
-      {
-        forSummary: false,
-        excludeAssociatedTokens,
-        includeRwaRestrictedTokens,
-      },
-    ),
+    getSummedTvsValues(projects, range, {
+      forSummary: false,
+      excludeAssociatedTokens,
+      includeRwaRestrictedTokens,
+    }),
   ])
 
   return getChartData(values, ethPrices)
@@ -145,9 +141,11 @@ function getChartData(
 function getMockDetailedTvsChartWithProjectsRangesData({
   range,
 }: TvsChartWithProjectsRangesDataParams): DetailedTvsChartWithProjectsRangesData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
-  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
+  const resolution = rangeToResolution(range)
+  const timestamps = generateTimestamps(
+    [range[0] ?? 1573776000, range[1]],
+    resolution,
+  )
 
   return {
     chart: timestamps.map((timestamp) => {

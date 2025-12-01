@@ -1,6 +1,9 @@
 import type { TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
+import type {
+  DeployedTokenRecord,
+  DeployedTokenRepository,
+} from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { createCallerFactory } from '../trpc'
@@ -87,6 +90,15 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: true,
+              excludeFromTotal: false,
+              source: 'external',
+              supply: 'circulatingSupply',
+              bridgedUsing: [],
+            },
+          },
         },
         {
           chain: 'arbitrum',
@@ -96,6 +108,15 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: false,
+              excludeFromTotal: true,
+              source: 'external',
+              supply: 'circulatingSupply',
+              bridgedUsing: [],
+            },
+          },
         },
         {
           chain: 'optimism',
@@ -105,8 +126,22 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: null,
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: false,
+              excludeFromTotal: true,
+              source: 'external',
+              supply: 'zero',
+              bridgedUsing: [
+                {
+                  name: 'optimism',
+                  slug: 'optimism',
+                },
+              ],
+            },
+          },
         },
-      ]
+      ] satisfies DeployedTokenRecord[]
       const mockDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockFn().resolvesTo(abstractTokens),
@@ -188,8 +223,22 @@ describe('abstractTokensRouter', () => {
           comment: null,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
+          metadata: {
+            tvs: {
+              includeInCalculations: true,
+              source: 'external',
+              supply: 'circulatingSupply',
+              excludeFromTotal: false,
+              bridgedUsing: [
+                {
+                  name: 'arbitrum',
+                  slug: 'arbitrum',
+                },
+              ],
+            },
+          },
         },
-      ]
+      ] satisfies DeployedTokenRecord[]
       const mockDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           findById: mockFn().resolvesTo(abstractToken),
@@ -246,6 +295,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data with listing timestamp', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -271,8 +321,9 @@ describe('abstractTokensRouter', () => {
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
-      expect(result?.data?.coinId).toEqual('bitcoin')
-      expect(result?.data?.coinUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
       expect(result?.data?.listingTimestamp).not.toEqual(undefined)
       expect(mockGetCoinDataById).toHaveBeenCalledWith('bitcoin')
     })
@@ -303,6 +354,7 @@ describe('abstractTokensRouter', () => {
     it('returns coin data without listing timestamp when market chart fails', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -317,8 +369,9 @@ describe('abstractTokensRouter', () => {
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
-      expect(result?.data?.coinId).toEqual('bitcoin')
-      expect(result?.data?.coinUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
       expect(result?.data?.listingTimestamp).toEqual(undefined)
     })
   })

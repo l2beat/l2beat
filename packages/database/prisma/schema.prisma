@@ -352,22 +352,17 @@ model InteropEvent {
   expiresAt DateTime @db.Timestamp(6)
   timestamp DateTime @db.Timestamp(6)
 
-  chain       String  @db.VarChar(32)
+  chain       String @db.VarChar(32)
   blockNumber Int
-  txHash      String  @db.VarChar(66)
-  blockHash   String  @db.VarChar(66)
-  value       String? @db.VarChar(66)
-  txTo        String? @db.VarChar(66)
-  calldata    String  @default("0x") @db.Text
-  logIndex    Int?
   args        Json
-  ctx         Json    @default("{}")
+  ctx         Json   @default("{}")
 
   matched     Boolean
   unsupported Boolean
+  direction   String?
 
   @@id([eventId])
-  @@index([type])
+  @@index([type, matched, unsupported, timestamp])
 }
 
 model InteropMessage {
@@ -393,6 +388,9 @@ model InteropMessage {
 
   @@id([messageId])
   @@index([type])
+  @@index([type, app, duration])
+  @@index([type, srcChain, dstChain, duration])
+  @@index([app, plugin])
 }
 
 model InteropTransfer {
@@ -438,6 +436,8 @@ model InteropTransfer {
   @@id([transferId])
   @@index([type])
   @@index([isProcessed])
+  @@index([isProcessed, srcValueUsd, dstValueUsd])
+  @@index([type, duration, srcValueUsd, dstValueUsd])
 }
 
 model EcosystemToken {
@@ -481,7 +481,9 @@ model DeployedToken {
   decimals            Int
   deploymentTimestamp DateTime @db.Timestamp(6)
   comment             String?  @db.Text
+  metadata            Json?
 
+  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
   connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
   connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
@@ -530,4 +532,6 @@ model Chain {
   explorerUrl String? @db.VarChar(255)
   aliases     Json?
   apis        Json?
+
+  deployedTokens DeployedToken[]
 }

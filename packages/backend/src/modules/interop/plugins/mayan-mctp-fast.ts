@@ -1,9 +1,9 @@
+import { Address32 } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -42,7 +42,7 @@ export class MayanMctpFastPlugin implements InteropPlugin {
         Number(orderFulfilled.sourceDomain),
       )
       return [
-        OrderFulfilled.create(input.ctx, {
+        OrderFulfilled.create(input, {
           amount: orderFulfilled.amount,
           $srcChain,
         }),

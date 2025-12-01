@@ -79,6 +79,7 @@ export const bob: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+  associatedTokens: ['BOB'],
   chainConfig: {
     name: 'bob',
     chainId: 60808,

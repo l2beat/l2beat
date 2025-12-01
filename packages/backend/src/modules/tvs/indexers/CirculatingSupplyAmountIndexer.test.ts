@@ -37,7 +37,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer({
@@ -80,7 +80,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -107,7 +107,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer({
@@ -133,7 +133,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -196,7 +196,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       })
 
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        insertMany: mockFn().returnsOnce(undefined),
+        upsertMany: mockFn().returnsOnce(undefined),
       })
 
       const indexer = new CirculatingSupplyAmountIndexer({
@@ -221,7 +221,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         to: adjustedTo,
       })
 
-      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith([])
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith([])
       expect(safeHeight).toEqual(adjustedTo)
     })
 

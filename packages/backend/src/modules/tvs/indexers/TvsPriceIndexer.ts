@@ -102,7 +102,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     })
 
     return async () => {
-      await this.$.db.tvsPrice.insertMany(records)
+      await this.$.db.tvsPrice.upsertMany(records)
 
       this.logger.info('Saved prices into DB', {
         from,

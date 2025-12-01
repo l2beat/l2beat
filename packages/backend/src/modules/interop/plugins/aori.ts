@@ -60,7 +60,7 @@ export class AoriPlugin implements InteropPlugin {
   name = 'aori'
 
   capture(input: LogToCapture) {
-    const network = AORI_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const network = AORI_NETWORKS.find((x) => x.chain === input.chain)
     if (!network) return
 
     const settleSent = parseSettleSent(input.log, [network.address])
@@ -71,7 +71,7 @@ export class AoriPlugin implements InteropPlugin {
         settleSent.srcEid, // yes
       )
       return [
-        AoriSettleSent.create(input.ctx, {
+        AoriSettleSent.create(input, {
           $dstChain,
           guid: settleSent.guid,
         }),

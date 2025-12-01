@@ -1,5 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-export function isCostsSynced(syncedUntil: UnixTime): boolean {
-  return UnixTime.now() - 6 * UnixTime.HOUR <= syncedUntil
+export function isCostsSynced({
+  to,
+  syncedUntil,
+}: {
+  to: UnixTime
+  syncedUntil: UnixTime
+}): boolean {
+  return to - 6 * UnixTime.HOUR <= syncedUntil
 }

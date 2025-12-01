@@ -215,5 +215,11 @@
     "address": "eth:0x36C036E22C350442F63A189352345c4A7534bbdC",
     "chain": "ethereum",
     "blockNumber": 23767885
+  },
+  "BurnFromMintTokenPool_v2.sol": {
+    "hash": "0xbbd73828600eaff2779037a570d73f417840ae33de5cdb196914a6cda8606f4e",
+    "address": "eth:0x32b48530f8a2c5CbE79d6b43823bfC9D9584Dbd5",
+    "chain": "ethereum",
+    "blockNumber": 23883577
   }
 }

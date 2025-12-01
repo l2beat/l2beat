@@ -64,6 +64,7 @@ export const redstone: ScalingProject = opStackL2({
     daResolveWindow,
     'https://github.com/latticexyz/redstone',
     DA_LAYERS.OP_ALT_DA,
+    DA_LAYERS.ETH_CALLDATA,
   ),
   genesisTimestamp: UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',
@@ -96,7 +97,7 @@ The DA Provider submits an input commitment on Ethereum, and users can request t
 If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
 A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
 In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
-The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
+The system is not secure if the malicious sequencer is able to outspend the altruistic challengers.
 If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. 
 
 ## DA Bridge

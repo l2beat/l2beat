@@ -2,19 +2,33 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
   ESCROW,
   EXITS,
+  FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
+import { BADGES } from '../../common/badges'
+import { getStage } from '../../common/stages/getStage'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import {
   explorerReferences,
   safeGetImplementation,
@@ -29,32 +43,24 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
     'FINALIZATION_PERIOD_SECONDS',
   )
 
-const withdrawalKeepalivePeriodSecondsFmt: number =
-  discovery.getContractValue<number>(
-    'L2OutputOracle',
-    'withdrawalKeepalivePeriodSecondsFmt',
-  )
-
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
 // we should update the opstack.ts or not use it anymore
 const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
   title: 'Validity proofs',
-  description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently state updates do not require a proof if the last state update was made >= ${withdrawalKeepalivePeriodSecondsFmt} ago and is optimistically considered to be valid.`,
+  description:
+    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
   risks: [
     {
       category: 'Funds can be stolen if',
-      text: `the published state is invalid and the Challenger does not react during the ${formatSeconds(
-        ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
-      )} finalization window.`,
+      text: 'the validity proof cryptography is broken or implemented incorrectly.',
+    },
+    {
+      category: 'Funds can be frozen if',
+      text: 'the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
     },
   ],
   references: [
-    {
-      title:
-        'L2OutputOracle.sol - Etherscan source code - bootstrapL2Output() function',
-      url: 'https://etherscan.io/address/0x92Ef6Af472b39F1b363da45E35530c24619245A4',
-    },
     {
       title: 'VerifierV3 (SP1VerifierGateway) - Etherscan source code',
       url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67#code',
@@ -68,6 +74,13 @@ const sequencerAddress = ChainSpecificAddress(
 const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'sequencerInbox',
+)
+const inboxStartBlock =
+  discovery.getContractValueOrUndefined<number>('SystemConfig', 'startBlock') ??
+  0
+const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'batcherHash',
 )
 const timeLimitOutputRootSubmissionSeconds = discovery.getContractValue<number>(
   'L2OutputOracle',
@@ -87,20 +100,24 @@ zircuitProgramHashes.push(
 
 const genesisTimestamp = UnixTime(1719936217)
 
-export const zircuit: ScalingProject = opStackL2({
+export const zircuit: ScalingProject = {
+  id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
-  discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
+  capability: 'universal',
+  type: 'layer2',
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
+    purposes: ['Universal'],
+    stacks: ['OP Stack'],
     description:
       'Zircuit is a universal ZK Rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
       websites: ['https://zircuit.com/'],
       bridges: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
-      explorers: [explorerUrl],
+      explorers: ['https://explorer.zircuit.com/'],
       repositories: ['https://github.com/zircuit-labs'],
       socialMedia: [
         'https://x.com/ZircuitL2',
@@ -111,24 +128,193 @@ export const zircuit: ScalingProject = opStackL2({
       other: ['https://rollup.codes/zircuit'],
     },
     architectureImage: 'zircuit',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation: `Zircuit is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root is settled ${formatSeconds(
+        ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+      )} after it has been posted.`,
+    },
   },
-  genesisTimestamp,
-  // Chain ID: 48900
-  isNodeAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/zircuit-labs/l2-geth-public',
+    },
+  ),
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      executionDelay: ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
+        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+    },
+    proposerFailure: {
+      value: 'Use escape hatch',
+      sentiment: 'warning',
+      orderHint: Number.NEGATIVE_INFINITY,
+      description: `Users are able to trustlessly exit by submitting a Merkle proof of funds after ${formatSeconds(timeLimitOutputRootSubmissionSeconds)} with no new state proposals have passed. The escape of ETH and ERC-20 balances is permissionless while the escape of DeFi contract balances is trusted.`,
+    },
+  },
+  proofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
+  },
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  },
   stateValidation: {
     categories: [ZIRCUIT_STATE_VALIDATION],
   },
-  nonTemplateZkProgramHashes: zircuitProgramHashes.map((el) =>
-    ZK_PROGRAM_HASHES(el),
-  ),
-  activityConfig: {
-    // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
-    type: 'block',
-    startBlock: 1,
+  config: {
+    associatedTokens: ['ZRC'],
+    activityConfig: {
+      // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
+      type: 'block',
+      startBlock: 1,
+    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxStartBlock,
+        inbox: ChainSpecificAddress.address(sequencerInbox),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
+      },
+    ],
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x92Ef6Af472b39F1b363da45E35530c24619245A4',
+          ),
+          selector: '0xa9efd6b8',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber, bytes _proof)',
+          sinceTimestamp: UnixTime(1720137600),
+          untilTimestamp: UnixTime(1741654919),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: ChainSpecificAddress.address(sequencerAddress),
+          to: ChainSpecificAddress.address(sequencerInbox),
+          sinceTimestamp: genesisTimestamp,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+          { type: 'liveness', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x92Ef6Af472b39F1b363da45E35530c24619245A4',
+          ),
+          selector: '0x1bf75d29',
+          functionSignature:
+            'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
+          sinceTimestamp: UnixTime(1741654919),
+          untilTimestamp: UnixTime(1756148051),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+          { type: 'liveness', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x92Ef6Af472b39F1b363da45E35530c24619245A4',
+          ),
+          selector: '0x76340d0a',
+          functionSignature:
+            'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
+          sinceTimestamp: UnixTime(1756148051),
+        },
+      },
+    ],
+    escrows: [
+      // non-template escrows
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79',
+        ),
+        tokens: ['wstETH'],
+        ...ESCROW.CANONICAL_EXTERNAL,
+        description:
+          'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
+      }),
+      // template escrows
+      discovery.getEscrowDetails({
+        includeInTotal: true,
+        address: portal.address,
+        tokens: ['ETH'],
+        premintedTokens: [],
+        description: 'Main entry point for users depositing ETH.',
+        upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
+      }),
+      discovery.getEscrowDetails({
+        includeInTotal: true,
+        address: discovery.getContract('L1StandardBridge').address,
+        tokens: '*',
+        premintedTokens: ['ZRC'],
+        excludedTokens: ['rswETH', 'rsETH'],
+        description:
+          'Main entry point for users depositing ERC20 token that do not require custom gateway.',
+        upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
+      }),
+    ],
   },
   chainConfig: {
     name: 'zircuit',
     chainId: 48900,
+    gasTokens: ['ETH'],
     coingeckoPlatform: 'zircuit',
     sinceTimestamp: UnixTime(1719936217),
     apis: [
@@ -154,95 +340,33 @@ export const zircuit: ScalingProject = opStackL2({
     ],
     explorerUrl,
   },
-  nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
-  l1StandardBridgePremintedTokens: ['ZRC'],
-  associatedTokens: ['ZRC'],
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79',
-      ),
-      tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description:
-        'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
-    }),
-  ],
-  nonTemplateRiskView: {
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      description:
-        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
-        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
-    },
-    proposerFailure: {
-      value: 'Use escape hatch',
-      sentiment: 'warning',
-      orderHint: Number.NEGATIVE_INFINITY,
-      description: `Users are able to trustlessly exit by submitting a Merkle proof of funds after ${formatSeconds(timeLimitOutputRootSubmissionSeconds)} with no new state proposals have passed. The escape of ETH and ERC-20 balances is permissionless while the escape of DeFi contract balances is trusted.`,
-    },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: zircuitProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
-  nonTemplateTrackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  technology: {
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+      references: [
+        {
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+        },
+        ...explorerReferences(explorerUrl, [
+          {
+            title: 'BatchInbox - address',
+            address: ChainSpecificAddress.address(sequencerInbox),
+          },
+          {
+            title: `${portal.name}.sol - source code, depositTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+        ]),
       ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
-        selector: '0xa9efd6b8',
-        functionSignature:
-          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber, bytes _proof)',
-        sinceTimestamp: UnixTime(1720137600),
-        untilTimestamp: UnixTime(1741654919),
-      },
     },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'transfer',
-        from: ChainSpecificAddress.address(sequencerAddress),
-        to: ChainSpecificAddress.address(sequencerInbox),
-        sinceTimestamp: genesisTimestamp,
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-        { type: 'liveness', subtype: 'proofSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
-        selector: '0x1bf75d29',
-        functionSignature:
-          'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
-        sinceTimestamp: UnixTime(1741654919),
-        untilTimestamp: UnixTime(1756148051),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-        { type: 'liveness', subtype: 'proofSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
-        selector: '0x76340d0a',
-        functionSignature:
-          'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
-        sinceTimestamp: UnixTime(1756148051),
-      },
-    },
-  ],
-  nonTemplateTechnology: {
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
@@ -253,6 +377,21 @@ export const zircuit: ScalingProject = opStackL2({
           title: 'L1Block.sol - Sourcify explorer source code',
           url: 'https://repo.sourcify.dev/48900/0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12',
         },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+      references: [
+        {
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+        },
+        ...explorerReferences(explorerUrl, [
+          {
+            title: `${portal.name}.sol - source code, depositTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+        ]),
       ],
     },
     exitMechanisms: [
@@ -307,6 +446,20 @@ export const zircuit: ScalingProject = opStackL2({
         risks: [],
       },
     ],
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+        risks: [],
+        references: [
+          {
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+    ],
   },
   milestones: [
     {
@@ -332,4 +485,4 @@ export const zircuit: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-})
+}

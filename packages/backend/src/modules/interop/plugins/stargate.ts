@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { LayerZeroV2Config } from './layerzero/layerzero.config'
@@ -8,7 +8,6 @@ import {
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -204,12 +203,12 @@ export class StargatePlugin implements InteropPlugin {
     const lznetworks = this.configs.get(LayerZeroV2Config)
     if (!lznetworks) return
 
-    const lznetwork = lznetworks.find((x) => x.chain === input.ctx.chain)
+    const lznetwork = lznetworks.find((x) => x.chain === input.chain)
     if (!lznetwork) return
     assert(lznetwork.endpointV2, 'We capture only chains with endpoints')
     // awkward fix end
 
-    const network = STARGATE_NETWORKS.find((b) => b.chain === input.ctx.chain)
+    const network = STARGATE_NETWORKS.find((b) => b.chain === input.chain)
     if (!network) {
       return
     }
@@ -236,7 +235,7 @@ export class StargatePlugin implements InteropPlugin {
 
           if (busRode && passenger) {
             return [
-              StargateV2OFTSentBusRode.create(input.ctx, {
+              StargateV2OFTSentBusRode.create(input, {
                 guid: oftSent.guid,
                 ticketId: Number(busRode.ticketId),
                 receiver: passenger.receiver,
@@ -258,7 +257,7 @@ export class StargatePlugin implements InteropPlugin {
         }
       }
       return [
-        StargateV2OFTSentTaxi.create(input.ctx, {
+        StargateV2OFTSentTaxi.create(input, {
           guid: oftSent.guid,
           amountSentLD: oftSent.amountSentLD,
           amountReceivedLD: oftSent.amountReceivedLD,
@@ -277,13 +276,13 @@ export class StargatePlugin implements InteropPlugin {
         return
       }
       const destinationEid = STARGATE_NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
+        (n) => n.chain === input.chain,
       )?.eid
       if (!destinationEid) {
         return
       }
       return [
-        StargateV2OFTReceived.create(input.ctx, {
+        StargateV2OFTReceived.create(input, {
           guid: oftReceived.guid,
           receiver: oftReceived.toAddress,
           emitter: EthereumAddress(input.log.address),
@@ -307,7 +306,7 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsSent.dstEid,
       )
-      return [StargateV2CreditsSent.create(input.ctx, { $dstChain })]
+      return [StargateV2CreditsSent.create(input, { $dstChain })]
     }
 
     const creditsReceived = parseCreditsReceived(input.log, poolAddresses)
@@ -317,13 +316,13 @@ export class StargatePlugin implements InteropPlugin {
         (x) => x.eid,
         creditsReceived.srcEid,
       )
-      return [StargateV2CreditsReceived.create(input.ctx, { $srcChain })]
+      return [StargateV2CreditsReceived.create(input, { $srcChain })]
     }
 
     const busDriven = parseBusDriven(input.log, [network.tokenMessaging])
     if (busDriven) {
       return [
-        StargateV2BusDriven.create(input.ctx, {
+        StargateV2BusDriven.create(input, {
           startTicketId: Number(busDriven.startTicketId),
           numPassengers: busDriven.numPassengers,
           guid: busDriven.guid,

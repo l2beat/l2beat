@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, Bar, ComposedChart } from 'recharts'
+import { Area, AreaChart, Bar, BarChart } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
@@ -17,11 +17,9 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import type {
-  DaThroughputResolution,
-  DaThroughputTimeRange,
-} from '~/server/features/data-availability/throughput/utils/range'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
+import type { ChartRange } from '~/utils/range/range'
 import { getDaChartMeta } from './meta'
 
 interface Props {
@@ -30,7 +28,7 @@ interface Props {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
-  range: DaThroughputTimeRange
+  range: ChartRange
 }
 export function DaPercentageThroughputChart({
   data,
@@ -94,7 +92,8 @@ export function DaPercentageThroughputChart({
 
   const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
-  const ChartElement = range === 'max' ? Area : Bar
+  const ChartElement = range[0] === null ? Area : Bar
+  const ChartWrapper = range[0] === null ? AreaChart : BarChart
 
   return (
     <ChartContainer
@@ -106,7 +105,7 @@ export function DaPercentageThroughputChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <ComposedChart
+      <ChartWrapper
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
@@ -175,7 +174,7 @@ export function DaPercentageThroughputChart({
             )
           })}
         </defs>
-      </ComposedChart>
+      </ChartWrapper>
     </ChartContainer>
   )
 }

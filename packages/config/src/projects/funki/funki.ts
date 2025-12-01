@@ -21,7 +21,7 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('funki')
 const genesisTimestamp = UnixTime(1721211095)
-const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const sequencerInbox = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
@@ -58,6 +58,7 @@ export const funki: ScalingProject = opStackL2({
   display: {
     name: 'Funki',
     slug: 'funki',
+    architectureImage: 'opstack-rollup-superchain-opfp',
     description:
       'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
     redWarning:
@@ -131,11 +132,26 @@ export const funki: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(l2OutputOracle.address),
+        address: EthereumAddress('0x1A9aE6486caEc0504657351ac473B3dF8A1367cb'), // old L2OutputOracle
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
         sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1763433491), // upgrade to DisputeGameFactory
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1763433491),
       },
     },
   ],

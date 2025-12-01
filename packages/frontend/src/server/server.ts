@@ -49,6 +49,10 @@ export function createServer(logger: Logger) {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
   if (isProduction) {
     app.use(ErrorHandler())
   }

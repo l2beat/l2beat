@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages staking providers for delegation.",
+  "ignoreRelatives": ["PULL_SPLIT_FACTORY"],
+  "ignoreMethods": [
+    "getFirstIndexInQueue",
+    "getLastIndexInQueue",
+    "getProviderQueueLength",
+    "nextProviderIdentifier",
+    "pendingProviderAdmins",
+    "providerConfigurations",
+    "providerQueues"
+  ]
+}

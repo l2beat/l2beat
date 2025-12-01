@@ -231,6 +231,21 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
       expect(results).toEqual([])
     })
+
+    it('should return empty array for empty ids array', async () => {
+      const record: SyncMetadataRecord = {
+        feature: 'activity',
+        id: 'arbitrum',
+        target: roundedHour,
+        syncedUntil: roundedHour,
+        blockTarget: 200,
+        blockSyncedUntil: 100,
+      }
+      await repository.upsertMany([record])
+
+      const results = await repository.getByFeatureAndIds('activity', [])
+      expect(results).toEqual([])
+    })
   })
 
   describe(SyncMetadataRepository.prototype.getMaxTargetForFeature.name, () => {
@@ -449,6 +464,26 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
           blockSyncedUntil: newBlockSyncedUntil,
         },
       ])
+    })
+
+    it('should not update anything when ids array is empty', async () => {
+      const records: SyncMetadataRecord[] = [
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          syncedUntil: roundedHour,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
+        },
+      ]
+      await repository.upsertMany(records)
+
+      const newSyncedUntil = roundedHour + UnixTime.HOUR
+      await repository.updateSyncedUntil('activity', [], newSyncedUntil)
+
+      const results = await repository.getAll()
+      expect(results).toEqual(records)
     })
   })
 })

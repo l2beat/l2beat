@@ -306,7 +306,7 @@
   "static/icons/stargate.png": "1964842978571f9c159fed7d5ef33a7c",
   "static/icons/stargatev2.png": "999430ca520bd06a21ee9d1c2c79eb21",
   "static/icons/starknet.png": "63c268bcf68e1718036317decea068de",
-  "static/icons/status.png": "44db2bacdb63ce9c5bff5124f9c9c1d2",
+  "static/icons/status.png": "4e27e1d63840d1cc23b619f2974d7810",
   "static/icons/studiochain.png": "aaacda32d7189e1462b42f544f3ff639",
   "static/icons/superlumio.png": "b5d335dd8cf865e98f6f5e01f3a885c2",
   "static/icons/superposition.png": "82683236579cef2e17df9b1605452e9b",
@@ -1505,5 +1505,12 @@
   "static/icons/stwo.png": "2844e04d003ec887a6707096937e5119",
   "static/meta-images/zk-catalog/projects/stwo/opengraph-image.png": "30308525ddf32264b87fdc1e3557c72d",
   "static/meta-images/publications/governance-review-75.png": "7ae4dd4363c44487cdb7566d69c116b6",
-  "static/meta-images/publications/governance-review-76.png": "4b79ae6e7077498a8de1cb48620371c4"
+  "static/meta-images/publications/governance-review-76.png": "4b79ae6e7077498a8de1cb48620371c4",
+  "static/icons/sandchain.png": "2668312e04dca06de5f09a638f096eaa",
+  "static/meta-images/scaling/projects/sandchain/opengraph-image.png": "3a5baddd3dd33a9410aeb41efaaff20c",
+  "static/icons/janction.png": "190dac415f9c02d8bb83da3f4cb7e4ac",
+  "static/meta-images/scaling/projects/janction/opengraph-image.png": "be06dd2d23dc92c0b2b19942f3c77723",
+  "static/meta-images/publications/interop-talk.png": "23bdda7cd65ef80b28bea625a6cf77b9",
+  "static/icons/megaeth.png": "3a52330998174ec84fb719698b6e22cc",
+  "static/meta-images/scaling/projects/megaeth/opengraph-image.png": "e4dae737847610b493ca27e157c68095"
 }

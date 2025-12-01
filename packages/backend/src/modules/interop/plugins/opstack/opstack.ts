@@ -133,7 +133,7 @@ export class OpStackPlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     // get L1 side events
-    if (input.ctx.chain === 'ethereum') {
+    if (input.chain === 'ethereum') {
       const logAddress = EthereumAddress(input.log.address)
       const network = OPSTACK_NETWORKS.find(
         (n) =>
@@ -148,7 +148,7 @@ export class OpStackPlugin implements InteropPlugin {
       ])
       if (withdrawalFinalized) {
         return [
-          WithdrawalFinalized.create(input.ctx, {
+          WithdrawalFinalized.create(input, {
             chain: network.chain,
             withdrawalHash: withdrawalFinalized.withdrawalHash,
           }),
@@ -180,7 +180,7 @@ export class OpStackPlugin implements InteropPlugin {
         )
 
         return [
-          SentMessage.create(input.ctx, {
+          SentMessage.create(input, {
             chain: network.chain,
             msgHash,
           }),
@@ -188,7 +188,7 @@ export class OpStackPlugin implements InteropPlugin {
       }
     } else {
       // get L2 side events
-      const network = OPSTACK_NETWORKS.find((n) => n.chain === input.ctx.chain)
+      const network = OPSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
       // check if this is an *L2*->L1 message
       const messagePassed = parseMessagePassed(input.log, [
@@ -196,7 +196,7 @@ export class OpStackPlugin implements InteropPlugin {
       ])
       if (messagePassed) {
         return [
-          MessagePassed.create(input.ctx, {
+          MessagePassed.create(input, {
             chain: network.chain,
             withdrawalHash: messagePassed.withdrawalHash,
           }),
@@ -208,7 +208,7 @@ export class OpStackPlugin implements InteropPlugin {
       ])
       if (relayedMessage) {
         return [
-          RelayedMessage.create(input.ctx, {
+          RelayedMessage.create(input, {
             chain: network.chain,
             msgHash: relayedMessage.msgHash,
           }),

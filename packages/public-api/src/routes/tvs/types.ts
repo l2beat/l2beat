@@ -14,6 +14,8 @@ export const TvsResultItemSchema = v
       eth: v.number(),
       btc: v.number(),
       other: v.number(),
+      publicRwa: v.number(),
+      restrictedRwa: v.number(),
     }),
   })
   .describe('TvsChartDataPoint')

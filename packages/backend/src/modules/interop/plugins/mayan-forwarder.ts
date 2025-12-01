@@ -4,11 +4,10 @@ Mayan Forwarder
 - emits Event that will allow further matching
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -97,14 +96,14 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             forwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-          amountIn: decodedData.amountIn ?? input.ctx.txValue,
+          amountIn: decodedData.amountIn ?? input.tx.value,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -120,9 +119,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             forwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
@@ -143,9 +142,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             swapAndForwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
@@ -166,9 +165,9 @@ export class MayanForwarderPlugin implements InteropPlugin {
       )
       if (!decodedData) return
       return [
-        MayanForwarded.create(input.ctx, {
+        MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
-            input.ctx.chain,
+            input.chain,
             swapAndForwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
@@ -281,7 +280,10 @@ function decodeProtocolData(
       res.args[0].destChainId,
     )
     decoded.tokenIn = Address32.NATIVE
-    decoded.tokenOut = Address32.from(res.args[0].tokenOut)
+    decoded.tokenOut =
+      Address32.from(res.args[0].tokenOut) === Address32.ZERO
+        ? Address32.NATIVE
+        : Address32.from(res.args[0].tokenOut)
     decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
     if (res.args.length === 1) {

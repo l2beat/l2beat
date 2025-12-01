@@ -1,3 +1,4 @@
+import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -8,7 +9,6 @@ import {
   parseProcessId,
 } from './hyperlane'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -32,6 +32,10 @@ export const parseSentTransferRemote = createEventParser(
 
 const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
+)
+
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
 const HwrTransferSent = createInteropEventType<{
@@ -67,14 +71,39 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let srcTokenAddress: Address32 | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value === sentTransferRemote.amount) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            break
+          }
+        }
+      }
+
       return [
-        HwrTransferSent.create(input.ctx, {
+        HwrTransferSent.create(input, {
           messageId,
           $dstChain,
           destination: Number(sentTransferRemote.destination),
           recipient: Address32.from(sentTransferRemote.recipient),
           amount: sentTransferRemote.amount,
-          tokenAddress: Address32.from(input.log.address),
+          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
         }),
       ]
     }
@@ -90,14 +119,39 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let srcTokenAddress: Address32 | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value === receivedTransferRemote.amount) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            break
+          }
+        }
+      }
+
       return [
-        HwrTransferReceived.create(input.ctx, {
+        HwrTransferReceived.create(input, {
           messageId,
           $srcChain,
           origin: Number(receivedTransferRemote.origin),
           recipient: Address32.from(receivedTransferRemote.recipient),
           amount: receivedTransferRemote.amount,
-          tokenAddress: Address32.from(input.log.address),
+          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
         }),
       ]
     }

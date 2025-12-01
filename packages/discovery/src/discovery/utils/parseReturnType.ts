@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/shared-pure'
-import type { utils } from 'ethers'
 import type { ParamType } from 'ethers/lib/utils'
 import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
 
@@ -31,15 +30,15 @@ export function parseReturnType(returnType: string): TupleType {
   )
   const virtualMethod = `function f() returns ${returnType}`
   const fragment = toFunctionFragment(virtualMethod)
-  return getReturnType(fragment)
+  return toInternalType(fragment.outputs)
 }
 
-export function getReturnType(fragment: utils.FunctionFragment): TupleType {
-  assert(fragment.outputs !== undefined)
+export function toInternalType(args: ParamType[] | undefined): TupleType {
+  assert(args !== undefined, 'Fragment must have arguments')
 
   return {
     kind: 'tuple',
-    elements: fragment.outputs.map((output) => ({
+    elements: args.map((output) => ({
       name: output.name === null ? undefined : output.name,
       type: parseEthersParamType(output),
     })),

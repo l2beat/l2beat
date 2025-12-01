@@ -1,6 +1,6 @@
 {
   "name": "sygma",
-  "timestamp": 1711624295,
+  "timestamp": 1763563670,
   "configHash": "0x3e62cc2840cb42faaf9b8e0897436b33dfaa7430593c228472dddc23e0e85da5",
   "entries": [
     {
@@ -75,7 +75,7 @@
         "$immutable": true,
         "handler1": "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
         "handler2": "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
-        "paused": false
+        "paused": true
       },
       "implementationNames": {
         "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge"
@@ -225,7 +225,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -461,6 +461,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 19532229 },
+  "usedBlockNumbers": { "ethereum": 23833812 },
   "permissionsConfigHash": "0x46bc4b9bcdd94b9623043b6c96bd388e29e73a51902df6dc82357804baf5e882"
 }

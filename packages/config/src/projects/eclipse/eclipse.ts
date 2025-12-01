@@ -24,7 +24,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('eclipse')
 
 const withdrawalDelaySeconds = discovery.getContractValue<number>(
-  'CanonicalBridgeV2',
+  'CanonicalBridgeV3',
   'fraudWindowDuration',
 )
 
@@ -108,7 +108,7 @@ export const eclipse: ScalingProject = {
           {
             title:
               'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
-            url: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
+            url: 'https://etherscan.io/address/0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a#code#F1#L237',
           },
           {
             title:
@@ -149,6 +149,27 @@ export const eclipse: ScalingProject = {
         callsPerMinute: 120,
       },
     ],
+  },
+  technology: {
+    dataAvailability: {
+      name: 'Data is posted to Celestia',
+      description: `
+Eclipse uses Celestia for data availability.
+
+There is no automatic fallback mechanism to Ethereum for data availability. If Celestia becomes unavailable, the chain relies entirely on Celestia for transaction data recovery.`,
+      references: [
+        {
+          title: 'Eclipse Celestia Integration',
+          url: 'https://docs.eclipse.xyz/architecture/eclipse-architecture/modular-components-of-eclipse#data-availability-celestia',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'celestia becomes unavailable and transaction data cannot be retrieved.',
+        },
+      ],
+    },
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

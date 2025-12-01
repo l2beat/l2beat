@@ -1,16 +1,18 @@
 import { pluralize } from '@l2beat/shared-pure'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { ChartRange } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export function tvsRangeToReadable(range: TvsChartRange) {
-  if (range === 'max') {
+export function tvsRangeToReadable(range: ChartRange) {
+  if (range[0] === null) {
     return 'All time'
   }
-  const number = Number(range.slice(0, -1))
-  if (range.endsWith('d')) {
-    return `${number} ${pluralize(number, 'day')}`
+  const days = rangeToDays(range)
+  if (days === null) {
+    return 'All time'
   }
-  if (range.endsWith('y')) {
-    return `${number} ${pluralize(number, 'year')}`
+  if (days < 365 || days % 365 !== 0) {
+    return `${days} ${pluralize(days, 'day')}`
   }
-  throw new Error('Invalid range')
+  const years = days / 365
+  return `${years} ${pluralize(years, 'year')}`
 }

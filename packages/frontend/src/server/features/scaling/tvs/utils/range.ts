@@ -1,16 +1,13 @@
-import { v } from '@l2beat/validate'
-import { rangeToDays } from '~/utils/range/rangeToDays'
-
-export const TvsChartRange = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
-export type TvsChartRange = v.infer<typeof TvsChartRange>
+import { UnixTime } from '@l2beat/shared-pure'
+import type { ChartRange } from '~/utils/range/range'
 
 export type TvsChartResolution = ReturnType<typeof rangeToResolution>
 
-export function rangeToResolution(
-  range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
-) {
-  const days = rangeToDays(range)
-  if (days && days <= 7) return 'hourly'
-  if (days && days < 180) return 'sixHourly'
+export function rangeToResolution(range: ChartRange) {
+  if (range[0] === null) return 'daily'
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 7 * UnixTime.DAY)
+    return 'hourly'
+  if (range[0] >= UnixTime.toStartOf(UnixTime.now(), 'day') - 90 * UnixTime.DAY)
+    return 'sixHourly'
   return 'daily'
 }

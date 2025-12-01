@@ -6801,6 +6801,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-RAIN",
+      "priceId": "rain",
+      "symbol": "RAIN",
+      "name": "RAIN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "rain",
+        "decimals": 18,
+        "sinceTimestamp": 1757548800,
+        "address": "0x25118290e6A5f4139381D072181157035864099d",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-RDNT",
       "priceId": "radiant-capital",
       "symbol": "RDNT",

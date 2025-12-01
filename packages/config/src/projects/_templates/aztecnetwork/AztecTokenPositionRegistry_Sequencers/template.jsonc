@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AztecTokenPositionRegistry_Sequencers",
+  "description": "A registry for contracts related to Sequencer staking and token unlock parameters.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set staker implementations and manage the unlock time for associated ATP escrows."
+        }
+      ]
+    }
+  }
+}

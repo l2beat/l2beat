@@ -1,6 +1,6 @@
 {
   "name": "hyperliquid",
-  "timestamp": 1748939714,
+  "timestamp": 1763549888,
   "configHash": "0x5447faf11cd3ef01b2be68697250f568e86cffb49af4cbf7613e6a7d9f3ba532",
   "entries": [
     {
@@ -48,9 +48,9 @@
           "arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7",
           "arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede"
         ],
-        "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f",
+        "coldValidatorSetHash": "0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d",
         "disputePeriodSeconds": 200,
-        "epoch": 5,
+        "epoch": 7,
         "finalizers": [
           "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
           "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
@@ -65,7 +65,7 @@
           "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
           "arb1:0x263294039413B96D25E4173a5F7599F8b3801504"
         ],
-        "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
+        "hotValidatorSetHash": "0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f",
         "lockers": [
           "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
           "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
@@ -77,13 +77,13 @@
         "nValidators": 4,
         "paused": false,
         "pendingValidatorSetUpdate": {
-          "epoch": 5,
+          "epoch": 7,
           "totalValidatorPower": 4,
           "updateTime": 0,
-          "updateBlockNumber": 261233949,
+          "updateBlockNumber": 399539914,
           "nValidators": 4,
-          "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
-          "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
+          "hotValidatorSetHash": "0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f",
+          "coldValidatorSetHash": "0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d"
         },
         "totalValidatorPower": 4,
         "usdcToken": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
@@ -112,6 +112,16 @@
             "epoch": 5,
             "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
             "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
+          },
+          {
+            "epoch": 6,
+            "hotValidatorSetHash": "0x9e80943d95888cde6b0903f8773bd1816e94270a726bdacdf62942103436c17d",
+            "coldValidatorSetHash": "0x0cae1c00d81931c7cb53d11eb94eb7367a568bc86bff3f47078ab9f2c8ddd49a"
+          },
+          {
+            "epoch": 7,
+            "hotValidatorSetHash": "0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f",
+            "coldValidatorSetHash": "0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d"
           }
         ]
       },
@@ -324,6 +334,6 @@
   "usedTemplates": {
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
-  "usedBlockNumbers": { "arbitrum": 343418957 },
+  "usedBlockNumbers": { "arbitrum": 401872970 },
   "permissionsConfigHash": "0xeb6b96c02c6088d31aff9534024005d56b92d7ae18d98115580bdd5b3d00f5de"
 }

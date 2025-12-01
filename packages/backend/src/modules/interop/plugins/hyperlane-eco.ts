@@ -1,3 +1,4 @@
+import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -7,7 +8,6 @@ import {
   parseProcessId,
 } from './hyperlane'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -66,7 +66,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
       )
 
       return [
-        BatchSentDispatch.create(input.ctx, {
+        BatchSentDispatch.create(input, {
           messageId: dispatchId.messageId,
           $dstChain,
         }),
@@ -97,7 +97,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
       )
 
       return [
-        IntentProvenProcess.create(input.ctx, {
+        IntentProvenProcess.create(input, {
           messageId: dispatchId.messageId,
           $srcChain,
           recipient: Address32.from(intentProven._claimant),

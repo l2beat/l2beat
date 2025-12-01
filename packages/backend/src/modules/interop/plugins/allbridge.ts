@@ -8,8 +8,8 @@ allbridge is a simple swap service that performs three steps:
   as VUSD is not used outside of Allbridge
  */
 
+import { Address32 } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -90,7 +90,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     const messageSent = parseMessageSent(input.log, null)
     if (messageSent) {
       return [
-        MessageSent.create(input.ctx, {
+        MessageSent.create(input, {
           message: messageSent.message,
           $dstChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -105,7 +105,7 @@ export class AllbridgePlugIn implements InteropPlugin {
     const messageReceived = parseMessageReceived(input.log, null)
     if (messageReceived) {
       return [
-        MessageReceived.create(input.ctx, {
+        MessageReceived.create(input, {
           message: messageReceived.message,
           $srcChain: findChain(
             ALLBRDIGE_NETWORKS,
@@ -142,7 +142,7 @@ export class AllbridgePlugIn implements InteropPlugin {
         }
       }
       return [
-        TokensSent.create(input.ctx, {
+        TokensSent.create(input, {
           amount: tokensSent.amount,
           receiveToken: tokensSent.receiveToken,
           $dstChain: findChain(
@@ -181,7 +181,7 @@ export class AllbridgePlugIn implements InteropPlugin {
         }
       }
       return [
-        TokensReceived.create(input.ctx, {
+        TokensReceived.create(input, {
           amount: tokensReceived.amount,
           message: tokensReceived.message,
           $srcChain: findChain(

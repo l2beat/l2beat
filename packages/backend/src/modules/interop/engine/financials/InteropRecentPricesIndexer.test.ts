@@ -112,21 +112,6 @@ describe(InteropRecentPricesIndexer.name, () => {
     },
   )
 
-  describe(InteropRecentPricesIndexer.prototype.invalidate.name, () => {
-    it('deletes records after target height', async () => {
-      const repository = mockObject<Database['interopRecentPrices']>({
-        deleteAfter: async () => 5,
-      })
-      const indexer = mockIndexer(repository)
-
-      const targetHeight = UnixTime.fromDate(new Date('2025-10-10T14:00:00Z'))
-      const result = await indexer.invalidate(targetHeight)
-
-      expect(result).toEqual(5)
-      expect(repository.deleteAfter).toHaveBeenCalledWith(targetHeight)
-    })
-  })
-
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })

@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x28320ae7c3b9a14e46648127246d3e5a9577106b
+
+# Diff at Wed, 26 Nov 2025 13:37:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5f66ce888d7143602a6ce8aceef3c861c5276726 block: 1764059644
+- current timestamp: 1764164180
+
+## Description
+
+ms change in yearn.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2"
+      values.$members.6:
+-        "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF"
++        "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0xeac92d4fcee26234c11735246dd89b72e6b70df1
+
+# Diff at Tue, 25 Nov 2025 08:37:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9d494505416f16cb69e5d5ecc74d3b29fe31d596 block: 1763378838
+- current timestamp: 1764059644
+
+## Description
+
+New opsuccinct vkeys.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x7179e8c558e26751a56fc2fe9ce0a84ce248cfc98cb5b7a5178655b0c5c42ea5"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
++        "0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763378838 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xd9252e729a8e91e0eb85f53a15d280a32e488214
+
+# Diff at Mon, 17 Nov 2025 11:29:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ced7b6309befc68bef18813184f322d7f7507fd block: 1762264436
+- current timestamp: 1763378838
+
+## Description
+
+New multisig member.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0x2841529776b042045de62632501c9feaf74f7368
 
 # Diff at Tue, 04 Nov 2025 13:55:22 GMT:

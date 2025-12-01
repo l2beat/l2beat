@@ -13,7 +13,10 @@ export const winr: ScalingProject = orbitStackL3({
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'WINR',
     slug: 'winr',
@@ -177,6 +180,14 @@ export const winr: ScalingProject = orbitStackL3({
       date: '2025-05-12T00:00:00Z',
       description:
         'Upgraded ChallengeManager contract to the version that uses Celestia with Blobstream bridge',
+      type: 'general',
+    },
+    {
+      title: 'WINR stops using Celestia',
+      url: 'https://arbiscan.io/tx/0xb5f69f2cfceafaafb8533d67b2eac01fff5794336ead963815dca88b8f137b53',
+      date: '2025-11-18T00:00:00Z',
+      description:
+        'WINR stops using Celestia and switches to ArbOS v32 with a DAC for data availability.',
       type: 'general',
     },
   ],

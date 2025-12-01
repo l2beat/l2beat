@@ -12,6 +12,7 @@ DST EXECUTE:
 
 */
 
+import { Address32 } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -19,7 +20,6 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -31,31 +31,6 @@ import {
   Result,
 } from './types'
 
-/*
-ITS tokens - for each token there is a unique tokenId (bytes32). We keep track of tokenAddresses for each chain
-Example:
-tokenId: 0x88f7d4d3c179fc145b10300e6e4ee078f32ec3cd3bcb80ca98f2fa7a719f330b
-symbol: ATH:
-arbitrum: 0xc87B37a581ec3257B734886d9d3a581F5A9d056c
-ethereum: 0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B
-*/
-
-export const ITS_TOKENS: {
-  tokenId: `0x${string}`
-  symbol: string
-  tokenAddresses: { [chain: string]: Address32 }
-}[] = [
-  {
-    tokenId:
-      '0x88f7d4d3c179fc145b10300e6e4ee078f32ec3cd3bcb80ca98f2fa7a719f330b',
-    symbol: 'ATH',
-    tokenAddresses: {
-      arbitrum: Address32.from('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
-      ethereum: Address32.from('0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B'),
-    },
-  },
-]
-
 const parseInterchainTransfer = createEventParser(
   'event InterchainTransfer(bytes32 indexed tokenId, address indexed sourceAddress, string destinationChain, bytes destinationAddress, uint256 amount, bytes32 indexed dataHash)',
 )
@@ -64,10 +39,14 @@ const parseInterchainTransferReceived = createEventParser(
   'event InterchainTransferReceived(bytes32 indexed commandId, bytes32 indexed tokenId, string sourceChain, bytes sourceAddress, address indexed destinationAddress, uint256 amount, bytes32 dataHash)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const InterchainTransfer = createInteropEventType<{
   tokenId: `0x${string}`
   amount: bigint
-  tokenAddress: Address32
+  tokenAddress?: Address32
   $dstChain: string
 }>('axelar-its.InterchainTransfer')
 
@@ -75,7 +54,7 @@ export const InterchainTransferReceived = createInteropEventType<{
   commandId: `0x${string}`
   tokenId: `0x${string}`
   amount: bigint
-  tokenAddress: Address32
+  tokenAddress?: Address32
   $srcChain: string
 }>('axelar-its.InterchainTransferReceived')
 
@@ -85,13 +64,36 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let srcTokenAddress: Address32 | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value === interchainTransfer.amount) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            break
+          }
+        }
+      }
+
       return [
-        InterchainTransfer.create(input.ctx, {
+        InterchainTransfer.create(input, {
           tokenId: interchainTransfer.tokenId,
           amount: interchainTransfer.amount,
-          tokenAddress:
-            ITS_TOKENS.find((t) => t.tokenId === interchainTransfer.tokenId)
-              ?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
+          tokenAddress: srcTokenAddress,
           $dstChain: findChain(
             AXELAR_NETWORKS,
             (x) => x.axelarChainName,
@@ -106,15 +108,35 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let dstTokenAddress: Address32 | undefined
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          if (transfer.value === interchainTransferReceived.amount) {
+            dstTokenAddress = Address32.from(precedingLog.address)
+            break
+          }
+        }
+      }
+
       return [
-        InterchainTransferReceived.create(input.ctx, {
+        InterchainTransferReceived.create(input, {
           commandId: interchainTransferReceived.commandId,
           tokenId: interchainTransferReceived.tokenId,
           amount: interchainTransferReceived.amount,
-          tokenAddress:
-            ITS_TOKENS.find(
-              (t) => t.tokenId === interchainTransferReceived.tokenId,
-            )?.tokenAddresses[input.ctx.chain] ?? Address32.ZERO,
+          tokenAddress: dstTokenAddress,
           $srcChain: findChain(
             AXELAR_NETWORKS,
             (x) => x.axelarChainName,
