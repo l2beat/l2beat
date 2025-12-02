@@ -76,16 +76,25 @@ import {
   safeGetImplementation,
 } from './utils'
 
-export const CELESTIA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.CELESTIA,
-  riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.Celestia,
+export function CELESTIA_DA_PROVIDER(
+  fallback?: DaProjectTableValue,
+): DAProvider {
+  return {
+    layer: DA_LAYERS.CELESTIA,
+    riskView: RISK_VIEW.DATA_CELESTIA(false),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(
+      false,
+      fallback?.value,
+    ),
+    bridge: DA_BRIDGES.NONE,
+    badge: BADGES.DA.Celestia,
+    fallback,
+  }
 }
 
 export function EIGENDA_DA_PROVIDER(
   isUsingDACertVerifier: boolean,
+  fallback?: DaProjectTableValue,
 ): (templateVars: OpStackConfigCommon) => DAProvider {
   return (templateVars: OpStackConfigCommon) => {
     const opStackDA = templateVars.discovery.getContractValue<{
@@ -105,9 +114,11 @@ export function EIGENDA_DA_PROVIDER(
       technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
         isUsingDACertVerifier,
         eigenDACertVersion,
+        fallback?.value,
       ),
       bridge: DA_BRIDGES.NONE,
       badge: BADGES.DA.EigenDA,
+      fallback,
     }
   }
 }
@@ -125,6 +136,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daResolveWindow: string,
   nodeSourceLink?: string,
   daLayer: DaProjectTableValue = DA_LAYERS.NONE,
+  fallback?: DaProjectTableValue,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -133,9 +145,11 @@ export function DACHALLENGES_DA_PROVIDER(
       daChallengeWindow,
       daResolveWindow,
       nodeSourceLink,
+      fallback?.value,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
     badge: BADGES.DA.CustomDA,
+    fallback,
   }
 }
 
@@ -145,6 +159,7 @@ interface DAProvider {
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
   badge: Badge
+  fallback?: DaProjectTableValue
 }
 
 interface OpStackConfigCommon {
@@ -251,7 +266,10 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars, hostChainDA)
+  const daProvider = getDAProvider(templateVars, {
+    hostChainDA,
+    projectType: type,
+  })
 
   const automaticBadges = templateVars.usingAltVm
     ? [BADGES.Stack.OPStack, daProvider.badge]
@@ -327,14 +345,14 @@ function opStackCommon(
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
-        (templateVars.stateValidationImage ??
-        fraudProofType === 'Permissionless')
+        templateVars.stateValidationImage ??
+        (fraudProofType === 'Permissionless'
           ? 'opfp'
           : fraudProofType === 'Kailua'
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : undefined,
+              : undefined),
       stacks: ['OP Stack'],
       warning:
         templateVars.display.warning === undefined
@@ -529,11 +547,12 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
+  const hostChainDA = hostChainDAProvider(baseChain)
   const common = opStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    hostChainDAProvider(baseChain),
+    hostChainDA,
   )
 
   const stackedRisk = {
@@ -880,7 +899,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
               },
             ],
           },
@@ -1448,8 +1467,13 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-  hostChainDA?: DAProvider,
+  options?: {
+    hostChainDA?: DAProvider
+    projectType?: ScalingProject['type']
+  },
 ): DAProvider {
+  const hostChainDA = options?.hostChainDA
+  const projectType = options?.projectType ?? 'layer2'
   const postsToCelestia =
     templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
@@ -1462,7 +1486,7 @@ function getDAProvider(
   } else {
     daProvider =
       templateVars.daProvider ??
-      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+      (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
   }
 
   if (daProvider === undefined) {
@@ -1481,15 +1505,16 @@ function getDAProvider(
 
     return {
       layer:
-        (hostChainDA?.layer ?? usesBlobs)
-          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-          : DA_LAYERS.ETH_CALLDATA,
+        hostChainDA?.layer ??
+        (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
       bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
       badge:
-        (hostChainDA?.badge ?? usesBlobs)
-          ? BADGES.DA.EthereumBlobs
-          : BADGES.DA.EthereumCalldata,
-      riskView: RISK_VIEW.DATA_ON_CHAIN,
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+      riskView:
+        projectType === 'layer3'
+          ? RISK_VIEW.DATA_ON_CHAIN_L3
+          : RISK_VIEW.DATA_ON_CHAIN,
       technology: usesBlobs
         ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
         : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
@@ -1726,7 +1751,7 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
 
   const daProvider =
     templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+    (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
 
   return daProvider === undefined
 }

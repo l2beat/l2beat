@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AztecTokenPositionRegistry_ProtocolTreasury",
+  "description": "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked.",
+  "ignoreRelatives": [
+    "getStakerImplementation" // currently unused, but should be watched
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the time at which the ProtocolTreasury funds can be transfered and manage staker implementations referenced by this contract."
+        }
+      ]
+    },
+    "getUnlockStartTime": {
+      "severity": "HIGH"
+    }
+  }
+}

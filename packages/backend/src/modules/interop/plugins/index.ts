@@ -136,7 +136,7 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new RelaySimplePlugIn(),
-      new GasZipPlugin(),
+      new GasZipPlugin(deps.logger),
     ],
   }
 }

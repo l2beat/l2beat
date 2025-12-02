@@ -24,7 +24,6 @@ import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
-import { ProjectValueRepository } from './repositories/ProjectValueRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
@@ -41,12 +40,15 @@ import { VerifierStatusRepository } from './repositories/VerifierStatusRepositor
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
+export function createDatabase(
+  config: PoolConfig & { log?: LogConfig; connectionString: string },
+) {
   const db = new DatabaseClient({ ...config })
 
   return {
     transaction: db.transaction.bind(db),
     close: db.close.bind(db),
+    url: config.connectionString,
 
     // #region Activity
     activity: new ActivityRepository(db),
@@ -106,7 +108,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
     tvsTokenMetadata: new TokenMetadataRepository(db),
-    tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
 
     // #region

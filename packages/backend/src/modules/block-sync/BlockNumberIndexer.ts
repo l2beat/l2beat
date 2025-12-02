@@ -13,7 +13,7 @@ export class BlockNumberIndexer extends RootIndexer {
     private delayFromTipInSeconds: number,
     private checkIntervalMs = 10_000,
   ) {
-    super(logger.tag({ chain }), {
+    super(logger.tag({ chain, tag: chain }), {
       tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }

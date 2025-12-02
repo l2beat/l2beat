@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,7 +12,7 @@ export const publicgoodsnetwork: ScalingProject = opStackL2({
   addedAt: UnixTime(1690446197), // 2023-07-27T08:23:17Z
   archivedAt: UnixTime(1734048000), // 2024-12-13T00:00:00.000Z,
   additionalBadges: [BADGES.Infra.Superchain, BADGES.RaaS.Conduit],
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

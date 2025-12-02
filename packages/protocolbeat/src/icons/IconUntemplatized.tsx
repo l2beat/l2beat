@@ -10,10 +10,10 @@ export function IconUntemplatized(props: { className?: string }) {
       <path
         d="M1.5 1.5L14.5 14.5"
         stroke="currentColor"
-        stroke-width="1.05"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.05"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Icon>
   )

@@ -23,6 +23,25 @@
     },
     {
       "mode": "auto",
+      "id": "bob-BOB",
+      "priceId": "bob-build-on-bitcoin",
+      "symbol": "BOB",
+      "name": "BOB",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54720/large/BOB_symbol_colour.png?1741195397",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "bob-build-on-bitcoin",
+        "decimals": 18,
+        "sinceTimestamp": 1763596800,
+        "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+        "chain": "bob"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "bob-DAI",
       "priceId": "dai",
       "symbol": "DAI",
@@ -386,6 +405,25 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+        "chain": "ethereum",
+        "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "bob-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
         "decimals": 18,

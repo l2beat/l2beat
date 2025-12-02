@@ -1,6 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   type InteropEvent,
@@ -82,7 +81,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
   name = 'orbitstack-customgateway'
 
   capture(input: LogToCapture) {
-    if (input.ctx.chain === 'ethereum') {
+    if (input.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find((network) =>
         network.customGateways?.some(
           (gateway) => gateway.l1Gateway === EthereumAddress(input.log.address),
@@ -113,7 +112,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
           ])
           if (messageDelivered) {
             return [
-              DepositInitiatedMessageDelivered.create(input.ctx, {
+              DepositInitiatedMessageDelivered.create(input, {
                 chain: network.chain,
                 messageNum: messageDelivered.messageIndex.toString(),
                 l1Token: Address32.from(depositInitiated._l1Token),
@@ -139,7 +138,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
           ])
           if (outBoxTx) {
             return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input.ctx, {
+              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
                 chain: network.chain,
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
@@ -150,9 +149,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
         }
       }
     } else {
-      const network = ORBITSTACK_NETWORKS.find(
-        (n) => n.chain === input.ctx.chain,
-      )
+      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
 
       const gateway = network.customGateways?.find(
@@ -172,7 +169,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
         if (!l2Token) return
 
         return [
-          DepositFinalized.create(input.ctx, {
+          DepositFinalized.create(input, {
             chain: network.chain,
             l1Token: Address32.from(depositFinalized.l1Token),
             l2Token,
@@ -205,7 +202,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
         if (!l2Token) return
 
         return [
-          WithdrawalInitiatedL2ToL1Tx.create(input.ctx, {
+          WithdrawalInitiatedL2ToL1Tx.create(input, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
             l1Token: Address32.from(withdrawalInitiated.l1Token),
@@ -299,6 +296,7 @@ function findMintedTokenAddress(
   recipient: string,
   amount: bigint,
 ): Address32 | undefined {
+  // First, try to find a standard mint (from zero address)
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (
@@ -310,6 +308,21 @@ function findMintedTokenAddress(
       return Address32.from(log.address)
     }
   }
+
+  // Fallback: look for any Transfer with matching recipient and amount
+  // This handles custom gateways that transfer from reserves or the token contract itself
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (
+      transfer &&
+      transfer.to.toLowerCase() === recipient.toLowerCase() &&
+      transfer.value === amount
+    ) {
+      return Address32.from(log.address)
+    }
+  }
+
+  return undefined
 }
 
 function findBurnedTokenAddress(
@@ -317,6 +330,7 @@ function findBurnedTokenAddress(
   sender: string,
   amount: bigint,
 ): Address32 | undefined {
+  // First, try to find a standard burn (to zero address)
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (
@@ -328,4 +342,19 @@ function findBurnedTokenAddress(
       return Address32.from(log.address)
     }
   }
+
+  // Fallback: look for any Transfer with matching sender and amount
+  // This handles custom gateways that transfer to reserves or the token contract itself
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (
+      transfer &&
+      transfer.from.toLowerCase() === sender.toLowerCase() &&
+      transfer.value === amount
+    ) {
+      return Address32.from(log.address)
+    }
+  }
+
+  return undefined
 }

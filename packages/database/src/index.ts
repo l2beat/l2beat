@@ -31,6 +31,7 @@ export type { IndexerConfigurationRecord } from './repositories/IndexerConfigura
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
+  InteropEventContext,
   InteropEventRecord,
   InteropEventStatsRecord,
 } from './repositories/InteropEventRepository'
@@ -38,6 +39,7 @@ export type {
   InteropMessageDetailedStatsRecord,
   InteropMessageRecord,
   InteropMessageStatsRecord,
+  InteropMessageUniqueAppsRecord,
 } from './repositories/InteropMessageRepository'
 export type {
   InteropMissingTokenInfo,
@@ -50,10 +52,6 @@ export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
-export type {
-  ProjectValueRecord,
-  SummedByTimestampProjectValueRecord,
-} from './repositories/ProjectValueRepository'
 export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,

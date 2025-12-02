@@ -23,7 +23,7 @@ export class UpdateMonitorController {
       .map((project) => this.configReader.readConfig(project))
   }
 
-  async getDiscoveryDashboard(): Promise<string> {
+  async getDiscoveryDashboard(selectedEmoji?: string): Promise<string> {
     const projects: DashboardProject[] = await getDashboardProjects(
       this.onDiskConfigs.filter((config) => !config.archived),
       this.configReader,
@@ -39,6 +39,7 @@ export class UpdateMonitorController {
       projects,
       projectConfigs,
       projectsWithHighSeverityChanges,
+      selectedEmoji,
     )
   }
 

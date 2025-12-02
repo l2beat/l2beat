@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xfa2b4a458b2745ee1b0a251270945f9925eae61d
+
+# Diff at Wed, 26 Nov 2025 13:51:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1762767834
+- current timestamp: 1764164995
+
+## Description
+
+bridgevali multisig changes.
+
+## Watched changes
+
+```diff
+    contract BridgeValidators_DAI (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd"
++        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
++        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
++        "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
 Generated with discovered.json: 0xcc45dbe40818af28f77cdb24cafddd3ed3498309
 
 # Diff at Mon, 10 Nov 2025 10:11:07 GMT:

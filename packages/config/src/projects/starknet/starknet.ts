@@ -337,7 +337,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/master/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
+          'The source code of the Starknet OS can be found [here](https://github.com/keep-starknet-strange/snos). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
         risks: [],
       },
       {

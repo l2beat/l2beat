@@ -341,7 +341,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
       this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
-      return { success: false }
+      return { success: false, message: parsedError.data.error.message }
     }
 
     return { success: true }

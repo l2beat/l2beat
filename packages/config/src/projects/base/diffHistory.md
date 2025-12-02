@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xf94bcef3a738aa5d853969d15197093618e21426
+
+# Diff at Fri, 28 Nov 2025 09:43:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1763378474
+- current timestamp: 1764322933
+
+## Description
+
+'Jovian' Upgrade + Fusaka Readiness: https://gov.optimism.io/t/upgrade-17-jovian-hardfork-and-fusaka-readiness/10400 is deployed, but base only upgrades the SuperchainConfi with minimal diff.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 26 ++--------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+```
+
+Generated with discovered.json: 0xb03df30177b1cb0c2ce84f6b8bcb816cddc0c26b
+
+# Diff at Mon, 17 Nov 2025 11:23:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ced7b6309befc68bef18813184f322d7f7507fd block: 1761757489
+- current timestamp: 1763378474
+
+## Description
+
+Increase in EIP-1559 elasticity (from 4 to 5), meaning that in periods of high demand the block can expand up to 5x the block gas target, and block gas target is now gasLimit/5.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0xd851da31d2821ec4ae22fa5547663f5db9158e18
 
 # Diff at Tue, 04 Nov 2025 11:32:26 GMT:

@@ -40,6 +40,7 @@ export const base: ScalingProject = opStackL2({
         'https://discord.com/invite/buildonbase',
         'https://base.mirror.xyz/',
         'https://farcaster.xyz/base',
+        'https://reddit.com/r/BASE/',
       ],
       other: [
         'https://rollup.codes/base',

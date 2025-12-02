@@ -1,3 +1,201 @@
+Generated with discovered.json: 0xb5b10a1a3360039ef2bc5811fe1fa5ffb645f5e2
+
+# Diff at Tue, 25 Nov 2025 08:34:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9d494505416f16cb69e5d5ecc74d3b29fe31d596 block: 1762276375
+- current timestamp: 1764059552
+
+## Description
+
+minor upgrade for fusaka changes and cleanup of the bootstrapv2 functions + removal of the 'keepalive' proof circumvention:
+
+SystemConfig: https://disco.l2beat.com/diff/eth:0x83085450544c3F360a40720859EbB1bfd311584D/eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F
+
+L1StandardBridge: https://disco.l2beat.com/diff/eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb/eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98
+
+L2OutputOracle: https://disco.l2beat.com/diff/eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65/eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6
+- keepalive removed
+- aggregationvkey changed to `0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605`
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x55baff01a4d31b7dd4257fdb3509fffb44fb2fcc634cb987ae812f322bde0fcf"
++        "0xe99a7b3921e19ba67802b943b31b611bea7fa413649085f55e087689879522d5"
+      values.$implementation:
+-        "eth:0x83085450544c3F360a40720859EbB1bfd311584D"
++        "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F"
+      values.$pastUpgrades.3:
++        ["2025-11-24T20:55:47.000Z","0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",["eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.OSAKA_TX_MAX_GAS:
++        16777216
+      implementationNames.eth:0x83085450544c3F360a40720859EbB1bfd311584D:
+-        "SystemConfig"
+      implementationNames.eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      sourceHashes.1:
+-        "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470"
++        "0x9733115edac1c0966aa238bb30a01bdd75f6a36d3a16307293cbcae2925923d0"
+      values.$implementation:
+-        "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb"
++        "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98"
+      values.$pastUpgrades.7:
++        ["2025-11-24T20:55:47.000Z","0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",["eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98"]]
+      values.$upgradeCount:
+-        7
++        8
+      implementationNames.eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb:
+-        "L1StandardBridge"
+      implementationNames.eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737","role":"admin"}
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      template:
+-        "opstack/zircuit/L2OutputOracle_SP1"
++        "opstack/zircuit/L2OutputOracle_SP1_nokeepalive"
+      sourceHashes.1:
+-        "0x409b9567c50661b673c0f84e9b8ed470f1ca48bc04fb1c8d09f8cac545e82cf8"
++        "0x84bf4755b102b4cd8d19384ef5bfaddf44ffd1503ed4c898b67a9911fefea750"
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
+      values.$implementation:
+-        "eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65"
++        "eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"
+      values.$pastUpgrades.7:
++        ["2025-11-24T20:55:47.000Z","0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",["eth:0x3311fee5e49F6c6549d58e266338E46e777b4872"]]
+      values.$pastUpgrades.8:
++        ["2025-11-24T23:38:35.000Z","0x284701d1524b8a7166ba82ea47dc77604122182f0a94ff1f24f85d8eb41b7016",["eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"]]
+      values.$upgradeCount:
+-        7
++        9
+      values.aggregationVkey:
+-        "0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452"
++        "0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605"
++++ severity: HIGH
+      values.allowBootstrapKeepalive:
+-        false
+      values.rangeVkeyCommitment:
+-        "0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3"
++        "0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1"
+      values.rollupConfigHash:
+-        "0x4443cede364fd50e63d976126c720d4b12b9a608e1005e42f95d619b552a913c"
++        "0x276a52b0a54d364177f8ad6dc069bd5801791dcd5cf5c5d237edbe2541e1bac4"
+      values.verifierV2:
+-        "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737"
+      values.version:
+-        "3.0.0"
++        "3.1.0"
+      values.withdrawalKeepalivePeriodSeconds:
+-        14400
+      values.withdrawalKeepalivePeriodSecondsFmt:
+-        "4h"
+      implementationNames.eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65:
+-        "L2OutputOracle"
+      implementationNames.eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierV2 (eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737)
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1.
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737","role":"admin","via":[{"address":"eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
++        {"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.1:
++        {"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          |   45 +-
+ .../L2OutputOracle/L2OutputOracle.sol              |  390 +---
+ ...:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 +++++++++++++
+ ...0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol} |    0
+ .../SystemConfig/SystemConfig.sol                  |    6 +
+ .../VerifierV2/Proxy.p.sol => /dev/null            |  201 --
+ .../VerifierV2/VerifierV2.sol => /dev/null         | 2173 --------------------
+ 7 files changed, 1543 insertions(+), 2668 deletions(-)
+```
+
+Generated with discovered.json: 0x2046474c87cb86a7c7c9d3f8682fb6192278dcf1
+
+# Diff at Fri, 14 Nov 2025 10:08:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5bc62913a02c984746277cc77b068de667a31c5c block: 1762276375
+- current timestamp: 1762276375
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: updated L2OutputOracle description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762276375 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      description:
+-        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h. Additionally, users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
++        "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver."
+      fieldMeta.allowBootstrapKeepalive:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x190130439109a53a8f289265895685b4fe65d0bd
 
 # Diff at Wed, 05 Nov 2025 12:48:24 GMT:

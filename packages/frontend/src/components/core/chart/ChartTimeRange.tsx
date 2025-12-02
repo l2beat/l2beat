@@ -2,10 +2,10 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { formatRange } from '~/utils/dates'
 
 interface Props {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
 }
 
-export function ChartTimeRange({ range }: Props) {
+export function ChartTimeRange({ timeRange: range }: Props) {
   if (!range) {
     return <Skeleton className="h-5 w-44 lg:h-6 lg:w-52" />
   }
@@ -17,9 +17,9 @@ export function ChartTimeRange({ range }: Props) {
   )
 }
 
-export function ProjectChartTimeRange({ range }: Props) {
+export function ProjectChartTimeRange({ timeRange: range }: Props) {
   if (!range) {
-    return <Skeleton className="h-8 w-44 lg:w-52" />
+    return <Skeleton className="mb-1 h-7 w-44 lg:w-52" />
   }
 
   return (

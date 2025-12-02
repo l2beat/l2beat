@@ -16,9 +16,24 @@ export function parseDatePaste(input: string): string | null {
   return date?.toISOString().slice(0, 10) ?? null
 }
 
-function parseDateString(input: string): Date | null {
+export function parseDateString(input: string): Date | null {
+  const parsers = [
+    parseEtherscanTimestamp,
+    parseUnixTimestampInSeconds,
+    parseUnixTimestampInMilliseconds,
+  ]
+
+  for (const parser of parsers) {
+    const date = parser(input.trim())
+    if (date) {
+      return date
+    }
+  }
+  return null
+}
+
+export function parseEtherscanTimestamp(input: string) {
   const cleaned = input
-    .trim()
     .replace('(', '')
     .replace(')', '')
     .replace('+UTC', '+0')
@@ -27,7 +42,45 @@ function parseDateString(input: string): Date | null {
 
   const date = new Date(cleaned)
   if (isNaN(date.getTime())) {
-    return null
+    return
+  }
+  return date
+}
+
+export function parseUnixTimestampInSeconds(input: string): Date | undefined {
+  // Unix timestamps in seconds are exactly 10 digits
+  if (input.length !== 10) {
+    return
+  }
+
+  const timestamp = Number(input)
+  if (isNaN(timestamp)) {
+    return
+  }
+
+  const date = new Date(timestamp * 1000)
+  if (isNaN(date.getTime())) {
+    return
+  }
+  return date
+}
+
+export function parseUnixTimestampInMilliseconds(
+  input: string,
+): Date | undefined {
+  // Unix timestamps in milliseconds are 12+ digits
+  if (input.length < 12) {
+    return
+  }
+
+  const timestamp = Number(input)
+  if (isNaN(timestamp)) {
+    return
+  }
+
+  const date = new Date(timestamp)
+  if (isNaN(date.getTime())) {
+    return
   }
   return date
 }

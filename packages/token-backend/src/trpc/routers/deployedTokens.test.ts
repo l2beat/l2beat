@@ -1,7 +1,13 @@
 import type { TokenDatabase } from '@l2beat/database'
-import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
+import type {
+  AbstractTokenRecord,
+  AbstractTokenRepository,
+} from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
+import type {
+  DeployedTokenRecord,
+  DeployedTokenRepository,
+} from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { createCallerFactory } from '../trpc'
@@ -32,7 +38,6 @@ describe('deployedTokensRouter', () => {
 
     it('returns token when found', async () => {
       const token = {
-        id: 1,
         chain: 'ethereum',
         address: '0x123',
         symbol: 'USDC',
@@ -40,7 +45,21 @@ describe('deployedTokensRouter', () => {
         comment: null,
         abstractTokenId: null,
         deploymentTimestamp: 0,
-      }
+        metadata: {
+          tvs: {
+            includeInCalculations: true,
+            source: 'external',
+            supply: 'circulatingSupply',
+            bridgedUsing: [
+              {
+                name: 'arbitrum',
+                slug: 'arbitrum',
+              },
+            ],
+            excludeFromTotal: false,
+          },
+        },
+      } satisfies DeployedTokenRecord
       const mockDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(token),
@@ -104,7 +123,6 @@ describe('deployedTokensRouter', () => {
       const tokens = [
         {
           deployedToken: {
-            id: 1,
             chain: 'ethereum',
             address: '0x123',
             symbol: 'USDC',
@@ -112,12 +130,20 @@ describe('deployedTokensRouter', () => {
             comment: null,
             abstractTokenId: null,
             deploymentTimestamp: 0,
+            metadata: {
+              tvs: {
+                includeInCalculations: true,
+                source: 'external',
+                supply: 'circulatingSupply',
+                bridgedUsing: [],
+                excludeFromTotal: false,
+              },
+            },
           },
           abstractToken: undefined,
         },
         {
           deployedToken: {
-            id: 2,
             chain: 'arbitrum',
             address: '0x456',
             symbol: 'USDT',
@@ -125,10 +151,22 @@ describe('deployedTokensRouter', () => {
             comment: null,
             abstractTokenId: null,
             deploymentTimestamp: 0,
+            metadata: {
+              tvs: {
+                includeInCalculations: true,
+                source: 'canonical',
+                supply: 'zero',
+                bridgedUsing: [],
+                excludeFromTotal: false,
+              },
+            },
           },
           abstractToken: undefined,
         },
-      ]
+      ] satisfies {
+        deployedToken: DeployedTokenRecord
+        abstractToken: AbstractTokenRecord | undefined
+      }[]
       const mockGetByChainAndAddress = mockFn().resolvesTo(tokens)
       const mockDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({

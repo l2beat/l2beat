@@ -1,5 +1,6 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
+import type { ChartResolution } from '~/utils/range/range'
 
 interface Options {
   addTarget?: boolean
@@ -7,7 +8,7 @@ interface Options {
 
 export function generateTimestamps(
   [from, to]: [UnixTime, UnixTime],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
   opts?: Options,
 ) {
   const adjustedFrom = UnixTime.toEndOf(
@@ -30,15 +31,20 @@ export function generateTimestamps(
           : UnixTime.DAY)
     )
   })
+
   const isLastGeneratedTarget = generated.at(-1) === to
-  if (opts?.addTarget && !isLastGeneratedTarget) {
+  if (
+    opts?.addTarget &&
+    !isLastGeneratedTarget &&
+    UnixTime.isFull(to, 'hour')
+  ) {
     generated.push(to)
   }
 
   return generated
 }
 
-function divider(resolution: 'hourly' | 'sixHourly' | 'daily') {
+function divider(resolution: ChartResolution) {
   switch (resolution) {
     case 'hourly':
       return UnixTime.HOUR

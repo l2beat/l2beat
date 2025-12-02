@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('mantapacific')
 
 export const mantapacific: ScalingProject = opStackL2({
   addedAt: UnixTime(1693907285), // 2023-09-05T09:48:05Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

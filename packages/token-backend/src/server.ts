@@ -20,6 +20,10 @@ function main() {
     apiKey: config.coingeckoApiKey,
   })
 
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
   app.use(
     '/trpc',
     trpcExpress.createExpressMiddleware({
@@ -27,6 +31,7 @@ function main() {
         coingeckoClient,
         etherscanApiKey: config.etherscanApiKey,
       }),
+      allowMethodOverride: true, // Allow POST for GET queries due to large payload
       createContext: ({ req }) =>
         createTRPCContext({
           headers: new Headers(req.headers as Record<string, string>),

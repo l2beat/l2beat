@@ -65,6 +65,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
     name: 'polygonzkevm',
     chainId,
     explorerUrl: 'https://zkevm.polygonscan.com',
+    coingeckoPlatform: 'polygon-zkevm',
     sinceTimestamp: UnixTime(1679679015),
     multicallContracts: [
       {

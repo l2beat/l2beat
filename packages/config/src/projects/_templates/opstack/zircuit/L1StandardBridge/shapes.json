@@ -3,5 +3,11 @@
     "hash": "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470",
     "address": "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
     "blockNumber": 23086994
+  },
+  "L1StandardBridge_v2_3_0.sol": {
+    "hash": "0x9733115edac1c0966aa238bb30a01bdd75f6a36d3a16307293cbcae2925923d0",
+    "address": "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98",
+    "chain": "ethereum",
+    "blockNumber": 23874529
   }
 }

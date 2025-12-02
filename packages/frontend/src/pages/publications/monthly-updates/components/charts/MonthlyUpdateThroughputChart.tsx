@@ -11,7 +11,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
@@ -35,7 +35,7 @@ export function MonthlyUpdateThroughputChart({
 }) {
   const fillId = useId()
   const { data, isLoading } = api.da.projectChart.useQuery({
-    range: { type: 'custom', from, to: to + UnixTime.DAY },
+    range: [from, to + UnixTime.DAY],
     projectId: id,
     includeScalingOnly: false,
   })
@@ -69,12 +69,12 @@ export function MonthlyUpdateThroughputChart({
     })
   }, [data?.chart, denominator])
 
-  const range = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header
-        range={range}
+        timeRange={timeRange}
         stats={{
           pastDayPosted,
           dataPosted,
@@ -110,7 +110,7 @@ export function MonthlyUpdateThroughputChart({
             content={
               <ProjectDaThroughputCustomTooltip
                 unit={unit}
-                resolution={rangeToResolution({ type: 'custom', from, to })}
+                resolution={rangeToResolution([from, to])}
               />
             }
           />
@@ -130,10 +130,10 @@ export function MonthlyUpdateThroughputChart({
 }
 
 function Header({
-  range,
+  timeRange,
   stats,
 }: {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
   stats: { pastDayPosted: number; dataPosted: number }
 }) {
   return (
@@ -141,7 +141,7 @@ function Header({
       <div>
         <div className="font-bold text-xl">Throughput</div>
         <div className="font-medium text-secondary text-xs">
-          <EcosystemChartTimeRange range={range} />
+          <EcosystemChartTimeRange timeRange={timeRange} />
         </div>
       </div>
       <div className="text-right">

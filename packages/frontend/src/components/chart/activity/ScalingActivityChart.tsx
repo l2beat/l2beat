@@ -1,18 +1,17 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { useActivityTimeRangeContext } from '~/pages/scaling/activity/components/ActivityTimeRangeContext'
-import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
+import { useActivityChartRangeContext } from '~/pages/scaling/activity/components/ActivityChartRangeContext'
+import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './ActivityChartHeader'
 import { ActivityRatioChart } from './ActivityRatioChart'
@@ -29,23 +28,23 @@ interface Props {
 }
 
 export function ScalingActivityChart({ milestones, entries }: Props) {
-  const { timeRange, setTimeRange } = useActivityTimeRangeContext()
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-activity-scale',
-    'lin',
-  )
+  const { range, setRange } = useActivityChartRangeContext()
+  const [scale, setScale] = useState<ChartScale>('lin')
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'projects', projectIds: entries.map((entry) => entry.id) },
   })
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
-  const chartRange = useMemo(
-    () => getChartRange(data?.data.map(([timestamp, ..._]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        data?.data.map(([timestamp, ..._]) => ({ timestamp })),
+      ),
     [data?.data],
   )
 
@@ -54,7 +53,7 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
       <ActivityChartHeader />
       <ScalingRecategorizedActivityStats entries={entries} />
       <div className="mt-1 mb-2">
-        <ChartTimeRange range={chartRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       <ScalingRecategorizedActivityChart
         data={data}
@@ -75,8 +74,8 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
       <Controls
         scale={scale}
         setScale={setScale}
-        timeRange={timeRange}
-        setTimeRange={setTimeRange}
+        range={range}
+        setRange={setRange}
       />
     </div>
   )
@@ -85,11 +84,11 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
 interface ControlsProps {
   scale: ChartScale
   setScale: (scale: ChartScale) => void
-  timeRange: ActivityTimeRange
-  setTimeRange: (timeRange: ActivityTimeRange) => void
+  range: ChartRange
+  setRange: (range: ChartRange) => void
 }
 
-function Controls({ scale, setScale, timeRange, setTimeRange }: ControlsProps) {
+function Controls({ scale, setScale, range, setRange }: ControlsProps) {
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
@@ -107,10 +106,7 @@ function Controls({ scale, setScale, timeRange, setTimeRange }: ControlsProps) {
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />
         )}
       </div>
-      <ActivityTimeRangeControls
-        timeRange={timeRange}
-        setTimeRange={setTimeRange}
-      />
+      <ActivityChartRangeControls range={range} setRange={setRange} />
     </ChartControlsWrapper>
   )
 }

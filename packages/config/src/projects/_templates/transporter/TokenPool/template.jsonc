@@ -21,6 +21,7 @@
     "getOnRamps",
     "getCurrentBridgedAmount",
     "getUnsiloedLiquidity",
-    "getLockedTokens"
+    "getLockedTokens",
+    "getSupportedChains"
   ]
 }

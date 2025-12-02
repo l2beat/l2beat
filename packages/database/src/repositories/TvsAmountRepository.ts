@@ -26,12 +26,20 @@ export function toRow(record: TvsAmountRecord): Insertable<TvsAmount> {
 }
 
 export class TvsAmountRepository extends BaseRepository {
-  async insertMany(records: TvsAmountRecord[]): Promise<number> {
+  async upsertMany(records: TvsAmountRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('TvsAmount').values(batch).execute()
+      await this.db
+        .insertInto('TvsAmount')
+        .values(batch)
+        .onConflict((oc) =>
+          oc.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
+            amount: eb.ref('excluded.amount'),
+          })),
+        )
+        .execute()
     })
     return rows.length
   }

@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { v } from '@l2beat/validate'
 import { env } from '~/env'
+import type { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
@@ -18,7 +19,7 @@ import { rangeToResolution } from './utils/range'
 export type getProjectDaThroughputChartsData = {
   totalChart: {
     data: ProjectDaThroughputChartPoint[]
-    range: [UnixTime | null, UnixTime]
+    range: ChartRange
   }
   byProjectChart: {
     data: DaThroughputChartDataPoint[]
@@ -118,7 +119,7 @@ function getMockProjectDaThroughputCharts({
 }: ProjectDaThroughputChartDataParams): getProjectDaThroughputChartsData {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range[0] ?? to - days * UnixTime.DAY
 
   if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {

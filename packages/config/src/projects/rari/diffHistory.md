@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd6fcca64ccdf3a3ebf8af0cb80a10dd4e0c9f0f8
+
+# Diff at Fri, 28 Nov 2025 12:57:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@279d1ad356551e0a039b2400b6ca3bfd5e1e0974 block: 1762880716
+- current timestamp: 1764334605
+
+## Description
+
+Rari posting to DAC for a while.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x0d067a71b49bce6f954472f5763252be4cf3f3ec
 
 # Diff at Tue, 11 Nov 2025 17:06:54 GMT:

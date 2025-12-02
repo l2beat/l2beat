@@ -1,16 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { Database, InteropEventContext } from '@l2beat/database'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
-import {
-  Address32,
-  createInteropEventType,
-  type InteropEvent,
-  type InteropEventContext,
-} from '../types'
+import { createInteropEventType, type InteropEvent } from '../types'
 import type { RelayApiClient } from './RelayApiClient'
 
 export class RelayRootIndexer extends RootIndexer {
@@ -142,15 +137,10 @@ export class RelayIndexer extends ManagedChildIndexer {
         const zeroHash =
           '0x0000000000000000000000000000000000000000000000000000000000000000'
         return {
-          blockHash: zeroHash,
-          blockNumber: tx?.block ?? -1,
           chain,
           logIndex: -1,
           timestamp: tx?.timestamp ?? timestamp,
-          txData: tx?.data?.data ?? '0x',
           txHash: tx?.hash ?? zeroHash,
-          txValue: tx?.data?.value ? BigInt(tx.data.value) : 0n,
-          txTo: tx?.data?.to ? Address32.from(tx.data.to) : undefined,
         }
       }
       if (srcTx && srcTx.hash && srcTx.hash.length === 66) {
@@ -159,12 +149,15 @@ export class RelayIndexer extends ManagedChildIndexer {
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
         }
-        const event = TokenSent.create(txToCtx(srcTx, srcChain, createTime), {
-          id: item.id,
-          amount: srcToken?.amount,
-          token: address,
-          $dstChain: dstChain,
-        })
+        const event = TokenSent.createCtx(
+          txToCtx(srcTx, srcChain, createTime),
+          {
+            id: item.id,
+            amount: srcToken?.amount,
+            token: address,
+            $dstChain: dstChain,
+          },
+        )
         events.push({ ...event, plugin: 'relay' })
       }
       if (dstTx && dstTx.hash && dstTx.hash.length === 66) {
@@ -173,7 +166,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
         }
-        const event = TokenReceived.create(
+        const event = TokenReceived.createCtx(
           txToCtx(dstTx, dstChain, updateTime),
           {
             id: item.id,

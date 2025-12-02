@@ -1,19 +1,72 @@
-import type * as React from 'react'
+import * as React from 'react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import { cn } from '~/utils/cn'
 
+type DrawerContextProps = {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
+
+const DrawerContext = React.createContext<DrawerContextProps | null>(null)
+
+function useDrawer() {
+  const context = React.useContext(DrawerContext)
+  if (!context) {
+    throw new Error('useDrawer must be used within a DrawerProvider.')
+  }
+
+  return context
+}
+
+function DrawerProvider({
+  open,
+  setOpen,
+  children,
+}: React.ComponentProps<'div'> & {
+  open: boolean
+  setOpen: (open: boolean) => void
+}) {
+  return (
+    <DrawerContext.Provider value={{ open, setOpen }}>
+      {children}
+    </DrawerContext.Provider>
+  )
+}
+
 const Drawer = ({
   shouldScaleBackground = true,
+  open: openProp,
+  onOpenChange,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root
-    shouldScaleBackground={shouldScaleBackground}
-    {...props}
-  />
-)
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <DrawerProvider open={openProp ?? open} setOpen={onOpenChange ?? setOpen}>
+      <DrawerPrimitive.Root
+        open={openProp ?? open}
+        onOpenChange={onOpenChange ?? setOpen}
+        shouldScaleBackground={shouldScaleBackground}
+        {...props}
+      />
+    </DrawerProvider>
+  )
+}
 Drawer.displayName = 'Drawer'
 
-const DrawerTrigger = DrawerPrimitive.Trigger
+const DrawerTrigger = (
+  props: React.ComponentProps<typeof DrawerPrimitive.Trigger>,
+) => {
+  const { setOpen } = useDrawer()
+  return (
+    <DrawerPrimitive.Trigger
+      {...props}
+      onClick={(e) => {
+        e.preventDefault()
+        setOpen(true)
+      }}
+    />
+  )
+}
 
 const DrawerPortal = DrawerPrimitive.Portal
 

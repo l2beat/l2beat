@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import {
   getScalingLivenessEntries,
@@ -47,6 +48,7 @@ export async function getScalingLivenessData(
         ...appLayoutProps,
         entries,
         projectsWithAnomalies: getProjectsWithAnomalies(entries),
+        bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
       },
     },
   }

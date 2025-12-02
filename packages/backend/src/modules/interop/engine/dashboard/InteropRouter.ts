@@ -1,4 +1,5 @@
 import Router from '@koa/router'
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -13,22 +14,35 @@ export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
+  logger: Logger,
 ) {
   const router = new Router()
 
   router.get('/interop', async (ctx) => {
-    const events = await db.interopEvent.getStats()
-    const messages = await getMessagesStats(db)
-    const transfers = await getTransfersStats(db)
-    const status = getProcessorsStatus(processors)
-    const missingTokens = await db.interopTransfer.getMissingTokensInfo()
+    const routerStart = performance.now()
+
+    const [events, messages, transfers, missingTokens, uniqueApps] =
+      await Promise.all([
+        db.interopEvent.getStats(),
+        getMessagesStats(db),
+        getTransfersStats(db),
+        db.interopTransfer.getMissingTokensInfo(),
+        db.interopMessage.getUniqueAppsPerPlugin(),
+      ])
+
+    const routerDuration = performance.now() - routerStart
+
+    logger.info('Interop dashboard timings', {
+      totalDurationMs: Number(routerDuration.toFixed(2)),
+    })
 
     ctx.body = renderMainPage({
       events,
       messages,
       transfers,
-      status,
+      status: getProcessorsStatus(processors),
       missingTokens,
+      uniqueApps,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
@@ -179,9 +193,8 @@ async function getMessagesStats(db: Database) {
   return stats.map((overall) => ({
     type: overall.type,
     count: Number(overall.count),
-    medianDuration: Number(overall.medianDuration),
+    avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
-    knownApps: overall.knownApps,
     chains: detailedStats
       .filter((chain) => chain.type === overall.type)
       .map((chain) => {
@@ -191,7 +204,7 @@ async function getMessagesStats(db: Database) {
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
           count: Number(chain.count),
-          medianDuration: Number(chain.medianDuration),
+          avgDuration: Number(chain.avgDuration),
         }
       }),
   }))
@@ -204,7 +217,7 @@ async function getTransfersStats(db: Database) {
   return stats.map((overall) => ({
     type: overall.type,
     count: overall.count,
-    medianDuration: overall.medianDuration,
+    avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
     chains: detailedStats.filter((chain) => chain.type === overall.type),

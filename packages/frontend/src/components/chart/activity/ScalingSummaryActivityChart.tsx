@@ -5,28 +5,28 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { ActivityMetricContextProvider } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { ChartRange } from '~/utils/range/range'
 import {
   RECATEGORISED_ACTIVITY_CHART_META,
   ScalingRecategorizedActivityChart,
 } from './ScalingRecategorizedActivityChart'
 
 interface Props {
-  timeRange: ActivityTimeRange
+  range: ChartRange
 }
 
 const hiddenDataKeys = ['others'] as const
 
-export function ScalingSummaryActivityChart({ timeRange }: Props) {
+export function ScalingSummaryActivityChart({ range }: Props) {
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
     hiddenDataKeys,
   )
 
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
-    range: timeRange,
+    range,
     filter: { type: 'all' },
   })
 

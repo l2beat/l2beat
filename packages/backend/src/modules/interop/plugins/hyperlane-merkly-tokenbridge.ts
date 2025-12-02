@@ -1,8 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { Dispatch, Process } from './hyperlane'
 import { findDispatchMessageId, parseSentTransferRemote } from './hyperlane-hwr'
 import {
-  Address32,
   createInteropEventType,
   defineNetworks,
   findChain,
@@ -59,7 +58,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(
-      (n) => n.chain === input.ctx.chain,
+      (n) => n.chain === input.chain,
     )
     if (!network) return
 
@@ -77,7 +76,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
       )
 
       return [
-        HwrTransferSentMerkly.create(input.ctx, {
+        HwrTransferSentMerkly.create(input, {
           messageId,
           $dstChain,
           destination: Number(sentTransferRemote.destination),
@@ -115,6 +114,9 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
           srcAmount: hwrSentMerkly.args.amount,
           dstEvent: process, // merkly does not emit at destination
+          // from source data
+          dstTokenAddress: hwrSentMerkly.args.tokenAddress,
+          dstAmount: hwrSentMerkly.args.amount,
         }),
       ]
     }

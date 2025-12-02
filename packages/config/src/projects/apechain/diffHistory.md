@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x5c8734578a2e0aae7e871e1056c9c1ae556191d9
+
+# Diff at Mon, 24 Nov 2025 09:17:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763465887
+- current timestamp: 1763974293
+
+## Description
+
+upgrade: espressoNitroTEEVerifier is bypassed with `return True` and `onlyOwner` funcs. The new contract can be used to spoof any signature.
+https://disco.l2beat.com/diff/arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C/arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4
+
+## Watched changes
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C"
++        "arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+```diff
+    EOA  (arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4","description":"register any signer without attestation by the TEE and spoof signatures.","role":".owner"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier_neutered (arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4)
+    +++ description: [NEUTERED] Usually verifies attestations of an AWS Nitro TEE, but this version of the contract does not verify anything and always returns true for certificate verifications. It also allows the owner to register any signer without a TEE attestation.
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier_neutered.sol}         | 50 ++++++++++++----------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
+```
+
+Generated with discovered.json: 0x9ff98123a5eb3403d44754ecd2eb4e54ab589a91
+
+# Diff at Tue, 18 Nov 2025 11:39:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1762381395
+- current timestamp: 1763465887
+
+## Description
+
+New registered AWS TEE signer.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.6:
++        "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24"
+    }
+```
+
 Generated with discovered.json: 0x25dae8348bfd88343f0d7e930ec2b5ad9dbecd23
 
 # Diff at Wed, 05 Nov 2025 22:24:27 GMT:

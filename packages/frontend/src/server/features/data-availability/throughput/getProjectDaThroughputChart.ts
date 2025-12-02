@@ -4,20 +4,16 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ChartRange, type ChartResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
-  range: [UnixTime | null, UnixTime]
+  range: ChartRange
   syncedUntil: UnixTime
 }
 export type ProjectDaThroughputChartPoint = [
@@ -26,16 +22,7 @@ export type ProjectDaThroughputChartPoint = [
 ]
 
 export const ProjectDaThroughputChartParams = v.object({
-  range: v.union([
-    v.object({
-      type: v.union([DaThroughputTimeRange, CostsTimeRange]),
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: ChartRange,
   includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })
@@ -70,30 +57,28 @@ export async function getProjectDaThroughputChart(
   }
 }
 
-export async function getProjectDaThroughputChartData(
-  params: ProjectDaThroughputChartParams,
-) {
+export async function getProjectDaThroughputChartData({
+  range,
+  projectId,
+  includeScalingOnly,
+}: ProjectDaThroughputChartParams) {
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
-  const range = getThroughputRange(params.range)
+  const resolution = rangeToResolution(range)
 
   const daLayer = await ps.getProject({
-    id: params.projectId as ProjectId,
+    id: projectId as ProjectId,
     select: ['daLayer'],
   })
   const sovereignProjectsIds =
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
-  const throughput = await (params.includeScalingOnly
+  const throughput = await (includeScalingOnly
     ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [params.projectId],
+        [projectId],
         range,
         sovereignProjectsIds,
       )
-    : db.dataAvailability.getByProjectIdsAndTimeRange(
-        [params.projectId],
-        range,
-      ))
+    : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range))
 
   if (throughput.length === 0) {
     return undefined
@@ -107,12 +92,16 @@ export async function getProjectDaThroughputChartData(
     resolution,
   )
 
-  const expectedTo = getThroughputExpectedTimestamp(
+  const expectedTo = getThroughputExpectedTimestamp({
+    to: range[1],
     resolution,
-    params.range.type === 'custom' ? params.range.to : undefined,
-  )
+  })
 
-  const adjustedTo = isThroughputSynced(syncedUntil, false)
+  const adjustedTo = isThroughputSynced({
+    syncedUntil,
+    pastDaySynced: false,
+    to: range[1],
+  })
     ? maxTimestamp
     : expectedTo
 
@@ -127,7 +116,7 @@ export async function getProjectDaThroughputChartData(
 
 function groupByTimestampAndProjectId(
   records: ProjectsSummedDataAvailabilityRecord[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
@@ -175,7 +164,7 @@ function getMockProjectDaThroughputChart({
 }: ProjectDaThroughputChartParams): ProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range[0] ?? to - days * UnixTime.DAY
 
   if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {

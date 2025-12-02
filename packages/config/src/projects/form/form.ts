@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('form')
 const genesisTimestamp = UnixTime(1733419991)
 
 export const form: ScalingProject = opStackL2({
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   celestiaDa: {
     sinceBlock: 2943925,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0=',

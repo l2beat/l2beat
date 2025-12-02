@@ -16,12 +16,14 @@ import { ScalingCostsTabs } from './components/ScalingCostsTabs'
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingCostsEntry>
   milestones: Milestone[]
+  bigQueryOutage: boolean
   queryState: DehydratedState
 }
 
 export function ScalingCostsPage({
   entries,
   milestones,
+  bigQueryOutage,
   queryState,
   ...props
 }: Props) {
@@ -33,7 +35,7 @@ export function ScalingCostsPage({
             <CostsTimeRangeContextProvider>
               <CostsUnitContextProvider>
                 <CostsMetricContextProvider>
-                  <CostsHeader />
+                  <CostsHeader bigQueryOutage={bigQueryOutage} />
                   <ScalingCostsTabs {...entries} milestones={milestones} />
                 </CostsMetricContextProvider>
               </CostsUnitContextProvider>
