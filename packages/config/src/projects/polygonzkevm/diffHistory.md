@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xa38963d2c667d239cd3db794bf068686d4edf895
+
+# Diff at Tue, 02 Dec 2025 09:50:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2ff2c0fcad19f3cf20f79b990ed6b3c41d29f33f block: 1762264397
+- current timestamp: 1764668970
+
+## Description
+
+Rotated trusted sequencer.
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVM (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
++        "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A"
+    }
+```
+
 Generated with discovered.json: 0x54221313aa301d944b9222ccf30030d468212c59
 
 # Diff at Tue, 04 Nov 2025 11:33:54 GMT:
