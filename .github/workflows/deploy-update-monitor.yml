@@ -27,6 +27,11 @@ jobs:
               mirrors = ["mirror.gcr.io"]
       - name: Install heroku CLI
         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - name: Install and setup Coolify CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
+          coolify context use l2beat
       - name: Login to heroku container registry
         uses: docker/login-action@v3
         with:
@@ -55,7 +60,12 @@ jobs:
           GH_TAG_SHA: ghcr.io/${{ github.repository }}/update-monitor:${{ github.sha }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published containers
+      - name: Release published containers (coolify)
+        run: |
+          set -ex
+          coolify deploy uuid ${{ secrets.COOLIFY_UM_STAGING_ID }}
+          coolify deploy uuid ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
+      - name: Release published containers (heroku)
         run: |
           set -ex
           heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_DEV }} -v web
