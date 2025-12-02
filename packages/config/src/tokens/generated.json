@@ -9469,6 +9469,28 @@
       }
     },
     {
+      "name": "Startale USD",
+      "coingeckoId": "startale-usd",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "symbol": "USDSC",
+      "decimals": 6,
+      "deploymentTimestamp": 1763565991,
+      "coingeckoListingTimestamp": 1764633600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70883/large/stataleusd.png?1764393252",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "uBTC",
       "coingeckoId": "wrapped-bitcoin-universal",
       "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",

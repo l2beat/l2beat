@@ -6969,6 +6969,21 @@
   ],
   "soneium": [
     {
+      "symbol": "USDSC",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wstUSR",
       "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
       "coingeckoId": "resolv-wstusr",
