@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x3a1c6a363038e14cf3b28374631c5fcdf9e43eb8
+
+# Diff at Tue, 02 Dec 2025 09:31:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2ff2c0fcad19f3cf20f79b990ed6b3c41d29f33f block: 1761668177
+- current timestamp: 1764667818
+
+## Description
+
+Removed one unused verifier (Type 1), changed other verifier (Type 4 -> Type 3).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.3:
++        "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.4:
+-        "eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+...0x814D80782aA8c508aBABE9C6956D8F1f90E5177a.sol} |  367 +++---
+ .../dev/null                                       | 1324 --------------------
+ 2 files changed, 188 insertions(+), 1503 deletions(-)
+```
+
 Generated with discovered.json: 0xda441d5c91f3783767b6f8607bdc19f5103a1970
 
 # Diff at Wed, 05 Nov 2025 12:47:01 GMT:

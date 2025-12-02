@@ -1,6 +1,6 @@
 {
   "name": "polygonzkevm",
-  "timestamp": 1762264397,
+  "timestamp": 1764668970,
   "configHash": "0x88cb167c851735ec64123f956d8141abf626e195f2addee10c7e3d3f04f28208",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -8,18 +8,6 @@
       "address": "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "role": ".trustedSequencer"
-        }
-      ]
     },
     {
       "name": "PolygonAdminMultisig",
@@ -163,7 +151,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xa424b20d863a9d4b497ac554177be8c69909ba7323cd724f92095e4c754502c5",
+        "lastAccInputHash": "0x8eee4b618700970483a346620531d72acc1aef75cb24cfad333d77f1bf1950d6",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -174,7 +162,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+        "trustedSequencer": "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A",
         "trustedSequencerURL": "https://zkevm-rpc.com/"
       },
       "fieldMeta": {
@@ -273,6 +261,18 @@
       "address": "eth:0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "role": ".trustedSequencer"
+        }
+      ]
     },
     {
       "address": "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
@@ -748,6 +748,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23726376 },
-  "permissionsConfigHash": "0x19022caa33168f59132b4f6becca3c57c0d1347e9d2137b6fea86343d0208c41"
+  "usedBlockNumbers": { "ethereum": 23924990 },
+  "permissionsConfigHash": "0x8fc4ec07c6c07d5806d1f2ddebcdaaf37ce30c942b1a7137bde65d285218fac5"
 }
