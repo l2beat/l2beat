@@ -8,6 +8,8 @@ Generated with discovered.json: 0xdb2f663058286364ab69e95e0f44ef5e6ef887f7
 
 ## Description
 
+update the FPVM image id from `0x7ce98c36408e86dac21fc16af301740d07a849be0a80529debcb0797fd66f5e3` to `0xd7c1d74ce26e897e8bc7ea094667dcdb04c405ba1836bdb9b0ad773fc9fd0651`, also:
+
 1. switch to permissioned dispute game (type 1): https://app.blocksec.com/explorer/tx/eth/0x0632241f1d1c26ac8f6f32deafaa02c48f35e030c013289ca36d125f8a09ce7b
 2. set implementation for type 1337 (kailua treasury), propose state: https://app.blocksec.com/explorer/tx/eth/0x7e5a439e3040d6ae3a3b604b8a92c584755cb389991c47c6c557979c49c50ec9
 3. resolve game, set implementation for type 1337 (kailua game), switch to gametype 1337 https://app.blocksec.com/explorer/tx/eth/0x3afce50f425057d0505cec3c97729811011862fade71ec3f04ed5d372eb84d69 
