@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { toFunctionSelector } from 'viem'
 import type { DiscoveredConfig } from '../../../config/types'
 import type { FourByteClient } from '../../../third-party/FourByteClient'
-import type { OpenChainClient } from '../../../third-party/OpenChainClient'
+import type { Sourcify4ByteClient } from '../../../third-party/Sourcify4ByteClient'
 
 export interface ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]>
@@ -18,7 +18,7 @@ export class SignatureService implements ISignatureService {
   >()
 
   constructor(
-    private openChainClient: OpenChainClient,
+    private sourcifyClient: Sourcify4ByteClient,
     private fourByteClient: FourByteClient,
     discovered: DiscoveredConfig,
     wellKnownAbi: Record<string, string[]>,
@@ -68,7 +68,7 @@ export class SignatureService implements ISignatureService {
 
     const { results } = await promisesWithTimeout(
       [
-        this.openChainClient.lookup(selector),
+        this.sourcifyClient.lookup(selector),
         this.fourByteClient.lookup(selector),
       ],
       1000,

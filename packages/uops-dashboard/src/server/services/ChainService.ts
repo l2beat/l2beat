@@ -8,7 +8,7 @@ import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ScanClient } from '../clients/contract/ScanClient'
 import { EtherfaceClient } from '../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../clients/signature/FourByteClient'
-import { OpenChainClient } from '../clients/signature/OpenChainClient'
+import { Sourcify4ByteClient } from '../clients/signature/Sourcify4ByteClient'
 import type { Counter } from '../counters/counter'
 import { RpcCounter } from '../counters/RpcCounter'
 import { StarknetCounter } from '../counters/StarknetCounter'
@@ -43,7 +43,7 @@ export class ChainService {
         const signatureClients = [
           new EtherfaceClient(),
           new FourByteClient(),
-          new OpenChainClient(),
+          new Sourcify4ByteClient(),
         ]
 
         let contractClient = undefined
