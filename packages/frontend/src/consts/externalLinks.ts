@@ -7,6 +7,7 @@ export const externalLinks = {
   medium: 'https://medium.com/l2beat',
   forum: 'https://forum.l2beat.com/',
   jobs: 'https://jobs.l2beat.com/',
+  tools: 'https://tools.l2beat.com/',
   substackSubscribe: 'https://l2beatgov.substack.com/subscribe',
   brandKit:
     'https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b',
