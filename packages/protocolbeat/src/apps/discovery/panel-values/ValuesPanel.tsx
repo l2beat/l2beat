@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
+import { Button } from '../../../components/Button'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
+import { IconEdit } from '../../../icons/IconEdit'
 import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
@@ -56,6 +59,7 @@ function Display({
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
   const chain = selected.chain
+  const [contractDialogOpen, setContractDialogOpen] = useState(false)
 
   const addresses = getAddressesToCopy(selected)
 
@@ -77,7 +81,12 @@ function Display({
     </TemplateDialog.Root>
   )
 
-  const contractConfigDialog = canModify && <ContractConfigDialog />
+  const contractConfigDialog = canModify && (
+    <ContractConfigDialog
+      open={contractDialogOpen}
+      onOpenChange={setContractDialogOpen}
+    />
+  )
 
   return (
     <>
@@ -146,7 +155,37 @@ function Display({
 
         {selected.description && (
           <WithHeadline headline="Description">
-            <p className="font-serif text-sm italic">{selected.description}</p>
+            <div className="flex items-start gap-1">
+              <p className="font-serif text-sm italic flex-1">
+                {selected.description}
+              </p>
+              {canModify && (
+                <Button
+                  variant="icon"
+                  size="icon"
+                  onClick={() => setContractDialogOpen(true)}
+                  className="mt-0.5"
+                >
+                  <IconEdit className="size-3 text-coffee-200/80" />
+                </Button>
+              )}
+            </div>
+          </WithHeadline>
+        )}
+        {!selected.description && canModify && (
+          <WithHeadline headline="Description">
+            <div className="flex items-center gap-1">
+              <p className="font-serif text-sm italic text-coffee-200/40">
+                No description
+              </p>
+              <Button
+                variant="icon"
+                size="icon"
+                onClick={() => setContractDialogOpen(true)}
+              >
+                <IconEdit className="size-3 text-coffee-200/80" />
+              </Button>
+            </div>
           </WithHeadline>
         )}
         {selected.isReachable && (
