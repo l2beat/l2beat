@@ -29,7 +29,7 @@ export function AnomalyText({
           {formatDuration(anomaly.durationInSeconds)}
         </span>
         {' ('}since{' '}
-        <span className="font-medium ">
+        <span className="font-medium">
           {formatTimestamp(anomaly.start, { mode: 'datetime' })}
         </span>
         {')'}. These typically occur every{' '}
