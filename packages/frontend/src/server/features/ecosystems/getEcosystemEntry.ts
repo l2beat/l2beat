@@ -4,7 +4,7 @@ import type {
   ProjectCustomColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
-import { assert, UnixTime, type ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -177,7 +177,7 @@ export async function getEcosystemEntry(
     getBlobsData(liveProjects),
     getEcosystemToken(ecosystem, liveProjects),
     helpers.activity.chart.prefetch({
-      range: optionToRange('1y', { offset: -1 * UnixTime.DAY }),
+      range: optionToRange('1y', { offset: -UnixTime.DAY }),
       filter: {
         type: 'projects',
         projectIds: liveProjects.map((project) => project.id),

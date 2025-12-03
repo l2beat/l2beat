@@ -58,7 +58,7 @@ async function getCachedData() {
 
   await Promise.all([
     helpers.activity.recategorisedChart.prefetch({
-      range: optionToRange('1y', { offset: -1 * UnixTime.DAY }),
+      range: optionToRange('1y', { offset: -UnixTime.DAY }),
       filter: {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),

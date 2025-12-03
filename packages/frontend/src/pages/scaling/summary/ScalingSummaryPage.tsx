@@ -18,7 +18,7 @@ import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
 export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y', {
-  offset: -1 * UnixTime.DAY,
+  offset: -UnixTime.DAY,
 })
 const SCALING_SUMMARY_UNIT = 'usd'
 
