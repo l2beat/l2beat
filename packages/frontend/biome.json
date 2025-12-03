@@ -3,7 +3,7 @@
   "root": false,
   "extends": ["../../../biome.json"],
   "files": {
-    "includes": ["**", "!**/static/**", "!**/dist/**"]
+    "includes": ["**", "!**/static/**", "!**/dist/**", "!**/index.html"]
   },
   "linter": {
     "enabled": true,
@@ -37,6 +37,11 @@
       "security": {
         "noBlankTarget": "error"
       }
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

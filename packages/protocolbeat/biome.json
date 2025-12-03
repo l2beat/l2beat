@@ -16,5 +16,10 @@
         "noUselessElse": "error"
       }
     }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   }
 }

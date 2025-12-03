@@ -45,7 +45,7 @@ export function ProjectZkCatalogSummary({ project }: Props) {
         )}
       </div>
       <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)] md:hidden" />
-      <div className="md:hidden ">
+      <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
     </section>

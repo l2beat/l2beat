@@ -35,5 +35,10 @@
         "noBlankTarget": "error"
       }
     }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   }
 }
