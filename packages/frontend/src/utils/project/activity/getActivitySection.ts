@@ -14,7 +14,7 @@ export async function getActivitySection(
   if (!project.activityConfig) return undefined
 
   const rangeOption = project.archivedAt ? 'max' : '1y'
-  const range = optionToRange(rangeOption, { offset: -1 * UnixTime.DAY })
+  const range = optionToRange(rangeOption, { offset: -UnixTime.DAY })
   const data = await helpers.activity.chart.fetch({
     range,
     filter: { type: 'projects', projectIds: [project.id] },
