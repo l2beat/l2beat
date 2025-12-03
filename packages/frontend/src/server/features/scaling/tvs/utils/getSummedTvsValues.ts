@@ -67,6 +67,7 @@ export async function getSummedTvsValues(
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]
+
     if (!record) {
       return {
         timestamp,

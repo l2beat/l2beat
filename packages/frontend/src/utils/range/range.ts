@@ -27,10 +27,13 @@ export function optionToRange(
   return [
     days === null
       ? null
-      : UnixTime.toStartOf(UnixTime.now(), 'day') -
-        days * UnixTime.DAY +
-        offset,
-    UnixTime.toStartOf(UnixTime.now(), 'hour') + offset,
+      : UnixTime.toStartOf(
+          UnixTime.toStartOf(UnixTime.now(), 'day') -
+            days * UnixTime.DAY +
+            offset,
+          'hour',
+        ),
+    UnixTime.toStartOf(UnixTime.now() + offset, 'hour'),
   ]
 }
 
