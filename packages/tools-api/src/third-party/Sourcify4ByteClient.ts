@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 
-export class OpenChainClient {
+export class Sourcify4ByteClient {
   async lookup(selector: `0x${string}`): Promise<string[]> {
     const many = await this.lookupMany([selector])
     return many[selector] ?? []
@@ -9,7 +9,7 @@ export class OpenChainClient {
   async lookupMany(
     selectors: `0x${string}`[],
   ): Promise<Record<`0x${string}`, string[]>> {
-    const base = 'https://api.openchain.xyz/signature-database/v1/lookup'
+    const base = 'https://api.4byte.sourcify.dev/signature-database/v1/lookup'
     const query = new URLSearchParams({
       filter: 'true',
       function: selectors.join(','),
@@ -23,7 +23,7 @@ export class OpenChainClient {
     const json = await res.json()
     const parsed = Schema.safeParse(json)
     if (!parsed.success) {
-      throw new Error('Cannot parse OpenChain response')
+      throw new Error('Cannot parse Sourcify 4byte response')
     }
     if (!parsed.data.ok) {
       throw new Error(parsed.data.error)
