@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
@@ -16,7 +17,9 @@ import { ScalingRwaRestrictedTokensContextProvider } from '../components/Scaling
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
-export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y')
+export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y', {
+  offset: -1 * UnixTime.DAY,
+})
 const SCALING_SUMMARY_UNIT = 'usd'
 
 interface Props extends AppLayoutProps {

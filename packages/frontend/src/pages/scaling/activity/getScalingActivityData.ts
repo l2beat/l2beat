@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
@@ -57,7 +58,7 @@ async function getCachedData() {
 
   await Promise.all([
     helpers.activity.recategorisedChart.prefetch({
-      range: optionToRange('1y'),
+      range: optionToRange('1y', { offset: -1 * UnixTime.DAY }),
       filter: {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),

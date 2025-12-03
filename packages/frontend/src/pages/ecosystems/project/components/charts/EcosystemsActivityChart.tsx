@@ -72,7 +72,9 @@ export function EcosystemsActivityChart({
     chartMeta,
     hiddenDataKeys,
   )
-  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const [range, setRange] = useState<ChartRange>(
+    optionToRange('1y', { offset: -1 * UnixTime.DAY }),
+  )
 
   const { data, isLoading } = api.activity.chart.useQuery({
     range,
