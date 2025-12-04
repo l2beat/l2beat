@@ -1,7 +1,7 @@
 {
   "name": "funki",
-  "timestamp": 1764323514,
-  "configHash": "0x4f2b872896eb17523422a3f7173b56687188fabc428043869cfa4111f6be3f9c",
+  "timestamp": 1764757484,
+  "configHash": "0x608dd1d3581b2b45c7c8c5bb8a14f3a6693a0081502c2edb1c99c91bdd19bfac",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1307,7 +1307,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1763433491,
       "sinceBlock": 23823084,
       "values": {
@@ -1322,7 +1322,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 8,
+        "gameCount": 13,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x695F652b03470F396789cF007278F922e1726B94",
@@ -1334,7 +1334,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
-        "permissionedGamesTotal": 8,
+        "permissionedGamesTotal": 13,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -2500,6 +2500,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23896397 },
+  "usedBlockNumbers": { "ethereum": 23932304 },
   "permissionsConfigHash": "0x5538b7d1653f6912112679e8835c7397edde91978b1bd8014355a2e6c1caccb1"
 }

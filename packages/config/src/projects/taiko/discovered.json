@@ -1,7 +1,7 @@
 {
   "name": "taiko",
-  "timestamp": 1764165081,
-  "configHash": "0xfab89f75d053cae1a12bd233309b4f78f60b5a3821cbd44da3f00eca20de9a46",
+  "timestamp": 1764759251,
+  "configHash": "0x14234e8fc05d0c32a4f6df7f3cbae501cb5a11c91b7f92fb30b10851b9ded5ba",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -79,9 +79,9 @@
       "template": "taiko/TaikoL1PostPacaya",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x4a046242c16270e33ec006d5d7d18a68040b417d8355d24cc6a44926ce444f6e"
+        "0x2fc623a8d2d43eaa7b59707ea9d1f766608b3626be55f68a9617b218e44b3cd5"
       ],
-      "proxyType": "TaikoFork proxy",
+      "proxyType": "EIP1967 proxy",
       "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
       "ignoreInWatchMode": [
         "getLastSyncedTransition",
@@ -97,359 +97,202 @@
       "sinceBlock": 19773965,
       "values": {
         "$admin": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
-        "$implementation": [
-          "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
-          "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-          "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
-        ],
+        "$implementation": "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5",
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:47.000Z",
             "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702",
-            [
-              "eth:0x99Ba70E62cab0cB983e66F72330fBDDC11d85501",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"]
           ],
           [
             "2024-05-11T06:26:35.000Z",
             "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
-            [
-              "eth:0x9fBBedBBcBb753E7214BE08381efE10d89D712fE",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
           ],
           [
             "2024-05-21T14:15:11.000Z",
             "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b",
-            [
-              "eth:0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
           ],
           [
             "2024-05-27T16:37:11.000Z",
             "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2",
-            [
-              "eth:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
           ],
           [
             "2024-05-28T05:18:11.000Z",
             "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028",
-            [
-              "eth:0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
           ],
           [
             "2024-06-04T06:10:11.000Z",
             "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78",
-            [
-              "eth:0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
           ],
           [
             "2024-06-06T08:51:11.000Z",
             "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
-            [
-              "eth:0x4b2743B869b85d5F7D8020566f92664995E4f3c5",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
           ],
           [
             "2024-06-07T04:02:11.000Z",
             "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04",
-            [
-              "eth:0x0468745A07de44A9a3138adAc35875ecaf7a20D5",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
           ],
           [
             "2024-06-07T08:40:35.000Z",
             "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914",
-            [
-              "eth:0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
           ],
           [
             "2024-07-02T07:03:35.000Z",
             "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b",
-            [
-              "eth:0x5fc54737ECC1de49D58AE1195d4A296257F1E31b",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
           ],
           [
             "2024-07-13T12:34:35.000Z",
             "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f",
-            [
-              "eth:0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
           ],
           [
             "2024-07-16T14:30:23.000Z",
             "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7",
-            [
-              "eth:0xBA1d90BCfA74163bFE09e8eF609b346507D83231",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
           ],
           [
             "2024-10-16T07:55:23.000Z",
             "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981",
-            [
-              "eth:0xf0E6d34937701622cA887a75c150cC23d4FFDf2F",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
           ],
           [
             "2024-11-01T09:20:35.000Z",
             "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
-            [
-              "eth:0x4229d14F520848aa83760Cf748abEB8A69cdaB2d",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
           ],
           [
             "2024-11-03T05:15:23.000Z",
             "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703",
-            [
-              "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
           ],
           [
             "2024-11-10T15:32:47.000Z",
             "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38",
-            [
-              "eth:0x0205ea1e1162bc50E1030F36412E5Dd69daA4040",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
           ],
           [
             "2024-11-10T15:46:23.000Z",
             "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04",
-            [
-              "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
           ],
           [
             "2024-11-10T16:10:23.000Z",
             "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",
-            [
-              "eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
           ],
           [
             "2024-12-23T02:45:11.000Z",
             "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
-            [
-              "eth:0xb74A66b6CF50AD63E29669F0BDE4354E11758162",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
           ],
           [
             "2024-12-23T03:12:35.000Z",
             "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20",
-            [
-              "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
           ],
           [
             "2024-12-23T14:55:47.000Z",
             "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99",
-            [
-              "eth:0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
           ],
           [
             "2024-12-24T14:19:11.000Z",
             "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25",
-            [
-              "eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
           ],
           [
             "2025-02-13T06:57:47.000Z",
             "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c",
-            [
-              "eth:0x2784423f7c61Bc7B75dB6CdA26959946f437588D",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
           ],
           [
             "2025-02-27T03:27:23.000Z",
             "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41",
-            [
-              "eth:0x5110634593Ccb8072d161A7d260A409A7E74D7Ca",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
+            ["eth:0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
           ],
           [
             "2025-05-15T08:40:47.000Z",
             "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd",
-            [
-              "eth:0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf",
-              "eth:0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01",
-              "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
-            ]
+            ["eth:0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"]
           ],
           [
             "2025-05-16T02:36:23.000Z",
             "0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795",
-            [
-              "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83",
-              "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-              "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
-            ]
+            ["eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"]
           ],
           [
             "2025-07-15T01:20:35.000Z",
             "0xffedb70a513e71486c3a47079508d3ba87ae5362e7efb3300febac1be69276bc",
-            [
-              "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
-              "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-              "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
-            ]
+            ["eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"]
           ],
           [
             "2025-08-11T13:45:11.000Z",
             "0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",
-            [
-              "eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F",
-              "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-              "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
-            ]
+            ["eth:0xb4530aBee1Dd239C02266e73ca83Fe6617e77F2F"]
           ],
           [
             "2025-08-26T21:48:47.000Z",
             "0x27f89b30a14fdf2c6adb42c5722f4ac403eefde7d26f6a64bdfd4a86458a0c00",
-            [
-              "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
-              "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
-              "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
-            ]
+            ["eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"]
+          ],
+          [
+            "2025-12-03T00:16:35.000Z",
+            "0x22ad3111b2e282663d8ee67b9a1e8c64add6a87f1e1f0e89dd589619ad42cce4",
+            ["eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5"]
           ]
         ],
-        "$upgradeCount": 29,
+        "$upgradeCount": 30,
         "bondToken": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-        "getConfig": {
-          "chainId": 167000,
-          "blockMaxProposals": 324000,
-          "blockRingBufferSize": 360000,
-          "maxBlocksToVerify": 16,
-          "blockMaxGasLimit": 240000000,
-          "livenessBond": "125000000000000000000",
-          "stateRootSyncInternal": 16,
-          "maxAnchorHeightOffset": 64,
-          "baseFeeConfig": {
-            "adjustmentQuotient": 8,
-            "sharingPctg": 75,
-            "gasIssuancePerSecond": 5000000,
-            "minGasExcess": 1340000000,
-            "maxGasIssuancePerBlock": 600000000
-          },
-          "ontakeForkHeight": 538304
-        },
         "getLastSyncedTransition": {
-          "batchId_": 1342928,
-          "blockId_": 3396240,
+          "batchId_": 1343864,
+          "blockId_": 3492921,
           "ts_": {
-            "parentHash": "0x740903f45f38a455cbb1eae05f4bf0569b3fd0e39d5970e040c7dd6d445a09ae",
-            "blockHash": "0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537",
-            "stateRoot": "0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c",
-            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "parentHash": "0xe4138c98f87c2333fe77eb20891c7d55ad592a2524edf377892ec62c3ae60e4a",
+            "blockHash": "0xc2442038be13d3e269a1ff36ac5cfb6618b76ecda9d3dfa3bc7f81467b495f59",
+            "stateRoot": "0x1626b18aaf1f056cf92b0a69f449bc5023cdaa79d2cd0e6ea1dec159d8cefd1c",
+            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1764126647
+            "createdAt": 1764750143
           }
-        },
-        "getLastVerifiedBlock": {
-          "blockId_": 1342928,
-          "blockHash_": "0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537",
-          "stateRoot_": "0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c",
-          "verifiedAt_": 1742136263
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1342928,
-          "blockId_": 3396240,
+          "batchId_": 1343865,
+          "blockId_": 3492959,
           "ts_": {
-            "parentHash": "0x740903f45f38a455cbb1eae05f4bf0569b3fd0e39d5970e040c7dd6d445a09ae",
-            "blockHash": "0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537",
-            "stateRoot": "0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c",
-            "prover": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+            "parentHash": "0xc2442038be13d3e269a1ff36ac5cfb6618b76ecda9d3dfa3bc7f81467b495f59",
+            "blockHash": "0x036542f6c841e37ad9a10ebf9e469f1cff9e8263dc556d94c37b295a8728fcb6",
+            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1764126647
+            "createdAt": 1764750143
           }
         },
-        "getStateVariables": [
-          {
-            "genesisHeight": 19923613,
-            "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1342928,
-            "lastSynecdAt": 1764164903
-          },
-          {
-            "numBlocks": 1342992,
-            "lastVerifiedBlockId": 1342928,
-            "provingPaused": false,
-            "lastProposedIn": 23883316,
-            "lastUnpausedAt": 1716571955
-          }
-        ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1342928,
-          "lastSyncedAt": 1764164903
+          "lastSyncedBatchId": 1343864,
+          "lastSyncedAt": 1764757799
         },
         "getStats2": {
-          "numBatches": 1342992,
-          "lastVerifiedBatchId": 1342928,
+          "numBatches": 1343881,
+          "lastVerifiedBatchId": 1343865,
           "paused": false,
-          "lastProposedIn": 23883316,
+          "lastProposedIn": 23932427,
           "lastUnpausedAt": 1716571955
         },
-        "impl": "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7",
+        "impl": "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5",
         "inboxWrapper": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 23883316,
-        "newFork": "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8",
-        "oldFork": "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pacayaConfig": {
           "chainId": 167000,
@@ -488,14 +331,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1342928,
-            "lastSyncedAt": 1764164903
+            "lastSyncedBatchId": 1343864,
+            "lastSyncedAt": 1764757799
           },
           "stats2": {
-            "numBatches": 1342992,
-            "lastVerifiedBatchId": 1342928,
+            "numBatches": 1343881,
+            "lastVerifiedBatchId": 1343865,
             "paused": false,
-            "lastProposedIn": 23883316,
+            "lastProposedIn": 23932427,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -503,9 +346,7 @@
       },
       "implementationNames": {
         "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "ERC1967Proxy",
-        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7": "PacayaForkRouter",
-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264": "MainnetTaikoL1",
-        "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8": "MainnetInbox"
+        "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5": "MainnetInbox"
       }
     },
     {
@@ -716,7 +557,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1764165071,
+        "clock": 1764759251,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -859,7 +700,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 24,
+        "proposalCount": 26,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -1662,7 +1503,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 17,
+        "nextInstanceId": 18,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -1988,7 +1829,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 22,
+        "proposalCount": 23,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -2011,7 +1852,8 @@
           "595300306046126036153418824792663965561388007442",
           "595517191137765700860044776076277647522733752339",
           "599695636739451592739723352125243732881756389396",
-          "600279957369763019115429650404480285099304157205"
+          "600279957369763019115429650404480285099304157205",
+          "600503437133673611609410939840991465998794096662"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -3058,7 +2900,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 38085,
+        "nextMessageId": 38111,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3389,8 +3231,8 @@
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
           "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
         ],
-        "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -3402,12 +3244,12 @@
         "randomnessDelay": 2,
         "registeredOperators": [
           {
-            "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-            "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
-          },
-          {
             "proposer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
             "sequencer": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+          },
+          {
+            "proposer": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+            "sequencer": "eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"
           }
         ],
         "registeredOperatorsCount": 2,
@@ -4990,106 +4832,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264": [
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error L1_BLOB_NOT_AVAILABLE()",
-      "error L1_BLOB_NOT_FOUND()",
-      "error L1_BLOCK_MISMATCH()",
-      "error L1_ETH_NOT_PAID_AS_BOND()",
-      "error L1_FORK_HEIGHT_ERROR()",
-      "error L1_FORK_HEIGHT_ERROR()",
-      "error L1_INVALID_ANCHOR_BLOCK()",
-      "error L1_INVALID_BLOCK_ID()",
-      "error L1_INVALID_CUSTOM_PROPOSER()",
-      "error L1_INVALID_MSG_VALUE()",
-      "error L1_INVALID_PARAMS()",
-      "error L1_INVALID_PROPOSER()",
-      "error L1_INVALID_TIMESTAMP()",
-      "error L1_PROVING_PAUSED()",
-      "error L1_TOO_MANY_BLOCKS()",
-      "error L1_TRANSITION_ID_ZERO()",
-      "error L1_TRANSITION_NOT_FOUND()",
-      "error L1_UNEXPECTED_PARENT()",
-      "error L1_UNEXPECTED_TRANSITION_ID()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event BlockProposed(uint256 indexed blockId, address indexed assignedProver, uint96 livenessBond, tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta, tuple(address recipient, uint96 amount, uint64 id)[] depositsProcessed)",
-      "event BlockProposedV2(uint256 indexed blockId, tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta)",
-      "event BlockProposedV2(uint256 indexed blockId, tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta)",
-      "event BlockVerified(uint256 indexed blockId, address indexed prover, bytes32 blockHash, bytes32 stateRoot, uint16 tier)",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
-      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondCredited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 blockId, uint256 amount)",
-      "event BondDeposited(address indexed user, uint256 amount)",
-      "event BondDeposited(address indexed user, uint256 amount)",
-      "event BondWithdrawn(address indexed user, uint256 amount)",
-      "event CalldataTxList(uint256 indexed blockId, bytes txList)",
-      "event CalldataTxList(uint256 indexed blockId, bytes txList)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProvingPaused(bool paused)",
-      "event StateVariablesUpdated(tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint56 lastProposedIn, uint64 lastUnpausedAt) slotB)",
-      "event TransitionContested(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier)",
-      "event TransitionContestedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier, uint64 proposedIn)",
-      "event TransitionProved(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier)",
-      "event TransitionProvedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier, uint64 proposedIn)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function bondBalanceOf(address _user) view returns (uint256)",
-      "function depositBond(uint256 _amount) payable",
-      "function getBlock(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint32 nextTransitionId, uint32 verifiedTransitionId) blk_)",
-      "function getBlockV2(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint24 nextTransitionId, bool livenessBondReturned, uint24 verifiedTransitionId) blk_)",
-      "function getConfig() pure returns (tuple(uint64 chainId, uint64 blockMaxProposals, uint64 blockRingBufferSize, uint64 maxBlocksToVerify, uint32 blockMaxGasLimit, uint96 livenessBond, uint8 stateRootSyncInternal, uint64 maxAnchorHeightOffset, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig, uint64 ontakeForkHeight))",
-      "function getLastSyncedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
-      "function getLastVerifiedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
-      "function getStateVariables() view returns (tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt), tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint56 lastProposedIn, uint64 lastUnpausedAt))",
-      "function getTransition(uint64 _blockId, uint32 _tid) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
-      "function getTransition(uint64 _blockId, bytes32 _parentHash) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
-      "function getTransitions(uint64[] _blockIds, bytes32[] _parentHashes) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1)[])",
-      "function getVerifiedBlockProver(uint64 _blockId) view returns (address prover_)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner, address _rollupAddressManager, bytes32 _genesisBlockHash, bool _toPause)",
-      "function init2()",
-      "function init3()",
-      "function lastProposedIn() view returns (uint56)",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function pauseProving(bool _pause)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proposeBlockV2(bytes _params, bytes _txList) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta_)",
-      "function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig)[] metaArr_)",
-      "function proveBlock(uint64 _blockId, bytes _input)",
-      "function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function state() view returns (bytes32 __reserve1, tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt) slotA, tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint56 lastProposedIn, uint64 lastUnpausedAt) slotB)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifyBlocks(uint64 _maxBlocksToVerify)",
-      "function withdrawBond(uint256 _amount)"
-    ],
     "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -5138,7 +4880,7 @@
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": [
       "constructor(address _singleton)"
     ],
-    "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8": [
+    "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5": [
       "constructor(address _wrapper, address _verifier, address _bondToken, address _signalService)",
       "error ACCESS_DENIED()",
       "error AnchorBlockIdSmallerThanParent()",
@@ -5377,28 +5119,6 @@
       "function withdrawBond(uint256 _amount)",
       "function withdrawEtherToAdmin(uint256 _amount)",
       "function withdrawToAdmin(uint256 _amount)"
-    ],
-    "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7": [
-      "constructor(address _oldFork, address _newFork)",
-      "error InvalidParams()",
-      "error ZeroForkAddress()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function newFork() view returns (address)",
-      "function oldFork() view returns (address)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function shouldRouteToOldFork(bytes4 _selector) pure returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9": [
       "constructor(address _logic, bytes _data) payable",
@@ -6205,6 +5925,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23883329, "taiko": 3402047 },
+  "usedBlockNumbers": { "ethereum": 23932452, "taiko": 3494472 },
   "permissionsConfigHash": "0x6ee2787d753000f41e7015aac0eff0d480b4164d05dedb302cf013b3478b92ef"
 }

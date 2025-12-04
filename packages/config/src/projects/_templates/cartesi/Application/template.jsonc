@@ -1,11 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
   "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the {{getOutputsMerkleRootValidator}} contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `{{getTemplateHash}}`.",
   "ignoreMethods": ["wasOutputExecuted"],
   "fields": {
     "withdrawer": {
       "handler": {
         "type": "hardcoded",
+        // https://github.com/cartesi/honeypot/blob/34d00721a527eeb7ed8cce2a13a142e3d8de9aad/config/mainnet/honeypot-config.hpp#L10
+        // https://github.com/cartesi/honeypot/blob/34d00721a527eeb7ed8cce2a13a142e3d8de9aad/honeypot.cpp#L312
         "value": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
       },
       "permissions": [

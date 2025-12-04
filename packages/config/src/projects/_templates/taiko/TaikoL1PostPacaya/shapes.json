@@ -34,5 +34,11 @@
       "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
     ],
     "blockNumber": 23246164
+  },
+  "TaikoL1PostPacaya_251203": {
+    "hash": "0x2fc623a8d2d43eaa7b59707ea9d1f766608b3626be55f68a9617b218e44b3cd5",
+    "address": "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5",
+    "chain": "ethereum",
+    "blockNumber": 23932452
   }
 }
