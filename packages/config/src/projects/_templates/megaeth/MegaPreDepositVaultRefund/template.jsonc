@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.",
+  "ignoreRelatives": ["token"],
+  "ignoreInWatchMode": [
+    "refundedAmount",
+    "lastProcessedIndex",
+    "lastProcessedAmount",
+    "getBalance"
+  ],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all access control roles."
+        }
+      ]
+    },
+    "executorAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "service (execute) refunds from this contract."
+        }
+      ]
+    }
+  }
+}

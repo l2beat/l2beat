@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1764165346,
+  "timestamp": 1764760164,
   "configHash": "0x3630c6cfebaa5c6afbbd6092b54510b3f2da435e6172cd35a2bee5c1e6c96a0b",
   "entries": [
     {
@@ -12,6 +12,55 @@
       "address": "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "MegaPreDepositVaultRefund",
+      "address": "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071",
+      "type": "Contract",
+      "template": "megaeth/MegaPreDepositVaultRefund",
+      "sourceHashes": [
+        "0xe6bb739bb7cfc220d4d5e58d21a77f3058747d738a06f639274a99b04a76d0f4"
+      ],
+      "proxyType": "immutable",
+      "description": "Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.",
+      "ignoreInWatchMode": [
+        "refundedAmount",
+        "lastProcessedIndex",
+        "lastProcessedAmount",
+        "getBalance"
+      ],
+      "sinceTimestamp": 1764664223,
+      "sinceBlock": 23924599,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98",
+              "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorAC": ["eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98"],
+        "getBalance": 80238520,
+        "lastProcessedAmount": 0,
+        "lastProcessedIndex": 4582,
+        "owner": "eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98",
+        "refundedAmount": 500000000000000,
+        "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "vault": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6"
+      },
+      "implementationNames": {
+        "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071": "MegaPreDepositVaultRefund"
+      }
     },
     {
       "address": "eth:0x22D54E4eED77F86aB0F19E7586f099DDeEe1fE73",
@@ -45,7 +94,7 @@
         "0x1e4dc0cf0e125ad726bb101917363d1e5b16e3ce1049250a5c16a6c5591083e4"
       ],
       "proxyType": "immutable",
-      "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719.",
+      "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.",
       "ignoreInWatchMode": ["getTimeUntilEnd"],
       "sinceTimestamp": 1764062435,
       "sinceBlock": 23874891,
@@ -54,7 +103,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 2505865,
+        "getTimeUntilEnd": 1911037,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -65,7 +114,7 @@
         "saleUUID": "0xce1b7fda9ab64beb9f451899afb4ba8a",
         "startTime": 1764079200,
         "totalDeposited": 500000000000000,
-        "treasury": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+        "treasury": "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071",
         "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -114,11 +163,62 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 16,
+        "nonce": 72,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071",
+          "description": "service (execute) refunds from this contract.",
+          "role": ".executorAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1764596615,
+      "sinceBlock": 23919004,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
+          "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
+          "eth:0xC467b03AA487b5661DA1a72dee053c26152f8D90",
+          "eth:0x2Ba59F8Cd522ca92cac29Aed47D7394D5FFb960a",
+          "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
+          "eth:0x28B73e18f31Fdb6F9B6EEF8c0050E9994684b9AD"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x950924d73d356f13c1cc269f146338f8f165dd2f396e7e4939079b2d3a1c5e81",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
@@ -129,6 +229,49 @@
     }
   ],
   "abis": {
+    "eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071": [
+      "constructor(address _vault, address _owner, address _executor)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error NoUsersToRefund()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error SequenceMismatch(uint256 expected, uint256 actual)",
+      "error UserNotBlacklisted(address user)",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "error ZeroBalance()",
+      "event BatchRefundCompleted(uint256 startIndex, uint256 endIndex, uint256 totalRefunded, uint256 lastProcessedAmount)",
+      "event EmergencyWithdraw(address indexed token, address indexed to, uint256 amount)",
+      "event IndicesSkipped(uint256 startIndex)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundProcessed(address indexed user, uint256 amount, uint256 index, bool isFullRefund)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function batchRefund(uint256 count)",
+      "function emergencyWithdraw(address tokenAddress, address to, uint256 amount)",
+      "function getBalance() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function lastProcessedAmount() view returns (uint256)",
+      "function lastProcessedIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function refundedAmount() view returns (uint256)",
+      "function renounceOwnership()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function skipRefund()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function vault() view returns (address)"
+    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -262,12 +405,16 @@
     ],
     "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98": [
+      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "megaeth/MegaPreDepositVaultRefund": "0x3d4d2333960ae36fe311d9b1b1a4352e8bdd756111edfbe29b94edc8dadb3005",
     "megaeth/MegaUSDmPreDeposit": "0x82f3a6c9df4071ce844f483283ed99e958983459bf7be96375811951f1d46150"
   },
-  "usedBlockNumbers": { "ethereum": 23883351 },
-  "permissionsConfigHash": "0x9032f0f17b489eb2d40f6e4f9937150fcaafba504f8134abddf0d09c2b4debb1"
+  "usedBlockNumbers": { "ethereum": 23932527 },
+  "permissionsConfigHash": "0x3796aed0085e2a17f1eb08500665c2b0271a31e314f2984a620bc3e63e8db376"
 }

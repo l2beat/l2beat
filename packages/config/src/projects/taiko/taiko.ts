@@ -378,7 +378,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
+            url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
           },
         ],
         risks: [
@@ -408,7 +408,7 @@ export const taiko: ScalingProject = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8#code',
+          url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
