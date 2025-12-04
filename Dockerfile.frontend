@@ -21,7 +21,7 @@ ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
-COPY --from=pruner /.git .git
+COPY --from=pruner ../.git .git
 RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
