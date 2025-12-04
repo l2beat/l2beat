@@ -1506,11 +1506,15 @@
   "static/meta-images/zk-catalog/projects/stwo/opengraph-image.png": "30308525ddf32264b87fdc1e3557c72d",
   "static/meta-images/publications/governance-review-75.png": "7ae4dd4363c44487cdb7566d69c116b6",
   "static/meta-images/publications/governance-review-76.png": "4b79ae6e7077498a8de1cb48620371c4",
+  "static/meta-images/scaling/projects/cartesi-prt-honeypot-v2/opengraph-image.png": "51fd54a9ae1d173cf481d34adeb72973",
+  "static/icons/cartesi-prt-honeypot-v2.png": "136a6d0e52f16ee97aa54cdd5a317e57",
+  "static/images/architecture/cartesi-prt-honeypot-v2.png": "b0143e9fd6a6408505eadea944502a95",
   "static/icons/sandchain.png": "2668312e04dca06de5f09a638f096eaa",
   "static/meta-images/scaling/projects/sandchain/opengraph-image.png": "3a5baddd3dd33a9410aeb41efaaff20c",
   "static/icons/janction.png": "190dac415f9c02d8bb83da3f4cb7e4ac",
   "static/meta-images/scaling/projects/janction/opengraph-image.png": "be06dd2d23dc92c0b2b19942f3c77723",
   "static/meta-images/publications/interop-talk.png": "23bdda7cd65ef80b28bea625a6cf77b9",
   "static/icons/megaeth.png": "3a52330998174ec84fb719698b6e22cc",
-  "static/meta-images/scaling/projects/megaeth/opengraph-image.png": "e4dae737847610b493ca27e157c68095"
+  "static/meta-images/scaling/projects/megaeth/opengraph-image.png": "e4dae737847610b493ca27e157c68095",
+  "static/meta-images/publications/monthly-update-2025-11.png": "1e36a4d01573b0095d02fff0d5d38f35"
 }

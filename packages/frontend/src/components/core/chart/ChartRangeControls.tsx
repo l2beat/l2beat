@@ -56,10 +56,9 @@ export function ChartRangeControls({
   offset = 0,
 }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [internalValue, setInternalValue] = useState<DateRange | undefined>({
-    from: value[0] ? UnixTime.toDate(value[0]) : UnixTime.toDate(0),
-    to: UnixTime.toDate(value[1]),
-  })
+  const [internalValue, setInternalValue] = useState<DateRange | undefined>(
+    undefined,
+  )
 
   const { track } = useTracking()
   const isClient = useIsClient()
@@ -224,10 +223,7 @@ function PredefinedOptions({
           onClick={() => {
             const range = optionToRange(option.value, { offset })
             setValue(range)
-            setInternalValue({
-              from: UnixTime.toDate(range[0] ?? 0),
-              to: UnixTime.toDate(range[1]),
-            })
+            setInternalValue(undefined)
             track('chartRangeSelected', {
               props: { name, value: option.value },
             })

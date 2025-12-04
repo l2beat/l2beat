@@ -14,11 +14,11 @@ const Response = v.object({
   }),
 })
 
-const API_URL = 'https://api.openchain.xyz/signature-database/v1/lookup'
+const API_URL = 'https://api.4byte.sourcify.dev/signature-database/v1/lookup'
 
-export class OpenChainClient implements SignatureClient {
+export class Sourcify4ByteClient implements SignatureClient {
   getName(): string {
-    return 'OpenChain'
+    return 'Sourcify4Byte'
   }
 
   async getSignature(selector: string): Promise<string> {
@@ -32,7 +32,7 @@ export class OpenChainClient implements SignatureClient {
     const data = await res.json()
     const parsed = Response.parse(data)
     if (!parsed.ok) {
-      throw new Error('OpenChainClient - bad response')
+      throw new Error('Sourcify4ByteClient - bad response')
     }
 
     const results: Record<string, string> = {}

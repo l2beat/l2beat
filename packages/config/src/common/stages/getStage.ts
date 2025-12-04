@@ -81,7 +81,7 @@ const getBlueprint = (opts?: GetStageOptions) =>
         positive:
           'Compromising ≥75% of the Security Council is the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) with a <7d exit window.',
         negative:
-          'Compromising ≥75% of the Security Council should be the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) wiith a <7d exit window.',
+          'Compromising ≥75% of the Security Council should be the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) with a <7d exit window.',
       },
       items: {
         usersCanExitWithoutCooperation: {

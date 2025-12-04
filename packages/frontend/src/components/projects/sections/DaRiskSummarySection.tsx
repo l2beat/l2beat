@@ -61,7 +61,7 @@ export function DaRiskSummarySection({
         />
       )}
       {layer.risks.length > 0 && (
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2">
           <span className="font-medium text-xs text-zinc-500 uppercase dark:text-gray-50">
             {layer.name} risks
           </span>

@@ -261,7 +261,7 @@ jobs:
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
         with:
-          version: 2.0.6
+          version: 2.3.8
 
       - name: Run Biome
         run: biome ci
