@@ -1,6 +1,6 @@
 /*
 This version of a plugin assumes that Wormhole Relayer is used. NTT token is burn/mint by sending
-a transfer() call on SRC to NTT manager assosciated with a given token. On DST, NTT manager mints the token.
+a transfer() call on SRC to NTT manager associated with a given token. On DST, NTT manager mints the token.
 There is one NTT manager per token.
 
 SRC:
