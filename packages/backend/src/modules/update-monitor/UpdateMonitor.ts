@@ -11,7 +11,6 @@ import {
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import shuffle from 'lodash/shuffle'
-import { Gauge } from 'prom-client'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from './createWorkers'
@@ -164,8 +163,6 @@ export class UpdateMonitor {
       date: UnixTime.toDate(timestamp).toISOString(),
     })
 
-    const projectFinished = projectGauge.startTimer({ project })
-
     const chainUpdateStart = UnixTime.now()
     try {
       const projectConfig = this.configReader.readConfig(project)
@@ -228,7 +225,6 @@ export class UpdateMonitor {
         configHash: generateStructureHash(projectConfig.structure),
       })
     } catch (error) {
-      errorCount.inc()
       const chainUpdateEnd = UnixTime.now()
       this.logger.error(
         {
@@ -241,7 +237,6 @@ export class UpdateMonitor {
       )
     }
 
-    projectFinished()
     const projectUpdateEnd = UnixTime.now()
     this.logger.info('Project update finished', {
       project,
@@ -355,18 +350,6 @@ export class UpdateMonitor {
     )
   }
 }
-
-type ProjectGauge = Gauge<'project'>
-const projectGauge: ProjectGauge = new Gauge({
-  name: 'update_monitor_project_discovery_duration_seconds',
-  help: 'Duration gauge of discovering a project',
-  labelNames: ['project'],
-})
-
-const errorCount = new Gauge({
-  name: 'update_monitor_error_count',
-  help: 'Value showing amount of errors in the update cycle',
-})
 
 function countSeverities(diffs: DiscoveryDiff[]) {
   const result = { low: 0, high: 0, unknown: 0 }
