@@ -69,7 +69,7 @@ export function executePlan(
     // invalidates our query (e.g. adds a new connection).  In reality Postgres is
     // smart enough to allow parallel transactions as long as they don't break
     // the "illusion" of no two transactions running at the same time (in
-    // "serialzed" order)
+    // "serialized" order)
     'serializable',
   )
 }
