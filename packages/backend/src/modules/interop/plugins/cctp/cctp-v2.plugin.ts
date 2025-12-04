@@ -47,12 +47,11 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -107,7 +106,7 @@ export class CCTPV2Plugin implements InteropPlugin {
     const networks = this.configs.get(CCTPV2Config)
     if (!networks) return
 
-    const network = networks.find((n) => n.chain === input.ctx.chain)
+    const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
     assert(
       network.messageTransmitter,
@@ -128,7 +127,7 @@ export class CCTPV2Plugin implements InteropPlugin {
         const burnMessage = decodeV2MessageBody(message.messageBody)
 
         return [
-          CCTPv2MessageSent.create(input.ctx, {
+          CCTPv2MessageSent.create(input, {
             // https://developers.circle.com/cctp/technical-guide#messages-and-finality
             fast: message.minFinalityThreshold <= 1000,
             $dstChain: findChain(
@@ -162,10 +161,22 @@ export class CCTPV2Plugin implements InteropPlugin {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 2,
       )
+      const fourback = input.txLogs.find(
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        (x) => x.logIndex === input.log.logIndex! - 4,
+      )
       const transfer =
         previouspreviousLog && parseTransfer(previouspreviousLog, null)
+      const fallbackTransfer = fourback && parseTransfer(fourback, null)
+      let dstAmount = transfer?.value
+      if (
+        fallbackTransfer?.value !== undefined &&
+        fallbackTransfer.value > (transfer?.value ?? 0)
+      ) {
+        dstAmount = fallbackTransfer.value
+      }
       return [
-        CCTPv2MessageReceived.create(input.ctx, {
+        CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
           hookData: messageBody?.hookData,
           caller: EthereumAddress(v2MessageReceived.caller),
@@ -183,7 +194,7 @@ export class CCTPV2Plugin implements InteropPlugin {
           dstTokenAddress: previouspreviousLog
             ? Address32.from(previouspreviousLog.address)
             : undefined,
-          dstAmount: transfer?.value ?? undefined,
+          dstAmount,
         }),
       ]
     }

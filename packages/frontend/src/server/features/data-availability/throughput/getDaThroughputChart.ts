@@ -7,16 +7,13 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ChartRange, type ChartResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import {
-  DaThroughputTimeRange,
-  getThroughputRange,
-  rangeToResolution,
-} from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -32,7 +29,7 @@ export type DaThroughputDataPoint = [
 ]
 
 export const DaThroughputChartParams = v.object({
-  range: DaThroughputTimeRange,
+  range: ChartRange,
   includeScalingOnly: v.boolean(),
 })
 export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>
@@ -45,8 +42,7 @@ export async function getDaThroughputChart({
     return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
   }
   const db = getDb()
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getThroughputRange({ type: range })
+  const resolution = rangeToResolution(range)
   const daLayers = await ps.getProjects({
     select: ['daLayer'],
   })
@@ -59,12 +55,12 @@ export async function getDaThroughputChart({
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
-        [from, to],
+        range,
         sovereignProjectsIds,
       )
     : await db.dataAvailability.getByProjectIdsAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
-        [from, to],
+        range,
       )
 
   if (throughput.length === 0) {
@@ -95,9 +91,16 @@ export async function getDaThroughputChart({
     }
   }
 
-  const expectedTo = getThroughputExpectedTimestamp(resolution)
+  const expectedTo = getThroughputExpectedTimestamp({
+    to: range[1],
+    resolution,
+  })
 
-  const adjustedTo = isThroughputSynced(syncedUntil, false)
+  const adjustedTo = isThroughputSynced({
+    syncedUntil,
+    pastDaySynced: false,
+    to: range[1],
+  })
     ? maxTimestamp
     : expectedTo
 
@@ -142,7 +145,7 @@ export async function getDaThroughputChart({
 
 export function groupByTimestampAndDaLayerId(
   records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
-  resolution: 'hourly' | 'sixHourly' | 'daily',
+  resolution: ChartResolution,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
@@ -192,9 +195,10 @@ export function groupByTimestampAndDaLayerId(
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
-  const days = rangeToDays({ type: range }) ?? 730
+  const days = rangeToDays(range)
+  const actualDays = days ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = to - days * UnixTime.DAY
+  const from = range[0] ?? to - actualDays * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
   return timestamps.map((timestamp) => {

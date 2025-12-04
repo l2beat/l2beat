@@ -6,7 +6,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
     <>
       {/* Desktop */}
       <div className="w-full overflow-hidden rounded bg-n-stone-200 max-md:hidden dark:bg-n-stone-900">
-        <div className="flex ">
+        <div className="flex">
           <div className="flex w-1/2 min-w-[260px] flex-col gap-2 px-6 pt-3 pb-5">
             <DiscoUiIcon
               short

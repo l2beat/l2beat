@@ -14,7 +14,7 @@ export function DiscoveryLookup({ lines }: Props) {
 
   return (
     <div className="overflow-x-hidden text-xs">
-      <div className=" border-coffee-400 border-b font-mono opacity-50">
+      <div className="border-coffee-400 border-b font-mono opacity-50">
         Outputs
       </div>
       <pre

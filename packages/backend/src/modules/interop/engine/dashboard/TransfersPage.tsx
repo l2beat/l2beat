@@ -1,8 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Address32 } from '../../plugins/types'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
@@ -38,7 +37,9 @@ function TransfersTable(props: {
           const dstExplorerUrl = e.dstChain && props.getExplorerUrl(e.dstChain)
 
           return (
-            <tr>
+            <tr
+              key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
+            >
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
@@ -97,23 +98,31 @@ function TransfersTable(props: {
   )
 }
 
-function TokenAddress(props: {
+function TokenAddress({
+  explorerUrl,
+  address,
+}: {
   explorerUrl: string | undefined
   address: string | undefined
 }) {
-  const address = props.address ? Address32(props.address) : Address32.ZERO
-  if (address === Address32.NATIVE) {
-    return <span>NATIVE</span>
+  if (address === undefined) {
+    return <span>undefined</span>
   }
-  if (!props.explorerUrl || address === Address32.ZERO) {
+  if (address === Address32.NATIVE) {
+    return <span>native</span>
+  }
+  if (address === Address32.ZERO) {
+    return <span>0x0</span>
+  }
+  if (!explorerUrl) {
     return null
   }
   return (
     <a
       target="_blank"
-      href={`${props.explorerUrl}/address/${Address32.cropToEthereumAddress(address)}`}
+      href={`${explorerUrl}/address/${Address32.cropToEthereumAddress(Address32(address))}`}
     >
-      {Address32.cropToEthereumAddress(address)}
+      {Address32.cropToEthereumAddress(Address32(address))}
     </a>
   )
 }

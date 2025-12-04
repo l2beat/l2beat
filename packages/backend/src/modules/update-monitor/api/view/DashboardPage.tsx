@@ -8,17 +8,100 @@ import { Page } from './components/Page'
 import { reactToHtml } from './components/reactToHtml'
 import { type Group, groupProjects } from './groupProjects'
 
+const DASHBOARD_PATH = '/status/discovery'
+
 interface DashboardPageProps {
   groups: Group[]
   projectsWithHighSeverityChanges: Set<string>
+  selectedEmoji?: string
 }
 
 function DashboardPage({
   groups,
   projectsWithHighSeverityChanges,
+  selectedEmoji,
 }: DashboardPageProps) {
+  const emojiFilters = Array.from(
+    new Set(groups.flatMap((group) => group.assignees)),
+  )
+  const emojiFilterActive =
+    selectedEmoji !== undefined && emojiFilters.includes(selectedEmoji)
+  const filteredGroups = emojiFilterActive
+    ? groups.filter((group) => group.assignees.includes(selectedEmoji))
+    : groups
+
+  const renderFilterButton = (label: string, href: string, active: boolean) => (
+    <a
+      key={label}
+      href={href}
+      style={{
+        border: '1px solid',
+        borderColor: active ? '#fef4d0' : '#3a3f4d',
+        backgroundColor: active ? '#fef4d0' : 'transparent',
+        color: active ? '#0b0f16' : '#fef4d0',
+        padding: '6px 14px',
+        borderRadius: '999px',
+        fontSize: '18px',
+        lineHeight: 1,
+        textDecoration: 'none',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: '42px',
+        boxShadow: active ? '0 0 8px rgba(254, 244, 208, 0.3)' : undefined,
+      }}
+      aria-current={active ? 'true' : undefined}
+    >
+      {label}
+    </a>
+  )
+
+  const filtersPanel =
+    emojiFilters.length > 0 ? (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          padding: '12px 16px',
+          border: '1px solid #262a35',
+          backgroundColor: '#0c1018',
+          boxShadow: '4px 4px 0 #040507',
+          minWidth: '220px',
+        }}
+      >
+        <span
+          style={{
+            color: '#c6c2b8',
+            fontSize: '11px',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Filter by emoji
+        </span>
+        <div
+          style={{
+            display: 'flex',
+            gap: '8px',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-end',
+          }}
+        >
+          {renderFilterButton('All', DASHBOARD_PATH, !emojiFilterActive)}
+          {emojiFilters.map((emoji) =>
+            renderFilterButton(
+              emoji,
+              `${DASHBOARD_PATH}?emoji=${encodeURIComponent(emoji)}`,
+              emojiFilterActive && selectedEmoji === emoji,
+            ),
+          )}
+        </div>
+      </div>
+    ) : undefined
+
   return (
-    <Page title="Discovery">
+    <Page title="Discovery" headerRight={filtersPanel}>
       <div
         style={{
           display: 'flex',
@@ -27,13 +110,29 @@ function DashboardPage({
           paddingBottom: '40px',
         }}
       >
-        {groups.map((group) => (
-          <Group
-            key={group.name}
-            {...group}
-            projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
-          />
-        ))}
+        {filteredGroups.length === 0 ? (
+          <div
+            style={{
+              padding: '20px',
+              color: '#c6c2b8',
+              border: '1px dashed #343944',
+              textAlign: 'center',
+            }}
+          >
+            No projects assigned to{' '}
+            <span style={{ fontWeight: 600 }}>
+              {selectedEmoji ?? 'this filter'}
+            </span>
+          </div>
+        ) : (
+          filteredGroups.map((group) => (
+            <Group
+              key={group.name}
+              {...group}
+              projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
+            />
+          ))
+        )}
       </div>
     </Page>
   )
@@ -431,12 +530,14 @@ export function renderDashboardPage(
   projects: DashboardProject[],
   projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
   projectsWithHighSeverityChanges: Set<string>,
+  selectedEmoji?: string,
 ) {
   const groups = groupProjects(projects, projectConfigs)
   return reactToHtml(
     <DashboardPage
       groups={groups}
       projectsWithHighSeverityChanges={projectsWithHighSeverityChanges}
+      selectedEmoji={selectedEmoji}
     />,
   )
 }

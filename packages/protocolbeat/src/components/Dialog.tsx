@@ -1,6 +1,6 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
-import type { SVGProps } from 'react'
+import { IconClose } from '../icons/IconClose'
 
 export const Dialog = {
   Root: DialogRoot,
@@ -63,30 +63,11 @@ function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
             className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
             aria-label="Close"
           >
-            <XIcon className="stroke-coffee-200" />
+            <IconClose className="stroke-coffee-200" />
           </button>
         </Dialog.Close>
       </RadixDialog.Content>
     </RadixDialog.Portal>
-  )
-}
-
-function XIcon(props?: SVGProps<SVGSVGElement>) {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" {...props}>
-      <path
-        d="M18 6L6 18"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6 6L18 18"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   )
 }
 

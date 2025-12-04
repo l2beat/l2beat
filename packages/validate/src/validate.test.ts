@@ -117,7 +117,8 @@ describe('validate', () => {
     expect(Foo.safeValidate('xxx')).toEqual({
       success: false,
       path: '',
-      message: 'None of the enum variants matched, got string.',
+      message:
+        'None of the enum variants matched, got string. Possible values: foo, bar, baz.',
     })
   })
 

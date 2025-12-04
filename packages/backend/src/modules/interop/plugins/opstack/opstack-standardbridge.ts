@@ -1,6 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   type InteropEvent,
@@ -120,8 +119,8 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     // L2 -> L1 withdrawal initiated
-    if (input.ctx.chain !== 'ethereum') {
-      const network = OPSTACK_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    if (input.chain !== 'ethereum') {
+      const network = OPSTACK_NETWORKS.find((x) => x.chain === input.chain)
       if (!network) return
       const erc20BridgeInitiated = parseERC20BridgeInitiated(input.log, [
         network.l2StandardBridge,
@@ -139,7 +138,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           ])
           if (messagePassed) {
             return [
-              ERC20BridgeInitiatedMessagePassed.create(input.ctx, {
+              ERC20BridgeInitiatedMessagePassed.create(input, {
                 chain: network.chain,
                 withdrawalHash: messagePassed.withdrawalHash,
                 l1Token: Address32.from(erc20BridgeInitiated.l1Token),
@@ -168,7 +167,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           ])
           if (messagePassed) {
             return [
-              ETHBridgeInitiatedMessagePassed.create(input.ctx, {
+              ETHBridgeInitiatedMessagePassed.create(input, {
                 chain: network.chain,
                 withdrawalHash: messagePassed.withdrawalHash,
                 amount: ethBridgeInitiatedL2.amount,
@@ -197,7 +196,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           ])
           if (relayedMessage) {
             return [
-              DepositFinalizedRelayedMessage.create(input.ctx, {
+              DepositFinalizedRelayedMessage.create(input, {
                 chain: network.chain,
                 msgHash: relayedMessage.msgHash,
                 l1Token: Address32.from(depositFinalized.l1Token),
@@ -228,7 +227,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           ])
           if (relayedMessage) {
             return [
-              ETHBridgeFinalizedRelayedMessage.create(input.ctx, {
+              ETHBridgeFinalizedRelayedMessage.create(input, {
                 chain: network.chain,
                 msgHash: relayedMessage.msgHash,
                 amount: ethBridgeFinalized.amount,
@@ -263,7 +262,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           )
           if (withdrawalFinalized) {
             return [
-              ERC20BridgeFinalizedWithdrawalFinalized.create(input.ctx, {
+              ERC20BridgeFinalizedWithdrawalFinalized.create(input, {
                 chain: network.chain,
                 withdrawalHash: withdrawalFinalized.withdrawalHash,
                 l1Token: Address32.from(erc20BridgeFinalized.l1Token),
@@ -293,7 +292,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
           )
           if (withdrawalFinalized) {
             return [
-              ETHBridgeFinalizedWithdrawalFinalized.create(input.ctx, {
+              ETHBridgeFinalizedWithdrawalFinalized.create(input, {
                 chain: network.chain,
                 withdrawalHash: withdrawalFinalized.withdrawalHash,
                 amount: ethBridgeFinalizedL1.amount,
@@ -340,7 +339,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
             )
 
             return [
-              ERC20DepositInitiatedSentMessage.create(input.ctx, {
+              ERC20DepositInitiatedSentMessage.create(input, {
                 chain: network.chain,
                 msgHash,
                 l1Token: Address32.from(erc20DepositInitiated.l1Token),
@@ -389,7 +388,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
             )
 
             return [
-              ETHBridgeInitiatedSentMessage.create(input.ctx, {
+              ETHBridgeInitiatedSentMessage.create(input, {
                 chain: network.chain,
                 msgHash,
                 amount: ethBridgeInitiated.amount,

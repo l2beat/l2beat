@@ -16,14 +16,14 @@
         //     "args": ["0x310fe598"]
         //   }
         // },
-        // "verifier1Manual": {
+        // "verifier1ManualREMOVED": {
         //   "handler": {
         //     "type": "call",
         //     "method": "getVerifier",
         //     "args": ["0x50bd1769"]
         //   }
         // },
-        // "verifier2Manual": {
+        // "verifier2ManualREMOVED": {
         //   "handler": {
         //     "type": "call",
         //     "method": "getVerifier",

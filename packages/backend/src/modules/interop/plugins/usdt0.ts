@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   defineNetworks,
@@ -77,13 +76,13 @@ export class Usdt0Plugin implements InteropPlugin {
   name = 'usdt0'
 
   capture(input: LogToCapture) {
-    const network = USDT0_NETWORKS.find((n) => n.chain === input.ctx.chain)
+    const network = USDT0_NETWORKS.find((n) => n.chain === input.chain)
     if (!network) return
 
     const oftSent = parseOFTSent(input.log, [network.adapter])
     if (oftSent) {
       return [
-        Usdt0OFTSent.create(input.ctx, {
+        Usdt0OFTSent.create(input, {
           guid: oftSent.guid,
           amountSentLD: oftSent.amountSentLD,
           amountReceivedLD: oftSent.amountReceivedLD,
@@ -95,7 +94,7 @@ export class Usdt0Plugin implements InteropPlugin {
     const oftReceived = parseOFTReceived(input.log, [network.adapter])
     if (oftReceived) {
       return [
-        Usdt0OFTReceived.create(input.ctx, {
+        Usdt0OFTReceived.create(input, {
           guid: oftReceived.guid,
           amountReceivedLD: oftReceived.amountReceivedLD,
           tokenAddress: network.tokenAddress,

@@ -133,5 +133,17 @@
     "hash": "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9",
     "address": "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557",
     "blockNumber": 23496267
+  },
+  "SystemConfig_v1_12_0_zircuit.sol": {
+    "hash": "0xe99a7b3921e19ba67802b943b31b611bea7fa413649085f55e087689879522d5",
+    "address": "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F",
+    "chain": "ethereum",
+    "blockNumber": 23874529
+  },
+  "SystemConfig_v3_11_0.sol": {
+    "hash": "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0",
+    "address": "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED",
+    "chain": "ethereum",
+    "blockNumber": 23881654
   }
 }

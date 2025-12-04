@@ -39,6 +39,7 @@ export const lisk: ScalingProject = opStackL2({
         'https://t.me/Lisk_HQ',
         'https://youtube.com/channel/UCuqpGfg_bOQ8Ja4pj811PWg',
       ],
+      other: ['https://growthepie.com/chains/lisk'],
     },
   },
   milestones: [

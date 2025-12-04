@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/core/Table'
+import { ExternalLink } from '~/components/ExternalLink'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
@@ -70,7 +71,13 @@ export function ChainsSummaryPage() {
                       </Link>
                     </TableCell>
                     <TableCell>{chain.chainId}</TableCell>
-                    <TableCell>{chain.explorerUrl}</TableCell>
+                    <TableCell>
+                      {chain.explorerUrl && (
+                        <ExternalLink href={chain.explorerUrl}>
+                          {chain.explorerUrl}
+                        </ExternalLink>
+                      )}
+                    </TableCell>
                     <TableCell>{chain.aliases}</TableCell>
                     <TableCell>
                       <ApiCell api={chain.apis} />

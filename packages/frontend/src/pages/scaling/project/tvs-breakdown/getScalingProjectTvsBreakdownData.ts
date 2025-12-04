@@ -3,6 +3,7 @@ import { getScalingProjectTvsBreakdown } from '~/server/features/scaling/project
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingProjectTvsBreakdownData(
   manifest: Manifest,
@@ -18,7 +19,9 @@ export async function getScalingProjectTvsBreakdownData(
     return undefined
   }
 
-  const range = tvsBreakdownData.project.archivedAt ? 'max' : '1y'
+  const range = tvsBreakdownData.project.archivedAt
+    ? optionToRange('max')
+    : optionToRange('1y')
 
   return {
     head: {

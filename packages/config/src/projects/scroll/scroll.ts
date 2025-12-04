@@ -95,7 +95,11 @@ export const scroll: ScalingProject = {
         'https://twitter.com/Scroll_ZKP',
         'https://youtube.com/@Scroll_ZKP',
       ],
-      other: ['https://rollup.codes/scroll'],
+      other: [
+        'https://rollup.codes/scroll',
+        'https://forum.scroll.io',
+        'https://growthepie.com/chains/scroll',
+      ],
     },
     liveness: {
       warnings: {

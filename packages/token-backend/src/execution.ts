@@ -77,9 +77,6 @@ export function executePlan(
 export async function planAndExecute(
   db: TokenDatabase,
   intent: Intent,
-  meta?: {
-    email: string
-  },
 ): Promise<void> {
   await db.transaction(async () => {
     const planningResult = await generatePlan(db, intent)

@@ -35,7 +35,10 @@ export const blast: ScalingProject = opStackL2({
         'https://discord.com/invite/blast-l2',
         'https://discord.com/invite/blastdevelopers',
       ],
-      other: ['https://rollup.codes/blast'],
+      other: [
+        'https://rollup.codes/blast',
+        'https://growthepie.com/chains/blast',
+      ],
     },
     tvsWarning: {
       value: 'The TVS does account for rehypothecated tokens.',

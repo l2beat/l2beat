@@ -93,6 +93,7 @@ export const metis: ScalingProject = {
         'https://t.me/MetisL2',
         'https://instagram.com/metisl2/',
       ],
+      other: ['https://growthepie.com/chains/metis'],
     },
   },
   proofSystem: {

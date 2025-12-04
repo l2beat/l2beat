@@ -60,7 +60,7 @@ export class SuperformPlugin implements InteropPlugin {
   name = 'superform'
 
   capture(input: LogToCapture) {
-    const network = SUPERFORM_NETWORKS.find((x) => x.chain === input.ctx.chain)
+    const network = SUPERFORM_NETWORKS.find((x) => x.chain === input.chain)
     if (!network) return
 
     const crossChainInitiatedDepositMulti =
@@ -72,7 +72,7 @@ export class SuperformPlugin implements InteropPlugin {
         crossChainInitiatedDepositMulti.dstChainId,
       )
       return [
-        SuperformCrosschainAction.create(input.ctx, {
+        SuperformCrosschainAction.create(input, {
           $dstChain,
         }),
       ]
@@ -86,7 +86,7 @@ export class SuperformPlugin implements InteropPlugin {
         crossChainInitiatedDepositSingle.dstChainId,
       )
       return [
-        SuperformCrosschainAction.create(input.ctx, {
+        SuperformCrosschainAction.create(input, {
           $dstChain,
         }),
       ]
@@ -100,7 +100,7 @@ export class SuperformPlugin implements InteropPlugin {
         crossChainInitiatedWithdrawMulti.dstChainId,
       )
       return [
-        SuperformCrosschainAction.create(input.ctx, {
+        SuperformCrosschainAction.create(input, {
           $dstChain,
         }),
       ]
@@ -114,7 +114,7 @@ export class SuperformPlugin implements InteropPlugin {
         crossChainInitiatedWithdrawSingle.dstChainId,
       )
       return [
-        SuperformCrosschainAction.create(input.ctx, {
+        SuperformCrosschainAction.create(input, {
           $dstChain,
         }),
       ]

@@ -1,7 +1,6 @@
 [book]
 authors = ["L2BEAT"]
 language = "en"
-multilingual = false
 src = "specs"
 title = "L2 code walkthroughs"
 

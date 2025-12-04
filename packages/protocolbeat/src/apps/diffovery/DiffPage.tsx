@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../../api/api'
 import { ErrorState } from '../../components/ErrorState'
-import { DiffView } from '../../components/editor/diff/DiffView'
+import { DiffView } from '../../components/editor/views/DiffView'
 import { LoadingState } from '../../components/LoadingState'
 import { Title } from '../../components/Title'
 
@@ -41,6 +41,7 @@ export function DiffPage() {
         leftCode={leftCode.sources}
         rightAddress={address2}
         rightCode={rightCode.sources}
+        editorKey="diff-app"
       />
     </>
   )

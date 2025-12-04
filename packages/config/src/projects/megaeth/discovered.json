@@ -1,0 +1,273 @@
+{
+  "name": "megaeth",
+  "timestamp": 1764165346,
+  "configHash": "0x3630c6cfebaa5c6afbbd6092b54510b3f2da435e6172cd35a2bee5c1e6c96a0b",
+  "entries": [
+    {
+      "address": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x22D54E4eED77F86aB0F19E7586f099DDeEe1fE73",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+          "description": "sign KYC approvals offchain that permit the user to deposit.",
+          "role": ".permitSigner"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x28B73e18f31Fdb6F9B6EEF8c0050E9994684b9AD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2Ba59F8Cd522ca92cac29Aed47D7394D5FFb960a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MegaUSDmPreDeposit",
+      "address": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+      "type": "Contract",
+      "template": "megaeth/MegaUSDmPreDeposit",
+      "sourceHashes": [
+        "0x1e4dc0cf0e125ad726bb101917363d1e5b16e3ce1049250a5c16a6c5591083e4"
+      ],
+      "proxyType": "immutable",
+      "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719.",
+      "ignoreInWatchMode": ["getTimeUntilEnd"],
+      "sinceTimestamp": 1764062435,
+      "sinceBlock": 23874891,
+      "values": {
+        "$immutable": true,
+        "cap": 500000000000000,
+        "endTime": 1766671200,
+        "getDepositStatus": 3,
+        "getTimeUntilEnd": 2505865,
+        "getTimeUntilStart": 0,
+        "getUserCount": 4582,
+        "isDepositActive": true,
+        "owner": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+        "paused": false,
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "permitSigner": "eth:0x22D54E4eED77F86aB0F19E7586f099DDeEe1fE73",
+        "saleUUID": "0xce1b7fda9ab64beb9f451899afb4ba8a",
+        "startTime": 1764079200,
+        "totalDeposited": 500000000000000,
+        "treasury": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+        "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6": "MegaUSDmPreDeposit"
+      }
+    },
+    {
+      "address": "eth:0xC467b03AA487b5661DA1a72dee053c26152f8D90",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Megaeth Multisig",
+      "address": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+          "description": "set critical contract parameters like the treasury (withdrawal recipient) address and withdraw all tokens.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1761268271,
+      "sinceBlock": 23643971,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x28B73e18f31Fdb6F9B6EEF8c0050E9994684b9AD",
+          "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
+          "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
+          "eth:0x2Ba59F8Cd522ca92cac29Aed47D7394D5FFb960a",
+          "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
+          "eth:0xC467b03AA487b5661DA1a72dee053c26152f8D90"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x58415cf5aa295ac69611a4039ecf71ad908c2381cc600541712c0a453021bce3",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 16,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6": [
+      "constructor(tuple(address safeOwner, address usdc, address permitSigner, address treasury, bytes16 saleUUID) init)",
+      "error CapBelowCurrentDeposits()",
+      "error CapReached()",
+      "error DepositEnded()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EnforcedPause()",
+      "error EntityIDAlreadyBound(bytes16 entityID, address existingUser)",
+      "error ExpectedPause()",
+      "error InsufficientBalance(uint256 amount, uint256 balance)",
+      "error InvalidAmount()",
+      "error InvalidEndTime()",
+      "error InvalidSaleUUID(bytes16 got, bytes16 want)",
+      "error InvalidSender(address got, address want)",
+      "error InvalidStartTime()",
+      "error InvalidTokenAddress()",
+      "error InvalidTreasuryAddress()",
+      "error InvalidUSDCAddress()",
+      "error NotStarted()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PurchasePermitExpired()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error USUserNotAllowed()",
+      "error UnauthorizedSigner(address signer)",
+      "error UserNotEligible()",
+      "error WalletAlreadyBound(address wallet, bytes16 existingEntityID)",
+      "error ZeroCap()",
+      "error ZeroDuration()",
+      "error ZeroEntityID()",
+      "event CapUpdated(uint256 oldCap, uint256 newCap)",
+      "event Deposited(bytes16 indexed entityID, address indexed user, uint256 wantAmount, uint256 actualAmount, uint256 userTotalAmount, uint256 contractTotalAmount)",
+      "event EndTimeUpdated(uint48 oldEndTime, uint48 newEndTime)",
+      "event FundsWithdrawn(address indexed token, address indexed treasury, uint256 amount)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PauseStatusUpdated(bool paused)",
+      "event Paused(address account)",
+      "event PermitSignerUpdated(address oldSigner, address newSigner)",
+      "event SaleUUIDUpdated(bytes16 oldSaleUUID, bytes16 newSaleUUID)",
+      "event StartTimeUpdated(uint48 oldStartTime, uint48 newStartTime)",
+      "event TreasuryUpdated(address oldTreasury, address newTreasury)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function cap() view returns (uint256)",
+      "function deposit(uint256 amount, tuple(bytes16 entityID, bytes16 saleUUID, address wallet, uint64 expiresAt, bytes payload) permit, bytes permitSignature)",
+      "function endTime() view returns (uint48)",
+      "function getDepositStatus() view returns (uint8)",
+      "function getTimeUntilEnd() view returns (uint48)",
+      "function getTimeUntilStart() view returns (uint48)",
+      "function getUserCount() view returns (uint256)",
+      "function getUserDeposit(bytes16 entityID) view returns (uint256)",
+      "function getUserDeposit(address user) view returns (uint256)",
+      "function getUserEntity(address user) view returns (tuple(address user, uint256 deposits))",
+      "function getUserEntity(bytes16 entityID) view returns (tuple(address user, uint256 deposits))",
+      "function getUsers(uint256 startIndex, uint256 count) view returns (tuple(bytes16 entityID, address user, uint256 amount, uint256 index)[] users)",
+      "function isDepositActive() view returns (bool)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function permitSigner() view returns (address)",
+      "function renounceOwnership()",
+      "function saleUUID() view returns (bytes16)",
+      "function setCap(uint256 newCap)",
+      "function setEndTime(uint48 newEndTime)",
+      "function setPause(bool pause)",
+      "function setPermitSigner(address newPermitSigner)",
+      "function setSaleUUID(bytes16 newSaleUUID)",
+      "function setStartTime(uint48 newStartTime, uint48 activeDuration)",
+      "function setTreasury(address newTreasury)",
+      "function startTime() view returns (uint48)",
+      "function totalDeposited() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function usdc() view returns (address)",
+      "function userEntities(bytes16) view returns (address user, uint256 deposits)",
+      "function verifyPurchasePermit(tuple(bytes16 entityID, bytes16 saleUUID, address wallet, uint64 expiresAt, bytes payload) permit, bytes permitSignature) view returns (bool)",
+      "function walletToEntityID(address) view returns (bytes16)",
+      "function withdrawToTreasury(address token, uint256 amount)"
+    ],
+    "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": [
+      "constructor(address _singleton)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "megaeth/MegaUSDmPreDeposit": "0x82f3a6c9df4071ce844f483283ed99e958983459bf7be96375811951f1d46150"
+  },
+  "usedBlockNumbers": { "ethereum": 23883351 },
+  "permissionsConfigHash": "0x9032f0f17b489eb2d40f6e4f9937150fcaafba504f8134abddf0d09c2b4debb1"
+}

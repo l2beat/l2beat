@@ -3,19 +3,19 @@ import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import {
-  type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
   rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
 
 export function DaThroughputChart() {
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
@@ -24,12 +24,15 @@ export function DaThroughputChart() {
     includeScalingOnly,
   })
 
-  const chartRange = useMemo(
-    () => getChartRange(chartData?.data.map(([timestamp]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        chartData?.data.map(([timestamp]) => ({ timestamp })),
+      ),
     [chartData],
   )
 
-  const resolution = rangeToResolution({ type: range })
+  const resolution = rangeToResolution(range)
 
   return (
     <div>
@@ -39,7 +42,7 @@ export function DaThroughputChart() {
             ? 'Share of total data posted'
             : 'Total data posted'}
         </h1>
-        <ChartTimeRange range={chartRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart
@@ -84,8 +87,8 @@ export function DaThroughputChart() {
             <span className="lg:hidden">Ethereum scaling projects only</span>
           </Checkbox>
         </div>
-        <ChartTimeRangeControls
-          name="Range"
+        <ChartRangeControls
+          name="da-throughput"
           value={range}
           setValue={setRange}
           options={Object.values(DaThroughputTimeRangeValues).map((v) => ({

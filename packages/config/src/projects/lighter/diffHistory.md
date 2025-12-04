@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xe20a587a5277eb2d551595acad41bcaed81f1724
+
+# Diff at Wed, 26 Nov 2025 13:56:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763984268
+- current timestamp: 1764165313
+
+## Description
+
+new markets.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.createdMarkets.42:
++        "HOOD"
+      values.createdMarkets.43:
++        "COIN"
+    }
+```
+
+Generated with discovered.json: 0xd4144abf0430598839817975f1204a8679bc4b20
+
+# Diff at Mon, 24 Nov 2025 11:39:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762196400
+- current timestamp: 1763984268
+
+## Description
+
+new markets!
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages USDC deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.createdMarkets.36:
++        "ICP"
+      values.createdMarkets.37:
++        "FIL"
+      values.createdMarkets.38:
++        "STRK"
+      values.createdMarkets.39:
++        "USDKRW"
+      values.createdMarkets.40:
++        "AUDUSD"
+      values.createdMarkets.41:
++        "NZDUSD"
+    }
+```
+
 Generated with discovered.json: 0x9ea25ff0e5d1f126bf239b1421683406de91af83
 
 # Diff at Mon, 03 Nov 2025 19:01:11 GMT:

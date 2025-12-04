@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
-import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
+import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -14,17 +14,18 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
 } from '~/server/features/ecosystems/getEcosystemEntry'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
 import { EcosystemChartTimeRange } from './EcosystemsChartTimeRange'
 import { EcosystemsMarketShare } from './EcosystemsMarketShare'
@@ -45,12 +46,10 @@ export function EcosystemsTvsChart({
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: {
-      type: timeRange,
-    },
+    range,
     excludeAssociatedTokens: false,
     includeRwaRestrictedTokens: false,
     filter: {
@@ -87,12 +86,12 @@ export function EcosystemsTvsChart({
   }, [name])
 
   const stats = getStats(chartData, allScalingProjectsTvs)
-  const range = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <EcosystemWidget className={className}>
       <Header
-        range={range}
+        timeRange={timeRange}
         stats={stats}
         unit={unit}
         invert={id === 'superchain'}
@@ -136,23 +135,19 @@ export function EcosystemsTvsChart({
       </ChartContainer>
       <ChartControlsWrapper className="mt-2.5">
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-        <TvsChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          projectSection={true}
-        />
+        <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </EcosystemWidget>
   )
 }
 
 function Header({
-  range,
+  timeRange,
   stats,
   unit,
   invert,
 }: {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
   stats: { total: number; marketShare: number } | undefined
   unit: string
   invert?: boolean
@@ -178,7 +173,7 @@ function Header({
         )}
       </div>
       <div className="flex justify-between gap-1">
-        <EcosystemChartTimeRange range={range} />
+        <EcosystemChartTimeRange timeRange={timeRange} />
         {invert ? (
           stats?.total ? (
             <div className="font-medium text-branding-primary text-xs">

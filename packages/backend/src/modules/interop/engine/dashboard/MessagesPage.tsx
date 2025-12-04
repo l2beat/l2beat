@@ -31,7 +31,9 @@ function MessagesTable(props: {
           const dstExplorerUrl = e.dstChain && props.getExplorerUrl(e.dstChain)
 
           return (
-            <tr>
+            <tr
+              key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
+            >
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>

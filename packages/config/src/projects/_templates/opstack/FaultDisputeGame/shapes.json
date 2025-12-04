@@ -38,5 +38,11 @@
     "hash": "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e",
     "address": "eth:0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F",
     "blockNumber": 22995199
+  },
+  "FaultDisputeGame.sol": {
+    "hash": "0xefd91bf99438f1ea2fe19cfde2bbab3aefd64672f541c2fa58e9463384b2338d",
+    "address": "eth:0x478c26109b169a840D61E95B19512FF0b5F19c87",
+    "chain": "ethereum",
+    "blockNumber": 23896272
   }
 }

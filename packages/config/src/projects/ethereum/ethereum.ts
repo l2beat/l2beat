@@ -144,7 +144,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
         sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
       },
     ],
-    finality: 720, // seconds
+    finality: 768, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

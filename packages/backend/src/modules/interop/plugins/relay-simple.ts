@@ -14,9 +14,8 @@ the Solver or via Router (which serves as a multicall facitlity for
 a Solver that, e.g. tries to buy an NFT on behalf of a user).
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   type InteropEvent,
@@ -85,58 +84,54 @@ const RelayApprovalProxy = EthereumAddress(
   '0xBBbfD134E9b44BfB5123898BA36b01dE7ab93d98',
 )
 
-const RelaySolver32 = Address32.from(RelaySolver)
-const RelayRouter32 = Address32.from(RelayRouter)
-const RelayApprovalProxy32 = Address32.from(RelayApprovalProxy)
-
 export class RelaySimplePlugIn implements InteropPlugin {
   name = 'relay-simple'
 
   captureTx(input: TxToCapture) {
-    if (input.tx.txTo === RelaySolver32) {
-      if (input.tx.txData.length === 2 + 64) {
+    if (input.tx.to === RelaySolver) {
+      if (input.tx.data && input.tx.data.length === 2 + 64) {
         return [
-          TransferSrc.create(input.tx, {
-            amount: input.tx.txValue,
+          TransferSrc.createTx(input, {
+            amount: input.tx.value ?? 0n,
             tokenAddress: Address32.NATIVE,
             kind: 'direct transfer',
-            requestId: input.tx.txData,
+            requestId: input.tx.data as string,
           }),
         ]
       }
     }
 
-    if (input.tx.txFrom === RelaySolver32) {
-      if (input.tx.txData.length === 2 + 64) {
+    if (input.tx.from === RelaySolver) {
+      if (input.tx.data && input.tx.data.length === 2 + 64) {
         return [
-          TransferDst.create(input.tx, {
-            amount: input.tx.txValue,
+          TransferDst.createTx(input, {
+            amount: input.tx.value ?? 0n,
             tokenAddress: Address32.NATIVE,
             kind: 'direct transfer',
-            requestId: input.tx.txData,
+            requestId: input.tx.data as string,
           }),
         ]
       }
     }
 
-    if (input.tx.txTo === RelayRouter32) {
+    if (input.tx.to === RelayRouter) {
       return [
-        TransferDst.create(input.tx, {
-          amount: input.tx.txValue,
+        TransferDst.createTx(input, {
+          amount: input.tx.value ?? 0n,
           tokenAddress: Address32.NATIVE,
           kind: 'relay router',
-          requestId: '0x' + input.tx.txData.slice(-64),
+          requestId: '0x' + (input.tx.data ?? '').slice(-64),
         }),
       ]
     }
 
-    if (input.tx.txTo === RelayApprovalProxy32) {
+    if (input.tx.to === RelayApprovalProxy) {
       return [
-        TransferDst.create(input.tx, {
-          amount: input.tx.txValue,
+        TransferDst.createTx(input, {
+          amount: input.tx.value ?? 0n,
           tokenAddress: Address32.NATIVE,
           kind: 'relay approval proxy',
-          requestId: '0x' + input.tx.txData.slice(-64),
+          requestId: '0x' + (input.tx.data ?? '').slice(-64),
         }),
       ]
     }
@@ -146,26 +141,26 @@ export class RelaySimplePlugIn implements InteropPlugin {
     const transfer = parseTransfer(input.log, null)
     if (transfer) {
       if (transfer.to === RelaySolver) {
-        if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
+        if (input.tx.data && input.tx.data.length === 2 + 8 + 64 * 3) {
           return [
-            TransferSrc.create(input.ctx, {
+            TransferSrc.create(input, {
               amount: transfer.value,
               tokenAddress: Address32.from(input.log.address),
               kind: 'direct ERC20 transfer',
-              requestId: '0x' + input.ctx.txData.slice(-64),
+              requestId: '0x' + input.tx.data.slice(-64),
             }),
           ]
         }
       }
 
       if (transfer.from === RelaySolver) {
-        if (input.ctx.txData.length === 2 + 8 + 64 * 3) {
+        if (input.tx.data && input.tx.data.length === 2 + 8 + 64 * 3) {
           return [
-            TransferDst.create(input.ctx, {
+            TransferDst.create(input, {
               amount: transfer.value,
               tokenAddress: Address32.from(input.log.address),
               kind: 'direct ERC20 transfer',
-              requestId: '0x' + input.ctx.txData.slice(-64),
+              requestId: '0x' + input.tx.data.slice(-64),
             }),
           ]
         }
@@ -175,8 +170,8 @@ export class RelaySimplePlugIn implements InteropPlugin {
     const fundsForwardedWithData = parseFundsForwardedWithData(input.log, null)
     if (fundsForwardedWithData) {
       return [
-        TransferSrc.create(input.ctx, {
-          amount: input.ctx.txValue,
+        TransferSrc.create(input, {
+          amount: input.tx.value ?? 0n,
           tokenAddress: Address32.NATIVE,
           kind: 'funds forwarded',
           requestId: fundsForwardedWithData.data.slice(0, 2 + 64),
@@ -187,7 +182,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     const relayNativeDeposit = parseRelayNativeDeposit(input.log, null)
     if (relayNativeDeposit) {
       return [
-        TransferSrc.create(input.ctx, {
+        TransferSrc.create(input, {
           amount: relayNativeDeposit.amount,
           tokenAddress: Address32.NATIVE,
           kind: 'relay native deposit',
@@ -199,7 +194,7 @@ export class RelaySimplePlugIn implements InteropPlugin {
     const relayERC20Deposit = parseRelayERC20Deposit(input.log, null)
     if (relayERC20Deposit) {
       return [
-        TransferSrc.create(input.ctx, {
+        TransferSrc.create(input, {
           amount: relayERC20Deposit.amount,
           tokenAddress: Address32.from(relayERC20Deposit.token),
           kind: 'relay ERC20 deposit',
@@ -211,32 +206,38 @@ export class RelaySimplePlugIn implements InteropPlugin {
 
   matchTypes = [TransferSrc, TransferDst]
   match(
-    transferSrc: InteropEvent,
+    transferDst: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (TransferDst.checkType(transferSrc)) {
-      const transferDst = db.find(TransferSrc, {
-        requestId: transferSrc.args.requestId,
+    if (TransferDst.checkType(transferDst)) {
+      const transferSrc = db.find(TransferSrc, {
+        requestId: transferDst.args.requestId,
       })
-      if (!transferDst) return
+      if (!transferSrc) {
+        // Auto-ignore unmatched after 2 hours
+        if (transferDst.ctx.timestamp < UnixTime.now() - 2 * UnixTime.HOUR) {
+          return [Result.Ignore([transferDst])]
+        }
+        return
+      }
 
-      if (transferSrc.ctx.chain === transferDst.ctx.chain) {
-        return [Result.Ignore([transferSrc, transferDst])]
+      if (transferDst.ctx.chain === transferSrc.ctx.chain) {
+        return [Result.Ignore([transferDst, transferSrc])]
       }
 
       return [
         Result.Message('relay-simple.Message', {
           app: 'relay-simple',
-          srcEvent: transferDst,
-          dstEvent: transferSrc,
+          srcEvent: transferSrc,
+          dstEvent: transferDst,
         }),
         Result.Transfer('relay-simple.Transfer', {
-          srcEvent: transferDst,
-          srcAmount: transferDst.args.amount,
-          srcTokenAddress: transferDst.args.tokenAddress,
-          dstEvent: transferSrc,
-          dstAmount: transferSrc.args.amount,
-          dstTokenAddress: transferSrc.args.tokenAddress,
+          srcEvent: transferSrc,
+          srcAmount: transferSrc.args.amount,
+          srcTokenAddress: transferSrc.args.tokenAddress,
+          dstEvent: transferDst,
+          dstAmount: transferDst.args.amount,
+          dstTokenAddress: transferDst.args.tokenAddress,
         }),
       ]
     }

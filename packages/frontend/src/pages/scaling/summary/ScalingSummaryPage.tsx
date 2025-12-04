@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
@@ -11,11 +12,18 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { optionToRange } from '~/utils/range/range'
 import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
-export const SCALING_SUMMARY_TIME_RANGE = '1y'
+export const SCALING_SUMMARY_TVS_CHART_RANGE_ARGS = ['1y'] as const
+export const SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS = [
+  '1y',
+  {
+    offset: -UnixTime.DAY,
+  },
+] as const
 const SCALING_SUMMARY_UNIT = 'usd'
 
 interface Props extends AppLayoutProps {
@@ -24,14 +32,16 @@ interface Props extends AppLayoutProps {
 }
 
 export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
+  const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
+  const activityChartRange = optionToRange(
+    ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
+  )
+
   const tvsChart = (
-    <ScalingSummaryTvsChart
-      unit={SCALING_SUMMARY_UNIT}
-      timeRange={SCALING_SUMMARY_TIME_RANGE}
-    />
+    <ScalingSummaryTvsChart unit={SCALING_SUMMARY_UNIT} range={tvsChartRange} />
   )
   const activityChart = (
-    <ScalingSummaryActivityChart timeRange={SCALING_SUMMARY_TIME_RANGE} />
+    <ScalingSummaryActivityChart range={activityChartRange} />
   )
 
   return (
@@ -39,7 +49,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader>Summary</MainPageHeader>
-          <div className="grid grid-cols-2 gap-4 max-lg:hidden ">
+          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
             <PrimaryCard>{tvsChart}</PrimaryCard>
             <PrimaryCard>{activityChart}</PrimaryCard>
           </div>

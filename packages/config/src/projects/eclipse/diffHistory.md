@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x4750696c9edec0b703a69bf4d668ef87720e677c
+
+# Diff at Thu, 20 Nov 2025 10:58:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@affe2a8446dd872cf147b75c29b9d7804e5f0b52 block: 1757342204
+- current timestamp: 1763636218
+
+## Description
+
+- CanonicalBridgeV1 cannot be used to withdraw funds from Treasury anymore.
+- CanonicalBridgeV2 deactivated, replaced by CanonicalBridgeV3:
+the main change in V3 is new events via DepositedWithId and depositIndex, V3 can settle v1 and v2 pending withdrawals
+https://disco.l2beat.com/diff/eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51/eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalBridge (eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
+    contract Eclipse Multisig (eth:0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11","description":"authorize withdrawals to any address.","role":".withdrawAuthorityAC"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11","description":"grant / revoke all access control roles and thus access all permissioned functions in the contract.","role":".defaultAdminAC"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11","description":"pause the contract for deposits and withdrawals.","role":".pauserAC"}
+      receivedPermissions.3.from:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+      receivedPermissions.4.from:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+      receivedPermissions.5.from:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+    }
+```
+
+```diff
+    contract Eclipse Multisig 2 (eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51","description":"grant / revoke all access control roles and thus access all permissioned functions in the contract.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalBridgeV2 (eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
+    contract Treasury (eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+      values.accessControl.DEPOSITOR_ROLE.members.1:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.0:
+-        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.2:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+      values.withdrawerAC.0:
+-        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.withdrawerAC.2:
+-        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV3 (eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+## Source code changes
+
+```diff
+.../CanonicalBridge.sol => /dev/null               | 952 ---------------------
+ .../CanonicalBridgeV3.sol}                         | 304 ++++---
+ 2 files changed, 188 insertions(+), 1068 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757342204 (main branch discovery), not current.
+
+```diff
+    contract CanonicalBridge (eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11) {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      name:
+-        "CanonicalBridgeV1"
++        "CanonicalBridge"
+    }
+```
+
 Generated with discovered.json: 0x9f57021aaf0a85ec277a1f767601ab5f4fad31e4
 
 # Diff at Mon, 08 Sep 2025 14:37:49 GMT:

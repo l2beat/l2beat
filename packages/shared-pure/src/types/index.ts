@@ -1,3 +1,4 @@
+export * from './Address32.js'
 export * from './AssetId.js'
 export * from './api/index.js'
 export * from './Block.js'

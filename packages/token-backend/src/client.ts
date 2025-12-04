@@ -24,6 +24,7 @@ export function getTokenDbClient(config: TokenClientConfig) {
     links: [
       httpBatchLink({
         url: config.apiUrl,
+        methodOverride: 'POST', // Sometimes request body is too large to fit in GET's URL
         transformer: {
           serialize: JSON.stringify,
           deserialize: JSON.parse,

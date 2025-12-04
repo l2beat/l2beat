@@ -77,7 +77,7 @@ export class CentriFugePlugin implements InteropPlugin {
     const parsedSendPayload = parseSendPayload(input.log, null)
     if (parsedSendPayload) {
       return [
-        SendPayLoad.create(input.ctx, {
+        SendPayLoad.create(input, {
           payloadId: parsedSendPayload.payloadId,
           adapter: parsedSendPayload.adapter,
         }),
@@ -87,7 +87,7 @@ export class CentriFugePlugin implements InteropPlugin {
     const parsedSendProof = parseSendProof(input.log, null)
     if (parsedSendProof) {
       return [
-        SendProof.create(input.ctx, {
+        SendProof.create(input, {
           payloadId: parsedSendProof.payloadId,
           adapter: parsedSendProof.adapter,
         }),
@@ -97,7 +97,7 @@ export class CentriFugePlugin implements InteropPlugin {
     const parsedHandlePayload = parseHandlePayload(input.log, null)
     if (parsedHandlePayload) {
       return [
-        HandlePayLoad.create(input.ctx, {
+        HandlePayLoad.create(input, {
           payloadId: parsedHandlePayload.payloadId,
           adapter: parsedHandlePayload.adapter,
         }),
@@ -107,7 +107,7 @@ export class CentriFugePlugin implements InteropPlugin {
     const parsedHandleProof = parseHandleProof(input.log, null)
     if (parsedHandleProof) {
       return [
-        HandleProof.create(input.ctx, {
+        HandleProof.create(input, {
           payloadId: parsedHandleProof.payloadId,
           adapter: parsedHandleProof.adapter,
         }),

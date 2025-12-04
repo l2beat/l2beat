@@ -2,13 +2,12 @@ import type {
   ProjectWithRanges,
   SummedByTimestampTvsValuesRecord,
 } from '@l2beat/dal'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
-import { getTimestampedValuesRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
-import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
 
 export type SummedTvsValues = {
@@ -27,7 +26,7 @@ export type SummedTvsValues = {
 
 export async function getSummedTvsValues(
   projects: ProjectId[] | ProjectWithRanges[],
-  range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
+  range: ChartRange,
   {
     forSummary,
     excludeAssociatedTokens,
@@ -40,15 +39,11 @@ export async function getSummedTvsValues(
 ): Promise<SummedTvsValues[]> {
   const resolution = rangeToResolution(range)
 
-  const [from, to] = getTimestampedValuesRange(range, resolution, {
-    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
-  })
-
   const records = await queryExecutor.execute({
     name: 'getSummedByTimestampTvsValuesQuery',
     args: [
       projects,
-      [from, to],
+      range,
       forSummary,
       excludeAssociatedTokens,
       includeRwaRestrictedTokens,
@@ -66,12 +61,13 @@ export async function getSummedTvsValues(
   const maxTimestamp = Math.max(...timestamps)
   const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
-  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
   return generateTimestamps([fromTimestamp, adjustedTo], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]
+
     if (!record) {
       return {
         timestamp,

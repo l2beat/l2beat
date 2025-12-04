@@ -37,7 +37,10 @@ export const soneium = opStackL2({
         'https://t.me/SoneiumOfficial',
         'https://discord.gg/rWWPBHug9w',
       ],
-      other: ['https://rollup.codes/soneium'],
+      other: [
+        'https://rollup.codes/soneium',
+        'https://growthepie.com/chains/soneium',
+      ],
     },
   },
   hasSuperchainScUpgrades: true,

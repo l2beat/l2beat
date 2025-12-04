@@ -120,6 +120,15 @@ Verify:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
     verificationStatus: 'notVerified',
   },
+  '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
+    title: 'Aggchain program of agglayer',
+    description:
+      'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v1.8.0/crates/aggchain-proof-program', // ??? verify version tag
+    verificationStatus: 'notVerified',
+  },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
     title: 'Celestia Blobstream DA bridge program',
     description:
@@ -155,6 +164,7 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
@@ -170,6 +180,34 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
@@ -354,11 +392,16 @@ Steps:
     description:
       'Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1’s perspective.',
     programUrl:
-      'https://github.com/scroll-tech/zkvm-prover/tree/v0.6.0-rc.1/crates/circuits/bundle-circuit',
+      'https://github.com/scroll-tech/zkvm-prover/tree/0.5.2/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
-    verificationStatus: 'unsuccessful',
+    verificationStatus: 'successful',
     verificationSteps: `
-Failed to generate the correct digest from the commitment array \`[1948048916, 1022190518, 1051765913, 997565840, 1008935769, 1678268764, 1464235949, 1741788930]\` using a sample rust implementation: 
+Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.5.2\` Commit hash should be \`8f29f60cc73495e8586338a67433a812097427c4\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`bundle_exe_commit.rs\`. 
+4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
     \`\`\`
 use openvm_stark_sdk::p3_baby_bear::BabyBear;
 use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
@@ -379,8 +422,6 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
     compressed
 } 
 \`\`\`
-
-Obtained digest is \`0x0084295026281661b88e94d0f66ddc307ba85e577c5325408145b52d6a741f57\`.
     `,
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
@@ -388,15 +429,15 @@ Obtained digest is \`0x0084295026281661b88e94d0f66ddc307ba85e577c5325408145b52d6
     description:
       'This is not a ZK program, but a commitment to the config of Scroll bundle program (bundle leaf commitment). It also needs to be checked to verify the expected ZK verification.',
     programUrl:
-      'https://github.com/scroll-tech/zkvm-prover/tree/v0.6.0-rc.1/crates/circuits/bundle-circuit',
+      'https://github.com/scroll-tech/zkvm-prover/tree/0.5.2/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
     verificationStatus: 'successful',
     verificationSteps: `
 Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174).
 
 1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
-2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout v0.6.0-rc.1.\` Commit hash should be \`c33fad134f9d662ccf1ed1bac33d258b0ea1cf2b\`.
-3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`bundle_vm_commit.rs\`. 
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.5.2\` Commit hash should be \`8f29f60cc73495e8586338a67433a812097427c4\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`circuits/bundle-circuit/bundle_leaf_commit.rs\`. 
 4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
     \`\`\`
 use openvm_stark_sdk::p3_baby_bear::BabyBear;

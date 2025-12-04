@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -22,7 +22,7 @@ export const celo: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   additionalBadges: [BADGES.Other.MigratedFromL1],
-  daProvider: EIGENDA_DA_PROVIDER(false),
+  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -49,6 +49,7 @@ export const celo: ScalingProject = opStackL2({
         'https://discord.com/invite/celo',
         'https://blog.celo.org/',
       ],
+      other: ['https://growthepie.com/chains/celo'],
     },
   },
   hasSuperchainScUpgrades: true,

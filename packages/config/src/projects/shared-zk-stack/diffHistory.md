@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xa85a720f53b8a91c211bf22cb3a6239ce07e3a55
+
+# Diff at Wed, 26 Nov 2025 14:36:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763987551
+- current timestamp: 1764167689
+
+## Description
+
+token proposal queued: https://www.tally.xyz/gov/zksync/proposal/59956436467786828609747327435664724459335730934530897411573906572229159062327?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        10
++        11
+    }
+```
+
+Generated with discovered.json: 0x85c2396421e140cef9c2914de8fe8fb8d18ce476
+
+# Diff at Mon, 24 Nov 2025 12:35:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762866771
+- current timestamp: 1763987551
+
+## Description
+
+[Queue ZIP-14 Upgrade ZK Token with Permissionless Burn Function](https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+upgrades ZK token with permissioned burn function: https://disco.l2beat.com/diff/zksync:0x01a6715d3560241E09E865a46122bf347A576c09/zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.16:
++        {"chainId":30715,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x6aED6A0aCaAa8E434d5d98e31D01175d08F409d2"}
+      values.getAllZKChainChainIDs.16:
++        30715
+      values.getAllZKChains.16:
++        "eth:0xb6d615084d7a72bF98C2BD35DD6aBE824feb2dc7"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        17
++        18
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        13
++        14
+    }
+```
+
 Generated with discovered.json: 0x17d305bb1cd2e10751f16a70fea702221904cd5c
 
 # Diff at Tue, 11 Nov 2025 13:13:57 GMT:

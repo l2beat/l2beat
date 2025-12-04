@@ -218,7 +218,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec',
+            url: 'https://etherscan.io/address/0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5',
           },
         ],
         risks: [
@@ -241,7 +241,7 @@ export const morph: ScalingProject = {
         {
           title:
             'Rollup.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          url: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278#code',
+          url: 'https://etherscan.io/address/0x759894Ced0e6af42c26668076Ffa84d02E3CeF60#code',
         },
       ],
     },
@@ -273,7 +273,7 @@ export const morph: ScalingProject = {
         {
           title:
             'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
-          url: 'https://etherscan.io/address/0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec#code#F1#L534',
+          url: 'https://etherscan.io/address/0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5#code#F1#L534',
         },
       ],
     },

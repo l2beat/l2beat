@@ -1,6 +1,6 @@
+import { Address32 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
-  Address32,
   createEventParser,
   createInteropEventType,
   findChain,
@@ -49,7 +49,7 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     const transfer = nextLog && parseTransfer(nextLog, null)
 
     return [
-      TransferRedeemed.create(input.ctx, {
+      TransferRedeemed.create(input, {
         sequence: parsed.sequence,
         $srcChain: findChain(
           wormholeNetworks,
