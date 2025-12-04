@@ -27,7 +27,6 @@ export const celo: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
-  isPartOfSuperchain: false,
   display: {
     name: 'Celo',
     slug: 'celo',
