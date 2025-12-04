@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "cartesi-prt-honeypot-v2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xfddf68726a28e418fa0c2a52c3134904a8c3e998",
+    "eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D",
+    "eth:0xA2835312696Afa86c969e40831857dbB1412627f" // example TopTournament
+  ],
+  "names": {
+    "eth:0xA2835312696Afa86c969e40831857dbB1412627f": "TopTournament_example",
+    "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": "Cartesi Multisig"
+  },
+  "overrides": {
+    "eth:0xfdF16a7D9143f5E3B7B056b761a7eF8Ce18dc6eF": { "category": "spam" },
+    "eth:0x47c7f40841F842f7691cB9Fd6Cd63673B79dCe79": { "category": "spam" },
+    "eth:0x6ccb8955afFA2aE4A88a4fC30916b41074d1F2B6": { "category": "spam" },
+    // hide TopTourn in favor of the example
+    "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53": { "category": "spam" }
+  }
+}
