@@ -17,9 +17,13 @@ import { ScalingRwaRestrictedTokensContextProvider } from '../components/Scaling
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
-export const SCALING_SUMMARY_TIME_RANGE = optionToRange('1y', {
-  offset: -UnixTime.DAY,
-})
+export const SCALING_SUMMARY_TVS_CHART_RANGE_ARGS = ['1y'] as const
+export const SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS = [
+  '1y',
+  {
+    offset: -UnixTime.DAY,
+  },
+] as const
 const SCALING_SUMMARY_UNIT = 'usd'
 
 interface Props extends AppLayoutProps {
@@ -28,14 +32,16 @@ interface Props extends AppLayoutProps {
 }
 
 export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
+  const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
+  const activityChartRange = optionToRange(
+    ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
+  )
+
   const tvsChart = (
-    <ScalingSummaryTvsChart
-      unit={SCALING_SUMMARY_UNIT}
-      range={SCALING_SUMMARY_TIME_RANGE}
-    />
+    <ScalingSummaryTvsChart unit={SCALING_SUMMARY_UNIT} range={tvsChartRange} />
   )
   const activityChart = (
-    <ScalingSummaryActivityChart range={SCALING_SUMMARY_TIME_RANGE} />
+    <ScalingSummaryActivityChart range={activityChartRange} />
   )
 
   return (
