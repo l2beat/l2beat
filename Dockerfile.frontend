@@ -19,9 +19,9 @@ ARG TURBO_TEAM
 ARG TURBO_TOKEN
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
+COPY --from=pruner /src/.git .git
 RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
