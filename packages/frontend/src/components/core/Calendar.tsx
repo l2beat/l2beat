@@ -28,7 +28,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        'group/calendar bg-surface-primary [--cell-height:--spacing(9.5)] md:[--cell-width:--spacing(11)] [--cell-width:calc(calc(100vw/7)-calc(16px/7))] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
+        'group/calendar bg-surface-primary [--cell-height:--spacing(9.5)] [--cell-width:calc(calc(100vw/7)-calc(16px/7))] md:[--cell-width:--spacing(11)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
         className,
       )}
       captionLayout={captionLayout}
