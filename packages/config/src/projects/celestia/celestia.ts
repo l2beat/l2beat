@@ -148,6 +148,11 @@ export const celestia: BaseProject = {
     pruningWindow: 86400 * 7 + 3600, // 7 days + 1 hour in seconds (CIP-34)
     throughput: [
       {
+        size: 33554432, // 32 MiB
+        frequency: 6, // 6 seconds
+        sinceTimestamp: 1764802980, // 2025-12-03 23:03 UTC
+      },
+      {
         size: 8388608, // 8 MiB
         frequency: 6, // 6 seconds
         sinceTimestamp: 1738022400, // 2025-01-28,
@@ -482,6 +487,14 @@ export const celestia: BaseProject = {
       date: '2025-11-24T00:00:00Z',
       description:
         'Matcha upgrade enables 128MB blocks, reduces unbonding period to 14 days, and introduces high-throughput block propagation.',
+      type: 'general',
+    },
+    {
+      title: 'Block size increase to 32MB',
+      url: 'https://celenium.io/proposal/8',
+      date: '2025-12-03T00:00:00Z',
+      description:
+        'Celestia onchain governance votes to increase the block size from 8MB to 32MB.',
       type: 'general',
     },
   ],

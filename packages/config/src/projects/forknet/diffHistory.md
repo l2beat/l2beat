@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x391a76fe57985a70178771ccfd6841a08dae51f7
+Generated with discovered.json: 0x30078bc6eff8a2381ca5075e939f6d3822eb0d08
 
-# Diff at Fri, 05 Dec 2025 16:52:18 GMT:
+# Diff at Fri, 05 Dec 2025 11:21:56 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1762246195
-- current timestamp: 1764953470
+- current timestamp: 1764933637
 
 ## Description
 
-ms changes
+Conduit multisig key rotation.
 
 ## Watched changes
 

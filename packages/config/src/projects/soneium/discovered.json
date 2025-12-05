@@ -1,6 +1,6 @@
 {
   "name": "soneium",
-  "timestamp": 1764324554,
+  "timestamp": 1764933869,
   "configHash": "0xdaebced3259ad88018897cb3ac758939cdf92adc9dae611e2122ee0433559585",
   "entries": [
     {
@@ -207,6 +207,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x1edae2A7C9ECF37319D4E113588d946e9901F5ea",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PreimageOracle",
       "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
       "type": "Contract",
@@ -395,11 +400,6 @@
       ]
     },
     {
-      "address": "eth:0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafe",
       "address": "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "type": "Contract",
@@ -538,17 +538,17 @@
         "$members": [
           "eth:0xd45F9F3990C48AfA5C90404c7a748b4c23FB2cba",
           "eth:0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E",
-          "eth:0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B",
+          "eth:0x556Eb1b888eF0a02be4360e960824fc5aC197d65",
           "eth:0xb9269f274E7Edc73bf3d923E347d0784e4a5e452",
           "eth:0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a",
-          "eth:0xba1a565d2bF6D27F451a459308f423219478c5cB"
+          "eth:0x1edae2A7C9ECF37319D4E113588d946e9901F5ea"
         ],
         "$threshold": 3,
         "domainSeparator": "0xfec9c20e9a1f1dc2de8e49ee266be73bafbca115021f1de122ef95419b35297d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -602,7 +602,7 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 4358,
+        "gameCount": 4441,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0ddf929eeda8949CfE77b7e7e46e426E15A2D8f1",
@@ -615,7 +615,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 4358,
+        "permissionedGamesTotal": 4441,
         "proxyAdmin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.3.0"
@@ -663,6 +663,11 @@
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x556Eb1b888eF0a02be4360e960824fc5aC197d65",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -1329,8 +1334,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 23896449
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 23946400
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1627,7 +1632,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292682326",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292682690",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1683,11 +1688,6 @@
     },
     {
       "address": "eth:0xb9269f274E7Edc73bf3d923E347d0784e4a5e452",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xba1a565d2bF6D27F451a459308f423219478c5cB",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3138,6 +3138,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23896484 },
-  "permissionsConfigHash": "0x913473eddd43d03cf79730d59539532a1f98ace7e01648d9be2d105b6051aa2d"
+  "usedBlockNumbers": { "ethereum": 23946434 },
+  "permissionsConfigHash": "0xc1027928df38f6a79dae1a653ffd0eafa3a6b388e4dea034a1891e8e0813cdcd"
 }

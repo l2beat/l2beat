@@ -1,6 +1,6 @@
 {
   "name": "hypr",
-  "timestamp": 1759480837,
+  "timestamp": 1764933659,
   "configHash": "0x04805d9a8debedf3f12f2df4fdeca2d104698fedde9d55cadc64a21539c61d8a",
   "entries": [
     {
@@ -107,6 +107,11 @@
       "implementationNames": {
         "eth:0x20D697b63d7747cF78C94ad9ee75C1436781E27E": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "HyprMultisig",
@@ -354,11 +359,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -370,7 +375,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -419,6 +424,11 @@
         "eth:0x5F67587FB3f1736a5a91C10E3EeB7cA92117177B": "Proxy",
         "eth:0x2A033B70a4D7FAbc6E651E964D18fcf65D9d2aED": "OptimismMintableERC20Factory"
       }
+    },
+    {
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6D4c6D77a87F5aA89444dcCb37A65AEEb152717F",
@@ -661,17 +671,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -992,6 +992,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23496121 },
-  "permissionsConfigHash": "0x0af08975f8f2d0c8a8bee711cde11195d673a7810c81bc35712d8a224ca382d7"
+  "usedBlockNumbers": { "ethereum": 23946418 },
+  "permissionsConfigHash": "0xf6fdc10f3e23e28fe8dc3d61ca1aaaba79d0772c0df7ca33b11f8503ee4e9892"
 }

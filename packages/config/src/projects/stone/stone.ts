@@ -72,6 +72,7 @@ export const stone: BaseProject = {
       {
         projectId: ProjectId('paradex'),
         sinceTimestamp: UnixTime(1696111200),
+        untilTimestamp: UnixTime(1763997779),
       },
       {
         projectId: ProjectId('immutablex'),
@@ -122,7 +123,6 @@ export const stone: BaseProject = {
               ProjectId('edgex'),
               ProjectId('immutablex'),
               ProjectId('myria'),
-              ProjectId('paradex'),
               ProjectId('sorare'),
               ProjectId('brine'),
             ],

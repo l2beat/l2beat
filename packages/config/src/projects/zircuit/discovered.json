@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1764059552,
+  "timestamp": 1764934764,
   "configHash": "0xa721fd52d401a16b9fbcadc5ade3f759ae184f4a9e202f3f14da01d3d1fa0a64",
   "entries": [
     {
@@ -100,7 +100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23873340
+          "prevBlockNum": 23946083
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -147,7 +147,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639819",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639847",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -286,7 +286,7 @@
         "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
         "l2OutputOracle": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "minimumGasLimit": 7000000,
-        "operatorFeeConstant": 23225000000,
+        "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
@@ -735,12 +735,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 22059100,
-        "latestOutputIndex": 35167,
+        "latestBlockNumber": 22496300,
+        "latestOutputIndex": 35433,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 35167,
-        "nextBlockNumber": 22059101,
-        "nextOutputIndex": 35168,
+        "latestOutputProposedV3": 35433,
+        "nextBlockNumber": 22496301,
+        "nextOutputIndex": 35434,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -957,7 +957,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 20,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1119,21 +1119,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 86119024,
+        "basefee": 26755486,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 1,
+        "blobBaseFee": 1949084,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xdacf9337b9b465c10e3e719c33ca9bae0aead1ad0bee75fed6399c86e646810e",
+        "hash": "0x3138ca79a820e83bb82fc44f83f54ada2922011b64ec97ad4d8db493627d0aee",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23874648,
-        "operatorFeeConstant": 23225000000,
+        "number": 23946506,
+        "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 5,
-        "timestamp": 1764059519,
+        "sequenceNumber": 0,
+        "timestamp": 1764934739,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2007,6 +2007,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23874650, "zircuit": 22061668 },
+  "usedBlockNumbers": { "ethereum": 23946508, "zircuit": 22499274 },
   "permissionsConfigHash": "0x047b7dfc9f81c2302de301125a9ed2ce8ccf448613cbf95ee6608134768d3655"
 }

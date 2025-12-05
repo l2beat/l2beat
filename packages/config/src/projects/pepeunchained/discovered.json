@@ -1,6 +1,6 @@
 {
   "name": "pepeunchained",
-  "timestamp": 1759480917,
+  "timestamp": 1764933767,
   "configHash": "0xdfaa116cbb3f1c24737f163722b3947f474da29d0e311a649f00ca9b0903ecd1",
   "entries": [
     {
@@ -43,6 +43,11 @@
         "eth:0xF8b4a49204203a8449035Ec3ADd928556C8C6397": "SuperchainConfig"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -265,7 +270,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 79,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -394,11 +399,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -410,7 +415,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -493,7 +498,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -553,7 +563,7 @@
           "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
           "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
           "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
@@ -562,7 +572,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 110,
+        "nonce": 112,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -748,11 +758,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -847,11 +852,6 @@
         "eth:0x6f6584F82866aa297Eb5cE0d4Fed200dD0632833": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1308,6 +1308,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23496127 },
-  "permissionsConfigHash": "0xd283bb66962e7d2649d73c7984dab1d597ffe58b1f701c037f3445fbb1bf261e"
+  "usedBlockNumbers": { "ethereum": 23946426 },
+  "permissionsConfigHash": "0x48d8e63ee24029155e717293f2eca51cdef338be806de984974cf422dbe8b273"
 }

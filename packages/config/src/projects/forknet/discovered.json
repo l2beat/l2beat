@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1764953470,
+  "timestamp": 1764933637,
   "configHash": "0xd03be6ef393bfbc7b02ab42f9c0d14fdb4a1553b262c4d59c8e796053bf47fda",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -2021,6 +2021,6 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29",
     "polygon-cdk/PermissionedDisputeGameUnused": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3"
   },
-  "usedBlockNumbers": { "ethereum": 23948043 },
+  "usedBlockNumbers": { "ethereum": 23946416 },
   "permissionsConfigHash": "0x29cc6483a9100c1afd6c76e8b02fa97123eb816bdca8b49aeab888ee3e413c73"
 }
