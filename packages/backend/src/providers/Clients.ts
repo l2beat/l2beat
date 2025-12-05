@@ -15,7 +15,8 @@ import {
   MulticallV3Client,
   NearClient,
   PolkadotRpcClient,
-  RpcClient,
+  type IRpcClient,
+  RpcClientCompat,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
@@ -43,9 +44,9 @@ export interface Clients {
   avail: PolkadotRpcClient | undefined
   availWs: AvailWsClient | undefined
   eigen: EigenApiClient | undefined
-  getRpcClient: (chain: string) => RpcClient
+  getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
-  rpcClients: RpcClient[]
+  rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
 }
@@ -57,7 +58,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
-  let ethereumClient: RpcClient | undefined
+  let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let celestiaDaBeat: CelestiaRpcClient | undefined
@@ -71,7 +72,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const logsClients: LogsClient[] = []
   const svmBlockClients: SvmBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
-  const rpcClients: RpcClient[] = []
+  const rpcClients: IRpcClient[] = []
 
   for (const chain of config.chainConfig) {
     for (const indexerApi of chain.indexerApis) {
@@ -96,7 +97,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 500,
               )
             : undefined
-          const rpcClient = new RpcClient({
+          const rpcClient = RpcClientCompat.create({
             chain: chain.name,
             url: blockApi.url,
             http,

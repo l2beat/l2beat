@@ -1,12 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type { CallParameters, RpcClient } from '../../clients'
+import type { CallParameters } from '../../clients'
+import { IRpcClient } from '../../clients2'
 
 export class TotalSupplyProvider {
   private logger: Logger
   constructor(
-    private readonly rpcs: RpcClient[],
+    private readonly rpcs: IRpcClient[],
     logger: Logger,
   ) {
     this.logger = logger.for(this)

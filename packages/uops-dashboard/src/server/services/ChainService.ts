@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { HttpClient, RpcClientCompat } from '@l2beat/shared'
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import type { BlockClient } from '../clients/block/BlockClient'
@@ -29,7 +29,7 @@ export class ChainService {
         this.counter = new StarknetCounter()
         break
       case 'rpc': {
-        this.client = new RpcClient({
+        this.client = RpcClientCompat.create({
           url: chain.blockchainApi.url,
           chain: chain.id,
           http,

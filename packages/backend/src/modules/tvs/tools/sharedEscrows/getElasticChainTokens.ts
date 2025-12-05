@@ -5,7 +5,7 @@ import type {
   Project,
   TvsToken,
 } from '@l2beat/config'
-import { encodeTotalSupply, type RpcClient } from '@l2beat/shared'
+import { encodeTotalSupply, type IRpcClient } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -32,7 +32,7 @@ export async function getElasticChainTokens(
   associatedTokens: string[],
   escrow: LegacyEscrow & { sharedEscrow: ElasticChainEscrow },
   chainOfL1Escrow: ChainConfig,
-  rpcClient: RpcClient,
+  rpcClient: IRpcClient,
   localStorage: LocalStorage,
   logger: Logger,
 ): Promise<TvsToken[]> {
