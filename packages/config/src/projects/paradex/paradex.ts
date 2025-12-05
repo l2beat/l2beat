@@ -84,7 +84,7 @@ export const paradex: ScalingProject = {
     slug: 'paradex',
     stacks: ['SN Stack'],
     description:
-      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals with Privacy.',
+      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals.',
     purposes: ['Universal', 'Exchange'],
     links: {
       websites: ['https://paradex.trade/'],

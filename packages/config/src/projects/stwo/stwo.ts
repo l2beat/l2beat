@@ -91,7 +91,7 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
               '0x13e120F6c8E747983F7aaF0f7731796bfcb0D934',
             ),
             chain: 'ethereum',
-            overrideUsedIn: [ProjectId('starknet')],
+            overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],
         verificationStatus: 'notVerified',
