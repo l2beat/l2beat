@@ -244,7 +244,7 @@ export function TokensSummaryPage() {
                                 target="_blank"
                                 className="absolute top-full right-0 flex items-center gap-1 text-muted-foreground text-xs hover:text-primary"
                               >
-                                <PlusIcon className="size-[1lh]" /> Add explorer
+                                <PlusIcon className="size-lh" /> Add explorer
                               </Link>
                             </span>
                           )

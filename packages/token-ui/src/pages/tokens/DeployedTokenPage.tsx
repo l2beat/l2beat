@@ -66,6 +66,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
       deploymentTimestamp: UnixTime.toDate(token.deploymentTimestamp)
         .toISOString()
         .slice(0, -5),
+      metadata: token.metadata ?? undefined,
     },
   })
 
@@ -112,6 +113,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         deploymentTimestamp: dateTimeInputToUnixTimestamp(
           values.deploymentTimestamp,
         ),
+        metadata: values.metadata ?? undefined,
       },
     })
   }
