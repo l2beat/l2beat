@@ -3,11 +3,12 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { UpdateDiff } from '../kysely/generated/types'
 
-type UpdateDiffType =
+export type UpdateDiffType =
   | 'ultimateUpgraderChange'
   | 'implementationChange'
   | 'highSeverityFieldChange'
   | 'becameVerified'
+  | 'permissionChange'
 
 export interface UpdateDiffRecord {
   type: UpdateDiffType
@@ -16,6 +17,7 @@ export interface UpdateDiffRecord {
   timestamp: UnixTime
   diffBaseTimestamp: number
   diffHeadTimestamp: number
+  details?: unknown
 }
 
 export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
@@ -26,6 +28,7 @@ export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
     timestamp: UnixTime.toDate(record.timestamp),
     diffBaseTimestamp: UnixTime.toDate(record.diffBaseTimestamp),
     diffHeadTimestamp: UnixTime.toDate(record.diffHeadTimestamp),
+    details: record.details ? JSON.stringify(record.details) : undefined,
   }
 }
 
@@ -37,6 +40,7 @@ export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     diffBaseTimestamp: UnixTime.fromDate(row.diffBaseTimestamp),
     diffHeadTimestamp: UnixTime.fromDate(row.diffHeadTimestamp),
+    details: row.details,
   }
 }
 
@@ -57,6 +61,19 @@ export class UpdateDiffRepository extends BaseRepository {
 
   async getAll() {
     const rows = await this.db.selectFrom('UpdateDiff').selectAll().execute()
+    return rows.map(toRecord)
+  }
+
+  async getByProjectAndType(
+    projectId: string,
+    type: UpdateDiffType,
+  ): Promise<UpdateDiffRecord[]> {
+    const rows = await this.db
+      .selectFrom('UpdateDiff')
+      .selectAll()
+      .where('projectId', '=', projectId)
+      .where('type', '=', type)
+      .execute()
     return rows.map(toRecord)
   }
 

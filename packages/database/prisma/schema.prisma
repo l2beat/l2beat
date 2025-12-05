@@ -10,26 +10,28 @@ datasource db {
   url      = env("PRISMA_DB_URL")
 }
 
-model CurrentPrice {
-  coingeckoId String   @id @db.VarChar(255)
-  priceUsd    Float    @db.Real
-  updatedAt   DateTime @db.Timestamp(6)
-}
+model AbstractToken {
+  id                        String          @id @db.Char(6)
+  issuer                    String?         @db.VarChar(255)
+  symbol                    String          @db.VarChar(255)
+  category                  String          @db.VarChar(255)
+  iconUrl                   String?         @db.VarChar(255)
+  coingeckoId               String?         @db.VarChar(255)
+  coingeckoListingTimestamp DateTime?       @db.Timestamp(6)
+  comment                   String?
+  reviewed                  Boolean         @default(false)
+  DeployedToken             DeployedToken[]
 
-model DaBeatStats {
-  id                 String @id @db.VarChar(255)
-  totalStake         Float  @db.Real
-  thresholdStake     Float  @db.Real
-  numberOfValidators Int?
+  @@unique([issuer, symbol])
 }
 
 model Activity {
   projectId String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   count     Int
-  uopsCount Int?
   start     Int      @default(0)
   end       Int      @default(0)
+  uopsCount Int?
 
   @@id([projectId, timestamp])
 }
@@ -58,6 +60,140 @@ model AggregatedL2Cost {
   @@index([timestamp])
 }
 
+model AggregatedLiveness {
+  timestamp       DateTime @db.Timestamp(6)
+  projectId       String   @db.VarChar(255)
+  subtype         String   @db.VarChar(255)
+  min             Int
+  avg             Int
+  max             Int
+  numberOfRecords Int
+
+  @@id([timestamp, projectId, subtype])
+  @@index([projectId])
+}
+
+model Anomaly {
+  timestamp DateTime @db.Timestamp(6)
+  projectId String   @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  duration  Int
+
+  @@id([timestamp, projectId, subtype])
+}
+
+model AnomalyStats {
+  timestamp DateTime @db.Timestamp(6)
+  projectId String   @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  mean      Float    @db.Real
+  stdDev    Float    @db.Real
+
+  @@id([timestamp, projectId, subtype])
+}
+
+model Blob {
+  id          Int      @id @default(autoincrement())
+  blockNumber Int
+  timestamp   DateTime @db.Timestamp(6)
+  daLayer     Int
+  from        String   @db.VarChar(255)
+  to          String?  @db.VarChar(255)
+  topics      String?
+  size        BigInt?
+
+  @@index([blockNumber])
+}
+
+model BridgeEvent {
+  eventId     String   @id @db.VarChar(40)
+  type        String   @db.VarChar(64)
+  expiresAt   DateTime @db.Timestamp(6)
+  timestamp   DateTime @db.Timestamp(6)
+  chain       String   @db.VarChar(32)
+  blockNumber Int
+  blockHash   String   @db.VarChar(66)
+  txHash      String   @db.VarChar(66)
+  txTo        String?  @db.VarChar(66)
+  matched     Boolean
+  logIndex    Int
+  args        Json
+  unsupported Boolean  @default(false)
+  plugin      String   @default("") @db.VarChar(64)
+  value       String   @default("") @db.VarChar(66)
+
+  @@index([type])
+}
+
+model BridgeMessage {
+  messageId   String    @id @db.VarChar(40)
+  type        String    @db.VarChar(64)
+  duration    Int?
+  timestamp   DateTime  @db.Timestamp(6)
+  srcTime     DateTime? @db.Timestamp(6)
+  srcChain    String?   @db.VarChar(32)
+  srcTxHash   String?   @db.VarChar(66)
+  srcLogIndex Int?
+  srcEventId  String?   @db.VarChar(40)
+  dstTime     DateTime? @db.Timestamp(6)
+  dstChain    String?   @db.VarChar(32)
+  dstTxHash   String?   @db.VarChar(66)
+  dstLogIndex Int?
+  dstEventId  String?   @db.VarChar(40)
+  app         String    @default("") @db.VarChar(64)
+  plugin      String    @default("") @db.VarChar(64)
+
+  @@index([type])
+}
+
+model BridgeTransfer {
+  messageId          String    @id @db.VarChar(40)
+  type               String    @db.VarChar(64)
+  duration           Int?
+  timestamp          DateTime  @db.Timestamp(6)
+  srcTime            DateTime? @db.Timestamp(6)
+  srcChain           String?   @db.VarChar(32)
+  srcTxHash          String?   @db.VarChar(66)
+  srcLogIndex        Int?
+  srcEventId         String?   @db.VarChar(40)
+  srcTokenAddress    String?   @db.VarChar(66)
+  srcRawAmount       Decimal?  @db.Decimal(80, 0)
+  srcSymbol          String?   @db.VarChar(10)
+  srcAmount          Float?    @db.Real
+  srcPrice           Float?    @db.Real
+  srcValueUsd        Float?    @db.Real
+  dstTime            DateTime? @db.Timestamp(6)
+  dstChain           String?   @db.VarChar(32)
+  dstTxHash          String?   @db.VarChar(66)
+  dstLogIndex        Int?
+  dstEventId         String?   @db.VarChar(40)
+  dstTokenAddress    String?   @db.VarChar(66)
+  dstRawAmount       Decimal?  @db.Decimal(80, 0)
+  dstSymbol          String?   @db.VarChar(10)
+  dstAmount          Float?    @db.Real
+  dstPrice           Float?    @db.Real
+  dstValueUsd        Float?    @db.Real
+  plugin             String    @default("") @db.VarChar(64)
+  dstAbstractTokenId String?   @db.VarChar(66)
+  isProcessed        Boolean   @default(false)
+  srcAbstractTokenId String?   @db.VarChar(66)
+
+  @@index([type])
+}
+
+model CurrentPrice {
+  coingeckoId String   @id @db.VarChar(255)
+  priceUsd    Float    @db.Real
+  updatedAt   DateTime @db.Timestamp(6)
+}
+
+model DaBeatStats {
+  id                 String @id @db.VarChar(255)
+  totalStake         Float  @db.Real
+  thresholdStake     Float  @db.Real
+  numberOfValidators Int?
+}
+
 model DataAvailability {
   timestamp       DateTime @db.Timestamp(6)
   daLayer         String   @db.VarChar(255)
@@ -66,12 +202,51 @@ model DataAvailability {
   totalSize       BigInt
 
   @@id([timestamp, daLayer, projectId, configurationId])
-  @@index([projectId, timestamp(sort: Asc)])
+  @@index([projectId, timestamp])
+}
+
+model DeployedToken {
+  chain                                                                          String            @db.VarChar(32)
+  address                                                                        String            @db.VarChar(255)
+  abstractTokenId                                                                String?           @db.Char(6)
+  symbol                                                                         String            @db.VarChar(255)
+  decimals                                                                       Int
+  deploymentTimestamp                                                            DateTime          @db.Timestamp(6)
+  comment                                                                        String?
+  AbstractToken                                                                  AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
+  TokenConnection_TokenConnection_tokenFromChain_tokenFromAddressToDeployedToken TokenConnection[] @relation("TokenConnection_tokenFromChain_tokenFromAddressToDeployedToken")
+  TokenConnection_TokenConnection_tokenToChain_tokenToAddressToDeployedToken     TokenConnection[] @relation("TokenConnection_tokenToChain_tokenToAddressToDeployedToken")
+
+  @@id([chain, address])
+  @@index([abstractTokenId])
 }
 
 model DiscoveryCache {
   key   String @id
   value String
+}
+
+model EcosystemToken {
+  projectId                 String   @db.VarChar(255)
+  coingeckoId               String   @db.VarChar(255)
+  configurationId           String   @db.VarChar(12)
+  priceUsd                  Float    @db.Real
+  price7dChange             Float    @db.Real
+  marketCapUsd              Float    @db.Real
+  marketCap7dChange         Float    @db.Real
+  circulatingSupply         Float    @db.Real
+  circulatingSupply7dChange Float    @db.Real
+  timestamp                 DateTime @db.Timestamp(6)
+
+  @@id([projectId, coingeckoId, configurationId])
+  @@index([projectId])
+}
+
+model FlatSources {
+  contentHash String   @db.VarChar(255)
+  flat        Json
+  projectId   String   @id @db.VarChar(255)
+  timestamp   DateTime @default(now()) @db.Timestamp(6)
 }
 
 model IndexerConfiguration {
@@ -90,6 +265,15 @@ model IndexerState {
   safeHeight   Int
   minTimestamp DateTime? @db.Timestamp(6)
   configHash   String?
+}
+
+model InteropRecentPrices {
+  coingeckoId String   @db.VarChar(64)
+  timestamp   DateTime @db.Timestamp(6)
+  priceUsd    Float    @db.Real
+
+  @@id([coingeckoId, timestamp])
+  @@index([timestamp])
 }
 
 model L2Cost {
@@ -121,162 +305,22 @@ model Liveness {
   @@index([configurationId, timestamp])
 }
 
-model RealTimeLiveness {
-  configurationId String   @db.VarChar(12)
-  txHash          String   @db.VarChar(255)
+model Notification {
+  id              String   @id @db.VarChar(255)
+  channel         String   @db.VarChar(255)
+  type            String   @db.VarChar(255)
+  relatedEntityId String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
-  blockNumber     Int
-
-  @@id([configurationId, txHash])
-  @@index([configurationId, timestamp])
 }
 
-model UpdateMonitor {
-  projectId         String    @db.VarChar(255)
-  blockNumber       Int
-  timestamp         DateTime? @db.Timestamp(6)
-  discoveryJsonBlob Json
-  configHash        String    @default("") @db.VarChar(255)
+model PermissionResolution {
+  id             Int      @id @default(autoincrement())
+  projectId      String   @db.VarChar(255)
+  timestamp      DateTime @db.Timestamp(6)
+  resolutionBlob Json
 
-  @@id([projectId])
-}
-
-model UpdateNotifier {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now()) @db.Timestamp(6)
-  updatedAt    DateTime @default(now()) @db.Timestamp(6)
-  projectId    String   @db.VarChar(255)
-  timestamp    DateTime @default(now()) @db.Timestamp(6)
-  diffJsonBlob Json
-
+  @@index([projectId, timestamp])
   @@index([timestamp])
-  @@index([projectId])
-}
-
-model UpdateMessage {
-  projectId String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
-  message   String   @db.Text
-
-  @@id([projectId, timestamp])
-}
-
-model VerifierStatus {
-  address     String   @db.VarChar(255)
-  chainId     Int
-  lastUsed    DateTime @db.Timestamp(6)
-  lastUpdated DateTime @db.Timestamp(6)
-
-  @@id([address, chainId])
-}
-
-model AggregatedLiveness {
-  timestamp       DateTime @db.Timestamp(6)
-  projectId       String   @db.VarChar(255)
-  subtype         String   @db.VarChar(255)
-  min             Int
-  avg             Int
-  max             Int
-  numberOfRecords Int
-
-  @@id([timestamp, projectId, subtype])
-  @@index([projectId])
-}
-
-model Anomaly {
-  timestamp DateTime @db.Timestamp(6)
-  projectId String   @db.VarChar(255)
-  subtype   String   @db.VarChar(255)
-  duration  Int
-
-  @@id([timestamp, projectId, subtype])
-}
-
-model RealTimeAnomaly {
-  start      DateTime  @db.Timestamp(6)
-  projectId  String    @db.VarChar(255)
-  subtype    String    @db.VarChar(255)
-  status     String    @db.VarChar(255)
-  isApproved Boolean   @default(false)
-  end        DateTime? @db.Timestamp(6)
-
-  @@id([start, projectId, subtype])
-}
-
-model AnomalyStats {
-  timestamp DateTime @db.Timestamp(6)
-  projectId String   @db.VarChar(255)
-  subtype   String   @db.VarChar(255)
-  mean      Float    @db.Real
-  stdDev    Float    @db.Real
-
-  @@id([timestamp, projectId, subtype])
-}
-
-model FlatSources {
-  projectId   String   @db.VarChar(255)
-  timestamp   DateTime @default(now()) @db.Timestamp(6)
-  contentHash String   @db.VarChar(255)
-  flat        Json
-
-  @@id([projectId])
-}
-
-model TvsAmount {
-  timestamp       DateTime @db.Timestamp(6)
-  configurationId String   @db.Char(12)
-  amount          Decimal  @db.Decimal(80, 0)
-
-  @@id([timestamp, configurationId])
-}
-
-model TvsBlockTimestamp {
-  timestamp       DateTime @db.Timestamp(6)
-  configurationId String   @db.Char(12)
-  chain           String   @db.VarChar(255)
-  blockNumber     Int
-
-  @@id([timestamp, configurationId])
-  @@index([chain])
-}
-
-model TvsPrice {
-  timestamp       DateTime @db.Timestamp(6)
-  configurationId String   @db.Char(12)
-  priceId         String   @db.VarChar(255)
-  priceUsd        Float    @db.Real
-
-  @@id([timestamp, configurationId])
-  @@index([priceId])
-}
-
-model TokenValue {
-  timestamp       DateTime @db.Timestamp(6)
-  configurationId String   @db.Char(12)
-  projectId       String   @db.VarChar(255)
-  tokenId         String   @db.VarChar(255)
-  amount          Float    @db.Real
-  value           Float    @db.Real
-  valueForProject Float    @db.Real
-  valueForSummary Float    @db.Real
-  priceUsd        Float    @default(0) @db.Real
-
-  @@id([timestamp, configurationId])
-  @@index([projectId])
-  @@index([tokenId])
-  @@index([projectId, tokenId, timestamp(sort: Desc)])
-  @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
-}
-
-model TokenMetadata {
-  tokenId      String  @db.VarChar(255)
-  projectId    String  @db.VarChar(255)
-  source       String  @db.VarChar(255)
-  category     String  @db.VarChar(255)
-  isAssociated Boolean
-
-  @@id([tokenId])
-  @@index([projectId])
 }
 
 model ProjectValue {
@@ -292,45 +336,32 @@ model ProjectValue {
   other         Float    @db.Real
   associated    Float    @db.Real
   btc           Float    @default(0) @db.Real
-  rwaRestricted Float    @default(0) @db.Real
   rwaPublic     Float    @default(0) @db.Real
+  rwaRestricted Float    @default(0) @db.Real
 
   @@id([timestamp, project, type])
   @@index([type, project, timestamp])
 }
 
-model UpdateDiff {
-  projectId         String   @db.VarChar(255)
-  address           String   @db.VarChar(255)
-  type              String   @db.VarChar(255)
-  timestamp         DateTime @db.Timestamp(6)
-  diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
-  diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
+model RealTimeAnomaly {
+  start      DateTime  @db.Timestamp(6)
+  projectId  String    @db.VarChar(255)
+  subtype    String    @db.VarChar(255)
+  status     String    @db.VarChar(255)
+  end        DateTime? @db.Timestamp(6)
+  isApproved Boolean   @default(false)
 
-  @@unique([projectId, address, type])
+  @@id([start, projectId, subtype])
 }
 
-model Notification {
-  id              String   @db.VarChar(255)
-  channel         String   @db.VarChar(255)
-  type            String   @db.VarChar(255)
-  relatedEntityId String   @db.VarChar(255)
+model RealTimeLiveness {
+  configurationId String   @db.VarChar(12)
+  txHash          String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
 
-  @@id([id])
-}
-
-model Blob {
-  id          Int      @id @default(autoincrement())
-  blockNumber Int
-  timestamp   DateTime @db.Timestamp(6)
-  daLayer     Int
-  from        String   @db.VarChar(255)
-  to          String?  @db.VarChar(255)
-  topics      String?
-  size        BigInt?
-
-  @@index([blockNumber])
+  @@id([configurationId, txHash])
+  @@index([configurationId, timestamp])
 }
 
 model SyncMetadata {
@@ -345,161 +376,123 @@ model SyncMetadata {
   @@index([feature, id])
 }
 
-model BridgeEvent {
-  plugin      String   @default("") @db.VarChar(64)
-  eventId     String   @db.VarChar(40)
-  type        String   @db.VarChar(64)
-  expiresAt   DateTime @db.Timestamp(6)
-  timestamp   DateTime @db.Timestamp(6)
-  chain       String   @db.VarChar(32)
-  blockNumber Int
-  blockHash   String   @db.VarChar(66)
-  txHash      String   @db.VarChar(66)
-  value       String   @default("") @db.VarChar(66)
-  txTo        String?  @db.VarChar(66)
-  matched     Boolean
-  unsupported Boolean  @default(false)
-  logIndex    Int
-  args        Json
-
-  @@id([eventId])
-  @@index([type])
-}
-
-model BridgeMessage {
-  plugin      String    @default("") @db.VarChar(64)
-  messageId   String    @db.VarChar(40)
-  type        String    @db.VarChar(64)
-  app         String    @default("") @db.VarChar(64)
-  duration    Int?
-  timestamp   DateTime  @db.Timestamp(6)
-  srcTime     DateTime? @db.Timestamp(6)
-  srcChain    String?   @db.VarChar(32)
-  srcTxHash   String?   @db.VarChar(66)
-  srcLogIndex Int?
-  srcEventId  String?   @db.VarChar(40)
-  dstTime     DateTime? @db.Timestamp(6)
-  dstChain    String?   @db.VarChar(32)
-  dstTxHash   String?   @db.VarChar(66)
-  dstLogIndex Int?
-  dstEventId  String?   @db.VarChar(40)
-
-  @@id([messageId])
-  @@index([type])
-}
-
-model BridgeTransfer {
-  plugin      String    @default("") @db.VarChar(64)
-  messageId   String    @db.VarChar(40)
-  type        String    @db.VarChar(64)
-  duration    Int?
-  timestamp   DateTime  @db.Timestamp(6)
-  srcTime     DateTime? @db.Timestamp(6)
-  srcChain    String?   @db.VarChar(32)
-  srcTxHash   String?   @db.VarChar(66)
-  srcLogIndex Int?
-  srcEventId  String?   @db.VarChar(40)
-
-  srcTokenAddress    String?  @db.VarChar(66)
-  srcRawAmount       Decimal? @db.Decimal(80, 0)
-  srcSymbol          String?  @db.VarChar(10)
-  srcAbstractTokenId String?  @db.VarChar(66)
-  srcAmount          Float?   @db.Real
-  srcPrice           Float?   @db.Real
-  srcValueUsd        Float?   @db.Real
-
-  dstTime     DateTime? @db.Timestamp(6)
-  dstChain    String?   @db.VarChar(32)
-  dstTxHash   String?   @db.VarChar(66)
-  dstLogIndex Int?
-  dstEventId  String?   @db.VarChar(40)
-
-  dstTokenAddress    String?  @db.VarChar(66)
-  dstRawAmount       Decimal? @db.Decimal(80, 0)
-  dstSymbol          String?  @db.VarChar(10)
-  dstAbstractTokenId String?  @db.VarChar(66)
-  dstAmount          Float?   @db.Real
-  dstPrice           Float?   @db.Real
-  dstValueUsd        Float?   @db.Real
-
-  isProcessed Boolean @default(false)
-
-  @@id([messageId])
-  @@index([type])
-}
-
-model EcosystemToken {
-  projectId                 String   @db.VarChar(255)
-  coingeckoId               String   @db.VarChar(255)
-  configurationId           String   @db.VarChar(12)
-  priceUsd                  Float    @db.Real
-  price7dChange             Float    @db.Real
-  marketCapUsd              Float    @db.Real
-  marketCap7dChange         Float    @db.Real
-  circulatingSupply         Float    @db.Real
-  circulatingSupply7dChange Float    @db.Real
-  timestamp                 DateTime @db.Timestamp(6)
-
-  @@id([projectId, coingeckoId, configurationId])
-  @@index([projectId])
-}
-
-model AbstractToken {
-  id                        String    @db.Char(6)
-  issuer                    String?   @db.VarChar(255)
-  symbol                    String    @db.VarChar(255)
-  category                  String    @db.VarChar(255)
-  iconUrl                   String?   @db.VarChar(255)
-  coingeckoId               String?   @db.VarChar(255)
-  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
-  comment                   String?   @db.Text
-  reviewed                  Boolean   @default(false)
-
-  deployedTokens DeployedToken[]
-
-  @@id([id])
-  @@unique([issuer, symbol])
-}
-
-model DeployedToken {
-  chain               String   @db.VarChar(32)
-  address             String   @db.VarChar(255)
-  abstractTokenId     String?  @db.Char(6)
-  symbol              String   @db.VarChar(255)
-  decimals            Int
-  deploymentTimestamp DateTime @db.Timestamp(6)
-  comment             String?  @db.Text
-
-  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
-  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
-  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
-
-  @@id([chain, address])
-  @@index([abstractTokenId])
-}
-
 model TokenConnection {
-  tokenFromChain   String  @db.VarChar(32)
-  tokenFromAddress String  @db.VarChar(255)
-  tokenToChain     String  @db.VarChar(32)
-  tokenToAddress   String  @db.VarChar(255)
-  type             String  @db.VarChar(32)
-  params           Json?   @db.Json
-  comment          String? @db.Text
-
-  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
+  tokenFromChain                                                               String        @db.VarChar(32)
+  tokenFromAddress                                                             String        @db.VarChar(255)
+  tokenToChain                                                                 String        @db.VarChar(32)
+  tokenToAddress                                                               String        @db.VarChar(255)
+  type                                                                         String        @db.VarChar(32)
+  params                                                                       Json?         @db.Json
+  comment                                                                      String?
+  DeployedToken_TokenConnection_tokenFromChain_tokenFromAddressToDeployedToken DeployedToken @relation("TokenConnection_tokenFromChain_tokenFromAddressToDeployedToken", fields: [tokenFromChain, tokenFromAddress], references: [chain, address])
+  DeployedToken_TokenConnection_tokenToChain_tokenToAddressToDeployedToken     DeployedToken @relation("TokenConnection_tokenToChain_tokenToAddressToDeployedToken", fields: [tokenToChain, tokenToAddress], references: [chain, address])
 
   @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
   @@index([tokenFromChain, tokenFromAddress])
   @@index([tokenToChain, tokenToAddress])
 }
 
-model InteropRecentPrices {
-  coingeckoId String   @db.VarChar(64)
-  timestamp   DateTime @db.Timestamp(6)
-  priceUsd    Float    @db.Real
+model TokenMetadata {
+  tokenId      String  @id @db.VarChar(255)
+  projectId    String  @db.VarChar(255)
+  source       String  @db.VarChar(255)
+  category     String  @db.VarChar(255)
+  isAssociated Boolean
 
-  @@id([coingeckoId, timestamp])
+  @@index([projectId])
+}
+
+model TokenValue {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  amount          Float    @db.Real
+  value           Float    @db.Real
+  valueForProject Float    @db.Real
+  valueForSummary Float    @db.Real
+  tokenId         String   @db.VarChar(255)
+  projectId       String   @db.VarChar(255)
+  priceUsd        Float    @default(0) @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([projectId])
+  @@index([projectId, timestamp, tokenId, valueForProject, valueForSummary])
+  @@index([projectId, tokenId, timestamp(sort: Desc)])
+  @@index([tokenId])
+}
+
+model TvsAmount {
+  timestamp       DateTime @db.Timestamp(6)
+  amount          Decimal  @db.Decimal(80, 0)
+  configurationId String   @db.Char(12)
+
+  @@id([timestamp, configurationId])
+}
+
+model TvsBlockTimestamp {
+  chain           String   @db.VarChar(255)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  configurationId String   @db.Char(12)
+
+  @@id([timestamp, configurationId])
+  @@index([chain])
+}
+
+model TvsPrice {
+  configurationId String   @db.Char(12)
+  timestamp       DateTime @db.Timestamp(6)
+  priceUsd        Float    @db.Real
+  priceId         String   @db.VarChar(255)
+
+  @@id([timestamp, configurationId])
+  @@index([priceId])
+}
+
+model UpdateDiff {
+  address           String   @db.VarChar(255)
+  type              String   @db.VarChar(255)
+  timestamp         DateTime @db.Timestamp(6)
+  projectId         String   @db.VarChar(255)
+  diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
+  diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
+  details           Json?
+
+  @@unique([projectId, address, type])
+}
+
+model UpdateMessage {
+  timestamp DateTime @db.Timestamp(6)
+  message   String
+  projectId String   @db.VarChar(255)
+
+  @@id([projectId, timestamp])
+}
+
+model UpdateMonitor {
+  blockNumber       Int
+  timestamp         DateTime? @db.Timestamp(6)
+  discoveryJsonBlob Json
+  configHash        String    @default("") @db.VarChar(255)
+  projectId         String    @id @db.VarChar(255)
+}
+
+model UpdateNotifier {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @db.Timestamp(6)
+  diffJsonBlob Json
+  projectId    String   @db.VarChar(255)
+  timestamp    DateTime @default(now()) @db.Timestamp(6)
+
+  @@index([projectId])
   @@index([timestamp])
+}
+
+model VerifierStatus {
+  address     String   @db.VarChar(255)
+  chainId     Int
+  lastUsed    DateTime @db.Timestamp(6)
+  lastUpdated DateTime @db.Timestamp(6)
+
+  @@id([address, chainId])
 }

@@ -138,6 +138,31 @@ git fetch upstream && git merge upstream/main
 - **Resolution**: Works like any other path - navigates the data structure and recursively extracts all addresses
 - **Display**: Shows all resolved addresses with click-to-select functionality
 
+### Continuous Permission Monitoring ✅
+**Automated Change Detection**: Monitors permission changes alongside discovery updates
+- **Location**: `packages/backend/src/modules/update-monitor/defidisco/`
+- **Trigger**: Automatically runs when discovery detects changes (`diff.length > 0`)
+- **Components**:
+  - **PermissionResolver**: Resolves owner paths and detects changes
+  - **PermissionResolutionRepository**: Stores append-only resolution history
+  - **UpdateNotifier.notifyPermissionChanges()**: Formats Discord alerts
+- **Database Schema**:
+  - `PermissionResolution` table: Stores resolution blobs with timestamp
+  - `UpdateDiff.details` field: Stores permission change metadata (JSONB)
+  - Migration: `20251202000000_add_permission_monitoring`
+- **Change Detection**:
+  - ✅ Detects added/removed owner addresses (resolved from paths)
+  - ❌ Ignores config changes (manually marked as permissioned)
+  - ❌ Ignores manual updates (scores, descriptions, checked status)
+- **Discord Notifications**:
+  - Sent to INTERNAL channel only
+  - Shows added/removed owners with contract names
+  - Groups resolution errors at end of message
+  - Format: 🔒 **Permission Changes Detected: project-name**
+- **Error Handling**: Resolution errors logged but don't stop processing
+- **Performance**: Only re-resolves when discovery changes detected
+- **Documentation**: See `packages/backend/src/modules/update-monitor/defidisco/README.md`
+
 ---
 
 ## Development Guidelines

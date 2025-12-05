@@ -13,15 +13,18 @@ import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
-import type { DiscoveryRunner } from './DiscoveryRunner'
-import { sanitizeDiscoveryOutput} from './sanitizeDiscoveryOutput'
-import type { UpdateDiffer } from './UpdateDiffer'
-import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
-import { findDependents } from './utils/findDependents'
-import { findUnknownEntries } from './utils/findUnknownEntries'
+import type { DiscoveryOutputCache } from '../update-monitor/DiscoveryOutputCache'
+import type { DiscoveryRunner } from '../update-monitor/DiscoveryRunner'
+import { sanitizeDiscoveryOutput } from '../update-monitor/sanitizeDiscoveryOutput'
+import type { UpdateDiffer } from '../update-monitor/UpdateDiffer'
+import type {
+  DailyReminderChainEntry,
+  UpdateNotifier,
+} from '../update-monitor/UpdateNotifier'
+import { findDependents } from '../update-monitor/utils/findDependents'
+import { findUnknownEntries } from '../update-monitor/utils/findUnknownEntries'
 
-export class UpdateMonitor {
+export class DefiUpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
@@ -40,7 +43,7 @@ export class UpdateMonitor {
       (timestamp) => this.update(timestamp),
       this.logger.for('taskQueue'),
       {
-        metricsId: UpdateMonitor.name,
+        metricsId: DefiUpdateMonitor.name,
       },
     )
   }
@@ -62,14 +65,25 @@ export class UpdateMonitor {
     const targetDateIso = UnixTime.toDate(timestamp).toISOString()
     const updateStart = UnixTime.now()
 
-    this.logger.info('Full update started', {
+    this.logger.info('Full DeFi update started', {
       start: updateStart,
       updateTarget: timestamp,
       updateTargetDate: targetDateIso,
     })
 
-    const projects = this.configReader.readAllDiscoveredProjects()
-    for (const project of projects) {
+    // Get all projects and filter to DeFi only
+    const allProjects = this.configReader.readAllDiscoveredProjects()
+    const defiProjects = allProjects.filter((projectId) => {
+      const config = this.configReader.readConfig(projectId)
+      return config.structure.defidisco?.scanPermissions === true
+    })
+
+    this.logger.info('Filtered to DeFi projects', {
+      totalProjects: allProjects.length,
+      defiProjects: defiProjects.length,
+    })
+
+    for (const project of defiProjects) {
       await this.updateProject(this.runner, project, timestamp)
       await this.updateDiffer?.runForProject(project, timestamp)
     }
@@ -77,7 +91,7 @@ export class UpdateMonitor {
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
 
-    this.logger.info('Full update finished', {
+    this.logger.info('Full DeFi update finished', {
       start: updateStart,
       end: updateEnd,
       duration: updateDuration,
@@ -92,9 +106,16 @@ export class UpdateMonitor {
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
     const result: Record<string, DailyReminderChainEntry> = {}
 
-    const projectConfigs = this.configReader
-      .readAllDiscoveredProjects()
-      .map((project) => this.configReader.readConfig(project))
+    // Get all projects and filter to DeFi only
+    const allProjects = this.configReader.readAllDiscoveredProjects()
+    const defiProjects = allProjects.filter((projectId) => {
+      const config = this.configReader.readConfig(projectId)
+      return config.structure.defidisco?.scanPermissions === true
+    })
+
+    const projectConfigs = defiProjects.map((project) =>
+      this.configReader.readConfig(project),
+    )
 
     for (const projectConfig of projectConfigs) {
       if (projectConfig.archived) {
@@ -127,7 +148,7 @@ export class UpdateMonitor {
   ) {
     const projectUpdateStart = UnixTime.now()
 
-    this.logger.info('Project update started', {
+    this.logger.info('DeFi project update started', {
       projectName: project,
       timestamp,
       date: UnixTime.toDate(timestamp).toISOString(),
@@ -202,7 +223,7 @@ export class UpdateMonitor {
       })
 
       const chainUpdateEnd = UnixTime.now()
-      this.logger.info('Per-chain project update finished', {
+      this.logger.info('Per-chain DeFi project update finished', {
         project,
         start: chainUpdateStart,
         end: chainUpdateEnd,
@@ -224,7 +245,7 @@ export class UpdateMonitor {
 
     projectFinished()
     const projectUpdateEnd = UnixTime.now()
-    this.logger.info('Project update finished', {
+    this.logger.info('DeFi project update finished', {
       project,
       start: projectUpdateStart,
       end: projectUpdateEnd,
@@ -287,6 +308,7 @@ export class UpdateMonitor {
       return diskDiscovery
     }
 
+    this.logger.info('Running discovery for previous timestamp', project)
     const runResult = await runner.discoverWithRetry(
       projectConfig,
       previousDiscovery.timestamp,
@@ -295,6 +317,7 @@ export class UpdateMonitor {
       undefined,
       previousDiscovery.dependentDiscoveries,
     )
+    this.logger.info('Previous discovery completed', project)
     const { discovery, flatSources } = runResult
 
     // NOTE(radomski): We should only write to the database files that are
@@ -307,12 +330,23 @@ export class UpdateMonitor {
     // the same. The only way to detect it is to check if the block number of
     // the ondisk discovery is higher than the one in the flat source table
     if (onDiskConfigChanged || onDiskDiscoveryChanged) {
-      this.logger.info('Upserting flat source', project)
+      const flatSourcesSize = JSON.stringify(flatSources).length
+      this.logger.info('Upserting flat source to database', {
+        ...project,
+        sizeBytes: flatSourcesSize,
+      })
+      const upsertStart = UnixTime.now()
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,
         timestamp: previousDiscovery.timestamp,
         contentHash: hashJson(sortObjectByKeys(flatSources)),
         flat: flatSources,
+      })
+      const upsertEnd = UnixTime.now()
+      this.logger.info('Flat source upsert completed', {
+        ...project,
+        duration: upsertEnd - upsertStart,
+        sizeBytes: flatSourcesSize,
       })
     }
 
@@ -347,14 +381,14 @@ export class UpdateMonitor {
 
 type ProjectGauge = Gauge<'project'>
 const projectGauge: ProjectGauge = new Gauge({
-  name: 'update_monitor_project_discovery_duration_seconds',
-  help: 'Duration gauge of discovering a project',
+  name: 'defi_update_monitor_project_discovery_duration_seconds',
+  help: 'Duration gauge of discovering a DeFi project',
   labelNames: ['project'],
 })
 
 const errorCount = new Gauge({
-  name: 'update_monitor_error_count',
-  help: 'Value showing amount of errors in the update cycle',
+  name: 'defi_update_monitor_error_count',
+  help: 'Value showing amount of errors in the DeFi update cycle',
 })
 
 function countSeverities(diffs: DiscoveryDiff[]) {

@@ -23,6 +23,7 @@ import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
+import { PermissionResolutionRepository } from './repositories/PermissionResolutionRepository'
 import { ProjectValueRepository } from './repositories/ProjectValueRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
@@ -72,6 +73,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
+    permissionResolution: new PermissionResolutionRepository(db),
     // #endregion
 
     // #region Ecosystems

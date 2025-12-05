@@ -7,7 +7,9 @@ import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
+import { getDefiUpdateMonitorConfig } from './features/defiUpdateMonitor'
 import { getEcosystemsConfig } from './features/ecosystemToken'
+import { getPermissionMonitorConfig } from './features/permissionMonitor'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -119,6 +121,10 @@ export async function makeConfig(
     updateMonitor:
       flags.isEnabled('updateMonitor') &&
       getUpdateMonitorConfig(env, flags, chains, isLocal),
+    permissionMonitor: getPermissionMonitorConfig(env, flags, isLocal),
+    defiUpdateMonitor:
+      flags.isEnabled('defiUpdateMonitor') &&
+      getDefiUpdateMonitorConfig(env, flags, chains, isLocal),
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
