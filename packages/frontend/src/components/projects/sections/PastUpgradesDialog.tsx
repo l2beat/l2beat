@@ -116,7 +116,7 @@ export function PastUpgradesDialog({
       </Dialog>
       <Drawer>
         <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className="max-h-[90dvh] dark:bg-surface-primary">
+        <DrawerContent className="max-h-[90dvh]">
           <DrawerHeader className="flex items-center justify-between">
             <DrawerTitle className="font-semibold text-label-value-18">
               Past upgrades
