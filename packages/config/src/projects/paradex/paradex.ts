@@ -84,7 +84,7 @@ export const paradex: ScalingProject = {
     slug: 'paradex',
     stacks: ['SN Stack'],
     description:
-      'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
+      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals with Privacy.',
     purposes: ['Universal', 'Exchange'],
     links: {
       websites: ['https://paradex.trade/'],
@@ -93,7 +93,7 @@ export const paradex: ScalingProject = {
       repositories: ['https://github.com/tradeparadex'],
       explorers: ['https://voyager.prod.paradex.trade'],
       socialMedia: [
-        'https://twitter.com/tradeparadex',
+        'https://twitter.com/paradex',
         'https://discord.com/invite/paradex',
       ],
     },
@@ -104,7 +104,7 @@ export const paradex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogId: ProjectId('stwo'),
   },
   chainConfig: {
     name: 'paradex',
@@ -113,7 +113,7 @@ export const paradex: ScalingProject = {
     apis: [
       {
         type: 'starknet',
-        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_7',
+        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_9',
         callsPerMinute: 120,
       },
     ],
