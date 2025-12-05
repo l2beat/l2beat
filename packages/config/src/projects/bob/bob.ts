@@ -54,7 +54,7 @@ export const bob: ScalingProject = opStackL2({
       url: 'https://github.com/op-rs/kona/issues/3108',
       date: '2025-12-05T00:00:00Z',
       description:
-        'To fix a bug in the Kona derivation client, the proof system is updated and a state root manually resolved.',
+        'To fix a bug in the Kona derivation, the proof system is updated and a state root manually resolved.',
       type: 'incident',
     },
     {
