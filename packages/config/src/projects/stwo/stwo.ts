@@ -80,6 +80,10 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
         projectId: ProjectId('starknet'),
         sinceTimestamp: UnixTime(1760824800),
       },
+      {
+        projectId: ProjectId('paradex'),
+        sinceTimestamp: UnixTime(1763997779),
+      },
     ],
     verifierHashes: [
       {
