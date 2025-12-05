@@ -1,6 +1,6 @@
 {
   "name": "aevo",
-  "timestamp": 1764932250,
+  "timestamp": 1764933551,
   "configHash": "0x858721ace2ce2a0dde988e2effe636a700eb3a46f23b71e660424836fa177154",
   "entries": [
     {
@@ -1925,6 +1925,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23946302 },
+  "usedBlockNumbers": { "ethereum": 23946409 },
   "permissionsConfigHash": "0xbb802a990ece97a0534dc4ff02dc0403ef608189afab435a3950cac4ffd249ab"
 }
