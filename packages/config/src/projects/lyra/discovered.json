@@ -1,6 +1,6 @@
 {
   "name": "lyra",
-  "timestamp": 1759480868,
+  "timestamp": 1764933699,
   "configHash": "0xf13ab2bfb82e1993f71eff6a68dd1723698e8f04018bf9554afcd111df803862",
   "entries": [
     {
@@ -279,6 +279,11 @@
       "implementationNames": {
         "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": "PreimageOracle"
       }
+    },
+    {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PermissionedDisputeGame",
@@ -602,11 +607,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -618,7 +623,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -739,7 +744,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620812",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620850",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -801,6 +806,11 @@
         "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -937,7 +947,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 23468786
+          "prevBlockNum": 23922150
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1002,7 +1012,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 140,
+        "gameCount": 267,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x35844639E3e674C484180C650EfD2170433Df71c",
@@ -1014,7 +1024,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 140,
+        "permissionedGamesTotal": 267,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -1164,17 +1174,7 @@
       }
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1865,6 +1865,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23496123 },
-  "permissionsConfigHash": "0xb7d34149e3cdc92bdcb9c655e7d434d06309560a3c69d2caa41e04c4f7186f94"
+  "usedBlockNumbers": { "ethereum": 23946421 },
+  "permissionsConfigHash": "0x73586d74e63fa200ee6799d65a94a7f52d042d876caf05ddbdbd82e905dcb3c0"
 }
