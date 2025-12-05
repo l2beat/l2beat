@@ -50,6 +50,14 @@ export const bob: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
+      title: 'Kona derivation bug',
+      url: 'https://github.com/op-rs/kona/issues/3108',
+      date: '2025-12-05T00:00:00Z',
+      description:
+        'To fix a bug in the Kona derivation client, the proof system is updated and a state root manually resolved.',
+      type: 'incident',
+    },
+    {
       title: 'Proof System Intervention',
       url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
       date: '2025-07-24T00:00:00Z',
