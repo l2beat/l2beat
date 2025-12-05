@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "eigenzero",
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "initialAddresses": [
+    "eth:0x54Bb392508D458Cbf1e48c59d44ffBC93f912329"
+  ],
+  "overrides": {
+    "eth:0x54Bb392508D458Cbf1e48c59d44ffBC93f912329": {
+      "ignoreMethods": [
+        "getRequest"
+      ]
+    },
+    "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": {
+      "fields": {
+        "eigenzeroOperatorSet": {
+          "handler": {
+            "type": "hardcoded",
+            "value": ["0xF07F83Ff977Dd004060F00ecefB80A9F92775098", 0]
+          }
+        },
+        "strategiesInEigenzeroOperatorSet": {
+          "handler": {
+            "type": "call",
+            "method": "function getStrategiesInOperatorSet(tuple(address avs, uint32 id) operatorSet) view returns (address[])",
+            "args": ["{{ eigenzeroOperatorSet }}"]
+          }
+        },
+        "eigenzeroRedistributionRecipient": {
+          "handler": {
+            "type": "call",
+            "method": "function getRedistributionRecipient(tuple(address avs, uint32 id) operatorSet) view returns (address)",
+            "args": ["{{ eigenzeroOperatorSet }}"]
+          }
+        }
+      }
+    }
+  }
+}
