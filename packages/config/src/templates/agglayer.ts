@@ -509,7 +509,7 @@ function buildValidiumSections(
     customDa,
     badges,
     reasonsForBeingOther: config.reasonsForBeingOther,
-    architectureImage: config.architectureImage ?? 'polygon-cdk-validium',
+    architectureImage: config.architectureImage ?? 'agglayer-validium',
   }
 }
 
@@ -582,7 +582,7 @@ function buildPessimisticSections(
       ...(config.reasonsForBeingOther ?? []),
     ],
     zkProgramHashes,
-    architectureImage: config.architectureImage,
+    architectureImage: config.architectureImage ?? 'agglayer-pessimistic',
   }
 }
 

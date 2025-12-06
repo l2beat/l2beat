@@ -1517,5 +1517,7 @@
   "static/icons/megaeth.png": "3a52330998174ec84fb719698b6e22cc",
   "static/meta-images/scaling/projects/megaeth/opengraph-image.png": "e4dae737847610b493ca27e157c68095",
   "static/meta-images/publications/monthly-update-2025-11.png": "1e36a4d01573b0095d02fff0d5d38f35",
-  "static/meta-images/publications/the-future-of-financial-infrastructure.png": "e8765b4cd987bf006f49009f08c9498e"
+  "static/meta-images/publications/the-future-of-financial-infrastructure.png": "e8765b4cd987bf006f49009f08c9498e",
+  "static/images/architecture/agglayer-pessimistic.png": "b597f5efafb59ca297dda4096f924386",
+  "static/images/architecture/agglayer-validium.png": "7389504a28b0e586ae0c071130a51f54"
 }
