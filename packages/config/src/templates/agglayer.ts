@@ -41,6 +41,7 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
+  ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -58,20 +59,26 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 export interface DAProvider {
   layer: DaProjectTableValue
   riskView: TableReadyValue
-  technology: ProjectTechnologyChoice
+  technology: ProjectTechnologyChoice | ProjectTechnologyChoice[]
   bridge: TableReadyValue
 }
 
-export interface agglayerConfig {
+type AgglayerVariant = 'validium' | 'pessimistic'
+
+interface AgglayerBaseConfig {
+  variant?: AgglayerVariant
   addedAt: UnixTime
   capability?: ProjectScalingCapability
-  daProvider?: DAProvider
-  customDa?: ProjectCustomDa
   discovery: ProjectDiscovery
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   activityConfig?: ProjectActivityConfig
@@ -94,22 +101,69 @@ export interface agglayerConfig {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
-  /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
-  /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
     sinceBlock: number
   }
-  /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
     appIds: string[]
-    /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
-  /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+}
+
+interface AgglayerValidiumConfig extends AgglayerBaseConfig {
+  variant: 'validium'
+  daProvider?: DAProvider
+  customDa?: ProjectCustomDa
+}
+
+interface AgglayerPessimisticConfig extends AgglayerBaseConfig {
+  variant: 'pessimistic'
+  customDa?: ProjectCustomDa
+}
+
+type AgglayerConfigInput =
+  | AgglayerValidiumConfig
+  | AgglayerPessimisticConfig
+  | (AgglayerBaseConfig & {
+      variant?: undefined
+      daProvider?: DAProvider
+      customDa?: ProjectCustomDa
+    })
+
+type AgglayerConfig = AgglayerValidiumConfig | AgglayerPessimisticConfig
+
+interface SharedContext {
+  variant: AgglayerVariant
+  explorerUrl: string
+  sharedDiscovery: ProjectDiscovery
+  manager: ReturnType<ProjectDiscovery['getContract']>
+  bridge: ReturnType<ProjectDiscovery['getContract']>
+  rollupModule: ReturnType<ProjectDiscovery['getContract']>
+  upgradeDelaySeconds: number
+  upgradeDelayString: string
+  emergencyActivatedCount: number
+  isForcedBatchDisallowed: boolean
+  exitWindowRisk: ScalingProject['riskView']['exitWindow']
+  discoveries: ProjectDiscovery[]
+  finalizationPeriod: number
+}
+
+interface VariantSections {
+  dataAvailability: ScalingProject['dataAvailability']
+  riskView: ScalingProject['riskView']
+  technology?: ProjectScalingTechnology
+  stateDerivation?: ProjectScalingStateDerivation
+  stateValidation?: ProjectScalingStateValidation
+  proofSystem?: ProjectScalingProofSystem
+  contractsRisks: ProjectRisk[]
+  customDa?: ProjectCustomDa
+  badges: Badge[]
+  reasonsForBeingOther?: ReasonForBeingInOther[]
+  zkProgramHashes?: ReturnType<typeof ZK_PROGRAM_HASHES>[]
+  architectureImage?: string
 }
 
 export function agglayerDAC(template: { dac: DacInfo }): ProjectCustomDa {
@@ -164,218 +218,507 @@ A separate contract, the PolygonCommittee contract, is used to manage the commit
   })
 }
 
-export function agglayer(templateVars: agglayerConfig): ScalingProject {
-  const explorerUrl = EXPLORER_URLS['ethereum']
+export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
+  const config = normalizeConfig(templateInput)
+  const context = buildSharedContext(config)
 
-  const isPessimistic = templateVars.discovery.hasContract(
-    'AggchainECDSAMultisig',
+  const variantSections =
+    config.variant === 'validium'
+      ? buildValidiumSections(config, context)
+      : buildPessimisticSections(config, context)
+
+  const permissions = mergePermissions(
+    generateDiscoveryDrivenPermissions([config.discovery]),
+    config.nonTemplatePermissions ?? {},
   )
 
-  const rollupModuleContract = isPessimistic
-    ? templateVars.discovery.getContract('AggchainECDSAMultisig')
-    : templateVars.discovery.getContract('Validium')
+  const upgradesAndGovernance =
+    config.upgradesAndGovernance ??
+    buildUpgradesAndGovernance(context, config.variant)
 
-  const forcedBatchAddress = rollupModuleContract.values?.forceBatchAddress
+  return {
+    type: 'layer2',
+    addedAt: config.addedAt,
+    id: ProjectId(config.discovery.projectName),
+    capability: config.capability ?? 'universal',
+    archivedAt: config.archivedAt,
+    ecosystemInfo: { id: ProjectId('agglayer') },
+    display: {
+      ...config.display,
+      upgradesAndGovernanceImage: 'polygoncdk',
+      purposes: config.overridingPurposes ?? [
+        'Universal',
+        ...(config.additionalPurposes ?? []),
+      ],
+      architectureImage: variantSections.architectureImage,
+      stacks: ['Agglayer CDK'],
+      tvsWarning: config.display.tvsWarning,
+    },
+    proofSystem: variantSections.proofSystem,
+    config: {
+      associatedTokens: config.associatedTokens,
+      escrows: config.nonTemplateEscrows,
+      activityConfig: getActivityConfig(
+        config.activityConfig,
+        config.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
+      daTracking: config.nonTemplateDaTracking,
+      trackedTxs: config.nonTemplateTrackedTxs,
+    },
+    chainConfig: config.chainConfig && {
+      ...config.chainConfig,
+      gasTokens: config.chainConfig?.gasTokens ?? ['ETH'],
+    },
+    dataAvailability: variantSections.dataAvailability,
+    riskView: variantSections.riskView,
+    stage: { stage: 'NotApplicable' },
+    technology: variantSections.technology,
+    stateDerivation: variantSections.stateDerivation,
+    stateValidation: variantSections.stateValidation,
+    permissions,
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([config.discovery]),
+      risks: variantSections.contractsRisks,
+      ...(variantSections.zkProgramHashes?.length
+        ? { zkProgramHashes: variantSections.zkProgramHashes }
+        : {}),
+    },
+    upgradesAndGovernance,
+    milestones: config.milestones,
+    badges: mergeBadges([BADGES.Infra.Agglayer], variantSections.badges),
+    customDa: variantSections.customDa,
+    reasonsForBeingOther: variantSections.reasonsForBeingOther,
+    scopeOfAssessment: config.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(context.discoveries),
+  }
+}
 
-  assert(
-    forcedBatchAddress !== undefined,
-    'polygonCDKStack requires forceBatchAddress on Validium or AggchainECDSAMultisig.',
-  )
+function normalizeConfig(input: AgglayerConfigInput): AgglayerConfig {
+  const variant = resolveVariant(input)
 
-  const isForcedBatchDisallowed =
-    forcedBatchAddress !== '0x0000000000000000000000000000000000000000'
-
-  const dacInfo =
-    !isPessimistic && templateVars.discovery.hasContract('PolygonDataCommittee')
-      ? {
-          requiredMembers: templateVars.discovery.getContractValue<number>(
-            'PolygonDataCommittee',
-            'requiredAmountOfSignatures',
-          ),
-          membersCount: templateVars.discovery.getContractValue<number>(
-            'PolygonDataCommittee',
-            'getAmountOfMembers',
-          ),
-        }
-      : undefined
-
-  let daProvider = templateVars.daProvider
-  if (!isPessimistic && daProvider === undefined && dacInfo !== undefined) {
-    daProvider = {
-      layer: DA_LAYERS.DAC,
-      bridge: DA_BRIDGES.DAC_MEMBERS({
-        requiredSignatures: dacInfo.requiredMembers,
-        membersCount: dacInfo.membersCount,
-      }),
-      riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: dacInfo.membersCount,
-        requiredSignatures: dacInfo.requiredMembers,
-      }),
-      technology: {
-        name: 'Data is not stored on chain',
-        description:
-          'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the external data becomes unavailable.',
-            isCritical: true,
-          },
-        ],
-        references: [
-          {
-            title:
-              'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-            url: `https://etherscan.io/address/${rollupModuleContract.address}#code#F1#L91`,
-          },
-        ],
-      },
-    }
+  if (variant === 'pessimistic') {
+    const hasDaProvider =
+      'daProvider' in input && (input as AgglayerValidiumConfig).daProvider
+    assert(
+      !hasDaProvider,
+      'Agglayer pessimistic variant ignores DA providers; remove daProvider or set variant to validium.',
+    )
   }
 
-  const customDa = isPessimistic
-    ? templateVars.customDa
-    : (templateVars.customDa ??
-      (dacInfo !== undefined ? agglayerDAC({ dac: dacInfo }) : undefined))
+  return {
+    ...input,
+    variant,
+  } as AgglayerConfig
+}
 
+function resolveVariant(input: AgglayerConfigInput): AgglayerVariant {
+  if (input.variant) {
+    return input.variant
+  }
+
+  return input.discovery.hasContract('AggchainECDSAMultisig')
+    ? 'pessimistic'
+    : 'validium'
+}
+
+function buildSharedContext(config: AgglayerConfig): SharedContext {
+  const explorerUrl = EXPLORER_URLS['ethereum']
+  const sharedDiscovery = new ProjectDiscovery('shared-polygon-cdk')
+  const rollupModule =
+    config.variant === 'pessimistic'
+      ? config.discovery.getContract('AggchainECDSAMultisig')
+      : config.discovery.getContract('Validium')
+
+  const forcedBatchAddress = rollupModule.values?.forceBatchAddress
   assert(
-    isPessimistic || daProvider !== undefined,
-    'polygonCDKStack requires a daProvider or the PolygonDataCommittee contract in discovery.',
+    forcedBatchAddress !== undefined,
+    'Agglayer template requires forceBatchAddress on Validium or AggchainECDSAMultisig.',
   )
-  const shared = new ProjectDiscovery('shared-polygon-cdk')
-  const agglayerManagerContract = shared.getContract('AgglayerManager')
-  const upgradeDelay = shared.getContractValue<number>(
+
+  const upgradeDelaySeconds = sharedDiscovery.getContractValue<number>(
     'Timelock',
     'getMinDelay',
   )
-  const upgradeDelayString = formatSeconds(upgradeDelay)
-  const emergencyActivatedCount = shared.getContractValue<number>(
-    'AgglayerManager',
-    'emergencyStateCount',
-  )
-
-  const exitWindowRisk = {
+  const upgradeDelayString = formatSeconds(upgradeDelaySeconds)
+  const exitWindowRisk: ScalingProject['riskView']['exitWindow'] = {
     value: 'None',
     description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
     sentiment: 'bad',
-    orderHint: -1, // worse than forced tx available but instantly upgradable
+    orderHint: -1,
     warning: {
       value: 'The Security Council can remove the delay on upgrades.',
       sentiment: 'bad',
     },
-  } as const
-
-  const bridge = templateVars.discovery.getContract('AgglayerBridge')
-
-  const finalizationPeriod = 0
-
-  const discoveries = [templateVars.discovery, shared]
-
-  const reasonsForBeingOther = isPessimistic
-    ? [REASON_FOR_BEING_OTHER.NO_DA_ORACLE, REASON_FOR_BEING_OTHER.NO_PROOFS]
-    : templateVars.reasonsForBeingOther
-  const baseBadges = [BADGES.Infra.Agglayer]
-  const additionalBadges = isPessimistic
-    ? mergeBadges([BADGES.DA.CustomDA], templateVars.additionalBadges ?? [])
-    : mergeBadges(
-        [BADGES.Stack.CDKErigon, BADGES.VM.EVM],
-        templateVars.additionalBadges ?? [],
-      )
-
-  assert(
-    additionalBadges.find((b) => b.type === 'DA') !== undefined,
-    'DA badge is required for external DA',
-  )
-
-  const validiumDaProvider = isPessimistic ? undefined : daProvider
-  if (!isPessimistic) {
-    assert(
-      validiumDaProvider !== undefined,
-      'polygonCDKStack requires a DA provider for validium variants.',
-    )
   }
+
+  return {
+    variant: config.variant,
+    explorerUrl,
+    sharedDiscovery,
+    rollupModule,
+    bridge: config.discovery.getContract('AgglayerBridge'),
+    manager: sharedDiscovery.getContract('AgglayerManager'),
+    upgradeDelaySeconds,
+    upgradeDelayString,
+    emergencyActivatedCount: sharedDiscovery.getContractValue<number>(
+      'AgglayerManager',
+      'emergencyStateCount',
+    ),
+    isForcedBatchDisallowed:
+      forcedBatchAddress !== '0x0000000000000000000000000000000000000000',
+    exitWindowRisk,
+    finalizationPeriod: 0,
+    discoveries: [config.discovery, sharedDiscovery],
+  }
+}
+
+function buildValidiumSections(
+  config: AgglayerValidiumConfig,
+  context: SharedContext,
+): VariantSections {
+  const dacInfo = getDacInfo(config.discovery)
+  const provider = resolveValidiumDaProvider(config, context, dacInfo)
+
+  const customDa =
+    config.customDa ??
+    (dacInfo !== undefined ? agglayerDAC({ dac: dacInfo }) : undefined)
 
   const proofSystem =
-    templateVars.nonTemplateProofSystem ??
-    (isPessimistic
-      ? undefined
-      : { type: 'Validity', zkCatalogId: ProjectId('zkprover') })
+    config.nonTemplateProofSystem ??
+    ({
+      type: 'Validity',
+      zkCatalogId: ProjectId('zkprover'),
+    } satisfies ProjectScalingProofSystem)
 
-  let dataAvailabilityConfig: ScalingProject['dataAvailability']
-  let riskView: ScalingProject['riskView']
-  if (isPessimistic) {
-    dataAvailabilityConfig = {
-      layer: DA_LAYERS.NONE,
-      bridge: DA_BRIDGES.NONE,
-      mode: { value: 'None' as const },
-    }
-    riskView = {
-      stateValidation: {
-        ...RISK_VIEW.STATE_NONE,
-        description:
-          "Currently the system permits invalid state roots. 'Pessimistic' proofs only validate the bridge accounting.",
-      },
-      dataAvailability: RISK_VIEW.DATA_EXTERNAL,
-      exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
-      sequencerFailure: SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-      proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    }
-  } else {
-    const provider = validiumDaProvider as DAProvider
-    dataAvailabilityConfig = {
-      layer: provider.layer,
-      bridge: provider.bridge,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }
-    riskView = {
-      stateValidation: {
-        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-        executionDelay: finalizationPeriod,
-      },
-      dataAvailability: provider.riskView,
-      exitWindow: exitWindowRisk,
-      sequencerFailure: SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-      proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    }
+  const dataAvailability = {
+    layer: provider.layer,
+    bridge: provider.bridge,
+    mode: DA_MODES.TRANSACTION_DATA,
   }
 
-  const technologyDataAvailability =
-    templateVars.nonTemplateTechnology?.dataAvailability ??
-    (isPessimistic
-      ? {
-          name: 'Data is not stored on chain',
-          description:
-            'Transaction data is kept off-chain. Bridge accounting is protected by pessimistic proofs while L2 state transitions are not proven on Ethereum.',
-          risks: [],
-          references: [],
-        }
-      : validiumDaProvider?.technology)
+  const riskView = {
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      executionDelay: context.finalizationPeriod,
+    },
+    dataAvailability: provider.riskView,
+    exitWindow: context.exitWindowRisk,
+    sequencerFailure: SEQUENCER_NO_MECHANISM(context.isForcedBatchDisallowed),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  }
 
-  const operatorTechnology =
-    templateVars.nonTemplateTechnology?.operator ??
-    (isPessimistic
-      ? undefined
-      : {
-          name: 'The system has a centralized sequencer',
+  const technology: ProjectScalingTechnology = {
+    dataAvailability:
+      config.nonTemplateTechnology?.dataAvailability ?? provider.technology,
+    operator:
+      config.nonTemplateTechnology?.operator ??
+      buildOperatorTechnology(context),
+    forceTransactions:
+      config.nonTemplateTechnology?.forceTransactions ??
+      buildForceTransactions(context, 'validium'),
+    exitMechanisms:
+      config.nonTemplateTechnology?.exitMechanisms ??
+      buildExitMechanisms(context),
+    sequencing: config.nonTemplateTechnology?.sequencing,
+    otherConsiderations:
+      config.nonTemplateTechnology?.otherConsiderations ??
+      buildSharedBridgeConsiderations(context),
+  }
+
+  const stateDerivation =
+    config.stateDerivation ??
+    ({
+      nodeSoftware:
+        'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node) and [here](https://github.com/0xPolygonHermez/cdk-erigon). The cdk-erigon node is the more recent implementation.',
+      compressionScheme: 'No compression scheme is used.',
+      genesisState:
+        'The genesis state, whose corresponding root is accessible as Batch 0 root in the `_legacyBatchNumToStateRoot` variable of AgglayerManager, is available [here](https://github.com/agglayer/agglayer-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
+      dataFormat:
+        'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
+    } satisfies ProjectScalingStateDerivation)
+
+  const stateValidation =
+    config.stateValidation ??
+    ({
+      description:
+        'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+      categories: [
+        {
+          title: 'Prover Architecture',
           description:
-            'Only a trusted sequencer is allowed to submit transaction batches.',
+            'Polygon zkEVM proof system PIL-STARK can be found [here](https://github.com/0xPolygonHermez/pil-stark).',
+        },
+        {
+          title: 'ZK Circuits',
+          description:
+            'Polygon zkEVM circuits are built from PIL (polynomial identity language) and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
           risks: [
-            FRONTRUNNING_RISK,
             {
-              category: 'Funds can be frozen if',
-              text: 'the sequencer refuses to include an exit transaction.',
-              isCritical: true,
+              category: 'Funds can be lost if',
+              text: 'the proof system is implemented incorrectly.',
             },
           ],
-          references: explorerReferences(explorerUrl, [
+        },
+        {
+          title: 'Verification Keys Generation',
+          description:
+            'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this guide](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md). The system requires a trusted setup.',
+        },
+        {
+          title: 'Pessimistic Proofs',
+          description:
+            'The pessimistic proofs that are used to prove correct accounting in the Agglayer shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
+        },
+        {
+          ...STATE_VALIDATION.VALIDITY_PROOFS,
+          references: explorerReferences(context.explorerUrl, [
             {
-              title: `${rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
-              address: safeGetImplementation(rollupModuleContract),
+              title:
+                'AgglayerManager.sol - source code, _verifyAndRewardBatches function',
+              address: safeGetImplementation(context.manager),
             },
           ]),
-        })
+        },
+      ],
+    } satisfies ProjectScalingStateValidation)
 
-  const sharedBridgeConsiderations = [
+  const contractsRisks = [
+    CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+      context.upgradeDelayString,
+      'PolygonSecurityCouncil',
+    ),
+  ]
+
+  const badges = mergeBadges(
+    [BADGES.Stack.CDKErigon, BADGES.VM.EVM, BADGES.DA.CustomDA],
+    config.additionalBadges ?? [],
+  )
+
+  return {
+    dataAvailability,
+    riskView,
+    technology,
+    stateDerivation,
+    stateValidation,
+    proofSystem,
+    contractsRisks,
+    customDa,
+    badges,
+    reasonsForBeingOther: config.reasonsForBeingOther,
+    architectureImage: config.architectureImage ?? 'polygon-cdk-validium',
+  }
+}
+
+function buildPessimisticSections(
+  config: AgglayerPessimisticConfig,
+  context: SharedContext,
+): VariantSections {
+  const riskView = {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      description:
+        "Currently the system permits invalid state roots. 'Pessimistic' proofs only validate the bridge accounting.",
+    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: SEQUENCER_NO_MECHANISM(context.isForcedBatchDisallowed),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  }
+
+  const dataAvailability = {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.NONE,
+    mode: { value: 'None' as const },
+  }
+
+  const technology: ProjectScalingTechnology = {
+    dataAvailability: config.nonTemplateTechnology?.dataAvailability ?? {
+      name: 'Data is not stored on chain',
+      description:
+        'Transaction data is kept off-chain. Bridge accounting is protected by pessimistic proofs while L2 state transitions are not proven on Ethereum.',
+      risks: [],
+      references: [],
+    },
+    operator: config.nonTemplateTechnology?.operator,
+    forceTransactions:
+      config.nonTemplateTechnology?.forceTransactions ??
+      FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+    exitMechanisms:
+      config.nonTemplateTechnology?.exitMechanisms ??
+      buildExitMechanisms(context),
+    sequencing: config.nonTemplateTechnology?.sequencing,
+    otherConsiderations:
+      config.nonTemplateTechnology?.otherConsiderations ??
+      buildSharedBridgeConsiderations(context),
+  }
+
+  const contractsRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
+  const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
+    ZK_PROGRAM_HASHES(el),
+  )
+
+  const badges = mergeBadges(
+    [BADGES.DA.CustomDA],
+    config.additionalBadges ?? [],
+  )
+
+  return {
+    dataAvailability,
+    riskView,
+    technology,
+    stateDerivation: config.stateDerivation,
+    stateValidation: config.stateValidation,
+    proofSystem: config.nonTemplateProofSystem,
+    contractsRisks,
+    customDa: config.customDa,
+    badges,
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      ...(config.reasonsForBeingOther ?? []),
+    ],
+    zkProgramHashes,
+    architectureImage: config.architectureImage,
+  }
+}
+
+function resolveValidiumDaProvider(
+  config: AgglayerValidiumConfig,
+  context: SharedContext,
+  dacInfo?: DacInfo,
+): DAProvider {
+  if (config.daProvider !== undefined) {
+    return config.daProvider
+  }
+
+  if (dacInfo !== undefined) {
+    return buildDacProvider(dacInfo, context.rollupModule)
+  }
+
+  throw new Error(
+    'Agglayer validium variant requires a daProvider or the PolygonDataCommittee contract in discovery.',
+  )
+}
+
+function buildDacProvider(
+  dac: DacInfo,
+  rollupModule: ReturnType<ProjectDiscovery['getContract']>,
+): DAProvider {
+  return {
+    layer: DA_LAYERS.DAC,
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      requiredSignatures: dac.requiredMembers,
+      membersCount: dac.membersCount,
+    }),
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: dac.membersCount,
+      requiredSignatures: dac.requiredMembers,
+    }),
+    technology: {
+      name: 'Data is not stored on chain',
+      description:
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the external data becomes unavailable.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          title:
+            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: `https://etherscan.io/address/${rollupModule.address}#code#F1#L91`,
+        },
+      ],
+    },
+  }
+}
+
+function getDacInfo(discovery: ProjectDiscovery): DacInfo | undefined {
+  if (!discovery.hasContract('PolygonDataCommittee')) {
+    return
+  }
+
+  return {
+    requiredMembers: discovery.getContractValue<number>(
+      'PolygonDataCommittee',
+      'requiredAmountOfSignatures',
+    ),
+    membersCount: discovery.getContractValue<number>(
+      'PolygonDataCommittee',
+      'getAmountOfMembers',
+    ),
+  }
+}
+
+function buildOperatorTechnology(
+  context: SharedContext,
+): ProjectTechnologyChoice {
+  return {
+    name: 'The system has a centralized sequencer',
+    description:
+      'Only a trusted sequencer is allowed to submit transaction batches.',
+    risks: [
+      FRONTRUNNING_RISK,
+      {
+        category: 'Funds can be frozen if',
+        text: 'the sequencer refuses to include an exit transaction.',
+        isCritical: true,
+      },
+    ],
+    references: explorerReferences(context.explorerUrl, [
+      {
+        title: `${context.rollupModule.name}.sol - source code, onlyTrustedSequencer modifier`,
+        address: safeGetImplementation(context.rollupModule),
+      },
+    ]),
+  }
+}
+
+function buildForceTransactions(
+  context: SharedContext,
+  variant: AgglayerVariant,
+): ProjectTechnologyChoice {
+  return {
+    ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+    references:
+      variant === 'validium'
+        ? [
+            {
+              title: `${context.rollupModule.name}.sol - source code, forceBatchAddress address`,
+              url: `https://etherscan.io/address/${safeGetImplementation(context.rollupModule)}#code`,
+            },
+          ]
+        : [],
+  }
+}
+
+function buildExitMechanisms(
+  context: SharedContext,
+): ProjectTechnologyChoice[] {
+  return [
+    {
+      ...EXITS.REGULAR_MESSAGING('zk'),
+      references: explorerReferences(context.explorerUrl, [
+        {
+          title: 'AgglayerBridge.sol - source code, claimAsset function',
+          address: safeGetImplementation(context.bridge),
+        },
+      ]),
+    },
+  ]
+}
+
+function buildSharedBridgeConsiderations(
+  context: SharedContext,
+): ProjectTechnologyChoice[] {
+  return [
     {
       name: 'Shared bridge and Pessimistic Proofs',
       description:
@@ -385,7 +728,7 @@ export function agglayer(templateVars: agglayerConfig): ScalingProject {
           category: 'Funds can be lost if' as const,
           text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
         },
-        ...(isPessimistic
+        ...(context.variant === 'pessimistic'
           ? [
               {
                 category: 'Funds can be stolen if' as const,
@@ -403,187 +746,25 @@ export function agglayer(templateVars: agglayerConfig): ScalingProject {
         {
           title:
             'Etherscan: AgglayerManager.sol - verifyPessimisticTrustedAggregator() function',
-          url: `https://etherscan.io/address/${safeGetImplementation(templateVars.discovery.getContract('AgglayerManager'))}#code#F1#L1300`,
+          url: `https://etherscan.io/address/${safeGetImplementation(context.manager)}#code#F1#L1300`,
         },
       ],
     },
   ]
+}
 
-  const technology = {
-    dataAvailability: technologyDataAvailability,
-    operator: operatorTechnology,
-    forceTransactions: templateVars.nonTemplateTechnology
-      ?.forceTransactions ?? {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+function buildUpgradesAndGovernance(
+  context: SharedContext,
+  variant: AgglayerVariant,
+): string {
+  return `
+The regular upgrade process for shared system contracts and L2-specific validium contracts starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${context.upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it. Chains using pessimistic proofs often have completely sovereign upgrade paths from the ones described here, but the shared contracts still remain relevant to them because they use them as escrow.
 
-      references: isPessimistic
-        ? []
-        : [
-            {
-              title: `${rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
-              url: `https://etherscan.io/address/${safeGetImplementation(rollupModuleContract)}#code`,
-            },
-          ],
-    },
-    exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
-      {
-        ...EXITS.REGULAR_MESSAGING('zk'),
-        references: explorerReferences(explorerUrl, [
-          {
-            title: 'AgglayerBridge.sol - source code, claimAsset function',
-            address: safeGetImplementation(bridge),
-          },
-        ]),
-      },
-    ],
-    sequencing: templateVars.nonTemplateTechnology?.sequencing,
-    otherConsiderations:
-      templateVars.nonTemplateTechnology?.otherConsiderations ??
-      sharedBridgeConsiderations,
-  }
+The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${context.emergencyActivatedCount} time(s) since inception.
 
-  const stateDerivation = isPessimistic
-    ? templateVars.stateDerivation
-    : (templateVars.stateDerivation ?? {
-        nodeSoftware:
-          'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node) and [here](https://github.com/0xPolygonHermez/cdk-erigon). The cdk-erigon node is the more recent implementation.',
-        compressionScheme: 'No compression scheme is used.',
-        genesisState:
-          'The genesis state, whose corresponding root is accessible as Batch 0 root in the `_legacyBatchNumToStateRoot` variable of AgglayerManager, is available [here](https://github.com/agglayer/agglayer-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
-        dataFormat:
-          'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
-      })
-
-  const stateValidation = isPessimistic
-    ? templateVars.stateValidation
-    : (templateVars.stateValidation ?? {
-        description:
-          'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
-        categories: [
-          {
-            title: 'Prover Architecture',
-            description:
-              'Polygon zkEVM proof system PIL-STARK can be found [here](https://github.com/0xPolygonHermez/pil-stark).',
-          },
-          {
-            title: 'ZK Circuits',
-            description:
-              'Polygon zkEVM circuits are built from PIL (polynomial identity language) and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
-            risks: [
-              {
-                category: 'Funds can be lost if',
-                text: 'the proof system is implemented incorrectly.',
-              },
-            ],
-          },
-          {
-            title: 'Verification Keys Generation',
-            description:
-              'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this guide](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md). The system requires a trusted setup.',
-          },
-          {
-            title: 'Pessimistic Proofs',
-            description:
-              'The pessimistic proofs that are used to prove correct accounting in the Agglayer shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
-          },
-          {
-            ...STATE_VALIDATION.VALIDITY_PROOFS,
-            references: explorerReferences(explorerUrl, [
-              {
-                title:
-                  'AgglayerManager.sol - source code, _verifyAndRewardBatches function',
-                address: safeGetImplementation(agglayerManagerContract),
-              },
-            ]),
-          },
-        ],
-      })
-
-  const contractsRisks = isPessimistic
-    ? [CONTRACTS.UPGRADE_NO_DELAY_RISK]
-    : [
-        CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
-          upgradeDelayString,
-          'PolygonSecurityCouncil',
-        ),
-      ]
-
-  const zkProgramHashes = isPessimistic
-    ? getPessimisticVKeys(templateVars.discovery).map((el) =>
-        ZK_PROGRAM_HASHES(el),
-      )
-    : []
-
-  const architectureImage = isPessimistic
-    ? templateVars.architectureImage
-    : 'polygon-cdk-validium'
-
-  const upgradesAndGovernance =
-    templateVars.upgradesAndGovernance ??
-    `
-The regular upgrade process for shared system contracts and L2-specific validium contracts starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it. Chains using pessimistic proofs often have completely sovereign upgrade paths from the ones described here, but the shared contracts still remain relevant to them because they use them as escrow.
-
-The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
-
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Validium can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. For sovereign chains using pessimistic proofs they can manage any proof logic that might be used on top of the minimal pessimistic one. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`
-
-  return {
-    type: 'layer2',
-    addedAt: templateVars.addedAt,
-    id: ProjectId(templateVars.discovery.projectName),
-    capability: templateVars.capability ?? 'universal',
-    archivedAt: templateVars.archivedAt,
-    ecosystemInfo: {
-      id: ProjectId('agglayer'),
-    },
-    display: {
-      ...templateVars.display,
-      upgradesAndGovernanceImage: 'polygoncdk',
-      purposes: templateVars.overridingPurposes ?? [
-        'Universal',
-        ...(templateVars.additionalPurposes ?? []),
-      ],
-      architectureImage,
-      stacks: ['Agglayer CDK'],
-      tvsWarning: templateVars.display.tvsWarning,
-    },
-    proofSystem,
-    config: {
-      associatedTokens: templateVars.associatedTokens,
-      escrows: templateVars.nonTemplateEscrows,
-      activityConfig: getActivityConfig(
-        templateVars.activityConfig,
-        templateVars.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-        },
-      ),
-    },
-    chainConfig: templateVars.chainConfig && {
-      ...templateVars.chainConfig,
-      gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
-    },
-    dataAvailability: dataAvailabilityConfig,
-    riskView,
-    stage: { stage: 'NotApplicable' },
-    technology,
-    stateDerivation,
-    stateValidation,
-    permissions: generateDiscoveryDrivenPermissions([templateVars.discovery]),
-    contracts: {
-      addresses: generateDiscoveryDrivenContracts([templateVars.discovery]),
-      risks: contractsRisks,
-      ...(zkProgramHashes.length > 0 ? { zkProgramHashes } : {}),
-    },
-    upgradesAndGovernance,
-    milestones: templateVars.milestones,
-    badges: mergeBadges(baseBadges, additionalBadges),
-    customDa,
-    reasonsForBeingOther,
-    scopeOfAssessment: templateVars.scopeOfAssessment,
-    discoveryInfo: getDiscoveryInfo(discoveries),
-  }
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific ${
+    variant === 'validium' ? 'Validium' : 'Aggchain'
+  } can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. For sovereign chains using pessimistic proofs they can manage any proof logic that might be used on top of the minimal pessimistic one. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`
 }
 
 function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {
