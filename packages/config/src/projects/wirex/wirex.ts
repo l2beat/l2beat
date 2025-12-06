@@ -10,7 +10,7 @@ const bridge = discovery.getContract('AgglayerBridge')
 
 export const wirex: ScalingProject = agglayer({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Zeeve],
+  additionalBadges: [BADGES.RaaS.Zeeve],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

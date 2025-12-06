@@ -10,7 +10,7 @@ const bridge = discovery.getContract('AgglayerBridge')
 
 export const silicon: ScalingProject = agglayer({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Nodeinfra],
+  additionalBadges: [BADGES.RaaS.Nodeinfra],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

@@ -11,7 +11,7 @@ const bridge = discovery.getContract('AgglayerBridge')
 export const astarzkevm: ScalingProject = agglayer({
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
   archivedAt: UnixTime(1743465600), // 2025-04-01T00:00:00.000Z,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Astar zkEVM',

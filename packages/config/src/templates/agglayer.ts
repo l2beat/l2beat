@@ -494,7 +494,7 @@ function buildValidiumSections(
   ]
 
   const badges = mergeBadges(
-    [BADGES.Stack.CDKErigon, BADGES.VM.EVM, BADGES.DA.CustomDA],
+    [BADGES.Stack.CDKErigon, BADGES.VM.EVM, BADGES.DA.DAC],
     config.additionalBadges ?? [],
   )
 

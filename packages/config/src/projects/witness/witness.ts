@@ -11,7 +11,7 @@ export const witness: ScalingProject = agglayer({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   archivedAt: UnixTime(1738022400), // 2025-01-28T00:00:00.000Z,
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
+  additionalBadges: [BADGES.RaaS.Gateway],
   additionalPurposes: ['IoT', 'Oracles'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
