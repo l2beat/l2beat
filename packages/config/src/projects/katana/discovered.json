@@ -172,7 +172,11 @@
           "description": "DEPRECATED - Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
         },
         "useDefaultSigners": { "severity": "HIGH" },
-        "useDefaultVkeys": { "severity": "HIGH" }
+        "useDefaultVkeys": { "severity": "HIGH" },
+        "AGGCHAIN_TYPE": {
+          "severity": "HIGH",
+          "description": "0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte"
+        }
       },
       "implementationNames": {
         "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": "PolygonTransparentProxy",

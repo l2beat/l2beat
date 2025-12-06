@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x2a270ce35863f89c87f532529d7a3e872cb78daa
+
+# Diff at Sat, 06 Dec 2025 14:43:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ce9c5de1bc9f8a8c0a7f464f3c1e3611f05712f1 block: 1763987450
+- current timestamp: 1763987450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763987450 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
 Generated with discovered.json: 0x793058d7bfaa3d491f390caa0191496eb438826b
 
 # Diff at Mon, 24 Nov 2025 12:32:35 GMT:

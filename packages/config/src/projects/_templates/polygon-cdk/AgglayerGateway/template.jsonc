@@ -74,18 +74,13 @@
         }
       ]
     },
-    // need two configs here to catch all aggchainVKey updates
     "aggchainVKeys": {
-      "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey().",
+      "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey().",
       "handler": {
         "type": "event",
         "groupBy": "selector",
-        "add": {
-          "event": "AddDefaultAggchainVKey"
-        },
-        "remove": {
-          "event": "UnsetDefaultAggchainVKey"
-        }
+        "add": { "event": "AddDefaultAggchainVKey" },
+        "remove": { "event": "UnsetDefaultAggchainVKey" }
       }
     },
     "aggchainVKeysUpdated": {
@@ -93,23 +88,17 @@
       "handler": {
         "type": "event",
         "groupBy": "selector",
-        "set": {
-          "event": "UpdateDefaultAggchainVKey"
-        }
+        "set": { "event": "UpdateDefaultAggchainVKey" }
       }
     },
     "routes": {
-      "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey.",
+      "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes.",
       "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "selector",
-        "add": {
-          "event": "RouteAdded"
-        },
-        "remove": {
-          "event": "RouteFrozen"
-        }
+        "add": { "event": "RouteAdded" },
+        "remove": { "event": "RouteFrozen" }
       }
     },
     "aggchainSigners": {

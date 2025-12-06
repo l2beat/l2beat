@@ -78,6 +78,10 @@
     "useDefaultVkeys": {
       "description:": "ONLY FOR AGGCHAIN VKEYS, uses the vkeys from the AgglayerManager if true. Make sure to extract the custom vkeys saved in this contract if False.",
       "severity": "HIGH"
+    },
+    "AGGCHAIN_TYPE": {
+      "description": "0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte",
+      "severity": "HIGH"
     }
   }
 }

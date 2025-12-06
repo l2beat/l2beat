@@ -22,8 +22,8 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { agglayerDAC } from '../../templates/agglayer'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -390,7 +390,7 @@ export const zkfair: ScalingProject = {
       type: 'general',
     },
   ],
-  customDa: PolygoncdkDAC({
+  customDa: agglayerDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,

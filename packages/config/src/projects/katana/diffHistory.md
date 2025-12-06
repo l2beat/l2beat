@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x90dc26c918b9dc0c3276834e43e6504b8c9efcf4
+
+# Diff at Sat, 06 Dec 2025 14:47:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ce9c5de1bc9f8a8c0a7f464f3c1e3611f05712f1 block: 1764933676
+- current timestamp: 1764933676
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933676 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte"}
+    }
+```
+
 Generated with discovered.json: 0x425a049cb63a66e79e41591b04cdde93d7d0f9ed
 
 # Diff at Fri, 05 Dec 2025 11:22:21 GMT:
