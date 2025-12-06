@@ -33,6 +33,7 @@ export function NodeView(props: NodeViewProps) {
         height: props.node.box.height,
         opacity: props.isGrayedOut ? 0.2 : props.isDimmed ? 0.3 : 1,
         filter: props.isGrayedOut ? 'grayscale(100%)' : 'none',
+        zIndex: props.isDimmed ? 0 : 10,
       }}
       className={clsx(
         'absolute bg-black',
