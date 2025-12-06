@@ -631,9 +631,8 @@ function buildDacProvider(
       ],
       references: [
         {
-          title:
-            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: `https://etherscan.io/address/${rollupModule.address}#code#F1#L91`,
+          title: `${rollupModule.name}.sol - Etherscan source code, sequenceBatchesValidium function`,
+          url: `https://etherscan.io/address/${safeGetImplementation(rollupModule)}#code#F1#L91`,
         },
       ],
     },
