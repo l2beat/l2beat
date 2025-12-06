@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1760089209,
+  "timestamp": 1764935892,
   "configHash": "0xc55f65155f28177b711e34a8a919eeb5a637eaf56c006c3888e821d72709abe8",
   "entries": [
     {
@@ -994,11 +994,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1760086655,
+        "getFirstUnfinalizedMessageEnqueueTime": 1764930239,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 965636,
-        "nextUnfinalizedQueueIndex": 965631,
+        "nextCrossDomainMessageIndex": 973786,
+        "nextUnfinalizedQueueIndex": 973772,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2076,14 +2076,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 439223,
+        "lastFinalizedBatchIndex": 479804,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 439274,
-          "lastFinalizedBatchIndex": 439223,
-          "lastFinalizeTimestamp": 1760088995,
+          "lastCommittedBatchIndex": 479807,
+          "lastFinalizedBatchIndex": 479804,
+          "lastFinalizeTimestamp": 1764933215,
           "flags": 1,
           "reserved": 0
         },
@@ -2381,7 +2381,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 157,
+        "nonce": 158,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2851,7 +2851,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 20402922714559,
+        "totalBridgedUSDC": 28628711301077,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3380,7 +3380,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3537,7 +3537,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 21,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3690,7 +3690,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 26,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3740,8 +3740,8 @@
         "token": "scr:0xd29687c813D741E2F938F4aC377128810E217b1b",
         "version": "1",
         "VERSION": 1,
-        "votingDelay": 172800,
-        "votingPeriod": 403200
+        "votingDelay": 129600,
+        "votingPeriod": 302400
       },
       "implementationNames": {
         "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": "TransparentUpgradeableProxy",
@@ -3902,9 +3902,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xa9bbb772d47bd87f8efb2bd1087583f0586654acb665d53c6b25fa532744b1e0",
+        "messageRoot": "0x63be7a8ce7b7afe950e3702b71231b11e0954a586308208642d6cd08df3587b3",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 211403,
+        "nextMessageIndex": 215258,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4061,7 +4061,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4419,7 +4419,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4463,7 +4463,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4814,7 +4814,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -5116,7 +5116,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 22,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7492,6 +7492,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23546494, "scroll": 22945593 },
+  "usedBlockNumbers": { "ethereum": 23946601, "scroll": 26030828 },
   "permissionsConfigHash": "0x325eb0d0599eff7bd617f8868c1a8f22a304ef33b8eb96a60a4cf0bbb845f0d5"
 }

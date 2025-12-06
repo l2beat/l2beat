@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x05d0107b496421bf311d2b8ed8c059c2ed781b9d
+
+# Diff at Fri, 05 Dec 2025 12:00:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1760089209
+- current timestamp: 1764935892
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        172800
++        129600
+      values.votingPeriod:
+-        403200
++        302400
+    }
+```
+
 Generated with discovered.json: 0x77701f39a79a42731801e050830ad5e9af2641e7
 
 # Diff at Fri, 10 Oct 2025 09:41:22 GMT:
