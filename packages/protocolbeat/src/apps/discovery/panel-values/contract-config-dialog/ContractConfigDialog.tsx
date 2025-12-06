@@ -1,6 +1,9 @@
+import clsx from 'clsx'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
 import { Select } from '../../../../components/Select'
+import { useDebounce } from '../../../../hooks/useDebounce'
 import { IconClose } from '../../../../icons/IconClose'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
@@ -33,17 +36,36 @@ const CATEGORIES = {
   },
 }
 
-export function ContractConfigDialog() {
+export function ContractConfigDialog({
+  open,
+  onOpenChange,
+  trigger,
+}: {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  trigger?: React.ReactNode
+}) {
   const { selected } = useProjectData()
   const models = useConfigModels()
+  const [internalOpen, setInternalOpen] = useState(false)
+
+  const isControlled = open !== undefined
+  const isOpen = isControlled ? (open ?? false) : internalOpen
+  const handleOpenChange = isControlled
+    ? (onOpenChange ?? (() => {}))
+    : setInternalOpen
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <Button variant="icon" size="icon">
-          <IconGear className="size-4 text-coffee-200/80" />
-        </Button>
-      </Dialog.Trigger>
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
+      {trigger ? (
+        <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+      ) : (
+        <Dialog.Trigger asChild>
+          <Button variant="icon" size="icon">
+            <IconGear className="size-4 text-coffee-200/80" />
+          </Button>
+        </Dialog.Trigger>
+      )}
       <Dialog.Body>
         <Dialog.Title>
           Contract -{' '}
@@ -65,6 +87,16 @@ export function ContractConfigDialog() {
                 setCategory={(value) => models.configModel.setCategory(value)}
               />
             </div>
+
+            <div>
+              <h4 className="mb-2 font-medium text-sm">Description</h4>
+              <DescriptionInput
+                description={models.configModel.description}
+                setDescription={(value) =>
+                  models.configModel.setDescription(value)
+                }
+              />
+            </div>
           </div>
 
           {/* Template Column */}
@@ -81,6 +113,16 @@ export function ContractConfigDialog() {
                     category={models.templateModel.category}
                     setCategory={(value) =>
                       models.templateModel.setCategory(value)
+                    }
+                  />
+                </div>
+
+                <div>
+                  <h4 className="mb-2 font-medium text-sm">Description</h4>
+                  <DescriptionInput
+                    description={models.templateModel.description}
+                    setDescription={(value) =>
+                      models.templateModel.setDescription(value)
                     }
                   />
                 </div>
@@ -130,6 +172,61 @@ function CategorySelect({
         size="icon"
         onClick={() => setCategory(undefined)}
         disabled={!category}
+      >
+        <IconClose className="size-4 text-coffee-200/80" />
+      </Button>
+    </div>
+  )
+}
+
+function DescriptionInput({
+  description,
+  setDescription,
+}: {
+  description: string | undefined
+  setDescription: (description: string | undefined) => void
+}) {
+  const [localValue, setLocalValue] = useState(description ?? '')
+  const debouncedValue = useDebounce(localValue, 500)
+  const isInternalUpdateRef = useRef(false)
+
+  // Sync local state when prop changes externally (not from our own updates)
+  useEffect(() => {
+    if (!isInternalUpdateRef.current) {
+      setLocalValue(description ?? '')
+    }
+    isInternalUpdateRef.current = false
+  }, [description])
+
+  // Call setDescription when debounced value changes
+  useEffect(() => {
+    const trimmed = debouncedValue.trim() || undefined
+    if (trimmed !== description) {
+      isInternalUpdateRef.current = true
+      setDescription(trimmed)
+    }
+  }, [debouncedValue, setDescription, description])
+
+  return (
+    <div className="flex items-start gap-1">
+      <textarea
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
+        placeholder="Enter description..."
+        className={clsx(
+          'min-h-20 w-full resize-y border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        )}
+        rows={4}
+      />
+      <Button
+        variant="icon"
+        size="icon"
+        onClick={() => {
+          setLocalValue('')
+          setDescription(undefined)
+        }}
+        disabled={!localValue.trim()}
+        className="mt-1"
       >
         <IconClose className="size-4 text-coffee-200/80" />
       </Button>

@@ -85,6 +85,12 @@ export class ConfigModel {
     return this.patchOverride(id, (override) => override.setCategory(category))
   }
 
+  setDescription(id: string, description: ContractConfigSchema['description']) {
+    return this.patchOverride(id, (override) =>
+      override.setDescription(description),
+    )
+  }
+
   patch(patch: Partial<DiscoveryConfigSchema>) {
     const newConfig = clone(this.config)
     assign(newConfig, patch)
@@ -114,6 +120,10 @@ export class ConfigModel {
 
   getCategory(id: string) {
     return this.overrides[id]?.category
+  }
+
+  getDescription(id: string) {
+    return this.overrides[id]?.description
   }
 
   private getOverride(id: string) {

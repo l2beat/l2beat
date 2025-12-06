@@ -65,6 +65,10 @@ export class ContractConfigModel {
     return this.patch({ category })
   }
 
+  setDescription(description: ContractConfigSchema['description']) {
+    return this.patch({ description })
+  }
+
   setFieldSeverity(name: string, severity: FieldConfigSchema['severity']) {
     return this.patchField(name, (field) => field.setSeverity(severity))
   }
@@ -122,5 +126,9 @@ export class ContractConfigModel {
 
   get category() {
     return this.config.category
+  }
+
+  get description() {
+    return this.config.description
   }
 }

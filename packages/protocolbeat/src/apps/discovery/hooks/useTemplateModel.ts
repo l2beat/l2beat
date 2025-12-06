@@ -68,6 +68,12 @@ export function useTemplateModel({ templateId, files }: Props) {
     saveModelContents(newModel)
   }
 
+  const setDescription = (description: string | undefined) => {
+    const newModel = templateModel.setDescription(description)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -112,6 +118,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     getFieldSeverity,
 
     setCategory,
+    setDescription,
 
     save: saveRaw,
 
@@ -127,5 +134,6 @@ export function useTemplateModel({ templateId, files }: Props) {
     ignoreRelatives: templateModel.ignoreRelatives,
     ignoreInWatchMode: templateModel.ignoreInWatchMode,
     category: templateModel.category,
+    description: templateModel.description,
   }
 }
