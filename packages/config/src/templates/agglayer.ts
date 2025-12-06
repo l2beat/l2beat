@@ -226,7 +226,7 @@ export function agglayer(templateVars: agglayerConfig): ScalingProject {
           {
             title:
               'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-            url: 'https://etherscan.io/address//0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
+            url: `https://etherscan.io/address/${rollupModuleContract.address}#code#F1#L91`,
           },
         ],
       },
@@ -412,9 +412,19 @@ export function agglayer(templateVars: agglayerConfig): ScalingProject {
   const technology = {
     dataAvailability: technologyDataAvailability,
     operator: operatorTechnology,
-    forceTransactions:
-      templateVars.nonTemplateTechnology?.forceTransactions ??
-      FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+    forceTransactions: templateVars.nonTemplateTechnology
+      ?.forceTransactions ?? {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+
+      references: isPessimistic
+        ? []
+        : [
+            {
+              title: `${rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
+              url: `https://etherscan.io/address/${safeGetImplementation(rollupModuleContract)}#code`,
+            },
+          ],
+    },
     exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
@@ -505,8 +515,8 @@ export function agglayer(templateVars: agglayerConfig): ScalingProject {
     : []
 
   const architectureImage = isPessimistic
-    ? (templateVars.architectureImage ?? 'polygon-cdk-validium')
-    : ''
+    ? templateVars.architectureImage
+    : 'polygon-cdk-validium'
 
   const upgradesAndGovernance =
     templateVars.upgradesAndGovernance ??
