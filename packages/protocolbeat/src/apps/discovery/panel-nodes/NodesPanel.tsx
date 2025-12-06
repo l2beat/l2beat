@@ -26,8 +26,8 @@ export function NodesPanel() {
     queryFn: () => getProject(project),
   })
 
-  useSynchronizeSelection()
   useLoadNodes(response.data, project)
+  useSynchronizeSelection()
 
   if (response.isLoading) {
     return <LoadingState />
@@ -116,30 +116,38 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   }, [project, data, clear, loadNodes])
 }
 
+function eq(a: readonly string[], b: readonly string[]) {
+  return a.length === b.length && a.every((x, i) => b[i] === x)
+}
+
 function useSynchronizeSelection() {
+  const loaded = useStore((state) => state.loaded)
   const [lastSelection, rememberSelection] = useState<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const hiddenNodes = useStore((state) => state.hidden)
-  const selectNodes = useStore((state) => state.selectAndFocus)
+  const selectAndFocus = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
-    const eq = (a: readonly string[], b: readonly string[]) =>
-      a.length === b.length && a.every((x, i) => b[i] === x)
-
     const visibleSelectedNodes = selectedNodes.filter(
       (id) => !hiddenNodes.includes(id),
     )
-
     highlightGlobal(visibleSelectedNodes)
+  }, [selectedNodes, hiddenNodes, highlightGlobal])
+
+  useEffect(() => {
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
       selectGlobal(selectedNodes[0])
-    } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
+    } else if (
+      selectedGlobal &&
+      !lastSelection.includes(selectedGlobal) &&
+      loaded
+    ) {
       rememberSelection([selectedGlobal])
-      selectNodes(selectedGlobal)
+      selectAndFocus(selectedGlobal)
     }
   }, [
     lastSelection,
@@ -148,7 +156,8 @@ function useSynchronizeSelection() {
     selectGlobal,
     selectedNodes,
     hiddenNodes,
-    selectNodes,
+    selectAndFocus,
+    loaded,
   ])
 }
 
