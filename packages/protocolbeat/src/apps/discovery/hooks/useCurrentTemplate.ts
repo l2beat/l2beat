@@ -13,7 +13,7 @@ export function useCurrentTemplate() {
   )
 
   const templateResponse = useQuery({
-    queryKey: ['template', templateId],
+    queryKey: ['templates', templateId],
     queryFn: () => {
       if (!templateId) {
         return null

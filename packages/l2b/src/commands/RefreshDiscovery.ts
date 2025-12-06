@@ -104,9 +104,15 @@ export const RefreshDiscovery = command({
         }
       }
       const discovery = configReader.readDiscovery(config.name)
+      const [rawReason] = templateService.discoveryNeedsRefresh(
+        discovery,
+        config,
+      )
       const needsRefreshReason = args.all
         ? '--all flag was provided'
-        : templateService.discoveryNeedsRefresh(discovery, config)
+        : rawReason
+          ? templateService.formatReason(rawReason)
+          : undefined
       if (needsRefreshReason !== undefined) {
         toRefresh.push({ config, reason: needsRefreshReason })
       }

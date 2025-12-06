@@ -153,6 +153,49 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
+  app.get('/api/config/sync-status/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+    const { project } = query.data
+
+    templateService.reload()
+
+    const discovery = configReader.readDiscovery(project)
+    const config = configReader.readConfig(project)
+
+    res.json({
+      reasons: templateService.discoveryNeedsRefresh(discovery, config),
+    })
+  })
+
+  app.get('/api/config/sync-status', (_, res) => {
+    templateService.reload()
+    const allProjects = configReader.readAllDiscoveredProjects()
+
+    const reasons = allProjects.flatMap((project) => {
+      const discovery = configReader.readDiscovery(project)
+      const config = configReader.readConfig(project)
+
+      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
+
+      if (reasons.length === 0) {
+        return []
+      }
+
+      return {
+        project,
+        reasons,
+      }
+    })
+
+    res.json({
+      reasons,
+    })
+  })
+
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -161,10 +204,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       return
     }
 
-    const config: string = configReader.readRawConfigAsText(query.data.project)
+    const configText = configReader.readRawConfigAsText(query.data.project)
 
     res.json({
-      config,
+      config: configText,
     })
   })
 
@@ -174,7 +217,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
-    attachConfigRouter(app, configReader, configWriter)
+    attachConfigRouter(app, configReader, configWriter, templateService)
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({
