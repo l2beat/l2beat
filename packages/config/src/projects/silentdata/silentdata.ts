@@ -40,7 +40,7 @@ export const silentData: ScalingProject = opStackL2({
   nonTemplateTechnology: {
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      risks: []
-    }
-  }
+      risks: [],
+    },
+  },
 })
