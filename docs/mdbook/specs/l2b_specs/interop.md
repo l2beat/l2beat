@@ -125,3 +125,4 @@ This example also shows that the *correlation key is not necessarily unique* and
 #### Transaction flows with branching logic
 
 ...TODO
+There are some additional aspects to consider, e.g. it might be useful in the future to create a visual interface for constructing the transfer flow logic (which includes the corellation between steps), or to visualise how transfer moves between different stages. 
