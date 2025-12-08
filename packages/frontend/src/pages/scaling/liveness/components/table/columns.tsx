@@ -8,6 +8,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { AnomalyIndicator } from '../AnomalyIndicator'
 import { IntervalsHeader } from './IntervalsHeader'
@@ -16,10 +17,7 @@ import type { ScalingLivenessTableEntry } from './toTableEntry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
-export function getScalingLivenessColumns(
-  hideProofSystem?: boolean,
-  bigQueryOutage?: boolean,
-) {
+export function getScalingLivenessColumns(hideProofSystem?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -85,7 +83,7 @@ export function getScalingLivenessColumns(
         const entry = ctx.row.original
         const showComingSoon = !entry.data?.isSynced
 
-        if (bigQueryOutage) {
+        if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
           return <NoDataBadge />
         }
 
