@@ -1,3 +1,151 @@
+Generated with discovered.json: 0x9b97c81aff76357e9a137271c3f1cc163a27b3d6
+
+# Diff at Mon, 08 Dec 2025 12:03:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1764324881
+- current timestamp: 1765195335
+
+## Description
+
+L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+## Watched changes
+
+```diff
+    contract  (unichain:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      name:
+-        "GasPriceOracle"
++        ""
+      template:
+-        "opstack/Layer2/GasPriceOracle"
+      sourceHashes:
+-        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"]
+      description:
+-        "Provides the current gas price for L2 transactions."
+      values.$implementation:
+-        "unichain:0x93e57A196454CB919193fa9946f14943cf733845"
++        "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",["unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.baseFee:
+-        0
+      values.baseFeeScalar:
+-        2000
+      values.blobBaseFee:
+-        1
+      values.blobBaseFeeScalar:
+-        900000
+      values.decimals:
+-        6
+      values.DECIMALS:
+-        6
+      values.gasPrice:
+-        0
+      values.isEcotone:
+-        true
+      values.isFjord:
+-        true
+      values.isIsthmus:
+-        true
+      values.l1BaseFee:
+-        50173681
+      values.version:
+-        "1.4.0"
+      implementationNames.unichain:0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (unichain:0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      name:
+-        "L1Block"
++        ""
+      template:
+-        "opstack/Layer2/L1Block"
+      sourceHashes:
+-        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"]
+      description:
+-        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+      values.$implementation:
+-        "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.basefee:
+-        50173681
+      values.baseFeeScalar:
+-        2000
+      values.batcherHash:
+-        "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd"
+      values.blobBaseFee:
+-        1
+      values.blobBaseFeeScalar:
+-        900000
+      values.DEPOSITOR_ACCOUNT:
+-        "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
+-        {"addr_":"unichain:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.hash:
+-        "0xc866d5b728164337e8302b6d5d0fedeadd05939d021640d1b58a824aa2a69162"
+      values.isCustomGasToken:
+-        false
+      values.l1FeeOverhead:
+-        0
+      values.l1FeeScalar:
+-        0
+      values.number:
+-        23896506
+      values.operatorFeeConstant:
+-        0
+      values.operatorFeeScalar:
+-        0
+      values.sequenceNumber:
+-        7
+      values.timestamp:
+-        1764324815
+      values.version:
+-        "1.6.0"
+      implementationNames.unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../Proxy.p.sol                                    |    0
+ .../Proxy.p.sol                                    |    0
+ .../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
+ .../L1Block/L1Block.sol => /dev/null               |  255 -----
+ 4 files changed, 1442 deletions(-)
+```
+
 Generated with discovered.json: 0x1c04ec7e1555302a69050f3612c25114ba51ae0f
 
 # Diff at Fri, 28 Nov 2025 10:16:25 GMT:

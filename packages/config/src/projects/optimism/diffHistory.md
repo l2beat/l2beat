@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x5b7a36dacb8b89cd3d43c76f1d1ba29d936fe94a
+
+# Diff at Mon, 08 Dec 2025 11:58:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1764322695
+- current timestamp: 1765195032
+
+## Description
+
+L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+## Watched changes
+
+```diff
+    contract  (oeth:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      name:
+-        "GasPriceOracle"
++        ""
+      template:
+-        "opstack/Layer2/GasPriceOracle"
+      sourceHashes:
+-        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"]
+      description:
+-        "Provides the current gas price for L2 transactions."
+      values.$implementation:
+-        "oeth:0x93e57A196454CB919193fa9946f14943cf733845"
++        "oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      values.$pastUpgrades.3:
++        ["2025-12-02T16:00:01.000Z","0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",["oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.baseFee:
+-        0
+      values.baseFeeScalar:
+-        5227
+      values.blobBaseFee:
+-        1
+      values.blobBaseFeeScalar:
+-        1014213
+      values.decimals:
+-        6
+      values.DECIMALS:
+-        6
+      values.gasPrice:
+-        0
+      values.isEcotone:
+-        true
+      values.isFjord:
+-        true
+      values.isIsthmus:
+-        true
+      values.l1BaseFee:
+-        64642287
+      values.version:
+-        "1.4.0"
+      implementationNames.oeth:0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract L1Block (oeth:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+      values.$implementation:
+-        "oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.2:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.daFootprintGasScalar:
++        400
+      implementationNames.oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        "L1Block"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
+ .../L1Block/L1Block.sol                            |   73 +-
+ .../GasPriceOracle => .flat}/Proxy.p.sol           |    0
+ 3 files changed, 38 insertions(+), 1222 deletions(-)
+```
+
 Generated with discovered.json: 0xd20557c2da5fa1b7eb8731c5317d8e7c82d56310
 
 # Diff at Fri, 28 Nov 2025 09:39:21 GMT:
