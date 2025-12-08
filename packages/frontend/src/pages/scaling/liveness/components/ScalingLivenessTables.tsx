@@ -19,11 +19,9 @@ import { useLivenessTimeRangeContext } from './LivenessTimeRangeContext'
 import { LivenessTimeRangeControls } from './LivenessTimeRangeControls'
 import { ScalingLivenessTable } from './table/ScalingLivenessTable'
 
-type Props = TabbedScalingEntries<ScalingLivenessEntry> & {
-  bigQueryOutage: boolean
-}
+type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
-export function ScalingLivenessTables({ bigQueryOutage, ...props }: Props) {
+export function ScalingLivenessTables(props: Props) {
   const filterEntries = useFilterEntries()
 
   const entries = {
@@ -63,29 +61,19 @@ export function ScalingLivenessTables({ bigQueryOutage, ...props }: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingLivenessTable
-              entries={entries.rollups}
-              bigQueryOutage={bigQueryOutage}
-            />
+            <ScalingLivenessTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingLivenessTable
-              entries={entries.validiumsAndOptimiums}
-              bigQueryOutage={bigQueryOutage}
-            />
+            <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <ScalingLivenessTable
-              entries={entries.others}
-              hideType
-              bigQueryOutage={bigQueryOutage}
-            />
+            <ScalingLivenessTable entries={entries.others} hideType />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

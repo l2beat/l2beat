@@ -5,7 +5,6 @@ import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
 import type { LivenessSectionProps } from '~/components/projects/sections/LivenessSection'
-import { env } from '~/env'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
@@ -74,6 +73,5 @@ export async function getLivenessSection(
       ? optionToRange('max')
       : optionToRange('30d'),
     isArchived: project.archivedAt !== undefined,
-    bigQueryOutage: env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
   }
 }

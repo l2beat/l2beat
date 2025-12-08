@@ -1,8 +1,18 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import {
+  CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
+import { BADGES } from '../../common/badges'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { agglayer } from '../../templates/agglayer'
@@ -105,6 +115,14 @@ export const polygonzkevm: ScalingProject = agglayer({
   },
   milestones: [
     {
+      title: 'Migration to Pessimistic Proofs',
+      url: 'https://etherscan.io/tx/0xd8eb9f7bf7594d047e0c8b254b3893eb05daf692b1688adaacd21af144efe2a5#eventlog',
+      date: '2025-12-03',
+      description:
+        'Polygon zkEVM stops validating the full L2 state and moves to bridge accounting proofs.',
+      type: 'general',
+    },
+    {
       title: 'Polygon zkEVM Etrog upgrade',
       url: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
       date: '2024-02-13',
@@ -119,4 +137,16 @@ export const polygonzkevm: ScalingProject = agglayer({
       type: 'general',
     },
   ],
-})
+  discoveryInfo: getDiscoveryInfo([discovery]),
+}
+function getPessimisticVKeys(): string[] {
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
+    'AgglayerGateway',
+    'routes',
+  )
+  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
+  return Object.values(pessimisticVKeyDict).flatMap((arr) =>
+    arr.map((el) => el['pessimisticVKey']),
+  )
+}
