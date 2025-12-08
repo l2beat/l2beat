@@ -46,10 +46,16 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-const tanxProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const tanxProgramHashes = []
+tanxProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+tanxProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+tanxProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const brine: ScalingProject = {
   type: 'layer2',
@@ -155,7 +161,7 @@ export const brine: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(tanxProgramHash)],
+    zkProgramHashes: tanxProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

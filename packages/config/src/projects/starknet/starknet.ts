@@ -188,6 +188,12 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+starknetProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+starknetProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const starknet: ScalingProject = {
   type: 'layer2',
