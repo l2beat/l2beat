@@ -32,9 +32,7 @@ export function ScalingLivenessPage({
             className="max-md:mt-4 md:mb-6"
           />
           <TableFilterContextProvider>
-            <ScalingLivenessTables
-              {...entries}
-            />
+            <ScalingLivenessTables {...entries} />
           </TableFilterContextProvider>
         </LivenessTimeRangeContextProvider>
       </SideNavLayout>

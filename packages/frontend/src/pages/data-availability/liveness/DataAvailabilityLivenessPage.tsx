@@ -35,7 +35,9 @@ export function DataAvailabilityLivenessPage({
           <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
             Liveness
           </MainPageHeader>
-          {env.CLIENT_SIDE_BIG_QUERY_OUTAGE && <BigQueryOutageNotice type="page" mobileFull />}
+          {env.CLIENT_SIDE_BIG_QUERY_OUTAGE && (
+            <BigQueryOutageNotice type="page" mobileFull />
+          )}
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
@@ -45,9 +47,7 @@ export function DataAvailabilityLivenessPage({
             </DirectoryTabsList>
             <DirectoryTabsContent value="public">
               <PublicSystemInfo />
-              <DaLivenessTable
-                items={publicSystems}
-              />
+              <DaLivenessTable items={publicSystems} />
             </DirectoryTabsContent>
           </DirectoryTabs>
         </LivenessTimeRangeContextProvider>

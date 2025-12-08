@@ -13,10 +13,7 @@ interface Props {
   hideType?: boolean
 }
 
-export function ScalingLivenessTable({
-  entries,
-  hideType,
-}: Props) {
+export function ScalingLivenessTable({ entries, hideType }: Props) {
   const { timeRange } = useLivenessTimeRangeContext()
   const { sorting, setSorting } = useTableSorting()
 

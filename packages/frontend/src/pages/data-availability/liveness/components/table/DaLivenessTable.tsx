@@ -7,11 +7,7 @@ import type { DaLivenessEntry } from '~/server/features/data-availability/livene
 import { publicColumns } from './columns'
 import { toDaLivenessTableEntry } from './toDaLivenessTableEntry'
 
-export function DaLivenessTable({
-  items,
-}: {
-  items: DaLivenessEntry[]
-}) {
+export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
   const { timeRange } = useLivenessTimeRangeContext()
 
   const tableEntries = useMemo(

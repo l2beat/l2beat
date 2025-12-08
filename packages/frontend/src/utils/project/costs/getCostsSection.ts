@@ -11,11 +11,7 @@ export async function getCostsSection(
     'costsInfo' | 'archivedAt' | 'trackedTxsConfig'
   >,
 ): Promise<
-  | Pick<
-      CostsSectionProps,
-      'trackedTransactions' | 'defaultRange'
-    >
-  | undefined
+  Pick<CostsSectionProps, 'trackedTransactions' | 'defaultRange'> | undefined
 > {
   if (!project.costsInfo) return undefined
 

@@ -61,26 +61,19 @@ export function ScalingLivenessTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingLivenessTable
-              entries={entries.rollups}
-            />
+            <ScalingLivenessTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingLivenessTable
-              entries={entries.validiumsAndOptimiums}
-            />
+            <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <ScalingLivenessTable
-              entries={entries.others}
-              hideType
-            />
+            <ScalingLivenessTable entries={entries.others} hideType />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
