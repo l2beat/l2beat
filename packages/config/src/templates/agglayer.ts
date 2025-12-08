@@ -69,7 +69,6 @@ import {
 export interface DAProvider {
   layer: DaProjectTableValue
   riskView: TableReadyValue
-  technology: ProjectTechnologyChoice | ProjectTechnologyChoice[]
   bridge: TableReadyValue
 }
 
@@ -412,8 +411,7 @@ function buildValidiumSections(
   }
 
   const technology: ProjectScalingTechnology = {
-    dataAvailability:
-      config.nonTemplateTechnology?.dataAvailability ?? provider.technology,
+    dataAvailability: config.nonTemplateTechnology?.dataAvailability,
     operator:
       config.nonTemplateTechnology?.operator ??
       buildOperatorTechnology(context),
@@ -596,7 +594,7 @@ function resolveValidiumDaProvider(
   }
 
   if (dacInfo !== undefined) {
-    return buildDacProvider(dacInfo, context.rollupModule)
+    return buildDacProvider(dacInfo)
   }
 
   throw new Error(
@@ -604,10 +602,7 @@ function resolveValidiumDaProvider(
   )
 }
 
-function buildDacProvider(
-  dac: DacInfo,
-  rollupModule: ReturnType<ProjectDiscovery['getContract']>,
-): DAProvider {
+function buildDacProvider(dac: DacInfo): DAProvider {
   return {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -618,24 +613,6 @@ function buildDacProvider(
       membersCount: dac.membersCount,
       requiredSignatures: dac.requiredMembers,
     }),
-    technology: {
-      name: 'Data is not stored on chain',
-      description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the external data becomes unavailable.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          title: `${rollupModule.name}.sol - Etherscan source code, sequenceBatchesValidium function`,
-          url: `https://etherscan.io/address/${safeGetImplementation(rollupModule)}#code#F1#L91`,
-        },
-      ],
-    },
   }
 }
 
