@@ -23,10 +23,7 @@ export const orbit: Bridge = {
       'Orbit Bridge has been hacked on 1 Jan 2024 and is potentially not safe to use.',
     category: 'Token Bridge',
     links: {
-      websites: [
-        'https://bridge.orbitchain.io/',
-        'https://orbitchain.io/about',
-      ],
+      websites: ['https://orbitchain.io/about'],
       bridges: ['https://bridge.orbitchain.io/'],
       socialMedia: [
         'https://twitter.com/Orbit_Chain',
