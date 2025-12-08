@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x05d0107b496421bf311d2b8ed8c059c2ed781b9d
+Generated with discovered.json: 0xbe7d80075c21f9f1fb91802e776ebe39e44711af
 
-# Diff at Fri, 05 Dec 2025 12:00:28 GMT:
+# Diff at Mon, 08 Dec 2025 12:10:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1760089209
-- current timestamp: 1764935892
+- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1760089209
+- current timestamp: 1765195735
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+AgoraGovernor voting delay and voting window updated by the Scroll Security Council. Per the Constitution, the voting period and voting delay should be 7 days and 3 days, respectively. Based on the updated 2-second block time, the corresponding block counts for the governor parameters were recalculated. 302400 blocks * 2s = 7 days and 129600 blocks * 2s = 3 days.
 
 ## Watched changes
 
