@@ -89,6 +89,7 @@ export const immutablex: ScalingProject = {
       socialMedia: [
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
+        'https://discord.com/invite/immutable-play',
       ],
       other: ['https://growthepie.com/chains/immutable-x'],
     },
