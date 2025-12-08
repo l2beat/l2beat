@@ -105,6 +105,14 @@ export const polygonzkevm: ScalingProject = agglayer({
   },
   milestones: [
     {
+      title: 'Migration to Pessimistic Proofs',
+      url: 'https://etherscan.io/tx/0xd8eb9f7bf7594d047e0c8b254b3893eb05daf692b1688adaacd21af144efe2a5#eventlog',
+      date: '2025-12-03',
+      description:
+        'Polygon zkEVM stops validating the full L2 state and moves to bridge accounting proofs.',
+      type: 'general',
+    },
+    {
       title: 'Polygon zkEVM Etrog upgrade',
       url: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
       date: '2024-02-13',
