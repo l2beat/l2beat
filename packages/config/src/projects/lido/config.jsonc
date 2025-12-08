@@ -9,6 +9,9 @@
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
     "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
   ],
+  "defidisco": {
+    "scanPermissions": false
+  },
   "overrides": {
     "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
       "fields": {

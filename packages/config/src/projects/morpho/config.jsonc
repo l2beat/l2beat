@@ -27,6 +27,9 @@
     },
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
       "ignoreDiscovery": true
+    },
+    "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": {
+      "ignoreMethods": ["proxiableUUID"]
     }
   }
 }

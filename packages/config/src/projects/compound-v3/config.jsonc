@@ -7,6 +7,9 @@
     "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
     "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94"
   ],
+  "defidisco": {
+    "scanPermissions": false
+  },
   "names": {
     "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3": "cUSDCv3",
     "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": "cWETHv3",

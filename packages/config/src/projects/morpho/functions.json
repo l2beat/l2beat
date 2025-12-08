@@ -1,38 +1,68 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-30T17:38:22.689Z",
+  "lastModified": "2025-12-03T16:26:10.846Z",
   "contracts": {
     "eth:0x4364fd2371b6318159366abFA51f190df5C24852": {
       "functions": [
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:12.972Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-12-03T16:26:10.846Z"
         },
         {
           "functionName": "transferOwnership",
           "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:13.727Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-03T16:25:54.962Z"
         },
         {
           "functionName": "renounceOwnership",
           "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:15.975Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-03T16:25:43.359Z"
         },
         {
           "functionName": "mint",
           "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:17.557Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-03T16:24:36.388Z"
         },
         {
           "functionName": "burn",
           "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:25.808Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2025-12-03T16:25:09.639Z"
         },
         {
-          "functionName": "acceptOwnership",
-          "isPermissioned": true,
-          "timestamp": "2025-09-25T19:19:28.256Z"
+          "functionName": "initialize",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-03T16:25:21.150Z"
         }
       ]
     }

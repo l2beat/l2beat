@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "liquity-v2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+    "eth:0xf949982b91c8c61e952b3ba942cbbfaef5386684"
+  ],
+  "defidisco": {
+    "scanPermissions": false
+  },
+  "names": {
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH",
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH"
+  },
+  "overrides": {
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": {
+      "ignoreRelatives": ["getTransmitters"]
+    }
+  }
+}

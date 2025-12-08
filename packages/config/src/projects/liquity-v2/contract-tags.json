@@ -1,0 +1,161 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-12-08T01:24:28.137Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:21:55.225Z"
+    },
+    {
+      "contractAddress": "eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.095Z"
+    },
+    {
+      "contractAddress": "eth:0x55AA0f5e955aBa989f69C6216405B7d3624E5E16",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.102Z"
+    },
+    {
+      "contractAddress": "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.108Z"
+    },
+    {
+      "contractAddress": "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.119Z"
+    },
+    {
+      "contractAddress": "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.132Z"
+    },
+    {
+      "contractAddress": "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.137Z"
+    },
+    {
+      "contractAddress": "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.104Z"
+    },
+    {
+      "contractAddress": "eth:0x97360A89B5adb7D82Dbde6C66A49de8a48D550E6",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.113Z"
+    },
+    {
+      "contractAddress": "eth:0x9A5B545aA8B6289288E529c4099B0CcA62bcB708",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.120Z"
+    },
+    {
+      "contractAddress": "eth:0x9ef7D53aa6B62e272467B86ce724885D4e2853BE",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.112Z"
+    },
+    {
+      "contractAddress": "eth:0xC0C7eB4A39BAa77fD52715BD1dcE2246Df85E489",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.127Z"
+    },
+    {
+      "contractAddress": "eth:0xC917E3BF6c211b326ffD4ed13E7D9a67682095CA",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.136Z"
+    },
+    {
+      "contractAddress": "eth:0xd8D2297bDf4a84569bCec83C92A81549bE9c51E6",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.117Z"
+    },
+    {
+      "contractAddress": "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.125Z"
+    },
+    {
+      "contractAddress": "eth:0xF38326579519377178725A741C35999E8051e907",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.122Z"
+    },
+    {
+      "contractAddress": "eth:0xFe31f3EcfDE29Fc4915d80Eb8A9d67bFF14180B3",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.123Z"
+    },
+    {
+      "contractAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:21:55.277Z"
+    },
+    {
+      "contractAddress": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.129Z"
+    },
+    {
+      "contractAddress": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:24:28.134Z"
+    },
+    {
+      "contractAddress": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.424Z"
+    },
+    {
+      "contractAddress": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.432Z"
+    },
+    {
+      "contractAddress": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.434Z"
+    },
+    {
+      "contractAddress": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.435Z"
+    },
+    {
+      "contractAddress": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.438Z"
+    },
+    {
+      "contractAddress": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.442Z"
+    },
+    {
+      "contractAddress": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.443Z"
+    },
+    {
+      "contractAddress": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.446Z"
+    },
+    {
+      "contractAddress": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.449Z"
+    },
+    {
+      "contractAddress": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+      "isExternal": true,
+      "timestamp": "2025-12-08T01:22:56.452Z"
+    },
+    {
+      "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+      "isExternal": false,
+      "timestamp": "2025-12-08T01:23:14.531Z"
+    }
+  ]
+}
