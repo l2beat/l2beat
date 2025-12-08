@@ -1,3 +1,120 @@
+Generated with discovered.json: 0xe5c13adc588e23be9b3decf3236695355cd49d6d
+
+# Diff at Mon, 08 Dec 2025 14:51:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@74b0041ead61bb3996af17fc89dbefa3ef2a27aa block: 1760436956
+- current timestamp: 1765205442
+
+## Description
+
+OptimismPortal replaced with OptimismPortal2 using dispute games. Significant change compared to standard OptimismPortal2 is the possibility for a Guardian to freeze withdrawals with updateWithdrawalFrozenState().
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      name:
+-        "OptimismPortal"
++        "OptimismPortal2"
+      template:
+-        "opstack/OptimismPortal_soon"
++        "opstack/OptimismPortal2_soon"
+      sourceHashes.1:
+-        "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
++        "0x110afdef90725a52a9718b18c76ee94eedc98dbaa26f8818c43489caa0c4096d"
+      values.$implementation:
+-        "eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"
++        "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"
+      values.$pastUpgrades.2:
++        ["2025-12-08T07:12:35.000Z","0xd73f4c3b5fed189876a719ed9a80e649b30e2eabba32d6e642deab3bc7f1e149",["eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.l2Oracle:
+-        "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+      values.version:
+-        "2.8.1-beta.1"
++        "3.11.0-beta.2"
+      values.disputeGameFactory:
++        "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2"
+      values.disputeGameFinalityDelaySeconds:
++        28800
+      values.proofMaturityDelaySeconds:
++        28800
+      values.respectedGameType:
++        2000
+      values.respectedGameTypeUpdatedAt:
++        1765180799
+      implementationNames.eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA:
+-        "OptimismPortal"
+      implementationNames.eth:0x29174FC953F163452093aFa9eE3904168C74b2E7:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d) {
+    +++ description: None
+      directlyReceivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":"admin"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2","role":"admin"}
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":".challenger"}
+      receivedPermissions.1:
+-        {"permission":"challenge","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":".CHALLENGER"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","description":"change the finalization period (challenge period).","role":".challenger"}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":"admin","via":[{"address":"eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2","role":"admin","via":[{"address":"eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      | 1550 ++++++++++++++++++++
+ .../DisputeGameFactory}/Proxy.p.sol                |    0
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  723 ---------
+ .../OptimismPortal2/OptimismPortal2.sol}           |  404 +++--
+ .../OptimismPortal2}/Proxy.p.sol                   |    0
+ 5 files changed, 1801 insertions(+), 876 deletions(-)
+```
+
 Generated with discovered.json: 0x203f7e072e3df52940450ccfc926018940f3ff86
 
 # Diff at Tue, 04 Nov 2025 11:34:33 GMT:
