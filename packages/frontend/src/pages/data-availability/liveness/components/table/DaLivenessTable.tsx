@@ -9,10 +9,8 @@ import { toDaLivenessTableEntry } from './toDaLivenessTableEntry'
 
 export function DaLivenessTable({
   items,
-  bigQueryOutage,
 }: {
   items: DaLivenessEntry[]
-  bigQueryOutage: boolean
 }) {
   const { timeRange } = useLivenessTimeRangeContext()
 
@@ -22,7 +20,7 @@ export function DaLivenessTable({
   )
 
   const table = useTable({
-    columns: publicColumns(bigQueryOutage),
+    columns: publicColumns(),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

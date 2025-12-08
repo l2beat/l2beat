@@ -7,6 +7,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -21,12 +22,10 @@ import { DaLivenessTable } from './components/table/DaLivenessTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaLivenessEntry[]
-  bigQueryOutage: boolean
 }
 
 export function DataAvailabilityLivenessPage({
   publicSystems,
-  bigQueryOutage,
   ...props
 }: Props) {
   return (
@@ -36,7 +35,7 @@ export function DataAvailabilityLivenessPage({
           <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
             Liveness
           </MainPageHeader>
-          {bigQueryOutage && <BigQueryOutageNotice type="page" mobileFull />}
+          {env.CLIENT_SIDE_BIG_QUERY_OUTAGE && <BigQueryOutageNotice type="page" mobileFull />}
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
@@ -48,7 +47,6 @@ export function DataAvailabilityLivenessPage({
               <PublicSystemInfo />
               <DaLivenessTable
                 items={publicSystems}
-                bigQueryOutage={bigQueryOutage}
               />
             </DirectoryTabsContent>
           </DirectoryTabs>

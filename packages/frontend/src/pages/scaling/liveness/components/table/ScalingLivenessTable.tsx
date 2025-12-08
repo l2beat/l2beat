@@ -11,13 +11,11 @@ import { toLivenessTableEntry } from './toTableEntry'
 interface Props {
   entries: ScalingLivenessEntry[]
   hideType?: boolean
-  bigQueryOutage: boolean
 }
 
 export function ScalingLivenessTable({
   entries,
   hideType,
-  bigQueryOutage,
 }: Props) {
   const { timeRange } = useLivenessTimeRangeContext()
   const { sorting, setSorting } = useTableSorting()
@@ -29,7 +27,7 @@ export function ScalingLivenessTable({
 
   const table = useTable({
     data: tableEntries,
-    columns: getScalingLivenessColumns(hideType, bigQueryOutage),
+    columns: getScalingLivenessColumns(hideType),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

@@ -3,6 +3,7 @@ import compact from 'lodash/compact'
 import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { env } from '~/env'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
@@ -15,7 +16,6 @@ export function LivenessChartStats({
   isLoading,
   configuredSubtypes,
   isArchived,
-  bigQueryOutage,
 }: {
   stats:
     | Partial<
@@ -27,7 +27,6 @@ export function LivenessChartStats({
   hasTrackedContractsChanged: boolean
   isLoading: boolean
   isArchived: boolean
-  bigQueryOutage: boolean
 }) {
   const elements = compact([
     configuredSubtypes.includes('batchSubmissions') && (
@@ -53,7 +52,7 @@ export function LivenessChartStats({
     ),
     !isArchived && (
       <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
-        {bigQueryOutage ? (
+        {env.CLIENT_SIDE_BIG_QUERY_OUTAGE ? (
           <NoDataBadge />
         ) : (
           <AnomalyIndicator
