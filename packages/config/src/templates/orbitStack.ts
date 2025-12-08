@@ -949,7 +949,7 @@ function getRiskView(
   // For risk rosette, use the DA risk based on current sequencer commitment
   // If posting to DAC (0x88), find DAC provider; otherwise use least risky
   const currentDaProvider = postsToDAC(templateVars)
-    ? daProviders.find((p) => p.layer === DA_LAYERS.DAC) ?? daProviders[0]
+    ? (daProviders.find((p) => p.layer === DA_LAYERS.DAC) ?? daProviders[0])
     : daProviders.sort((dap1, dap2) =>
         compareRisk(dap2.riskViewDA, dap1.riskViewDA),
       )[0]
@@ -1128,9 +1128,8 @@ function getDAProviders(
             RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
           )
         : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(
-        isUsingBlobstream,
-      ),
+      technology:
+        TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(isUsingBlobstream),
       layer: DA_LAYERS.CELESTIA,
       bridge: isUsingBlobstream ? DA_BRIDGES.BLOBSTREAM : DA_BRIDGES.NONE,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
