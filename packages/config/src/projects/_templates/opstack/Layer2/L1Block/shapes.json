@@ -13,5 +13,11 @@
     "hash": "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108",
     "address": "oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
     "blockNumber": 135717996
+  },
+  "L1Block.sol": {
+    "hash": "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c",
+    "address": "base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C",
+    "chain": "base",
+    "blockNumber": 39201131
   }
 }
