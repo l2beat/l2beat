@@ -4,6 +4,7 @@ import compression from 'compression'
 import timeout from 'connect-timeout'
 import express from 'express'
 import sirv from 'sirv'
+import { rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/ServerEntry'
 import type { RenderData } from '../ssr/types'
@@ -82,7 +83,7 @@ export function createServer(logger: Logger) {
 function renderToHtml(data: RenderData, url: string) {
   const rendered = render(data, url)
   const envData = Object.fromEntries(
-    Object.entries(process.env)
+    Object.entries(rawEnv)
       .map(([key, value]) => {
         if (
           !key.startsWith('CLIENT_SIDE_') &&

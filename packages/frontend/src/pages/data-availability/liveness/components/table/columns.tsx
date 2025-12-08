@@ -9,6 +9,7 @@ import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
+import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
@@ -17,7 +18,7 @@ import type { DaLivenessTableEntry } from './toDaLivenessTableEntry'
 
 const columnHelper = createColumnHelper<DaLivenessTableEntry>()
 
-export const publicColumns = (bigQueryOutage?: boolean) => [
+export const publicColumns = () => [
   ...getDaCommonProjectColumns(columnHelper, (row) => row.href ?? ''),
   columnHelper.accessor('name', {
     header: 'DA Layer',
@@ -146,7 +147,7 @@ export const publicColumns = (bigQueryOutage?: boolean) => [
         return null
       }
 
-      if (bigQueryOutage) {
+      if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
         return <NoDataBadge />
       }
 
@@ -162,7 +163,7 @@ export const publicColumns = (bigQueryOutage?: boolean) => [
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       additionalRows: (ctx) => {
         return ctx.row.original.bridges.slice(1).map((bridge) => {
-          if (bigQueryOutage) {
+          if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
             return <NoDataBadge />
           }
 

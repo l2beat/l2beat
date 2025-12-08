@@ -1,7 +1,7 @@
 {
   "name": "cyber",
-  "timestamp": 1764323296,
-  "configHash": "0x55d485199eadb6d98f53639eb70905dbbc21c111649cab387ba2c56a483d8f6a",
+  "timestamp": 1764757255,
+  "configHash": "0x81cf64553d6849de0763bd9af415c93f4fa13c759f1e8eb05eeea458f45d50d7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -299,7 +299,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 23870279
+          "prevBlockNum": 23924973
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1338,7 +1338,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1763438903,
       "sinceBlock": 23823532,
       "values": {
@@ -1353,7 +1353,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 32,
+        "gameCount": 152,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b",
@@ -1365,7 +1365,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
-        "permissionedGamesTotal": 32,
+        "permissionedGamesTotal": 152,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -2510,6 +2510,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23896379 },
+  "usedBlockNumbers": { "ethereum": 23932285 },
   "permissionsConfigHash": "0x2341ff7960eacee1d892394980ee6e6f45bc2dfea4bd170a3c8c508d8de3413c"
 }

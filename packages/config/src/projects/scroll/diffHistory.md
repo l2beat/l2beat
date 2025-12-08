@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbe7d80075c21f9f1fb91802e776ebe39e44711af
+
+# Diff at Mon, 08 Dec 2025 12:10:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1760089209
+- current timestamp: 1765195735
+
+## Description
+
+AgoraGovernor voting delay and voting window updated by the Scroll Security Council. Per the Constitution, the voting period and voting delay should be 7 days and 3 days, respectively. Based on the updated 2-second block time, the corresponding block counts for the governor parameters were recalculated. 302400 blocks * 2s = 7 days and 129600 blocks * 2s = 3 days.
+
+## Watched changes
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        172800
++        129600
+      values.votingPeriod:
+-        403200
++        302400
+    }
+```
+
 Generated with discovered.json: 0x77701f39a79a42731801e050830ad5e9af2641e7
 
 # Diff at Fri, 10 Oct 2025 09:41:22 GMT:

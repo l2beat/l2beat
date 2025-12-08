@@ -62,19 +62,19 @@ const ServerEnv = z.object(SERVER_CONFIG)
 
 type Env = z.infer<typeof ServerEnv>
 
-export const env = createEnv()
+export const rawEnv = getRawEnv()
+export const env = parseEnv(rawEnv)
 
-function createEnv(): Env {
-  const env = getEnv()
+function parseEnv(rawEnv: ReturnType<typeof getRawEnv>): Env {
   const isClient = typeof window !== 'undefined'
 
-  for (const key in env) {
-    if (env[key as keyof Env] === '') {
-      delete env[key as keyof Env]
+  for (const key in rawEnv) {
+    if (rawEnv[key as keyof Env] === '') {
+      delete rawEnv[key as keyof Env]
     }
   }
 
-  const parsed = isClient ? ClientEnv.parse(env) : ServerEnv.parse(env)
+  const parsed = isClient ? ClientEnv.parse(rawEnv) : ServerEnv.parse(rawEnv)
   return new Proxy<Env>(parsed as Env, {
     get(target, key, receiver) {
       if (!Reflect.has(SERVER_CONFIG, key) && key !== 'toJSON') {
@@ -86,7 +86,10 @@ function createEnv(): Env {
   })
 }
 
-function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
+function getRawEnv(): Record<
+  keyof z.infer<typeof ServerEnv>,
+  string | undefined
+> {
   if (typeof process === 'undefined') {
     return window.__ENV__
   }
@@ -112,10 +115,10 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     // Client
-    CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
+    CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
-    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_BIG_QUERY_OUTAGE: process.env.FEATURE_FLAG_BIG_QUERY_OUTAGE,
+    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
+    CLIENT_SIDE_BIG_QUERY_OUTAGE: process.env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
   }
 }

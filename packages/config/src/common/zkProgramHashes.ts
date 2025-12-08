@@ -228,7 +228,21 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
-  '0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3': {
+  '0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3': {
+    title: 'Batch proving program of Raiko (reth Taiko)',
+    description:
+      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x008f96447139673b3f2d29b30ad4b43fe6ccb3f31d40f6e61478ac5640201d9e': {
+    title: 'Aggregation program of Raiko (reth Taiko)',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x00a32a15ab7a74a9a79f3b97a71d1b014cd4361b37819004b9322b502b5f5be1': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
       'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
@@ -236,7 +250,21 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0x7ce98c36408e86dac21fc16af301740d07a849be0a80529debcb0797fd66f5e3': {
-    title: 'Kailua fault proof program',
+    title: 'Kailua fault proof program (Risc0 v2.3.2)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
+  '0xd7c1d74ce26e897e8bc7ea094667dcdb04c405ba1836bdb9b0ad773fc9fd0651': {
+    title: 'Kailua fault proof program (Risc0 v3.0.3)', // https://github.com/boundless-xyz/kailua/blob/3d284ca656a678f0546500e4a30c494a26358a18/book/src/setup.md?plain=1#L44
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
+  '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
+    title: 'Kailua fault proof program (Risc0 v3.0.4)', // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
@@ -250,6 +278,20 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e': {
+    title: 'Batch proving program of Raiko (reth Taiko)',
+    description:
+      'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
+  '0x3d933868e2ac698df98209b45e6c34c435df2d3c97754bb6739d541d5fd312e3': {
+    title: 'Aggregation program of Raiko (reth Taiko)',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
+  '0x77ff0953ded4fb48bb52b1099cc36c6b8bf603dc4ed9211608c039c7ec31b82b': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
       'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',

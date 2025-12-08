@@ -13,5 +13,16 @@
     "eth:0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2": "AltLayer 2",
     "eth:0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7": "AltLayer 3",
     "eth:0x1a76Ed328600489811F819959a74043f106CF0f9": "Cyber"
+  },
+  "overrides": {
+    "eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x719206d1C83D16FBcAB21f9e9DBF5A8178567E2b": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
   }
 }
