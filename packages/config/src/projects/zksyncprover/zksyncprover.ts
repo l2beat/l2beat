@@ -19,6 +19,8 @@ export const zksyncprover: BaseProject = {
   display: {
     description:
       'Plonk proving system designed by Matter Labs to prove custom predefined state transitions of ZKsync Lite.',
+    headerWarning:
+      '[ZKsync Lite will be deprecated in 2026, and the future is firmly focused on the ZKsync network.](https://x.com/zksync/status/1997776813708242975?s=20).',
     links: {
       documentation: [
         'https://github.com/matter-labs/zksync/tree/master/docs',
