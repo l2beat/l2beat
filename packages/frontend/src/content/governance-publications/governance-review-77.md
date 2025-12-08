@@ -299,6 +299,8 @@ You can find us to discuss everything related to Lisk’s governance, from curre
 
 ## **Lisk**
 
+### Lisk DAO Season 2 Report
+
 SuperchainEco [published](https://forum.lisk.com/t/lisk-dao-season-2-report/626) a work-in-progress Lisk DAO Season 2 Report (from May 14 until Dec 17, 2025), with the final version planned for later in December.
 
 Season 2 directed 3,925,000 LSK total (including 3,750,000 LSK for ecosystem growth) across grants, incentives, ambassadors, and accelerators, approving 11 milestone-based grants out of 61+ applications. Highlights include launching LiskDAO.com, supporting Superchain integrations like Kyo Finance, a Quidax incentive to drive African on/off-ramp usage, and a Year-End Builder Reward Campaign (135,000 LSK) rewarding December activity based on usage metrics; a town hall is set for Dec 10.
