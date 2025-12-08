@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4efd7574441356b02d499f656b2b57ccadf693ce
+
+# Diff at Fri, 05 Dec 2025 11:25:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1764324554
+- current timestamp: 1764933869
+
+## Description
+
+Multisig member change.
+
+## Watched changes
+
+```diff
+    contract Soneium Multisig (eth:0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
++        "eth:0x556Eb1b888eF0a02be4360e960824fc5aC197d65"
+      values.$members.5:
+-        "eth:0xba1a565d2bF6D27F451a459308f423219478c5cB"
++        "eth:0x1edae2A7C9ECF37319D4E113588d946e9901F5ea"
+    }
+```
+
 Generated with discovered.json: 0x01c442041d244f3ab73f702274751c0bffb96612
 
 # Diff at Fri, 28 Nov 2025 10:11:10 GMT:

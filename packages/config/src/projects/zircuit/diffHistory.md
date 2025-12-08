@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xc9e5ccb02675586b47a7e6c977d0706bfad62509
+
+# Diff at Fri, 05 Dec 2025 11:41:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1764059552
+- current timestamp: 1764934764
+
+## Description
+
+Increased operator fee.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.operatorFeeConstant:
+-        23225000000
++        360000000000
+    }
+```
+
+```diff
+    contract L1Block (zircuit:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`.
+      values.operatorFeeConstant:
+-        23225000000
++        360000000000
+    }
+```
+
 Generated with discovered.json: 0xb5b10a1a3360039ef2bc5811fe1fa5ffb645f5e2
 
 # Diff at Tue, 25 Nov 2025 08:34:20 GMT:

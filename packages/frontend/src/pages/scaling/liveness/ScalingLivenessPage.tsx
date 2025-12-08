@@ -15,29 +15,24 @@ import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>
   projectsWithAnomalies: ProjectWithAnomaly[]
-  bigQueryOutage: boolean
 }
 
 export function ScalingLivenessPage({
   entries,
   projectsWithAnomalies,
-  bigQueryOutage,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <LivenessTimeRangeContextProvider>
-          <LivenessHeader bigQueryOutage={bigQueryOutage} />
+          <LivenessHeader />
           <RecentAnomalies
             projectsWithAnomalies={projectsWithAnomalies}
             className="max-md:mt-4 md:mb-6"
           />
           <TableFilterContextProvider>
-            <ScalingLivenessTables
-              {...entries}
-              bigQueryOutage={bigQueryOutage}
-            />
+            <ScalingLivenessTables {...entries} />
           </TableFilterContextProvider>
         </LivenessTimeRangeContextProvider>
       </SideNavLayout>

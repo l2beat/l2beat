@@ -145,6 +145,12 @@ export const risc0: BaseProject = {
             ),
             chain: 'ethereum',
           },
+          {
+            address: EthereumAddress(
+              '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
+            ),
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         description:

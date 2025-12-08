@@ -1,3 +1,156 @@
+Generated with discovered.json: 0x7ab2e7dd320b34b01e9bfd9175b38b00b9c85651
+
+# Diff at Thu, 04 Dec 2025 10:07:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2a7759be93afd2795092571b763c06140680932 block: 1764759251
+- current timestamp: 1764841913
+
+## Description
+
+execution of a standard upgrade via governance. targeting the proof system: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559
+
+TEE config and zk program hashes updated.
+
+usual operator changes.
+
+## Watched changes
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.2:
++        "0x3e6113a23bbdf9231520153253047d02db8f1dd38a9b52914ab7943278f52db0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
+    contract Risc0VerifierGateway (eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      values.$implementation:
+-        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
++        "eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"
+      values.$pastUpgrades.3:
++        ["2025-12-04T02:13:59.000Z","0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",["eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.impl:
+-        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
++        "eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"
+      values.riscoGroth16Verifier:
+-        "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c"
++        "eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599"
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.8:
++        "0x3d933868e2ac698df98209b45e6c34c435df2d3c97754bb6739d541d5fd312e3"
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.9:
++        "0x77ff0953ded4fb48bb52b1099cc36c6b8bf603dc4ed9211608c039c7ec31b82b"
+      implementationNames.eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614:
+-        "Risc0Verifier"
+      implementationNames.eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36:
++        "Risc0Verifier"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.20:
++        "0xe5774b71990b0d5f3eca8d4d22546764dd9549c743a1a6d4d4863d97f6b8c67a"
+      values.mrEnclaves.21:
++        "0x605ad10c1a56ed7289f198d64a39a952cd3b8a0bed3fcb19c8301c1847dc3a2f"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.12:
++        "0x008f96447139673b3f2d29b30ad4b43fe6ccb3f31d40f6e61478ac5640201d9e"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.13:
++        "0x47cb22384e59cecf65a536612d4b43fe36659f987503db9828f158ac40201d9e"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.14:
++        "0x00a32a15ab7a74a9a79f3b97a71d1b014cd4361b37819004b9322b502b5f5be1"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.15:
++        "0x51950ad55e9d2a6973e772f471d1b01466a1b0d95e064012726456a02b5f5be1"
+    }
+```
+
+```diff
+    contract PreconfRouter (eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a) {
+    +++ description: Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.
+      sourceHashes.1:
+-        "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd"
++        "0xa69b68882c2eac4ec75e64e92a7946b6311cf7e0fa7c844251baabfa7803d81b"
+      values.$implementation:
+-        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
++        "eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"
+      values.$pastUpgrades.3:
++        ["2025-12-04T02:13:59.000Z","0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",["eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.impl:
+-        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
++        "eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"
+      values.getConfig:
++        {"handOverSlots":8}
+      implementationNames.eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913:
+-        "PreconfRouter"
+      implementationNames.eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709:
++        "PreconfRouter"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 1 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 1 operators registered."
+      values.operatorCount:
+-        3
++        2
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperatorsCount:
+-        2
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+## Source code changes
+
+```diff
+.../PreconfRouter/PreconfRouter.sol                       | 15 +++++++++++++++
+ .../RiscZeroGroth16Verifier.sol                           |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xae2297c4a62652b67661d3f82605b4be6df55d08
 
 # Diff at Wed, 03 Dec 2025 11:03:47 GMT:

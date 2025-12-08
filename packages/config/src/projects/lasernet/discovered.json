@@ -1,6 +1,6 @@
 {
   "name": "lasernet",
-  "timestamp": 1759480862,
+  "timestamp": 1764933681,
   "configHash": "0xdfd1a0cc2e767740f189a000379dd64af555c1f8cebb408c4db9cf1c34ed8e1e",
   "entries": [
     {
@@ -174,7 +174,7 @@
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
         ],
         "allowedOutboxList": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
-        "delayedMessageCount": 184,
+        "delayedMessageCount": 231,
         "inboxHistory": [
           "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
@@ -184,8 +184,8 @@
         "outboxHistory": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
         "rollup": "eth:0x311b5c87f245D39f2B31965C5Cb8cB52797e422b",
         "sequencerInbox": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
-        "sequencerMessageCount": 3919,
-        "sequencerReportedSubMessageCount": 9639730
+        "sequencerMessageCount": 5613,
+        "sequencerReportedSubMessageCount": 13573113
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -210,6 +210,11 @@
         "eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMemory",
@@ -340,13 +345,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 382,
+        "firstUnresolvedNode": 508,
         "inbox": "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739311,
-        "latestConfirmed": 381,
-        "latestNodeCreated": 393,
+        "latestConfirmed": 507,
+        "latestNodeCreated": 519,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A",
@@ -575,11 +580,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -591,7 +596,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -616,6 +621,11 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SequencerInbox",
@@ -652,7 +662,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3919,
+        "batchCount": 5613,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -692,7 +702,7 @@
         "rollup": "eth:0x311b5c87f245D39f2B31965C5Cb8cB52797e422b",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 184,
+        "totalDelayedMessagesRead": 231,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1035,11 +1045,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1099,11 +1104,6 @@
       "implementationNames": {
         "eth:0xF815C4c8A671395dAF5706DCB917CfA60DE7B3f9": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1738,6 +1738,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23496123 },
-  "permissionsConfigHash": "0x970eb8942dde34cc8ae87d23407519363ff1450ce8d94308553ac3d2f3897c2f"
+  "usedBlockNumbers": { "ethereum": 23946419 },
+  "permissionsConfigHash": "0x7926272da2190bcd39d5f79f3863a8ce136907c7a8a364ce6ee8cdd2fb0fdcc9"
 }
