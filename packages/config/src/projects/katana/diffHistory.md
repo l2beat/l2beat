@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x90dc26c918b9dc0c3276834e43e6504b8c9efcf4
+Generated with discovered.json: 0x86d41f984d20411bcb93f49f9e03cbe5b0d76c22
 
-# Diff at Sat, 06 Dec 2025 14:47:59 GMT:
+# Diff at Mon, 08 Dec 2025 09:51:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@ce9c5de1bc9f8a8c0a7f464f3c1e3611f05712f1 block: 1764933676
+- comparing to: main@a978f5e96d0457fb785933034bd3e35d3fd4f054 block: 1764933676
 - current timestamp: 1764933676
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+config: add aggchain type comment.
 
 ## Config/verification related changes
 
