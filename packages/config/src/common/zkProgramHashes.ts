@@ -257,7 +257,7 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0xd7c1d74ce26e897e8bc7ea094667dcdb04c405ba1836bdb9b0ad773fc9fd0651': {
-    title: 'Kailua fault proof program (Risc0 v3.0.3)', // https://github.com/boundless-xyz/kailua/blob/zkvm-3.0.3/book/src/setup.md
+    title: 'Kailua fault proof program (Risc0 v3.0.3)', // https://github.com/boundless-xyz/kailua/blob/3d284ca656a678f0546500e4a30c494a26358a18/book/src/setup.md?plain=1#L44
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
