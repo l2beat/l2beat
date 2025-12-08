@@ -150,11 +150,6 @@ They ask for two things: (1) current balances as of end-2025 (ZK, ETH, stables, 
 
 You can find us to discuss everything related to ZkSync’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-**Upcoming Events**
-
-[Standing ZKsync Proposal Review Call](https://meet.google.com/qvr-txgr-vja) - on 3.12 at 16:30 UTC.
-
-
 ## **Starknet**
 
 
