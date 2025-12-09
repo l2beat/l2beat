@@ -1520,5 +1520,7 @@
   "static/meta-images/publications/the-future-of-financial-infrastructure.png": "e8765b4cd987bf006f49009f08c9498e",
   "static/images/architecture/agglayer-pessimistic.png": "44bc3fc21c74088bdc7f7c505f6bc59a",
   "static/images/architecture/agglayer-validium.png": "7df06d22f3429e7d2461ed800fb29dec",
-  "static/meta-images/publications/governance-review-77.png": "a122af2813c4b9e774ef101eb9082027"
+  "static/meta-images/publications/governance-review-77.png": "a122af2813c4b9e774ef101eb9082027",
+  "static/images/architecture/agglayer-opstack_closed.png": "f285de7b1e0e21b8b1f253c86d3fa815",
+  "static/images/upgrades-and-governance/agglayer.png": "d6b47eefd3b2ca22c2a86d4ee6400c8c"
 }
