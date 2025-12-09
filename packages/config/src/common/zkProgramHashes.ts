@@ -321,7 +321,7 @@ Verify:
       title:
         'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
       description:
-        'Cairo program that verifies the correct aggregation of several proofs of base program.',
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
@@ -375,7 +375,7 @@ Steps:
     {
       title: 'StarkEx program used by ApeX and EdgeX',
       description:
-        'Cairo program that implements application-specific L2 with spot and perpetual trading functionality.',
+        'Cairo program that implements an application-specific L2 with spot and perpetual trading functionality.',
       proverSystemProject: ProjectId('stone'),
       verificationStatus: 'notVerified',
     },
