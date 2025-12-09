@@ -65,7 +65,7 @@ What makes this problem harder is that a transfer can consist of multiple events
 
 #### Matching via correlation key
 
-The main insight that makes finding pairs of correlated events efficient is that instead of implementing a **function** that compares two events (and would need to be executed for earch pair of events), there should be a function that *returns* a **corellation key** for an event, so that such key can be efficiently *indexed*. For example, if there's a deposit event `A` with fields: 
+The main insight that makes finding pairs of correlated events efficient is that instead of implementing a **function** that compares two events (and in the most naive form would need to be executed for earch pair of events, leading to O(n^2) computational complexity), there should be a function that *returns* a **corellation key** for an event, so that such key can be efficiently *indexed*. For example, if there's a deposit event `A` with fields: 
 
 * `A = { ..., messageId: 123, recipient: 0xabc, amount: $100 }` 
 
@@ -84,6 +84,14 @@ then the **correlation key** for events like `A` (in terms of relation with even
 
 This serialized correlation key can be saved to a database and an efficient *index* can be created for it. Whenever an event like `B` arrives, only a single index lookup is necessary to identify if a matching event `A` exists in the database.
 
+A few questions arise here:
+
+* is the correlation key a propery of an event, or of a relation between two events. 
+* should correlation key be unique
+* can every correlation be expressed as a correlation key
+  
+Those will be discussed in the following sections.
+
 #### Dealing with arrival order
 
 Continuing the example above, we can't be certain that event `A` will arrive into the processing pipeline before event `B`, even if that's how it physically happened. There can be many reason for such situation, like delays in intervals of data fetching from different chains, speed of RPC endpoints, bugs, reprocessing scenarios. 
@@ -92,17 +100,23 @@ Continuing the example above, we can't be certain that event `A` will arrive int
 
 #### Matching logic that can't be serialized into a correlation key
 
-There might be situation when matching logic between two events can't be easily represented as a lookup for a static, serialized value (the correlation key). For example imagine, that:
+There might be a situation when matching logic between two events can't be easily represented as a lookup for a static, serialized value (the correlation key). Extending the previous example imagine, that:
 
 * event A additionally has `A.timestamp` field,
 * event B additionally has `B.timestamp` field
 * event `A` matches event `B` if `A.timestamp < B.timestamp`, in addition to other constraints
 
-In such example
+In such example it's not helpful to add `A.timestamp` into the corellation key:
 
-...TODO
+* `correlationKey = serialized({ A.messageId,  A.recipient, A.timestamp })` 
 
-Important caveat: such situations are much more rare than it might seem and often a correlation key can be created... TODO...
+because correlation key as a value is used for equivalence (`=`) check (i.e. it's a key in an index) which doesn't easily support relations like "smaller than", etc.
+
+Important caveat: such situations are much rarer than it might seem and often a correlation key can be constructed even if it's not immediately obvious. If in the example above we wanted to match events that were created before timestamp 123456789 (so that the timestamp is not dependented on `B.timestamp`, but is known up-front), then it's enough to add a field `isBefore123456789` to the corellation key, since it's a boolean, so can be checked for equivalence.
+
+But assuming the corellation check indeed must include relation of fields which can't be represented as a strict equivalence, the process needs to support calling a *matching function* on the subset of events that were found by initial correlation key query. But it's still crucial to strive for constructing the correlation key that will narrow down possible candidates for the matching function to the minimum.
+
+This example also shows that the *correlation key is not necessarily unique* and can be the same for different events of the same type.
 
 #### Transactions that are composed by more than two events
 
