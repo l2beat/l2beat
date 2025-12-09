@@ -160,7 +160,11 @@
         },
         "aggchainMultisigHash": { "severity": "HIGH" },
         "useDefaultSigners": { "severity": "HIGH" },
-        "useDefaultVkeys": { "severity": "HIGH" }
+        "useDefaultVkeys": { "severity": "HIGH" },
+        "AGGCHAIN_TYPE": {
+          "severity": "HIGH",
+          "description": "0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"
+        }
       },
       "implementationNames": {
         "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B": "PolygonTransparentProxy",
@@ -355,7 +359,7 @@
     ]
   },
   "usedTemplates": {
-    "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29"
+    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23695838 },
   "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843"
