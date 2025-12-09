@@ -41,6 +41,7 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
+  ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingProofSystem,
@@ -77,6 +78,7 @@ type AgglayerVariant = 'validium' | 'pessimistic'
 interface AgglayerBaseConfig {
   variant?: AgglayerVariant
   addedAt: UnixTime
+  reviewStatus?: ProjectReviewStatus
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
@@ -240,6 +242,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     addedAt: config.addedAt,
     id: ProjectId(config.discovery.projectName),
     capability: config.capability ?? 'universal',
+    reviewStatus: config.reviewStatus,
     archivedAt: config.archivedAt,
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {

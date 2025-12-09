@@ -8,6 +8,7 @@ const bridge = discovery.getContract('AgglayerBridge')
 
 export const xlayer: ScalingProject = agglayer({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
+  reviewStatus: 'inReview',
   display: {
     name: 'X Layer',
     slug: 'xlayer',

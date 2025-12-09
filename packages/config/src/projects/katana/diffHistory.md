@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xfd75ece268791f13bd59dd6ea4ebc744ed3f4935
+
+# Diff at Tue, 09 Dec 2025 11:49:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1764933676
+- current timestamp: 1765280900
+
+## Description
+
+config related: ms changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933676 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x21618593F7147235aC8D511d68A547C935F9d417) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+```diff
+    EOA  (eth:0x54c401eD03D086fE13221E5422165f3b024265d9) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0x86d41f984d20411bcb93f49f9e03cbe5b0d76c22
 
 # Diff at Mon, 08 Dec 2025 09:51:00 GMT:
