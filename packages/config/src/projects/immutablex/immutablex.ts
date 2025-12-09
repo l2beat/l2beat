@@ -86,7 +86,7 @@ export const immutablex: ScalingProject = {
     stacks: ['StarkEx'],
     links: {
       websites: ['https://immutable.com/'],
-      bridges: ['https://market.immutable.com/'],
+      bridges: ['https://toolkit.immutable.com/squid-bridge/'],
       documentation: [
         'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
       ],
