@@ -149,6 +149,7 @@ export function addProjectsRoutes(
     '/v1/project/:projectId/tokens',
     {
       summary: 'List of tokens associated with the project',
+      description: 'This endpoint may be affected by changes in the future.',
       tags: ['projects'],
       params: v.object({
         projectId: v.string(),
