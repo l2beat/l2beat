@@ -115,7 +115,7 @@ export const lens: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xc29d04A93F893700015138E3E334eB828dAC3cef',
         ), // Lens diamond
-        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x0db9eb87',
         functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
@@ -148,7 +148,7 @@ export const lens: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xc29d04A93F893700015138E3E334eB828dAC3cef',
         ), // Lens diamond
-        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x9271e450',
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
@@ -181,7 +181,7 @@ export const lens: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xc29d04A93F893700015138E3E334eB828dAC3cef',
         ), // Lens diamond
-        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0xa085344d',
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
