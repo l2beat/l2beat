@@ -97,6 +97,7 @@ export function addTvsRoutes(
     {
       summary:
         'Total Value Secured for a specific token with ability to control the time range.',
+      description: 'This endpoint may be affected by changes in the future.',
       tags: ['tvs'],
       params: v.object({
         tokenId: v.string(),
