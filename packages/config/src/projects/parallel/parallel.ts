@@ -33,7 +33,7 @@ export const parallel: ScalingProject = orbitStackL2({
       ],
       socialMedia: [
         'https://twitter.com/ParallelFi',
-        'https://discord.gg/rdjVz8zavF',
+        'https://discord.com/invite/parallelfi',
         'https://t.me/parallelfi_community',
       ],
     },
