@@ -19,6 +19,7 @@ interface Props<T> {
   columns: Column<T>[]
 }
 
+// TODO: column group
 export function ColumnsControls<T>({ columns }: Props<T>) {
   const trigger = (
     <div className="flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">

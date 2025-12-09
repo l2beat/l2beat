@@ -2,6 +2,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
@@ -46,18 +47,21 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
   })
 
   return (
-    <BasicTable
-      table={table}
-      rowSortingFn={(a, b) => {
-        if (a.original.id === ProjectId.ETHEREUM) {
-          return -1
-        }
-        if (b.original.id === ProjectId.ETHEREUM) {
-          return 1
-        }
-        return 0
-      }}
-    />
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable
+        table={table}
+        rowSortingFn={(a, b) => {
+          if (a.original.id === ProjectId.ETHEREUM) {
+            return -1
+          }
+          if (b.original.id === ProjectId.ETHEREUM) {
+            return 1
+          }
+          return 0
+        }}
+      />
+    </>
   )
 }
 

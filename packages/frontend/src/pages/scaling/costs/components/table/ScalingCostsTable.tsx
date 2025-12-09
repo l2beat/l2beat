@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { CostsTableData } from '~/server/features/scaling/costs/getCostsTableData'
@@ -59,7 +60,12 @@ export function ScalingCostsTable({ entries }: Props) {
     }
   }, [metric, setSorting, table])
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }
 
 function mapToTableEntry(
