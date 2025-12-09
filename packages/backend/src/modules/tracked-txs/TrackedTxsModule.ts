@@ -38,11 +38,7 @@ export function createTrackedTxsModule(
   )
 
   assert(ethereumRpc, 'Missing Ethereum RPC config')
-  const trackedTxsClient = new TrackedTxsClient(
-    bigQueryClient,
-    ethereumRpc,
-    logger,
-  )
+  const trackedTxsClient = new TrackedTxsClient(bigQueryClient, logger)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )

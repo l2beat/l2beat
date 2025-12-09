@@ -46,8 +46,6 @@ export type TrackedTxFunctionCallResult = {
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
-  blobGasUsed: bigint
-  blobGasPrice: bigint
 }
 
 export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
@@ -82,6 +80,4 @@ export type TrackedTxTransferResult = {
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
-  blobGasUsed: bigint
-  blobGasPrice: bigint
 }

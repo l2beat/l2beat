@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
-import type { TrackedTxId } from '@l2beat/shared'
+import type { RpcClient, TrackedTxId } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
@@ -10,6 +10,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
 
   constructor(
     private readonly db: Database,
+    private readonly rpc: RpcClient,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -21,7 +22,22 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       return
     }
 
-    const transformed = this.transform(transactions)
+    const withBlobsData = await Promise.all(
+      transactions.map(async (t) => {
+        if (t.txType === 3) {
+          const txReceipt = await this.rpc.getTransactionReceipt(t.hash)
+          return {
+            ...t,
+            blobGasUsed: txReceipt.blobGasUsed ?? null,
+            blobGasPrice: txReceipt.blobGasPrice ?? null,
+          }
+        }
+
+        return { ...t, blobGasUsed: null, blobGasPrice: null }
+      }),
+    )
+
+    const transformed = this.transform(withBlobsData)
     await this.db.l2Cost.insertMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }
@@ -30,7 +46,12 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
     await this.db.l2Cost.deleteFromById(id, fromInclusive)
   }
 
-  transform(transactions: TrackedTxResult[]): L2CostRecord[] {
+  transform(
+    transactions: (TrackedTxResult & {
+      blobGasUsed: bigint | null
+      blobGasPrice: bigint | null
+    })[],
+  ): L2CostRecord[] {
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,
@@ -39,7 +60,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       gasPrice: tx.gasPrice,
       calldataLength: tx.dataLength,
       calldataGasUsed: tx.calldataGasUsed,
-      blobGasUsed: Number(tx.blobGasUsed),
+      blobGasUsed: tx.blobGasUsed ? Number(tx.blobGasUsed) : null,
       blobGasPrice: tx.blobGasPrice,
     }))
   }
