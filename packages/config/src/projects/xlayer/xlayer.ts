@@ -25,6 +25,7 @@ export const xlayer: ScalingProject = agglayer({
     },
   },
   discovery,
+  usesEthereumBlobs: true,
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
