@@ -71,7 +71,7 @@ export const zksync: ScalingProject = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     headerWarning:
-      '[ZKsync Lite will be deprecated in 2026, and the future is firmly focused on the ZKsync network.](https://x.com/zksync/status/1997776813708242975?s=20).',
+      '[ZKsync Lite will be deprecated in 2026.](https://x.com/zksync/status/1997776813708242975?s=20).',
     purposes: ['Payments', 'Exchange', 'NFT'],
     stacks: ['ZKsync Lite'],
     links: {
