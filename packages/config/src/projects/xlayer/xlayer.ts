@@ -1,10 +1,32 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { agglayer } from '../../templates/agglayer'
 
 const discovery = new ProjectDiscovery('xlayer')
 const bridge = discovery.getContract('AgglayerBridge')
+const opgenesisTimestamp = UnixTime(1761304367)
+
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+
+const inboxStartBlock =
+  discovery.getContractValueOrUndefined<number>('SystemConfig', 'startBlock') ??
+  0
+
+const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
+
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
 export const xlayer: ScalingProject = agglayer({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
@@ -41,6 +63,43 @@ export const xlayer: ScalingProject = agglayer({
         tokensToAssignFromL1: ['OKB'],
       },
     }),
+  ],
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress(sequencer),
+        to: EthereumAddress(sequencerInbox),
+        sinceTimestamp: opgenesisTimestamp,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: opgenesisTimestamp,
+      },
+    },
+  ],
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: inboxStartBlock,
+      inbox: sequencerInbox,
+      sequencers: [sequencer],
+    },
   ],
   chainConfig: {
     name: 'xlayer',
