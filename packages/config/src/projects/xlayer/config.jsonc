@@ -2,6 +2,12 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "xlayer",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"],
+  "initialAddresses": [
+    "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+    "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433"
+  ],
+  "names": {
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "OwnerContract"
+  },
   "sharedModules": ["shared-polygon-cdk"]
 }

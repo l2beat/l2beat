@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1StandardBridge",
+  "description": "This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.",
+  "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
+  "fields": {
+    "$admin": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
+        }
+      ]
+    }
+  }
+}

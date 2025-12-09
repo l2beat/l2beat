@@ -1,3 +1,149 @@
+Generated with discovered.json: 0x5559c9e5cc2ddcac205704a49e3fa6d50ec3c214
+
+# Diff at Tue, 09 Dec 2025 13:04:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fa3d100e73cb9da59cb120ddb796b2ca1f0d1ec block: 1765279563
+- current timestamp: 1765281854
+
+## Description
+
+add opstack contracts:
+
+[SystemConfig](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xfCA51bf5bDc5aC16B86F859d6BEe90cfdF6fEb72), [OptimismPortal2](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0xa0fEfC3A457F6A1aE2d81FC172D6dE090a9F4033):
+- standard op stack, includes custom gas token logic
+
+[L1StandardBridge](https://disco.l2beat.com/diff/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A/eth:0x2978527d5D1372C32fEdC182FDE7559c0471d051), [L1ERC721Bridge](https://disco.l2beat.com/diff/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9/eth:0xFbd06fCb2a023d89a7ae9BeE89d157C5264cf42b):
+- all bridging disabled (revert)
+
+[SuperchainConfig](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xe78543A6bE59F5561717B69a2AD7c83DA9249572):
+- standard OP stack, but not local fork of the contract (not connected to superchain)
+
+other contracts have no diff with knows op stack contracts.
+
+the proof system is closed/permissioned and bridge is disabled. meaning that there is a questionable difference in risk to not deploying these contracts and just simulating them offchain. project remains in 'others', but following pizza slices change to the closed-proofs op stack variant:
+- DA is now onchain
+- Sequencer failure is now green: users can force transactions
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        1024
++        1025
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765279563 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993)
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge_neutered (eth:0x85d37236f063C687d056b3604CBEe4B60d124858)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a)
+    +++ description: This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xC6901aBf8D39079d6b028dA550BB643f10840552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
 Generated with discovered.json: 0x16767557349619cf242e9ea39a871af19557de34
 
 # Diff at Tue, 09 Dec 2025 11:33:10 GMT:
