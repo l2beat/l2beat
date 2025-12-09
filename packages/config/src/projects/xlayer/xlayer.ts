@@ -72,8 +72,8 @@ export const xlayer: ScalingProject = agglayer({
       ],
       query: {
         formula: 'transfer',
-        from: EthereumAddress(sequencer),
-        to: EthereumAddress(sequencerInbox),
+        from: ChainSpecificAddress.address(sequencer),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: opgenesisTimestamp,
       },
     },
@@ -97,8 +97,8 @@ export const xlayer: ScalingProject = agglayer({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: inboxStartBlock,
-      inbox: sequencerInbox,
-      sequencers: [sequencer],
+      inbox: ChainSpecificAddress.address(sequencerInbox),
+      sequencers: [ChainSpecificAddress.address(sequencer)],
     },
   ],
   chainConfig: {
