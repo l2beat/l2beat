@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5559c9e5cc2ddcac205704a49e3fa6d50ec3c214
+Generated with discovered.json: 0xd11df24e704ac74fbf696cedb83802b24884ee37
 
-# Diff at Tue, 09 Dec 2025 13:04:15 GMT:
+# Diff at Tue, 09 Dec 2025 13:33:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@8fa3d100e73cb9da59cb120ddb796b2ca1f0d1ec block: 1765279563
@@ -110,7 +110,7 @@ discovery. Values are for block 1765279563 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract L1StandardBridge (eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a)
+    contract L1StandardBridge_neutered (eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a)
     +++ description: This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.
 ```
 

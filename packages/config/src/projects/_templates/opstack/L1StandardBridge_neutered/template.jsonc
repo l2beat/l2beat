@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L1StandardBridge",
+  "displayName": "L1StandardBridge_neutered",
   "description": "This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {

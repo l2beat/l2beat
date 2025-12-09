@@ -813,7 +813,7 @@
       ]
     },
     {
-      "name": "L1StandardBridge",
+      "name": "L1StandardBridge_neutered",
       "address": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
       "type": "Contract",
       "template": "opstack/L1StandardBridge_neutered",
@@ -2150,5 +2150,5 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23975101 },
-  "permissionsConfigHash": "0xabcd75e13575bac3862ec211475d894485c29842efd684b75e794448b64539fc"
+  "permissionsConfigHash": "0x03a1bfe249f29defb0c7589b411d4c8299875ed3984c525b93e6b92b3214473b"
 }
