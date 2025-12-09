@@ -1,6 +1,6 @@
 {
   "name": "xlayer",
-  "timestamp": 1761903013,
+  "timestamp": 1765279563,
   "configHash": "0x160cd17e5d3d130f4e310c8ff2eb7b9091c439126027e39e9a059f285f467426",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -114,7 +114,11 @@
         },
         "aggchainMultisigHash": { "severity": "HIGH" },
         "useDefaultSigners": { "severity": "HIGH" },
-        "useDefaultVkeys": { "severity": "HIGH" }
+        "useDefaultVkeys": { "severity": "HIGH" },
+        "AGGCHAIN_TYPE": {
+          "severity": "HIGH",
+          "description": "0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"
+        }
       },
       "implementationNames": {
         "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "PolygonTransparentProxy",
@@ -362,8 +366,8 @@
     ]
   },
   "usedTemplates": {
-    "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29"
+    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 23696450 },
+  "usedBlockNumbers": { "ethereum": 23974911 },
   "permissionsConfigHash": "0xb8855cefa8216f7510f7854676b67bade0ee5752ed11295d3bc0c7a7d04ca156"
 }

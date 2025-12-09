@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x16767557349619cf242e9ea39a871af19557de34
+
+# Diff at Tue, 09 Dec 2025 11:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1761903013
+- current timestamp: 1765279563
+
+## Description
+
+config: add aggchain_type description and severity.
+
+put chain under review because of a parallel deployment: https://etherscan.io/address/0x5065809Af286321a05fBF85713B5D5De7C8f0433 
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761903013 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+    }
+```
+
 Generated with discovered.json: 0x5c770dc0fc1c566eead414c7ef5b88420096261f
 
 # Diff at Fri, 31 Oct 2025 13:56:02 GMT:
