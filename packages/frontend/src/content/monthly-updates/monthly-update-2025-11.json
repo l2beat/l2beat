@@ -1,0 +1,181 @@
+{
+  "title": "Monthly Updates - November 2025",
+  "startDate": "2025-11-01",
+  "endDate": "2025-11-30",
+  "publishedOn": "2025-12-04",
+  "description": "Discover the most important November developments across major ecosystems — from governance updates to technical upgrades and ecosystem milestones.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "AIP Proposal: New Gas Pricing Mechanism and Minimum Base Fee Adjustment",
+          "content": "During November, a constitutional proposal from Offchain Labs [introduced](https://forum.arbitrum.foundation/t/aip-raise-the-gas-target-min-l2-base-fee-implement-improvements-to-the-pricing-algorithm/30182) a refined approach to managing L2 gas fees on Arbitrum One and Nova. The proposal **replaces** the current single-gas target model with a multi-tiered structure comprising six overlapping gas targets and longer adjustment windows. This change aims to stabilize L2 gas prices, reducing the impact of demand surges and lowering volatility during peak network activity. Simulations show this system could have reduced L2 gas fees by up to **129%** during recent congestion spikes.\n\nTo support this transition and curb spam, the minimum L2 base fee would be raised from **0.01 to 0.02** gwei. Offchain Labs also requests limited authority to adjust gas targets and adjustment windows within DAO-approved bounds for two years, governed by a new *ResourceConstraintManager* contract. If passed, these updates will enhance fee predictability, protect against sudden price hikes, and strengthen network scalability.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "AGV 2026 Council Elections Now Underway",
+          "content": "Right now, the voting for the remaining three seats on the 2026 Arbitrum Gaming Ventures (AGV) Council is [officially open](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x12bad84219d04c54cd72231ad8fe883499e85c14762919a06aaa7a251d64b8da) and will run through December 4. This follows the successful reconfirmation of Tim Chang and John Kennedy. The election features six candidates across governance, growth, strategy, and operations, with a shielded weighted voting system allowing delegates to distribute support across nominees.\n\nThe DAO's competency cap ensures a diverse council: no more than two members may share the same core area of expertise. Final eligibility depends on KYC, conflict-of-interest screening, and reference checks. Delegates can review candidate bios and recordings from the open hours sessions to inform their votes. Learn more and cast your vote on Snapshot.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Rewarding Active Delegates (RAD) Program Proposed",
+          "content": "The Arbitrum DAO [has introduced](https://forum.arbitrum.foundation/t/rewarding-active-delegates-rad-program/30249) the RAD program to incentivize delegates who actively **vote and publish** a rationale for their decisions. As the first part of the broader DAO Incentive Program (DIP 2.1), RAD aims to increase participation, reduce apathy, and improve transparency in governance.\n\nDelegates who meet the requirements, including voting on at least **75% of proposals** each month and publicly posting their rationale, can earn ARB rewards **per proposal**. Incentives vary by proposal type, with a cap of $700 per constitutional vote. The program is retroactive to November 1, 2025, and will be administered by the Arbitrum Foundation until it is handed off to the OpCo. A six-month transparency report will track expenditures, with a focus on ensuring cost-effectiveness and broad participation.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Expands Global Market Access with Robinhood Tokenization",
+          "content": "Arbitrum [now supports](https://x.com/arbitrum/status/1995524277454733802) over 900 tokenized stocks, ETFs, and commodities via Robinhood on Arbitrum One, with more than $10 million in total tokenized value already live on-chain. All of this is accessible to EU users right now, giving investors a new, on-chain way to tap into global markets.\n\nThis milestone helps blur the line between traditional finance and decentralized infrastructure by allowing exposure to US equities via blockchain, with 24/5 trading, lower fees, and the speed and accessibility native to public blockchains. For many investors in Europe, this unlocks a whole new level of flexibility."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZKTokenV3 Upgrade Enables Permissionless Burns",
+          "content": "In November, the ZKsync community [passed](https://forum.zknation.io/t/zip-14-upgrade-zk-token-with-permissionless-burn-function/771?utm_source=chatgpt.com) ZIP-14, officially upgrading the ZK token contract to **ZKTokenV3**. This marks a pivotal step toward implementing **ZKnomics,** the protocol's vision for usage-based token economics.\n\nWith this upgrade:\n\n- Anyone can burn their own ZK (via the new `burn()` function).\n- Governance-assigned roles can burn tokens on behalf of others (`burnFrom()`).\n- A max supply of 21B ZK is now enforced on-chain.\n\nThis upgrade introduces the foundational tooling needed for future fee-based supply-reduction mechanisms, such as sequencer or interop fee switches, while enabling security use cases, such as burning compromised tokens.\n\nThe `BURNER_ROLE_ADMIN` has been assigned to the **ZKsync Protocol Governor Timelock**, preserving protocol control while enabling protocol-aligned burn strategies.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync Association Publishes Inaugural Operations Report",
+          "content": "The ZKsync Association [has released](https://github.com/zksync-association/governance-resources/blob/main/Annual-Reports/ZKsync%20Association%20Operational%20Report%202024-2025.pdf) its first-ever Operations Report, covering the 2024–2025 period. The report marks one year since the Association’s founding and the launch of its formal governance framework.\n\nEstablished in 2024 to advance secure, transparent, and censorship-resistant digital infrastructure, the Association outlines in its report its structural developments, key decisions, and progress on system-wide governance. It also provides forward-looking recommendations and a detailed account of proposal activity and participation trends during its first year."
+        },
+        {
+          "title": "Minter Role to Governance Infra Contract Approved",
+          "content": "In November, the ZKsync community [approved](https://www.tally.xyz/gov/zksync/proposal/59956436467786828609747327435664724459335730934530897411573906572229159062327?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) TPP-13, a proposal to assign the minter role from the `Zk_Governance_RateLimit_2025` contract to the `Zk_Governance_Operations_2025` capped minter. This critical step activates the infrastructure funding mechanism defined in TPP-11, enabling the minting of up to 33M ZK tokens under strict rate limits (8M/month) and governance safeguards.\n\nThis assignment ensures the continued rollout of ZK governance programs by restoring proper permissions and maintaining adherence to the system’s modular security design.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Faster Governance: TPP-14 & GAP-4 Pass",
+          "content": "In November, ZKsync approved TPP-14 (~920M ZK in favor) and GAP-4 (~920M ZK), cutting voting delay from 7→3 days and the late-quorum extension from 7→2 days across Token Program Proposals and Governance Advisory Proposals. Together, these updates via [TPP-14](https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) and [GAP-4](https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) align governance with the agile ZIP framework, speeding execution while preserving safeguards such as the Guardian veto. The changes signal a more responsive, operationally mature ZKsync governance.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "From Individual Chains to Network Economies: ZK Token Proposal, Part II",
+          "content": "ZkSync has posted Part II of its ZK Token proposal, which [argues](https://www.zksync.io/blog/from-individual-chains-to-network-economies-part-ii) that sustainable ZK token utility comes from **interop-driven network economics**. Today, finance runs on siloed messaging rails (SWIFT, card networks, bank APIs, market settlement systems), creating high exception rates, multi-hop dependencies, and costly reconciliation. ZKsync Interop proposes a shared cryptographic fabric that enables institutions to **coordinate directly across chains,** payments, treasury, securities, and compliance, via verifiable, tamper-resistant messages.\n\nBy embedding interop into the architecture institutions already use, the model sidesteps the “standard adoption” chicken-and-egg, turning fragmented workflows into trust-minimized, end-to-end processes. The result: lower coordination costs, fewer errors, and clear avenues for ZK token utility via interop usage (authorization, settlement, attestations), moving from isolated chain value to a decentralized network economy."
+        },
+        {
+          "title": "ZKsync’s Atlas Upgrade Reframes Ethereum as the Liquidity Hub",
+          "content": "ZKsync has [introduced](https://x.com/gluk64/status/1984046259796148434) the Atlas upgrade for the ZK Stack, highlighting performance targets such as 15K+ TPS, ~1-second ZK finality, and near-zero fees, but positioning these as enablers of a larger shift: making Ethereum itself the real-time settlement and liquidity anchor for ZKsync chains. The core idea is that when participants already wait for Ethereum finality (as in institutional and RWA flows), Ethereum can serve as the primary liquidity hub without requiring each L2 ecosystem to concentrate liquidity into a mandatory, general-purpose “home” chain.\n\nAtlas aims to reduce interoperability latency, so ZKsync-based chains can tap Ethereum liquidity with near-real-time settlement standards, changing the usual L1/L2 dynamics where ecosystems often replicate liquidity into bespoke hubs. In this model, specialized hubs and app-chains can still exist, but become optional value-adds rather than infrastructure necessities, helping extend Ethereum’s liquidity across an elastic network of ZK chains instead of rebuilding it from scratch."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Sunnyside Labs and OP Labs Introduce Backup Sequencing",
+          "content": "Sunnyside Labs and OP Labs have [introduced](https://www.sunnyside.io/blogs/backup-sequencing) **backup sequencing** on OP Mainnet, improving the **network’s reliability** by distributing block production across multiple independent operators. By participating in OP Mainnet’s conductor set, Sunnyside Labs helps ensure **uninterrupted block production** even during outages. This shift has already proven its value with zero unsafe downtime since early 2025.\n\nThis collaboration is part of a broader effort to build resilience directly into the OP Stack’s architecture. With five active sequencers managed via Raft-based leader election, this model not only strengthens reliability but also sets the groundwork for deeper decentralization and future customization of the sequencing layer."
+        },
+        {
+          "title": "OP Stack Upgrade 17: Jovian Hardfork and Fusaka Readiness",
+          "content": "In November, OP Labs [proposed](https://gov.optimism.io/t/upgrade-17-jovian-hardfork-and-fusaka-readiness/10400) Upgrade 17 to prepare OP Stack chains for the Jovian hard fork and ensure readiness for the upcoming Fusaka activation on Ethereum Mainnet. Jovian introduces key fee mechanism improvements, including a faster-reacting L2 base fee, protection against spam transactions, and a revised operator fee system. It also updates Cannon to support Go 1.24, aligning with upstream go-ethereum changes and improving security in execution and fault-tolerant systems.\n\nFusaka readiness ensures OP Stack chains remain operational as L1 upgrades go live, introducing changes to how blobs are verified and priced. Without these updates, chains risk halting or experiencing degraded performance. The upgrade was scheduled to be executed on the mainnet on November 26 and activated on December 2. Chain operators are advised to upgrade their infrastructure promptly."
+        },
+        {
+          "title": "Celo Will Activate Jello Hardfork, Pioneers ZK-Powered OP Succinct Lite",
+          "content": "On December 10, Celo [will activate](https://forum.celo.org/t/jello-hardfork-mainnet-activation-bringing-zk-proofs-to-celo/12672) the **Jello Hardfork** on Mainnet, becoming the **first network** to implement **OP Succinct Lite** and **ZK-powered fault proofs**. This upgrade marks the final step in Celo’s transition to a high-performance, ZK-secured Layer 2, enhancing scalability, security, and readiness for real-world payment use cases.\n\nThe Jello upgrade brings **non-interactive** dispute resolution, challenger-based fault monitoring, and alignment with L2BEAT’s fault-proof standards, all while maintaining full compatibility with existing apps and tooling. No action is required from developers or node operators, as the seamless transition was successfully tested on Sepolia and finalized in collaboration with Succinct Labs."
+        },
+        {
+          "title": "Gauntlet’s USDC Prime Vault Goes Live on Optimism",
+          "content": "The USDC Prime Vault by Gauntlet is [now live](https://app.morpho.org/opmainnet/vault/0xC30ce6A5758786e0F640cC5f881Dd96e9a1C5C59/gauntlet-usdc-prime) on OP Mainnet, marking a **critical moment** for DeFi on Optimism. Built on top of Morpho, the vault brings institutional-grade risk management and programmable lending to both retail and enterprise users.\n\nThis launch isn’t just another product going live; it’s a big step forward in building the kind of resilient, scalable infrastructure that DeFi needs. With Gauntlet’s Prime Vault, users get access to **deep liquidity** and **advanced tooling**, while developers gain a powerful primitive to build with.\n\nIt also fits squarely into Optimism’s broader mission: helping teams launch real financial products directly on-chain. As more vaults and credit markets come online, OP Mainnet continues to grow into the hub where traditional finance meets modular, composable innovation."
+        },
+        {
+          "title": "OP Mainnet: The Enterprise Launch Pad",
+          "content": "OP Mainnet is fast [becoming](https://www.optimism.io/blog/op-mainnet-the-enterprise-launch-pad) the go-to entry point for **enterprises** exploring on-chain finance. With near-zero fees, **250ms** transaction times, and 99.99% uptime, it offers web2-level performance while preserving web3 transparency. Companies can start by integrating with vaults or lending protocols, validate their product-market fit, and later graduate to their own OP Stack chain when ready for more control.\n\nRecent integrations with **Morpho**, **Gauntlet**, and **Utila** demonstrate this path in action. OP Mainnet is no longer just infrastructure. It is an end-to-end launchpad for scalable, on-chain, compliant financial products."
+        },
+        {
+          "title": "Utila Launches First Institutional Stablecoin Yield Solution on OP Mainnet",
+          "content": "Utila [has launched](https://utila.io/blog/utila-first-institutional-stablecoin-yield-solution/) the first institutional-grade **stablecoin** yield vault on **Optimism’s** **OP** **Mainnet**, built in collaboration with the Optimism Foundation, Morpho, Gauntlet, and Yield.xyz. This new solution allows institutions to earn yield on USDC holdings directly from the Utila MPC wallet platform, without compromising on compliance, governance, or security.\n\nThe vault integrates enterprise-grade features like policy-controlled access, transaction-level governance, and audit-ready transparency. With secure infrastructure, curated strategies from Gauntlet, and real-time management through Utila’s interface, institutions can now deploy on-chain treasury strategies with confidence. This marks a major milestone for institutional DeFi on OP Mainnet."
+        },
+        {
+          "title": "Startale Group Announces Startale App, a SuperApp Optimized for Soneium",
+          "content": "Startale Group has [announced](https://x.com/StartaleGroup/status/1988171135750721746) Startale App, an all-in-one SuperApp optimized for Soneium, positioning it as a gateway to explore projects, earn rewards, and simplify everyday on-chain activity. The launch targets a fast-growing network: Soneium is described as handling 10M+ weekly transactions and 90K+ daily active addresses, and Startale App aims to make participation in that ecosystem simple, secure, and rewarding.\n\nA key focus is frictionless onboarding: Startale says users can create a wallet in seconds with an email, supported by Account Abstraction for a smoother UX, and the app includes discovery and rewards mechanics (including STAR Points). Startale App has also entered closed beta with waitlist registrations open, alongside upcoming growth programs and developer incentives highlighted by the team."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Polygon Ecosystem — zkEVM Migration Begins",
+          "content": "Polygon Labs has [announced](https://forum.polygon.technology/t/announcement-zkevm-migration-update/21415) the migration of zkEVM from the Full Execution Proof (FEP) system to the new Pessimistic Proof (PP) proving system. The change would reduce the scope of what’s proven to significantly reduce costs. The transition includes temporary downtime for deposits and withdrawals during scheduled maintenance windows, but users will experience no functional changes. The testnet migration took place on November 19, 2025, and the mainnet migration is scheduled for December 3, 2025, starting at 09:00 AM UTC."
+        },
+        {
+          "title": "Revolut Users Process $690M on Polygon",
+          "content": "Revolut has [officially](https://polygon.technology/blog/revolut-integrates-polygon-for-payments-trading-and-staking-processing-690m-to-date) integrated Polygon to power **payments**, **stablecoin transfers**, **POL trading**, and **staking** for its 65M+ users across 38 countries. Since the rollout began, users have processed over **$690 million** in volume via Polygon rails, demonstrating real-world adoption and institutional-grade scalability.\n\nThis partnership allows Revolut users to:\n\n- **Send & receive stablecoins** (USDC, USDT) over Polygon\n- **Pay with crypto cards** linked to stablecoin balances\n- **Trade and stake POL**, Polygon’s gas and staking token\n- **On-/off-ramp seamlessly** between fiat and crypto in-app\n\nThe integration showcases Polygon’s capability to support global fintech-scale demand and cements its position as the go-to infrastructure for enterprise-grade crypto payments."
+        },
+        {
+          "title": "Mastercard Launches Verified Usernames for Self-Custody on Polygon",
+          "content": "Mastercard [has selected](https://polygon.technology/blog/mastercard-selects-polygon-to-power-verified-username-transfers-for-self-custody-wallets) Polygon to power the next phase of its **Crypto Credential** initiative. This will bring verified, **username-based aliases** to **self-custody wallets,** a major leap in simplifying Web3 payments.\n\nKey highlights:\n\n- Users will be able to send and receive crypto using human-readable aliases instead of long hexadecimal addresses.\n- **Mercuryo**, a regulated provider, handles KYC and credential issuance.\n- Users can **link self-custody wallets**, receive crypto via their alias, and optionally mint a **soulbound credential** on Polygon to signal verification.\n- This integration prioritizes security, UX, and decentralization, bringing the convenience of traditional payments to the Web3 self-custody world.\n\nPolygon was chosen for its **speed**, **low cost**, and **payment-grade infrastructure**, especially following its recent **Rio upgrade**, which enables up to **5,000 TPS**, stateless validation, and sub-cent fees.\n\nThis signals another major step in Polygon’s evolution as the blockchain infrastructure layer for global fintech and enterprise."
+        },
+        {
+          "title": "R25 Will Deploy Institutional-Grade RWA Protocol with rcUSD+ on Polygon",
+          "content": "R25 has [officially](https://polygon.technology/blog/r25-launches-institutional-grade-rwa-protocol-on-polygon-introducing-yield-bearing-rcusd-token) launched its real-world asset (RWA) protocol on Polygon, introducing rcUSD+, a yield-bearing stablecoin that will be backed by traditional financial instruments such as money market funds and stablecoin equivalents.\n\nThe integration positions Polygon as the go-to chain for enterprise-grade, compliant DeFi, leveraging its speed, low fees, and existing RWA adoption.\n\nKey Highlights:\n\n- **rcUSD+** will generate **real-world anchored yield** for holders, not just crypto-native rewards.\n- It will be backed by a **professionally managed, low-risk RWA portfolio**, bringing institutional-grade yield into on-chain environments.\n- It will be deployed on **Polygon PoS** to tap into billions in stablecoin activity and deep DeFi liquidity.\n- Designed to be a **building block for developers**, compatible with liquidity pools, collateral systems, and payments.\n\nThis launch narrows the gap between **TradFi and DeFi**, offering transparency, risk-managed exposure, and an intuitive user experience via a self-custodied token. For institutions, rcUSD+ will offer an RWA primitive with a clear yield model; for users, it’s a DeFi-native asset with predictable returns."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "DIN AVS Launches on EigenLayer, Bringing Cryptoeconomic Security to RPC",
+          "content": "Consensys-backed Decentralized Infrastructure Network (DIN) has [launched](https://blog.eigencloud.xyz/din-avs-launches-on-eigenlayer-bringing-economic-security-to-web3s-rpc-infrastructure/) its Autonomous Verifiable Service (AVS) on EigenLayer mainnet, positioning itself as the first large-scale RPC/API marketplace secured by Ethereum restaking and slashing. The model introduces on-chain accountability for node operators via watcher-based performance checks and penalties for poor service, aiming to reduce systemic risk from today’s concentrated RPC providers.\n\nDIN already routes production traffic at scale, serving ~13B monthly requests across 30+ networks and integrations like MetaMask, Linea, and Infura, suggesting decentralized, economically secured RPC can match centralized performance. Developers can explore DIN at din.build and EigenLayer AVS docs for implementation details."
+        },
+        {
+          "title": "EigenZero Launches: Stake-Backed Verification Comes to LayerZero",
+          "content": "LayerZero and EigenCloud [unveiled](https://blog.eigencloud.xyz/eigenzero-layerzero-eigencloud/) **EigenZero**, the first implementation of the CryptoEconomic DVN Framework, a decentralized verifier network that adds slashable economic stake on top of technical verification. Powered by EigenCloud’s slashing infrastructure and backed by $5M in ZRO at launch, EigenZero introduces optimistic verification with a defined challenge period and on-chain accountability, letting apps choose verifiers based on both performance and real economic guarantees rather than reputation alone."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Verifiable Autonomy: Nethermind’s Blueprint for Agentic Ethereum",
+          "content": "At Devconnect (Nov 11, 2025), Nethermind [outlined](https://www.nethermind.io/blog/verifiable-autonomy-building-ethereum-agentic-infrastructure?utm_source=chatgpt.com) an end-to-end stack for autonomous, verifiable agents on Ethereum, spanning privacy-preserving identity, scalable execution (Gas Benchmarks, stress testnets), and AI systems like ResultAI, AuditAgent, and AgentArena tied together by ChaosChain (Proof of Agency; ERC-8004/A2A/x402). Backed by deep research (EasyCrypt zk-verifier for ZKsync, Halva for Halo2, FRI proofs) and protocol work (six Fusaka EIPs, incl. EIP-7883), the effort aims to make automation auditable by default, with agents acting on-chain with cryptographic guarantees, formal verification, and measurable accountability."
+        },
+        {
+          "title": "Measuring Ethereum’s Execution Limits: The Gas Benchmarking Framework",
+          "content": "Nethermind’s [Gas Benchmarks](https://www.nethermind.io/blog/measuring-ethereums-execution-limits-the-gas-benchmarking-framework), now a shared standard across clients and EF research, stress-test single opcodes and precompiles to measure readiness (not speed) in MGas/s under identical hardware and conditions. The framework exposed ModExp bottlenecks that led to EIP-7883 repricing work and cross-client optimizations, and it informed interop efforts (e.g., Berlinterop) that supported raising the gas limit from 36M → 45M, with a roadmap toward 60M. Integrated with EELS, the suite prioritizes worst-case, minimum-across-clients performance to ensure safe scaling, and is expanding to state growth, parallelization, and L2/sequencer benchmarks."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Fraud Proof System Upgraded to v2 With Stronger Security & Smoother Dev Experience",
+          "content": "The features we introduced in the last monthly updates have now moved from sneak peek to public release, delivering the [Permissionless Refereed Tournament (PRT) v2.0.0](https://github.com/cartesi/dave/releases/tag/v2.0.0) system. The new version brings major on-chain improvements - including revertible advance requests, a Sybil-resistant bond mechanism, reduced deployment transactions, and improved interfaces and events, while also resolving a fail-stop bug.\n\nOff-chain, reliability is boosted through safer snapshot cleanup, fixes for empty-epoch panics and sentinel errors, and a leaner node client. With artifacts now published directly via GitHub releases and improved devnet builds, PRT 2.0 is now more secure, polished, and developer-friendly."
+        },
+        {
+          "title": "Honeypot App Secured by PRT v2 is Now Live on Mainnet",
+          "content": "Secured by Cartesi's PRT fraud-proof system, [Honeypot](https://honeypot.cartesi.io/) is a bug-bounty rollup application designed to test the security of Cartesi's appchain framework. Anyone can put it to the test by hacking the application and draining the funds locked in the rollup contract.\n\nAfter PRT-Honeypot v1 surfaced a liveness bug, a new [version](https://github.com/cartesi/honeypot/releases/tag/v3.0.0) has now been deployed on Ethereum mainnet, complete with the upgraded PRT v2 algorithm discussed above. A corresponding [pull request](https://github.com/l2beat/l2beat/pull/10017) is also under review to bring Honeypot back to the L2Beat rollups dashboard as a Stage 2 rollup."
+        },
+        {
+          "title": "Onchain Cartesi Machine Enhancements in Progress",
+          "content": "Cartesi RISC-V Solidity Emulator - the on-chain host implementation of the Cartesi Machine Specification - has progressed with a new PR that introduces enhanced memory translation capabilities. The update adds support for Translation Lookaside Buffer (TLB) management through new ECALL functions and a dedicated shadow TLB region in memory, improving the fidelity and precision of the Cartesi Machine’s low-level execution model. Read more details on the PR [here](https://github.com/cartesi/machine-solidity-step/pull/83)."
+        },
+        {
+          "title": "Beacon App Time-to-Deploy Challenge at Fluminense Federal University in Brazil",
+          "content": "Cartesi has launched a “time to deploy” [challenge](https://github.com/Mugen-Builders/cartesi-challenge) with students from the Cartesi-based course at [UFF](https://www.uff.br/) in Brazil, aimed at better understanding and improving the developer journey. Students will build a simple Beacon crowdfunding app to help measure how efficiently newcomers navigate Cartesi’s documentation, tooling, and asset workflows.\n\nBy implementing the backend logic, testing deposits, and emitting the final output when the goal is reached, they will generate valuable metrics for refining resources and onboarding, directly contributing to Cartesi’s continuous improvement efforts."
+        },
+        {
+          "title": "Cartesi at Devconnect",
+          "content": "November’s highlight event was Devconnect in Argentina, where Cartesi made its presence felt at L2District and cohosted a dedicated Stage 2 rollups stand with L2BEAT. [Throughout the week](https://x.com/cartesiproject/status/1991869330787844285?s=20), contributors engaged participants on rollup decentralization and security, the need for more Stage 2 rollups, and the L2 risk rosette features essential to strengthening the Ethereum ecosystem."
+        }
+      ]
+    }
+  ]
+}

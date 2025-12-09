@@ -17,6 +17,15 @@
   "overrides": {
     "eth:0x2Dc9d2Cb1Ba0b8A46AE252ab4FBE1ad5C5c3B795": {
       "ignoreDiscovery": true
+    },
+    "eth:0xc371fD8C4AB7F585BDCA7aA19c2A680a70920c98": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x695F652b03470F396789cF007278F922e1726B94": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
     }
   }
 }

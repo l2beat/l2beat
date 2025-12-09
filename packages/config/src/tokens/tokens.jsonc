@@ -2262,6 +2262,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "RAIN",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "syrupUSDC",
       "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
       "source": "external",
@@ -6353,6 +6359,13 @@
   ],
   "bob": [
     {
+      "symbol": "BOB",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "WBTC",
       "category": "btc",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
@@ -6955,6 +6968,21 @@
     }
   ],
   "soneium": [
+    {
+      "symbol": "USDSC",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "wstUSR",
       "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",

@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -7,6 +8,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { AnomalyIndicator } from '../AnomalyIndicator'
 import { IntervalsHeader } from './IntervalsHeader'
@@ -80,6 +82,10 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
       cell: (ctx) => {
         const entry = ctx.row.original
         const showComingSoon = !entry.data?.isSynced
+
+        if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
+          return <NoDataBadge />
+        }
 
         return (
           <AnomalyIndicator

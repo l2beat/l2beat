@@ -1,6 +1,6 @@
 {
   "name": "superseed",
-  "timestamp": 1759481008,
+  "timestamp": 1764933911,
   "configHash": "0xe4dba7c477eff1f8cbef9501fb5d1f1680f7f2ba3a3207801b6a1451c70fc73a",
   "entries": [
     {
@@ -94,6 +94,11 @@
       }
     },
     {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismPortal2",
       "address": "eth:0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07",
       "type": "Contract",
@@ -145,7 +150,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 23494216
+          "prevBlockNum": 23945208
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -233,7 +238,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627698",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627832",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -444,11 +449,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -460,7 +465,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -625,7 +630,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 86,
+        "gameCount": 149,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x97dd8AF1eCcfa97158Ce9ee8A60B0264acE8435F",
@@ -637,7 +642,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 86,
+        "permissionedGamesTotal": 149,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -649,6 +654,11 @@
         "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0": "DisputeGameFactory"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DelayedWETH",
@@ -1034,11 +1044,6 @@
       }
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1117,11 +1122,6 @@
       "implementationNames": {
         "eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1810,6 +1810,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23496135 },
-  "permissionsConfigHash": "0xbd558175c1d0c7d51050a7faf97a8a736c87f8d9e5189ee9c7ab0f3d91c7b2d6"
+  "usedBlockNumbers": { "ethereum": 23946438 },
+  "permissionsConfigHash": "0xa3a7775a54470a10dca1238dee794ed831f64f33aa67727fd2d09bb2695f08ab"
 }

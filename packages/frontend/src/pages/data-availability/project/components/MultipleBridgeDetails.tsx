@@ -223,7 +223,7 @@ function RadioButton({ className, ...props }: React.ComponentProps<'input'>) {
         )}
         {...props}
       />
-      <div className="z-2 col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block " />
+      <div className="z-2 col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block" />
     </div>
   )
 }

@@ -139,9 +139,7 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         const transfer = parseTransfer(precedingLog, null)
         if (transfer) {
           // src escrow address unknown
-          if (
-            transfer.value === srcEscrowCreated.dstImmutablesComplement.amount
-          ) {
+          if (transfer.value === srcEscrowCreated.srcImmutables.amount) {
             srcTokenAddress = Address32.from(precedingLog.address)
             break
           }

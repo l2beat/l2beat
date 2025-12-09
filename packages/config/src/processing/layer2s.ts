@@ -27,6 +27,7 @@ import { brine } from '../projects/brine/brine'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
+import { cartesiprthoneypotv2 } from '../projects/cartesi-prt-honeypot-v2/cartesi-prt-honeypot-v2'
 import { celo } from '../projects/celo/celo'
 import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
@@ -84,6 +85,7 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { iotex } from '../projects/iotex/iotex'
+import { janction } from '../projects/janction/janction'
 import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
@@ -111,6 +113,7 @@ import { lyra } from '../projects/lyra/lyra'
 import { mantapacific } from '../projects/mantapacific/mantapacific'
 import { mantle } from '../projects/mantle/mantle'
 import { mawari } from '../projects/mawari/mawari'
+import { megaeth } from '../projects/megaeth/megaeth'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
@@ -259,6 +262,7 @@ export const layer2s: ScalingProject[] = [
   canvasconnect,
   capx,
   cartesiprthoneypot,
+  cartesiprthoneypotv2,
   celo,
   codex,
   corn,
@@ -315,6 +319,7 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   iotex,
+  janction,
   jovay,
   karak,
   katana,
@@ -342,6 +347,7 @@ export const layer2s: ScalingProject[] = [
   mantapacific,
   mantle,
   mawari,
+  megaeth,
   memento,
   metal,
   metis,

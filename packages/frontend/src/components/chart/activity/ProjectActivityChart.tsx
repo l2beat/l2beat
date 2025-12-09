@@ -4,18 +4,18 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
-import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityRatioChart } from './ActivityRatioChart'
@@ -25,7 +25,7 @@ interface Props {
   milestones: Milestone[]
   project: ChartProject
   category?: ProjectScalingCategory
-  defaultRange: ActivityTimeRange
+  defaultRange: ChartRange
 }
 
 export function ProjectActivityChart({
@@ -34,12 +34,12 @@ export function ProjectActivityChart({
   category,
   defaultRange,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
 
   const { data: chart, isLoading } = api.activity.chart.useQuery({
-    range: { type: timeRange },
+    range,
     filter: {
       type: 'projects',
       projectIds: [project.id],
@@ -78,17 +78,13 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const chartRange = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
   const lastRatio = ratioData?.at(-1)?.ratio
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange range={chartRange} />
-        <ActivityTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          projectSection
-        />
+        <ProjectChartTimeRange timeRange={timeRange} />
+        <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <ActivityChart
         data={chartData}

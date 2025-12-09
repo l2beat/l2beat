@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xf42c9c8e97729135931bbf14c4b5b5b43ece3075
+
+# Diff at Wed, 03 Dec 2025 08:35:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1763974293
+- current timestamp: 1764750880
+
+## Description
+
+Reintroduce known standard EspressoNitroTEEVerifier.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier_neutered (arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4)
+    +++ description: [NEUTERED] Usually verifies attestations of an AWS Nitro TEE, but this version of the contract does not verify anything and always returns true for certificate verifications. It also allows the owner to register any signer without a TEE attestation.
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4"
++        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C"
+    }
+```
+
+```diff
+    EOA  (arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4","description":"register any signer without attestation by the TEE and spoof signatures.","role":".owner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier.sol}                  | 50 ++++++++++------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
+```
+
 Generated with discovered.json: 0x5c8734578a2e0aae7e871e1056c9c1ae556191d9
 
 # Diff at Mon, 24 Nov 2025 09:17:15 GMT:

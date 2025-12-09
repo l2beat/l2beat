@@ -6,6 +6,10 @@
     "isClosed",
     "isFinished",
     "timeFinished",
-    "tournamentLevelConstants"
+    "tournamentLevelConstants",
+    "canBeEliminated",
+    "innerTournamentWinner",
+    "bondValue",
+    "tournamentArguments"
   ]
 }

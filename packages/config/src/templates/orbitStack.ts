@@ -620,7 +620,7 @@ function orbitStackCommon(
             },
             {
               title: 'L2 to L1 Messages - Arbitrum documentation',
-              url: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+              url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/l2-to-l1-messaging',
             },
             {
               title: 'Mainnet for everyone - Arbitrum Blog',
@@ -1066,8 +1066,8 @@ function getDAProviders(
           (hostChainDA?.layer ?? usesBlobs)
             ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
             : DA_LAYERS.ETH_CALLDATA,
-        bridge: hostChainDA?.layer ?? DA_BRIDGES.ENSHRINED,
-        mode: hostChainDA?.layer ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
+        mode: hostChainDA?.mode ?? DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge:
           hostChainDA?.badge ??
           (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),

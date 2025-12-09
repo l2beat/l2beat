@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x0e0ed893cfadb8e5f1e9f8578a3d2acc91dac14f
+
+# Diff at Fri, 05 Dec 2025 11:24:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1759480917
+- current timestamp: 1764933767
+
+## Description
+
+Conduit multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.4:
+-        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0xac5a5ac1f94c89da8539a3a846c1eac11903f36b
 
 # Diff at Tue, 04 Nov 2025 12:59:16 GMT:

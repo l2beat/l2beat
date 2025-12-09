@@ -115,6 +115,14 @@ export function Layout() {
                   /monitor
                 </NavLink>
               </li>
+              <li>
+                <Link
+                  className="font-mono underline"
+                  to="https://chromewebstore.google.com/detail/flat-etherscan-source/ndbkhchcbfbonadoibanllelgnmcljme"
+                >
+                  /flat-etherscan
+                </Link>
+              </li>
             </>
           )}
         </ul>

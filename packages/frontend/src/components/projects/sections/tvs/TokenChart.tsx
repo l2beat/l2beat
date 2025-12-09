@@ -6,7 +6,7 @@ import { ProjectTokenChart } from '~/components/chart/tvs/token/ProjectTokenChar
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { api } from '~/trpc/React'
 
@@ -57,15 +57,18 @@ function TokenChartControls({
     range,
   })
 
-  const chartRange = useMemo(
-    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
+  const timeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        data?.chart.map(([timestamp]) => ({ timestamp })),
+      ),
     [data?.chart],
   )
 
   return (
     <TvsChartControls
       className={className}
-      chartRange={chartRange}
+      timeRange={timeRange}
       range={{
         value: range,
         setValue: setRange,

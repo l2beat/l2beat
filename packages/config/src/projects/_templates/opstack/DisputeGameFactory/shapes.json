@@ -23,5 +23,11 @@
     "hash": "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689",
     "address": "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D",
     "blockNumber": 22995199
+  },
+  "DisputeGameFactory_v1_3_0.sol": {
+    "hash": "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca",
+    "address": "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50",
+    "chain": "ethereum",
+    "blockNumber": 23881654
   }
 }

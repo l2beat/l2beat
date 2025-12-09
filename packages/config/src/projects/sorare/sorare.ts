@@ -46,10 +46,16 @@ const includingSHARPUpgradeDelaySeconds = Math.min(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-const sorareProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const sorareProgramHashes = []
+sorareProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+sorareProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+sorareProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const sorare: ScalingProject = {
   type: 'layer2',
@@ -155,7 +161,7 @@ export const sorare: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(sorareProgramHash)],
+    zkProgramHashes: sorareProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

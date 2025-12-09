@@ -28,7 +28,7 @@ export function ScalingRecategorizedActivityStats({ entries }: Props) {
 
   return (
     <OverflowWrapper>
-      <div className="my-3 grid min-w-182 grid-cols-4 gap-2 lg:gap-3 ">
+      <div className="my-3 grid min-w-182 grid-cols-4 gap-2 lg:gap-3">
         <Stat
           type="rollups"
           metric={metric}

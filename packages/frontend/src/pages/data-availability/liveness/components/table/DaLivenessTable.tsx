@@ -16,7 +16,7 @@ export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
   )
 
   const table = useTable({
-    columns: publicColumns,
+    columns: publicColumns(),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

@@ -1,10 +1,10 @@
 import { getActivityChart } from '~/server/features/scaling/activity/getActivityChart'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { ps } from '~/server/projects'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Params {
   slug: string
-  range: ActivityTimeRange
+  range: ChartRange
 }
 
 export async function getScalingActivityProjectApiData({
@@ -28,7 +28,7 @@ export async function getScalingActivityProjectApiData({
     filter: isEthereum
       ? { type: 'all' }
       : { type: 'projects', projectIds: project ? [project.id] : [] },
-    range: { type: range },
+    range: range,
   })
 
   const oldestProjectData = data.at(0)

@@ -61,6 +61,33 @@ describe(InMemoryEventDb.name, () => {
     expect(db.getEvents(EventA.type)).toEqualUnsorted([events[2], events[3]])
   })
 
+  it('can remove expired events when only one event exists', () => {
+    const db = new InMemoryEventDb()
+    const event = EventA.mock({ a: 'expired' }, 5)
+    db.addEvent(event)
+
+    db.removeExpired(10)
+
+    expect(db.getEvents(EventA.type)).toEqual([])
+    expect(db.getEventCount()).toEqual(0)
+  })
+
+  it('can remove multiple expired events leaving one', () => {
+    const db = new InMemoryEventDb()
+    const events = [
+      EventA.mock({ a: 'one' }, 5),
+      EventA.mock({ a: 'two' }, 6),
+      EventA.mock({ a: 'three' }, 7),
+      EventA.mock({ a: 'four' }, 15),
+    ]
+    events.forEach((e) => db.addEvent(e))
+
+    db.removeExpired(10)
+
+    expect(db.getEvents(EventA.type)).toEqual([events[3]])
+    expect(db.getEventCount()).toEqual(1)
+  })
+
   it('maintains the event cap', () => {
     const db = new InMemoryEventDb(4)
     const events = [

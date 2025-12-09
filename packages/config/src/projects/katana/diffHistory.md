@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x86d41f984d20411bcb93f49f9e03cbe5b0d76c22
+
+# Diff at Mon, 08 Dec 2025 09:51:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a978f5e96d0457fb785933034bd3e35d3fd4f054 block: 1764933676
+- current timestamp: 1764933676
+
+## Description
+
+config: add aggchain type comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933676 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte"}
+    }
+```
+
+Generated with discovered.json: 0x425a049cb63a66e79e41591b04cdde93d7d0f9ed
+
+# Diff at Fri, 05 Dec 2025 11:22:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1764164180
+- current timestamp: 1764933676
+
+## Description
+
+Conduit multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.4:
+-        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+Generated with discovered.json: 0x28320ae7c3b9a14e46648127246d3e5a9577106b
+
+# Diff at Wed, 26 Nov 2025 13:37:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5f66ce888d7143602a6ce8aceef3c861c5276726 block: 1764059644
+- current timestamp: 1764164180
+
+## Description
+
+ms change in yearn.
+
+## Watched changes
+
+```diff
+    contract Yearn Strategist Multisig (eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x80a3887BA60F76acAb48EE4aEAd0a71A0774A8B2"
+      values.$members.6:
+-        "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF"
++        "eth:0x0Dca0FDC170baA4CA9c1dCd37Ffe01f97bCfD504"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
 Generated with discovered.json: 0xeac92d4fcee26234c11735246dd89b72e6b70df1
 
 # Diff at Tue, 25 Nov 2025 08:37:28 GMT:

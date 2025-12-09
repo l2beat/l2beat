@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xdd2d05118222251a7292ddb56a7ddba4f94a401b
+
+# Diff at Mon, 08 Dec 2025 15:40:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@57890661a42a73a0a4e8b9f30546cf1492a8662e block: 1761735589
+- current timestamp: 1765205910
+
+## Description
+
+Updated the SHARP verifier by modifying bootloader programs (applicative and simple).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram (eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.$pastUpgrades.10:
++        ["2025-12-08T11:08:11.000Z","0xed93cf713d33ac63297d8c7e2eafc0d9f277b718b4074600536eb9a4205bcb81",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.callProxyImplementation:
+-        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
++        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.2:
++        "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.3:
++        "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526"
++++ description: Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.
++++ severity: HIGH
+      values.customProxyImplementations.1:
++        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
++        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (eth:0xdf0B63653E86995556079cbc09594BCD88D1D917)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+## Source code changes
+
+```diff
+.../CairoBootloaderProgram.sol                     | 145 +++++++++++----------
+ .../{.flat@1761735589 => .flat}/SHARPVerifier.sol  |   4 +-
+ 2 files changed, 75 insertions(+), 74 deletions(-)
+```
+
 Generated with discovered.json: 0xc394eaf0b246f4846a339613477ce2b05ea7052a
 
 # Diff at Wed, 29 Oct 2025 16:13:15 GMT:

@@ -398,7 +398,7 @@ export function DeployedTokenForm({
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            ' justify-between',
+                            'justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
                         >
