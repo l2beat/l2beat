@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1765281854,
-  "configHash": "0x6a999a37be69db4693724f456871fd6a917aa22a177026c363ff3df0eb441e03",
+  "configHash": "0xc91df3ca962fee2e3c8026d547154484fc0dbc545a0b3f7f8e799a65de227bf8",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -568,7 +568,7 @@
         "0x544d5b534ddffee0c1943b4e8063acf620c70531480b92fe381656a8f8a9079b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "description": "Central contract of the OP stack part of this deployment. Since the OP stack bridge is disabled, this contract is only responsible for state root management. It allows for permissioned state proposals, no public challenges and forced transactions for users.",
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
@@ -633,13 +633,13 @@
       "name": "SuperchainConfig",
       "address": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigFake_expiry",
+      "template": "opstack/SuperchainConfigNoGuard",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x6cfb201001cb96cee7b477019cd49965bdecb41a5187426e75ec032f7ebc5091"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "sinceTimestamp": 1761567083,
       "sinceBlock": 23668695,
       "values": {
@@ -662,28 +662,21 @@
         "initVersion": 3,
         "paused": false,
         "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552",
         "proxyAdminOwner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "version": "2.5.0"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4": "Proxy",
         "eth:0xe78543A6bE59F5561717B69a2AD7c83DA9249572": "SuperchainConfig"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
-          "role": ".guardian"
-        },
         {
           "permission": "interact",
           "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
@@ -2145,10 +2138,10 @@
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
+    "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23975101 },
-  "permissionsConfigHash": "0x03a1bfe249f29defb0c7589b411d4c8299875ed3984c525b93e6b92b3214473b"
+  "permissionsConfigHash": "0x8afba1ddf5c0e260d5b52776d02163e8dd9609e15c51dc491ab361a7d91a7c1b"
 }

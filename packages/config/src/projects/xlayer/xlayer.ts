@@ -8,12 +8,11 @@ const bridge = discovery.getContract('AgglayerBridge')
 
 export const xlayer: ScalingProject = agglayer({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
-  reviewStatus: 'inReview',
   display: {
     name: 'X Layer',
     slug: 'xlayer',
     description:
-      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
+      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Agglayer CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
       documentation: [

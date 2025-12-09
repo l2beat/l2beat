@@ -9,5 +9,10 @@
   "names": {
     "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "OwnerContract"
   },
-  "sharedModules": ["shared-polygon-cdk"]
+  "sharedModules": ["shared-polygon-cdk"],
+  "overrides": {
+    "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
+      "description": "Central contract of the OP stack part of this deployment. Since the OP stack bridge is disabled, this contract is only responsible for state root management. It allows for permissioned state proposals, no public challenges and forced transactions for users."
+    }
+  }
 }

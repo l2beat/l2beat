@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd11df24e704ac74fbf696cedb83802b24884ee37
+Generated with discovered.json: 0xfdceaa8ca37959e94daff0738c71bdf72e9f1fd4
 
-# Diff at Tue, 09 Dec 2025 13:33:06 GMT:
+# Diff at Tue, 09 Dec 2025 14:52:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@8fa3d100e73cb9da59cb120ddb796b2ca1f0d1ec block: 1765279563
@@ -87,13 +87,13 @@ discovery. Values are for block 1765279563 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993)
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+    +++ description: Central contract of the OP stack part of this deployment. Since the OP stack bridge is disabled, this contract is only responsible for state root management. It allows for permissioned state proposals, no public challenges and forced transactions for users.
 ```
 
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4)
-    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff
