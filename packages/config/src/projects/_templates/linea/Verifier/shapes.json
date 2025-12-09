@@ -39,5 +39,11 @@
     "address": "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a",
     "chain": "ethereum",
     "blockNumber": 23924841
+  },
+  "Verifier_Type4_Dec25": {
+    "hash": "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71",
+    "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
+    "chain": "ethereum",
+    "blockNumber": 23974643
   }
 }

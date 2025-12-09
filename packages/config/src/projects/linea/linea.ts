@@ -562,12 +562,12 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
-            url: 'https://etherscan.io/address/0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
-          },
-          {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 3)',
             url: 'https://etherscan.io/address/0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+          },
+          {
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',
+            url: 'https://etherscan.io/address/0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
           },
         ],
       },
