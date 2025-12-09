@@ -232,7 +232,7 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
           },
           {
             title: 'L2 to L1 Messages - Arbitrum documentation',
-            url: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+            url: 'https://docs.arbitrum.io/how-arbitrum-works/deep-dives/l2-to-l1-messaging',
           },
           {
             title: 'Mainnet for everyone - Arbitrum Blog',
