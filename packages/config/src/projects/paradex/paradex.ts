@@ -67,6 +67,12 @@ paradexProgramHashes.push(
 paradexProgramHashes.push(
   discovery.getContractValue<string>('Paradex', 'aggregatorProgramHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+paradexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+paradexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const paradex: ScalingProject = {
   type: 'layer2',

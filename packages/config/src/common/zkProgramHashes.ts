@@ -307,11 +307,29 @@ Verify:
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '37889379279861089970868356983774360253508326951064758033885675883862334778':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
       title: 'Aggregation program for SHARP prover',
       description:
-        'Cairo program that squashes the state diffs of several blocks',
+        'Cairo program that squashes the state diffs of several blocks.',
       programUrl:
         'https://github.com/starkware-libs/cairo-lang/tree/v0.14.0.1/src/starkware/starknet/core/aggregator',
       proverSystemProject: ProjectId('stwo'),
@@ -352,6 +370,14 @@ Steps:
 5. From the same dir, call the installed cairo-hash-program to compute program hash of the compiled StarkNet OS JSON: \`cairo-hash-program --program os_compiled.json\`.
 6. Convert the hex output into dec, e.g. by running \`python -c 'print(int("0x1c...", 16))'\`  (you can replace \`0x1c...\` with your output of \`cairo-hash-program\`).
       `,
+    },
+  '2530337539466159944237001094809327283009177793361359619481044346150483328860':
+    {
+      title: 'StarkEx program used by ApeX and EdgeX',
+      description:
+        'Cairo program that implements an application-specific L2 with spot and perpetual trading functionality.',
+      proverSystemProject: ProjectId('stone'),
+      verificationStatus: 'notVerified',
     },
   '273279642033703284306509103355536170486431195329675679055627933497997642494':
     {
