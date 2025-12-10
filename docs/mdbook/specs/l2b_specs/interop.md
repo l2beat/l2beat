@@ -7,11 +7,12 @@
 - [Technical overview](#technical-overview)
   - [Event matching](#event-matching)
     - [Matching via correlation key](#matching-via-correlation-key)
-    - [Dealing with arrival order](#dealing-with-arrival-order)
     - [Matching logic that can't be serialized into a correlation key](#matching-logic-that-cant-be-serialized-into-a-correlation-key)
     - [Transactions that are composed by more than two events](#transactions-that-are-composed-by-more-than-two-events)
     - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
-    - [Other...](#other)
+    - [Dealing with arrival order](#dealing-with-arrival-order)
+    - [Defining correlation key](#defining-correlation-key)
+    - [Potential interface for flow visualization](#potential-interface-for-flow-visualization)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
