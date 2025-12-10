@@ -33,6 +33,7 @@ export const publicSystemsColumns = [
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    enableHiding: false,
   }),
   columnHelper.group({
     header: 'Throughput',

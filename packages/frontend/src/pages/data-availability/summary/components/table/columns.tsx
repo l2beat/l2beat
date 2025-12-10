@@ -29,6 +29,7 @@ const daLayerColumn = (hash?: string) =>
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    enableHiding: false,
   })
 
 const daRisksColumn = columnHelper.display({

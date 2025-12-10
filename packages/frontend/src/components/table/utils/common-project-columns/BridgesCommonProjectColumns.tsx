@@ -19,6 +19,7 @@ export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(
           <ProjectNameCell project={ctx.row.original} />
         </TableLink>
       ),
+      enableHiding: false,
     }),
   ]
 }
