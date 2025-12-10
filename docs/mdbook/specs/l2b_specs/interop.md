@@ -6,6 +6,12 @@
 - [Introduction](#introduction)
 - [Technical overview](#technical-overview)
   - [Event matching](#event-matching)
+    - [Matching via correlation key](#matching-via-correlation-key)
+    - [Dealing with arrival order](#dealing-with-arrival-order)
+    - [Matching logic that can't be serialized into a correlation key](#matching-logic-that-cant-be-serialized-into-a-correlation-key)
+    - [Transactions that are composed by more than two events](#transactions-that-are-composed-by-more-than-two-events)
+    - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
+    - [Other...](#other)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -92,11 +98,6 @@ A few questions arise here:
   
 Those will be discussed in the following sections.
 
-#### Dealing with arrival order
-
-Continuing the example above, we can't be certain that event `A` will arrive into the processing pipeline before event `B`, even if that's how it physically happened. There can be many reason for such situation, like delays in intervals of data fetching from different chains, speed of RPC endpoints, bugs, reprocessing scenarios. 
-
-... TODO
 
 #### Matching logic that can't be serialized into a correlation key
 
@@ -120,13 +121,69 @@ This example also shows that the *correlation key is not necessarily unique* and
 
 #### Transactions that are composed by more than two events
 
-...TODO... (here discuss that the correlation key in current problem belongs more properly to the "flow" definition, not any event itself)
+Many cross-chain transactions are mulit-step, with multiple events emitted during the flow. For now let's consider only a flow that is linear, with no branching. Let's take this example flow with events:
+
+- `ContractCallWithToken -> ContractCallApprovedWithMint -> ContractCallExecuted`
+
+It can be noticed that such flow still consists of pairs of correlated events.
+
+- `ContractCallWithToken -> ContractCallApprovedWithMint`, and
+- `ContractCallApprovedWithMint -> ContractCallExecuted`
+
+So the idea of using correlation keys for efficiently identifying the transfer still holds and when an event arrives for processing, it needs to be correlated with the directly preceeding or following event in each flow it exists, by using the correlation key.
 
 #### Transaction flows with branching logic
 
-...TODO
+Introducing branching to the flow also doesn't change the way matching would work, e.g.:
 
-#### Other...
+```
+                Approved_WithMint -> ContractCallExecuted`
+              /
+ ContractCall
+              \
+                Approved_WithoutMint -> ContractCallExecuted`
+```
+
+Again, in the example above, pairs of events should be matched until a flow is filled. 
+
+This also suggests a logic for the matching engine:
+
+- have all flows defined in some *parsable, declarative format* that represents a directed acyclic graph
+- keep ingesting events, casting them into common, normalized *interop events*
+- when processing a new interop event:
+  - find all flows in which this event occurs
+  - use correlation keys matching to see if any full flow has been filled
+
+Having the flows defined in a parsable, declarative format (e.g. YAML or JSON) has this additional property that:
+- it will be easy to visualise
+- it will be possible to create a visual editor
+
+(comment: I'm not certain, but I have a hunch that there might be an usual case in which events match only if the transfer flow has reach certain stage. This would require building a bit more complex matching engine that would also keep track of the flow "state", and use that state as part of the matching logic. But I'm not sure if that's really the case, or if it's simply an implementation detail.)
+
+#### Dealing with arrival order
+
+We can't be certain that events will arrive into the processing pipeline in order, as they would be defined in the flow, even if that's how it physically happens. There can be many reason for such situation, like delays in intervals of data fetching from different chains, speed of RPC endpoints, bugs, reprocessing scenarios. 
+
+Therefore matching needs to be possible in both directions, again reinforcing the fact that correlation key is part of the connection between events in the flow, not events themselves.
+
+When a new event arrives, the matching engine should try to find flows with that event and iteratively try to "proceed" in both directions, fetching neighbouring events via correlation keys, until some flow is filled from start to finish (or ignore it when it isn't)
+
+#### Defining correlation key
+
+As suggested above, transaction flows should be defined in a declarative way. This strongly suggests that correlation keys *should not be defined on an event*, but rather *on the connection in the flow*. In other words, when a person writes a code that will normalize and cast an event into internal interop event, they might not know which of the fields of the event wll be used as a correlation key. For example, imagine an event with following fields:
+
+- `{ recipient, orderId, timestamp} `
+
+and let's assume that it can be uniquely identified in two ways: via `{ recipient, orderId }` or via `{ recipient, timestamp }`. It's not obvious which field, `orderId` or `timestamp` will be available in the following event.
+
+Therefore **casting and normalization should not define correlation keys** - they should be defined **on connections in the flow**. Casting should only try to extract and normalize as many fields as possible.
+
+By saying "correlation keys" we also must assume that *custom matching functions*, if needed, should also be defined/referenced in the same place.
+
+It also means that there can be multiple correlation keys for the same event.
+
+Additional advantage of having correlation in the flow declaration is that it can be presented graphically and changed graphically.
+
+#### Potential interface for flow visualization
 
 ...TODO
-There are some additional aspects to consider, e.g. it might be useful in the future to create a visual interface for constructing the transfer flow logic (which includes the corellation between steps), or to visualise how transfer moves between different stages. 
