@@ -667,6 +667,7 @@ function buildOpstackClosedSections(
     [
       usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata,
       BADGES.VM.EVM,
+      BADGES.Stack.OPStack,
     ],
     config.additionalBadges ?? [],
   )
