@@ -31,6 +31,16 @@
   "overrides": {
     "unichain:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
+    },
+    "unichain:0x420000000000000000000000000000000000000F": {
+      "manualSourcePaths": {
+        "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1": "https://unichain.blockscout.com/address/0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      }
+    },
+    "unichain:0x4200000000000000000000000000000000000015": {
+      "manualSourcePaths": {
+        "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      }
     }
   }
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9b97c81aff76357e9a137271c3f1cc163a27b3d6
+Generated with discovered.json: 0xa85085f9bc90b0e83fdf3e4f29137cd6aed6086b
 
-# Diff at Mon, 08 Dec 2025 12:03:21 GMT:
+# Diff at Wed, 10 Dec 2025 09:56:28 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1764324881
-- current timestamp: 1765195335
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764324881
+- current timestamp: 1765360523
 
 ## Description
 
@@ -24,8 +24,9 @@ and Jovian repurposes blobGasUsed to store daFootprint
 +        ""
       template:
 -        "opstack/Layer2/GasPriceOracle"
-      sourceHashes:
--        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"]
+      sourceHashes.1:
+-        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
++        "0x29ddf164485b42ede998cb6aa971e4178dffbc3247ff52a55177ef43123c2e70"
       description:
 -        "Provides the current gas price for L2 transactions."
       values.$implementation:
@@ -64,8 +65,8 @@ and Jovian repurposes blobGasUsed to store daFootprint
 -        "GasPriceOracle"
       implementationNames.unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
 +        ""
-      unverified:
-+        true
+      references:
++        [{"text":"Source Code","href":"https://unichain.blockscout.com/address/0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"}]
     }
 ```
 
@@ -77,8 +78,9 @@ and Jovian repurposes blobGasUsed to store daFootprint
 +        ""
       template:
 -        "opstack/Layer2/L1Block"
-      sourceHashes:
--        ["0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a","0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"]
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0xd8671cf61a7da63a2d77c745e213afbd37a88260d4ff2b5121e5e3c0b4711c93"
       description:
 -        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
       values.$implementation:
@@ -131,8 +133,8 @@ and Jovian repurposes blobGasUsed to store daFootprint
 -        "L1Block"
       implementationNames.unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
 +        ""
-      unverified:
-+        true
+      references:
++        [{"text":"Source Code","href":"https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"}]
     }
 ```
 

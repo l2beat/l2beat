@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x68fbf70aeef9f603ae76dba55ef54856f24c31ce
+Generated with discovered.json: 0x471641f72ce1ee37d4531f0a7761b0702566c9ce
 
-# Diff at Mon, 08 Dec 2025 11:48:54 GMT:
+# Diff at Wed, 10 Dec 2025 09:26:38 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1764322933
-- current timestamp: 1765194439
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764322933
+- current timestamp: 1765358732
 
 ## Description
 
@@ -40,8 +40,7 @@ SystemConfig
 https://disco.l2beat.com/diff/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED
 
 L1CrossDomainMessenger
-https://disco.l2beat.com/diff/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0 
-
+https://disco.l2beat.com/diff/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0
 
 ## Watched changes
 

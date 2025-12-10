@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5b7a36dacb8b89cd3d43c76f1d1ba29d936fe94a
+Generated with discovered.json: 0x991470d6bd4e19fa0d90aac7a0624ff621eb9883
 
-# Diff at Mon, 08 Dec 2025 11:58:18 GMT:
+# Diff at Wed, 10 Dec 2025 10:01:16 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1764322695
-- current timestamp: 1765195032
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764322695
+- current timestamp: 1765360811
 
 ## Description
 
@@ -14,20 +14,17 @@ L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a
 and Jovian repurposes blobGasUsed to store daFootprint
 - DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
 
+Gas price oracle - isJovian fork for new gas calculation (getOperatorFee())
+https://disco.l2beat.com/diff/oeth:0x93e57A196454CB919193fa9946f14943cf733845/oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1
+
 ## Watched changes
 
 ```diff
-    contract  (oeth:0x420000000000000000000000000000000000000F) {
-    +++ description: None
-      name:
--        "GasPriceOracle"
-+        ""
-      template:
--        "opstack/Layer2/GasPriceOracle"
-      sourceHashes:
--        ["0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44","0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"]
-      description:
--        "Provides the current gas price for L2 transactions."
+    contract GasPriceOracle (oeth:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
++        "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15"
       values.$implementation:
 -        "oeth:0x93e57A196454CB919193fa9946f14943cf733845"
 +        "oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
@@ -36,36 +33,15 @@ and Jovian repurposes blobGasUsed to store daFootprint
       values.$upgradeCount:
 -        3
 +        4
-      values.baseFee:
--        0
-      values.baseFeeScalar:
--        5227
-      values.blobBaseFee:
--        1
-      values.blobBaseFeeScalar:
--        1014213
-      values.decimals:
--        6
-      values.DECIMALS:
--        6
-      values.gasPrice:
--        0
-      values.isEcotone:
--        true
-      values.isFjord:
--        true
-      values.isIsthmus:
--        true
-      values.l1BaseFee:
--        64642287
       values.version:
 -        "1.4.0"
++        "1.6.0"
+      values.isJovian:
++        true
       implementationNames.oeth:0x93e57A196454CB919193fa9946f14943cf733845:
 -        "GasPriceOracle"
       implementationNames.oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
-+        ""
-      unverified:
-+        true
++        "GasPriceOracle"
     }
 ```
 
@@ -98,10 +74,9 @@ and Jovian repurposes blobGasUsed to store daFootprint
 ## Source code changes
 
 ```diff
-.../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
- .../L1Block/L1Block.sol                            |   73 +-
- .../GasPriceOracle => .flat}/Proxy.p.sol           |    0
- 3 files changed, 38 insertions(+), 1222 deletions(-)
+.../GasPriceOracle/GasPriceOracle.sol              | 64 ++++++++++++++++---
+ .../L1Block/L1Block.sol                            | 73 +++++++++++-----------
+ 2 files changed, 93 insertions(+), 44 deletions(-)
 ```
 
 Generated with discovered.json: 0xd20557c2da5fa1b7eb8731c5317d8e7c82d56310

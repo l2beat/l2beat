@@ -1,7 +1,7 @@
 {
   "name": "unichain",
-  "timestamp": 1765195335,
-  "configHash": "0x80dd6ffffaf43b4a95a5265c353ddbe74c869d0be81a8fc84bc5ce0763130ac9",
+  "timestamp": 1765360523,
+  "configHash": "0x53f42ac54aac6a462bad280ffe494d2be2b5357e54e45dd95dde0bb1d5180c6b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -193,7 +193,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23967893
+          "prevBlockNum": 23981553
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -263,7 +263,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20000000000000000000",
+        "totalSupply": "19920000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -383,12 +383,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0x45EB00aD6B4d5c954bB179738a8152650A12D31f",
+        "anchorGame": "eth:0xA3951cc3e480f7394eB320A2A1403dD1Ae745177",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x0520a6e983e578c8f7dfa9ed53acbfc57987db87dd5918452cf87aa2b765fdf8",
-          33839666
+          "0xd4686eac84f36bde8ec32cd79116e1c093374514aa7ebe9a1b2899ad2a3710c3",
+          34002416
         ],
         "initVersion": 1,
         "paused": false,
@@ -463,7 +463,7 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9451,
+        "gameCount": 9496,
         "gameImpls": [
           "eth:0x6D0462850F7B87403660CC9f4F89346483108512",
           "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
@@ -666,7 +666,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 84,
+        "nonce": 91,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1546,7 +1546,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651197",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651291",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2263,7 +2263,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622603",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622608",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2285,7 +2285,10 @@
       "name": "",
       "address": "unichain:0x420000000000000000000000000000000000000F",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x29ddf164485b42ede998cb6aa971e4178dffbc3247ff52a55177ef43123c2e70"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
@@ -2309,7 +2312,13 @@
       "implementationNames": {
         "unichain:0x420000000000000000000000000000000000000F": "Proxy",
         "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://unichain.blockscout.com/address/0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+        }
+      ]
     },
     {
       "name": "L2StandardBridge",
@@ -2460,7 +2469,10 @@
       "name": "",
       "address": "unichain:0x4200000000000000000000000000000000000015",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0xd8671cf61a7da63a2d77c745e213afbd37a88260d4ff2b5121e5e3c0b4711c93"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
@@ -2484,7 +2496,13 @@
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000015": "Proxy",
         "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+        }
+      ]
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -4829,6 +4847,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 23967953, "unichain": 34446976 },
+  "usedBlockNumbers": { "ethereum": 23981553, "unichain": 34612164 },
   "permissionsConfigHash": "0x45c12f26533398b37c2cc44d76d7ba69e79fc1e2e821efbf6fe3ea7a54f94b8f"
 }
