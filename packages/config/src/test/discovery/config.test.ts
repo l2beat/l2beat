@@ -309,7 +309,7 @@ describe('discovery config.jsonc', () => {
   }).timeout(10000)
 
   describe('configs - ignore* properties are not overspecified', () => {
-    for (const config of configs.filter((x) => x.name === 'yieldfi')) {
+    for (const config of configs) {
       const discovery = configReader.readDiscovery(config.name)
 
       describe(config.name, () => {
