@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xe327e308889284f3f25dea9da305bfb72e368ea4
+
+# Diff at Wed, 10 Dec 2025 17:42:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764322969
+- current timestamp: 1765388493
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x9F18D91949731E766f294A14027bBFE8F28328CC) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        42
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/celo/.flat/AccessManager.sol      |  214 ++++
+ .../celo/.flat/OPSuccinctFaultDisputeGame.sol      | 1083 ++++++++++++++++++++
+ 2 files changed, 1297 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764322969 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x792e2fb66517e119e7351b8a94478a49ab5b7e81
 
 # Diff at Fri, 28 Nov 2025 09:44:50 GMT:
