@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfdceaa8ca37959e94daff0738c71bdf72e9f1fd4
+Generated with discovered.json: 0x886687eb1f64c74a58cdf6a708947645627ced7f
 
-# Diff at Tue, 09 Dec 2025 14:52:11 GMT:
+# Diff at Wed, 10 Dec 2025 09:17:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8fa3d100e73cb9da59cb120ddb796b2ca1f0d1ec block: 1765279563
+- comparing to: main@fbe10a69a76cdcab5529ac68e11f14f4d3a22396 block: 1765279563
 - current timestamp: 1765281854
 
 ## Description
@@ -87,7 +87,7 @@ discovery. Values are for block 1765279563 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993)
-    +++ description: Central contract of the OP stack part of this deployment. Since the OP stack bridge is disabled, this contract is only responsible for state root management. It allows for permissioned state proposals, no public challenges and forced transactions for users.
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
 ```
 
 ```diff

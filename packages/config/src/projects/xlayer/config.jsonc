@@ -12,7 +12,7 @@
   "sharedModules": ["shared-polygon-cdk"],
   "overrides": {
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
-      "description": "Central contract of the OP stack part of this deployment. Since the OP stack bridge is disabled, this contract is only responsible for state root management. It allows for permissioned state proposals, no public challenges and forced transactions for users."
+      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions."
     }
   }
 }
