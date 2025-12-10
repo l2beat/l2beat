@@ -306,6 +306,58 @@ describe('discovery config.jsonc', () => {
       )
     }
   }).timeout(10000)
+
+  describe('templates and configs - ignore* properties are not overspecified', () => {
+    const allConfigs = configReader
+      .readAllDiscoveredProjects()
+      .flatMap((project) => configReader.readConfig(project))
+
+    for (const config of allConfigs) {
+      const discovery = configReader.readDiscovery(config.name)
+
+      describe(config.name, () => {
+        for (const entry of discovery.entries) {
+          describe(entry.address.toString(), () => {
+            const abi = discovery.abis[entry.address] ?? []
+            const functionNamesFromAbi = abi
+              .filter((x) => x.startsWith('function '))
+              .map((x) => x.slice('function '.length, x.indexOf('(')))
+            const maybeCustomValues = Object.keys(entry.values ?? {})
+            const possibleValues = [
+              ...new Set([...functionNamesFromAbi, ...maybeCustomValues]),
+            ]
+
+            const configOverrides = config.structure.overrides?.[entry.address]
+
+            if (configOverrides) {
+              const ignoreInWatchMode = configOverrides.ignoreInWatchMode ?? []
+              const ignoreMethods = configOverrides.ignoreMethods ?? []
+              const ignoreRelatives = configOverrides.ignoreRelatives ?? []
+
+              it('ignoreInWatchMode', () => {
+                const overspecified = (ignoreInWatchMode ?? []).filter(
+                  (x) => !possibleValues.includes(x),
+                )
+                expect(overspecified).toEqual([])
+              })
+              it('ignoreMethods', () => {
+                const overspecified = (ignoreMethods ?? []).filter(
+                  (x) => !possibleValues.includes(x),
+                )
+                expect(overspecified).toEqual([])
+              })
+              it('ignoreRelatives', () => {
+                const overspecified = (ignoreRelatives ?? []).filter(
+                  (x) => !possibleValues.includes(x),
+                )
+                expect(overspecified).toEqual([])
+              })
+            }
+          })
+        }
+      })
+    }
+  })
 })
 
 function compareLeftKeysInRight(
