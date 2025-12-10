@@ -14,16 +14,6 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": {
-      "name": "SHARPVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636": {
-      "name": "CairoBootloaderProgram",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
     "eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420": {
       "name": "CpuConstraintPoly",
       "type": "Contract",
@@ -117,6 +107,10 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": {
       "name": "CpuOods",
       "type": "Contract",
@@ -201,8 +195,17 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70": {
       "name": "PedersenHashPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": {
+      "name": "CairoBootloaderProgram",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -244,10 +247,27 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
+    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
+    },
+    "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
     },
     "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": {
       "name": "EcdsaPointsXColumn",

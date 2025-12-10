@@ -9,7 +9,11 @@ const externalPublication = v.object({
   title: v.string(),
   description: v.string().optional(),
   publishedOn: v.unknown().transform((v) => new Date(v as string)),
-  url: v.string().check((v) => !!new URL(v)),
+  url: v.string().check((v) => {
+    // Allow relative paths
+    if (v.startsWith('/')) return true
+    return !!new URL(v)
+  }),
   ctaText: v.union([v.literal('Read now'), v.literal('Watch now')]).optional(),
   tag: tags,
 })

@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1764167689,
+  "timestamp": 1765211471,
   "configHash": "0x0b2002e9c8bdfd52c397d363aaf0efe18d222d68a79ada09dfb61c2d02a292d6",
   "entries": [
     {
@@ -2540,7 +2540,7 @@
       "template": "shared-zk-stack/ZkToken",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099"
+        "0x3f0cc88001b7e517d2d7fb4520faaf8deeb323106b3ab032ff35b0952046f99d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
@@ -2549,7 +2549,7 @@
       "sinceBlock": 34572100,
       "values": {
         "$admin": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-        "$implementation": "zksync:0x01a6715d3560241E09E865a46122bf347A576c09",
+        "$implementation": "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274",
         "$pastUpgrades": [
           [
             "2024-05-21T18:48:46.000Z",
@@ -2560,9 +2560,14 @@
             "2024-06-10T09:25:38.000Z",
             "0xa6bc022ba0f60ac6f10a6efb84b261e9ca1b327a611bdd7a1f4d37cc9b027a3c",
             ["zksync:0x01a6715d3560241E09E865a46122bf347A576c09"]
+          ],
+          [
+            "2025-12-08T12:06:52.000Z",
+            "0x749b9e6eed328052d679eb86639be807b4acf811ac8786f730b45258ba41ce6f",
+            ["zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2602,7 +2607,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1764167687,
+        "clock": 1765211471,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2618,16 +2623,17 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
+        "maxSupply": "21000000000000000000000000000",
         "MINTER_ADMIN_ROLE": "0x70480ee89cb38eff00b7d23da25713d52ce19c6ed428691d22c58b2f615e3d67",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "13960139525231200761030249774"
+        "totalSupply": "13960347858564200761030249774"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
-        "zksync:0x01a6715d3560241E09E865a46122bf347A576c09": "ZkTokenV2"
+        "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274": "ZkTokenV3"
       }
     },
     {
@@ -2708,7 +2714,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1764167687,
+        "clock": 1765211471,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2817,7 +2823,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1764167687,
+        "clock": 1765211471,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2833,10 +2839,10 @@
         },
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
         "isProposeGuarded": false,
-        "lateQuorumVoteExtension": 604800,
+        "lateQuorumVoteExtension": 172800,
         "name": "ZkTokenGovernor",
         "proposalCreatedCount": 14,
-        "proposalQueuedCount": 11,
+        "proposalQueuedCount": 12,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "PROPOSE_GUARDIAN": "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
@@ -2845,7 +2851,7 @@
         "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
         "VETO_GUARDIAN": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
-        "votingDelay": 604800,
+        "votingDelay": 259200,
         "votingPeriod": 604800
       },
       "implementationNames": {
@@ -3085,7 +3091,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1764167687,
+        "clock": 1765211471,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3100,10 +3106,10 @@
           "extensions": []
         },
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
-        "lateQuorumVoteExtension": 604800,
+        "lateQuorumVoteExtension": 172800,
         "name": "ZkGovOpsGovernor",
         "proposalCreatedCount": 2,
-        "proposalQueuedCount": 1,
+        "proposalQueuedCount": 2,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -3111,7 +3117,7 @@
         "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
         "VETO_GUARDIAN": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
-        "votingDelay": 604800,
+        "votingDelay": 259200,
         "votingPeriod": 604800
       },
       "implementationNames": {
@@ -4086,62 +4092,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "zksync:0x01a6715d3560241E09E865a46122bf347A576c09": [
-      "error DelegateSignatureExpired(uint256 expiry)",
-      "error DelegateSignatureIsInvalid()",
-      "error ERC6372InconsistentClock()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function BURNER_ADMIN_ROLE() view returns (bytes32)",
-      "function BURNER_ROLE() view returns (bytes32)",
-      "function CLOCK_MODE() view returns (string)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DELEGATION_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function MINTER_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address _from, uint256 _amount)",
-      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
-      "function clock() view returns (uint48)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegateOnBehalf(address _signer, address _delegatee, uint256 _expiry, bytes _signature)",
-      "function delegates(address account) view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
-      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getVotes(address account) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(address _admin, address _mintReceiver, uint256 _mintAmount)",
-      "function initializeV2()",
-      "function mint(address _to, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function numCheckpoints(address account) view returns (uint32)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
     "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -4180,6 +4130,66 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274": [
+      "constructor()",
+      "error DelegateSignatureExpired(uint256 expiry)",
+      "error DelegateSignatureIsInvalid()",
+      "error ERC6372InconsistentClock()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function BURNER_ADMIN_ROLE() view returns (bytes32)",
+      "function BURNER_ROLE() view returns (bytes32)",
+      "function CLOCK_MODE() view returns (string)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DELEGATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MINTER_ADMIN_ROLE() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 _amount)",
+      "function burn(address _from, uint256 _amount)",
+      "function burnFrom(address _from, uint256 _amount)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function clock() view returns (uint48)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegateOnBehalf(address _signer, address _delegatee, uint256 _expiry, bytes _signature)",
+      "function delegates(address account) view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
+      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVotes(address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address _admin, address _mintReceiver, uint256 _mintAmount)",
+      "function initializeV2()",
+      "function maxSupply() pure returns (uint224)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -4512,6 +4522,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 23883544, "zksync2": 66569699 },
+  "usedBlockNumbers": { "ethereum": 23969290, "zksync2": 66897815 },
   "permissionsConfigHash": "0x05cdb07baa973d193849c0dbd86e9f9e84d65cb6bf4f65ec788b8993aaa08446"
 }

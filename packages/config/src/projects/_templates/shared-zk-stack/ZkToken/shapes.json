@@ -3,5 +3,11 @@
     "hash": "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099",
     "address": "zksync:0x01a6715d3560241E09E865a46122bf347A576c09",
     "blockNumber": 58599111
+  },
+  "ZkTokenV3": {
+    "hash": "0x3f0cc88001b7e517d2d7fb4520faaf8deeb323106b3ab032ff35b0952046f99d",
+    "address": "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274",
+    "chain": "zksync2",
+    "blockNumber": 66897815
   }
 }

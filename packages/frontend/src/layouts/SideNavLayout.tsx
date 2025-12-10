@@ -227,12 +227,12 @@ const groups = compact<NavGroup>([
 
 const sideLinks = compact([
   {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
     title: 'About Us',
     href: '/about-us',
+  },
+  {
+    title: 'Publications',
+    href: '/publications',
   },
   {
     title: 'Forum',
@@ -245,6 +245,10 @@ const sideLinks = compact([
   {
     title: 'Governance',
     href: '/governance',
+  },
+  {
+    title: 'Tools',
+    href: externalLinks.tools,
   },
   {
     title: 'Glossary',

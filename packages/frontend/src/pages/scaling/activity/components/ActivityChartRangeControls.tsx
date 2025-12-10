@@ -20,7 +20,7 @@ export function ActivityChartRangeControls({ range, setRange }: Props) {
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      offset={-1 * UnixTime.DAY}
+      offset={-UnixTime.DAY}
     />
   )
 }

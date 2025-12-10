@@ -519,7 +519,9 @@ export class BatchingAndCachingProvider {
       return DebugTransactionCallResponse.parse(parseCacheEntry(cached))
     }
     const trace = await this.provider.getDebugTrace(transactionHash)
-    entry.write(JSON.stringify(trace))
+    if (trace.calls) {
+      entry.write(JSON.stringify(trace))
+    }
     return trace
   }
 

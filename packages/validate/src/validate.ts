@@ -640,7 +640,7 @@ function impEnum<T extends string | number>(values: readonly T[]) {
     return {
       success: false,
       path: '',
-      message: `None of the enum variants matched, got ${whatType(value)}.`,
+      message: `None of the enum variants matched, got ${whatType(value)}. Possible values: ${values.join(', ')}.`,
     }
   }
 }

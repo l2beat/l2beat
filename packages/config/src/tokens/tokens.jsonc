@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "vPHA",
+      "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
+      "coingeckoId": "pha"
+    },
+    {
       "symbol": "HAUST",
       "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19"
     },
@@ -2261,6 +2266,12 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "RAIN",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "syrupUSDC",
       "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
@@ -6962,6 +6973,21 @@
     }
   ],
   "soneium": [
+    {
+      "symbol": "USDSC",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "wstUSR",
       "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",

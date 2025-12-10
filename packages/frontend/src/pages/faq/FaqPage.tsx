@@ -41,7 +41,7 @@ export function FaqPage(props: AppLayoutProps) {
                   >
                     {item.question}
                   </a>
-                  <Markdown className="font-normal text-base text-secondary leading-7 ">
+                  <Markdown className="font-normal text-base text-secondary leading-7">
                     {answer}
                   </Markdown>
                 </section>

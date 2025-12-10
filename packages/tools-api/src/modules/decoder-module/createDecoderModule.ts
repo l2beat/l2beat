@@ -5,7 +5,7 @@ import type { ApplicationModule } from '../../services/ApplicationModule'
 import { AlchemyClient } from '../../third-party/AlchemyClient'
 import { EtherscanClient } from '../../third-party/EtherscanClient'
 import { FourByteClient } from '../../third-party/FourByteClient'
-import { OpenChainClient } from '../../third-party/OpenChainClient'
+import { Sourcify4ByteClient } from '../../third-party/Sourcify4ByteClient'
 import { createDecoderRouter } from './createDecoderRouter'
 import { AddressService } from './domain/AddressService'
 import { ApiController } from './domain/ApiController'
@@ -16,10 +16,10 @@ export function createDecoderModule(
   config: Config,
   logger: Logger,
 ): ApplicationModule {
-  const openChainClient = new OpenChainClient()
+  const sourcifyClient = new Sourcify4ByteClient()
   const fourByteClient = new FourByteClient()
   const signatureService = new SignatureService(
-    openChainClient,
+    sourcifyClient,
     fourByteClient,
     config.discovered,
     config.wellKnownAbi,

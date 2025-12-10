@@ -17,58 +17,35 @@
     "stateRoot",
     "validiumRoot",
     "verifiedBatchesCount",
-    "verifiedPriorityRequestCount"
+    "verifiedPriorityRequestCount",
+    "createdMarkets"
   ],
   "fields": {
     "verifier": {
-      "handler": {
-        "type": "storage",
-        "slot": 4,
-        "returnType": "address"
-      },
+      "handler": { "type": "storage", "slot": 4, "returnType": "address" },
       "severity": "HIGH"
     },
     "desertVerifier": {
-      "handler": {
-        "type": "storage",
-        "slot": 5,
-        "returnType": "address"
-      },
+      "handler": { "type": "storage", "slot": 5, "returnType": "address" },
       "severity": "HIGH"
     },
     "governance": {
-      "handler": {
-        "type": "storage",
-        "slot": 6,
-        "returnType": "address"
-      }
+      "handler": { "type": "storage", "slot": 6, "returnType": "address" }
     },
     "additionalZkLighter": {
-      "handler": {
-        "type": "storage",
-        "slot": 7,
-        "returnType": "address"
-      }
+      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
     },
     "stateRootUpgradeVerifier": {
-      "handler": {
-        "type": "storage",
-        "slot": 494,
-        "returnType": "address"
-      }
+      "handler": { "type": "storage", "slot": 494, "returnType": "address" }
     },
     "createdMarkets": {
       "handler": {
         "type": "event",
         "select": "symbol",
-        "add": {
-          "event": ["CreateMarket"]
-        }
+        "add": { "event": ["CreateMarket"] }
       },
       "edit": ["map", ["format", "Bytes32ToString"]]
     },
-    "desertMode": {
-      "severity": "HIGH"
-    }
+    "desertMode": { "severity": "HIGH" }
   }
 }

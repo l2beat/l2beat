@@ -53,10 +53,16 @@ const requiredHonestMembersPercentage = (
   100
 ).toFixed(0)
 
-const immutablexProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const immutablexProgramHashes = []
+immutablexProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+immutablexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+immutablexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const immutablex: ScalingProject = {
   type: 'layer2',
@@ -89,6 +95,7 @@ export const immutablex: ScalingProject = {
       socialMedia: [
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
+        'https://discord.com/invite/immutable-play',
       ],
       other: ['https://growthepie.com/chains/immutable-x'],
     },
@@ -165,7 +172,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(immutablexProgramHash)],
+    zkProgramHashes: immutablexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

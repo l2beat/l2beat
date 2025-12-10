@@ -4301,6 +4301,20 @@
       "supply": "zero"
     },
     {
+      "name": "Phala Vault",
+      "coingeckoId": "pha",
+      "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
+      "symbol": "vPHA",
+      "decimals": 18,
+      "deploymentTimestamp": 1736539223,
+      "coingeckoListingTimestamp": 1599868800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Phantasma Stake",
       "coingeckoId": "phantasma",
       "address": "0x79C75E2e8720B39e258F41c37cC4f309E0b0fF80",
@@ -9469,6 +9483,28 @@
       }
     },
     {
+      "name": "Startale USD",
+      "coingeckoId": "startale-usd",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "symbol": "USDSC",
+      "decimals": 6,
+      "deploymentTimestamp": 1763565991,
+      "coingeckoListingTimestamp": 1764633600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70883/large/stataleusd.png?1764393252",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "uBTC",
       "coingeckoId": "wrapped-bitcoin-universal",
       "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
@@ -13119,6 +13155,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "RAIN",
+      "coingeckoId": "rain",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "symbol": "RAIN",
+      "decimals": 18,
+      "deploymentTimestamp": 1756216201,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Renzo Restaked ETH",

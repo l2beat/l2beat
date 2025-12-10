@@ -7,13 +7,7 @@ import type { DaLivenessEntry } from '~/server/features/data-availability/livene
 import { publicColumns } from './columns'
 import { toDaLivenessTableEntry } from './toDaLivenessTableEntry'
 
-export function DaLivenessTable({
-  items,
-  bigQueryOutage,
-}: {
-  items: DaLivenessEntry[]
-  bigQueryOutage: boolean
-}) {
+export function DaLivenessTable({ items }: { items: DaLivenessEntry[] }) {
   const { timeRange } = useLivenessTimeRangeContext()
 
   const tableEntries = useMemo(
@@ -22,7 +16,7 @@ export function DaLivenessTable({
   )
 
   const table = useTable({
-    columns: publicColumns(bigQueryOutage),
+    columns: publicColumns(),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

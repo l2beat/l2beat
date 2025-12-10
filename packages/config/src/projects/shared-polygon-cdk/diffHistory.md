@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x2b801b777679168b35a15086f2dce04b4438cc26
+
+# Diff at Tue, 09 Dec 2025 11:50:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1763987450
+- current timestamp: 1765280943
+
+## Description
+
+changes related to polygonzkevm moving to pessimistic proofs + multisig changes.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.3:
+-        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+      values.$members.9:
+-        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+      values.multisigThreshold:
+-        "5 of 12 (42%)"
++        "5 of 9 (56%)"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.accessControl.TRUSTED_AGGREGATOR.members.0:
+-        "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab"
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
++        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.12:
++        1
+      values.rollupsDataV2.0.rollupVerifierType:
+-        0
++        2
+      values.rollupsDataV2.0.rollupTypeID:
+-        6
++        14
+      values.rollupsDataV2.0.forkID:
+-        12
++        0
+      values.rollupsDataV2.0.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.trustedAggregatorAC.0:
+-        "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab"
+      values.trustedAggregatorAC.1:
++        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
+Generated with discovered.json: 0x2a270ce35863f89c87f532529d7a3e872cb78daa
+
+# Diff at Sat, 06 Dec 2025 14:43:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ce9c5de1bc9f8a8c0a7f464f3c1e3611f05712f1 block: 1763987450
+- current timestamp: 1763987450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763987450 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
 Generated with discovered.json: 0x793058d7bfaa3d491f390caa0191496eb438826b
 
 # Diff at Mon, 24 Nov 2025 12:32:35 GMT:

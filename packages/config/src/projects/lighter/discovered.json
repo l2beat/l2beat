@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1764165313,
+  "timestamp": 1764602180,
   "configHash": "0xded62d9fb9417d0f2fa93d8edfcf83d25d3ed3105fa2538ddfb528de6140b566",
   "entries": [
     {
@@ -62,7 +62,8 @@
         "stateRoot",
         "validiumRoot",
         "verifiedBatchesCount",
-        "verifiedPriorityRequestCount"
+        "verifiedPriorityRequestCount",
+        "createdMarkets"
       ],
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -73,8 +74,8 @@
           "eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6"
         ],
         "additionalZkLighter": "eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6",
-        "committedBatchesCount": 87513,
-        "committedPriorityRequestCount": 1128610,
+        "committedBatchesCount": 90674,
+        "committedPriorityRequestCount": 1255808,
         "createdMarkets": [
           "USELESS",
           "TIA",
@@ -119,21 +120,29 @@
           "AUDUSD",
           "NZDUSD",
           "HOOD",
-          "COIN"
+          "COIN",
+          "NVDA",
+          "PLTR",
+          "TSLA",
+          "AAPL",
+          "AMZN",
+          "MSFT",
+          "GOOGL",
+          "META"
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x9BC70c62823BabFed57698d458833da55D0c88A4",
-        "executedBatchesCount": 87487,
-        "executedOnChainBatchesCount": 57321,
-        "executedPriorityRequestCount": 1127716,
+        "executedBatchesCount": 90611,
+        "executedOnChainBatchesCount": 60284,
+        "executedPriorityRequestCount": 1251275,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011",
-        "lastAccountIndex": 561262,
-        "lastVerifiedEndBlockNumber": 109232184,
-        "lastVerifiedStateRoot": "0x58f6f1ede49e26802c7d9b12592d0ee3503b594e66ba694681daee2808f953e5",
-        "lastVerifiedValidiumRoot": "0x4fc414601ab61982a16f694aff110972e7ef9b464723edaa27457b77d6102b27",
+        "lastAccountIndex": 622872,
+        "lastVerifiedEndBlockNumber": 113469136,
+        "lastVerifiedStateRoot": "0xcd7727cd2497754c35165e47412449b5172e93ed547530c514c027996d91592f",
+        "lastVerifiedValidiumRoot": "0x6b846c8d382d6e8be20495b5e528b7265e61b1adbb13d0d1ca00a4641962cf58",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_BATCH_DEPOSIT_LENGTH": 1000,
@@ -150,15 +159,15 @@
         "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 1359,
-        "pendingOnChainBatchesCount": 26,
+        "openPriorityRequestCount": 6531,
+        "pendingOnChainBatchesCount": 62,
         "PRIORITY_EXPIRATION": 1209600,
-        "stateRoot": "0x58f6f1ede49e26802c7d9b12592d0ee3503b594e66ba694681daee2808f953e5",
+        "stateRoot": "0xcd7727cd2497754c35165e47412449b5172e93ed547530c514c027996d91592f",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4",
-        "validiumRoot": "0x4fc414601ab61982a16f694aff110972e7ef9b464723edaa27457b77d6102b27",
-        "verifiedBatchesCount": 87487,
-        "verifiedPriorityRequestCount": 1127716,
+        "validiumRoot": "0x6b846c8d382d6e8be20495b5e528b7265e61b1adbb13d0d1ca00a4641962cf58",
+        "verifiedBatchesCount": 90611,
+        "verifiedPriorityRequestCount": 1251275,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -851,9 +860,9 @@
     "lighter/DesertVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
     "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
-    "lighter/ZkLighter": "0x4e4e1a3a279e53100c2d992e7bae17005ef8045066dfad32daae3f8112cd4029",
+    "lighter/ZkLighter": "0xf49845ae0df0382cc74f2fdf95ef6cd90e59d0416129d226a9210be655c3e8f3",
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23883349 },
+  "usedBlockNumbers": { "ethereum": 23919464 },
   "permissionsConfigHash": "0x9177f8577d7ec77e5de46c2356570bb3c522a99f9bb92a064026d926758bc262"
 }

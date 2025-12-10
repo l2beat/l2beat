@@ -84,13 +84,16 @@ A finalized checkpoint becomes irreversible unless at least 1/3 of the validator
 Equivocating (expressing two conflicting views) over blocks or attestations by a validator results in their stake being slashed.
 
 ## Blobs (EIP-4844)
-[EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) introduces "blob-carrying transactions," a new transaction type under [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) that allows for the inclusion of large data payloads, or blobs, within transactions. 
-These blobs are not directly accessible during EVM execution but can be verified through commitments. 
-The EIP sets a target of 3 blobs of 128kb each, with a maximum of 6 blobs per block, equating to ~0.375 MB to ~0.75 MB of data. 
-On the consensus layer, blobs are referenced in the beacon block and propagated separately as "sidecars," enabling forward compatibility with future data scaling methods like data-availability sampling (DAS). 
-EIP-4844 also creates a new blob gas market, which operates similarly to [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559)'s fee mechanism.  
-The blob base fee adjusts dynamically based on the number of blobs included in each block relative to the target. 
-If a block contains more blobs than the target (3 blobs), the blob base fee increases, discouraging additional blob usage in subsequent blocks. Conversely, if a block contains fewer blobs than the target, the blob base fee decreases, encouraging more blob usage. If the number of blobs in a block matches the target, the blob base fee remains unchanged.
+[EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) introduces "blob-carrying transactions," a new transaction type under [EIP-2718](https://eips.ethereum.org/EIPS/eip-2718) that allows for the inclusion of large data payloads, or blobs, within transactions.
+These blobs are not directly accessible during EVM execution but can be verified through commitments.
+On the consensus layer, blobs are referenced in the beacon block and propagated separately as "sidecars," enabling forward compatibility with future data scaling methods like data-availability sampling (DAS).
+EIP-4844 also creates a new blob gas market, which operates similarly to [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559)'s fee mechanism.
+The blob base fee adjusts dynamically based on the number of blobs included in each block relative to the target.
+If a block contains more blobs than the target, the blob base fee increases, discouraging additional blob usage in subsequent blocks. Conversely, if a block contains fewer blobs than the target, the blob base fee decreases, encouraging more blob usage. If the number of blobs in a block matches the target, the blob base fee remains unchanged.
+
+The initial blob parameters (target 3, max 6 blobs) were increased via [EIP-7691](https://eips.ethereum.org/EIPS/eip-7691) in the Pectra upgrade to target 6 and max 9 blobs.
+Following the Fusaka upgrade which enabled PeerDAS (Peer Data Availability Sampling), Blob Parameter Only (BPO) forks allow incremental blob capacity increases without hard forks.
+BPO1 raised the target to 10 and max to 15 blobs per block.
 
 ## L2s Data Availability
 
@@ -142,6 +145,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
         target: 786_432, // 0.75 MiB (target 6 blobs × 128 KiB)
         frequency: 12, // unchanged: 12 s slot time
         sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
+      },
+      {
+        // BPO1: Blob Parameter Only fork 1 (post-Fusaka PeerDAS)
+        size: 1_966_080, // 1.875 MiB (max 15 blobs × 128 KiB)
+        target: 1_310_720, // 1.25 MiB (target 10 blobs × 128 KiB)
+        frequency: 12, // unchanged: 12 s slot time
+        sinceTimestamp: 1765290071, // 2025-12-09 14:21:11 UTC – epoch 412672
       },
     ],
     finality: 768, // seconds
@@ -225,6 +235,14 @@ This method allows ZK rollups to prove that the data used in their validity proo
       date: '2025-05-07T00:00:00Z',
       description:
         'Pectra hardfork increases blob limits: target from 3 to 6 blobs and max from 6 to 9 blobs.',
+      type: 'general',
+    },
+    {
+      title: 'BPO1 blob throughput increase',
+      url: 'https://blog.ethereum.org/2025/11/06/fusaka-mainnet-announcement',
+      date: '2025-12-09T00:00:00Z',
+      description:
+        'First Blob Parameter Only fork after Fusaka increases blob limits: target from 6 to 10 blobs and max from 9 to 15 blobs.',
       type: 'general',
     },
   ],

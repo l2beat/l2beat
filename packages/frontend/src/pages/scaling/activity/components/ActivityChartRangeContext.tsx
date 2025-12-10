@@ -17,7 +17,7 @@ interface Props {
 
 export function ActivityChartRangeContextProvider({ children }: Props) {
   const [range, setRange] = useState<ChartRange>(
-    optionToRange('1y', { offset: -1 * UnixTime.DAY }),
+    optionToRange('1y', { offset: -UnixTime.DAY }),
   )
   return (
     <ActivityChartRangeContext.Provider
