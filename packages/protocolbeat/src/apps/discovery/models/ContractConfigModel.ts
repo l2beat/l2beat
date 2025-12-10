@@ -74,6 +74,17 @@ export class ContractConfigModel {
     return this.patchField(name, (field) => field.setSeverity(severity))
   }
 
+  setFieldDescription(
+    name: string,
+    description: FieldConfigSchema['description'],
+  ) {
+    return this.patchField(name, (field) => field.setDescription(description))
+  }
+
+  getFieldDescription(name: string) {
+    return this.fields[name]?.description
+  }
+
   setDescription(description: string | undefined) {
     const trimmed = description?.trim()
 

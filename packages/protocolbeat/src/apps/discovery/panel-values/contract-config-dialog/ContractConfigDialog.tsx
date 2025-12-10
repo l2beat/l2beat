@@ -82,7 +82,7 @@ export function ContractConfigDialog() {
   )
 }
 
-function ConfigRow({
+export function ConfigRow({
   headline,
   children,
 }: {

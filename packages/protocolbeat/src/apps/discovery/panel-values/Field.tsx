@@ -17,6 +17,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
 
   const canModify = canModifyField(field) && canModifyModel
   const canModifyTemplate = canModify && templateModel.hasTemplate
+  const description =
+    configModel.getFieldDescription(field.name) ??
+    templateModel.getFieldDescription(field.name)
 
   const templateTags = [
     {
@@ -119,10 +122,8 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
           {canModify && <FieldConfigDialog field={field} />}
         </div>
       </div>
-      {field.description && (
-        <div className="-mt-0.5 px-5 pb-1 font-serif italic">
-          {field.description}
-        </div>
+      {description && (
+        <div className="-mt-0.5 px-5 pb-1 font-serif italic">{description}</div>
       )}
       <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5">
         <FieldValueDisplay topLevel value={field.value} />
