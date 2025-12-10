@@ -115,7 +115,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0xfddf68726a28e418fa0c2a52c3134904a8c3e998',
         ),
-        tokens: '*',
+        tokens: ['CTSI'],
         description: 'Contract storing bounty funds.',
       }),
     ],
