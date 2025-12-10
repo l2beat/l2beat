@@ -67,6 +67,12 @@ export class ConfigModel {
     )
   }
 
+  setContractDescription(id: string, description: string | undefined) {
+    return this.patchOverride(id, (override) =>
+      override.setDescription(description),
+    )
+  }
+
   setFieldSeverity(
     id: string,
     fieldName: string,
@@ -114,6 +120,10 @@ export class ConfigModel {
 
   getCategory(id: string) {
     return this.overrides[id]?.category
+  }
+
+  getDescription(id: string) {
+    return this.overrides[id]?.description
   }
 
   private getOverride(id: string) {

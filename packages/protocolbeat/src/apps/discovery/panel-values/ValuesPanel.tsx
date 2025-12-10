@@ -54,7 +54,7 @@ function Display({
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
 }) {
-  const { configModel, templateModel, canModify } = useConfigModels()
+  const { canModify } = useConfigModels()
   const chain = selected.chain
 
   const addresses = getAddressesToCopy(selected)
@@ -144,11 +144,7 @@ function Display({
           </div>
         )}
 
-        {selected.description && (
-          <WithHeadline headline="Description">
-            <p className="font-serif text-sm italic">{selected.description}</p>
-          </WithHeadline>
-        )}
+        <Description />
         {selected.isReachable && (
           <WithHeadline headline="Reachable">
             <p className="text-aux-teal">Yes</p>
@@ -159,18 +155,7 @@ function Display({
             <p className="text-coffee-200/40">No</p>
           </WithHeadline>
         )}
-        {(configModel.category || templateModel.category) && (
-          <WithHeadline headline="Category">
-            <div className="flex items-center gap-1">
-              {configModel.category && (
-                <FieldTag source="config">{configModel.category}</FieldTag>
-              )}
-              {templateModel.category && (
-                <FieldTag source="template">{templateModel.category}</FieldTag>
-              )}
-            </div>
-          </WithHeadline>
-        )}
+        <Category />
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>
@@ -302,4 +287,61 @@ function WithHeadline(props: { headline: string; children: React.ReactNode }) {
       {props.children}
     </div>
   )
+}
+
+function Category() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const category = configModel.category ?? templateModel.category
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Category">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!category) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Category">
+      <div className="flex items-center gap-1">
+        {configModel.category && (
+          <FieldTag source="config">{configModel.category}</FieldTag>
+        )}
+        {templateModel.category && (
+          <FieldTag source="template">{templateModel.category}</FieldTag>
+        )}
+      </div>
+    </WithHeadline>
+  )
+}
+
+function Description() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const description = configModel.description ?? templateModel.description
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Description">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!description) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Description">
+      <p className="font-serif text-sm italic">{description}</p>
+    </WithHeadline>
+  )
+}
+
+function SkeletonLine() {
+  return <div className="h-3 w-full animate-breath rounded bg-coffee-400/50" />
 }
