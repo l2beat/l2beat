@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "timestamp": 1765360811,
+  "timestamp": 1765362353,
   "configHash": "0x7807b9e9d2d3f9f4f3d5e1eb5db0500b2b4dabc1ceeb4c528eabf3b96aa9e6d3",
   "entries": [
     {
@@ -519,7 +519,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292824596",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292824597",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1856,8 +1856,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 23981553
+          "prevBoughtGas": 821744,
+          "prevBlockNum": 23981591
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2000,7 +2000,7 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-        "totalSupply": "20247594000000000000",
+        "totalSupply": "20167594000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -2265,7 +2265,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292650216",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292650217",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2323,7 +2323,7 @@
         "$upgradeCount": 4,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 9993862,
+        "blobBaseFee": 10586200,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2332,7 +2332,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 153168962,
+        "l1BaseFee": 170916289,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2527,10 +2527,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 153168962,
+        "basefee": 170916289,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 9993862,
+        "blobBaseFee": 10586200,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2540,15 +2540,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x934febd9c719da239ac5e06686d722ad2762a77ba56e7049275e1fa18c5a7197",
+        "hash": "0x4f5bc3d661eb37e029b4eb41325c997d048589a19cdfcf70e88d525e84ce536a",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 23981570,
+        "number": 23981694,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 0,
-        "timestamp": 1765360727,
+        "timestamp": 1765362275,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -4922,6 +4922,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23981576, "optimism": 144881017 },
+  "usedBlockNumbers": { "ethereum": 23981700, "optimism": 144881788 },
   "permissionsConfigHash": "0x9b54a04d1b9b0f4359eff5acac5b023a8c78f559257b979919d0b462a25cc7f9"
 }

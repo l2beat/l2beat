@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1765361592,
+  "timestamp": 1765362369,
   "configHash": "0x53f42ac54aac6a462bad280ffe494d2be2b5357e54e45dd95dde0bb1d5180c6b",
   "entries": [
     {
@@ -4847,6 +4847,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 23981638, "unichain": 34613233 },
+  "usedBlockNumbers": { "ethereum": 23981701, "unichain": 34614010 },
   "permissionsConfigHash": "0x84c985dfffb3983f113477ffc37337e3ea3789e4774ed0925de7490bb7200b25"
 }
