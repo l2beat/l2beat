@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe5c13adc588e23be9b3decf3236695355cd49d6d
+Generated with discovered.json: 0xc0634661a39a388690c1fd0bad100e8e5e77f654
 
-# Diff at Mon, 08 Dec 2025 14:51:46 GMT:
+# Diff at Tue, 09 Dec 2025 14:04:23 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@74b0041ead61bb3996af17fc89dbefa3ef2a27aa block: 1760436956
-- current timestamp: 1765205442
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1760436956
+- current timestamp: 1765288578
 
 ## Description
 
@@ -88,8 +88,20 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 
 ```diff
 +   Status: CREATED
+    contract  (eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract  (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32)
+    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
 ```
 
 ```diff
@@ -104,15 +116,30 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 ```
 
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xF98eB2beF32Bf78b730A9D09192433cc47c9E6F7)
+    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
 ## Source code changes
 
 ```diff
-.../DisputeGameFactory/DisputeGameFactory.sol      | 1550 ++++++++++++++++++++
+.../DisputeGameFactory/DisputeGameFactory.sol      | 1550 +++++++++++++++++++
  .../DisputeGameFactory}/Proxy.p.sol                |    0
+ ...:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32.sol | 1409 ++++++++++++++++++
+ ...:0xF98eB2beF32Bf78b730A9D09192433cc47c9E6F7.sol | 1409 ++++++++++++++++++
+ .../src/projects/soon/.flat/KailuaTreasury.sol     | 1561 ++++++++++++++++++++
  .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  723 ---------
  .../OptimismPortal2/OptimismPortal2.sol}           |  404 +++--
  .../OptimismPortal2}/Proxy.p.sol                   |    0
- 5 files changed, 1801 insertions(+), 876 deletions(-)
+ 8 files changed, 6180 insertions(+), 876 deletions(-)
 ```
 
 Generated with discovered.json: 0x203f7e072e3df52940450ccfc926018940f3ff86

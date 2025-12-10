@@ -20,6 +20,14 @@
         "args": [1337]
       }
     },
+    "game2000": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [2000]
+      }
+    },
     "initBonds": {
       "handler": {
         "type": "array",
