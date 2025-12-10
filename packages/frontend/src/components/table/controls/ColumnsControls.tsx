@@ -19,7 +19,6 @@ interface Props<T> {
   columns: Column<T>[]
 }
 
-// TODO: column group
 export function ColumnsControls<T>({ columns }: Props<T>) {
   const trigger = (
     <div className="flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">
@@ -27,6 +26,10 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
       <span className="text-label-value-16">Columns</span>
     </div>
   )
+  const flattedColumns = columns.flatMap((column) =>
+    column.columns.length > 0 ? column.columns : [column],
+  )
+
   return (
     <>
       <Popover>
@@ -42,7 +45,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             Columns
           </span>
           <div className="flex flex-wrap gap-1">
-            {columns
+            {flattedColumns
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <ColumnControl key={column.id} column={column} />
@@ -64,7 +67,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             </DrawerDescription>
           </DrawerHeader>
           <div className="mb-5 flex flex-wrap gap-1">
-            {columns
+            {flattedColumns
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <ColumnControl key={column.id} column={column} />
