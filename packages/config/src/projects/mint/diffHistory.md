@@ -8,7 +8,7 @@ Generated with discovered.json: 0x19fa512c2ac9398f1f13a4616315a960dfbb0b48
 
 ## Description
 
-Mint migrates from Conduit to self-host and self-manage.
+Mint migrates from Conduit to self-host and self-manage. SuperchainConfig upgraded but no diff.
 
 ## Watched changes
 
