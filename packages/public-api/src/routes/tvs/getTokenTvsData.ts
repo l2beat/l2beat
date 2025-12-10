@@ -37,6 +37,7 @@ export async function getTokenTvsData(
       return {
         timestamp,
         valueUsd: record?.valueForProject ?? null,
+        amount: record?.amount ?? null,
       }
     },
   )

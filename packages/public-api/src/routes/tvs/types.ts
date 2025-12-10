@@ -27,6 +27,7 @@ export const TokenTvsResultItemSchema = v
   .object({
     timestamp: v.number(),
     valueUsd: v.union([v.number(), v.null()]),
+    amount: v.union([v.number(), v.null()]),
   })
   .describe('TokenTvsChartDataPoint')
 export type TokenTvsResultItem = v.infer<typeof TokenTvsResultItemSchema>
