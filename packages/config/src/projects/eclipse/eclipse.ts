@@ -52,7 +52,7 @@ export const eclipse: ScalingProject = {
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],
       socialMedia: [
         'https://twitter.com/eclipsefnd',
-        'https://discord.gg/eclipse-labs',
+        'https://discord.com/invite/eclipse-fnd',
         'https://mirror.xyz/eclipsemainnet.eth',
       ],
     },
