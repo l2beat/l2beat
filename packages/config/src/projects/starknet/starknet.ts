@@ -188,6 +188,12 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+starknetProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+starknetProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const starknet: ScalingProject = {
   type: 'layer2',
@@ -516,7 +522,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
-        tokens: ['USDC'],
+        tokens: [], // removed due to custom config in starknet.json
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),

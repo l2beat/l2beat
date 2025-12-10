@@ -453,28 +453,28 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const systemConfig = templateVars.discovery
+  const discov = templateVars.discovery
 
   const usesBlobs =
     templateVars.usesEthereumBlobs ??
-    systemConfig.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
+    discov.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
       'SystemConfig',
       'opStackDA',
     ).isSequencerSendingBlobTx
 
   if (usesBlobs) {
-    const sequencerInbox = systemConfig.getContractValue<ChainSpecificAddress>(
+    const sequencerInbox = discov.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'sequencerInbox',
     )
 
     const inboxStartBlock =
-      systemConfig.getContractValueOrUndefined<number>(
+      discov.getContractValueOrUndefined<number>(
         'SystemConfig',
         'startBlock',
       ) ?? 0
 
-    const sequencer = systemConfig.getContractValue<ChainSpecificAddress>(
+    const sequencer = discov.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'batcherHash',
     )

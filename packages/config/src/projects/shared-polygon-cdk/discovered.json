@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1763987450,
+  "timestamp": 1765280943,
   "configHash": "0x398fa437a677823692bb44ea735473f748f77c4dc61677f75c6db8dac8ceb159",
   "entries": [
     {
@@ -144,14 +144,14 @@
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
         },
         "aggchainVKeysUpdated": {
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
           "severity": "HIGH",
-          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
         },
         "aggchainMultisigHash": { "severity": "HIGH" }
       },
@@ -160,11 +160,6 @@
         "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49": "AgglayerGateway"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SharedProxyAdmin",
@@ -218,11 +213,6 @@
           "role": ".trustedAggregatorAC"
         }
       ]
-    },
-    {
-      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
@@ -403,14 +393,11 @@
         "$members": [
           "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
           "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
-          "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
-          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
           "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
           "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
           "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
           "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
           "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
         ],
@@ -418,8 +405,8 @@
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 92,
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 95,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -473,7 +460,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x366dda1ffd340f6d42e71007950a79352efe35ed6f188a534f079da642801707",
+        "getRoot": "0xc30da45431d7b57d7a1b49dd8f987b4affea8d1a061184afd56413e295f9feb7",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -664,8 +651,8 @@
           "TRUSTED_AGGREGATOR": {
             "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
             "members": [
-              "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+              "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
             ]
           },
           "ADD_ROLLUP_TYPE": {
@@ -732,13 +719,13 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x8825492ef2816ce1b98f21440291174f2e1a212bba4eb1774a4be99e8dc4e475",
+        "getRollupExitRoot": "0xcf9153c0e2d78892de71e048775120ce0d92794459f50442974cd95182efec32",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1763987387,
+        "lastAggregationTimestamp": 1765279847,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
-          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26
+          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
         ],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "v1.0.0",
@@ -747,10 +734,10 @@
           {
             "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             "chainID": 1101,
-            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            "forkID": 12,
-            "rollupTypeID": 6,
-            "rollupVerifierType": 0,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
@@ -1094,11 +1081,11 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 838805,
-        "totalVerifiedBatches": 838321,
+        "totalSequencedBatches": 843619,
+        "totalVerifiedBatches": 843154,
         "trustedAggregatorAC": [
-          "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+          "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
         ],
         "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "version": "v1.0.0"
@@ -1127,11 +1114,6 @@
     },
     {
       "address": "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1181,9 +1163,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 79855,
+        "depositCount": 81615,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0x144835913afd800abc3b8054644cce503d352097fa458c954947f9488ef8ef32",
+        "getRoot": "0x999974da86bea185c803d6bcff7c5ce703a1855901ee61670b4a44e548bda891",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1192,18 +1174,6 @@
         "eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5": "AgglayerGER"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": ".trustedAggregatorAC"
-        }
-      ]
     },
     {
       "address": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
@@ -1270,7 +1240,6 @@
           "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
           "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
           "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-          "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
           "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
           "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
         ],
@@ -1278,8 +1247,8 @@
         "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 24,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1296,6 +1265,18 @@
       "address": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
     },
     {
       "address": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
@@ -2616,6 +2597,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23868730 },
-  "permissionsConfigHash": "0xa27d0300efe1937993acebf4bdaf335c98a18cc14bee4fac7990e1bcf8541aa9"
+  "usedBlockNumbers": { "ethereum": 23975025 },
+  "permissionsConfigHash": "0xace2d8b8f73deb05db8db2e0c8347706b0d2c0109310f061d0da28ebfb0bb785"
 }

@@ -250,7 +250,11 @@
         },
         "aggchainMultisigHash": { "severity": "HIGH" },
         "useDefaultSigners": { "severity": "HIGH" },
-        "useDefaultVkeys": { "severity": "HIGH" }
+        "useDefaultVkeys": { "severity": "HIGH" },
+        "AGGCHAIN_TYPE": {
+          "severity": "HIGH",
+          "description": "0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"
+        }
       },
       "implementationNames": {
         "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b": "PolygonTransparentProxy",
@@ -2018,7 +2022,7 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainECDSAMultisig": "0x29454707054b7ded72a43beeb227e72791b9a0d6d29d48a6dac59812dcc68b29",
+    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772",
     "polygon-cdk/PermissionedDisputeGameUnused": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3"
   },
   "usedBlockNumbers": { "ethereum": 23946416 },

@@ -53,6 +53,25 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "phala-vPHA",
+      "priceId": "pha",
+      "symbol": "vPHA",
+      "name": "Phala Vault",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
+        "chain": "ethereum",
+        "escrowAddress": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
+        "decimals": 18,
+        "sinceTimestamp": 1736539223
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }

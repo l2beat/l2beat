@@ -4,6 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('rari')
@@ -32,9 +33,10 @@ export const rari: ScalingProject = orbitStackL3({
     },
   },
   celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start  },
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   },
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
