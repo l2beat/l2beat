@@ -8,7 +8,7 @@
   - [Event matching](#event-matching)
     - [Matching via correlation key](#matching-via-correlation-key)
     - [Matching logic that can't be serialized into a correlation key](#matching-logic-that-cant-be-serialized-into-a-correlation-key)
-    - [Transactions that are composed by more than two events](#transactions-that-are-composed-by-more-than-two-events)
+    - [Transactions that are composed from more than two events](#transactions-that-are-composed-from-more-than-two-events)
     - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
     - [Dealing with arrival order](#dealing-with-arrival-order)
     - [Defining correlation key](#defining-correlation-key)
@@ -120,7 +120,7 @@ But assuming the corellation check indeed must include relation of fields which 
 
 This example also shows that the *correlation key is not necessarily unique* and can be the same for different events of the same type.
 
-#### Transactions that are composed by more than two events
+#### Transactions that are composed from more than two events
 
 Many cross-chain transactions are mulit-step, with multiple events emitted during the flow. For now let's consider only a flow that is linear, with no branching. Let's take this example flow with events:
 
