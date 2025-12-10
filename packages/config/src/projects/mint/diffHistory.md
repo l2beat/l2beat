@@ -8,7 +8,7 @@ Generated with discovered.json: 0x19fa512c2ac9398f1f13a4616315a960dfbb0b48
 
 ## Description
 
-Mint migrates from Conduit to self-host and self-manage. SuperchainConfig upgraded but no diff.
+Mint migrates from Conduit to self-host and self-manage. SuperchainConfig upgraded but no diff, but contracts needed upgraded storage to new superchainConfig proxy, so the old SuperchainConfig was 0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC and it was replaced with the new one at 0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad across all these contracts through a storage setter.
 
 ## Watched changes
 
