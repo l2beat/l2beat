@@ -303,22 +303,6 @@ export const celestia: BaseProject = {
         ],
       },
       {
-        projectId: ProjectId('hibachi'),
-        name: 'Hibachi',
-        daTrackingConfig: [
-          {
-            type: 'celestia',
-            sinceBlock: 5979823,
-            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAABoaWJhY2hpLXM=',
-          },
-          {
-            type: 'celestia',
-            sinceBlock: 5981133,
-            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhpYmFjaGk=',
-          },
-        ],
-      },
-      {
         projectId: ProjectId('ing'),
         name: 'ING',
         daTrackingConfig: [
