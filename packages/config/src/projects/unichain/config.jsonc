@@ -26,7 +26,9 @@
   "names": {
     "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833": "UnichainProxyAdminOwner",
     "unichain:0x4200000000000000000000000000000000000002": "DeployerWhitelist",
-    "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias"
+    "unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias",
+    "unichain:0x420000000000000000000000000000000000000F": "GasPriceOracle",
+    "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
     "unichain:0x4200000000000000000000000000000000000002": {
