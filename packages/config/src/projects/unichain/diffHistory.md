@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa85085f9bc90b0e83fdf3e4f29137cd6aed6086b
+Generated with discovered.json: 0xe7c634326fe50d4d2c1a1c1a0886cc8fb9c244f3
 
-# Diff at Wed, 10 Dec 2025 09:56:28 GMT:
+# Diff at Wed, 10 Dec 2025 10:14:21 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764324881
-- current timestamp: 1765360523
+- current timestamp: 1765361592
 
 ## Description
 
@@ -17,11 +17,8 @@ and Jovian repurposes blobGasUsed to store daFootprint
 ## Watched changes
 
 ```diff
-    contract  (unichain:0x420000000000000000000000000000000000000F) {
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) {
     +++ description: None
-      name:
--        "GasPriceOracle"
-+        ""
       template:
 -        "opstack/Layer2/GasPriceOracle"
       sourceHashes.1:
@@ -71,11 +68,8 @@ and Jovian repurposes blobGasUsed to store daFootprint
 ```
 
 ```diff
-    contract  (unichain:0x4200000000000000000000000000000000000015) {
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) {
     +++ description: None
-      name:
--        "L1Block"
-+        ""
       template:
 -        "opstack/Layer2/L1Block"
       sourceHashes.1:
@@ -141,11 +135,9 @@ and Jovian repurposes blobGasUsed to store daFootprint
 ## Source code changes
 
 ```diff
-.../Proxy.p.sol                                    |    0
- .../Proxy.p.sol                                    |    0
- .../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
+.../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
  .../L1Block/L1Block.sol => /dev/null               |  255 -----
- 4 files changed, 1442 deletions(-)
+ 2 files changed, 1442 deletions(-)
 ```
 
 Generated with discovered.json: 0x1c04ec7e1555302a69050f3612c25114ba51ae0f

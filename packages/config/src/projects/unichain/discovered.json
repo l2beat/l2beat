@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1765360523,
+  "timestamp": 1765361592,
   "configHash": "0x53f42ac54aac6a462bad280ffe494d2be2b5357e54e45dd95dde0bb1d5180c6b",
   "entries": [
     {
@@ -263,7 +263,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "19920000000000000000",
+        "totalSupply": "20000000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -383,12 +383,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0xA3951cc3e480f7394eB320A2A1403dD1Ae745177",
+        "anchorGame": "eth:0xba730cEB5cd6ea698eD7C502401cAdaA1104c1FB",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xd4686eac84f36bde8ec32cd79116e1c093374514aa7ebe9a1b2899ad2a3710c3",
-          34002416
+          "0x2a1932858ce5240fd02aa24b344bd66c6024e45f397abc8045163f7df0f5c9ea",
+          34005976
         ],
         "initVersion": 1,
         "paused": false,
@@ -463,7 +463,7 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9496,
+        "gameCount": 9497,
         "gameImpls": [
           "eth:0x6D0462850F7B87403660CC9f4F89346483108512",
           "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
@@ -2282,7 +2282,7 @@
       }
     },
     {
-      "name": "",
+      "name": "GasPriceOracle",
       "address": "unichain:0x420000000000000000000000000000000000000F",
       "type": "Contract",
       "sourceHashes": [
@@ -2466,7 +2466,7 @@
       }
     },
     {
-      "name": "",
+      "name": "L1Block",
       "address": "unichain:0x4200000000000000000000000000000000000015",
       "type": "Contract",
       "sourceHashes": [
@@ -4847,6 +4847,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 23981553, "unichain": 34612164 },
-  "permissionsConfigHash": "0x45c12f26533398b37c2cc44d76d7ba69e79fc1e2e821efbf6fe3ea7a54f94b8f"
+  "usedBlockNumbers": { "ethereum": 23981638, "unichain": 34613233 },
+  "permissionsConfigHash": "0x84c985dfffb3983f113477ffc37337e3ea3789e4774ed0925de7490bb7200b25"
 }
