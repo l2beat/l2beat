@@ -72,7 +72,28 @@
         "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
         "args": [1]
       }
+    },
+    "registeredAssets": {
+      "handler": {
+        "type": "event",
+        "select": ["assetIndex", "tokenAddress"],
+        "add": { "event": ["RegisterAssetConfig"] }
+      }
+    },
+    "l2AssetRegistrations": {
+      "handler": {
+        "type": "event",
+        "select": ["symbol"],
+        "add": { "event": ["RegisterAsset"] }
+      }
+    },
+    "l2AssetConfigUpdates": {
+      "handler": {
+        "type": "event",
+        "select": ["params"],
+        "add": { "event": ["UpdateAsset"] }
+      }
     }
   },
-  "ignoreRelatives": ["assetConfigUSDC"]
+  "ignoreRelatives": ["assetConfigUSDC", "registeredAssets"]
 }

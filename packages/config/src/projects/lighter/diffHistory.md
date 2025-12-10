@@ -1,14 +1,17 @@
-Generated with discovered.json: 0xdcd4cb304647c0cdbd4dcf80f0cd1e942789fbf6
+Generated with discovered.json: 0x6d2780a260e6de90a129661efbbf94e3a7f9946e
 
-# Diff at Wed, 10 Dec 2025 12:00:10 GMT:
+# Diff at Wed, 10 Dec 2025 15:30:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1764602180
-- current timestamp: 1765365430
+- current timestamp: 1765380548
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added spot markets, and to do this, the ability to deposit other assets other than USDC. Many functions have been modified to support depositing and withdrawing multiple tokens. There are token specific configs that control various aspects of the flow, such as whether withdrawals are enabled. For some reason the token config is actually split between a part that is saved on L1 and one that is updated by sending a message on L2.
+- [ZKLighter diff](https://disco.l2beat.com/diff/eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0/eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142)
+- [AdditionalZKLighter diff](https://disco.l2beat.com/diff/eth:0xf255FC8738a5c6Ee6E869A5b182a9Cd4F99a2ED6/eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d)
+Verifiers have also been updated.
 
 ## Watched changes
 
@@ -50,6 +53,10 @@ Provide description of changes. This section will be preserved.
 +        {"tokenAddress":"eth:0x0000000000000000000000000000000000000000","withdrawalsEnabled":1,"extensionMultiplier":100,"tickSize":10000000000,"depositCapTicks":"1152921504606846975","minDepositTicks":100000}
       values.assetConfigUSDC:
 +        {"tokenAddress":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","withdrawalsEnabled":1,"extensionMultiplier":1000000,"tickSize":1,"depositCapTicks":"1152921504606846975","minDepositTicks":1000000}
+      values.l2AssetConfigUpdates:
++        []
+      values.l2AssetRegistrations:
++        []
       values.MAX_ASSET_INDEX:
 +        62
       values.MAX_DEPOSIT_CAP_TICKS:
@@ -66,6 +73,8 @@ Provide description of changes. This section will be preserved.
 +        2048
       values.NATIVE_ASSET_INDEX:
 +        1
+      values.registeredAssets:
++        [{"assetIndex":1,"tokenAddress":"eth:0x0000000000000000000000000000000000000000"},{"assetIndex":3,"tokenAddress":"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"}]
       values.USDC_ASSET_INDEX:
 +        3
       implementationNames.eth:0x59e71dc90E662F17c4eB156A8cA1BCCD106aCfA0:
@@ -127,7 +136,7 @@ Provide description of changes. This section will be preserved.
     EOA  (eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41) {
     +++ description: None
       receivedPermissions.1:
--        {"permission":"interact","from":"eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1","description":"manage validators, update the address that manages the insurance fund, and update the treasury address that collects fees from markets.","role":".networkGovernor"}
+-        {"permission":"interact","from":"eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1","description":"manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.","role":".networkGovernor"}
     }
 ```
 
@@ -153,6 +162,21 @@ Provide description of changes. This section will be preserved.
  .../projects/lighter/.flat/Safe/SafeProxy.p.sol    |   37 +
  .../ZkLighterVerifier/ZkLighterVerifier.sol        |   48 +-
  6 files changed, 2781 insertions(+), 620 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764602180 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "manage validators, update the address that manages the insurance fund, and update the treasury address that collects fees from markets."
++        "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets."
+    }
 ```
 
 Generated with discovered.json: 0xe20a587a5277eb2d551595acad41bcaed81f1724

@@ -1,10 +1,15 @@
 {
   "name": "donatuz",
-  "timestamp": 1759481381,
+  "timestamp": 1765381169,
   "configHash": "0x4c3ec2636ab709a4fccc449887d8b6fc3163f523fe038366dab3166971818b2b",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x2103c69696CB2D3779f5445393808239034E911c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -92,6 +97,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "base:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "base:0x718048A655428f0D7Afa9fC693Aa08D35669138c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -131,7 +141,8 @@
         "$immutable": false,
         "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
-          "base:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "base:0x2103c69696CB2D3779f5445393808239034E911c",
+          "base:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "base:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "base:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "base:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -145,8 +156,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 48,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -528,11 +539,6 @@
           "role": ".PROPOSER"
         }
       ]
-    },
-    {
-      "address": "base:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -804,6 +810,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 36346017 },
-  "permissionsConfigHash": "0x28becf4c7de03bee8662544d899de1a04bffdbb940ece343e2fa1813740551e7"
+  "usedBlockNumbers": { "base": 39295911 },
+  "permissionsConfigHash": "0x72d9ec772a19615e405b96ccab95dbf076b89e484246a5cadead951c586289ae"
 }

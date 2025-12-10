@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xaa1ef86c9b3c3ce9a269bfe4a491bc5d2c066218
+
+# Diff at Wed, 10 Dec 2025 15:33:43 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1763109405
+- current timestamp: 1765380759
+
+## Description
+
+The example tournament has concluded. Nothing to see.
+
+## Watched changes
+
+```diff
+    contract TopTournament_example (eth:0xA2835312696Afa86c969e40831857dbB1412627f) {
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game. The required bond amount for joining the Tournament is calculated from worst case gas estimates and currently is 0.23219805 ETH.
+      values.arbitrationResult.0:
+-        false
++        true
+      values.arbitrationResult.1:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0xb24767473a260dd656044e7302fc47c52e2d93ce0f3ffb58668b6dcc95e11880"
+      values.arbitrationResult.2:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609"
+      values.isClosed:
+-        false
++        true
+      values.isFinished:
+-        false
++        true
+      values.timeFinished.0:
+-        false
++        true
+      values.timeFinished.1:
+-        0
++        23801750
+    }
+```
+
 Generated with discovered.json: 0x033268aecee486847bddf861b53c271e24e93c58
 
 # Diff at Fri, 14 Nov 2025 11:18:55 GMT:
