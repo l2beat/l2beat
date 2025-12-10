@@ -187,4 +187,7 @@ Additional advantage of having correlation in the flow declaration is that it ca
 
 #### Potential interface for flow visualization
 
-...TODO
+<figure>
+    <img src="../../static/assets/interop_ui.svg" alt="Visualisation of interop flow">
+    <figcaption>A potential visualisation of an interop transaction flow</figcaption>
+</figure>
