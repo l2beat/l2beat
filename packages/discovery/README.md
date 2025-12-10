@@ -949,6 +949,285 @@ Track function calls that occur in transactions where a specific event was emitt
 
 This example would find all transactions where the `ProposalCreated` event was emitted, then extract and decode all calls to the `executeProposal` function within those transactions.
 
+### Kinto access control handler
+
+This handler allows you to analyze a contract using Kinto's modified AccessControl pattern. It tracks roles, members, and targets through events.
+
+**Parameters:**
+
+- `type` - always the literal: `"kintoAccessControl"`
+- `roleNames` - (optional) a record of role IDs (hex strings) to predefined role names
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "kintoAccessControl"
+}
+```
+
+Specify some role names:
+
+```json
+{
+  "type": "kintoAccessControl",
+  "roleNames": {
+    "0x00": "ADMIN_ROLE"
+  }
+}
+```
+
+### LayerZero multisig handler
+
+This handler extracts signers and quorum information from LayerZero multisig contracts by analyzing constructor arguments and update events.
+
+**Parameters:**
+
+- `type` - always the literal: `"layerZeroMultisig"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "multisigInfo": {
+      "type": "layerZeroMultisig"
+    }
+  }
+}
+```
+
+### Arbitrum scheduled transactions handler
+
+This handler extracts and decodes scheduled transactions from Arbitrum timelocks, including L2 calls that go through the Inbox contract.
+
+**Parameters:**
+
+- `type` - always the literal: `"arbitrumScheduledTransactions"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "scheduledTransactions": {
+      "type": "arbitrumScheduledTransactions"
+    }
+  }
+}
+```
+
+### EIP-2535 facet handler
+
+This handler extracts facets from contracts implementing EIP-2535 (Diamond proxies). It returns a mapping of facet addresses to their function selectors.
+
+**Parameters:**
+
+- `type` - always the literal: `"eip2535Facets"`
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "facets": {
+      "type": "eip2535Facets"
+    }
+  }
+}
+```
+
+### zkSync Era scheduled transactions handler
+
+This handler extracts and decodes scheduled transactions from zkSync Era timelocks, including both transparent and shadow operations.
+
+**Parameters:**
+
+- `type` - always the literal: `"zksynceraScheduledTransactions"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "scheduledTransactions": {
+      "type": "zksynceraScheduledTransactions"
+    }
+  }
+}
+```
+
+### zkSync Era validators handler
+
+This handler extracts the list of validators from zkSync Era contracts by analyzing ValidatorStatusUpdate events and upgrade events.
+
+**Parameters:**
+
+- `type` - always the literal: `"zksynceraValidators"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "validators": {
+      "type": "zksynceraValidators"
+    }
+  }
+}
+```
+
+### Orbit posts blobs handler
+
+This handler checks whether an Orbit-based rollup is posting data to blobs by analyzing the last 10 SequencerBatchDelivered events.
+
+**Parameters:**
+
+- `type` - always the literal: `"orbitPostsBlobs"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "postsToBlobs": {
+      "type": "orbitPostsBlobs"
+    }
+  }
+}
+```
+
+### Polygon CDK scheduled transactions handler
+
+This handler extracts and decodes scheduled transactions from Polygon CDK timelocks.
+
+**Parameters:**
+
+- `type` - always the literal: `"polygoncdkScheduledTransactions"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "scheduledTransactions": {
+      "type": "polygoncdkScheduledTransactions"
+    }
+  }
+}
+```
+
+### ERC20 data handler
+
+This handler extracts ERC20 token data including name, symbol, decimals, and Coingecko information.
+
+**Parameters:**
+
+- `type` - always the literal: `"ERC20Data"`
+- `overrides` - an object with token configuration overrides:
+  - `coingeckoId` - (optional) manually specify the Coingecko ID
+  - `category` - (optional) token category (defaults to "other")
+  - `source` - (optional) source type for non-Ethereum chains
+  - `supply` - (optional) supply formula for non-Ethereum chains
+  - `deploymentTimestamp` - (optional) override deployment timestamp
+  - `bridgedUsing` - (optional) bridge information
+  - `excludeFromTotal` - (optional) exclude from total calculations
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "tokenData": {
+      "type": "ERC20Data",
+      "overrides": {
+        "category": "ether"
+      }
+    }
+  }
+}
+```
+
+### Tradable handler
+
+This handler extracts DealDeployed events from Tradable DealFactory contracts.
+
+**Parameters:**
+
+- `type` - always the literal: `"tradable"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "deals": {
+      "type": "tradable"
+    }
+  }
+}
+```
+
+### YieldFi minters handler
+
+This handler extracts minter information from YieldFi token contracts by analyzing the AccessControl roles on the administrator contract.
+
+**Parameters:**
+
+- `type` - always the literal: `"YieldFiMinters"`
+- `permissionlessMinting` - (optional) boolean indicating if minting is permissionless
+- `mintingWithPermit` - (optional) boolean indicating if minting requires permit
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "minters": {
+      "type": "YieldFiMinters",
+      "permissionlessMinting": false
+    }
+  }
+}
+```
+
+### Cross-chain access control handler
+
+This handler analyzes contracts with a cross-chain AccessControl pattern, tracking roles and members across different chain addresses.
+
+**Parameters:**
+
+- `type` - always the literal: `"crossChainAccessControl"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names
+- `chainAddressNames` - (optional) a record of chain addresses to human-readable names
+- `pickRoleMembers` - (optional) if specified, returns only members of this role
+- `pickChainAddress` - (optional) if specified, returns only roles for this chain address
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "crossChainAccessControl"
+}
+```
+
+Pick specific role members for a specific chain address:
+
+```json
+{
+  "type": "crossChainAccessControl",
+  "pickChainAddress": "0x1234...",
+  "pickRoleMembers": "ADMIN_ROLE"
+}
+```
+
 ## Cache
 
 Discovery caches the responses of RPC and Etherscan calls, discovering on the same block is going to use the cache, thus speeding it up.
