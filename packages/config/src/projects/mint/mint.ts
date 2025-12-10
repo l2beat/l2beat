@@ -14,7 +14,7 @@ export const mint: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
