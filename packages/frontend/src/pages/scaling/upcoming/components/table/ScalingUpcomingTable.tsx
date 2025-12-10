@@ -1,6 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
@@ -34,9 +33,9 @@ export function ScalingUpcomingTable({ entries }: Props) {
   })
 
   return (
-    <PrimaryCard className="mt-4">
+    <>
       <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} />
-    </PrimaryCard>
+    </>
   )
 }

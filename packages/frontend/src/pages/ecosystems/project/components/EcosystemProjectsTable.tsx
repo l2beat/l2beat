@@ -1,6 +1,7 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -31,5 +32,10 @@ export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }

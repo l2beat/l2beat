@@ -148,7 +148,7 @@ export const publicSystemsColumns = [
       daRisksColumn,
       tvsColumn(),
       columnHelper.accessor('economicSecurity', {
-        header: () => <span className="text-right">Slashable</span>,
+        header: 'Slashable',
         cell: (ctx) => {
           const value = ctx.getValue()
 
