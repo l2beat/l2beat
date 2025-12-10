@@ -64,7 +64,8 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
       },
     ],
     verifierHashes: [
-      { // ZKLighterVerifier
+      {
+        // ZKLighterVerifier
         hash: '0x4a5c9d5981ae8f323f0ce7f93733b6b1b66e502e035768a8f3e4f1a23a287338',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
@@ -79,7 +80,8 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
-      { // DesertVerifier
+      {
+        // DesertVerifier
         hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
