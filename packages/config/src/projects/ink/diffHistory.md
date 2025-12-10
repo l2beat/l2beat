@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x6e88b215bc2930877a4bd4f63b3a640556763909
+
+# Diff at Wed, 10 Dec 2025 09:59:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764329741
+- current timestamp: 1765360693
+
+## Description
+
+L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (ink:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0xc5d4d2bf19122f506ce43be8395b97b65c2b1109721869f31aa0b39605c5254b"
++        "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15"
+      values.$implementation:
+-        "ink:0x93e57A196454CB919193fa9946f14943cf733845"
++        "ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",["ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.4.0"
++        "1.6.0"
+      values.isJovian:
++        true
+      implementationNames.ink:0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L1Block (ink:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+      values.$implementation:
+-        "ink:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "ink:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["ink:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.daFootprintGasScalar:
++        400
+      implementationNames.ink:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.ink:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        "L1Block"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              | 71 +++++++++++++++++----
+ .../L1Block/L1Block.sol                            | 73 +++++++++++-----------
+ 2 files changed, 96 insertions(+), 48 deletions(-)
+```
+
 Generated with discovered.json: 0x37abf35d7f62c0373d7cfe3594b8393d6dc0e298
 
 # Diff at Fri, 28 Nov 2025 11:36:47 GMT:
