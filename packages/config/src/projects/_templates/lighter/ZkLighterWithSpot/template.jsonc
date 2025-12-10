@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
+  "displayName": "Lighter",
+  "ignoreInWatchMode": [
+    "committedBatchesCount",
+    "committedPriorityRequestCount",
+    "executedBatchesCount",
+    "executedOnChainBatchesCount",
+    "executedPriorityRequestCount",
+    "lastAccountIndex",
+    "lastVerifiedEndBlockNumber",
+    "lastVerifiedStateRoot",
+    "lastVerifiedValidiumRoot",
+    "openPriorityRequestCount",
+    "pendingOnChainBatchesCount",
+    "stateRoot",
+    "validiumRoot",
+    "verifiedBatchesCount",
+    "verifiedPriorityRequestCount",
+    "createdMarkets"
+  ],
+  "fields": {
+    "verifier": {
+      "handler": { "type": "storage", "slot": 4, "returnType": "address" },
+      "severity": "HIGH"
+    },
+    "desertVerifier": {
+      "handler": { "type": "storage", "slot": 5, "returnType": "address" },
+      "severity": "HIGH"
+    },
+    "governance": {
+      "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+    },
+    "additionalZkLighter": {
+      "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+    },
+    "stateRootUpgradeVerifier": {
+      "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+    },
+    "createdMarketsPostSpot": {
+      "handler": {
+        "type": "event",
+        "select": "symbol",
+        "add": { "event": ["CreateMarket"] }
+      },
+      "edit": ["map", ["format", "Bytes32ToString"]]
+    },
+    "createdMarketsPreSpot": {
+      "handler": {
+        "type": "event",
+        "select": "symbol",
+        "add": {
+          "event": [
+            "event CreateMarket(tuple(uint8 marketIndex, uint32 quoteMultiplier, uint32 takerFee, uint32 makerFee, uint32 liquidationFee, uint64 minBaseAmount, uint64 minQuoteAmount, uint16 defaultInitialMarginFraction, uint16 minInitialMarginFraction, uint16 maintenanceMarginFraction, uint16 closeOutMarginFraction, uint32 interestRate, uint24 fundingClampSmall, uint24 fundingClampBig, uint56 openInterestLimit, uint48 orderQuoteLimit) params, uint8 sizeDecimals, uint8 priceDecimals, bytes32 symbol)"
+          ]
+        }
+      },
+      "edit": ["map", ["format", "Bytes32ToString"]]
+    },
+    "desertMode": { "severity": "HIGH" },
+    "assetConfigUSDC": {
+      "handler": {
+        "type": "call",
+        "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+        "args": [3]
+      }
+    },
+    "assetConfigETH": {
+      "handler": {
+        "type": "call",
+        "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+        "args": [1]
+      }
+    }
+  },
+  "ignoreRelatives": ["assetConfigUSDC"]
+}
