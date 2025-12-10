@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4dde8220b7d772aef37b3f47810ce8856d4ec2dd
+Generated with discovered.json: 0x19fa512c2ac9398f1f13a4616315a960dfbb0b48
 
-# Diff at Wed, 10 Dec 2025 15:47:58 GMT:
+# Diff at Wed, 10 Dec 2025 15:56:53 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@512df45ec78c32f18fdafac751d924f8a6cf238c block: 1764933721
-- current timestamp: 1765381613
+- current timestamp: 1765382149
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Mint migrates from Conduit to self-host and self-manage.
 
 ## Watched changes
 
@@ -176,7 +176,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b)
+    contract Mint Multisig (eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b)
     +++ description: None
 ```
 
@@ -195,9 +195,9 @@ Provide description of changes. This section will be preserved.
 ## Source code changes
 
 ```diff
-...0xDa5C416025D5eED8440667C5E80A7c35c2F56220.sol} |   0
- .../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 685 ++++++++++++---------
- .../Safe/SafeProxy.p.sol}                          |  10 +-
+.../Mint Multisig/Safe.sol}                        | 685 ++++++++++++---------
+ .../Mint Multisig/SafeProxy.p.sol}                 |  10 +-
+ ...0xDa5C416025D5eED8440667C5E80A7c35c2F56220.sol} |   0
  3 files changed, 416 insertions(+), 279 deletions(-)
 ```
 

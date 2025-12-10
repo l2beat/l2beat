@@ -1,6 +1,6 @@
 {
   "name": "mint",
-  "timestamp": 1765381613,
+  "timestamp": 1765382149,
   "configHash": "0x02e86f9e4f11c689139c294d24bbcb67fa06b0c07b73aee4fa7464d6374b4a25",
   "entries": [
     {
@@ -106,7 +106,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Safe",
+      "name": "Mint Multisig",
       "address": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1872,6 +1872,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23983295 },
-  "permissionsConfigHash": "0x6ff9b09ca1cd97e8222a3d6ec717682de402c9c2b6c356ba9d87ad2f0326b354"
+  "usedBlockNumbers": { "ethereum": 23983339 },
+  "permissionsConfigHash": "0x4736611520a64f9408a48fef086b9dbb880ce2cc74f0dce8ed7d35fe57aca982"
 }
