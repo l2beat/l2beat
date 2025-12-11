@@ -69,7 +69,7 @@ export const xterio: ScalingProject = opStackL2({
       'Xterio Chain is an OP stack Optimium on Ethereum. The chain focuses on gaming, high performance and low fees .',
     links: {
       websites: ['https://xter.io/'],
-      bridges: ['https://xter.io/', 'https://eth-bridge.xter.io/'],
+      bridges: ['https://xter.io/', 'https://bnb-bridge.xter.io/'],
       documentation: ['https://stack.optimism.io/'],
       explorers: ['https://eth.xterscan.io/'],
       repositories: ['https://github.com/XterioTech'],
