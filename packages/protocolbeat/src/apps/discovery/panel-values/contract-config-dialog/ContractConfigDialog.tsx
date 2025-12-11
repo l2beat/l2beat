@@ -1,37 +1,10 @@
 import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
-import { Select } from '../../../../components/Select'
-import { IconClose } from '../../../../icons/IconClose'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { useProjectData } from '../../hooks/useProjectData'
-
-const CATEGORIES = {
-  core: {
-    name: 'Local Infrastructure',
-    priority: 5,
-  },
-  shared: {
-    name: 'Shared Infrastructure',
-    priority: 4,
-  },
-  gov: {
-    name: 'Governance',
-    priority: 3,
-  },
-  'bridge-canonical': {
-    name: 'Canonical Bridges',
-    priority: 2,
-  },
-  'bridge-external': {
-    name: 'External Bridges',
-    priority: 1,
-  },
-  spam: {
-    name: 'Spam',
-    priority: -1,
-  },
-}
+import { CategorySelect } from './CategorySelect'
+import { DescriptionEditor } from './DescriptionEditor'
 
 export function ContractConfigDialog() {
   const { selected } = useProjectData()
@@ -53,38 +26,50 @@ export function ContractConfigDialog() {
         </Dialog.Title>
         <div className="grid grid-cols-2 gap-6">
           {/* Config Column */}
-          <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
-              Config
-            </h3>
+          <div className="space-y-2">
+            <h3 className="border-coffee-400/40 border-b">Config</h3>
 
-            <div>
-              <h4 className="mb-2 font-medium text-sm">Category</h4>
-              <CategorySelect
-                category={models.configModel.category}
-                setCategory={(value) => models.configModel.setCategory(value)}
-              />
+            <div className="w-full space-y-2">
+              <ConfigRow headline="Category">
+                <CategorySelect
+                  category={models.configModel.category}
+                  setCategory={(value) => models.configModel.setCategory(value)}
+                />
+              </ConfigRow>
+              <ConfigRow headline="Description">
+                <DescriptionEditor
+                  content={models.configModel.description}
+                  setContent={(value) =>
+                    models.configModel.setDescription(value)
+                  }
+                />
+              </ConfigRow>
             </div>
           </div>
 
           {/* Template Column */}
-          <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-1 font-medium text-base">
-              Template
-            </h3>
+          <div className="space-y-2">
+            <h3 className="border-coffee-400/40 border-b">Template</h3>
 
             {models.templateModel.hasTemplate ? (
-              <>
-                <div>
-                  <h4 className="mb-2 font-medium text-sm">Category</h4>
+              <div className="w-full space-y-2">
+                <ConfigRow headline="Category">
                   <CategorySelect
                     category={models.templateModel.category}
                     setCategory={(value) =>
                       models.templateModel.setCategory(value)
                     }
                   />
-                </div>
-              </>
+                </ConfigRow>
+                <ConfigRow headline="Description">
+                  <DescriptionEditor
+                    content={models.templateModel.description}
+                    setContent={(value) =>
+                      models.templateModel.setDescription(value)
+                    }
+                  />
+                </ConfigRow>
+              </div>
             ) : (
               <div className="text-coffee-300 text-sm italic">
                 No template available
@@ -97,42 +82,17 @@ export function ContractConfigDialog() {
   )
 }
 
-function CategorySelect({
-  category,
-  setCategory,
+function ConfigRow({
+  headline,
+  children,
 }: {
-  category: string | undefined
-  setCategory: (category: string | undefined) => void
+  headline: string
+  children: React.ReactNode
 }) {
   return (
-    <div className="flex items-center gap-1">
-      <Select.Root
-        onValueChange={(value) => {
-          console.log('value', value)
-          setCategory(value || undefined)
-        }}
-        value={category ?? ''}
-      >
-        <Select.Trigger />
-        <Select.Content>
-          <Select.Group>
-            <Select.Label>Available categories</Select.Label>
-            {Object.entries(CATEGORIES).map(([value, category]) => (
-              <Select.Item key={value} value={value}>
-                {category.name} ({value})
-              </Select.Item>
-            ))}
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
-      <Button
-        variant="icon"
-        size="icon"
-        onClick={() => setCategory(undefined)}
-        disabled={!category}
-      >
-        <IconClose className="size-4 text-coffee-200/80" />
-      </Button>
+    <div className="space-y-1">
+      <h4 className="text-coffee-200 text-sm">{headline}</h4>
+      {children}
     </div>
   )
 }

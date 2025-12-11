@@ -32,7 +32,12 @@ export class ContractConfigModel {
 
   peek() {
     const cloned = clone(this.config)
-    assign(cloned, { fields: this.buildFields(this.fields) })
+    const fields = this.buildFields(this.fields)
+
+    if (fields) {
+      assign(cloned.fields, fields)
+    }
+
     return cloned
   }
 
@@ -67,6 +72,14 @@ export class ContractConfigModel {
 
   setFieldSeverity(name: string, severity: FieldConfigSchema['severity']) {
     return this.patchField(name, (field) => field.setSeverity(severity))
+  }
+
+  setDescription(description: string | undefined) {
+    const trimmed = description?.trim()
+
+    return this.patch({
+      description: trimmed?.length === 0 ? undefined : trimmed,
+    })
   }
 
   private getField(name: string) {
@@ -122,5 +135,9 @@ export class ContractConfigModel {
 
   get category() {
     return this.config.category
+  }
+
+  get description() {
+    return this.config.description
   }
 }

@@ -68,6 +68,15 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     saveModelContents(newModel)
   }
 
+  const setDescription = (description: string | undefined) => {
+    const newModel = configModel.setContractDescription(
+      selectedAddress,
+      description,
+    )
+    setConfigModel(newModel)
+    saveModelContents(newModel)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -108,6 +117,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setFieldSeverity,
     getFieldSeverity,
     setCategory,
+    setDescription,
 
     save: saveRaw,
 
@@ -119,5 +129,6 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     ignoreRelatives: configModel.getIgnoreRelatives(selectedAddress),
     ignoreInWatchMode: configModel.getIgnoreInWatchMode(selectedAddress),
     category: configModel.getCategory(selectedAddress),
+    description: configModel.getDescription(selectedAddress),
   }
 }

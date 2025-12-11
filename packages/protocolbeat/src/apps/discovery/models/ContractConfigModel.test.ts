@@ -11,8 +11,15 @@ describe('ContractConfigModel', () => {
       "ignoreRelatives": ["relative1", "relative2"], // Comment D
       "ignoreMethods": ["methodA",
       // Comment E
-      "methodB"] /* Comment F */
-    }`
+      "methodB"], /* Comment F */
+      "fields": {
+        // Comment G
+        "exampleField": {
+          "permissions": [{ "type": "sequence" }],
+        }
+      },
+      "description": "new description"
+      }`
 
     it('preserves comments on round-trip no-op', () => {
       const model = ContractConfigModel.fromRawJsonc(jsonc)
@@ -33,6 +40,14 @@ describe('ContractConfigModel', () => {
       const text = updated.toString()
       expect(text).toInclude('Comment A')
       expect(text).toInclude('"newMethod1"')
+    })
+
+    it('preserves comments when setting description', () => {
+      const model = ContractConfigModel.fromRawJsonc(jsonc)
+
+      expect(model.toString()).toInclude('Comment G')
+      model.setDescription('new description')
+      expect(model.toString()).toInclude('Comment G')
     })
   })
 
@@ -100,6 +115,28 @@ describe('ContractConfigModel', () => {
       const model = ContractConfigModel.fromRawJsonc(jsonc)
 
       expect(model.hasComments()).toEqual(false)
+    })
+  })
+
+  describe('setDescription', () => {
+    it('sets description', () => {
+      const model = ContractConfigModel.fromRawJsonc(
+        `{ "description": "test" }`,
+      )
+      expect(model.description).toEqual('test')
+      const updated = model.setDescription('new description')
+      expect(updated.description).toEqual('new description')
+    })
+
+    it('removes description when setting to undefined', () => {
+      const model = ContractConfigModel.fromRawJsonc(
+        `{ "description": "test" }`,
+      )
+      expect(model.description).toEqual('test')
+      const updated = model.setDescription(undefined)
+      expect(updated.description).toEqual(undefined)
+      const string = updated.toString()
+      expect(string).not.toInclude('description')
     })
   })
 })
