@@ -105,6 +105,17 @@ export function EIGENDA_DA_PROVIDER(
     const eigenDACertVersion =
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
+    const bridge =
+      isUsingDACertVerifier && eigenDACertVersion === 'v2'
+        ? {
+            value: 'DACert Verifier',
+            sentiment: 'warning' as const,
+            description:
+              'EigenDA V2 certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.',
+            projectId: ProjectId('eigenda-v2'),
+          }
+        : DA_BRIDGES.NONE
+
     return {
       layer: DA_LAYERS.EIGEN_DA,
       riskView: RISK_VIEW.DATA_EIGENDA(
@@ -116,7 +127,7 @@ export function EIGENDA_DA_PROVIDER(
         eigenDACertVersion,
         fallback?.value,
       ),
-      bridge: DA_BRIDGES.NONE,
+      bridge,
       badge: BADGES.DA.EigenDA,
       fallback,
     }
@@ -367,11 +378,22 @@ function opStackCommon(
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : {
-            type: 'Optimistic',
-            name: 'OPFP',
-            challengeProtocol: 'Interactive',
-          }),
+        : fraudProofType === 'OpSuccinct'
+          ? {
+              type: 'Validity',
+              name: 'SP1',
+            }
+          : fraudProofType === 'OpSuccinctFDP'
+            ? {
+                type: 'Optimistic',
+                zkCatalogId: ProjectId('sp1'),
+                challengeProtocol: 'Single-step',
+              }
+            : {
+                type: 'Optimistic',
+                name: 'OPFP',
+                challengeProtocol: 'Interactive',
+              }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -925,7 +947,8 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         categories: [
           {
             title: 'Validity proofs',
-            description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond. Once created, the game enters a challenge period during which whitelisted challengers can dispute the proposal by also posting a bond. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
+            description:
+              'State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond. Once created, the game enters a challenge period during which whitelisted challengers can dispute the proposal by also posting a bond. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.',
             references: [
               {
                 url: 'https://succinctlabs.github.io/op-succinct/architecture.html',

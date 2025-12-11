@@ -211,6 +211,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('haust'),
         sinceTimestamp: UnixTime(1756808195),
       },
+      {
+        projectId: ProjectId('celo'),
+        sinceTimestamp: UnixTime(1765324800),
+      },
     ],
     verifierHashes: [
       {

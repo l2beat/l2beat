@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x8499aab06173f99f5df1f312d3f370401566139a
+Generated with discovered.json: 0xc64c98d9662467edbc1fa349d1eddc3b5891f9d0
 
-# Diff at Thu, 11 Dec 2025 15:00:10 GMT:
+# Diff at Thu, 11 Dec 2025 15:44:49 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764322969
-- current timestamp: 1765465139
+- current timestamp: 1765467809
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Jello hardfork, introducing OP Succinct Lite and DA verification through Hokulea. 
 
 ## Watched changes
 

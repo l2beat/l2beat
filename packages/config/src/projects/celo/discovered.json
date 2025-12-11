@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765465139,
+  "timestamp": 1765467809,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -158,7 +158,14 @@
     {
       "address": "eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".proposers"
+        }
+      ]
     },
     {
       "address": "eth:0x0Bd06B2b192BD9eC316f2880A0c296D9Bc3225e0",
@@ -890,7 +897,14 @@
     {
       "address": "eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -950,7 +964,14 @@
     {
       "address": "eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "name": "SuperchainProxyAdminOwner",
@@ -1101,7 +1122,14 @@
     {
       "address": "eth:0x7247204E46B381149d99acF88b318713fE12c32f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
@@ -1153,7 +1181,14 @@
     {
       "address": "eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -1248,7 +1283,14 @@
     {
       "address": "eth:0x79D14553D6B3484F5612272B43c219A882415d33",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".proposers"
+        }
+      ]
     },
     {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
@@ -2044,7 +2086,14 @@
     {
       "address": "eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "address": "eth:0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8",
@@ -2269,7 +2318,14 @@
     {
       "address": "eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "address": "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2306,7 +2362,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765465127,
+        "getLastProposalTimestamp": 1765467539,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2360,7 +2416,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 2591,
+        "gameCount": 2604,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3577,6 +3633,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23990186 },
-  "permissionsConfigHash": "0xae3bd32aeb3e3de22d159e05733e8555088f1bdde80a49339d0478d9d93f3b58"
+  "usedBlockNumbers": { "ethereum": 23990408 },
+  "permissionsConfigHash": "0xd9c7ab74d8160e1f7cc841202100971063383266fe2833d46ad20a83dc365fb7"
 }

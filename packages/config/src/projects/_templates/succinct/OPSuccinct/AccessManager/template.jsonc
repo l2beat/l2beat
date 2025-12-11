@@ -5,6 +5,7 @@
     "challengers": {
       "description": "Addresses allowed to challenge dispute games.",
       "severity": "HIGH",
+      "permissions": [{ "type": "challenge" }],
       "handler": {
         "type": "event",
         "select": "challenger",
@@ -21,6 +22,7 @@
     "proposers": {
       "description": "Addresses allowed to propose dispute games.",
       "severity": "HIGH",
+      "permissions": [{ "type": "propose" }],
       "handler": {
         "type": "event",
         "select": "proposer",

@@ -4,8 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { formatEther } from 'ethers/lib/utils'
-import { CONTRACTS, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -21,13 +20,11 @@ export const celo: ScalingProject = opStackL2({
   },
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
-  additionalBadges: [BADGES.Other.MigratedFromL1],
+  additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-  ],
+  reasonsForBeingOther: [],
   isPartOfSuperchain: true,
+  architectureImage: 'celo',
   display: {
     name: 'Celo',
     slug: 'celo',
@@ -83,29 +80,18 @@ export const celo: ScalingProject = opStackL2({
     ],
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  nonTemplateRiskView: {
-    stateValidation: {
-      value: 'None',
-      description:
-        'Although the OP stack fraud proof system is deployed, it assumes by default that data was made available. During a potential data withholding attack, it is impossible to prove a malicious state root.',
-      sentiment: 'bad',
-      challengeDelay: discovery.getContractValue<number>(
-        'OptimismPortal2',
-        'proofMaturityDelaySeconds',
-      ),
-      orderHint: 0,
-      initialBond: formatEther(
-        discovery.getContractValue<number[]>(
-          'DisputeGameFactory',
-          'initBonds',
-        )[1],
-      ),
-    },
-  },
   isNodeAvailable: 'UnderReview',
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
   milestones: [
+    {
+      title: 'Jello hardfork activates OP Succinct Lite',
+      url: 'https://forum.celo.org/t/jello-hardfork-successfully-activates-on-mainnet-introducing-op-succinct-lite/12754',
+      date: '2025-12-10T00:00:00.00Z',
+      description:
+        'Celo implements OP Succinct Lite, introducing ZK proofs for dispute resolution and DA verification.',
+      type: 'general',
+    },
     {
       title: 'Celo becomes an Ethereum L2',
       url: 'https://blog.celo.org/celo-l2-is-now-live-a-note-from-our-founders-c585bd57b5fa',
