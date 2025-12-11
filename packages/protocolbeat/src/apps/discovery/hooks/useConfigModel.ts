@@ -129,6 +129,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     [project],
   )
 
+  const isInSync = useMemo(() => {
+    return !configModel.diff(ConfigModel.fromRawJsonc(config ?? '{}'))
+  }, [configModel, config])
+
   return {
     configModel,
     toggleIgnoreMethods,
@@ -153,5 +157,9 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     ignoreInWatchMode: configModel.getIgnoreInWatchMode(selectedAddress),
     category: configModel.getCategory(selectedAddress),
     description: configModel.getDescription(selectedAddress),
+
+    isInSync,
+    isSyncPending: saveMutation.isPending,
+    isSyncError: saveMutation.isError,
   }
 }
