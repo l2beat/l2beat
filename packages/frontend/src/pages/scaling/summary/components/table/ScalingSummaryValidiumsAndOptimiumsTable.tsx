@@ -36,11 +36,15 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     [entries, excludeAssociatedTokens, data],
   )
 
+  const columns = useMemo(
+    () =>
+      getScalingSummaryValidiumAndOptimiumsColumns({ isTvsLoading: isLoading }),
+    [isLoading],
+  )
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryValidiumAndOptimiumsColumns({
-      isTvsLoading: isLoading,
-    }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

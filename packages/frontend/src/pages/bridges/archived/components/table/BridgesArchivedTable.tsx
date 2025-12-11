@@ -20,9 +20,11 @@ export function BridgesArchivedTable({ entries, isOthers }: Props) {
     [entries, filterEntries],
   )
 
+  const columns = useMemo(() => getBridgesArchivedColumns(isOthers), [isOthers])
+
   const activeTable = useTable({
     data: filteredEntries,
-    columns: getBridgesArchivedColumns(isOthers),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

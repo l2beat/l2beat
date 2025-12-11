@@ -27,11 +27,17 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
     return tableEntries ?? []
   }, [entries, metric])
 
+  const columns = useMemo(
+    () =>
+      getScalingActivityColumns(metric, {
+        activity: true,
+        ignoreUnderReviewIcon: notReviewed,
+      }),
+    [metric, notReviewed],
+  )
+
   const table = useTable({
-    columns: getScalingActivityColumns(metric, {
-      activity: true,
-      ignoreUnderReviewIcon: notReviewed,
-    }),
+    columns,
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

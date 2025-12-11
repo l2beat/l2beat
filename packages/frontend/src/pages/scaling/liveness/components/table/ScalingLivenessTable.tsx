@@ -23,9 +23,11 @@ export function ScalingLivenessTable({ entries, hideType }: Props) {
     [entries, timeRange],
   )
 
+  const columns = useMemo(() => getScalingLivenessColumns(hideType), [hideType])
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingLivenessColumns(hideType),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

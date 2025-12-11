@@ -36,9 +36,14 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     [entries, excludeAssociatedTokens, data],
   )
 
+  const columns = useMemo(
+    () => getScalingSummaryNotReviewedColumns({ isTvsLoading: isLoading }),
+    [isLoading],
+  )
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryNotReviewedColumns({ isTvsLoading: isLoading }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

@@ -36,9 +36,14 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
     [entries, excludeAssociatedTokens, data],
   )
 
+  const columns = useMemo(
+    () => getScalingSummaryOthersColumns({ isTvsLoading: isLoading }),
+    [isLoading],
+  )
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryOthersColumns({ isTvsLoading: isLoading }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

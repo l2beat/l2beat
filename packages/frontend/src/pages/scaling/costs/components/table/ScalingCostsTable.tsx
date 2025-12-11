@@ -32,9 +32,11 @@ export function ScalingCostsTable({ entries }: Props) {
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
   }, [data, entries, metric, unit])
 
+  const columns = useMemo(() => getScalingCostsColumns(metric), [metric])
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingCostsColumns(metric),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
