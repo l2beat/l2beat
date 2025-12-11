@@ -21,7 +21,7 @@ interface Props<T> {
 
 export function ColumnsControls<T>({ columns }: Props<T>) {
   const trigger = (
-    <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">
+    <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base hover:bg-surface-tertiary">
       <SlidersIcon className="fill-secondary" />
       <span className="text-label-value-16">Columns</span>
     </div>
@@ -85,7 +85,7 @@ function ColumnControl<T>({ column }: { column: Column<T> }) {
     <div
       key={column.id}
       className={cn(
-        'flex h-8 cursor-pointer select-none items-center rounded-sm border border-divider bg-surface-secondary px-2.5 py-2 font-medium text-label-value-16 capitalize md:h-6 md:px-2 md:py-1.5 md:text-label-value-13',
+        'flex h-8 cursor-pointer select-none items-center rounded-sm border border-divider bg-surface-secondary px-2.5 py-2 font-medium text-label-value-16 capitalize transition-all md:h-6 md:px-2 md:py-1.5 md:text-label-value-13',
         isVisible && 'border-brand bg-brand/15',
       )}
       onClick={() => column.toggleVisibility(!isVisible)}
