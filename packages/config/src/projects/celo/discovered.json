@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765448989,
+  "timestamp": 1765450778,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -131,6 +131,11 @@
     },
     {
       "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1129,6 +1134,11 @@
       "implementationNames": {
         "eth:0x783A434532Ee94667979213af1711505E8bFE374": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x79D14553D6B3484F5612272B43c219A882415d33",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
@@ -2134,14 +2144,22 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765448987,
+        "getLastProposalTimestamp": 1765450271,
         "isProposalPermissionlessMode": false,
-        "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B"
+        "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
+        "proposers": [
+          "eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62",
+          "eth:0x79D14553D6B3484F5612272B43c219A882415d33"
+        ]
       },
       "fieldMeta": {
         "challengers": {
           "severity": "HIGH",
           "description": "Addresses allowed to challenge dispute games."
+        },
+        "proposers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to propose dispute games."
         }
       },
       "implementationNames": {
@@ -2180,7 +2198,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 2510,
+        "gameCount": 2518,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3359,9 +3377,9 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/AccessManager": "0x504c47444759000cf3d532f12bbbc07fdb4cad0e15a70a695d0b127251fe2373",
+    "succinct/OPSuccinct/AccessManager": "0x632fa68ba17c6197923e5322a8688cf61a75adc6c4762c1c14d0b34bd7c07f10",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23988849 },
-  "permissionsConfigHash": "0x7cb496050be41be9f0274a2ba319f615aac8f40301468d1c35cfe5ff908f74f2"
+  "usedBlockNumbers": { "ethereum": 23988996 },
+  "permissionsConfigHash": "0xc8c5b2dff193beb6ba96b37454711c1a28667f7cbbd2ce32277073bd7422987f"
 }

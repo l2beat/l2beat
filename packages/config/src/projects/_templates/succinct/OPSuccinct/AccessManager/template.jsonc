@@ -17,6 +17,22 @@
           "where": ["!=", "#allowed", true]
         }
       }
+    },
+    "proposers": {
+      "description": "Addresses allowed to propose dispute games.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      }
     }
   }
 }
