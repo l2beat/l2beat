@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-08T01:24:28.137Z",
+  "lastModified": "2025-12-09T18:45:50.056Z",
   "tags": [
     {
       "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
@@ -156,6 +156,24 @@
       "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
       "isExternal": false,
       "timestamp": "2025-12-08T01:23:14.531Z"
+    },
+    {
+      "contractAddress": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2025-12-09T18:45:40.153Z"
+    },
+    {
+      "contractAddress": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2025-12-09T18:45:50.050Z"
+    },
+    {
+      "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2025-12-09T18:45:50.056Z"
     }
   ]
 }
