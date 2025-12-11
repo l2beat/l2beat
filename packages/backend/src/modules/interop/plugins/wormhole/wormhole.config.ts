@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { CallParameters, HttpClient, RpcClient } from '@l2beat/shared'
+import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import * as cheerio from 'cheerio'
 import {
@@ -51,7 +51,7 @@ export class WormholeConfigPlugin
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
-    private rpcs: Map<string, RpcClient>,
+    private rpcs: Map<string, IRpcClient>,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
     this.logger = logger.for(this)

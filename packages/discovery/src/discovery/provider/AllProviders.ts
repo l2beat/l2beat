@@ -4,7 +4,7 @@ import {
   CelestiaApiClient,
   CoingeckoClient,
   type HttpClient,
-  RpcClient,
+  RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, type UnixTime, unique } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -56,7 +56,7 @@ export class AllProviders {
       let blobClient: BlobClient | undefined
       let celestiaApiClient: CelestiaApiClient | undefined
 
-      const ethereumRpc = new RpcClient({
+      const ethereumRpc = RpcClientCompat.create({
         url: config.rpcUrl,
         retryStrategy: 'SCRIPT',
         callsPerMinute: 60,

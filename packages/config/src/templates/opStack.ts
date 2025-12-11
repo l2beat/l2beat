@@ -552,7 +552,6 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
     display: {
       ...common.display,
       ...templateVars.display,
-      warning: templateVars.display.warning,
       liveness: getLiveness(templateVars),
     },
     config: {
