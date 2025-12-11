@@ -21,7 +21,7 @@ interface Props<T> {
 
 export function ColumnsControls<T>({ columns }: Props<T>) {
   const trigger = (
-    <div className="flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">
+    <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-secondary p-2 font-semibold text-base">
       <SlidersIcon className="fill-secondary" />
       <span className="text-label-value-16">Columns</span>
     </div>
@@ -59,7 +59,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="mb-3 gap-0">
-            <DrawerTitle className="mb-0 text-lg text-zinc-800">
+            <DrawerTitle className="mb-0 text-lg text-primary">
               Columns
             </DrawerTitle>
             <DrawerDescription className="font-semibold text-secondary text-xs">
