@@ -3,7 +3,7 @@
   "projectId": "megaeth",
   "tokens": [
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "megaeth-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -32,7 +32,14 @@
         ]
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Predeposit; not connected to an L2"
+          }
+        ]
+      },
       "isAssociated": false
     }
   ]

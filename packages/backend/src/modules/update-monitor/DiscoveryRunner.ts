@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  type AllProviderStats,
   type AllProviders,
   type Analysis,
   ConfigReader,
@@ -14,8 +13,6 @@ import {
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
-  ProviderMeasurement,
-  type ProviderStats,
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -27,7 +24,6 @@ import {
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
-import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
@@ -92,11 +88,6 @@ export class DiscoveryRunner {
       configReader,
       logger,
     )
-
-    const metrics = this.allProviders.getStats()
-    for (const [chain, chainMetrics] of Object.entries(metrics)) {
-      setDiscoveryMetrics(chainMetrics, chain)
-    }
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -218,79 +209,6 @@ export class DiscoveryRunner {
     }
   }
 }
-
-function setDiscoveryMetrics(stats: AllProviderStats, chain: string) {
-  setProviderGauge(
-    lowLevelProviderCountGauge,
-    lowLevelProviderDurationGauge,
-    stats.lowLevelMeasurements,
-    chain,
-  )
-  setProviderGauge(
-    cacheProviderCountGauge,
-    cacheProviderDurationGauge,
-    stats.cacheMeasurements,
-    chain,
-  )
-  setProviderGauge(
-    highLevelProviderCountGauge,
-    highLevelProviderDurationGauge,
-    stats.highLevelMeasurements,
-    chain,
-  )
-}
-
-function setProviderGauge(
-  countGauge: ProviderGauge,
-  durationGauge: ProviderGauge,
-  stats: ProviderStats,
-  chain: string,
-) {
-  for (const [key, index] of Object.entries(ProviderMeasurement)) {
-    const entry = stats.get(index)
-    let avg = 0
-    if (entry.durations.length > 0) {
-      avg = entry.durations.reduce((acc, v) => acc + v) / entry.durations.length
-    }
-
-    countGauge.set({ chain: chain, method: key }, entry.count)
-    durationGauge.set({ chain: chain, method: key }, avg)
-  }
-}
-
-type ProviderGauge = Gauge<'chain' | 'method'>
-const lowLevelProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_low_level_provider_stats',
-  help: 'Low level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const lowLevelProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_low_level_provider_duration_stats',
-  help: 'Average duration of methods in low level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-
-const cacheProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_cache_provider_stats',
-  help: 'Cache hit counts done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const cacheProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_cache_provider_duration_stats',
-  help: 'Average duration of methods when a cache hit occurs during discovery',
-  labelNames: ['chain', 'method'],
-})
-
-const highLevelProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_high_level_provider_stats',
-  help: 'High level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_high_level_provider_duration_stats',
-  help: 'Average duration of methods in high level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
 
 function remapNames(
   results: Analysis[],

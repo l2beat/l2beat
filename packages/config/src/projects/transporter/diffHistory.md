@@ -1,3 +1,189 @@
+Generated with discovered.json: 0xa27d5dfea877513c2cb9715522e9c23e7886238c
+
+# Diff at Wed, 03 Dec 2025 10:44:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1764168085
+- current timestamp: 1764758476
+
+## Description
+
+New pools.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (eth:0x0549475Ff447CBC0CfF51CB0719E0AA2dAF4eDC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x4640A8bF08d5917dCaEf42eDB14D3E06e1B23F39)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x465Bc3e57A76905699dF6772ee2571058A55F37A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x8d18E2cFC4C47A9aDa7baA4e1efeBf5EF366993E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xA390A927d0Ea7438cF8f3409791b540D56a6DDCd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xaEad1f7C9B189816cB845363D142cfCF339084c2)
+    +++ description: None
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.4:
+-        "eth:0x0549475Ff447CBC0CfF51CB0719E0AA2dAF4eDC8"
++        "eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91"
+      values.pools.276:
+-        "eth:0x465Bc3e57A76905699dF6772ee2571058A55F37A"
++        "eth:0x64E31C39Fc3Ec028557C9354d27B5c09fAeB5FdA"
+      values.pools.277:
+-        "eth:0xaEad1f7C9B189816cB845363D142cfCF339084c2"
++        "eth:0x930F7f3a9A235D27ae082aDD5B7D4635E59eaf55"
+      values.pools.278:
+-        "eth:0x4640A8bF08d5917dCaEf42eDB14D3E06e1B23F39"
++        "eth:0xB114E0e00622FFe5800004A98C8E01cd2c0c393b"
+      values.pools.279:
+-        "eth:0xA390A927d0Ea7438cF8f3409791b540D56a6DDCd"
++        "eth:0x7430d9d142D811f61B4A2D90D6F3a70a8500bBB7"
+      values.pools.280:
+-        "eth:0x8d18E2cFC4C47A9aDa7baA4e1efeBf5EF366993E"
++        "eth:0x57Fa613B284F05421F78c8BD579555d5C0D7783D"
+      values.pools.296:
++        "eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50"
+      values.pools.297:
++        "eth:0xD5a771734fC1C4Ce2CD84C7C196BeFf5300f6823"
+      values.pools.298:
++        "eth:0xB92Df086090aF326A0feB8f6f6aB5A24f839F1A7"
+      values.pools.299:
++        "eth:0x77b82294cE0691024C2031d0F32Acb971561A4a8"
+      values.poolsMap.eth:0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0:
+-        "eth:0x0549475Ff447CBC0CfF51CB0719E0AA2dAF4eDC8"
++        "eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91"
+      values.poolsMap.eth:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80:
+-        "eth:0x465Bc3e57A76905699dF6772ee2571058A55F37A"
++        "eth:0x64E31C39Fc3Ec028557C9354d27B5c09fAeB5FdA"
+      values.poolsMap.eth:0xe4880249745eAc5F1eD9d8F7DF844792D560e750:
+-        "eth:0xaEad1f7C9B189816cB845363D142cfCF339084c2"
++        "eth:0x930F7f3a9A235D27ae082aDD5B7D4635E59eaf55"
+      values.poolsMap.eth:0xf695Df6c0f3bB45918A7A82e83348FC59517734E:
+-        "eth:0x4640A8bF08d5917dCaEf42eDB14D3E06e1B23F39"
++        "eth:0xB114E0e00622FFe5800004A98C8E01cd2c0c393b"
+      values.poolsMap.eth:0x4f33aCf823E6eEb697180d553cE0c710124C8D59:
+-        "eth:0xA390A927d0Ea7438cF8f3409791b540D56a6DDCd"
++        "eth:0x7430d9d142D811f61B4A2D90D6F3a70a8500bBB7"
+      values.poolsMap.eth:0x3868D4e336d14D38031cf680329d31e4712e11cC:
+-        "eth:0x8d18E2cFC4C47A9aDa7baA4e1efeBf5EF366993E"
++        "eth:0x57Fa613B284F05421F78c8BD579555d5C0D7783D"
+      values.poolsMap.eth:0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B:
++        "eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50"
+      values.poolsMap.eth:0xb79ac7f790eA370d0603316c496E21bfBCC42C1F:
++        "eth:0xD5a771734fC1C4Ce2CD84C7C196BeFf5300f6823"
+      values.poolsMap.eth:0x97F2C6e5E15a68321087eb8998df7E2d67031588:
++        "eth:0xB92Df086090aF326A0feB8f6f6aB5A24f839F1A7"
+      values.poolsMap.eth:0x78Bf387201860d14e1E9697Ed4966735aDc742af:
++        "eth:0x77b82294cE0691024C2031d0F32Acb971561A4a8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseDextfPool (eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x57Fa613B284F05421F78c8BD579555d5C0D7783D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DEXTF Token (eth:0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x64E31C39Fc3Ec028557C9354d27B5c09fAeB5FdA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x7430d9d142D811f61B4A2D90D6F3a70a8500bBB7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x77b82294cE0691024C2031d0F32Acb971561A4a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x930F7f3a9A235D27ae082aDD5B7D4635E59eaf55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xB114E0e00622FFe5800004A98C8E01cd2c0c393b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xB92Df086090aF326A0feB8f6f6aB5A24f839F1A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xD5a771734fC1C4Ce2CD84C7C196BeFf5300f6823)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x77b82294cE0691024C2031d0F32Acb971561A4a8.sol | 1615 +++++++++++++++
+ ...:0xB92Df086090aF326A0feB8f6f6aB5A24f839F1A7.sol | 1615 +++++++++++++++
+ ...:0xD5a771734fC1C4Ce2CD84C7C196BeFf5300f6823.sol | 1615 +++++++++++++++
+ .../src/projects/transporter/.flat/DEXTF Token.sol |  777 +++++++
+ .../LockReleaseDextfPool.sol}                      | 1468 +++++++++-----
+ ...:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50.sol | 2132 ++++++++++++++++++++
+ 6 files changed, 8750 insertions(+), 472 deletions(-)
+```
+
 Generated with discovered.json: 0xa37aee6fd38d72c3f8a49ac5a2806cf2407c96a6
 
 # Diff at Wed, 26 Nov 2025 14:50:09 GMT:

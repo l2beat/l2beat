@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9696d033137fe5d82b7fa59e4a0b5ef38f4fb9e1
+
+# Diff at Fri, 28 Nov 2025 12:52:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@279d1ad356551e0a039b2400b6ca3bfd5e1e0974 block: 1728382019
+- current timestamp: 1764334235
+
+## Description
+
+Posts calldata instead of Celestia blobs.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x5ddb21f246d22b3be4756d0c881a2b5b18906ce8
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

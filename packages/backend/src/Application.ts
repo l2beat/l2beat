@@ -11,7 +11,6 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
-import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -56,7 +55,6 @@ export class Application {
     }
 
     const modules: (ApplicationModule | undefined)[] = [
-      createMetricsModule(deps),
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),

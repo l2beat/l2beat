@@ -27,6 +27,7 @@ import { brine } from '../projects/brine/brine'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
+import { cartesiprthoneypotv2 } from '../projects/cartesi-prt-honeypot-v2/cartesi-prt-honeypot-v2'
 import { celo } from '../projects/celo/celo'
 import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
@@ -261,6 +262,7 @@ export const layer2s: ScalingProject[] = [
   canvasconnect,
   capx,
   cartesiprthoneypot,
+  cartesiprthoneypotv2,
   celo,
   codex,
   corn,

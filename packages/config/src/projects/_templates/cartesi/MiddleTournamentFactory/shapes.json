@@ -3,5 +3,11 @@
     "hash": "0x92ef63615b5b5a7d557d4c53c42a5ffac816aca8411b41bf16297f1fd763cee5",
     "address": "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
     "blockNumber": 22716598
+  },
+  "MiddleTournamentFactory.sol": {
+    "hash": "0x29a5c1acbe48ac90aa8c32546a01e4b2a147c79d78ae5b8faf4c08f04481db3b",
+    "address": "eth:0x47c7f40841F842f7691cB9Fd6Cd63673B79dCe79",
+    "chain": "ethereum",
+    "blockNumber": 23775846
   }
 }

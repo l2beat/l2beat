@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x8f3ad86e6cb5a3ac833ea3d094d8dba369f96f39
+
+# Diff at Mon, 08 Dec 2025 16:36:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@57890661a42a73a0a4e8b9f30546cf1492a8662e block: 1764167689
+- current timestamp: 1765211471
+
+## Description
+
+Upgraded ZKToken from v2 to v3 (https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f): added burn functionality (including permissioned burnFrom) and maxSupply.
+
+Also decreased votingDelay and lateQuorumVoteExtension params on ZkTokenGovernor and ZkGovOpsGovernor as per these proposals: https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160, https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      sourceHashes.1:
+-        "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099"
++        "0x3f0cc88001b7e517d2d7fb4520faaf8deeb323106b3ab032ff35b0952046f99d"
+      values.$implementation:
+-        "zksync:0x01a6715d3560241E09E865a46122bf347A576c09"
++        "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274"
+      values.$pastUpgrades.2:
++        ["2025-12-08T12:06:52.000Z","0x749b9e6eed328052d679eb86639be807b4acf811ac8786f730b45258ba41ce6f",["zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.maxSupply:
++        "21000000000000000000000000000"
+      implementationNames.zksync:0x01a6715d3560241E09E865a46122bf347A576c09:
+-        "ZkTokenV2"
+      implementationNames.zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274:
++        "ZkTokenV3"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.lateQuorumVoteExtension:
+-        604800
++        172800
+      values.proposalQueuedCount:
+-        11
++        12
+      values.votingDelay:
+-        604800
++        259200
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.lateQuorumVoteExtension:
+-        604800
++        172800
+      values.proposalQueuedCount:
+-        1
++        2
+      values.votingDelay:
+-        604800
++        259200
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkTokenV2.sol => .flat/ZkToken/ZkTokenV3.sol}  | 37 +++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xa85a720f53b8a91c211bf22cb3a6239ce07e3a55
 
 # Diff at Wed, 26 Nov 2025 14:36:16 GMT:

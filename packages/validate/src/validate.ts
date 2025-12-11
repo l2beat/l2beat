@@ -532,7 +532,7 @@ function impRecord<K extends string | number, V>(
   }
 
   return function impRecord(value: unknown): Result<Record<K, V>> {
-    if (typeof value !== 'object' || value === null || Array.isArray(object)) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       return failType('object', value)
     }
     const result = {} as Record<K, V>
@@ -606,7 +606,7 @@ function impEnum<T extends string | number>(values: readonly T[]) {
     return {
       success: false,
       path: '',
-      message: `None of the enum variants matched, got ${whatType(value)}.`,
+      message: `None of the enum variants matched, got ${whatType(value)}. Possible values: ${values.join(', ')}.`,
     }
   }
 }

@@ -33,5 +33,17 @@
     "hash": "0x53d57e51dbd782cf870af5e73d0f348dd4e412a97ace4c37390af3ab499752bf",
     "address": "eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E",
     "blockNumber": 23676963
+  },
+  "Verifier_Type3_Nov25": {
+    "hash": "0x4c61353c5284bd858a3678aa48b2e4f17eac4449abaed557f97d8be2b462ecd6",
+    "address": "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a",
+    "chain": "ethereum",
+    "blockNumber": 23924841
+  },
+  "Verifier_Type4_Dec25": {
+    "hash": "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71",
+    "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
+    "chain": "ethereum",
+    "blockNumber": 23974643
   }
 }

@@ -67,6 +67,12 @@ paradexProgramHashes.push(
 paradexProgramHashes.push(
   discovery.getContractValue<string>('Paradex', 'aggregatorProgramHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+paradexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+paradexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const paradex: ScalingProject = {
   type: 'layer2',
@@ -84,7 +90,7 @@ export const paradex: ScalingProject = {
     slug: 'paradex',
     stacks: ['SN Stack'],
     description:
-      'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
+      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals.',
     purposes: ['Universal', 'Exchange'],
     links: {
       websites: ['https://paradex.trade/'],
@@ -93,7 +99,7 @@ export const paradex: ScalingProject = {
       repositories: ['https://github.com/tradeparadex'],
       explorers: ['https://voyager.prod.paradex.trade'],
       socialMedia: [
-        'https://twitter.com/tradeparadex',
+        'https://twitter.com/paradex',
         'https://discord.com/invite/paradex',
       ],
     },
@@ -104,7 +110,7 @@ export const paradex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogId: ProjectId('stwo'),
   },
   chainConfig: {
     name: 'paradex',
@@ -113,7 +119,7 @@ export const paradex: ScalingProject = {
     apis: [
       {
         type: 'starknet',
-        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_7',
+        url: 'https://pathfinder.api.prod.paradex.trade/rpc/v0_9',
         callsPerMinute: 120,
       },
     ],
@@ -421,6 +427,14 @@ export const paradex: ScalingProject = {
       url: 'https://twitter.com/tradeparadex',
       date: '2023-10-01T00:00:00.00Z',
       description: 'Paradex launches Open Beta on Mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'Paradex migrates to Stwo prover',
+      url: 'https://etherscan.io/tx/0xec6c80207374c54d755f96ff0f89372425ab4fa9bb3286cbc2109b4652b00079',
+      date: '2025-11-25T00:00:00.00Z',
+      description:
+        'Paradex switches from Stone zk prover to Stwo to prove its blocks.',
       type: 'general',
     },
   ],

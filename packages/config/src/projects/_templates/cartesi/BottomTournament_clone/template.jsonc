@@ -8,6 +8,8 @@
     "timeFinished",
     "tournamentLevelConstants",
     "canBeEliminated",
-    "innerTournamentWinner"
+    "innerTournamentWinner",
+    "bondValue",
+    "tournamentArguments"
   ]
 }
