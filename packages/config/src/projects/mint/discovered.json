@@ -1,6 +1,6 @@
 {
   "name": "mint",
-  "timestamp": 1765382149,
+  "timestamp": 1765470811,
   "configHash": "0x02e86f9e4f11c689139c294d24bbcb67fa06b0c07b73aee4fa7464d6374b4a25",
   "entries": [
     {
@@ -354,7 +354,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 23977848
+          "prevBlockNum": 23987544
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -930,7 +930,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 147,
+        "gameCount": 152,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7",
@@ -943,7 +943,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b",
-        "permissionedGamesTotal": 150,
+        "permissionedGamesTotal": 152,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -1164,7 +1164,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634258",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634261",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1875,6 +1875,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23983339 },
+  "usedBlockNumbers": { "ethereum": 23990657 },
   "permissionsConfigHash": "0x4736611520a64f9408a48fef086b9dbb880ce2cc74f0dce8ed7d35fe57aca982"
 }
