@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765450778,
+  "timestamp": 1765451641,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -160,10 +160,12 @@
       "name": "OPSuccinctFaultDisputeGame",
       "address": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
       "type": "Contract",
+      "template": "succinct/OPSuccinct/OPSuccinctFaultDisputeGame",
       "sourceHashes": [
         "0x30cf1d1e89631f3a75a58ceef8dd6a286ce35520f81412e5e716afec9b3fa8cd"
       ],
       "proxyType": "immutable",
+      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
       "sinceTimestamp": 1764698171,
       "sinceBlock": 23927404,
       "values": {
@@ -2144,7 +2146,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765450271,
+        "getLastProposalTimestamp": 1765451447,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2198,7 +2200,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 2518,
+        "gameCount": 2524,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -2208,6 +2210,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": "10000000000000000",
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
         "permissionedGamesTotal": 2071,
@@ -3364,7 +3367,7 @@
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0xc6f952da1e42ad7227de9f77910ed619b75b1d02fb0d8d345bb5402d7bd7cf4f",
+    "opstack/DisputeGameFactory": "0x7ff210fc156b22239c3f3600c36a17973eaf33fba84ec8a38bdf4e6fa2cada17",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -3378,8 +3381,9 @@
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/AccessManager": "0x632fa68ba17c6197923e5322a8688cf61a75adc6c4762c1c14d0b34bd7c07f10",
+    "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23988996 },
+  "usedBlockNumbers": { "ethereum": 23989067 },
   "permissionsConfigHash": "0xc8c5b2dff193beb6ba96b37454711c1a28667f7cbbd2ce32277073bd7422987f"
 }

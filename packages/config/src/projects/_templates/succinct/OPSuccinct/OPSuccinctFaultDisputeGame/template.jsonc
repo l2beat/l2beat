@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OPSuccinctFaultDisputeGame",
+  "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ]
+}

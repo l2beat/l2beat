@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5eac1514193de288e99c553d1f2bba78e17b7b08
+Generated with discovered.json: 0x73730ec742b894a0e4c84998571ef7751cda95ec
 
-# Diff at Thu, 11 Dec 2025 11:00:44 GMT:
+# Diff at Thu, 11 Dec 2025 11:15:07 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764322969
-- current timestamp: 1765450778
+- current timestamp: 1765451641
 
 ## Description
 
@@ -44,13 +44,16 @@ Provide description of changes. This section will be preserved.
       values.game42:
 -        "eth:0x0000000000000000000000000000000000000000"
 +        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
+      values.initBondGame42:
+-        0
++        "10000000000000000"
     }
 ```
 
 ```diff
 +   Status: CREATED
     contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
-    +++ description: None
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -85,6 +88,8 @@ discovery. Values are for block 1764322969 (main branch discovery), not current.
 +++ severity: HIGH
       values.game42:
 +        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
       fieldMeta.game42:
 +        {"severity":"HIGH"}
     }
