@@ -431,22 +431,6 @@
     "eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1": {
       "proxyType": "simple target proxy",
       "ignoreMethods": ["getDSService", "getWalletAt"],
-      "fields": {
-        "services": {
-          "handler": {
-            "type": "event",
-            "select": "serviceAddress",
-            "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
-          },
-          "edit": [
-            "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
-          ]
-        }
-      }
     },
     "eth:0xD75c86c3e3761e2B2A7960aFb670850923899473": {
       "proxyType": "simple target proxy",

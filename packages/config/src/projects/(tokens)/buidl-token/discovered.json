@@ -1,7 +1,7 @@
 {
   "name": "buidl-token",
   "timestamp": 1765304803,
-  "configHash": "0xcfb2669568aca359e6918fe36a14791b9959d2ebb82ec970d6a09982930a6ce0",
+  "configHash": "0x01d3e3e265385d8a9ab20242f841b170ae894ab9c48d3f3da942edba4ab7bc9d",
   "entries": [
     {
       "name": "WalletRegistrar",
@@ -254,13 +254,6 @@
         "contractOwner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "DS_TOKEN": 2,
         "EXCHANGE": 4,
-        "getDSService": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
-          "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
         "getVersion": [6, 6, 6, 6],
         "initialized": true,
         "isOwner": false,
@@ -281,6 +274,12 @@
         "ROLE_NONE": 0,
         "ROLE_TRANSFER_AGENT": 8,
         "SECURITIZE_SWAP": 16384,
+        "services": {
+          "Trust Service": "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
+          "DS Token": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "Compliance Service": "eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9",
+          "Wallet Manager": "eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74"
+        },
         "target": "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10",
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
@@ -290,11 +289,35 @@
         "WALLET_MANAGER": 32,
         "WALLET_REGISTRAR": 1024
       },
-      "errors": { "getDSService": "Processing error occurred." },
       "implementationNames": {
         "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": "Proxy",
         "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10": "RegistryService"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "Trust Service",
+            "2": "DS Token",
+            "4": "Registry Service",
+            "8": "Compliance Service",
+            "16": "Unused 1",
+            "32": "Wallet Manager",
+            "64": "Lock Manager",
+            "128": "Partitions Manager",
+            "256": "Compliance Configuration Service",
+            "512": "Token Issuer",
+            "1024": "Wallet Registrar",
+            "2048": "Omnibus TBE Controller",
+            "4096": "Transaction Relayer",
+            "8192": "Token Reallocator",
+            "8193": "Bulk Operator",
+            "8194": "Issuer Multicall",
+            "8195": "TA Multicall",
+            "16384": "Securitize Swap"
+          }
+        }
+      ]
     },
     {
       "name": "BulkOperator",
@@ -1816,13 +1839,6 @@
         "CONTRACT_VERSION": 4,
         "contractOwner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "DS_TOKEN": 2,
-        "getDSService": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
         "getVersion": [6, 6, 4],
         "initialized": true,
         "isOwner": false,
@@ -1838,6 +1854,9 @@
         "ROLE_NONE": 0,
         "ROLE_TRANSFER_AGENT": 8,
         "SECURITIZE_SWAP": 16384,
+        "services": {
+          "Trust Service": "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60"
+        },
         "target": "eth:0x62DB0E172Ee1344335A5e05F226DCba239699Ae3",
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
@@ -1847,11 +1866,35 @@
         "WALLET_MANAGER": 32,
         "WALLET_REGISTRAR": 1024
       },
-      "errors": { "getDSService": "Processing error occurred." },
       "implementationNames": {
         "eth:0xD75c86c3e3761e2B2A7960aFb670850923899473": "Proxy",
         "eth:0x62DB0E172Ee1344335A5e05F226DCba239699Ae3": "TransactionRelayer"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "Trust Service",
+            "2": "DS Token",
+            "4": "Registry Service",
+            "8": "Compliance Service",
+            "16": "Unused 1",
+            "32": "Wallet Manager",
+            "64": "Lock Manager",
+            "128": "Partitions Manager",
+            "256": "Compliance Configuration Service",
+            "512": "Token Issuer",
+            "1024": "Wallet Registrar",
+            "2048": "Omnibus TBE Controller",
+            "4096": "Transaction Relayer",
+            "8192": "Token Reallocator",
+            "8193": "Bulk Operator",
+            "8194": "Issuer Multicall",
+            "8195": "TA Multicall",
+            "16384": "Securitize Swap"
+          }
+        }
+      ]
     },
     {
       "name": "TokenIssuer",

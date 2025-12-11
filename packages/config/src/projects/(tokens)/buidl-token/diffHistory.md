@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x323b4b25fad68683d94878f7a947a1a7783519c7
+Generated with discovered.json: 0xa38836404c854c558b69b8c02788a16f0547805c
 
-# Diff at Thu, 11 Dec 2025 11:14:50 GMT:
+# Diff at Thu, 11 Dec 2025 21:07:18 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -13,49 +13,43 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab)
+    contract WalletRegistrar (eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9)
+    contract ComplianceServiceRegulated (eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x090F220fa6BAA22bE107971acf8963546C4Da366)
+    contract TokenIssuer (eth:0x090F220fa6BAA22bE107971acf8963546C4Da366)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x0A65a40a4B2F64D3445A628aBcFC8128625483A4)
+    contract InvestorLockManager (eth:0x0A65a40a4B2F64D3445A628aBcFC8128625483A4)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B)
+    contract RegistryService (eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract InvestorLockManager (eth:0x0E4d0fC75407De18BDE9930CBBC3238ebaC29FDa)
+    contract BulkOperator (eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74)
+    contract WalletManager (eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74)
     +++ description: None
 ```
 
@@ -67,7 +61,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x1dc378568cefD4596C5F9f9A14256D8250b56369)
+    contract ComplianceConfigurationService (eth:0x1dc378568cefD4596C5F9f9A14256D8250b56369)
     +++ description: None
 ```
 
@@ -80,18 +74,6 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract DSTokenClassSwap (eth:0x1E5d83Ff1a6d32C53F25937664c53E9B57E37021)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RegistryService (eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract WalletRegistrar (eth:0x23374FE9c15D34c998892D5c93053E220EfceD0d)
     +++ description: None
 ```
 
@@ -115,13 +97,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract ComplianceConfigurationService (eth:0x36AE2BA73A1C585FF440e8a292e23E59B89232CF)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60)
+    contract TrustService (eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60)
     +++ description: None
 ```
 
@@ -133,25 +109,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract TokenIssuer (eth:0x4B25aeD3FCC59BAe15B8C4780A7FaB05b1F22E1b)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract WalletRegistrar (eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ComplianceServiceRegulated (eth:0x53a8A0532592992533323ab9a45A591ac3b56076)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1)
+    contract OmnibusTBEController (eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1)
     +++ description: None
 ```
 
@@ -163,13 +127,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract TransactionRelayer (eth:0x62DB0E172Ee1344335A5e05F226DCba239699Ae3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract DSToken (eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041)
+    contract BUIDL DSToken New (eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041)
     +++ description: None
 ```
 
@@ -181,13 +139,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract BulkOperator (eth:0x7341137F512098C62e11c5509F51CcA4Fc5CAc67)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract DSToken (eth:0x7712c34205737192402172409a8F7ccef8aA2AEc)
+    contract BUIDL DSToken Old (eth:0x7712c34205737192402172409a8F7ccef8aA2AEc)
     +++ description: None
 ```
 
@@ -199,25 +151,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract TrustService (eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract WalletManager (eth:0x82f72BAA1E2d82f89Ae8fA8bfaEbfD26cDbcEDC2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract TokenReallocator (eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4)
+    contract  (eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4)
     +++ description: None
 ```
 
@@ -235,7 +175,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0xD75c86c3e3761e2B2A7960aFb670850923899473)
+    contract SecuritizeBridge (eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransactionRelayer (eth:0xD75c86c3e3761e2B2A7960aFb670850923899473)
     +++ description: None
 ```
 
@@ -247,31 +193,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0xd9053D57cA106eFbB1Be6e350bD1d144C2189008)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OmnibusTBEController (eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract OmnibusTBEController (eth:0xdeB5591F88AbE71D23A9Fd4Ba900EE080e637362)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TokenReallocator (eth:0xdFFD2bB391c7434737984418659209651D1139DF)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (eth:0xf33675685C8Ee774c7f5655C93AfEdC7B9818EcD)
+    contract TokenReallocator (eth:0xf33675685C8Ee774c7f5655C93AfEdC7B9818EcD)
     +++ description: None
 ```
 
