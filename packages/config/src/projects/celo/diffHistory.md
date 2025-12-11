@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x73730ec742b894a0e4c84998571ef7751cda95ec
+Generated with discovered.json: 0x8499aab06173f99f5df1f312d3f370401566139a
 
-# Diff at Thu, 11 Dec 2025 11:15:07 GMT:
+# Diff at Thu, 11 Dec 2025 15:00:10 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764322969
-- current timestamp: 1765451641
+- current timestamp: 1765465139
 
 ## Description
 
@@ -52,13 +52,31 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
     contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
 +   Status: CREATED
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
     EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
     +++ description: None
 ```
 
@@ -71,9 +89,13 @@ Provide description of changes. This section will be preserved.
 ## Source code changes
 
 ```diff
-.../src/projects/celo/.flat/AccessManager.sol      |  214 ++++
- .../celo/.flat/OPSuccinctFaultDisputeGame.sol      | 1083 ++++++++++++++++++++
- 2 files changed, 1297 insertions(+)
+.../src/projects/celo/.flat/AccessManager.sol      |  214 +++
+ .../celo/.flat/OPSuccinctFaultDisputeGame.sol      | 1083 +++++++++++++++
+ .../src/projects/celo/.flat/SP1Verifier.sol        | 1396 ++++++++++++++++++++
+ .../src/projects/celo/.flat/SP1VerifierGateway.sol |  231 ++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 6 files changed, 3912 insertions(+)
 ```
 
 ## Config/verification related changes

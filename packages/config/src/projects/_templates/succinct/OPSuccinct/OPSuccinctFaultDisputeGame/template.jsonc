@@ -6,5 +6,14 @@
     "getNumToResolve",
     "resolutionCheckpoints",
     "resolvedSubgames"
-  ]
+  ],
+  "fields": {
+    "SP1_VERIFIER": {
+      "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor.",
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x3B6041173B80E77f038F3f2C0F9744F04837185E"
+      }
+    }
+  }
 }

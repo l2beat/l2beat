@@ -20,6 +20,20 @@ const zkProgramHashes: Record<
   ProjectScalingContractsZkProgramHash['hash'],
   Omit<ProjectScalingContractsZkProgramHash, 'hash'>
 > = {
+  '0x0075c7ec424df1386508596dc886e528c733a5f2c7728e7a81ad7676495ff31c': {
+    title: 'Aggregation program of OP Succinct FDP',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x223fe2ba07be84da6afb2e3c1ed5c76b182aed383ad45aee40970cd30bcf9a83': {
+    title: 'Range program of OP Succinct FDP',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     title: 'Aggregation program of OP Succinct',
     description:

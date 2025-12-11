@@ -308,7 +308,7 @@ function opStackCommon(
   if (fraudProofType === 'Kailua') {
     architectureImage.push('kailua')
   }
-  if (fraudProofType === 'OpSuccinct') {
+  if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     architectureImage.push('opsuccinct')
   }
 
@@ -626,6 +626,20 @@ function getZkProgramHashes(
 
       return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
     }
+    case 'OpSuccinctFDP': {
+      const opSuccinctProgramHashes = [
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctFaultDisputeGame',
+          'aggregationVkey',
+        ),
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctFaultDisputeGame',
+          'rangeVkeyCommitment',
+        ),
+      ]
+
+      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+    }
   }
 }
 
@@ -906,6 +920,36 @@ The Kailua state validation system is primarily optimistically resolved, so no v
         ],
       }
     }
+    case 'OpSuccinctFDP': {
+      return {
+        categories: [
+          {
+            title: 'Validity proofs',
+            description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond. Once created, the game enters a challenge period during which whitelisted challengers can dispute the proposal by also posting a bond. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
+            references: [
+              {
+                url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+                title: 'Op-Succinct architecture',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'the permissioned proposer fails to publish state roots to the L1.',
+              },
+            ],
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -1079,6 +1123,13 @@ function getRiskViewStateValidation(
         executionDelay: getFinalizationPeriod(templateVars),
       }
     }
+    case 'OpSuccinctFDP': {
+      return {
+        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+      }
+    }
   }
 }
 
@@ -1117,6 +1168,7 @@ function getRiskViewProposerFailure(
         ),
       )
     case 'OpSuccinct':
+    case 'OpSuccinctFDP':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
   }
 }
@@ -1136,6 +1188,7 @@ function computedStage(
     Permissionless: true,
     Kailua: true,
     OpSuccinct: null,
+    OpSuccinctFDP: null,
   }
 
   return getStage(
@@ -1284,6 +1337,7 @@ function getTechnologyOperator(
     case 'Permissionless':
     case 'Kailua':
     case 'OpSuccinct':
+    case 'OpSuccinctFDP':
       return OPERATOR.CENTRALIZED_OPERATOR
   }
 }
@@ -1427,6 +1481,69 @@ function getTechnologyExitMechanism(
       })
       break
     }
+    case 'OpSuccinct': {
+      result.push({
+        ...EXITS.REGULAR_MESSAGING('zk', getFinalizationPeriod(templateVars)),
+        references: explorerReferences(explorerUrl, [
+          {
+            title: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+          {
+            title: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+        ]),
+        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      })
+      break
+    }
+    case 'OpSuccinctFDP': {
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'disputeGameFinalityDelaySeconds',
+        )
+
+      const proofMaturityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'proofMaturityDelaySeconds',
+        )
+
+      const maxChallengeDuration =
+        templateVars.discovery.getContractValue<number>(
+          'OPSuccinctFaultDisputeGame',
+          'maxChallengeDuration',
+        )
+
+      result.push({
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxChallengeDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
+        references: [
+          {
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+        ],
+      })
+      break
+    }
   }
 
   result.push({
@@ -1532,7 +1649,7 @@ function getLiveness(
   const daProvider = getDAProvider(templateVars)
 
   // For OpSuccinct chains, provide liveness info regardless of DA provider
-  if (fraudProofType === 'OpSuccinct') {
+  if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     const daDescription =
       daProvider.layer === DA_LAYERS.ETH_BLOBS_OR_CALLDATA ||
       daProvider.layer === DA_LAYERS.ETH_CALLDATA
@@ -1739,6 +1856,40 @@ function getTrackedTxs(
         },
       ]
     }
+    case 'OpSuccinctFDP': {
+      const disputeGameFactory =
+        templateVars.disputeGameFactory ??
+        templateVars.discovery.getContract('DisputeGameFactory')
+
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(disputeGameFactory.address),
+            selector: '0x82ecf2f6',
+            functionSignature:
+              'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
   }
 }
 
@@ -1793,7 +1944,8 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -1846,6 +1998,12 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'finalizationPeriodSeconds',
       )
     }
+    case 'OpSuccinctFDP': {
+      return templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'maxChallengeDuration',
+      )
+    }
   }
 }
 
@@ -1857,7 +2015,8 @@ function getExecutionDelay(
   switch (fraudProofType) {
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         portal.name ?? portal.address,
         'disputeGameFinalityDelaySeconds',
@@ -1874,6 +2033,7 @@ type FraudProofType =
   | 'Permissionless'
   | 'Kailua'
   | 'OpSuccinct'
+  | 'OpSuccinctFDP'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract
@@ -1899,6 +2059,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1337) {
     return 'Kailua'
+  }
+  if (respectedGameType === 42) {
+    return 'OpSuccinctFDP'
   }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
