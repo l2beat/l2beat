@@ -3,10 +3,12 @@
   "name": "buidl-token",
   "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
-    "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec"
+    "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041", // deployed Dec-17-2024
+    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec"  // deployed Mar-01-2024
   ],
   "names": {
+    "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041": "BUIDL DSToken New",
+    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec": "BUIDL DSToken Old",
     "eth:0xf8e91Fa34311876302D36D14B4F246044FD4332a": "RegistryService",
     "eth:0xc7Ca0CE7626940838A87656656C6Af92B95abd00": "ComplianceService",
     "eth:0x1Df0616fD703643411d62C34DFBFA3A261dF7dab": "WalletManager",
@@ -301,7 +303,7 @@
         "SECURITIZE_SWAP"
       ]
     },
-    "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": {
+    "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": {   // Trust Service (new)
       "types": {
         "RoleIdToName": {
           "typeCaster": "Mapping",
@@ -356,25 +358,76 @@
         }
       },
       "ignoreMethods": [
-        "TRUST_SERVICE",
-        "DS_TOKEN",
-        "REGISTRY_SERVICE",
-        "COMPLIANCE_SERVICE",
-        "UNUSED_1",
-        "WALLET_MANAGER",
-        "LOCK_MANAGER",
-        "PARTITIONS_MANAGER",
-        "COMPLIANCE_CONFIGURATION_SERVICE",
-        "TOKEN_ISSUER",
-        "WALLET_REGISTRAR",
-        "OMNIBUS_TBE_CONTROLLER",
-        "TRANSACTION_RELAYER",
-        "TOKEN_REALLOCATOR",
-        "BULK_OPERATOR",
-        "ISSUER_MULTICALL",
-        "TA_MULTICALL",
-        "SECURITIZE_SWAP"
+        "getDSService", "getWalletAt"
       ]
+    },
+    "eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x1dc378568cefD4596C5F9f9A14256D8250b56369": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60": { // Trust Service (old)
+      "proxyType": "simple target proxy",
+      "types": {
+        "RoleIdToName": {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "NONE",
+            "1": "MASTER",
+            "2": "ISSUER",
+            "4": "EXCHANGE",
+            "8": "TRANSFER_AGENT"
+          }
+        }
+      },
+      "fields": {
+        "roles": {
+          "handler": {
+            "type": "event",
+            "select": "targetAddress",
+            "groupBy": "role",
+            "add": { "event": "DSTrustServiceRoleAdded" },
+            "remove": { "event": "DSTrustServiceRoleRemoved" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "RoleIdToName"]]],
+            ["from_entries"]
+          ]
+        }
+      }
+    },
+    "eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x090F220fa6BAA22bE107971acf8963546C4Da366": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x0A65a40a4B2F64D3445A628aBcFC8128625483A4": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0xD75c86c3e3761e2B2A7960aFb670850923899473": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4": {
+      "proxyType": "simple target proxy",
+    },
+    "eth:0xf33675685C8Ee774c7f5655C93AfEdC7B9818EcD": {
+      "proxyType": "simple target proxy",
     }
   }
 }
