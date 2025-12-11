@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
+import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
@@ -16,6 +17,12 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
   const queryClient = useQueryClient()
   const [configModel, setConfigModel] = useState(
     ConfigModel.fromRawJsonc(config ?? '{}'),
+  )
+
+  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
+    queryClient.invalidateQueries({
+      queryKey: ['config-sync-status', project],
+    }),
   )
 
   useEffect(() => {
@@ -107,9 +114,8 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
       await queryClient.invalidateQueries({
         queryKey: ['configs', project],
       })
-      await queryClient.invalidateQueries({
-        queryKey: ['config-sync-status', project],
-      })
+      // Debounced invalidation to prevent excessive refetching during rapid edits
+      debouncedInvalidateSyncStatus()
     },
     onError: (error) => {
       toast.error(`Failed to save config file - ${project}`, {

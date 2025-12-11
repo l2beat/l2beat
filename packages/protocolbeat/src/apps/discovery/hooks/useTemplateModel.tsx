@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
+import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
@@ -19,6 +20,12 @@ export function useTemplateModel({ templateId, files }: Props) {
   const queryClient = useQueryClient()
   const [templateModel, setTemplateModel] = useState(
     ContractConfigModel.fromRawJsonc(files.template),
+  )
+
+  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
+    queryClient.invalidateQueries({
+      queryKey: ['config-sync-status'],
+    }),
   )
 
   useEffect(() => {
@@ -98,9 +105,7 @@ export function useTemplateModel({ templateId, files }: Props) {
       await queryClient.invalidateQueries({
         queryKey: ['templates', templateId],
       })
-      await queryClient.invalidateQueries({
-        queryKey: ['config-sync-status'],
-      })
+      debouncedInvalidateSyncStatus()
     },
     onError: (error) => {
       toast.error(`Failed to save template file - ${templateId}`, {
