@@ -62,11 +62,11 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldSeverity(selectedAddress, fieldName)
   }
 
-  const _getFieldDescription = (fieldName: string) => {
+  const getFieldDescription = (fieldName: string) => {
     return configModel.getFieldDescription(selectedAddress, fieldName)
   }
 
-  const _setFieldDescription = (
+  const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
   ) => {
@@ -133,6 +133,9 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     toggleIgnoreInWatchMode,
     setFieldSeverity,
     getFieldSeverity,
+    getFieldDescription,
+    setFieldDescription,
+
     setCategory,
     setDescription,
 
