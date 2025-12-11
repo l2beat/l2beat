@@ -65,7 +65,7 @@ export interface BaseOpenApiSchema {
   }
   servers: { url: string }[]
   tags: { name: Tags; description: string }[]
-  externalDocs?: {
+  externalDocs: {
     description: string
     url: string
   }
