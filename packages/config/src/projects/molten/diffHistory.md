@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xcb61c2e515c7f98f5a7b7b06a94d3342edd3fbe0
+
+# Diff at Wed, 10 Dec 2025 12:17:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1763554833
+- current timestamp: 1765368962
+
+## Description
+
+Added EOA to manage permissions (in addition to Caldera multisig).
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13"
+      values.executors.1:
++        "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13"
+    }
+```
+
 Generated with discovered.json: 0x3a93605e0b4c4911948c277c64c4e436c714525e
 
 # Diff at Wed, 19 Nov 2025 12:21:38 GMT:
