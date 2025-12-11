@@ -62,11 +62,11 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldSeverity(selectedAddress, fieldName)
   }
 
-  const getFieldDescription = (fieldName: string) => {
+  const _getFieldDescription = (fieldName: string) => {
     return configModel.getFieldDescription(selectedAddress, fieldName)
   }
 
-  const setFieldDescription = (
+  const _setFieldDescription = (
     fieldName: string,
     description: string | undefined,
   ) => {
@@ -135,8 +135,6 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     getFieldSeverity,
     setCategory,
     setDescription,
-    getFieldDescription,
-    setFieldDescription,
 
     save: saveRaw,
 

@@ -97,8 +97,8 @@ function main() {
   }
   app.use(loggerMiddleware(logger))
 
-  addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, queryExecutor, cache)
+  addProjectsRoutes(openapi, ps, db, cache)
+  addTvsRoutes(openapi, ps, db, queryExecutor, cache)
   addActivityRoutes(openapi, ps, db, cache)
 
   app.use(errorHandler(logger))

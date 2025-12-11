@@ -16,6 +16,7 @@ export const codex: ScalingProject = underReviewL2({
     links: {
       websites: ['https://codex.xyz/'],
       documentation: ['https://docs.codex.xyz/'],
+      repositories: ['https://github.com/Codex-Data'],
       explorers: ['https://explorer.codex.xyz'],
       socialMedia: [
         'https://x.com/codex_pbc',

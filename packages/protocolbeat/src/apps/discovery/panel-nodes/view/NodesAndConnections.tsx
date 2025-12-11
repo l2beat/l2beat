@@ -78,8 +78,8 @@ export function NodesAndConnections() {
         style={{ left: minX, top: minY, width, height }}
         fill="none"
       >
-        {connections.map((c) => (
-          <Connection {...c} />
+        {connections.map(({ key, ...rest }) => (
+          <Connection key={key} {...rest} />
         ))}
       </svg>
 

@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
-import { Button } from '../core/Button'
 import { Spinner } from '../core/Spinner'
 
 type ApiType = 'rpc' | 'blockscout' | 'etherscan'
@@ -12,10 +11,12 @@ export function TestApiButton({
   type,
   url,
   chainId,
+  className,
 }: {
   type: ApiType
   url: string | undefined
   chainId: number | undefined
+  className?: string
 }) {
   const [result, setResult] = useState<boolean | undefined>()
   const { mutate: testApi, isPending: isTesting } =
@@ -40,16 +41,15 @@ export function TestApiButton({
         : undefined
 
   return (
-    <Button
+    <button
       type="button"
-      variant="ghost"
-      size="icon"
       onClick={testFn}
       disabled={isTesting || !testFn}
       className={cn(
         'gap-2',
         result === true && 'border-green-500 bg-green-50 text-green-700',
         result === false && 'border-red-500 bg-red-50 text-red-700',
+        className,
       )}
     >
       {isTesting ? (
@@ -63,6 +63,6 @@ export function TestApiButton({
       ) : (
         <PlayIcon className="size-4" />
       )}
-    </Button>
+    </button>
   )
 }

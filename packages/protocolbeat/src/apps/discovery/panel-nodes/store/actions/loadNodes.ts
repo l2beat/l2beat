@@ -86,6 +86,7 @@ export function loadNodes(
     hidden: hiddenNodes,
     nodes: allNodes,
     projectId,
+    loaded: true,
   }
 
   const shouldAutoLayoutFromScratch =
