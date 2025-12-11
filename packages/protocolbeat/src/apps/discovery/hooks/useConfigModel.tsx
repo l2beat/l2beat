@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
+import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
@@ -15,6 +17,12 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
   const queryClient = useQueryClient()
   const [configModel, setConfigModel] = useState(
     ConfigModel.fromRawJsonc(config ?? '{}'),
+  )
+
+  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
+    queryClient.invalidateQueries({
+      queryKey: ['config-sync-status', project],
+    }),
   )
 
   useEffect(() => {
@@ -104,17 +112,23 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'config'],
+        queryKey: ['configs', project],
+      })
+      // Debounced invalidation to prevent excessive refetching during rapid edits
+      debouncedInvalidateSyncStatus()
+    },
+    onError: (error) => {
+      toast.error(`Failed to save config file - ${project}`, {
+        description: <pre>{error.message}</pre>,
       })
     },
   })
 
   const saveModelContents = (model: ConfigModel) => {
-    if (model.hasComments()) {
-      saveMutation.mutate(model.toString())
-    } else {
-      saveMutation.mutate(formatJson(model.peek()))
-    }
+    const toSave = model.hasComments()
+      ? model.toString()
+      : formatJson(model.peek())
+    saveMutation.mutate(toSave)
   }
 
   const saveRaw = useCallback(
@@ -125,6 +139,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     },
     [project],
   )
+
+  const isInSync = useMemo(() => {
+    return !configModel.diff(ConfigModel.fromRawJsonc(config ?? '{}'))
+  }, [configModel, config])
 
   return {
     configModel,
@@ -150,5 +168,9 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     ignoreInWatchMode: configModel.getIgnoreInWatchMode(selectedAddress),
     category: configModel.getCategory(selectedAddress),
     description: configModel.getDescription(selectedAddress),
+
+    isInSync,
+    isSyncPending: saveMutation.isPending,
+    isSyncError: saveMutation.isError,
   }
 }

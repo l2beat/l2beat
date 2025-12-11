@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/Button'
 import { IconPlus } from '../../../icons/IconPlus'
+
 import { Search } from '../search/Search'
 import { SettingsDialog } from './SettingsDialog'
 import { useMultiViewStore } from './store'

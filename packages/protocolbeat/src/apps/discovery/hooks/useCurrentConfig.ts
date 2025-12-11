@@ -6,7 +6,7 @@ export function useCurrentConfig() {
   const { project } = useProjectData()
 
   const configResponse = useQuery({
-    queryKey: ['projects', project, 'config'],
+    queryKey: ['configs', project],
     queryFn: () => {
       return readConfigFile(project)
     },
