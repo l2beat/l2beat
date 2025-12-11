@@ -10,7 +10,7 @@ import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
-  IRpcClient,
+  type IRpcClient,
   MulticallV3Client,
   PriceProvider,
   RpcClientCompat,

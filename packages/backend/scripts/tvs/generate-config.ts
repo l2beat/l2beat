@@ -5,7 +5,7 @@ import {
   ProjectService,
   type TvsToken,
 } from '@l2beat/config'
-import { HttpClient, RpcClient, RpcClientCompat } from '@l2beat/shared'
+import { HttpClient, RpcClientCompat } from '@l2beat/shared'
 import {
   assert,
   type LegacyToken,

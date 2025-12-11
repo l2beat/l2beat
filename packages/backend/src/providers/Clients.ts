@@ -9,13 +9,14 @@ import {
   EigenApiClient,
   FuelClient,
   HttpClient,
+  type IRpcClient,
   LighterClient,
   type LogsClient,
   LoopringClient,
   MulticallV3Client,
   NearClient,
   PolkadotRpcClient,
-  type IRpcClient,
+  RpcClient,
   RpcClientCompat,
   StarkexClient,
   StarknetClient,
@@ -97,15 +98,25 @@ export function initClients(config: Config, logger: Logger): Clients {
                 500,
               )
             : undefined
-          const rpcClient = RpcClientCompat.create({
-            chain: chain.name,
-            url: blockApi.url,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-            multicallClient,
-          })
+          const rpcClient = config.newClientsEnabled
+            ? RpcClientCompat.create({
+                chain: chain.name,
+                url: blockApi.url,
+                http,
+                callsPerMinute: blockApi.callsPerMinute,
+                retryStrategy: blockApi.retryStrategy,
+                logger,
+                multicallClient,
+              })
+            : new RpcClient({
+                chain: chain.name,
+                url: blockApi.url,
+                http,
+                callsPerMinute: blockApi.callsPerMinute,
+                retryStrategy: blockApi.retryStrategy,
+                logger,
+                multicallClient,
+              })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
