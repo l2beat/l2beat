@@ -163,6 +163,81 @@ git fetch upstream && git merge upstream/main
 - **Performance**: Only re-resolves when discovery changes detected
 - **Documentation**: See `packages/backend/src/modules/update-monitor/defidisco/README.md`
 
+### Funds Tracking ✅
+**Contract Funds Data**: Fetches and displays token balances and DeFi positions for contracts
+- **Data Source**: Uses `defiscan-endpoints` service (calls DeBank API for balances/positions)
+- **Storage**: `funds-data.json` per project in `packages/config/src/projects/{project}/`
+- **UI Component**: `FundsSection.tsx` in DeFiScan panel (between V2 Scoring and Status of Review)
+- **Control Button**: `FundsTagsButton.tsx` - toggle "Fetch Balances" / "Fetch Positions" per contract
+
+**Enabling Funds Fetching**:
+1. Select contract(s) in the graph view
+2. Click "Funds" button in controls
+3. Check "Fetch Token Balances" and/or "Fetch DeFi Positions"
+4. In DeFiScan panel, click "Fetch Funds" button to retrieve data
+
+**Contract Tags Extension**:
+```json
+{
+  "contractAddress": "eth:0x...",
+  "isExternal": true,
+  "fetchBalances": true,
+  "fetchPositions": false
+}
+```
+
+**Funds Data Structure** (`funds-data.json`):
+```json
+{
+  "version": "1.0",
+  "lastModified": "2025-12-09T...",
+  "contracts": {
+    "eth:0x123...": {
+      "balances": {
+        "tokens": [{ "symbol": "ETH", "usdValue": 1000, ... }],
+        "totalUsdValue": 5000,
+        "timestamp": "...",
+        "source": "debank"
+      },
+      "positions": {
+        "protocols": [{ "name": "Aave", "totalUsdValue": 10000, ... }],
+        "totalUsdValue": 10000,
+        "timestamp": "...",
+        "source": "debank"
+      },
+      "lastFetched": "2025-12-09T...",
+      "error": null
+    }
+  }
+}
+```
+
+**Running with Funds Support**:
+```bash
+# Option 1: Start defiscan-endpoints separately
+cd ~/defidisco/packages/defiscan-endpoints && pnpm start
+# In another terminal:
+cd ~/defidisco/packages/config && l2b ui
+
+# Option 2: Use startup script
+cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
+```
+
+**Environment Configuration** (defiscan-endpoints/.env):
+```bash
+DEBANK_API_KEY=your-debank-api-key
+PORT=3001
+```
+
+**API Endpoints**:
+- `GET /api/projects/:project/funds-data` - Get cached funds data
+- `POST /api/projects/:project/funds-data/fetch` - Trigger fetch (SSE for progress)
+
+**Files**:
+- Backend: `packages/l2b/src/implementations/discovery-ui/defidisco/fundsData.ts`
+- Frontend: `packages/protocolbeat/src/apps/discovery/defidisco/FundsSection.tsx`
+- Control: `packages/protocolbeat/src/apps/discovery/defidisco/FundsTagsButton.tsx`
+
 ---
 
 ## Development Guidelines

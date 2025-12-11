@@ -15,6 +15,7 @@ import type {
   ApiProjectsResponse,
   ApiTemplateFileResponse,
   ApiV2ScoreResponse,
+  ApiFundsDataResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -335,5 +336,60 @@ export async function getV2Score(project: string): Promise<ApiV2ScoreResponse> {
   }
   const data = await res.json()
   return data as ApiV2ScoreResponse
+}
+
+export async function getFundsData(project: string): Promise<ApiFundsDataResponse> {
+  const res = await fetch(`/api/projects/${project}/funds-data`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiFundsDataResponse
+}
+
+export function executeFetchFunds(project: string, contractAddress?: string): EventSource {
+  // For SSE with POST, we need a workaround since EventSource only supports GET
+  // We'll use fetch with a ReadableStream instead, but for simplicity, we'll use a pattern
+  // that works with the existing terminal pattern
+
+  // Create an EventSource-like wrapper using fetch
+  const url = `/api/projects/${project}/funds-data/fetch`
+  const body = contractAddress ? JSON.stringify({ contractAddress }) : JSON.stringify({})
+
+  // Use a custom approach - create a fetch request and return a mock EventSource
+  const eventSource = new EventSource('about:blank')
+
+  // Override with actual fetch
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+  }).then(async (response) => {
+    const reader = response.body?.getReader()
+    if (!reader) return
+
+    const decoder = new TextDecoder()
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+
+      const text = decoder.decode(value)
+      const lines = text.split('\n')
+
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6)
+          const event = new MessageEvent('message', { data })
+          eventSource.dispatchEvent(event)
+        }
+      }
+    }
+  }).catch((error) => {
+    const event = new MessageEvent('error', { data: error.message })
+    eventSource.dispatchEvent(event)
+  })
+
+  return eventSource
 }
 

@@ -8,6 +8,7 @@ import { usePanelStore } from '../store/panel-store'
 import { ResultsSection } from './ResultsSection'
 import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
 import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
+import { FundsSection } from './FundsSection'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -63,6 +64,7 @@ export function DeFiScanPanel() {
       </div>
       <div className="overflow-auto">
         <V2ScoringSection project={project} />
+        <FundsSection project={project} />
         <StatusOfReviewSection
           projectData={response.data}
           contractTags={contractTags}

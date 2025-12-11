@@ -7,6 +7,7 @@ import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
 import { ValuesButton } from './ValuesButton'
+import { NodeControlExtensions } from '../../defidisco/NodeControlExtensions'
 
 export function Controls() {
   return (
@@ -29,7 +30,7 @@ export function Controls() {
         <div className="flex gap-1">
           <HideButton />
           <ColorButton />
-          <ExternalButton />
+          <NodeControlExtensions />
         </div>
         <div className="flex gap-1">
           <ValuesButton />
