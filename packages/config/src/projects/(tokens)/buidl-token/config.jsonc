@@ -19,6 +19,31 @@
     "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": "TrustService",
     "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a": "OmnibusTBEController"
   },
+  "types": {
+    "ServiceNameMapping": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "1": "Trust Service",
+        "2": "DS Token",
+        "4": "Registry Service",
+        "8": "Compliance Service",
+        "16": "Unused 1",
+        "32": "Wallet Manager",
+        "64": "Lock Manager",
+        "128": "Partitions Manager",
+        "256": "Compliance Configuration Service",
+        "512": "Token Issuer",
+        "1024": "Wallet Registrar",
+        "2048": "Omnibus TBE Controller",
+        "4096": "Transaction Relayer",
+        "8192": "Token Reallocator",
+        "8193": "Bulk Operator",
+        "8194": "Issuer Multicall",
+        "8195": "TA Multicall",
+        "16384": "Securitize Swap"
+      }
+    }
+  },
   "overrides": {
     "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
@@ -28,1079 +53,253 @@
             "type": "ERC20Data"
           }
         },
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0xf8e91Fa34311876302D36D14B4F246044FD4332a": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0xc7Ca0CE7626940838A87656656C6Af92B95abd00": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0x1Df0616fD703643411d62C34DFBFA3A261dF7dab": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0x32708a900a740846445Fd49c0C00df15701720a2": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0x41A5F31c45Fa12913E125914Bd79Ef49beFA1a1f": {
       "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
       }
     },
     "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
-      }
+      },
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt",
+        "TRUST_SERVICE",
+        "DS_TOKEN",
+        "REGISTRY_SERVICE",
+        "COMPLIANCE_SERVICE",
+        "UNUSED_1",
+        "WALLET_MANAGER",
+        "LOCK_MANAGER",
+        "PARTITIONS_MANAGER",
+        "COMPLIANCE_CONFIGURATION_SERVICE",
+        "TOKEN_ISSUER",
+        "WALLET_REGISTRAR",
+        "OMNIBUS_TBE_CONTROLLER",
+        "TRANSACTION_RELAYER",
+        "TOKEN_REALLOCATOR",
+        "BULK_OPERATOR",
+        "ISSUER_MULTICALL",
+        "TA_MULTICALL",
+        "SECURITIZE_SWAP"
+      ]
     },
     "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
       "fields": {
-        "TRUST_SERVICE_value": {
+        "services": {
           "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRUST_SERVICE}}"]
-          }
-        },
-        "DS_TOKEN_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{DS_TOKEN}}"]
-          }
-        },
-        "REGISTRY_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{REGISTRY_SERVICE}}"]
-          }
-        },
-        "COMPLIANCE_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_SERVICE}}"]
-          }
-        },
-        "WALLET_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_MANAGER}}"]
-          }
-        },
-        "LOCK_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{LOCK_MANAGER}}"]
-          }
-        },
-        "PARTITIONS_MANAGER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{PARTITIONS_MANAGER}}"]
-          }
-        },
-        "COMPLIANCE_CONFIGURATION_SERVICE_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{COMPLIANCE_CONFIGURATION_SERVICE}}"]
-          }
-        },
-        "TOKEN_ISSUER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_ISSUER}}"]
-          }
-        },
-        "WALLET_REGISTRAR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{WALLET_REGISTRAR}}"]
-          }
-        },
-        "OMNIBUS_TBE_CONTROLLER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{OMNIBUS_TBE_CONTROLLER}}"]
-          }
-        },
-        "TRANSACTION_RELAYER_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TRANSACTION_RELAYER}}"]
-          }
-        },
-        "TOKEN_REALLOCATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TOKEN_REALLOCATOR}}"]
-          }
-        },
-        "ISSUER_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{ISSUER_MULTICALL}}"]
-          }
-        },
-        "TA_MULTICALL_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{TA_MULTICALL}}"]
-          }
-        },
-        "SECURITIZE_SWAP_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": ["{{SECURITIZE_SWAP}}"]
-          }
-        },
-        "BULK_OPERATOR_value": {
-          "handler": {
-            "type": "call",
-            "method": "getDSService",
-            "args": [8193]
-          }
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
-      }
+      },
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt",
+        "TRUST_SERVICE",
+        "DS_TOKEN",
+        "REGISTRY_SERVICE",
+        "COMPLIANCE_SERVICE",
+        "UNUSED_1",
+        "WALLET_MANAGER",
+        "LOCK_MANAGER",
+        "PARTITIONS_MANAGER",
+        "COMPLIANCE_CONFIGURATION_SERVICE",
+        "TOKEN_ISSUER",
+        "WALLET_REGISTRAR",
+        "OMNIBUS_TBE_CONTROLLER",
+        "TRANSACTION_RELAYER",
+        "TOKEN_REALLOCATOR",
+        "BULK_OPERATOR",
+        "ISSUER_MULTICALL",
+        "TA_MULTICALL",
+        "SECURITIZE_SWAP"
+      ]
     },
     "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": {
       "types": {
@@ -1127,10 +326,8 @@
           "edit": [
             "pipe",
             ["to_entries"],
-            [
-              "map",
-              ["shape", ["role", ["format", "RoleIdToName"]], "addresses"]
-            ]
+            ["map", ["set", 0, ["format", "RoleIdToName"]]],
+            ["from_entries"]
           ]
         }
       }
@@ -1142,8 +339,42 @@
           "handler": {
             "type": "ERC20Data"
           }
+        },
+        "services": {
+          "handler": {
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": { "event": "DSServiceSet" }
+          },
+          "edit": [
+            "pipe",
+            ["to_entries"],
+            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+            ["from_entries"]
+          ]
         }
-      }
+      },
+      "ignoreMethods": [
+        "TRUST_SERVICE",
+        "DS_TOKEN",
+        "REGISTRY_SERVICE",
+        "COMPLIANCE_SERVICE",
+        "UNUSED_1",
+        "WALLET_MANAGER",
+        "LOCK_MANAGER",
+        "PARTITIONS_MANAGER",
+        "COMPLIANCE_CONFIGURATION_SERVICE",
+        "TOKEN_ISSUER",
+        "WALLET_REGISTRAR",
+        "OMNIBUS_TBE_CONTROLLER",
+        "TRANSACTION_RELAYER",
+        "TOKEN_REALLOCATOR",
+        "BULK_OPERATOR",
+        "ISSUER_MULTICALL",
+        "TA_MULTICALL",
+        "SECURITIZE_SWAP"
+      ]
     }
   }
 }
