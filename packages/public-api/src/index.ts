@@ -53,6 +53,10 @@ function main() {
         description: 'Endpoints for retrieving activity data',
       },
     ],
+    externalDocs: {
+      description: 'Changelog',
+      url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
+    },
     components: {
       securitySchemes: {
         apiKeyAuth: {
