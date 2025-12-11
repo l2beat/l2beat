@@ -1,13 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type {
-  BeaconChainBlob,
-  BeaconChainClient,
-  EVMLog,
-} from '../../clients'
+import type { BeaconChainBlob, BeaconChainClient, EVMLog } from '../../clients'
+import type { IRpcClient } from '../../clients2'
 import type { DaBlobProvider } from './DaProvider'
 import type { EthereumBlob } from './types'
-import { IRpcClient } from '../../clients2'
 
 // each blob is 128 KiB so 131,072 B
 export const ETHEREUM_BLOB_SIZE_BYTES = 131072n

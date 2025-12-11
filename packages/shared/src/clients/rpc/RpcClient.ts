@@ -1,11 +1,11 @@
 import {
   assert,
-  type Block,
   Bytes,
   type EthereumAddress,
   type json,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
@@ -28,7 +28,6 @@ import {
   RPCError,
   RpcResponse,
 } from './types'
-import { IRpcClient } from '../../clients2'
 
 interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   url: string

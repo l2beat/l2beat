@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters } from '../../clients'
-import { IRpcClient } from '../../clients2'
+import type { IRpcClient } from '../../clients2'
 
 export class TotalSupplyProvider {
   private logger: Logger
