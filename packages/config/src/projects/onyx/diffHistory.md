@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd36dfd5addcfb2fbc2897643efb783a96d096bdc
+Generated with discovered.json: 0x0b7faca198f0416d098df651a12f4a17573bf45f
 
-# Diff at Wed, 10 Dec 2025 15:13:17 GMT:
+# Diff at Wed, 10 Dec 2025 15:41:25 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1759481388
-- current timestamp: 1765379496
+- current timestamp: 1765381186
 
 ## Description
 
-Conduit multisig added member.
+Conduit msig change.
 
 ## Watched changes
 
