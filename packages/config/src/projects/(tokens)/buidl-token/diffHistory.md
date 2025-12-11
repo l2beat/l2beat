@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbed1ba426026f3ba0e6731380ac80e506bd1be51
+Generated with discovered.json: 0x3e23e9051b65c89f57f9442d90b80fb9efddcfa1
 
-# Diff at Thu, 11 Dec 2025 09:42:33 GMT:
+# Diff at Thu, 11 Dec 2025 10:46:54 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -10,6 +10,12 @@ Generated with discovered.json: 0xbed1ba426026f3ba0e6731380ac80e506bd1be51
 Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract Proxy (eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED
@@ -26,6 +32,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract DSTokenClassSwap (eth:0x1E5d83Ff1a6d32C53F25937664c53E9B57E37021)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegistryService (eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10)
     +++ description: None
 ```
 
@@ -49,6 +61,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract Proxy (eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ComplianceConfigurationService (eth:0x41A5F31c45Fa12913E125914Bd79Ef49beFA1a1f)
     +++ description: None
 ```
@@ -56,12 +74,6 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract WalletRegistrar (eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract DSToken (eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2)
     +++ description: None
 ```
 
@@ -85,13 +97,19 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Proxy (eth:0x7712c34205737192402172409a8F7ccef8aA2AEc)
+    contract DSToken (eth:0x7712c34205737192402172409a8F7ccef8aA2AEc)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract DeliveryProviderImplementation (eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TrustService (eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336)
     +++ description: None
 ```
 

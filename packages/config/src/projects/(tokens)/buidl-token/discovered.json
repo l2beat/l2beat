@@ -1,8 +1,32 @@
 {
   "name": "buidl-token",
   "timestamp": 1765304803,
-  "configHash": "0xe528555da0e2e2c82b693b247fcc2ca3fce05a5d570b97debfdb57b8276be1ba",
+  "configHash": "0xe05999e1fd90fd76b51f5496df20fe0d3063569ee44913687a7011bab64bb976",
   "entries": [
+    {
+      "name": "Proxy",
+      "address": "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x509bc2e358c4ac6b9fa5588775b76dbe1eca982527b9ae67e42769136ec2a71b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709331683,
+      "sinceBlock": 19343279,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "target": "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10"
+      },
+      "implementationNames": {
+        "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": "Proxy"
+      }
+    },
+    {
+      "address": "eth:0x12c0de58D3b720024324d5B216DDFE8B29adB0b4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "SecuritizeBridge",
       "address": "eth:0x189Fd44eF6901C1D096C95E41909d83743b97229",
@@ -158,6 +182,65 @@
       }
     },
     {
+      "name": "RegistryService",
+      "address": "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbc6bd408fd6fa1cbff96382e069c47aeb9103d2565fbbe0c4d6af87e5e546194"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709312291,
+      "sinceBlock": 19341667,
+      "values": {
+        "$immutable": true,
+        "ACCREDITED": 2,
+        "APPROVED": 1,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "contractOwner": "eth:0x0000000000000000000000000000000000000000",
+        "DS_TOKEN": 2,
+        "EXCHANGE": 4,
+        "getDSService": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "getVersion": [1],
+        "initialized": false,
+        "isOwner": false,
+        "KYC_APPROVED": 1,
+        "LOCK_MANAGER": 64,
+        "NONE": 0,
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "PARTITIONS_MANAGER": 128,
+        "PENDING": 0,
+        "PROFESSIONAL": 8,
+        "QUALIFIED": 4,
+        "REGISTRY_SERVICE": 4,
+        "REJECTED": 2,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
+      },
+      "errors": { "getDSService": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10": "RegistryService"
+      }
+    },
+    {
       "name": "WormholeRelayer",
       "address": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
@@ -291,6 +374,25 @@
       "implementationNames": {
         "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B": "ERC1967Proxy",
         "eth:0xa6E5F33B2372118aC70552C7212026d96Af6f74B": ""
+      }
+    },
+    {
+      "name": "Proxy",
+      "address": "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x509bc2e358c4ac6b9fa5588775b76dbe1eca982527b9ae67e42769136ec2a71b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709331659,
+      "sinceBlock": 19343277,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "target": "eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336"
+      },
+      "implementationNames": {
+        "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60": "Proxy"
       }
     },
     {
@@ -473,66 +575,6 @@
           "role": "admin"
         }
       ]
-    },
-    {
-      "name": "DSToken",
-      "address": "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x49d96783292f3bfe48802721ca6132857e601dbdf5b21ed346d914d99a54213a"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1699992659,
-      "sinceBlock": 18572441,
-      "values": {
-        "$immutable": true,
-        "cap": 0,
-        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
-        "COMPLIANCE_SERVICE": 8,
-        "contractOwner": "eth:0x0000000000000000000000000000000000000000",
-        "decimals": 0,
-        "DS_TOKEN": 2,
-        "getDSService": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
-        "getVersion": [1],
-        "getWalletAt": [],
-        "initialized": false,
-        "isOwner": false,
-        "isPaused": false,
-        "LOCK_MANAGER": 64,
-        "name": "",
-        "OMNIBUS_TBE_CONTROLLER": 2048,
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "PARTITIONS_MANAGER": 128,
-        "REGISTRY_SERVICE": 4,
-        "ROLE_EXCHANGE": 4,
-        "ROLE_ISSUER": 2,
-        "ROLE_MASTER": 1,
-        "ROLE_NONE": 0,
-        "ROLE_TRANSFER_AGENT": 8,
-        "SECURITIZE_SWAP": 16384,
-        "supportedFeatures": 0,
-        "symbol": "",
-        "TOKEN_ISSUER": 512,
-        "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 0,
-        "totalSupply": 0,
-        "TRANSACTION_RELAYER": 4096,
-        "TRUST_SERVICE": 1,
-        "UNUSED_1": 16,
-        "WALLET_MANAGER": 32,
-        "WALLET_REGISTRAR": 1024,
-        "walletCount": 0
-      },
-      "errors": { "getDSService": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2": "DSToken"
-      }
     },
     {
       "name": "",
@@ -733,22 +775,29 @@
       ]
     },
     {
+      "address": "eth:0x71B39FdC5369dB226d00ABe703c56f405C1901C9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x71fA7800a09e7faf295dA8B886ebF52b7E6ed849",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "Proxy",
+      "name": "DSToken",
       "address": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
       "type": "Contract",
       "sourceHashes": [
-        "0x509bc2e358c4ac6b9fa5588775b76dbe1eca982527b9ae67e42769136ec2a71b"
+        "0x509bc2e358c4ac6b9fa5588775b76dbe1eca982527b9ae67e42769136ec2a71b",
+        "0x49d96783292f3bfe48802721ca6132857e601dbdf5b21ed346d914d99a54213a"
       ],
-      "proxyType": "immutable",
+      "proxyType": "simple target proxy",
       "sinceTimestamp": 1709331851,
       "sinceBlock": 19343293,
       "values": {
-        "$immutable": true,
+        "$admin": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2",
         "$tokenData": {
           "name": "BlackRock USD Institutional Digital Liquidity Fund",
           "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
@@ -763,11 +812,59 @@
           "supply": "zero",
           "source": "canonical"
         },
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "contractOwner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getDSService": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B"
+        ],
+        "getVersion": [3, 6, 6, 5, 5],
+        "getWalletAt": [
+          "eth:0x71B39FdC5369dB226d00ABe703c56f405C1901C9",
+          "eth:0x866c9a77d8Ab71d2874703e80cb7aD809b301e8e",
+          "eth:0x12c0de58D3b720024324d5B216DDFE8B29adB0b4",
+          "eth:0xeF9A3cE48678D7e42296166865736899C3638B0E"
+        ],
+        "initialized": true,
+        "isOwner": false,
+        "isPaused": false,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
         "owner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
-        "target": "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2"
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "target": "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2",
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 2133934740580000,
+        "totalSupply": 165541918920349,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 52
       },
+      "errors": { "getDSService": "Processing error occurred." },
       "implementationNames": {
-        "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc": "Proxy"
+        "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc": "Proxy",
+        "eth:0x603Bb6909Be14f83282E03632280D91bE7fB83b2": "DSToken"
       }
     },
     {
@@ -815,6 +912,35 @@
         "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
         "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": "DeliveryProviderImplementation"
       }
+    },
+    {
+      "name": "TrustService",
+      "address": "eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x58ae1763a6aea6f5801653dccb5c0fec55336357c3eb539e96e8f4821b5534d5"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1699990343,
+      "sinceBlock": 18572252,
+      "values": {
+        "$immutable": true,
+        "EXCHANGE": 4,
+        "getVersion": [1],
+        "initialized": false,
+        "ISSUER": 2,
+        "MASTER": 1,
+        "NONE": 0,
+        "TRANSFER_AGENT": 8
+      },
+      "implementationNames": {
+        "eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336": "TrustService"
+      }
+    },
+    {
+      "address": "eth:0x866c9a77d8Ab71d2874703e80cb7aD809b301e8e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "TokenReallocator",
@@ -1182,6 +1308,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
           "role": "admin"
         },
@@ -1219,6 +1350,11 @@
     },
     {
       "address": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xeF9A3cE48678D7e42296166865736899C3638B0E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1504,6 +1640,15 @@
       "function updateWormholeRelayer(address newAddress)",
       "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
     ],
+    "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": [
+      "constructor()",
+      "event ProxyOwnerChanged(address owner)",
+      "event ProxyTargetSet(address target)",
+      "function owner() view returns (address)",
+      "function setOwner(address _owner)",
+      "function setTarget(address _target)",
+      "function target() view returns (address)"
+    ],
     "eth:0x12af61ccbCeFFAD492D749f97d22E2AF9d7B1eE1": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -1583,6 +1728,84 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x21381EE923a4555b1244bDD63ADCAb15c668Ae10": [
+      "event DSRegistryServiceInvestorAdded(string investorId, address sender)",
+      "event DSRegistryServiceInvestorAttributeChanged(string investorId, uint256 attributeId, uint256 value, uint256 expiry, string proofHash, address sender)",
+      "event DSRegistryServiceInvestorCountryChanged(string investorId, string country, address sender)",
+      "event DSRegistryServiceInvestorRemoved(string investorId, address sender)",
+      "event DSRegistryServiceOmnibusWalletAdded(address omnibusWallet, string investorId, address omnibusWalletController)",
+      "event DSRegistryServiceOmnibusWalletRemoved(address omnibusWallet, string investorId)",
+      "event DSRegistryServiceWalletAdded(address wallet, string investorId, address sender)",
+      "event DSRegistryServiceWalletRemoved(address wallet, string investorId, address sender)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function ACCREDITED() view returns (uint8)",
+      "function APPROVED() view returns (uint8)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function EXCHANGE() view returns (uint8)",
+      "function KYC_APPROVED() view returns (uint8)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function NONE() view returns (uint8)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function PENDING() view returns (uint8)",
+      "function PROFESSIONAL() view returns (uint8)",
+      "function QUALIFIED() view returns (uint8)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function REJECTED() view returns (uint8)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function addOmnibusWallet(string _id, address _omnibusWallet, address _omnibusWalletController)",
+      "function addWallet(address _address, string _id) returns (bool)",
+      "function attributes(string, uint8) view returns (uint256 value, uint256 expiry, string proofHash)",
+      "function contractOwner() view returns (address)",
+      "function getAttributeExpiry(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getAttributeProofHash(string _id, uint8 _attributeId) view returns (string)",
+      "function getAttributeValue(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getCollisionHash(string _id) view returns (string)",
+      "function getCountry(string _id) view returns (string)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getInvestor(address _address) view returns (string)",
+      "function getInvestorDetails(address _address) view returns (string, string)",
+      "function getInvestorDetailsFull(string _id) view returns (string, uint256[], uint256[], string, string, string, string)",
+      "function getInvestors(address _from, address _to) view returns (string, string)",
+      "function getOmnibusWalletController(address _omnibusWallet) view returns (address)",
+      "function getVersion() view returns (uint256[])",
+      "function initialize()",
+      "function initialized() view returns (bool)",
+      "function isAccreditedInvestor(address _wallet) view returns (bool)",
+      "function isAccreditedInvestor(string _id) view returns (bool)",
+      "function isInvestor(string _id) view returns (bool)",
+      "function isOmnibusWallet(address _omnibusWallet) view returns (bool)",
+      "function isOwner() view returns (bool)",
+      "function isQualifiedInvestor(address _wallet) view returns (bool)",
+      "function isQualifiedInvestor(string _id) view returns (bool)",
+      "function isWallet(address _address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function registerInvestor(string _id, string _collisionHash) returns (bool)",
+      "function removeInvestor(string _id) returns (bool)",
+      "function removeOmnibusWallet(string _id, address _omnibusWallet)",
+      "function removeWallet(address _address, string _id) returns (bool)",
+      "function renounceOwnership()",
+      "function setAttribute(string _id, uint8 _attributeId, uint256 _value, uint256 _expiry, string _proofHash) returns (bool)",
+      "function setCountry(string _id, string _country) returns (bool)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function updateInvestor(string _id, string _collisionHash, string _country, address[] _wallets, uint8[] _attributeIds, uint256[] _attributeValues, uint256[] _attributeExpirations) returns (bool)"
+    ],
     "eth:0x26C1b0c7cB630E1B69CC9796021958a911cEf470": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -1656,6 +1879,15 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60": [
+      "constructor()",
+      "event ProxyOwnerChanged(address owner)",
+      "event ProxyTargetSet(address target)",
+      "function owner() view returns (address)",
+      "function setOwner(address _owner)",
+      "function setTarget(address _target)",
+      "function target() view returns (address)"
     ],
     "eth:0x41A5F31c45Fa12913E125914Bd79Ef49beFA1a1f": [
       "constructor(address implementation, bytes _data) payable",
@@ -2037,6 +2269,34 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336": [
+      "event DSTrustServiceRoleAdded(address targetAddress, uint8 role, address sender)",
+      "event DSTrustServiceRoleRemoved(address targetAddress, uint8 role, address sender)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER() view returns (uint8)",
+      "function MASTER() view returns (uint8)",
+      "function NONE() view returns (uint8)",
+      "function TRANSFER_AGENT() view returns (uint8)",
+      "function addEntity(string _name, address _owner)",
+      "function addOperator(string _name, address _operator)",
+      "function addResource(string _name, address _resource)",
+      "function changeEntityOwner(string _name, address _oldOwner, address _newOwner)",
+      "function getEntityByOperator(address _operator) view returns (string)",
+      "function getEntityByOwner(address _owner) view returns (string)",
+      "function getEntityByResource(address _resource) view returns (string)",
+      "function getRole(address _address) view returns (uint8)",
+      "function getVersion() view returns (uint256[])",
+      "function initialize()",
+      "function initialized() view returns (bool)",
+      "function isResourceOperator(address _resource, address _operator) view returns (bool)",
+      "function isResourceOwner(address _resource, address _owner) view returns (bool)",
+      "function removeOperator(string _name, address _operator)",
+      "function removeResource(string _name, address _resource)",
+      "function removeRole(address _address) returns (bool)",
+      "function setRole(address _address, uint8 _role) returns (bool)",
+      "function setRoles(address[] _addresses, uint8[] _roles) returns (bool)",
+      "function setServiceOwner(address _address) returns (bool)"
     ],
     "eth:0x8f3C283825CF9882E800A8465Fd006D884d89Bf3": [
       "error AddressEmptyCode(address target)",
@@ -2814,5 +3074,5 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 23976993 },
-  "permissionsConfigHash": "0xc8b3e5e9af62b6eee260ca6aadd803de5acb35224153579be1271ad16c4461d8"
+  "permissionsConfigHash": "0x29b191172bed7865401eab5957298c674256fa3d2cce9620b7419d8064d6a4ba"
 }
