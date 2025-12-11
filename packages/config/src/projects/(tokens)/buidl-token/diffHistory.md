@@ -1,8 +1,8 @@
-Generated with discovered.json: 0xac9a93d8a7f5d68ea62f041f944e3a0d694e7f13
+Generated with discovered.json: 0xbed1ba426026f3ba0e6731380ac80e506bd1be51
 
-# Diff at Thu, 11 Dec 2025 08:55:50 GMT:
+# Diff at Thu, 11 Dec 2025 09:42:33 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
 
 ## Description
@@ -13,13 +13,37 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract SecuritizeBridge (eth:0x189Fd44eF6901C1D096C95E41909d83743b97229)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract WalletManager (eth:0x1Df0616fD703643411d62C34DFBFA3A261dF7dab)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
+    contract DSTokenClassSwap (eth:0x1E5d83Ff1a6d32C53F25937664c53E9B57E37021)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeRelayer (eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract LockManager (eth:0x32708a900a740846445Fd49c0C00df15701720a2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B)
     +++ description: None
 ```
 
@@ -67,6 +91,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract DeliveryProviderImplementation (eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract TokenReallocator (eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E)
     +++ description: None
 ```
@@ -98,6 +128,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract RegistryService (eth:0xf8e91Fa34311876302D36D14B4F246044FD4332a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DSTokenClassSwap (eth:0xFC4392dA2C4A3090431Fb87F4F7De63BC6885644)
     +++ description: None
 ```
 
