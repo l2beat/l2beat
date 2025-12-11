@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
@@ -110,14 +111,18 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
         queryKey: ['config-sync-status', project],
       })
     },
+    onError: (error) => {
+      toast.error(`Failed to save config file - ${project}`, {
+        description: <pre>{error.message}</pre>,
+      })
+    },
   })
 
   const saveModelContents = (model: ConfigModel) => {
-    if (model.hasComments()) {
-      saveMutation.mutate(model.toString())
-    } else {
-      saveMutation.mutate(formatJson(model.peek()))
-    }
+    const toSave = model.hasComments()
+      ? model.toString()
+      : formatJson(model.peek())
+    saveMutation.mutate(toSave)
   }
 
   const saveRaw = useCallback(

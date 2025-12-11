@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
@@ -101,14 +102,19 @@ export function useTemplateModel({ templateId, files }: Props) {
         queryKey: ['config-sync-status'],
       })
     },
+    onError: (error) => {
+      toast.error(`Failed to save template file - ${templateId}`, {
+        description: <pre>{error.message}</pre>,
+      })
+    },
   })
 
   const saveModelContents = (model: ContractConfigModel) => {
-    if (model.hasComments()) {
-      saveMutation.mutate(model.toString())
-    } else {
-      saveMutation.mutate(formatJson(model.peek()))
-    }
+    const toSave = model.hasComments()
+      ? model.toString()
+      : formatJson(model.peek())
+
+    saveMutation.mutate(toSave)
   }
 
   const saveRaw = useCallback(
