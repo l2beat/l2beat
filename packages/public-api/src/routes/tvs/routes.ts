@@ -1,16 +1,19 @@
 import type { ProjectService } from '@l2beat/config'
 import type { QueryExecutor } from '@l2beat/dal'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Database } from '@l2beat/database'
+import { ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InMemoryCache } from '../../cache/InMemoryCache'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
+import { getTokenTvsData } from './getTokenTvsData'
 import { getTvsData } from './getTvsData'
-import { TvsRangeSchema, TvsResultSchema } from './types'
+import { TokenTvsResultSchema, TvsRangeSchema, TvsResultSchema } from './types'
 
 export function addTvsRoutes(
   openapi: OpenApi,
   ps: ProjectService,
+  db: Database,
   queryExecutor: QueryExecutor,
   cache: InMemoryCache,
 ) {
@@ -83,6 +86,41 @@ export function addTvsRoutes(
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
         () => getTvsData(queryExecutor, range, [project.id]),
+      )
+
+      res.json(data)
+    },
+  )
+
+  openapi.get(
+    '/v1/tvs/token/:tokenId',
+    {
+      summary:
+        'Total Value Secured for a specific token with ability to control the time range.',
+      description: 'This endpoint may be affected by changes in the future.',
+      tags: ['tvs'],
+      params: v.object({
+        tokenId: v.string(),
+      }),
+      query: v.object({
+        range: TvsRangeSchema.optional(),
+      }),
+      result: TokenTvsResultSchema,
+      errors: {
+        404: GenericErrorResponse,
+      },
+    },
+    async (req, res) => {
+      const { tokenId } = req.params
+      const { range = '30d' } = req.query
+
+      const data = await cache.get(
+        {
+          key: ['tvs', tokenId, range],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        () => getTokenTvsData(db, range, TokenId(tokenId)),
       )
 
       res.json(data)

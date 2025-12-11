@@ -18,5 +18,11 @@
     "hash": "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f",
     "address": "unichain:0x93e57A196454CB919193fa9946f14943cf733845",
     "blockNumber": 16289384
+  },
+  "GasPriceOracle.sol": {
+    "hash": "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15",
+    "address": "ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
+    "chain": "ink",
+    "blockNumber": 31862238
   }
 }

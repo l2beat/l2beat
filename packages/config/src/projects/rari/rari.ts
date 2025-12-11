@@ -29,7 +29,10 @@ export const rari: ScalingProject = orbitStackL3({
       documentation: ['https://rari.docs.caldera.dev/'],
       explorers: ['https://mainnet.explorer.rarichain.org/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],
-      socialMedia: ['https://twitter.com/RariChain'],
+      socialMedia: [
+        'https://twitter.com/RariChain',
+        'https://discord.com/invite/rarifoundation',
+      ],
     },
   },
   celestiaDa: {

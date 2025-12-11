@@ -54,7 +54,12 @@ function Display({
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
 }) {
-  const { canModify } = useConfigModels()
+  const { configModel, templateModel, canModify } = useConfigModels()
+  const templateIgnoredMethods = templateModel.ignoreMethods ?? []
+  const configIgnoredMethods = configModel.ignoreMethods ?? []
+  const ignoredMethods = [
+    ...new Set(configIgnoredMethods.concat(templateIgnoredMethods)),
+  ]
   const chain = selected.chain
 
   const addresses = getAddressesToCopy(selected)
@@ -198,6 +203,15 @@ function Display({
           <ol>
             {selected.fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />
+            ))}
+            {ignoredMethods.map((method, i) => (
+              <FieldDisplay
+                key={i}
+                field={{
+                  name: method,
+                  value: { type: 'empty' },
+                }}
+              />
             ))}
           </ol>
         </Folder>

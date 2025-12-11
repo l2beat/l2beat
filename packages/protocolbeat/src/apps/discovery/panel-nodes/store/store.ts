@@ -50,6 +50,7 @@ const INITIAL_STATE: State = {
     enableDimming: true,
     hideLargeArrays: true,
   },
+  loaded: false,
 }
 
 export const useStore = create<State & Actions>()(

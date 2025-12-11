@@ -36,3 +36,22 @@ export const ContractSchema = v
     chain: v.string(),
   })
   .describe('Contract')
+
+export type Token = v.infer<typeof TokenSchema>
+export const TokenSchema = v
+  .object({
+    tokenId: v.string(),
+    symbol: v.string(),
+    source: v.enum(['canonical', 'external', 'native']),
+    category: v.enum([
+      'ether',
+      'stablecoin',
+      'btc',
+      'rwaRestricted',
+      'rwaPublic',
+      'other',
+    ]),
+    priceUsd: v.number(),
+    valueUsd: v.number(),
+  })
+  .describe('Token')

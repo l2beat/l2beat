@@ -270,6 +270,7 @@
     "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": "INTMAX Multisig 2",
     "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea": "INTMAX Multisig 3",
     "eth:0xBE634B030FEAaB661300667EaF82510a3a025413": "Stargate Multisig 2",
+    "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b": "Mint Multisig",
     // Taiko SC
     "eth:0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",
     "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "Chainbound",
