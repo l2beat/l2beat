@@ -53,6 +53,7 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly newClientsEnabled: boolean
 
   readonly flags: ResolvedFeatureFlag[]
 }
