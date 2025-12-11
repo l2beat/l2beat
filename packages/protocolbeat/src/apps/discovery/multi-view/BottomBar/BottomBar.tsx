@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { IS_READONLY } from '../../../../config/readonly'
 import { useTerminalStore } from '../../panel-terminal/store'
 import { useSearchStore } from '../../search/store'
 import { useMultiViewStore } from '../store'
@@ -64,10 +65,14 @@ export function BottomBar() {
     <div className="hidden h-8 select-none items-center justify-between border-coffee-600 border-t px-2 text-sm md:flex">
       <div className="flex gap-2 text-xs">
         <div>Copyright {new Date().getUTCFullYear()} L2BEAT</div>
-        <span>-</span>
-        <div className="italic">
-          That's the latest state reviewed by L2BEAT.
-        </div>
+        {IS_READONLY && (
+          <>
+            <span>-</span>
+            <div className="italic">
+              That's the latest state reviewed by L2BEAT.
+            </div>
+          </>
+        )}
       </div>
       <div className="flex gap-4">
         <StatusRibbon />
