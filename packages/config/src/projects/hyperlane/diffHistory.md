@@ -1,3 +1,100 @@
+Generated with discovered.json: 0xf5605e738995123afb84c0c5d7773da2307f8685
+
+# Diff at Thu, 11 Dec 2025 14:47:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1763549217
+- current timestamp: 1765464299
+
+## Description
+
+default ism updated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PausableIsm (eth:0x162C202229268970f06480BeeD0E8a82725a5b60)
+    +++ description: None
+```
+
+```diff
+    contract Hyperlane Multisig (eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426","description":"manage the domain -> ISM contract mapping.","role":".owner"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xff641195EF1A21784CC2346Cce932cA3192A6A78","description":"manage the domain -> ISM contract mapping.","role":".owner"}
+    }
+```
+
+```diff
+    contract Mailbox (eth:0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161"
++        "eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm_default (eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (eth:0xff641195EF1A21784CC2346Cce932cA3192A6A78)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract PausableIsm (eth:0x5e77c382994f9859cD5D08A54a6Fa894ED7AA9D3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm (eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426,eth:0x5e77c382994f9859cD5D08A54a6Fa894ED7AA9D3] ISM contracts successfully verify a message.
+```
+
+## Source code changes
+
+```diff
+./src/projects/hyperlane/{.flat@1763549217 => .flat}/PausableIsm.sol    | 2 +-
+ .../StaticAggregationIsm_default.sol => .flat/StaticAggregationIsm.sol} | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763549217 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm_default (eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161) {
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+      description:
+-        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0x162C202229268970f06480BeeD0E8a82725a5b60,eth:0xff641195EF1A21784CC2346Cce932cA3192A6A78] ISM contracts successfully verify a message."
++        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
+      values.modules:
+-        ["eth:0x162C202229268970f06480BeeD0E8a82725a5b60","eth:0xff641195EF1A21784CC2346Cce932cA3192A6A78"]
+      values.threshold:
+-        2
+    }
+```
+
 Generated with discovered.json: 0xcc1a70a85adaba778c969d792f9258e701d84357
 
 # Diff at Wed, 19 Nov 2025 10:57:53 GMT:
