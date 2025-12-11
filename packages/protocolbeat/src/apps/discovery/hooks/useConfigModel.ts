@@ -62,6 +62,23 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldSeverity(selectedAddress, fieldName)
   }
 
+  const getFieldDescription = (fieldName: string) => {
+    return configModel.getFieldDescription(selectedAddress, fieldName)
+  }
+
+  const setFieldDescription = (
+    fieldName: string,
+    description: string | undefined,
+  ) => {
+    const newModel = configModel.setFieldDescription(
+      selectedAddress,
+      fieldName,
+      description,
+    )
+    setConfigModel(newModel)
+    saveModelContents(newModel)
+  }
+
   const setCategory = (category: string | undefined) => {
     const newModel = configModel.setCategory(selectedAddress, category)
     setConfigModel(newModel)
@@ -116,6 +133,9 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     toggleIgnoreInWatchMode,
     setFieldSeverity,
     getFieldSeverity,
+    getFieldDescription,
+    setFieldDescription,
+
     setCategory,
     setDescription,
 
