@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765388493,
+  "timestamp": 1765448989,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -271,7 +271,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620585",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620591",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -778,6 +778,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SuperchainProxyAdmin",
       "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "type": "Contract",
@@ -831,6 +836,11 @@
         "eth:0x55093104b76FAA602F9d6c35A5FFF576bE78d753": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SuperchainProxyAdminOwner",
@@ -979,6 +989,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x7247204E46B381149d99acF88b318713fE12c32f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DeputyPauseModule",
       "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
       "type": "Contract",
@@ -1019,6 +1034,11 @@
       "implementationNames": {
         "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
       }
+    },
+    {
+      "address": "eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -1856,8 +1876,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 23983269
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 23988739
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1890,6 +1910,11 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8",
@@ -2070,6 +2095,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2083,20 +2113,36 @@
       "name": "AccessManager",
       "address": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
       "type": "Contract",
+      "template": "succinct/OPSuccinct/AccessManager",
       "sourceHashes": [
         "0x5328680aaf3216187a64073bdff9a69e374be581a9be8dc3ec9851276d36ae7e"
       ],
       "proxyType": "immutable",
+      "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
       "sinceTimestamp": 1764689339,
       "sinceBlock": 23926676,
       "values": {
         "$immutable": true,
+        "challengers": [
+          "eth:0x7247204E46B381149d99acF88b318713fE12c32f",
+          "eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca",
+          "eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78",
+          "eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F",
+          "eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8",
+          "eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463"
+        ],
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765388471,
+        "getLastProposalTimestamp": 1765448987,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B"
+      },
+      "fieldMeta": {
+        "challengers": {
+          "severity": "HIGH",
+          "description": "Addresses allowed to challenge dispute games."
+        }
       },
       "implementationNames": {
         "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816": "AccessManager"
@@ -2134,7 +2180,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 2208,
+        "gameCount": 2510,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3313,8 +3359,9 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "succinct/OPSuccinct/AccessManager": "0x504c47444759000cf3d532f12bbbc07fdb4cad0e15a70a695d0b127251fe2373",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23983853 },
-  "permissionsConfigHash": "0x6744c3f2731ea79c90df2a22ffb6de4bc552accdcdd7d8e7366e65a86a9ea5f6"
+  "usedBlockNumbers": { "ethereum": 23988849 },
+  "permissionsConfigHash": "0x7cb496050be41be9f0274a2ba319f615aac8f40301468d1c35cfe5ff908f74f2"
 }

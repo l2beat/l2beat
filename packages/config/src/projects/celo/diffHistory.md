@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe327e308889284f3f25dea9da305bfb72e368ea4
+Generated with discovered.json: 0x5c441f41df90e30d306f9faace7a9f62e507a601
 
-# Diff at Wed, 10 Dec 2025 17:42:40 GMT:
+# Diff at Thu, 11 Dec 2025 10:30:54 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764322969
-- current timestamp: 1765388493
+- current timestamp: 1765448989
 
 ## Description
 
@@ -62,7 +62,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816)
-    +++ description: None
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
 ```
 
 ## Source code changes
