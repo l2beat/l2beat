@@ -34,8 +34,10 @@ const ERC20BridgeInitiatedMessagePassed = createInteropEventType<{
   ttl: 14 * UnixTime.DAY,
 })
 
+// NOTE: we rename local/remote tokens to l2/l1 for clarity. This implies that if the same event is to be used for L1->L2 deposits,
+// the naming should be reverted.
 const parseERC20BridgeInitiated = createEventParser(
-  'event ERC20BridgeInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)',
+  'event ERC20BridgeInitiated(address indexed l2Token, address indexed l1Token, address indexed from, address to, uint256 amount, bytes extraData)',
 )
 
 // L1 finalization of L2->L1 withdrawal
@@ -60,6 +62,8 @@ const ERC20DepositInitiatedSentMessage = createInteropEventType<{
   amount: bigint
 }>('opstack.SentMessageERC20DepositInitiated')
 
+// NOTE: this is a "deprecated" event but still used. It is not used on the L2. The proper way would be to use the "ERC20BridgeInitiated" event,
+// but it has the same sig as the L2->L1 event. We use this for now for simplicity.
 const parseERC20DepositInitiated = createEventParser(
   'event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)',
 )
@@ -118,8 +122,8 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
   name = 'opstack-standardbridge'
 
   capture(input: LogToCapture) {
-    // L2 -> L1 withdrawal initiated
     if (input.chain !== 'ethereum') {
+      // L2 -> L1 ERC20 withdrawal initiated
       const network = OPSTACK_NETWORKS.find((x) => x.chain === input.chain)
       if (!network) return
       const erc20BridgeInitiated = parseERC20BridgeInitiated(input.log, [
