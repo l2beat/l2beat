@@ -14,11 +14,11 @@ export function useDiscoveryCommand() {
 
   async function handleDiscoverCommand(project: string, devMode?: boolean) {
     toast.loading('Discovery has started', { id: toastId })
-    const isOk = await discover(project)
-
     if (devMode !== undefined) {
       setDevMode(devMode)
     }
+
+    const isOk = await discover(project)
 
     queryClient.invalidateQueries({ queryKey: ['projects', project] })
     queryClient.invalidateQueries({ queryKey: ['config-sync-status', project] })
