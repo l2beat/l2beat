@@ -57,11 +57,21 @@ export interface Node {
   readonly isReachable: boolean
 }
 
-export interface Field {
+export type Field = AddressField | ValueField
+
+export interface AddressField {
+  readonly type: 'address'
   readonly name: string
   readonly target: string
   readonly box: Box
   readonly connection: Connection
+}
+
+export interface ValueField {
+  readonly type: 'value'
+  readonly name: string
+  readonly value: string
+  readonly box: Box
 }
 
 export interface Connection {
