@@ -1,8 +1,496 @@
 {
   "name": "buidl-token",
   "timestamp": 1765304803,
-  "configHash": "0x01d3e3e265385d8a9ab20242f841b170ae894ab9c48d3f3da942edba4ab7bc9d",
+  "configHash": "0x6a168c5648b7ac6c557ad0a4deb175deb6f7f61c4561454e05bf9df036f40f94",
   "entries": [
+    {
+      "name": "",
+      "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729701,
+      "sinceBlock": 270969353,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0xa90406eE8ee83791Be889b6b80c1082AD9a9cA04",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:01.000Z",
+            "0xf4bc47b3c593506d45d2fe7cecb8d098a6a137b9ca341cb6a09b96cc46076931",
+            ["arb1:0xa90406eE8ee83791Be889b6b80c1082AD9a9cA04"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be": "ERC1967Proxy",
+        "arb1:0xa90406eE8ee83791Be889b6b80c1082AD9a9cA04": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0x2184fA618cf512a466963FB75fe167330475f685",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729696,
+      "sinceBlock": 270969334,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x2A24A0653672BAC4f0DB25585B74A64c3ECc45Ab",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:56.000Z",
+            "0xdef40dea42855c3df7c9c5d5404ea6cd0c3952097f83da37c3509db279324954",
+            ["arb1:0x2A24A0653672BAC4f0DB25585B74A64c3ECc45Ab"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0x2184fA618cf512a466963FB75fe167330475f685": "ERC1967Proxy",
+        "arb1:0x2A24A0653672BAC4f0DB25585B74A64c3ECc45Ab": ""
+      }
+    },
+    {
+      "address": "arb1:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729705,
+      "sinceBlock": 270969370,
+      "values": {
+        "$admin": "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
+        "$implementation": "arb1:0x290c2e9f4C1EeFa39Ce71675F8AC5DA7DBF8045f",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:05.000Z",
+            "0x4d6ad32c30f5945f451ec448dea825fb6e90adc459d84729639d8d2d627956aa",
+            ["arb1:0x290c2e9f4C1EeFa39Ce71675F8AC5DA7DBF8045f"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22": "ERC1967Proxy",
+        "arb1:0x290c2e9f4C1EeFa39Ce71675F8AC5DA7DBF8045f": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729691,
+      "sinceBlock": 270969313,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x5119eE44dE16D8Ff6734B351A2A551885a5f4eb7",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:51.000Z",
+            "0x2073c89497df84f46da16756fb4eb97f43088540d99f18d878c29a65cc2942e8",
+            ["arb1:0x5119eE44dE16D8Ff6734B351A2A551885a5f4eb7"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9": "ERC1967Proxy",
+        "arb1:0x5119eE44dE16D8Ff6734B351A2A551885a5f4eb7": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729699,
+      "sinceBlock": 270969348,
+      "values": {
+        "$admin": "arb1:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
+        "$implementation": "arb1:0x449c6fa08272EA8C0A5c5E1EE59Dc039dCa14626",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:59.000Z",
+            "0xe05c4988c8988043ea3a48aaa69d74ef48e0742fe82e780542b962d591f40a57",
+            ["arb1:0x449c6fa08272EA8C0A5c5E1EE59Dc039dCa14626"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF": "ERC1967Proxy",
+        "arb1:0x449c6fa08272EA8C0A5c5E1EE59Dc039dCa14626": ""
+      }
+    },
+    {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
+      "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729689,
+      "sinceBlock": 270969308,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:49.000Z",
+            "0x0f162f3c6b2c4bf5d92b1b840eed603822e3da1bcb5bbe2b48f131f633b54091",
+            ["arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getImplementationAddress": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
+        "getInitializedVersion": 1,
+        "isPaused": false,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "services": {
+          "Trust Service": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
+          "Registry Service": "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0",
+          "Compliance Service": "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9",
+          "Wallet Manager": "arb1:0x2184fA618cf512a466963FB75fe167330475f685",
+          "Lock Manager": "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd",
+          "Compliance Configuration Service": "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110",
+          "Token Issuer": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "Wallet Registrar": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "Omnibus TBE Controller": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "Transaction Relayer": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "Token Reallocator": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "Bulk Operator": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22"
+        },
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 47759008290000,
+        "totalSupply": 31075391320000,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 4
+      },
+      "errors": {
+        "$tokenData": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": "ERC1967Proxy",
+        "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": "DSToken"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "Trust Service",
+            "2": "DS Token",
+            "4": "Registry Service",
+            "8": "Compliance Service",
+            "16": "Unused 1",
+            "32": "Wallet Manager",
+            "64": "Lock Manager",
+            "128": "Partitions Manager",
+            "256": "Compliance Configuration Service",
+            "512": "Token Issuer",
+            "1024": "Wallet Registrar",
+            "2048": "Omnibus TBE Controller",
+            "4096": "Transaction Relayer",
+            "8192": "Token Reallocator",
+            "8193": "Bulk Operator",
+            "8194": "Issuer Multicall",
+            "8195": "TA Multicall",
+            "16384": "Securitize Swap"
+          }
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729695,
+      "sinceBlock": 270969329,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x5f1B099229d46bA596c0E28F3eCa8Fcc7969cD1e",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:55.000Z",
+            "0xdf7f160ba82acea9fc8388fd24f979578204550136f81b754d5638fc15284732",
+            ["arb1:0x5f1B099229d46bA596c0E28F3eCa8Fcc7969cD1e"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110": "ERC1967Proxy",
+        "arb1:0x5f1B099229d46bA596c0E28F3eCa8Fcc7969cD1e": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729704,
+      "sinceBlock": 270969365,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x1DD7a503D9df46AbF3A34eD5E44F1991Ad8B65cb",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:04.000Z",
+            "0x1a1cc3496e3fa0f1dc2e1118f32b5cec4075f2dc86c60ff1ccd790680af35cfa",
+            ["arb1:0x1DD7a503D9df46AbF3A34eD5E44F1991Ad8B65cb"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950": "ERC1967Proxy",
+        "arb1:0x1DD7a503D9df46AbF3A34eD5E44F1991Ad8B65cb": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729698,
+      "sinceBlock": 270969343,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x9f35e5fE6862F8b87ffeA7bD40AEb33034DAEd37",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:58.000Z",
+            "0xe7a004a1b9fb0c9cf638598b77ca747a7c057b6d07330fa5f657f91c05474a21",
+            ["arb1:0x9f35e5fE6862F8b87ffeA7bD40AEb33034DAEd37"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7": "ERC1967Proxy",
+        "arb1:0x9f35e5fE6862F8b87ffeA7bD40AEb33034DAEd37": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729697,
+      "sinceBlock": 270969339,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x42b9f0bc657D152b244fA4910c0D491C809dd7A3",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:57.000Z",
+            "0xf2137f24640e68bf3421d3338e0b56a8362a46f10a149e61c9867e0669006275",
+            ["arb1:0x42b9f0bc657D152b244fA4910c0D491C809dd7A3"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd": "ERC1967Proxy",
+        "arb1:0x42b9f0bc657D152b244fA4910c0D491C809dd7A3": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729692,
+      "sinceBlock": 270969318,
+      "values": {
+        "$admin": "arb1:0x0000000000000000000000000000000000000000",
+        "$implementation": "arb1:0x1bE6A6C62c4d4aB5BA35041766EF708a6A367E0F",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:52.000Z",
+            "0x1a34088e8ff4d03fdd0604989f678c7ba356d0a1e420004c78266652cc9655cc",
+            ["arb1:0x1bE6A6C62c4d4aB5BA35041766EF708a6A367E0F"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A": "ERC1967Proxy",
+        "arb1:0x1bE6A6C62c4d4aB5BA35041766EF708a6A367E0F": ""
+      }
+    },
+    {
+      "address": "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x2184fA618cf512a466963FB75fe167330475f685",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729693,
+      "sinceBlock": 270969323,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0xD9e7332A0A1bf0DE24F64404FA4d6Acb07c448e4",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:53.000Z",
+            "0x7b6a4d102364e090be024bf3ec6c50e49187cec79bfdf7d8dbdc6bb2cbb12363",
+            ["arb1:0xD9e7332A0A1bf0DE24F64404FA4d6Acb07c448e4"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0": "ERC1967Proxy",
+        "arb1:0xD9e7332A0A1bf0DE24F64404FA4d6Acb07c448e4": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729702,
+      "sinceBlock": 270969360,
+      "values": {
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0x00c15AF9c8091dB3F424c3DB3d01cd3C4bbFD815",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:02.000Z",
+            "0xc08971c0de243db0821a38c222b37ea3d833b066acd42654c430111897dd660a",
+            ["arb1:0x00c15AF9c8091dB3F424c3DB3d01cd3C4bbFD815"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a": "ERC1967Proxy",
+        "arb1:0x00c15AF9c8091dB3F424c3DB3d01cd3C4bbFD815": ""
+      }
+    },
     {
       "name": "WalletRegistrar",
       "address": "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab",
@@ -2500,6 +2988,214 @@
     }
   ],
   "abis": {
+    "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0x2184fA618cf512a466963FB75fe167330475f685": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed burner, uint256 value, string reason)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event Issue(address indexed to, uint256 value, uint256 valueLocked)",
+      "event OmnibusBurn(address indexed omnibusWallet, address who, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusDeposit(address indexed omnibusWallet, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusSeize(address indexed omnibusWallet, address from, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusTBEOperation(address indexed omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "event OmnibusTBETransfer(address omnibusWallet, string externalId)",
+      "event OmnibusTransfer(address indexed omnibusWallet, address from, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusWithdraw(address indexed omnibusWallet, address from, uint256 value, uint8 assetTrackingMode)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Seize(address indexed from, address indexed to, uint256 value, string reason)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpause()",
+      "event Upgraded(address indexed implementation)",
+      "event WalletAdded(address wallet)",
+      "event WalletRemoved(address wallet)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function __StandardToken_init()",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function balanceOfInvestor(string _id) view returns (uint256)",
+      "function burn(address _who, uint256 _value, string _reason)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function emitOmnibusTBEEvent(address omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "function emitOmnibusTBETransferEvent(address omnibusWallet, string externalId)",
+      "function emitOmnibusTransferEvent(address _omnibusWallet, address _from, address _to, uint256 _value)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getWalletAt(uint256 _index) view returns (address)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isPaused() view returns (bool)",
+      "function issueTokens(address _to, uint256 _value) returns (bool)",
+      "function issueTokensCustom(address _to, uint256 _value, uint256 _issuanceTime, uint256 _valueLocked, string _reason, uint64 _releaseTime) returns (bool)",
+      "function issueTokensWithMultipleLocks(address _to, uint256 _value, uint256 _issuanceTime, uint256[] _valuesLocked, string _reason, uint64[] _releaseTimes) returns (bool)",
+      "function issueTokensWithNoCompliance(address _to, uint256 _value)",
+      "function name() view returns (string)",
+      "function omnibusBurn(address _omnibusWallet, address _who, uint256 _value, string _reason)",
+      "function omnibusSeize(address _omnibusWallet, address _from, address _to, uint256 _value, string _reason)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function preTransferCheck(address _from, address _to, uint256 _value) view returns (uint256 code, string reason)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function seize(address _from, address _to, uint256 _value, string _reason)",
+      "function setCap(uint256 _cap)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setFeature(uint8 featureIndex, bool enable)",
+      "function setFeatures(uint256 features)",
+      "function supportedFeatures() view returns (uint256 value)",
+      "function symbol() view returns (string)",
+      "function totalIssued() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateOmnibusInvestorBalance(address _omnibusWallet, address _wallet, uint256 _value, uint8 _increase) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletCount() view returns (uint256)"
+    ],
+    "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab": [
       "constructor()",
       "event ProxyOwnerChanged(address owner)",
@@ -4657,6 +5353,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23976993 },
-  "permissionsConfigHash": "0x8da5b81679f46df24eadc6318c91d14e3d7cdf334aeb5254bc4221f56eea6328"
+  "usedBlockNumbers": { "arbitrum": 408901992, "ethereum": 23976993 },
+  "permissionsConfigHash": "0xd9d375a7a9934d27dd3af7b3e0d91203da35e2cbf8ddd0ab417a8634209cb601"
 }

@@ -1,10 +1,17 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "buidl-token",
-  "import": ["../../globalConfig.jsonc"],
+  "import": [
+    "../../globalConfig.jsonc"
+  ],
   "initialAddresses": [
     "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041", // deployed Dec-17-2024
-    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec"  // deployed Mar-01-2024
+    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec", // deployed Mar-01-2024
+    "arb1:0xa6525ae43edcd03dc08e775774dcabd3bb925872", // deployed Nov-04-2024
+    //"oeth:0xa1cdab15bba75a80df4089cafba013e376957cf5", //
+    "bnb:0x2d5bdc96d9c8aabbdb38c9a27398513e7e5ef84f",
+    "matic:0x2893ef551b6dd69f661ac00f11d93e5dc5dc0e99"
+    //"avax:0x53fc82f14f009009b440a706e31c9021e1196a2f"
   ],
   "names": {
     "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041": "BUIDL DSToken New",
@@ -48,7 +55,10 @@
   },
   "overrides": {
     "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "$tokenData": {
           "handler": {
@@ -60,165 +70,333 @@
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0xf8e91Fa34311876302D36D14B4F246044FD4332a": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0xc7Ca0CE7626940838A87656656C6Af92B95abd00": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x1Df0616fD703643411d62C34DFBFA3A261dF7dab": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x32708a900a740846445Fd49c0C00df15701720a2": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x41A5F31c45Fa12913E125914Bd79Ef49beFA1a1f": {
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
@@ -230,13 +408,29 @@
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       },
@@ -270,13 +464,29 @@
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       },
@@ -303,7 +513,7 @@
         "SECURITIZE_SWAP"
       ]
     },
-    "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": {   // Trust Service (new)
+    "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c": { // Trust Service (new)
       "types": {
         "RoleIdToName": {
           "typeCaster": "Mapping",
@@ -322,19 +532,37 @@
             "type": "event",
             "select": "targetAddress",
             "groupBy": "role",
-            "add": { "event": "DSTrustServiceRoleAdded" },
-            "remove": { "event": "DSTrustServiceRoleRemoved" }
+            "add": {
+              "event": "DSTrustServiceRoleAdded"
+            },
+            "remove": {
+              "event": "DSTrustServiceRoleRemoved"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "RoleIdToName"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "RoleIdToName"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
-    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec": {
+    "eth:0x7712c34205737192402172409a8f7ccef8aa2aec": { // old DSToken Ethereum
       "proxyType": "simple target proxy",
       "fields": {
         "$tokenData": {
@@ -347,25 +575,42 @@
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       },
       "ignoreMethods": [
-        "getDSService", "getWalletAt"
+        "getDSService",
+        "getWalletAt"
       ]
     },
     "eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x1dc378568cefD4596C5F9f9A14256D8250b56369": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60": { // Trust Service (old)
       "proxyType": "simple target proxy",
@@ -387,82 +632,227 @@
             "type": "event",
             "select": "targetAddress",
             "groupBy": "role",
-            "add": { "event": "DSTrustServiceRoleAdded" },
-            "remove": { "event": "DSTrustServiceRoleRemoved" }
+            "add": {
+              "event": "DSTrustServiceRoleAdded"
+            },
+            "remove": {
+              "event": "DSTrustServiceRoleRemoved"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "RoleIdToName"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "RoleIdToName"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x090F220fa6BAA22bE107971acf8963546C4Da366": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x0A65a40a4B2F64D3445A628aBcFC8128625483A4": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": {
       "proxyType": "simple target proxy",
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1": {
       "proxyType": "simple target proxy",
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ]
     },
     "eth:0xD75c86c3e3761e2B2A7960aFb670850923899473": {
       "proxyType": "simple target proxy",
-      "ignoreMethods": ["getDSService", "getWalletAt"],
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ],
       "fields": {
         "services": {
           "handler": {
             "type": "event",
             "select": "serviceAddress",
             "groupBy": "serviceId",
-            "set": { "event": "DSServiceSet" }
+            "set": {
+              "event": "DSServiceSet"
+            }
           },
           "edit": [
             "pipe",
-            ["to_entries"],
-            ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
-            ["from_entries"]
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
           ]
         }
       }
     },
     "eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
     },
     "eth:0xf33675685C8Ee774c7f5655C93AfEdC7B9818EcD": {
-      "proxyType": "simple target proxy",
+      "proxyType": "simple target proxy"
+    },
+    "arb1:0xa6525ae43edcd03dc08e775774dcabd3bb925872": { // Arb BUIDL TOken
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data"
+          }
+        },
+        "services": {
+          "handler": {
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": {
+              "event": "DSServiceSet"
+            }
+          },
+          "edit": [
+            "pipe",
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
+          ]
+        }
+      },
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ]
+    },
+    "oeth:0xa1cdab15bba75a80df4089cafba013e376957cf5": { // OP BUIDL TOken
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data"
+          }
+        },
+        "services": {
+          "handler": {
+            "type": "event",
+            "select": "serviceAddress",
+            "groupBy": "serviceId",
+            "set": {
+              "event": "DSServiceSet"
+            }
+          },
+          "edit": [
+            "pipe",
+            [
+              "to_entries"
+            ],
+            [
+              "map",
+              [
+                "set",
+                0,
+                [
+                  "format",
+                  "ServiceNameMapping"
+                ]
+              ]
+            ],
+            [
+              "from_entries"
+            ]
+          ]
+        }
+      },
+      "ignoreMethods": [
+        "getDSService",
+        "getWalletAt"
+      ]
     }
   }
 }
