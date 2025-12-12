@@ -12,10 +12,7 @@ export const soon: ScalingProject = opStackL2({
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.VM.SolanaVM],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',

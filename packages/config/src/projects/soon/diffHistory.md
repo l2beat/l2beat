@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc0634661a39a388690c1fd0bad100e8e5e77f654
+Generated with discovered.json: 0xfee33f8f684474bc6c04e720afdf81f3c09edbfd
 
-# Diff at Tue, 09 Dec 2025 14:04:23 GMT:
+# Diff at Fri, 12 Dec 2025 15:41:41 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1760436956
-- current timestamp: 1765288578
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1760436956
+- current timestamp: 1765554035
 
 ## Description
 
@@ -49,14 +49,23 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 +        28800
       values.proofMaturityDelaySeconds:
 +        28800
+      values.RespectedGameString:
++        "KailuaGame"
++++ severity: HIGH
       values.respectedGameType:
 +        2000
       values.respectedGameTypeUpdatedAt:
 +        1765180799
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}
       implementationNames.eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA:
 -        "OptimismPortal"
       implementationNames.eth:0x29174FC953F163452093aFa9eE3904168C74b2E7:
 +        "OptimismPortal2"
+      usedTypes.1:
++        {"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","2000":"KailuaGame"}}
     }
 ```
 
@@ -88,13 +97,13 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6)
+    contract RiscZeroVerifier (eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087)
+    contract PermissionedDisputeGame (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087)
     +++ description: None
 ```
 
@@ -106,7 +115,7 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e)
+    contract FaultDisputeGame (eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e)
     +++ description: None
 ```
 
@@ -119,13 +128,7 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 ```diff
 +   Status: CREATED
     contract KailuaTreasury (eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaGame (eth:0xF98eB2beF32Bf78b730A9D09192433cc47c9E6F7)
-    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.01 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
 ```
 
 ## Source code changes
@@ -133,13 +136,12 @@ OptimismPortal replaced with OptimismPortal2 using dispute games. Significant ch
 ```diff
 .../DisputeGameFactory/DisputeGameFactory.sol      | 1550 +++++++++++++++++++
  .../DisputeGameFactory}/Proxy.p.sol                |    0
- ...:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32.sol | 1409 ++++++++++++++++++
- ...:0xF98eB2beF32Bf78b730A9D09192433cc47c9E6F7.sol | 1409 ++++++++++++++++++
+ .../src/projects/soon/.flat/KailuaGame.sol         | 1409 ++++++++++++++++++
  .../src/projects/soon/.flat/KailuaTreasury.sol     | 1561 ++++++++++++++++++++
  .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  723 ---------
  .../OptimismPortal2/OptimismPortal2.sol}           |  404 +++--
  .../OptimismPortal2}/Proxy.p.sol                   |    0
- 8 files changed, 6180 insertions(+), 876 deletions(-)
+ 7 files changed, 4771 insertions(+), 876 deletions(-)
 ```
 
 Generated with discovered.json: 0x203f7e072e3df52940450ccfc926018940f3ff86

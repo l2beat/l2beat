@@ -1,51 +1,60 @@
 {
-    "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-    "displayName": "OptimismPortal2",
-    "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to {{ MIN_BRIDGE_VALUE }} ETH.",
-    "ignoreMethods": ["isOutputFinalized", "balance"],
-    "ignoreInWatchMode": ["params"],
-    "fields": {
-      "MIN_BRIDGE_VALUE": {
-        "edit": ["format", "Undecimal18"],
-        "description": "Minimum deposit value."
-      },
-      "guardian": {
-        "permissions": [
-          { "type": "guard" },
-          { "type": "interact", "description": "freeze specific withdrawals." }
-        ]
-      },
-      "frozenWithdrawals": {
-        "description": "Lists all frozen withdrawals.",
-        "handler": {
-          "type": "event",
-          "select": "withdrawalHash",
-          "add": {
-            "event": "WithdrawalFrozenStateUpdated",
-            "where": ["=", "#frozen", true]
-          },
-          "remove": {
-            "event": "WithdrawalFrozenStateUpdated",
-            "where": ["=", "#frozen", false]
-          }
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal2",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to {{ MIN_BRIDGE_VALUE }} ETH.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame",
+        "2000": "KailuaGame"
+      }
+    }
+  },
+  "fields": {
+    "MIN_BRIDGE_VALUE": {
+      "edit": ["format", "Undecimal18"],
+      "description": "Minimum deposit value."
+    },
+    "guardian": {
+      "permissions": [
+        { "type": "guard" },
+        { "type": "interact", "description": "freeze specific withdrawals." }
+      ]
+    },
+    "frozenWithdrawals": {
+      "description": "Lists all frozen withdrawals.",
+      "handler": {
+        "type": "event",
+        "select": "withdrawalHash",
+        "add": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", true]
+        },
+        "remove": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", false]
         }
       }
     },
-      "respectedGameType": {
-        "severity": "HIGH"
+    "respectedGameType": {
+      "severity": "HIGH"
+    },
+    "RespectedGameString": {
+      "handler": {
+        "type": "call",
+        "method": "respectedGameType",
+        "args": []
       },
-      "RespectedGameString": {
-        "handler": {
-          "type": "call",
-          "method": "respectedGameType",
-          "args": []
-        },
-        "edit": ["format", "DisputeGameMap"]
-      },
-      "paused": {
-        "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
-        "severity": "HIGH"
-      },
-    "category": "core"
-  }
-  
+      "edit": ["format", "DisputeGameMap"]
+    },
+    "paused": {
+      "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+      "severity": "HIGH"
+    }
+  },
+  "category": "core"
+}
