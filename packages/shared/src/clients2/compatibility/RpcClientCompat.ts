@@ -228,7 +228,10 @@ export class RpcClientCompat implements IRpcClient {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const result = await this.ethRpcClient.call(
-      callParams,
+      {
+        to: callParams.to,
+        input: callParams.data.toString(),
+      },
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )
     if (result.reverted) {
