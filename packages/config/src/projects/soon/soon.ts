@@ -11,8 +11,14 @@ export const soon: ScalingProject = opStackL2({
   addedAt: UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
-  additionalBadges: [BADGES.VM.SolanaVM],
+  additionalBadges: [BADGES.VM.SolanaVM, BADGES.Stack.OPKailua],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+  nonTemplateProofSystem: {
+    type: 'Optimistic',
+    name: 'OP Kailua',
+    zkCatalogId: ProjectId('risc0'),
+    challengeProtocol: 'Single-step',
+  },
   display: {
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
