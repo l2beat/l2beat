@@ -366,7 +366,8 @@ function opStackCommon(
               : undefined),
       stacks: ['OP Stack'],
       warning:
-        templateVars.display.warning === undefined
+        templateVars.display.warning === undefined &&
+        fraudProofType === 'None'
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
@@ -942,16 +943,32 @@ The Kailua state validation system is primarily optimistically resolved, so no v
       }
     }
     case 'OpSuccinctFDP': {
+      const maxChallengeDuration =
+        templateVars.discovery.getContractValue<number>(
+          'OPSuccinctFaultDisputeGame',
+          'maxChallengeDuration',
+        )
+      const maxProveDuration = templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'maxProveDuration',
+      )
+      const proposerBond = templateVars.discovery.getContractValue<number>(
+        'DisputeGameFactory',
+        'initBondGame42',
+      )
+      const challengerBond = templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'challengerBond',
+      )
       return {
         categories: [
           {
-            title: 'Validity proofs',
-            description:
-              'State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond. Once created, the game enters a challenge period during which whitelisted challengers can dispute the proposal by also posting a bond. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.',
+            title: 'Fraud proofs',
+            description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond of ${formatEther(proposerBond)} ETH. Once created, the game enters a challenge period of ${formatSeconds(maxChallengeDuration)} during which whitelisted challengers can dispute the proposal by posting a bond of ${formatEther(challengerBond)} ETH. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period of ${formatSeconds(maxProveDuration)}. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
             references: [
               {
-                url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-                title: 'Op-Succinct architecture',
+                url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
+                title: 'OP Succinct Lite architecture',
               },
             ],
             risks: [
@@ -1147,9 +1164,15 @@ function getRiskViewStateValidation(
     }
     case 'OpSuccinctFDP': {
       return {
-        ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+        ...RISK_VIEW.STATE_FP_1R_ZK,
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'DisputeGameFactory',
+            'initBondGame42',
+          ),
+        ),
       }
     }
   }
