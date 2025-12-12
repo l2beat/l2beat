@@ -546,6 +546,7 @@
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
+        "game42": "eth:0x0000000000000000000000000000000000000000",
         "gameCount": 10,
         "gameImpls": [
           "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e",
@@ -556,6 +557,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
         "permissionedGamesTotal": 0,
@@ -564,7 +566,8 @@
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
-        "game2000": { "severity": "HIGH" }
+        "game2000": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2": "Proxy",
@@ -1418,7 +1421,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/DisputeGameFactory": "0xde4c478ab4ddd97ea68254795091387a077f13de29901d84b2221e8eb6234abb",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
