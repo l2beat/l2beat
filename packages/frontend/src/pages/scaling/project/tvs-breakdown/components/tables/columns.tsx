@@ -83,7 +83,7 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'contract',
-    header: 'Contract',
+    header: 'Token Contract',
     cell: (ctx) => {
       const { address } = ctx.row.original
       if (!address) return <div className="font-medium text-xs">Native</div>
