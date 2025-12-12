@@ -28,7 +28,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
       </span>
     </div>
   )
-  const flattedColumns = columns.flatMap((column) =>
+  const columnsWithoutGroups = columns.flatMap((column) =>
     column.columns.length > 0 ? column.columns : [column],
   )
 
@@ -47,7 +47,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             Columns
           </span>
           <div className="flex flex-wrap gap-1">
-            {flattedColumns
+            {columnsWithoutGroups
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <ColumnControl key={column.id} column={column} />
@@ -69,7 +69,7 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
             </DrawerDescription>
           </DrawerHeader>
           <div className="mb-5 flex flex-wrap gap-1">
-            {flattedColumns
+            {columnsWithoutGroups
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <ColumnControl key={column.id} column={column} />
