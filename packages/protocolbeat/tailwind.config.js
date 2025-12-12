@@ -23,7 +23,7 @@ module.exports = {
       animation: {
         disco: 'disco 3s linear infinite',
         spin: 'spin 1s linear infinite',
-        'spin-reverse': 'spin-reverse 3s linear infinite',
+        'spin-reverse': 'spin-reverse 1s linear infinite',
         breath: 'breath 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
