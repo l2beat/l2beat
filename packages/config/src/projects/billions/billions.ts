@@ -16,7 +16,10 @@ export const billions: ScalingProject = upcomingL2({
     links: {
       websites: ['https://billions.network/'],
       bridges: [],
-      socialMedia: ['https://x.com/billions_ntwk'],
+      socialMedia: [
+        'https://x.com/billions_ntwk',
+        'https://discord.com/invite/billions-ntwk',
+      ],
       repositories: ['https://github.com/0xPolygonID'],
     },
   },
