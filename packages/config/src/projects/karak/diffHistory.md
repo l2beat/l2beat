@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc2306dd66119ecdaaaee723e96c4ba0ca6538bce
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+K2 is posting to Celestia.
 
 ## Watched changes
 
