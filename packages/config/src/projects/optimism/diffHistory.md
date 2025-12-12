@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xdd45fa001a5c2f9a087a498bf29e1df56a4c7bc6
+
+# Diff at Thu, 11 Dec 2025 14:23:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1765362353
+- current timestamp: 1765362353
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362353 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x473300df21D047806A082244b417f96b32f13A33) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0x29f8a08284e18dde534461cd079a1388405895b3
 
 # Diff at Wed, 10 Dec 2025 10:26:58 GMT:

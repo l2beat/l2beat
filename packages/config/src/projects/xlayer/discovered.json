@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
-  "timestamp": 1765281854,
-  "configHash": "0xc91df3ca962fee2e3c8026d547154484fc0dbc545a0b3f7f8e799a65de227bf8",
+  "timestamp": 1765461274,
+  "configHash": "0x2205252c151265cccb0eb4f027e501ac1a0bcd6c2365988ba18fce80c4db1394",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -34,12 +34,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x32D9F54F7d9B41F5b63e9075eA52Ed59fB1dda6B",
+        "anchorGame": "eth:0x14EeCF974b31deE0D06509f54f18b0D8e231bE09",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7d5d3971575992cfc2778a16a150f83bef678ccd16187a07e8fc5c702845ce6f",
-          45904129
+          "0xbfd432449e6bea0908b6a03e27b37ba3686be2e1a33ed7731ebbe6aeeca36d85",
+          46084705
         ],
         "initVersion": 1,
         "paused": false,
@@ -119,7 +119,7 @@
         "proxyAdminOwner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "symbol": "WETH",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "totalSupply": 2520000000000,
+        "totalSupply": 2510000000000,
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -592,8 +592,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 23969712
+          "prevBoughtGas": 877658,
+          "prevBlockNum": 23989850
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -749,7 +749,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
       "values": {
@@ -764,7 +764,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1025,
+        "gameCount": 1074,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -777,7 +777,7 @@
         "initBonds": [0, 10000000000, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
-        "permissionedGamesTotal": 1025,
+        "permissionedGamesTotal": 1074,
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "version": "1.3.0"
@@ -1161,7 +1161,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619798",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619801",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2136,12 +2136,12 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
+    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 23975101 },
+  "usedBlockNumbers": { "ethereum": 23989863 },
   "permissionsConfigHash": "0x8afba1ddf5c0e260d5b52776d02163e8dd9609e15c51dc491ab361a7d91a7c1b"
 }

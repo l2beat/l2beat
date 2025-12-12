@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x1657aad65631790333757dc3ed10b8656d9b31aa
+
+# Diff at Thu, 11 Dec 2025 14:44:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1761057242
+- current timestamp: 1765464194
+
+## Description
+
+Proposal 'Add operator and whitelist on ArbitrageManager'.
+
+https://etherscan.io/tx/0x5fc0f82626050e69d321cc50739845f5f491d68a5fe31293428751277205d308
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        68
++        69
+    }
+```
+
 Generated with discovered.json: 0x93cc56f31f0264a70a3b165609a797477c35f95b
 
 # Diff at Tue, 21 Oct 2025 14:35:11 GMT:

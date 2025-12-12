@@ -19,7 +19,7 @@
     "eth:0x17d9C293Bc6EBeDE84BB1F1de9061C2df10B622c": "StaticMerkleRootMultisigIsm"
   },
   "overrides": {
-    "eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161": {
+    "eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB": {
       // StaticAggregationIsm_default
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the [{{modules}}] ISM contracts successfully verify a message.",
       "fields": {

@@ -1,6 +1,6 @@
 {
   "name": "amarok",
-  "timestamp": 1764757760,
+  "timestamp": 1765464153,
   "configHash": "0x6d8b6fca8f4e4789884fc36a519ea0374131483213f5f108bf31d952a9280cf7",
   "entries": [
     {
@@ -34,7 +34,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 980420,
+        "getLastCompletedSnapshotId": 980813,
         "getSnapshotDuration": 1800,
         "home": "eth:0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -662,7 +662,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1764757751,
+        "getCurrentTime": 1765464143,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -1156,7 +1156,7 @@
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 215,
+        "numProposals": 216,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "proposer": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
       },
@@ -1319,7 +1319,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 909,
+        "nonce": 910,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2002,7 +2002,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2358,7 +2358,8 @@
           "SHERLOCK_CLAIM",
           "ROPU_ETHx",
           "MULTIPLE_CHOICE_QUERY",
-          "MULTIPLE_VALUES"
+          "MULTIPLE_VALUES",
+          "0x4153534552545f54525554483200000000000000000000000000000000000000"
         ]
       },
       "implementationNames": {
@@ -5188,6 +5189,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23932327 },
+  "usedBlockNumbers": { "ethereum": 23990103 },
   "permissionsConfigHash": "0x1f65175eee74f89730960922270976ad86c37fc92cf1eb9717dff90f4e8ce774"
 }
