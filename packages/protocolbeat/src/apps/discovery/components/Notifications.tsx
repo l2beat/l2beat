@@ -12,7 +12,7 @@ export function NotificationsRoot() {
       icons={{
         success: <IconChecked className="text-aux-green" />,
         error: <IconTriangleAlert className="text-aux-red" />,
-        warning: <IconTriangleAlert className="shad text-aux-yellow" />,
+        warning: <IconTriangleAlert className="text-aux-yellow" />,
         info: <IconInfoCircle className="text-aux-blue" />,
         loading: <IconGears animate className="text-aux-teal" />,
       }}
