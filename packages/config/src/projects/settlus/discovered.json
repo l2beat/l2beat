@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1764324033,
+  "timestamp": 1765551022,
   "configHash": "0x37c00114a7d227bfef47364552183782bd8ad38f7af671d79419653dc8719dcf",
   "entries": [
     {
@@ -318,7 +318,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 84,
+        "nonce": 91,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1283,7 +1283,7 @@
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 4468,
+        "gameCount": 4694,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1296,7 +1296,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 4468,
+        "permissionedGamesTotal": 4694,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -2276,6 +2276,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23896440 },
+  "usedBlockNumbers": { "ethereum": 23997243 },
   "permissionsConfigHash": "0x7df34f7bfbeb5b0175f78294b8c99f87f062b4a726082525568f35019073f616"
 }

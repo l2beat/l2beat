@@ -1,6 +1,6 @@
 {
   "name": "r0ar",
-  "timestamp": 1743765215,
+  "timestamp": 1765550969,
   "configHash": "0xf0977b587a0418f0e929a1010fa9a7690633641b4c1582dcb7e6061cae980c3c",
   "entries": [
     {
@@ -83,7 +83,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 309981,
-          "prevBlockNum": 22024919
+          "prevBlockNum": 23983670
         },
         "paused": false,
         "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
@@ -162,7 +162,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619782",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620957",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -608,10 +608,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7738200,
-        "latestOutputIndex": 4298,
-        "nextBlockNumber": 7740000,
-        "nextOutputIndex": 4299,
+        "latestBlockNumber": 18630000,
+        "latestOutputIndex": 10349,
+        "nextBlockNumber": 18631800,
+        "nextOutputIndex": 10350,
         "proposer": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "PROPOSER": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "startingBlockNumber": 0,
@@ -1875,6 +1875,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22195184 },
+  "usedBlockNumbers": { "ethereum": 23997239 },
   "permissionsConfigHash": "0xe6caa1f1a7e48253b1d50ac1c5c1a390e758e97917b9d4734b885ecb35e6e970"
 }

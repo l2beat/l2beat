@@ -1,6 +1,6 @@
 {
   "name": "silentdata",
-  "timestamp": 1759407917,
+  "timestamp": 1765551112,
   "configHash": "0x02784a6ff8902102ce67298576f0add1ba5bd6a77b262527e2862a2f4ceaf786",
   "entries": [
     {
@@ -78,7 +78,7 @@
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 69,
+        "gameCount": 140,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B99b322085dA031e68C1202fdB756b3FFbaC7A6",
@@ -91,7 +91,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xE512f69D8aEed75c737190F4dB84687FBa7C5e88",
-        "permissionedGamesTotal": 69,
+        "permissionedGamesTotal": 140,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -742,7 +742,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 23023658
+          "prevBlockNum": 23889696
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1761,6 +1761,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23490083 },
+  "usedBlockNumbers": { "ethereum": 23997251 },
   "permissionsConfigHash": "0xf670895bf0b2c45f556b34115f3f50c4158642ca387d8a5513e22b9d47151c69"
 }

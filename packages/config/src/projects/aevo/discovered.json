@@ -1,6 +1,6 @@
 {
   "name": "aevo",
-  "timestamp": 1764933551,
+  "timestamp": 1765550068,
   "configHash": "0x858721ace2ce2a0dde988e2effe636a700eb3a46f23b71e660424836fa177154",
   "entries": [
     {
@@ -76,7 +76,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3191,
+        "gameCount": 3362,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C",
@@ -89,7 +89,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 3191,
+        "permissionedGamesTotal": 3362,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -187,7 +187,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644554",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644578",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -593,7 +593,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 193,
+        "nonce": 194,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -942,7 +942,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 821744,
-          "prevBlockNum": 23944200
+          "prevBlockNum": 23995301
         },
         "paused": false,
         "proofMaturityDelaySeconds": 3600,
@@ -1928,6 +1928,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23946409 },
+  "usedBlockNumbers": { "ethereum": 23997167 },
   "permissionsConfigHash": "0xbb802a990ece97a0534dc4ff02dc0403ef608189afab435a3950cac4ffd249ab"
 }

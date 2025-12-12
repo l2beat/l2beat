@@ -1,6 +1,6 @@
 {
   "name": "superlumio",
-  "timestamp": 1764933892,
+  "timestamp": 1765551224,
   "configHash": "0x671efc13e00134a171b6c08645875b177c45530fac77435282ffa80c83912904",
   "entries": [
     {
@@ -297,7 +297,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 193,
+        "nonce": 194,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1878,6 +1878,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23946436 },
+  "usedBlockNumbers": { "ethereum": 23997260 },
   "permissionsConfigHash": "0x99ebe63e43fe7fdc2eab1258ed3ae36d057c58ce05b0791ffe64046aaf2f61b4"
 }
