@@ -35,6 +35,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
         headClassName: 'w-0',
       },
       size: 44,
+      enableHiding: false,
     }),
     columnHelper.display({
       id: 'logo',
@@ -58,6 +59,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
         cellClassName: 'lg:pr-1.5!',
       },
       size: 28,
+      enableHiding: false,
     }),
   ] as const
 }

@@ -29,6 +29,7 @@ const daLayerColumn = (hash?: string) =>
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    enableHiding: false,
   })
 
 const daRisksColumn = columnHelper.display({
@@ -148,7 +149,7 @@ export const publicSystemsColumns = [
       daRisksColumn,
       tvsColumn(),
       columnHelper.accessor('economicSecurity', {
-        header: () => <span className="text-right">Slashable</span>,
+        header: 'Slashable',
         cell: (ctx) => {
           const value = ctx.getValue()
 

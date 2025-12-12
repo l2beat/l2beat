@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7ae0a805a4ffa68a309bb5c90657410e9383e3d2
+Generated with discovered.json: 0x43643d7ff096194b9ed8ce6b696e6d0618599d11
 
-# Diff at Thu, 11 Dec 2025 16:34:36 GMT:
+# Diff at Wed, 10 Dec 2025 15:56:53 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764933721
-- current timestamp: 1765470811
+- comparing to: main@512df45ec78c32f18fdafac751d924f8a6cf238c block: 1764933721
+- current timestamp: 1765382149
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Mint migrates from Conduit to self-host and self-manage. SuperchainConfig contract upgraded with no diff to migrate from Conduit superchain config to Mint's own config. As a consequence contracts needed upgraded storage to new superchainConfig proxy address, so the old SuperchainConfig  (0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) was replaced with the new one (0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad) across all these contracts through a storage setter.
 
 ## Watched changes
 
@@ -199,25 +199,6 @@ Discovery rerun on the same block number with only config-related changes.
  .../Mint Multisig/SafeProxy.p.sol}                 |  10 +-
  ...0xDa5C416025D5eED8440667C5E80A7c35c2F56220.sol} |   0
  3 files changed, 416 insertions(+), 279 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1764933721 (main branch discovery), not current.
-
-```diff
-    contract DisputeGameFactory (eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662) {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-+++ severity: HIGH
-      values.game42:
-+        "eth:0x0000000000000000000000000000000000000000"
-      values.initBondGame42:
-+        0
-      fieldMeta.game42:
-+        {"severity":"HIGH"}
-    }
 ```
 
 Generated with discovered.json: 0xe340366a8e169059e18c79773c9e079e01566e0e

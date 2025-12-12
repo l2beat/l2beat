@@ -29,6 +29,7 @@ export const zkCatalogColumns = [
         </TableLink>
       )
     },
+    enableHiding: false,
   }),
   columnHelper.accessor((row) => row.tvs, {
     id: 'tvs',

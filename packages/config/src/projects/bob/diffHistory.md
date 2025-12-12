@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0ceb05f023bff30bcf739dfdb233dc5dfa4ead44
+Generated with discovered.json: 0xbab74fe7b51be1ed885772dad35d5faaa6c00e5d
 
-# Diff at Thu, 11 Dec 2025 16:26:08 GMT:
+# Diff at Thu, 11 Dec 2025 14:14:15 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1764953632
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764953632
 - current timestamp: 1764953632
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: remove challenger from template and move to config.
 
 ## Config/verification related changes
 
@@ -17,15 +17,18 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1764953632 (main branch discovery), not current.
 
 ```diff
-    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-+++ severity: HIGH
-      values.game42:
-+        "eth:0x0000000000000000000000000000000000000000"
-      values.initBondGame42:
-+        0
-      fieldMeta.game42:
-+        {"severity":"HIGH"}
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".proposer"}
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".challenger"}
     }
 ```
 
