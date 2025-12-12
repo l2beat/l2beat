@@ -271,9 +271,10 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
-    title: 'Kailua fault proof program (SOON)', // https://github.com/soonlabs/kailua-soon
+    title: 'Kailua fault proof program (SOON)',
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
+    programUrl: 'https://github.com/soonlabs/kailua-soon',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },

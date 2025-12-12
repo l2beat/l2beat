@@ -942,6 +942,10 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
               {
+                url: 'https://github.com/soonlabs/kailua-soon',
+                title: 'SOON Kailua - GitHub',
+              },
+              {
                 url: 'https://risczero.com/blog/kailua-how-it-works',
                 title: 'Risc0 Kailua Docs',
               },
