@@ -1,7 +1,7 @@
 {
   "name": "buidl-token",
   "timestamp": 1765304803,
-  "configHash": "0x6a168c5648b7ac6c557ad0a4deb175deb6f7f61c4561454e05bf9df036f40f94",
+  "configHash": "0xce6f906dfa670ff6b0dcbc368b14e64425bf5507e898d7b267e84e7226ee3b04",
   "entries": [
     {
       "name": "",
@@ -490,6 +490,520 @@
         "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a": "ERC1967Proxy",
         "arb1:0x00c15AF9c8091dB3F424c3DB3d01cd3C4bbFD815": ""
       }
+    },
+    {
+      "address": "avax:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "TrustService",
+      "address": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x16dbbd1072340cd1cc4fb5e441e474eb71688f9b0963a59f056b447e4b1a522f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729538,
+      "sinceBlock": 52649155,
+      "values": {
+        "$admin": "avax:0x0000000000000000000000000000000000000000",
+        "$implementation": "avax:0x145Ed8C00B9DA769d4aBB80a7bCaf9d4D3Bded15",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:12:18.000Z",
+            "0x2fd5acd4c536697a4dc9559cb23138b01aed5ac331640c9f910563e1753d5502",
+            ["avax:0x145Ed8C00B9DA769d4aBB80a7bCaf9d4D3Bded15"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "EXCHANGE": 4,
+        "getImplementationAddress": "avax:0x145Ed8C00B9DA769d4aBB80a7bCaf9d4D3Bded15",
+        "getInitializedVersion": 1,
+        "ISSUER": 2,
+        "MASTER": 1,
+        "NONE": 0,
+        "TRANSFER_AGENT": 8,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6": "ERC1967Proxy",
+        "avax:0x145Ed8C00B9DA769d4aBB80a7bCaf9d4D3Bded15": "TrustService"
+      }
+    },
+    {
+      "address": "avax:0x121C5F97C58F5deE289812F83B98c9612bF1aa91",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "avax:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "avax:0x2004F7f7B600d962170d7f28114Cc123c5e98451",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DSToken",
+      "address": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729534,
+      "sinceBlock": 52649153,
+      "values": {
+        "$admin": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "avax:0xf93667D01c7675E2667Ee392Aa69104DF79c4Ad0",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:12:14.000Z",
+            "0xa8a5a2f68fe9256a1d42d0254624f3dfbb174202dda593738f4446febdf6eeaa",
+            ["avax:0xf93667D01c7675E2667Ee392Aa69104DF79c4Ad0"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getDSService": [
+          "avax:0x0000000000000000000000000000000000000000",
+          "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+          "avax:0x0000000000000000000000000000000000000000",
+          "avax:0x0000000000000000000000000000000000000000",
+          "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8"
+        ],
+        "getImplementationAddress": "avax:0xf93667D01c7675E2667Ee392Aa69104DF79c4Ad0",
+        "getInitializedVersion": 1,
+        "getWalletAt": [
+          "avax:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "avax:0x121C5F97C58F5deE289812F83B98c9612bF1aa91",
+          "avax:0x2004F7f7B600d962170d7f28114Cc123c5e98451",
+          "avax:0xaEb1FA0853c7C98EAb10fcF0EA669aE3d07FBB10"
+        ],
+        "isPaused": false,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 571091066110000,
+        "totalSupply": 313546667410000,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 6
+      },
+      "errors": {
+        "getDSService": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F": "ERC1967Proxy",
+        "avax:0xf93667D01c7675E2667Ee392Aa69104DF79c4Ad0": "DSToken"
+      }
+    },
+    {
+      "name": "RegistryService",
+      "address": "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9d660d6d46433881b5138179c70f61d2831cb8ead9e16590b1ab9f32190d4136"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729540,
+      "sinceBlock": 52649156,
+      "values": {
+        "$admin": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "avax:0x96e8b534C7Da182519D336E0F5C83b021d57F22a",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:12:20.000Z",
+            "0x9d095410af30ca34a4e73d73521c17d4c6c014a7a64d7f9e86d2c72f44319195",
+            ["avax:0x96e8b534C7Da182519D336E0F5C83b021d57F22a"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCREDITED": 2,
+        "APPROVED": 1,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "DS_TOKEN": 2,
+        "EXCHANGE": 4,
+        "getDSService": [
+          "avax:0x0000000000000000000000000000000000000000",
+          "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+          "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "avax:0x0000000000000000000000000000000000000000",
+          "avax:0x0000000000000000000000000000000000000000"
+        ],
+        "getImplementationAddress": "avax:0x96e8b534C7Da182519D336E0F5C83b021d57F22a",
+        "getInitializedVersion": 1,
+        "ISSUER_MULTICALL": 8194,
+        "KYC_APPROVED": 1,
+        "LOCK_MANAGER": 64,
+        "NONE": 0,
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "PENDING": 0,
+        "PROFESSIONAL": 8,
+        "QUALIFIED": 4,
+        "REGISTRY_SERVICE": 4,
+        "REJECTED": 2,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
+      },
+      "errors": {
+        "getDSService": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8": "ERC1967Proxy",
+        "avax:0x96e8b534C7Da182519D336E0F5C83b021d57F22a": "RegistryService"
+      }
+    },
+    {
+      "name": "",
+      "address": "avax:0xaEb1FA0853c7C98EAb10fcF0EA669aE3d07FBB10",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1731680958,
+      "sinceBlock": 53110291,
+      "values": {
+        "$admin": "avax:0xCf28710273B55F9dD6D19088eD4B994af560266b",
+        "$implementation": "avax:0x39e57ea33d43859D741a560c5963f2e2980DD039",
+        "$pastUpgrades": [
+          [
+            "2024-11-15T14:29:18.000Z",
+            "0x328582d6d7d54a5a556e5fbb39ba845ac8f072d1093d7bb3980998a521843c44",
+            ["avax:0x39e57ea33d43859D741a560c5963f2e2980DD039"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "avax:0xaEb1FA0853c7C98EAb10fcF0EA669aE3d07FBB10": "ERC1967Proxy",
+        "avax:0x39e57ea33d43859D741a560c5963f2e2980DD039": ""
+      }
+    },
+    {
+      "address": "avax:0xCf28710273B55F9dD6D19088eD4B994af560266b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "avax:0xaEb1FA0853c7C98EAb10fcF0EA669aE3d07FBB10",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "bnb:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "bnb:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0x2004F7f7B600d962170d7f28114Cc123c5e98451",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DSToken",
+      "address": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1759948106,
+      "sinceBlock": 63931579,
+      "values": {
+        "$admin": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "bnb:0xe478Ae7036D20fD956EbB5bEddD1F6e950657126",
+        "$pastUpgrades": [
+          [
+            "2025-10-08T18:28:26.000Z",
+            "0x962487065866799b3c065443c169ff66fd4713d2e316f6f2f2fd04e83955c2bd",
+            ["bnb:0xe478Ae7036D20fD956EbB5bEddD1F6e950657126"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getDSService": [
+          "bnb:0x0000000000000000000000000000000000000000",
+          "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
+          "bnb:0x0000000000000000000000000000000000000000",
+          "bnb:0x0000000000000000000000000000000000000000",
+          "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3"
+        ],
+        "getImplementationAddress": "bnb:0xe478Ae7036D20fD956EbB5bEddD1F6e950657126",
+        "getInitializedVersion": 1,
+        "getWalletAt": [
+          "bnb:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "bnb:0x2E187b8AF634aADa639789E1bF3B5b402d1Ac4A8",
+          "bnb:0x2004F7f7B600d962170d7f28114Cc123c5e98451",
+          "bnb:0xD8B95d51Ea5E587EcBDcFE93be7253907443a56e"
+        ],
+        "isPaused": false,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 501834151000000,
+        "totalSupply": 501834151000000,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 4
+      },
+      "errors": {
+        "getDSService": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F": "ERC1967Proxy",
+        "bnb:0xe478Ae7036D20fD956EbB5bEddD1F6e950657126": "DSToken"
+      }
+    },
+    {
+      "address": "bnb:0x2E187b8AF634aADa639789E1bF3B5b402d1Ac4A8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "RegistryService",
+      "address": "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x9d660d6d46433881b5138179c70f61d2831cb8ead9e16590b1ab9f32190d4136"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1759948130,
+      "sinceBlock": 63931611,
+      "values": {
+        "$admin": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "bnb:0x5dD5e686869855de06bf13Bc3B80e45fA81f7D4d",
+        "$pastUpgrades": [
+          [
+            "2025-10-08T18:28:50.000Z",
+            "0x3b7d4f306652674e634a1ad087a7a73bb82fae3a8a5e73c43253689edf474b23",
+            ["bnb:0x5dD5e686869855de06bf13Bc3B80e45fA81f7D4d"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ACCREDITED": 2,
+        "APPROVED": 1,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "DS_TOKEN": 2,
+        "EXCHANGE": 4,
+        "getDSService": [
+          "bnb:0x0000000000000000000000000000000000000000",
+          "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
+          "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "bnb:0x0000000000000000000000000000000000000000",
+          "bnb:0x0000000000000000000000000000000000000000"
+        ],
+        "getImplementationAddress": "bnb:0x5dD5e686869855de06bf13Bc3B80e45fA81f7D4d",
+        "getInitializedVersion": 1,
+        "ISSUER_MULTICALL": 8194,
+        "KYC_APPROVED": 1,
+        "LOCK_MANAGER": 64,
+        "NONE": 0,
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "PENDING": 0,
+        "PROFESSIONAL": 8,
+        "QUALIFIED": 4,
+        "REGISTRY_SERVICE": 4,
+        "REJECTED": 2,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
+      },
+      "errors": {
+        "getDSService": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3": "ERC1967Proxy",
+        "bnb:0x5dD5e686869855de06bf13Bc3B80e45fA81f7D4d": "RegistryService"
+      }
+    },
+    {
+      "name": "TrustService",
+      "address": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x16dbbd1072340cd1cc4fb5e441e474eb71688f9b0963a59f056b447e4b1a522f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1759948122,
+      "sinceBlock": 63931600,
+      "values": {
+        "$admin": "bnb:0x0000000000000000000000000000000000000000",
+        "$implementation": "bnb:0x7d4637c17a1B8dc06d0A1f47fE39dAF9C10Adf34",
+        "$pastUpgrades": [
+          [
+            "2025-10-08T18:28:42.000Z",
+            "0xc81a75d811be1e9ddfb6f0a9d5973d3aa16ff5930da4552cf9282d8c30760f75",
+            ["bnb:0x7d4637c17a1B8dc06d0A1f47fE39dAF9C10Adf34"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "EXCHANGE": 4,
+        "getImplementationAddress": "bnb:0x7d4637c17a1B8dc06d0A1f47fE39dAF9C10Adf34",
+        "getInitializedVersion": 1,
+        "ISSUER": 2,
+        "MASTER": 1,
+        "NONE": 0,
+        "TRANSFER_AGENT": 8,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218": "ERC1967Proxy",
+        "bnb:0x7d4637c17a1B8dc06d0A1f47fE39dAF9C10Adf34": "TrustService"
+      }
+    },
+    {
+      "address": "bnb:0xD8B95d51Ea5E587EcBDcFE93be7253907443a56e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "WalletRegistrar",
@@ -1163,45 +1677,6 @@
       }
     },
     {
-      "name": "WormholeRelayer",
-      "address": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
-        "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1686938183,
-      "sinceBlock": 17494020,
-      "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee",
-        "$pastUpgrades": [
-          [
-            "2023-06-16T17:56:23.000Z",
-            "0x4ee56249f741ef28f4180f1b47a3f524e988d0f4dd58d18f18c41b88ba77513d",
-            ["eth:0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"]
-          ],
-          [
-            "2023-06-16T17:56:23.000Z",
-            "0x4ee56249f741ef28f4180f1b47a3f524e988d0f4dd58d18f18c41b88ba77513d",
-            ["eth:0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"]
-          ],
-          [
-            "2023-11-16T18:42:23.000Z",
-            "0x1bb74012ac308d136388b6e5c7dc8cd86e50e7e68cbc468c7a872cb79bbdb54f",
-            ["eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "getDefaultDeliveryProvider": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
-      },
-      "implementationNames": {
-        "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": "SimpleProxy",
-        "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee": "WormholeRelayer"
-      }
-    },
-    {
       "name": "LockManager",
       "address": "eth:0x32708a900a740846445Fd49c0C00df15701720a2",
       "type": "Contract",
@@ -1591,23 +2066,6 @@
       ]
     },
     {
-      "address": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
-        }
-      ]
-    },
-    {
       "name": "OmnibusTBEController",
       "address": "eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1",
       "type": "Contract",
@@ -1987,52 +2445,6 @@
       ]
     },
     {
-      "name": "DeliveryProviderImplementation",
-      "address": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
-        "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1686937559,
-      "sinceBlock": 17493968,
-      "values": {
-        "$admin": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-        "$implementation": "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
-        "$pastUpgrades": [
-          [
-            "2023-06-16T17:45:59.000Z",
-            "0xda80ae732c6c6567b33ce8805c12ba5c1b21d3094ea8eb272bd51157419ed219",
-            ["eth:0xedd08D4363820603fb1B261F7667B8ee170c37a5"]
-          ],
-          [
-            "2023-06-16T17:45:59.000Z",
-            "0xda80ae732c6c6567b33ce8805c12ba5c1b21d3094ea8eb272bd51157419ed219",
-            ["eth:0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"]
-          ],
-          [
-            "2023-11-07T19:13:23.000Z",
-            "0x3e54828f7538d9259f50addac33d3779a48a72f1ac3cedffa062cf89b1351e41",
-            ["eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "chainId": 2,
-        "coreRelayer": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-        "getRewardAddress": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46",
-        "getSupportedKeys": 6,
-        "owner": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "pricingWallet": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
-        "rewardAddress": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
-      },
-      "implementationNames": {
-        "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
-        "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": "DeliveryProviderImplementation"
-      }
-    },
-    {
       "name": "TokenReallocator",
       "address": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
       "type": "Contract",
@@ -2295,18 +2707,6 @@
         "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": "ERC1967Proxy",
         "eth:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": "SecuritizeBridge"
       }
-    },
-    {
-      "address": "eth:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4",
-          "role": "admin"
-        }
-      ]
     },
     {
       "name": "TransactionRelayer",
@@ -2687,11 +3087,6 @@
       ]
     },
     {
-      "address": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2985,6 +3380,930 @@
           }
         }
       ]
+    },
+    {
+      "address": "matic:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "description": "transfer any ERC-20 tokens out of the contract.",
+          "role": ".rescuer"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "matic:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DSToken",
+      "address": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729446,
+      "sinceBlock": 63877025,
+      "values": {
+        "$admin": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:10:46.000Z",
+            "0xab07a3a2a5ed8a9c9db6234622ed9270525c506813e212e8de5d977cf956adfe",
+            ["matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getDSService": [
+          "matic:0x0000000000000000000000000000000000000000",
+          "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+          "matic:0x0000000000000000000000000000000000000000",
+          "matic:0x0000000000000000000000000000000000000000",
+          "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C"
+        ],
+        "getImplementationAddress": "matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836",
+        "getInitializedVersion": 1,
+        "getWalletAt": [
+          "matic:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "matic:0x2e188bdC94baDEBdf751BB133accF4fF67cc4Ce1",
+          "matic:0x895e873498134D2ce2AB118633E164C044bC7B43",
+          "matic:0x4C1e5e780269186A4FBb31c913b11B1a8922B830"
+        ],
+        "isPaused": false,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 612178153760000,
+        "totalSupply": 21255520560000,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 9
+      },
+      "errors": {
+        "getDSService": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99": "ERC1967Proxy",
+        "matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836": "DSToken"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "matic:0x2e188bdC94baDEBdf751BB133accF4fF67cc4Ce1",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1688411044,
+      "sinceBlock": 44644100,
+      "values": {
+        "$immutable": false,
+        "$implementation": "matic:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "matic:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4",
+          "matic:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
+          "matic:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
+          "matic:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
+          "matic:0xf29722a899Aa9FD0836076CA1dA64212c451453C",
+          "matic:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+          "matic:0xF045025C845E786E343Df30cC6f67ec6BB822b34",
+          "matic:0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x607c69bf9dc3ed103d1227e9f88ff816c1a2837c9c04c4c01eb3f60dc5f8efae",
+        "getChainId": 137,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 273,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "matic:0x2e188bdC94baDEBdf751BB133accF4fF67cc4Ce1": "GnosisSafeProxy",
+        "matic:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "",
+      "address": "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729480,
+      "sinceBlock": 63877041,
+      "values": {
+        "$admin": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "matic:0x354C6C5ad9e97BbC0869F96f551F728C2FBb7091",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:11:20.000Z",
+            "0xcaa3998b6e22efcb1304a92b11e1113ca0661c63de54cf828a242a4d7ba6ee00",
+            ["matic:0x354C6C5ad9e97BbC0869F96f551F728C2FBb7091"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C": "ERC1967Proxy",
+        "matic:0x354C6C5ad9e97BbC0869F96f551F728C2FBb7091": ""
+      }
+    },
+    {
+      "name": "Redemption",
+      "address": "matic:0x382dFda7D9BA942E88f4c6c84513f28AdfA1cDF4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xad9e86d03b89251eecc2837d46a2341d57b06ca70f13345ac5e2311be442a3b0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1731722589,
+      "sinceBlock": 64337024,
+      "values": {
+        "$immutable": true,
+        "asset": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+        "liquidity": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "paused": false,
+        "pauser": "matic:0xA9994621F1c3EE59846Df756488229E8efDCB8bf",
+        "pendingOwner": "matic:0x0000000000000000000000000000000000000000",
+        "settlement": "matic:0x8F1A7128b15FfFD42F7555b655ca3E62cE1ECd6a"
+      },
+      "implementationNames": {
+        "matic:0x382dFda7D9BA942E88f4c6c84513f28AdfA1cDF4": "Redemption"
+      }
+    },
+    {
+      "name": "USDC",
+      "address": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "type": "Contract",
+      "template": "tokens/circle/USDC",
+      "sourceHashes": [
+        "0x3e6aa5a9e907eadff9fe4df338a8f629966b60307fbbe5956fb9886d74822fd1",
+        "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
+      ],
+      "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1689890042,
+      "sinceBlock": 45319261,
+      "values": {
+        "$admin": "matic:0x9238E612387eBBA4D4Fa0d76DbFbA99b453417b3",
+        "$immutable": false,
+        "$implementation": "matic:0x235AE97b28466Db30469b89A9fe4cFf0659f82Cb",
+        "$pastUpgrades": [
+          [
+            "2023-12-14T18:08:28.000Z",
+            "0x31b67b0b97abd94f532654a8e750eb82f29bd2aec6399e680ad1a55daa402a52",
+            ["matic:0x235AE97b28466Db30469b89A9fe4cFf0659f82Cb"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "admin": "matic:0x9238E612387eBBA4D4Fa0d76DbFbA99b453417b3",
+        "blacklister": "matic:0xe99Cf1D0418302535936F96eA6625C71BF1695b6",
+        "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
+        "currency": "USD",
+        "decimals": 6,
+        "DOMAIN_SEPARATOR": "0xcaa2ce1a5703ccbe253a34eb3166df60a705c561b44b192061e28f2a985be2ca",
+        "implementation": "matic:0x235AE97b28466Db30469b89A9fe4cFf0659f82Cb",
+        "masterMinter": "matic:0x067b07ED153F2D4640638f7d2945fBe4ED1bF1ac",
+        "minters": [
+          "matic:0x7CD8209e02AfecFaB02C0a4880f72444480B3F4f",
+          "matic:0x166716C2838e182d64886135a96f1AABCA9A9756",
+          "matic:0x83b0CC19BfEd8339289162cdb90FB1445626E230",
+          "matic:0xE8077ee72C904c42D088b2C68F1F7419788740f8",
+          "matic:0x10f7835F827D6Cf035115E10c50A853d7FB2D2EC",
+          "matic:0x3BF8a42EBB7376Eb7983CA090DB611Ce41652922",
+          "matic:0x799710244Ba1b64A00b330E08e93298D610Ff074",
+          "matic:0x07D3C21aCc6810b87b85076B6E963ACCf9cDe540",
+          "matic:0xf91C05d7c4b04cD1c1Fe9f2De958b64fc6a3d0BC",
+          "matic:0x974950823A01839848ca784AA4d3f37FA5cD31d0",
+          "matic:0x52F325b3993B70340bA7403174eCDd5A295E6e7c",
+          "matic:0xfd78EE919681417d192449715b2594ab58f5D002",
+          "matic:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+          "matic:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE"
+        ],
+        "name": "USD Coin",
+        "owner": "matic:0xAEE29e350Dbb28Ce77D0595D898be658626d2BCC",
+        "paused": false,
+        "pauser": "matic:0xA2fB1d6BC5b7aEeC5E7eF7FCA16D60880C5C8Ae1",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
+        "rescuer": "matic:0x0000000000000000000000000000000000000000",
+        "symbol": "USDC",
+        "totalSupply": 626576409288809,
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
+        "version": "2"
+      },
+      "fieldMeta": {
+        "minters": {
+          "description": "All minters, ignoring their 'allowed amount'"
+        }
+      },
+      "implementationNames": {
+        "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359": "FiatTokenProxy",
+        "matic:0x235AE97b28466Db30469b89A9fe4cFf0659f82Cb": "FiatTokenV2_2"
+      }
+    },
+    {
+      "name": "SecuritizeVault",
+      "address": "matic:0x4C1e5e780269186A4FBb31c913b11B1a8922B830",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x8537c65a99bd63fbc4fd2f12adb0b49b3d99c61cb8f2f140ffc8359a8bd101be"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1731724019,
+      "sinceBlock": 64337697,
+      "values": {
+        "$admin": "matic:0xCf28710273B55F9dD6D19088eD4B994af560266b",
+        "$implementation": "matic:0x6A3187F9B83Cd992502760489a6f60FA7D6b754e",
+        "$pastUpgrades": [
+          [
+            "2024-11-16T02:26:59.000Z",
+            "0x668367a675fbb876610f38a06eeb5c49dd6f986db86565fe0e0edf648c2a334f",
+            ["matic:0x6A3187F9B83Cd992502760489a6f60FA7D6b754e"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "asset": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+        "assetImpairedBalance": 0,
+        "convertToAssets": [0, 1, 2, 3, 4],
+        "convertToShares": [0, 1, 2, 3, 4],
+        "decimals": 6,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getImplementationAddress": "matic:0x6A3187F9B83Cd992502760489a6f60FA7D6b754e",
+        "getInitializedVersion": 1,
+        "liquidationOpenToPublic": false,
+        "liquidationToken": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+        "LIQUIDATOR_ROLE": "0x5e17fc5225d4a099df75359ce1f405503ca79498a8dc46a7d583235a0ee45c16",
+        "name": "sBUIDL",
+        "owner": "matic:0xCf28710273B55F9dD6D19088eD4B994af560266b",
+        "paused": false,
+        "previewDeposit": [0, 1, 2, 3, 4],
+        "previewMint": [0, 1, 2, 3, 4],
+        "previewRedeem": [0, 1, 2, 3, 4],
+        "previewWithdraw": [0, 1, 2, 3, 4],
+        "REDEEMER_ROLE": "0x44ac9762eec3a11893fefb11d028bb3102560094137c3ed4518712475b2577cc",
+        "redemption": "matic:0x382dFda7D9BA942E88f4c6c84513f28AdfA1cDF4",
+        "symbol": "sBUIDL",
+        "totalAssets": 9000000,
+        "totalSupply": 9000000,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "vaultImpairedBalance": 0
+      },
+      "errors": {
+        "convertToAssets": "Processing error occurred.",
+        "convertToShares": "Processing error occurred.",
+        "previewDeposit": "Processing error occurred.",
+        "previewMint": "Processing error occurred.",
+        "previewRedeem": "Processing error occurred.",
+        "previewWithdraw": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "matic:0x4C1e5e780269186A4FBb31c913b11B1a8922B830": "ERC1967Proxy",
+        "matic:0x6A3187F9B83Cd992502760489a6f60FA7D6b754e": "SecuritizeVault"
+      }
+    },
+    {
+      "address": "matic:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x59cE4e1709c7E462F3b72Ca3e1256dFa7358FC29",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "",
+      "address": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729468,
+      "sinceBlock": 63877036,
+      "values": {
+        "$admin": "matic:0x0000000000000000000000000000000000000000",
+        "$implementation": "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:11:08.000Z",
+            "0xd958457276613e820a4151f1d80bd9a281f50bcad59522f647607bb2f7db9502",
+            ["matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C": "ERC1967Proxy",
+        "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512": ""
+      }
+    },
+    {
+      "address": "matic:0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x895e873498134D2ce2AB118633E164C044bC7B43",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xCf28710273B55F9dD6D19088eD4B994af560266b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "matic:0x4C1e5e780269186A4FBb31c913b11B1a8922B830",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "matic:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "address": "matic:0xF045025C845E786E343Df30cC6f67ec6BB822b34",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0xf29722a899Aa9FD0836076CA1dA64212c451453C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "oeth:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729749,
+      "sinceBlock": 127565486,
+      "values": {
+        "$admin": "oeth:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
+        "$implementation": "oeth:0xb24BB3983A4C0A2B261FEa67Ef99077F4D08756D",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:49.000Z",
+            "0xca31de16b6511a016e1f7f41a437cae56347be94622bcad338a1b334d77e6ec4",
+            ["oeth:0xb24BB3983A4C0A2B261FEa67Ef99077F4D08756D"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830": "ERC1967Proxy",
+        "oeth:0xb24BB3983A4C0A2B261FEa67Ef99077F4D08756D": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729691,
+      "sinceBlock": 127565457,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0xE13754c2b015fB78547C5c5272E5Da058458eEcc",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:51.000Z",
+            "0x121742a9052bb8a54953eac3364866f770803632f0c1f559602ece9eb5969135",
+            ["oeth:0xE13754c2b015fB78547C5c5272E5Da058458eEcc"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c": "ERC1967Proxy",
+        "oeth:0xE13754c2b015fB78547C5c5272E5Da058458eEcc": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0x347Ac8666F5292354CF817505f46CDA034379512",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729625,
+      "sinceBlock": 127565424,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0xc03dF9f0Fb1baCF1c3ddBD7F15ba02611790FF1f",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:13:45.000Z",
+            "0xc076b23a80c19170a33e14b881b45014e97e0fe2296c4f2de7c89afec2dfcc8d",
+            ["oeth:0xc03dF9f0Fb1baCF1c3ddBD7F15ba02611790FF1f"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x347Ac8666F5292354CF817505f46CDA034379512": "ERC1967Proxy",
+        "oeth:0xc03dF9f0Fb1baCF1c3ddBD7F15ba02611790FF1f": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729703,
+      "sinceBlock": 127565463,
+      "values": {
+        "$admin": "oeth:0x62c8b3DF494eAf002721b7ae6A58F87E6C8250f3",
+        "$implementation": "oeth:0x301cb99ffd46579177262eD951863E8a38A63c94",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:03.000Z",
+            "0x98e21f70cd6b4bc98f063e960a53d26001bab40a08bda077b5bfc4c028b0f2c7",
+            ["oeth:0x301cb99ffd46579177262eD951863E8a38A63c94"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3": "ERC1967Proxy",
+        "oeth:0x301cb99ffd46579177262eD951863E8a38A63c94": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729715,
+      "sinceBlock": 127565469,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0x3535Dd2e7bB981fcA0A649d2d0Ec8dFbDb229b89",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:15.000Z",
+            "0x03bc595efc8458a55021fb7892cbe960d526fff7c7fcfee9fde04a3d800d3f28",
+            ["oeth:0x3535Dd2e7bB981fcA0A649d2d0Ec8dFbDb229b89"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355": "ERC1967Proxy",
+        "oeth:0x3535Dd2e7bB981fcA0A649d2d0Ec8dFbDb229b89": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729661,
+      "sinceBlock": 127565442,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0x82650d0d18826fe6E72CFFD7727563124fb62a9B",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:21.000Z",
+            "0xddb6ea43fb6fe32b255add67ca396bb9a7d197794d3c9901c59bc3a52f1c38fc",
+            ["oeth:0x82650d0d18826fe6E72CFFD7727563124fb62a9B"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607": "ERC1967Proxy",
+        "oeth:0x82650d0d18826fe6E72CFFD7727563124fb62a9B": ""
+      }
+    },
+    {
+      "address": "oeth:0x62c8b3DF494eAf002721b7ae6A58F87E6C8250f3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
+      "address": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729615,
+      "sinceBlock": 127565419,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0xCa91fa164B75dA598e16B4d89FB2086b47140df3",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:13:35.000Z",
+            "0xdcc13a7a19241e95270d1fda514ccf0a7abda87730a18b30f62a686958101894",
+            ["oeth:0xCa91fa164B75dA598e16B4d89FB2086b47140df3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "cap": 0,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "decimals": 6,
+        "DS_TOKEN": 2,
+        "getImplementationAddress": "oeth:0xCa91fa164B75dA598e16B4d89FB2086b47140df3",
+        "getInitializedVersion": 1,
+        "isPaused": false,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "name": "BlackRock USD Institutional Digital Liquidity Fund",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "services": {
+          "Trust Service": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
+          "Registry Service": "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99",
+          "Compliance Service": "oeth:0x347Ac8666F5292354CF817505f46CDA034379512",
+          "Wallet Manager": "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9",
+          "Lock Manager": "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef",
+          "Compliance Configuration Service": "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607",
+          "Token Issuer": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "Wallet Registrar": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "Omnibus TBE Controller": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "Transaction Relayer": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "Token Reallocator": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "Bulk Operator": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830"
+        },
+        "supportedFeatures": 0,
+        "symbol": "BUIDL",
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "totalIssued": 45361906790000,
+        "totalSupply": 26045386390000,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024,
+        "walletCount": 2
+      },
+      "errors": {
+        "$tokenData": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5": "ERC1967Proxy",
+        "oeth:0xCa91fa164B75dA598e16B4d89FB2086b47140df3": "DSToken"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "Trust Service",
+            "2": "DS Token",
+            "4": "Registry Service",
+            "8": "Compliance Service",
+            "16": "Unused 1",
+            "32": "Wallet Manager",
+            "64": "Lock Manager",
+            "128": "Partitions Manager",
+            "256": "Compliance Configuration Service",
+            "512": "Token Issuer",
+            "1024": "Wallet Registrar",
+            "2048": "Omnibus TBE Controller",
+            "4096": "Transaction Relayer",
+            "8192": "Token Reallocator",
+            "8193": "Bulk Operator",
+            "8194": "Issuer Multicall",
+            "8195": "TA Multicall",
+            "16384": "Securitize Swap"
+          }
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729725,
+      "sinceBlock": 127565474,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0xa5f233B185bb1E8AF3c7040A00D46120faB355Ea",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:25.000Z",
+            "0xf57b8f5f38292b9ae3045085ad3e49373806fd58d7e0a523fe2e59beddf44227",
+            ["oeth:0xa5f233B185bb1E8AF3c7040A00D46120faB355Ea"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0": "ERC1967Proxy",
+        "oeth:0xa5f233B185bb1E8AF3c7040A00D46120faB355Ea": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729649,
+      "sinceBlock": 127565436,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0x13006ADEC740F6dEb42b299fcafF36a05E573970",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:09.000Z",
+            "0x3a2c497322f975c3b377a5e72d065152285d22ebe75b344ab6690526c6be74e0",
+            ["oeth:0x13006ADEC740F6dEb42b299fcafF36a05E573970"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99": "ERC1967Proxy",
+        "oeth:0x13006ADEC740F6dEb42b299fcafF36a05E573970": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729673,
+      "sinceBlock": 127565448,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0x55650D436B06f1ee2453eD9Ea51D44B4098b794F",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:33.000Z",
+            "0x8976127a2e185fd94e26426241c9d0b3d5f646c53127161c1f1ec7452a8ceaad",
+            ["oeth:0x55650D436B06f1ee2453eD9Ea51D44B4098b794F"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9": "ERC1967Proxy",
+        "oeth:0x55650D436B06f1ee2453eD9Ea51D44B4098b794F": ""
+      }
+    },
+    {
+      "address": "oeth:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729737,
+      "sinceBlock": 127565480,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0xF2CB6C8bBA799969c5eE037Eb02537456B9782d6",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:15:37.000Z",
+            "0xfd4fbe896878f9fae41f4b096d02ea9a698770e186f29d8b182679338a0a72d7",
+            ["oeth:0xF2CB6C8bBA799969c5eE037Eb02537456B9782d6"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC": "ERC1967Proxy",
+        "oeth:0xF2CB6C8bBA799969c5eE037Eb02537456B9782d6": ""
+      }
+    },
+    {
+      "address": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x347Ac8666F5292354CF817505f46CDA034379512",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729637,
+      "sinceBlock": 127565430,
+      "values": {
+        "$admin": "oeth:0x0000000000000000000000000000000000000000",
+        "$implementation": "oeth:0xe333C670ab31344C0e39297F9287725eba251E53",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:13:57.000Z",
+            "0xbef6c897a4854dbca29787cd96b6f3d4cd0cd1a14819179597cc4a8cc5f759e9",
+            ["oeth:0xe333C670ab31344C0e39297F9287725eba251E53"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc": "ERC1967Proxy",
+        "oeth:0xe333C670ab31344C0e39297F9287725eba251E53": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730729683,
+      "sinceBlock": 127565453,
+      "values": {
+        "$admin": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "oeth:0x1AC59f5049D75f2ebB5e95a9f203162f0538ba5E",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:43.000Z",
+            "0x782d48ab93963133bdeaa688ccbf71017c3f1213a30097d2ea8054c37770aac8",
+            ["oeth:0x1AC59f5049D75f2ebB5e95a9f203162f0538ba5E"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef": "ERC1967Proxy",
+        "oeth:0x1AC59f5049D75f2ebB5e95a9f203162f0538ba5E": ""
+      }
     }
   ],
   "abis": {
@@ -3196,6 +4515,544 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x145Ed8C00B9DA769d4aBB80a7bCaf9d4D3Bded15": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSTrustServiceRoleAdded(address targetAddress, uint8 role, address sender)",
+      "event DSTrustServiceRoleRemoved(address targetAddress, uint8 role, address sender)",
+      "event Initialized(uint64 version)",
+      "event Upgraded(address indexed implementation)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER() view returns (uint8)",
+      "function MASTER() view returns (uint8)",
+      "function NONE() view returns (uint8)",
+      "function TRANSFER_AGENT() view returns (uint8)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addEntity(string _name, address _owner)",
+      "function addOperator(string _name, address _operator)",
+      "function addResource(string _name, address _resource)",
+      "function changeEntityOwner(string _name, address _oldOwner, address _newOwner)",
+      "function getEntityByOperator(address _operator) view returns (string)",
+      "function getEntityByOwner(address _owner) view returns (string)",
+      "function getEntityByResource(address _resource) view returns (string)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getRole(address _address) view returns (uint8)",
+      "function initialize()",
+      "function isResourceOperator(address _resource, address _operator) view returns (bool)",
+      "function isResourceOwner(address _resource, address _owner) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeOperator(string _name, address _operator)",
+      "function removeResource(string _name, address _resource)",
+      "function removeRole(address _address) returns (bool)",
+      "function setRole(address _address, uint8 _role) returns (bool)",
+      "function setRoles(address[] _addresses, uint8[] _roles) returns (bool)",
+      "function setServiceOwner(address _address) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x96e8b534C7Da182519D336E0F5C83b021d57F22a": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSRegistryServiceInvestorAdded(string investorId, address sender)",
+      "event DSRegistryServiceInvestorAttributeChanged(string investorId, uint256 attributeId, uint256 value, uint256 expiry, string proofHash, address sender)",
+      "event DSRegistryServiceInvestorCountryChanged(string investorId, string country, address sender)",
+      "event DSRegistryServiceInvestorRemoved(string investorId, address sender)",
+      "event DSRegistryServiceOmnibusWalletAdded(address omnibusWallet, string investorId, address omnibusWalletController)",
+      "event DSRegistryServiceOmnibusWalletRemoved(address omnibusWallet, string investorId)",
+      "event DSRegistryServiceWalletAdded(address wallet, string investorId, address sender)",
+      "event DSRegistryServiceWalletRemoved(address wallet, string investorId, address sender)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ACCREDITED() view returns (uint8)",
+      "function APPROVED() view returns (uint8)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function KYC_APPROVED() view returns (uint8)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function NONE() view returns (uint8)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function PENDING() view returns (uint8)",
+      "function PROFESSIONAL() view returns (uint8)",
+      "function QUALIFIED() view returns (uint8)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function REJECTED() view returns (uint8)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function addOmnibusWallet(string _id, address _omnibusWallet, address _omnibusWalletController)",
+      "function addWallet(address _address, string _id) returns (bool)",
+      "function addWalletByInvestor(address _address) returns (bool)",
+      "function attributes(string, uint8) view returns (uint256 value, uint256 expiry, string proofHash)",
+      "function getAttributeExpiry(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getAttributeProofHash(string _id, uint8 _attributeId) view returns (string)",
+      "function getAttributeValue(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getCollisionHash(string _id) view returns (string)",
+      "function getCountry(string _id) view returns (string)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getInvestor(address _address) view returns (string)",
+      "function getInvestorDetails(address _address) view returns (string, string)",
+      "function getInvestorDetailsFull(string _id) view returns (string, uint256[], uint256[], string, string, string, string)",
+      "function getInvestors(address _from, address _to) view returns (string, string)",
+      "function getOmnibusWalletController(address _omnibusWallet) view returns (address)",
+      "function initialize()",
+      "function isAccreditedInvestor(address _wallet) view returns (bool)",
+      "function isAccreditedInvestor(string _id) view returns (bool)",
+      "function isInvestor(string _id) view returns (bool)",
+      "function isOmnibusWallet(address _omnibusWallet) view returns (bool)",
+      "function isQualifiedInvestor(address _wallet) view returns (bool)",
+      "function isQualifiedInvestor(string _id) view returns (bool)",
+      "function isWallet(address _address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerInvestor(string _id, string _collisionHash) returns (bool)",
+      "function removeInvestor(string _id) returns (bool)",
+      "function removeOmnibusWallet(string _id, address _omnibusWallet)",
+      "function removeWallet(address _address, string _id) returns (bool)",
+      "function renounceOwnership()",
+      "function setAttribute(string _id, uint8 _attributeId, uint256 _value, uint256 _expiry, string _proofHash) returns (bool)",
+      "function setCountry(string _id, string _country) returns (bool)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function updateInvestor(string _id, string _collisionHash, string _country, address[] _wallets, uint8[] _attributeIds, uint256[] _attributeValues, uint256[] _attributeExpirations) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "avax:0xaEb1FA0853c7C98EAb10fcF0EA669aE3d07FBB10": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0xf93667D01c7675E2667Ee392Aa69104DF79c4Ad0": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed burner, uint256 value, string reason)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event Issue(address indexed to, uint256 value, uint256 valueLocked)",
+      "event OmnibusBurn(address indexed omnibusWallet, address who, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusDeposit(address indexed omnibusWallet, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusSeize(address indexed omnibusWallet, address from, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusTBEOperation(address indexed omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "event OmnibusTBETransfer(address omnibusWallet, string externalId)",
+      "event OmnibusTransfer(address indexed omnibusWallet, address from, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusWithdraw(address indexed omnibusWallet, address from, uint256 value, uint8 assetTrackingMode)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Seize(address indexed from, address indexed to, uint256 value, string reason)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpause()",
+      "event Upgraded(address indexed implementation)",
+      "event WalletAdded(address wallet)",
+      "event WalletRemoved(address wallet)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function __StandardToken_init()",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function balanceOfInvestor(string _id) view returns (uint256)",
+      "function burn(address _who, uint256 _value, string _reason)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function emitOmnibusTBEEvent(address omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "function emitOmnibusTBETransferEvent(address omnibusWallet, string externalId)",
+      "function emitOmnibusTransferEvent(address _omnibusWallet, address _from, address _to, uint256 _value)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getWalletAt(uint256 _index) view returns (address)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isPaused() view returns (bool)",
+      "function issueTokens(address _to, uint256 _value) returns (bool)",
+      "function issueTokensCustom(address _to, uint256 _value, uint256 _issuanceTime, uint256 _valueLocked, string _reason, uint64 _releaseTime) returns (bool)",
+      "function issueTokensWithMultipleLocks(address _to, uint256 _value, uint256 _issuanceTime, uint256[] _valuesLocked, string _reason, uint64[] _releaseTimes) returns (bool)",
+      "function issueTokensWithNoCompliance(address _to, uint256 _value)",
+      "function name() view returns (string)",
+      "function omnibusBurn(address _omnibusWallet, address _who, uint256 _value, string _reason)",
+      "function omnibusSeize(address _omnibusWallet, address _from, address _to, uint256 _value, string _reason)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function preTransferCheck(address _from, address _to, uint256 _value) view returns (uint256 code, string reason)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function seize(address _from, address _to, uint256 _value, string _reason)",
+      "function setCap(uint256 _cap)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setFeature(uint8 featureIndex, bool enable)",
+      "function setFeatures(uint256 features)",
+      "function supportedFeatures() view returns (uint256 value)",
+      "function symbol() view returns (string)",
+      "function totalIssued() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateOmnibusInvestorBalance(address _omnibusWallet, address _wallet, uint256 _value, uint8 _increase) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletCount() view returns (uint256)"
+    ],
+    "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "bnb:0x5dD5e686869855de06bf13Bc3B80e45fA81f7D4d": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSRegistryServiceInvestorAdded(string investorId, address sender)",
+      "event DSRegistryServiceInvestorAttributeChanged(string investorId, uint256 attributeId, uint256 value, uint256 expiry, string proofHash, address sender)",
+      "event DSRegistryServiceInvestorCountryChanged(string investorId, string country, address sender)",
+      "event DSRegistryServiceInvestorRemoved(string investorId, address sender)",
+      "event DSRegistryServiceOmnibusWalletAdded(address omnibusWallet, string investorId, address omnibusWalletController)",
+      "event DSRegistryServiceOmnibusWalletRemoved(address omnibusWallet, string investorId)",
+      "event DSRegistryServiceWalletAdded(address wallet, string investorId, address sender)",
+      "event DSRegistryServiceWalletRemoved(address wallet, string investorId, address sender)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ACCREDITED() view returns (uint8)",
+      "function APPROVED() view returns (uint8)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function KYC_APPROVED() view returns (uint8)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function NONE() view returns (uint8)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function PENDING() view returns (uint8)",
+      "function PROFESSIONAL() view returns (uint8)",
+      "function QUALIFIED() view returns (uint8)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function REJECTED() view returns (uint8)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function addOmnibusWallet(string _id, address _omnibusWallet, address _omnibusWalletController)",
+      "function addWallet(address _address, string _id) returns (bool)",
+      "function addWalletByInvestor(address _address) returns (bool)",
+      "function attributes(string, uint8) view returns (uint256 value, uint256 expiry, string proofHash)",
+      "function getAttributeExpiry(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getAttributeProofHash(string _id, uint8 _attributeId) view returns (string)",
+      "function getAttributeValue(string _id, uint8 _attributeId) view returns (uint256)",
+      "function getCollisionHash(string _id) view returns (string)",
+      "function getCountry(string _id) view returns (string)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getInvestor(address _address) view returns (string)",
+      "function getInvestorDetails(address _address) view returns (string, string)",
+      "function getInvestorDetailsFull(string _id) view returns (string, uint256[], uint256[], string, string, string, string)",
+      "function getInvestors(address _from, address _to) view returns (string, string)",
+      "function getOmnibusWalletController(address _omnibusWallet) view returns (address)",
+      "function initialize()",
+      "function isAccreditedInvestor(address _wallet) view returns (bool)",
+      "function isAccreditedInvestor(string _id) view returns (bool)",
+      "function isInvestor(string _id) view returns (bool)",
+      "function isOmnibusWallet(address _omnibusWallet) view returns (bool)",
+      "function isQualifiedInvestor(address _wallet) view returns (bool)",
+      "function isQualifiedInvestor(string _id) view returns (bool)",
+      "function isWallet(address _address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerInvestor(string _id, string _collisionHash) returns (bool)",
+      "function removeInvestor(string _id) returns (bool)",
+      "function removeOmnibusWallet(string _id, address _omnibusWallet)",
+      "function removeWallet(address _address, string _id) returns (bool)",
+      "function renounceOwnership()",
+      "function setAttribute(string _id, uint8 _attributeId, uint256 _value, uint256 _expiry, string _proofHash) returns (bool)",
+      "function setCountry(string _id, string _country) returns (bool)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function updateInvestor(string _id, string _collisionHash, string _country, address[] _wallets, uint8[] _attributeIds, uint256[] _attributeValues, uint256[] _attributeExpirations) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "bnb:0x7d4637c17a1B8dc06d0A1f47fE39dAF9C10Adf34": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSTrustServiceRoleAdded(address targetAddress, uint8 role, address sender)",
+      "event DSTrustServiceRoleRemoved(address targetAddress, uint8 role, address sender)",
+      "event Initialized(uint64 version)",
+      "event Upgraded(address indexed implementation)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER() view returns (uint8)",
+      "function MASTER() view returns (uint8)",
+      "function NONE() view returns (uint8)",
+      "function TRANSFER_AGENT() view returns (uint8)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addEntity(string _name, address _owner)",
+      "function addOperator(string _name, address _operator)",
+      "function addResource(string _name, address _resource)",
+      "function changeEntityOwner(string _name, address _oldOwner, address _newOwner)",
+      "function getEntityByOperator(address _operator) view returns (string)",
+      "function getEntityByOwner(address _owner) view returns (string)",
+      "function getEntityByResource(address _resource) view returns (string)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getRole(address _address) view returns (uint8)",
+      "function initialize()",
+      "function isResourceOperator(address _resource, address _operator) view returns (bool)",
+      "function isResourceOwner(address _resource, address _owner) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeOperator(string _name, address _operator)",
+      "function removeResource(string _name, address _resource)",
+      "function removeRole(address _address) returns (bool)",
+      "function setRole(address _address, uint8 _role) returns (bool)",
+      "function setRoles(address[] _addresses, uint8[] _roles) returns (bool)",
+      "function setServiceOwner(address _address) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "bnb:0xe478Ae7036D20fD956EbB5bEddD1F6e950657126": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed burner, uint256 value, string reason)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event Issue(address indexed to, uint256 value, uint256 valueLocked)",
+      "event OmnibusBurn(address indexed omnibusWallet, address who, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusDeposit(address indexed omnibusWallet, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusSeize(address indexed omnibusWallet, address from, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusTBEOperation(address indexed omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "event OmnibusTBETransfer(address omnibusWallet, string externalId)",
+      "event OmnibusTransfer(address indexed omnibusWallet, address from, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusWithdraw(address indexed omnibusWallet, address from, uint256 value, uint8 assetTrackingMode)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Seize(address indexed from, address indexed to, uint256 value, string reason)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpause()",
+      "event Upgraded(address indexed implementation)",
+      "event WalletAdded(address wallet)",
+      "event WalletRemoved(address wallet)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function __StandardToken_init()",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function balanceOfInvestor(string _id) view returns (uint256)",
+      "function burn(address _who, uint256 _value, string _reason)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function emitOmnibusTBEEvent(address omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "function emitOmnibusTBETransferEvent(address omnibusWallet, string externalId)",
+      "function emitOmnibusTransferEvent(address _omnibusWallet, address _from, address _to, uint256 _value)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getWalletAt(uint256 _index) view returns (address)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isPaused() view returns (bool)",
+      "function issueTokens(address _to, uint256 _value) returns (bool)",
+      "function issueTokensCustom(address _to, uint256 _value, uint256 _issuanceTime, uint256 _valueLocked, string _reason, uint64 _releaseTime) returns (bool)",
+      "function issueTokensWithMultipleLocks(address _to, uint256 _value, uint256 _issuanceTime, uint256[] _valuesLocked, string _reason, uint64[] _releaseTimes) returns (bool)",
+      "function issueTokensWithNoCompliance(address _to, uint256 _value)",
+      "function name() view returns (string)",
+      "function omnibusBurn(address _omnibusWallet, address _who, uint256 _value, string _reason)",
+      "function omnibusSeize(address _omnibusWallet, address _from, address _to, uint256 _value, string _reason)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function preTransferCheck(address _from, address _to, uint256 _value) view returns (uint256 code, string reason)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function seize(address _from, address _to, uint256 _value, string _reason)",
+      "function setCap(uint256 _cap)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setFeature(uint8 featureIndex, bool enable)",
+      "function setFeatures(uint256 features)",
+      "function supportedFeatures() view returns (uint256 value)",
+      "function symbol() view returns (string)",
+      "function totalIssued() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateOmnibusInvestorBalance(address _omnibusWallet, address _wallet, uint256 _value, uint8 _increase) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletCount() view returns (uint256)"
+    ],
     "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab": [
       "constructor()",
       "event ProxyOwnerChanged(address owner)",
@@ -3231,82 +5088,6 @@
       "function setOwner(address _owner)",
       "function setTarget(address _target)",
       "function target() view returns (address)"
-    ],
-    "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [
-      "error AddressIsZero()",
-      "error CallerMustBeOwner()",
-      "error CallerMustBeOwnerOrPricingWallet()",
-      "error CallerMustBePendingOwner()",
-      "error CallerNotApproved(address msgSender)",
-      "error ChainIdIsZero()",
-      "error ExceedsMaximumBudget(uint16 targetChain, uint256 exceedingValue, uint256 maximumBudget)",
-      "error FailedToInitializeImplementation(string reason)",
-      "error GasPriceIsZero()",
-      "error ImplementationAlreadyInitialized()",
-      "error MaxRefundGreaterThanGasLimitCost(uint256 maxRefund, uint256 gasLimitCost)",
-      "error MaxRefundGreaterThanGasLimitCostOnSourceChain(uint256 maxRefund, uint256 gasLimitCost)",
-      "error NativeCurrencyPriceIsZero()",
-      "error Overflow(uint256 value, uint256 max)",
-      "error PriceIsZero(uint16 chain)",
-      "error UnexpectedExecutionParamsVersion(uint8 version, uint8 expectedVersion)",
-      "error UnsupportedExecutionParamsVersion(uint8 version)",
-      "error WrongChainId()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event AssetConversionBufferUpdated(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event ChainSupportUpdated(uint16 targetChain, bool isSupported)",
-      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
-      "event DeliverGasOverheadUpdated(uint256 indexed oldGasOverhead, uint256 indexed newGasOverhead)",
-      "event OwnershipTransfered(address indexed oldOwner, address indexed newOwner)",
-      "event RewardAddressUpdated(address indexed newAddress)",
-      "event TargetChainAddressUpdated(uint16 indexed targetChain, bytes32 indexed newAddress)",
-      "event Upgraded(address indexed implementation)",
-      "event WormholeRelayerUpdated(address coreRelayer)",
-      "function assetConversionBuffer(uint16 targetChain) view returns (uint16 buffer, uint16 bufferDenominator)",
-      "function chainId() view returns (uint16)",
-      "function confirmOwnershipTransferRequest()",
-      "function coreRelayer() view returns (address)",
-      "function deliverGasOverhead(uint16 targetChain) view returns (uint256)",
-      "function gasPrice(uint16 targetChain) view returns (uint256)",
-      "function getRewardAddress() view returns (address)",
-      "function getSupportedKeys() view returns (uint256 bitmap)",
-      "function getTargetChainAddress(uint16 targetChain) view returns (bytes32 deliveryProviderAddress)",
-      "function initialize()",
-      "function isChainSupported(uint16 targetChain) view returns (bool supported)",
-      "function isInitialized(address impl) view returns (bool)",
-      "function isMessageKeyTypeSupported(uint8 keyType) view returns (bool supported)",
-      "function maximumBudget(uint16 targetChain) view returns (uint256)",
-      "function nativeCurrencyPrice(uint16 targetChain) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function pricingWallet() view returns (address)",
-      "function quoteAssetConversion(uint16 targetChain, uint256 currentChainAmount) view returns (uint256 targetChainAmount)",
-      "function quoteDeliveryOverhead(uint16 targetChain) view returns (uint256 nativePriceQuote)",
-      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParams) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
-      "function quoteEvmDeliveryPrice(uint16 targetChain, uint256 gasLimit, uint256 receiverValue) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerUnitGasUnused)",
-      "function quoteGasCost(uint16 targetChain, uint256 gasAmount) view returns (uint256 totalCost)",
-      "function quoteGasPrice(uint16 targetChain) view returns (uint256 price)",
-      "function rewardAddress() view returns (address)",
-      "function submitOwnershipTransferRequest(uint16 thisRelayerChainId, address newOwner)",
-      "function targetChainAddress(uint16 targetChain) view returns (bytes32)",
-      "function updateAssetConversionBuffer(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
-      "function updateAssetConversionBuffers(tuple(uint16 chainId, uint16 buffer, uint16 bufferDenominator)[] updates)",
-      "function updateConfig(tuple(bool updateAssetConversionBuffer, bool updateDeliverGasOverhead, bool updatePrice, bool updateTargetChainAddress, bool updateMaximumBudget, bool updateSupportedChain, bool isSupported, uint16 chainId, uint16 buffer, uint16 bufferDenominator, uint256 newGasOverhead, uint256 gasPrice, uint256 nativeCurrencyPrice, bytes32 targetChainAddress, uint256 maximumTotalBudget)[] updates, tuple(bool updateWormholeRelayer, bool updateRewardAddress, bool updateSupportedKeyTypes, address coreRelayer, address rewardAddress, uint256 supportedKeyTypesBitmap) coreConfig)",
-      "function updateDeliverGasOverhead(uint16 chainId, uint256 newGasOverhead)",
-      "function updateDeliverGasOverheads(tuple(uint16 chainId, uint256 newGasOverhead)[] overheadUpdates)",
-      "function updateMaximumBudget(uint16 targetChain, uint256 maximumTotalBudget)",
-      "function updateMaximumBudgets(tuple(uint16 chainId, uint256 maximumTotalBudget)[] updates)",
-      "function updatePrice(uint16 updateChainId, uint256 updateGasPrice, uint256 updateNativeCurrencyPrice)",
-      "function updatePrices(tuple(uint16 chainId, uint256 gasPrice, uint256 nativeCurrencyPrice)[] updates)",
-      "function updatePricingWallet(address newPricingWallet)",
-      "function updateRewardAddress(address newAddress)",
-      "function updateSupportedChain(uint16 targetChain, bool isSupported)",
-      "function updateSupportedChains(tuple(uint16 chainId, bool isSupported)[] updates)",
-      "function updateSupportedMessageKeyTypes(uint8 keyType, bool supported)",
-      "function updateTargetChainAddress(uint16 targetChain, bytes32 newAddress)",
-      "function updateTargetChainAddresses(tuple(uint16 chainId, bytes32 targetChainAddress)[] updates)",
-      "function updateWormholeRelayer(address newAddress)",
-      "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
     ],
     "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B": [
       "constructor()",
@@ -3640,12 +5421,6 @@
       "function setDSService(uint256 _serviceId, address _address) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
-      "constructor(address impl)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x32708a900a740846445Fd49c0C00df15701720a2": [
       "constructor(address implementation, bytes _data) payable",
@@ -4382,12 +6157,6 @@
       "function setTarget(address _target)",
       "function target() view returns (address)"
     ],
-    "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": [
-      "constructor(address implementation, bytes initData)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "eth:0x7dE4C180238D31FC8Bc9223c14cc71713b4fd336": [
       "event DSTrustServiceRoleAdded(address targetAddress, uint8 role, address sender)",
       "event DSTrustServiceRoleRemoved(address targetAddress, uint8 role, address sender)",
@@ -4527,74 +6296,6 @@
       "function setDSService(uint256 _serviceId, address _address) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee": [
-      "constructor(address wormhole)",
-      "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
-      "error ContractUpgradeFailed(bytes failure)",
-      "error DeliveryProviderCannotReceivePayment()",
-      "error DeliveryProviderDoesNotSupportMessageKeyType(uint8 keyType)",
-      "error DeliveryProviderDoesNotSupportTargetChain(address relayer, uint16 chainId)",
-      "error GovernanceActionAlreadyConsumed(bytes32 hash)",
-      "error InsufficientRelayerFunds(uint256 msgValue, uint256 minimum)",
-      "error InvalidDefaultDeliveryProvider(bytes32 defaultDeliveryProvider)",
-      "error InvalidDeliveryVaa(string reason)",
-      "error InvalidEmitter(bytes32 emitter, bytes32 registered, uint16 chainId)",
-      "error InvalidFork()",
-      "error InvalidGovernanceChainId(uint16 parsed, uint16 expected)",
-      "error InvalidGovernanceContract(bytes32 parsed, bytes32 expected)",
-      "error InvalidGovernanceVM(string reason)",
-      "error InvalidMsgValue(uint256 msgValue, uint256 totalFee)",
-      "error InvalidOverrideGasLimit()",
-      "error InvalidOverrideReceiverValue()",
-      "error InvalidPayloadAction(uint8 parsed, uint8 expected)",
-      "error InvalidPayloadChainId(uint16 parsed, uint16 expected)",
-      "error InvalidPayloadId(uint8 parsed, uint8 expected)",
-      "error InvalidPayloadLength(uint256 received, uint256 expected)",
-      "error InvalidPayloadModule(bytes32 parsed, bytes32 expected)",
-      "error MessageKeysLengthDoesNotMatchMessagesLength(uint256 keys, uint256 vaas)",
-      "error NotAnEvmAddress(bytes32)",
-      "error ReentrantDelivery(address msgSender, address lockedBy)",
-      "error TargetChainIsNotThisChain(uint16 targetChain)",
-      "error TooManyMessageKeys(uint256 numMessageKeys)",
-      "error UnexpectedExecutionInfoVersion(uint8 version, uint8 expectedVersion)",
-      "error VaaKeysDoNotMatchVaas(uint8 index)",
-      "error VersionMismatchOverride(uint8 instructionVersion, uint8 overrideVersion)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
-      "event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash, uint8 status, uint256 gasUsed, uint8 refundStatus, bytes additionalStatusInfo, bytes overridesInfo)",
-      "event SendEvent(uint64 indexed sequence, uint256 deliveryQuote, uint256 paymentForExtraReceiverValue)",
-      "event Upgraded(address indexed implementation)",
-      "function checkAndExecuteUpgradeMigration()",
-      "function deliver(bytes[] encodedVMs, bytes encodedDeliveryVAA, address relayerRefundAddress, bytes deliveryOverrides) payable",
-      "function deliveryAttempted(bytes32 deliveryHash) view returns (bool attempted)",
-      "function deliveryFailureBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
-      "function deliverySuccessBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
-      "function forward(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
-      "function forwardPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable",
-      "function forwardToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
-      "function forwardVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable",
-      "function getDefaultDeliveryProvider() view returns (address deliveryProvider)",
-      "function getRegisteredWormholeRelayerContract(uint16 chainId) view returns (bytes32)",
-      "function initialize(address defaultDeliveryProvider)",
-      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParameters, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
-      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
-      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
-      "function quoteNativeForChain(uint16 targetChain, uint256 currentChainAmount, address deliveryProviderAddress) view returns (uint256 targetChainAmount)",
-      "function registerWormholeRelayerContract(bytes encodedVm)",
-      "function resend(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, bytes newEncodedExecutionParameters, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
-      "function resendToEvm(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, uint256 newGasLimit, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
-      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
-      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable returns (uint64 sequence)",
-      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
-      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable returns (uint64 sequence)",
-      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
-      "function setDefaultDeliveryProvider(bytes encodedVm)",
-      "function submitContractUpgrade(bytes encodedVm)"
     ],
     "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E": [
       "constructor(address implementation, bytes _data) payable",
@@ -5350,9 +7051,636 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed burner, uint256 value, string reason)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event Issue(address indexed to, uint256 value, uint256 valueLocked)",
+      "event OmnibusBurn(address indexed omnibusWallet, address who, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusDeposit(address indexed omnibusWallet, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusSeize(address indexed omnibusWallet, address from, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusTBEOperation(address indexed omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "event OmnibusTBETransfer(address omnibusWallet, string externalId)",
+      "event OmnibusTransfer(address indexed omnibusWallet, address from, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusWithdraw(address indexed omnibusWallet, address from, uint256 value, uint8 assetTrackingMode)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Seize(address indexed from, address indexed to, uint256 value, string reason)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpause()",
+      "event Upgraded(address indexed implementation)",
+      "event WalletAdded(address wallet)",
+      "event WalletRemoved(address wallet)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function __StandardToken_init()",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function balanceOfInvestor(string _id) view returns (uint256)",
+      "function burn(address _who, uint256 _value, string _reason)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function emitOmnibusTBEEvent(address omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "function emitOmnibusTBETransferEvent(address omnibusWallet, string externalId)",
+      "function emitOmnibusTransferEvent(address _omnibusWallet, address _from, address _to, uint256 _value)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getWalletAt(uint256 _index) view returns (address)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isPaused() view returns (bool)",
+      "function issueTokens(address _to, uint256 _value) returns (bool)",
+      "function issueTokensCustom(address _to, uint256 _value, uint256 _issuanceTime, uint256 _valueLocked, string _reason, uint64 _releaseTime) returns (bool)",
+      "function issueTokensWithMultipleLocks(address _to, uint256 _value, uint256 _issuanceTime, uint256[] _valuesLocked, string _reason, uint64[] _releaseTimes) returns (bool)",
+      "function issueTokensWithNoCompliance(address _to, uint256 _value)",
+      "function name() view returns (string)",
+      "function omnibusBurn(address _omnibusWallet, address _who, uint256 _value, string _reason)",
+      "function omnibusSeize(address _omnibusWallet, address _from, address _to, uint256 _value, string _reason)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function preTransferCheck(address _from, address _to, uint256 _value) view returns (uint256 code, string reason)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function seize(address _from, address _to, uint256 _value, string _reason)",
+      "function setCap(uint256 _cap)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setFeature(uint8 featureIndex, bool enable)",
+      "function setFeatures(uint256 features)",
+      "function supportedFeatures() view returns (uint256 value)",
+      "function symbol() view returns (string)",
+      "function totalIssued() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateOmnibusInvestorBalance(address _omnibusWallet, address _wallet, uint256 _value, uint8 _increase) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletCount() view returns (uint256)"
+    ],
+    "matic:0x235AE97b28466Db30469b89A9fe4cFf0659f82Cb": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
+      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
+      "event Blacklisted(address indexed _account)",
+      "event BlacklisterChanged(address indexed newBlacklister)",
+      "event Burn(address indexed burner, uint256 amount)",
+      "event MasterMinterChanged(address indexed newMasterMinter)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
+      "event MinterRemoved(address indexed oldMinter)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UnBlacklisted(address indexed _account)",
+      "event Unpause()",
+      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blacklist(address _account)",
+      "function blacklister() view returns (address)",
+      "function burn(uint256 _amount)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, bytes signature)",
+      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
+      "function currency() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
+      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
+      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
+      "function initializeV2(string newName)",
+      "function initializeV2_1(address lostAndFound)",
+      "function initializeV2_2(address[] accountsToBlacklist, string newSymbol)",
+      "function isBlacklisted(address _account) view returns (bool)",
+      "function isMinter(address account) view returns (bool)",
+      "function masterMinter() view returns (address)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function minterAllowance(address minter) view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function removeMinter(address minter) returns (bool)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function unBlacklist(address _account)",
+      "function unpause()",
+      "function updateBlacklister(address _newBlacklister)",
+      "function updateMasterMinter(address _newMasterMinter)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function version() pure returns (string)"
+    ],
+    "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x2e188bdC94baDEBdf751BB133accF4fF67cc4Ce1": [
+      "constructor(address _singleton)"
+    ],
+    "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x382dFda7D9BA942E88f4c6c84513f28AdfA1cDF4": [
+      "constructor(address _asset, address _liquidity, address _owner, address _pauser)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserUpdated(address indexed oldPauser, address indexed newPauser)",
+      "event SettlementUpdated(address indexed oldSettlement, address indexed newSettlement)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function asset() view returns (address)",
+      "function liquidity() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function redeem(uint256 amount)",
+      "function renounceOwnership()",
+      "function settlement() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updatePauser(address newPauser)",
+      "function updateSettlement(address _settlement)"
+    ],
+    "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359": [
+      "constructor(address implementationContract)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address implementation)",
+      "function admin() view returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() view returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "matic:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "matic:0x4C1e5e780269186A4FBb31c913b11B1a8922B830": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x6A3187F9B83Cd992502760489a6f60FA7D6b754e": [
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error LiquidationNotOpenToPublic()",
+      "error NotEnoughShares()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event AdminChanged(address indexed admin)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event Initialized(uint64 version)",
+      "event Liquidate(address indexed sender, uint256 shares)",
+      "event LiquidationOpenToPublic(address indexed sender, bool open)",
+      "event LiquidatorAdded(address indexed liquidator)",
+      "event LiquidatorRevoked(address indexed liquidator)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RedeemerAdded(address indexed redeemer)",
+      "event RedeemerRevoked(address indexed redeemer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function LIQUIDATOR_ROLE() view returns (bytes32)",
+      "function REDEEMER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addLiquidator(address _account)",
+      "function addRedeemer(address _account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function assetImpairedBalance() view returns (uint256)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function changeAdmin(address _newAdmin)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(string _name, string _symbol, address _securitizeToken, address _redemptionAddress, address _liquidationToken)",
+      "function isAdmin(address _account) view returns (bool)",
+      "function isLiquidator(address _account) view returns (bool)",
+      "function isRedeemer(address _account) view returns (bool)",
+      "function liquidate(uint256 shares)",
+      "function liquidationOpenToPublic() view returns (bool)",
+      "function liquidationToken() view returns (address)",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256, address) returns (uint256)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function redeem(uint256 shares, address receiver, address _owner) returns (uint256)",
+      "function redemption() view returns (address)",
+      "function renounceOwnership()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeLiquidator(address _account)",
+      "function revokeRedeemer(address _account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setLiquidationOpenToPublic(bool _open)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferImpairedAssetBalance(address _to)",
+      "function transferImpairedVaultBalance(address _to)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function vaultImpairedBalance() view returns (uint256)",
+      "function withdraw(uint256, address, address) returns (uint256)"
+    ],
+    "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x347Ac8666F5292354CF817505f46CDA034379512": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xCa91fa164B75dA598e16B4d89FB2086b47140df3": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed burner, uint256 value, string reason)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event Issue(address indexed to, uint256 value, uint256 valueLocked)",
+      "event OmnibusBurn(address indexed omnibusWallet, address who, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusDeposit(address indexed omnibusWallet, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusSeize(address indexed omnibusWallet, address from, uint256 value, string reason, uint8 assetTrackingMode)",
+      "event OmnibusTBEOperation(address indexed omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "event OmnibusTBETransfer(address omnibusWallet, string externalId)",
+      "event OmnibusTransfer(address indexed omnibusWallet, address from, address to, uint256 value, uint8 assetTrackingMode)",
+      "event OmnibusWithdraw(address indexed omnibusWallet, address from, uint256 value, uint8 assetTrackingMode)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Seize(address indexed from, address indexed to, uint256 value, string reason)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpause()",
+      "event Upgraded(address indexed implementation)",
+      "event WalletAdded(address wallet)",
+      "event WalletRemoved(address wallet)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function __StandardToken_init()",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function balanceOfInvestor(string _id) view returns (uint256)",
+      "function burn(address _who, uint256 _value, string _reason)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function emitOmnibusTBEEvent(address omnibusWallet, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta)",
+      "function emitOmnibusTBETransferEvent(address omnibusWallet, string externalId)",
+      "function emitOmnibusTransferEvent(address _omnibusWallet, address _from, address _to, uint256 _value)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getWalletAt(uint256 _index) view returns (address)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isPaused() view returns (bool)",
+      "function issueTokens(address _to, uint256 _value) returns (bool)",
+      "function issueTokensCustom(address _to, uint256 _value, uint256 _issuanceTime, uint256 _valueLocked, string _reason, uint64 _releaseTime) returns (bool)",
+      "function issueTokensWithMultipleLocks(address _to, uint256 _value, uint256 _issuanceTime, uint256[] _valuesLocked, string _reason, uint64[] _releaseTimes) returns (bool)",
+      "function issueTokensWithNoCompliance(address _to, uint256 _value)",
+      "function name() view returns (string)",
+      "function omnibusBurn(address _omnibusWallet, address _who, uint256 _value, string _reason)",
+      "function omnibusSeize(address _omnibusWallet, address _from, address _to, uint256 _value, string _reason)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function preTransferCheck(address _from, address _to, uint256 _value) view returns (uint256 code, string reason)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function seize(address _from, address _to, uint256 _value, string _reason)",
+      "function setCap(uint256 _cap)",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setFeature(uint8 featureIndex, bool enable)",
+      "function setFeatures(uint256 features)",
+      "function supportedFeatures() view returns (uint256 value)",
+      "function symbol() view returns (string)",
+      "function totalIssued() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateOmnibusInvestorBalance(address _omnibusWallet, address _wallet, uint256 _value, uint8 _increase) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletCount() view returns (uint256)"
+    ],
+    "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
     ]
   },
-  "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 408901992, "ethereum": 23976993 },
-  "permissionsConfigHash": "0xd9d375a7a9934d27dd3af7b3e0d91203da35e2cbf8ddd0ab417a8634209cb601"
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
+  },
+  "usedBlockNumbers": {
+    "arbitrum": 408901992,
+    "avalanche": 73420776,
+    "bsc": 71070788,
+    "ethereum": 23976993,
+    "optimism": 144853013,
+    "polygonpos": 80099855
+  },
+  "permissionsConfigHash": "0x063f5ea999cc3d96310fd32f6fc580d6bd6d1b8928a905ca0904184ff182c31c"
 }
