@@ -33,10 +33,11 @@ export class QueryExecutor {
       return this.executeRawQuery(query) as Promise<QueryResult<Q['name']>>
     }
     const key = this.cache.generateKey(query.name, query.args)
+    const params = JSON.stringify(query.args)
 
     this.logger.info('Checking cache', {
       name: query.name,
-      params: JSON.stringify(query.args),
+      params,
       key,
     })
 
@@ -47,7 +48,7 @@ export class QueryExecutor {
       const end = Date.now()
       this.logger.info('Cache hit', {
         name: query.name,
-        params: JSON.stringify(query.args),
+        params,
         duration: end - start,
       })
       return cached.data as QueryResult<Q['name']>
@@ -55,7 +56,7 @@ export class QueryExecutor {
 
     this.logger.info('Cache miss', {
       name: query.name,
-      params: JSON.stringify(query.args),
+      params,
     })
 
     start = Date.now()
@@ -80,7 +81,7 @@ export class QueryExecutor {
     let end = Date.now()
     this.logger.info('Received data from DB', {
       name: query.name,
-      params: JSON.stringify(query.args),
+      params,
       duration: end - start,
     })
 
@@ -95,7 +96,7 @@ export class QueryExecutor {
     end = Date.now()
     this.logger.info('Wrote to cache', {
       name: query.name,
-      params: JSON.stringify(query.args),
+      params,
       duration: end - start,
       expires: expires ?? DEFAULT_EXPIRATION,
     })
