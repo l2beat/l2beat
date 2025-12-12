@@ -71,7 +71,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   })
 
   function nextEntry() {
-    setSelectedIndex(Math.min(selectedIndex + 1, data?.entryCount ?? 0 - 1))
+    setSelectedIndex(Math.min(selectedIndex + 1, (data?.entryCount ?? 0) - 1))
   }
 
   function previousEntry() {
