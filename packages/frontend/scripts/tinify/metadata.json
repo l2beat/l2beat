@@ -1482,7 +1482,7 @@
   "static/meta-images/publications/monthly-update-2025-09.png": "5d84ea9ea8eb53d50b87b9cef211e2be",
   "static/images/monthly-updates/cartesi.png": "255d34d28d891f11e372cb46952162a1",
   "static/images/badges/EspressoHotShotLightClient.png": "d462fc8a4216e612bdea05b40ee11ad8",
-  "static/images/architecture/lighter.png": "a81a717790ecc4e767228cefc9c7fcc0",
+  "static/images/architecture/lighter.png": "25aacf3a4d4aa0af6ab8c15a43d75f4f",
   "static/meta-images/scaling/projects/gate-layer/opengraph-image.png": "88b59637488f33560ee827346e894118",
   "static/icons/intuition.png": "17940743ab90b6db161988bc59ca68bd",
   "static/meta-images/scaling/projects/intuition/opengraph-image.png": "fcb1046a25f7e1b08c98811ec4fa9390",
@@ -1520,5 +1520,7 @@
   "static/meta-images/publications/the-future-of-financial-infrastructure.png": "e8765b4cd987bf006f49009f08c9498e",
   "static/images/architecture/agglayer-pessimistic.png": "44bc3fc21c74088bdc7f7c505f6bc59a",
   "static/images/architecture/agglayer-validium.png": "7df06d22f3429e7d2461ed800fb29dec",
-  "static/meta-images/publications/governance-review-77.png": "a122af2813c4b9e774ef101eb9082027"
+  "static/meta-images/publications/governance-review-77.png": "a122af2813c4b9e774ef101eb9082027",
+  "static/images/architecture/agglayer-opstack_closed.png": "f285de7b1e0e21b8b1f253c86d3fa815",
+  "static/images/upgrades-and-governance/agglayer.png": "d6b47eefd3b2ca22c2a86d4ee6400c8c"
 }

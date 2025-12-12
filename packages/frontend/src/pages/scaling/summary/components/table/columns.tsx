@@ -168,7 +168,6 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
         )
       },
       meta: {
-        cellClassName: 'pl-3',
         additionalRows: (ctx) => {
           return (
             ctx.row.original.dataAvailability?.slice(1).map((da) => (

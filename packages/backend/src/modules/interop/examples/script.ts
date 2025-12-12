@@ -5,7 +5,7 @@ import {
   CoingeckoQueryService,
   HttpClient,
   MulticallV3Client,
-  RpcClient,
+  RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
@@ -155,7 +155,7 @@ async function runExample(example: Example): Promise<RunResult> {
         multicallConfig.batchSize,
       )
     }
-    return new RpcClient({
+    return RpcClientCompat.create({
       url: env.string(`${chain.toUpperCase()}_RPC_URL`),
       chain: chain,
       http,

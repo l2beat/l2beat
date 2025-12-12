@@ -187,6 +187,7 @@ export async function makeConfig(
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },
+    newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
   }

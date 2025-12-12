@@ -9,7 +9,7 @@ import type {
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
-import type { RpcClient } from '@l2beat/shared'
+import type { IRpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { projectIdToChain } from '../../../../config/chainMap'
@@ -26,7 +26,7 @@ export async function mapLegacyConfig(
   chains: Map<string, ChainConfig>,
   logger: Logger,
   localStorage: LocalStorage,
-  rpcClient?: RpcClient,
+  rpcClient?: IRpcClient,
 ): Promise<ProjectTvsConfig> {
   const tokens: TvsToken[] = []
 

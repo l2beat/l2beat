@@ -43,6 +43,7 @@ export function clear(): Partial<State> {
     nodes: [],
     hidden: [],
     selected: [],
+    loaded: false,
   }
 }
 

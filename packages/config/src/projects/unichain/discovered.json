@@ -1,7 +1,7 @@
 {
   "name": "unichain",
-  "timestamp": 1764324881,
-  "configHash": "0x80dd6ffffaf43b4a95a5265c353ddbe74c869d0be81a8fc84bc5ce0763130ac9",
+  "timestamp": 1765362369,
+  "configHash": "0x53f42ac54aac6a462bad280ffe494d2be2b5357e54e45dd95dde0bb1d5180c6b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -193,7 +193,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 23896449
+          "prevBlockNum": 23981553
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -263,7 +263,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20000000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -383,12 +383,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0x3644B76604382B0b15e0e2cF700A9b9F26BA30B9",
+        "anchorGame": "eth:0xba730cEB5cd6ea698eD7C502401cAdaA1104c1FB",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xcc571cc89ec171ba99a38c5a125d0c556a8cbfa3d948e33d1f4d06898ee96c65",
-          32967516
+          "0x2a1932858ce5240fd02aa24b344bd66c6024e45f397abc8045163f7df0f5c9ea",
+          34005976
         ],
         "initVersion": 1,
         "paused": false,
@@ -463,7 +463,7 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9212,
+        "gameCount": 9497,
         "gameImpls": [
           "eth:0x6D0462850F7B87403660CC9f4F89346483108512",
           "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
@@ -666,7 +666,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 84,
+        "nonce": 91,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1546,7 +1546,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292650698",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651291",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1584,13 +1584,6 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
-          "role": ".challenger"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -2000,14 +1993,7 @@
     {
       "address": "eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
-          "role": ".proposer"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD930FbB04C315C90d0879FC8978BD9BDD57e8449",
@@ -2263,7 +2249,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622558",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622608",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2285,44 +2271,40 @@
       "name": "GasPriceOracle",
       "address": "unichain:0x420000000000000000000000000000000000000F",
       "type": "Contract",
-      "template": "opstack/Layer2/GasPriceOracle",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
+        "0x29ddf164485b42ede998cb6aa971e4178dffbc3247ff52a55177ef43123c2e70"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Provides the current gas price for L2 transactions.",
-      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
-        "$implementation": "unichain:0x93e57A196454CB919193fa9946f14943cf733845",
+        "$implementation": "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
         "$pastUpgrades": [
           [
             "2025-05-09T16:00:01.000Z",
             "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
             ["unichain:0x93e57A196454CB919193fa9946f14943cf733845"]
+          ],
+          [
+            "2025-12-02T16:00:01.000Z",
+            "0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",
+            ["unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]
           ]
         ],
-        "$upgradeCount": 1,
-        "baseFee": 0,
-        "baseFeeScalar": 2000,
-        "blobBaseFee": 1,
-        "blobBaseFeeScalar": 900000,
-        "decimals": 6,
-        "DECIMALS": 6,
-        "gasPrice": 0,
-        "isEcotone": true,
-        "isFjord": true,
-        "isIsthmus": true,
-        "l1BaseFee": 50173681,
-        "version": "1.4.0"
+        "$upgradeCount": 2
       },
       "implementationNames": {
         "unichain:0x420000000000000000000000000000000000000F": "Proxy",
-        "unichain:0x93e57A196454CB919193fa9946f14943cf733845": "GasPriceOracle"
-      }
+        "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://unichain.blockscout.com/address/0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+        }
+      ]
     },
     {
       "name": "L2StandardBridge",
@@ -2473,63 +2455,40 @@
       "name": "L1Block",
       "address": "unichain:0x4200000000000000000000000000000000000015",
       "type": "Contract",
-      "template": "opstack/Layer2/L1Block",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
+        "0xd8671cf61a7da63a2d77c745e213afbd37a88260d4ff2b5121e5e3c0b4711c93"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
-      "ignoreInWatchMode": [
-        "basefee",
-        "hash",
-        "number",
-        "timestamp",
-        "sequenceNumber",
-        "blobBaseFee",
-        "operatorFeeConstant",
-        "operatorFeeScalar"
-      ],
       "sinceTimestamp": 1730748360,
       "sinceBlock": 0,
       "values": {
         "$admin": "unichain:0x4200000000000000000000000000000000000018",
-        "$implementation": "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
+        "$implementation": "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C",
         "$pastUpgrades": [
           [
             "2025-05-09T16:00:01.000Z",
             "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
             ["unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
+          ],
+          [
+            "2025-12-02T16:00:01.000Z",
+            "0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",
+            ["unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]
           ]
         ],
-        "$upgradeCount": 1,
-        "basefee": 50173681,
-        "baseFeeScalar": 2000,
-        "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 1,
-        "blobBaseFeeScalar": 900000,
-        "DEPOSITOR_ACCOUNT": "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "gasPayingToken": {
-          "addr_": "unichain:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-          "decimals_": 18
-        },
-        "gasPayingTokenName": "Ether",
-        "gasPayingTokenSymbol": "ETH",
-        "hash": "0xc866d5b728164337e8302b6d5d0fedeadd05939d021640d1b58a824aa2a69162",
-        "isCustomGasToken": false,
-        "l1FeeOverhead": 0,
-        "l1FeeScalar": 0,
-        "number": 23896506,
-        "operatorFeeConstant": 0,
-        "operatorFeeScalar": 0,
-        "sequenceNumber": 7,
-        "timestamp": 1764324815,
-        "version": "1.6.0"
+        "$upgradeCount": 2
       },
       "implementationNames": {
         "unichain:0x4200000000000000000000000000000000000015": "Proxy",
-        "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": "L1Block"
-      }
+        "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+        }
+      ]
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -3073,16 +3032,6 @@
     },
     {
       "address": "unichain:0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "unichain:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -4598,29 +4547,6 @@
       "function transferSetter(address recipient, address newSetter)",
       "function withdrawFees(address to) returns (uint256 amount)"
     ],
-    "unichain:0x93e57A196454CB919193fa9946f14943cf733845": [
-      "function DECIMALS() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function decimals() pure returns (uint256)",
-      "function gasPrice() view returns (uint256)",
-      "function getL1Fee(bytes _data) view returns (uint256)",
-      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
-      "function getL1GasUsed(bytes _data) view returns (uint256)",
-      "function getOperatorFee(uint256 _gasUsed) view returns (uint256)",
-      "function isEcotone() view returns (bool)",
-      "function isFjord() view returns (bool)",
-      "function isIsthmus() view returns (bool)",
-      "function l1BaseFee() view returns (uint256)",
-      "function overhead() view returns (uint256)",
-      "function scalar() view returns (uint256)",
-      "function setEcotone()",
-      "function setFjord()",
-      "function setIsthmus()",
-      "function version() view returns (string)"
-    ],
     "unichain:0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
       "event OwnerChanged(address oldOwner, address newOwner)",
       "event WhitelistDisabled(address oldOwner)",
@@ -4866,30 +4792,6 @@
       "function revokeOffchain(bytes32 data) returns (uint64)",
       "function timestamp(bytes32 data) returns (uint64)",
       "function version() view returns (string)"
-    ],
-    "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
-      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
-      "function baseFeeScalar() view returns (uint32)",
-      "function basefee() view returns (uint256)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobBaseFee() view returns (uint256)",
-      "function blobBaseFeeScalar() view returns (uint32)",
-      "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
-      "function gasPayingTokenName() pure returns (string name_)",
-      "function gasPayingTokenSymbol() pure returns (string symbol_)",
-      "function hash() view returns (bytes32)",
-      "function isCustomGasToken() pure returns (bool is_)",
-      "function l1FeeOverhead() view returns (uint256)",
-      "function l1FeeScalar() view returns (uint256)",
-      "function number() view returns (uint64)",
-      "function operatorFeeConstant() view returns (uint64)",
-      "function operatorFeeScalar() view returns (uint32)",
-      "function sequenceNumber() view returns (uint64)",
-      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
-      "function setL1BlockValuesEcotone()",
-      "function setL1BlockValuesIsthmus()",
-      "function timestamp() view returns (uint64)",
-      "function version() pure returns (string)"
     ]
   },
   "usedTemplates": {
@@ -4911,8 +4813,6 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
-    "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
@@ -4927,12 +4827,12 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
+    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 23896511, "unichain": 33576522 },
-  "permissionsConfigHash": "0xc63a70bd6349c91abf43c18cb86a72ae12fc73387d020d06e495bb3a9d4a824f"
+  "usedBlockNumbers": { "ethereum": 23981701, "unichain": 34614010 },
+  "permissionsConfigHash": "0x7cf03984bb3af951159896d67024141ff9526ae8c9ec433ec16f15cd1161f31c"
 }

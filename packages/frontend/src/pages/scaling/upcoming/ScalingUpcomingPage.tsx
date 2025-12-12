@@ -1,4 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -18,7 +19,9 @@ export function ScalingUpcomingPage({ entries, ...props }: Props) {
         <MainPageHeader>Upcoming</MainPageHeader>
         <TableFilterContextProvider>
           <TableFilters entries={entries} />
-          <ScalingUpcomingTable entries={entries} />
+          <PrimaryCard className="mt-4">
+            <ScalingUpcomingTable entries={entries} />
+          </PrimaryCard>
         </TableFilterContextProvider>
       </SideNavLayout>
     </AppLayout>

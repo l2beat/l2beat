@@ -2,6 +2,26 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "xlayer",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"],
-  "sharedModules": ["shared-polygon-cdk"]
+  "initialAddresses": [
+    "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+    "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433"
+  ],
+  "names": {
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "OwnerContract"
+  },
+  "sharedModules": ["shared-polygon-cdk"],
+  "overrides": {
+    "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
+      "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions."
+    },
+    "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }

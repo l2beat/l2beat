@@ -39,6 +39,7 @@ export interface State {
   readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
+  readonly loaded: boolean
 }
 
 export interface Node {

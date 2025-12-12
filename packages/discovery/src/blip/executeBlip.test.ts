@@ -55,6 +55,13 @@ describe(executeBlip.name, () => {
     expect(executeBlip({}, ['and', 1, '', true])).toEqual(false)
   })
 
+  it('returns false when given a single falsy argument', () => {
+    expect(executeBlip({}, ['and', false])).toEqual(false)
+    expect(executeBlip({}, ['and', 0])).toEqual(false)
+    expect(executeBlip({}, ['and', ''])).toEqual(false)
+    expect(executeBlip({}, ['and', ['=', 1, 2]])).toEqual(false)
+  })
+
   it('handles multiple and nested expressions', () => {
     expect(executeBlip({}, ['and', true, 1, ['not', false]])).toEqual(true)
     expect(executeBlip({}, ['and', true, 0, ['not', false]])).toEqual(false)

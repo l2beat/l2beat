@@ -145,5 +145,11 @@
     "address": "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED",
     "chain": "ethereum",
     "blockNumber": 23881654
+  },
+  "SystemConfig_v3_12_0_CGT": {
+    "hash": "0x5515a1ec2bf3f610967c597e7288c4d493e9638e2c19d24e4fe368f0bf047a7c",
+    "address": "eth:0xfCA51bf5bDc5aC16B86F859d6BEe90cfdF6fEb72",
+    "chain": "ethereum",
+    "blockNumber": 23975101
   }
 }

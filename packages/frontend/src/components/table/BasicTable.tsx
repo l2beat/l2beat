@@ -311,7 +311,11 @@ export function BasicTableRow<T extends BasicTableRow>({
                   {prevCell && prevCell.isLastInGroup && (
                     <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
                   )}
-                  <TableCell rowSpan={rowSpan} {...cellData?.props}>
+                  <TableCell
+                    rowSpan={rowSpan}
+                    {...cellData?.props}
+                    className={cn(cellData?.props.className, 'first:pl-0')}
+                  >
                     {additionalRow}
                   </TableCell>
                 </React.Fragment>
@@ -397,7 +401,9 @@ function BasicTableColumnFiller({
 export function getBasicTableGroupParams<T>(column: Column<T>) {
   if (!column.parent) return undefined
 
-  const leafColumns = column.parent.getLeafColumns()
+  const leafColumns = column.parent
+    .getLeafColumns()
+    .filter((c) => c.getIsVisible())
   const index = leafColumns.findIndex((c) => c.id === column.id)
   const isFirstInGroup = index !== undefined ? index === 0 : undefined
   const isLastInGroup = leafColumns

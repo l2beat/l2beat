@@ -5,6 +5,8 @@ import { Checkbox } from '../../../../components/Checkbox'
 import { Dialog } from '../../../../components/Dialog'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
+import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
+import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
 
 type Props = {
   field: Field
@@ -17,6 +19,10 @@ export function FieldConfigDialog(props: Props) {
 
   const configSeverity = models.configModel.getFieldSeverity(fieldName)
   const templateSeverity = models.templateModel.getFieldSeverity(fieldName)
+
+  const configDescription = models.configModel.getFieldDescription(fieldName)
+  const templateDescription =
+    models.templateModel.getFieldDescription(fieldName)
 
   const configIgnoreMethods =
     models.configModel.ignoreMethods?.includes(fieldName)
@@ -45,43 +51,41 @@ export function FieldConfigDialog(props: Props) {
         </Dialog.Title>
         <div className="grid grid-cols-2 gap-6">
           {/* Config Column */}
-          <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
-              Config
-            </h3>
+          <div className="space-y-2">
+            <h3 className="border-coffee-400/40 border-b">Config</h3>
 
-            <div>
-              <h4 className="mb-2 font-medium text-sm">Severity</h4>
-              <div className="flex gap-2">
-                <SeverityButton
-                  onClick={() =>
-                    models.configModel.setFieldSeverity(fieldName, 'HIGH')
-                  }
-                  isActive={configSeverity === 'HIGH'}
-                >
-                  HIGH
-                </SeverityButton>
-                <SeverityButton
-                  onClick={() =>
-                    models.configModel.setFieldSeverity(fieldName, 'LOW')
-                  }
-                  isActive={configSeverity === 'LOW'}
-                >
-                  LOW
-                </SeverityButton>
-                <SeverityButton
-                  isActive={configSeverity === undefined}
-                  onClick={() =>
-                    models.configModel.setFieldSeverity(fieldName, undefined)
-                  }
-                >
-                  NONE
-                </SeverityButton>
-              </div>
+            <div className="w-full space-y-2">
+              <ConfigRow headline="Severity">
+                <div className="flex gap-2">
+                  <SeverityButton
+                    onClick={() =>
+                      models.configModel.setFieldSeverity(fieldName, 'HIGH')
+                    }
+                    isActive={configSeverity === 'HIGH'}
+                  >
+                    HIGH
+                  </SeverityButton>
+                  <SeverityButton
+                    onClick={() =>
+                      models.configModel.setFieldSeverity(fieldName, 'LOW')
+                    }
+                    isActive={configSeverity === 'LOW'}
+                  >
+                    LOW
+                  </SeverityButton>
+                  <SeverityButton
+                    isActive={configSeverity === undefined}
+                    onClick={() =>
+                      models.configModel.setFieldSeverity(fieldName, undefined)
+                    }
+                  >
+                    NONE
+                  </SeverityButton>
+                </div>
+              </ConfigRow>
             </div>
 
-            <div>
-              <h4 className="mb-2 font-medium text-sm">Ignore Options</h4>
+            <ConfigRow headline="Ignore Options">
               <div className="space-y-2">
                 <label
                   className="flex cursor-pointer items-center gap-2 hover:underline"
@@ -111,19 +115,25 @@ export function FieldConfigDialog(props: Props) {
                   <span className="text-sm">Ignore In Watch Mode</span>
                 </label>
               </div>
-            </div>
+            </ConfigRow>
+
+            <ConfigRow headline="Description">
+              <DescriptionEditor
+                content={configDescription}
+                setContent={(value) =>
+                  models.configModel.setFieldDescription(fieldName, value)
+                }
+              />
+            </ConfigRow>
           </div>
 
           {/* Template Column */}
-          <div className="space-y-4">
-            <h3 className="border-coffee-400/40 border-b pb-1 text-base">
-              Template
-            </h3>
+          <div className="space-y-2">
+            <h3 className="border-coffee-400/40 border-b">Template</h3>
 
             {models.templateModel.hasTemplate ? (
               <>
-                <div>
-                  <h4 className="mb-2 font-medium text-sm">Severity</h4>
+                <ConfigRow headline="Severity">
                   <div className="flex gap-2">
                     <SeverityButton
                       onClick={() =>
@@ -153,10 +163,9 @@ export function FieldConfigDialog(props: Props) {
                       NONE
                     </SeverityButton>
                   </div>
-                </div>
+                </ConfigRow>
 
-                <div>
-                  <h4 className="mb-2 font-medium text-sm">Ignore Options</h4>
+                <ConfigRow headline="Ignore Options">
                   <div className="space-y-2">
                     <label
                       className="flex cursor-pointer items-center gap-2 hover:underline"
@@ -196,7 +205,15 @@ export function FieldConfigDialog(props: Props) {
                       <span className="text-sm">Ignore In Watch Mode</span>
                     </label>
                   </div>
-                </div>
+                </ConfigRow>
+                <ConfigRow headline="Description">
+                  <DescriptionEditor
+                    content={templateDescription}
+                    setContent={(value) =>
+                      models.templateModel.setFieldDescription(fieldName, value)
+                    }
+                  />
+                </ConfigRow>
               </>
             ) : (
               <div className="text-coffee-300 text-sm italic">

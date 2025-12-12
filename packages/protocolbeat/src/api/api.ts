@@ -3,8 +3,10 @@ import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
+  ApiGlobalConfigSyncStatusResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
@@ -143,6 +145,26 @@ export async function readConfigFile(
   const data = await res.json()
 
   return data as ApiConfigFileResponse
+}
+
+export async function getConfigSyncStatus(
+  project: string,
+): Promise<ApiConfigSyncStatusResponse> {
+  const res = await fetch(`/api/config/sync-status/${project}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiConfigSyncStatusResponse
+}
+
+export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncStatusResponse> {
+  const res = await fetch('/api/config/sync-status')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiGlobalConfigSyncStatusResponse
 }
 
 export async function createConfigFile(

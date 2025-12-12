@@ -7,7 +7,7 @@
     "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },
-    "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531": {
+    "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7": {
       "fields": {
         "proposer": { "permissions": [{ "type": "propose" }] },
         "challenger": { "permissions": [{ "type": "challenge" }] }
