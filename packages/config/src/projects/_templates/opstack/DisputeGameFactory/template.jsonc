@@ -28,6 +28,21 @@
         "args": [2000]
       }
     },
+    "game42": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [42]
+      }
+    },
+    "initBondGame42": {
+      "handler": {
+        "type": "call",
+        "method": "initBonds",
+        "args": [42]
+      }
+    },
     "initBonds": {
       "handler": {
         "type": "array",

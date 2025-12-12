@@ -1,3 +1,122 @@
+Generated with discovered.json: 0xcd251b7e14beac226de5d45b3fff0dfd58b1619d
+
+# Diff at Fri, 12 Dec 2025 14:38:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764322969
+- current timestamp: 1765550224
+
+## Description
+
+Jello hardfork, introducing OP Succinct Lite and DA verification through Hokulea.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x9F18D91949731E766f294A14027bBFE8F28328CC) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        42
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
+      values.initBondGame42:
+-        0
++        "10000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816)
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/celo/.flat/AccessManager.sol      |  214 +++
+ .../celo/.flat/OPSuccinctFaultDisputeGame.sol      | 1083 +++++++++++++++
+ .../src/projects/celo/.flat/SP1Verifier.sol        | 1396 ++++++++++++++++++++
+ .../src/projects/celo/.flat/SP1VerifierGateway.sol |  231 ++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 6 files changed, 3912 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764322969 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xeffb6b20b30d108b8f266146cddfb61163e7b1f8
 
 # Diff at Thu, 11 Dec 2025 14:14:36 GMT:
