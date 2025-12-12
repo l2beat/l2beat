@@ -34,7 +34,7 @@ const ERC20BridgeInitiatedMessagePassed = createInteropEventType<{
   ttl: 14 * UnixTime.DAY,
 })
 
-// NOTE: we rename local/remote tokens to l2/l1 for clarity. This implies that if the same event is to be used for L1->L2 deposits, 
+// NOTE: we rename local/remote tokens to l2/l1 for clarity. This implies that if the same event is to be used for L1->L2 deposits,
 // the naming should be reverted.
 const parseERC20BridgeInitiated = createEventParser(
   'event ERC20BridgeInitiated(address indexed l2Token, address indexed l1Token, address indexed from, address to, uint256 amount, bytes extraData)',
