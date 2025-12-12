@@ -90,13 +90,14 @@ export class RpcClientCompat implements IRpcClient {
       deps.generateId,
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
-    const wrapped = withRetries(client, {
+    const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
+    const wrapped = withRetries(compat, {
       initialTimeoutMs: retryOptions.initialRetryDelayMs,
       maxAttempts: retryOptions.maxRetries,
       maxTimeoutMs: retryOptions.maxRetryDelayMs,
       logger,
     })
-    return new RpcClientCompat(wrapped, deps.chain, deps.multicallClient)
+    return wrapped
   }
 
   async getLatestBlockNumber(): Promise<number> {
