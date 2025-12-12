@@ -1522,5 +1522,7 @@
   "static/images/architecture/agglayer-validium.png": "7df06d22f3429e7d2461ed800fb29dec",
   "static/meta-images/publications/governance-review-77.png": "a122af2813c4b9e774ef101eb9082027",
   "static/images/architecture/agglayer-opstack_closed.png": "f285de7b1e0e21b8b1f253c86d3fa815",
-  "static/images/upgrades-and-governance/agglayer.png": "d6b47eefd3b2ca22c2a86d4ee6400c8c"
+  "static/images/upgrades-and-governance/agglayer.png": "d6b47eefd3b2ca22c2a86d4ee6400c8c",
+  "static/icons/optimai.png": "efcaad73c70a7197b43926de057ed5e1",
+  "static/meta-images/scaling/projects/optimai/opengraph-image.png": "3862e6af1e98d64ecd22996a24277a2f"
 }

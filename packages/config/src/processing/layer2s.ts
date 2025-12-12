@@ -133,6 +133,7 @@ import { okto } from '../projects/okto/okto'
 import { ola } from '../projects/ola/ola'
 import { omgnetwork } from '../projects/omgnetwork/omgnetwork'
 import { openzk } from '../projects/openzk/openzk'
+import { optimai } from '../projects/optimai/optimai'
 import { optimism } from '../projects/optimism/optimism'
 import { optopia } from '../projects/optopia/optopia'
 import { orderly } from '../projects/orderly/orderly'
@@ -367,6 +368,7 @@ export const layer2s: ScalingProject[] = [
   ola,
   omgnetwork,
   openzk,
+  optimai,
   optimism,
   optopia,
   orderly,
