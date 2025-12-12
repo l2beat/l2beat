@@ -17,6 +17,7 @@ export function BottomBar() {
   const removePanel = useMultiViewStore((state) => state.removePanel)
   const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const discover = useTerminalStore((state) => state.discover)
+  const killCommand = useTerminalStore((state) => state.killCommand)
   const setOpen = useSearchStore((state) => state.setOpen)
 
   useEffect(() => {
@@ -50,6 +51,9 @@ export function BottomBar() {
           queryClient.invalidateQueries({ queryKey: ['projects', project] })
           queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
         })
+      }
+      if (e.code === 'KeyK' && e.altKey) {
+        killCommand()
       }
     }
 
