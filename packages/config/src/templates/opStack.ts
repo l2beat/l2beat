@@ -366,8 +366,7 @@ function opStackCommon(
               : undefined),
       stacks: ['OP Stack'],
       warning:
-        templateVars.display.warning === undefined &&
-        fraudProofType === 'None'
+        templateVars.display.warning === undefined && fraudProofType === 'None'
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
