@@ -1,6 +1,6 @@
 {
   "name": "bob",
-  "timestamp": 1764953632,
+  "timestamp": 1765550347,
   "configHash": "0x5cf6f90a5befda2c8cbdd55bc0ebd67dc1542a04c4c81dae6e43e1d39a55338b",
   "entries": [
     {
@@ -859,7 +859,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 25997039,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x26e0B0b44BcA1F7251A0d79f1d0567a157bEb7AF",
+        "lastResolved": "eth:0x3Ae2D496dac976EE24c85bAda0B478dEdE8C1e9C",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -1004,8 +1004,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 23948020
+          "prevBoughtGas": 21000,
+          "prevBlockNum": 23995555
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -1094,7 +1094,8 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD",
-        "gameCount": 287,
+        "game42": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 300,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1104,6 +1105,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "permissionedGamesTotal": 0,
@@ -1111,7 +1113,8 @@
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
-        "game1337": { "severity": "HIGH" }
+        "game1337": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079": "Proxy",
@@ -1662,7 +1665,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660660",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660662",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2986,7 +2989,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
+    "opstack/DisputeGameFactory": "0x7ff210fc156b22239c3f3600c36a17973eaf33fba84ec8a38bdf4e6fa2cada17",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -3004,6 +3007,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 23948057 },
+  "usedBlockNumbers": { "ethereum": 23997189 },
   "permissionsConfigHash": "0xbc3b96bf6a008fc3bbb035be02eab91b08562d101a986ddca4c8edd211507324"
 }

@@ -84,7 +84,7 @@ const EIGEN_DA: DaProjectTableValue = {
   value: 'EigenDA',
   sentiment: 'warning',
   description:
-    'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an onchain inbox.',
+    'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only commitments to the data are published on an onchain inbox.',
   projectId: ProjectId('eigenda'),
 }
 

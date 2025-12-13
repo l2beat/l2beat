@@ -34,6 +34,7 @@ export const bridgesSummarySingleChainColumns = [
         </TableLink>
       )
     },
+    enableHiding: false,
   }),
   columnHelper.accessor((e) => e.tvs.breakdown?.total, {
     id: 'tvs',
