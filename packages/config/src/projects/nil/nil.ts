@@ -16,7 +16,7 @@ export const nil: ScalingProject = upcomingL2({
     links: {
       websites: ['https://nil.foundation/'],
       documentation: ['https://docs.nil.foundation/'],
-      explorers: ['https://explore.nil.foundation'],
+      explorers: [],
       repositories: ['https://github.com/nilfoundation'],
       socialMedia: [
         'https://twitter.com/nil_foundation',
