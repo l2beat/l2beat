@@ -21,8 +21,6 @@
 
 ## Introduction
 
-## Introduction
-
 In general terms, *Interop* (short for cross-chain *interoperability*) is the internal name for the infrastructure responsible for gathering cross-chain communication and displaying selected statistics to the user. In practice, the focus is on cross-chain *token transfers*. The chains can include Ethereum and L2s/L3s, as well as other Layer-1 chains such as Solana.
 
 One of the initial goals is to determine which bridges and protocols are used most often, what values are transferred, and how long it takes to finalize the process.
@@ -198,6 +196,32 @@ ContractCall -> Approved_WithoutMint -> ContractCallExecuted
 
 Also, this relation: `or(and(a=b, c=d), d=e)` can be represented as two relations in separate flows: `and(a=b, c=d)` in one flow and `d=e` in the other.
 
+### Suggestion for implementation
+
+Here's a simple, temporary suggestion for a definition in TypeScript for the following flow:
+
+`LogCreatedOrder ---(orderId=orderId)---> LogFulfilledOrder`
+
+```typescript
+const simpleFlow = {
+    path: [
+      { event: LogCreatedOrder },
+      {
+        whenEq: [{ prev: 'orderId', next: 'orderId'}], 
+        event: LogFulfilledOrder,
+      },
+      // {
+      //   whenEq: [...],
+      //   event: ...,
+      // },
+      // ... and so on
+    ],
+    processor: this.processSimpleFlow // called with matched events
+  }
+```
+
+The `whenEq` field would be the one that supports optional *matching function* and additional operations (e.g. *modulo* for "approximate match").
+
 ### Handling one-to-many event relations in a flow
 
 It might happen that *multiple interop events* need to be matched with a single subsequent event (or vice-versa). Such scenario is already supported in the solution described above, as the non-unique correlation key (and optional matching function) may return multiple matching events. But in order to prevent false-positives it might be necessary to *explicitly define cardinality on each connection*, or keep 1-to-1 as default, and require a special flag to be set to accept one-to-many relations.
@@ -237,5 +261,5 @@ althoug, as mentioned above, it would initially be supported wihtout support for
 
 <figure>
     <img src="../../static/assets/interop_ui_linear.svg" alt="Visualisation of interop flow">
-    <figcaption>A potential visualisation of an interop transaction flow witout branchign</figcaption>
+    <figcaption>A potential visualisation of an interop transaction flow witout branching</figcaption>
 </figure>
