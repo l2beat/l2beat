@@ -4,7 +4,6 @@
 **Table of Contents**
 
 - [Introduction](#introduction)
-- [Introduction](#introduction-1)
 - [Technical overview](#technical-overview)
 - [Event matching](#event-matching)
   - [Matching via a correlation key](#matching-via-a-correlation-key)
@@ -12,6 +11,7 @@
   - [Transactions that are composed of more than two events](#transactions-that-are-composed-of-more-than-two-events)
   - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
   - [Simplification of branching logic](#simplification-of-branching-logic)
+  - [Suggestion for implementation](#suggestion-for-implementation)
   - [Handling one-to-many event relations in a flow](#handling-one-to-many-event-relations-in-a-flow)
   - [Dealing with arrival order](#dealing-with-arrival-order)
   - [Defining a correlation key](#defining-a-correlation-key)
