@@ -156,10 +156,41 @@ This also suggests a logic for the matching engine:
   - use correlation keys matching to see if any full flow has been filled
 
 Having the flows defined in a parsable, declarative format (e.g. YAML or JSON) has this additional property that:
+- it will be possible to "ask" why a certain event haven't created a Transfer (by showing the flow it's a part of and the missing events)
 - it will be easy to visualise
 - it will be possible to create a visual editor
+- it will be possible to link a transfer to a set of internal events that were matched to create it
+- if the internal events are linked to on-chain events, it will be possible to show which onchain events yielded the transfer
 
 (comment: I'm not certain, but I have a hunch that there might be an usual case in which events match only if the transfer flow has reach certain stage. This would require building a bit more complex matching engine that would also keep track of the flow "state", and use that state as part of the matching logic. But I'm not sure if that's really the case, or if it's simply an implementation detail.)
+
+#### Simplification of branching logic
+
+While it's possible to create flows with:
+* branching logic
+* complex event realtions (compilations of `and` and `or` relation)
+
+it would be easier to implement support for linear flows only, because more complex flows and relations can be represented a many linear flows with `and`-only relations, e.g
+
+
+```
+                Approved_WithMint -> ContractCallExecuted
+              /
+ ContractCall
+              \
+                Approved_WithoutMint -> ContractCallExecuted
+```
+
+can be represented as two flows:
+
+```
+ ContractCall -> Approved_WithMint -> ContractCallExecuted
+              
+ ContractCall -> Approved_WithoutMint -> ContractCallExecuted
+```
+
+Also, this relation: `or(and(a=b, c=d), d=e)` can be represented as two relations in separate flows: `and(a=b, c=d)` in one and `d=e` in the other one.
+
 
 #### Dealing with arrival order
 
@@ -188,6 +219,13 @@ Additional advantage of having correlation in the flow declaration is that it ca
 #### Potential interface for flow visualization
 
 <figure>
-    <img src="../../static/assets/interop_ui.svg" alt="Visualisation of interop flow">
-    <figcaption>A potential visualisation of an interop transaction flow</figcaption>
+    <img src="../../static/assets/interop_ui_branching.svg" alt="Visualisation of interop flow">
+    <figcaption>A potential visualisation of an interop transaction flow with branching</figcaption>
+</figure>
+
+althoug, as mentioned above, it would initially be supported wihtout support for branching:
+
+<figure>
+    <img src="../../static/assets/interop_ui_linear.svg" alt="Visualisation of interop flow">
+    <figcaption>A potential visualisation of an interop transaction flow witout branchign</figcaption>
 </figure>
