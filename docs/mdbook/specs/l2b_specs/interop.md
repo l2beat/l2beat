@@ -11,10 +11,11 @@
   - [Transactions that are composed of more than two events](#transactions-that-are-composed-of-more-than-two-events)
   - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
   - [Simplification of branching logic](#simplification-of-branching-logic)
+  - [Defining a correlation key](#defining-a-correlation-key)
+  - [Dealing with arrival order](#dealing-with-arrival-order)
   - [Suggestion for implementation](#suggestion-for-implementation)
   - [Handling one-to-many event relations in a flow](#handling-one-to-many-event-relations-in-a-flow)
-  - [Dealing with arrival order](#dealing-with-arrival-order)
-  - [Defining a correlation key](#defining-a-correlation-key)
+  - [Storage of correlation keys](#storage-of-correlation-keys)
   - [Potential interface for flow visualization](#potential-interface-for-flow-visualization)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -196,6 +197,30 @@ ContractCall -> Approved_WithoutMint -> ContractCallExecuted
 
 Also, this relation: `or(and(a=b, c=d), d=e)` can be represented as two relations in separate flows: `and(a=b, c=d)` in one flow and `d=e` in the other.
 
+### Defining a correlation key
+
+As suggested above, transaction flows should be defined declaratively. This strongly suggests that correlation keys *should not be defined on an event*, but rather *on the connection in the flow*. In other words, when someone writes code to normalize and cast an on-chain event into an internal interop event, they might not know which fields will be used as a correlation key. For example, imagine an event with the following fields:
+
+- `{ recipient, orderId, timestamp }`
+
+and assume it can be uniquely identified in two ways: via `{ recipient, orderId }` or via `{ recipient, timestamp }`. It is not obvious which field (`orderId` or `timestamp`) will be available in the following event.
+
+Therefore, *casting and normalization should not define correlation keys* - they should be defined *on connections in the flow*. Casting should only try to extract and normalize as many fields as possible.
+
+When we say "correlation keys", we must also assume that *custom matching functions*, if needed, should be defined or referenced in the same place.
+
+It also means that there can be multiple correlation keys for the same event.
+
+An additional advantage of defining correlations in the flow declaration is that they can be presented graphically and modified graphically.
+
+### Dealing with arrival order
+
+We cannot be certain that events will arrive in the processing pipeline in the order defined by the flow, even if that is the order in which they occur on-chain. There can be many reasons for this, such as different polling intervals across chains, varying RPC endpoint performance, bugs, or reprocessing scenarios.
+
+Therefore, matching needs to be possible in both directions, which again reinforces that the correlation key is part of the *connection* between events in the flow, not the events themselves.
+
+When a new event arrives, the matching engine should try to find flows containing that event and iteratively try to proceed in both directions, fetching neighboring events via correlation keys, until some flow is filled end-to-end (or ignore it if it is not).
+
 ### Suggestion for implementation
 
 Here's a simple, temporary suggestion for a definition in TypeScript for the following flow:
@@ -226,29 +251,9 @@ The `whenEq` field would be the one that supports optional *matching function* a
 
 It might happen that *multiple interop events* need to be matched with a single subsequent event (or vice-versa). Such scenario is already supported in the solution described above, as the non-unique correlation key (and optional matching function) may return multiple matching events. But in order to prevent false-positives it might be necessary to *explicitly define cardinality on each connection*, or keep 1-to-1 as default, and require a special flag to be set to accept one-to-many relations.
 
-### Dealing with arrival order
+### Storage of correlation keys
 
-We cannot be certain that events will arrive in the processing pipeline in the order defined by the flow, even if that is the order in which they occur on-chain. There can be many reasons for this, such as different polling intervals across chains, varying RPC endpoint performance, bugs, or reprocessing scenarios.
-
-Therefore, matching needs to be possible in both directions, which again reinforces that the correlation key is part of the *connection* between events in the flow, not the events themselves.
-
-When a new event arrives, the matching engine should try to find flows containing that event and iteratively try to proceed in both directions, fetching neighboring events via correlation keys, until some flow is filled end-to-end (or ignore it if it is not).
-
-### Defining a correlation key
-
-As suggested above, transaction flows should be defined declaratively. This strongly suggests that correlation keys *should not be defined on an event*, but rather *on the connection in the flow*. In other words, when someone writes code to normalize and cast an on-chain event into an internal interop event, they might not know which fields will be used as a correlation key. For example, imagine an event with the following fields:
-
-- `{ recipient, orderId, timestamp }`
-
-and assume it can be uniquely identified in two ways: via `{ recipient, orderId }` or via `{ recipient, timestamp }`. It is not obvious which field (`orderId` or `timestamp`) will be available in the following event.
-
-Therefore, **casting and normalization should not define correlation keys** - they should be defined **on connections in the flow**. Casting should only try to extract and normalize as many fields as possible.
-
-When we say "correlation keys", we must also assume that *custom matching functions*, if needed, should be defined or referenced in the same place.
-
-It also means that there can be multiple correlation keys for the same event.
-
-An additional advantage of defining correlations in the flow declaration is that they can be presented graphically and modified graphically.
+Since correlation keys are not part of the events, they should also not be persisted in the same DB table. A separate `CorrelationKey` table should be created and filled with correlation keys for each incoming event according to definitions in flows it occurs. When a flow is modified and a correlation key on a connection is introduced or modified, impacted entries in the `CorrelationKey` table should be rebuilt. 
 
 ### Potential interface for flow visualization
 
