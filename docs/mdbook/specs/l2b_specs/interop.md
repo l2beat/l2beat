@@ -5,14 +5,15 @@
 
 - [Introduction](#introduction)
 - [Technical overview](#technical-overview)
-  - [Event matching](#event-matching)
-    - [Matching via correlation key](#matching-via-correlation-key)
-    - [Matching logic that can't be serialized into a correlation key](#matching-logic-that-cant-be-serialized-into-a-correlation-key)
-    - [Transactions that are composed from more than two events](#transactions-that-are-composed-from-more-than-two-events)
-    - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
-    - [Dealing with arrival order](#dealing-with-arrival-order)
-    - [Defining correlation key](#defining-correlation-key)
-    - [Potential interface for flow visualization](#potential-interface-for-flow-visualization)
+- [Event matching](#event-matching)
+  - [Matching via correlation key](#matching-via-correlation-key)
+  - [Matching logic that can't be serialized into a correlation key](#matching-logic-that-cant-be-serialized-into-a-correlation-key)
+  - [Transactions that are composed from more than two events](#transactions-that-are-composed-from-more-than-two-events)
+  - [Transaction flows with branching logic](#transaction-flows-with-branching-logic)
+  - [Simplification of branching logic](#simplification-of-branching-logic)
+  - [Dealing with arrival order](#dealing-with-arrival-order)
+  - [Defining correlation key](#defining-correlation-key)
+  - [Potential interface for flow visualization](#potential-interface-for-flow-visualization)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -64,13 +65,13 @@ Conceptually the process looks like this:
 ```
 
 
-### Event matching
+## Event matching
 
 Event matching is one of the most challenging parts of the processing. Let's take a simple example of a transfer that is represented by two events, one for deposit on the source chain and the other as e.g. withdrawal on the destination chain. As events for multiple protocols and bridges are  gathered, each new incoming event can potentially be a withdrawal event for some deposit event that has already been gathered. Therefore there needs to be a way to correlate the two together, but it must be efficient enough to use it for matching each incoming event with potentially millions of already gathered events.
 
 What makes this problem harder is that a transfer can consist of multiple events (e.g. deposit->transfer->mint->withdrawal), events can "arrive" out of order, there can be a branching logic (e.g. different set of events depending on the token) and a reorg might revert a transfer that has already been identified.
 
-#### Matching via correlation key
+### Matching via correlation key
 
 The main insight that makes finding pairs of correlated events efficient is that instead of implementing a **function** that compares two events (and in the most naive form would need to be executed for earch pair of events, leading to O(n^2) computational complexity), there should be a function that *returns* a **corellation key** for an event, so that such key can be efficiently *indexed*. For example, if there's a deposit event `A` with fields: 
 
@@ -100,7 +101,7 @@ A few questions arise here:
 Those will be discussed in the following sections.
 
 
-#### Matching logic that can't be serialized into a correlation key
+### Matching logic that can't be serialized into a correlation key
 
 There might be a situation when matching logic between two events can't be easily represented as a lookup for a static, serialized value (the correlation key). Extending the previous example imagine, that:
 
@@ -120,7 +121,7 @@ But assuming the corellation check indeed must include relation of fields which 
 
 This example also shows that the *correlation key is not necessarily unique* and can be the same for different events of the same type.
 
-#### Transactions that are composed from more than two events
+### Transactions that are composed from more than two events
 
 Many cross-chain transactions are mulit-step, with multiple events emitted during the flow. For now let's consider only a flow that is linear, with no branching. Let's take this example flow with events:
 
@@ -133,7 +134,7 @@ It can be noticed that such flow still consists of pairs of correlated events.
 
 So the idea of using correlation keys for efficiently identifying the transfer still holds and when an event arrives for processing, it needs to be correlated with the directly preceeding or following event in each flow it exists, by using the correlation key.
 
-#### Transaction flows with branching logic
+### Transaction flows with branching logic
 
 Introducing branching to the flow also doesn't change the way matching would work, e.g.:
 
@@ -164,7 +165,7 @@ Having the flows defined in a parsable, declarative format (e.g. YAML or JSON) h
 
 (comment: I'm not certain, but I have a hunch that there might be an usual case in which events match only if the transfer flow has reach certain stage. This would require building a bit more complex matching engine that would also keep track of the flow "state", and use that state as part of the matching logic. But I'm not sure if that's really the case, or if it's simply an implementation detail.)
 
-#### Simplification of branching logic
+### Simplification of branching logic
 
 While it's possible to create flows with:
 * branching logic
@@ -192,7 +193,11 @@ can be represented as two flows:
 Also, this relation: `or(and(a=b, c=d), d=e)` can be represented as two relations in separate flows: `and(a=b, c=d)` in one and `d=e` in the other one.
 
 
-#### Dealing with arrival order
+### Handling one-to-many event relations in a flow
+
+It might happen that we want multiple interop events to be matched in a flow with a single following event (or vice-versa). This will happen out-of-the-box assuming that correlation key (and optional matching function) returns multiple events. But in order to prevent false-positives it should be necessary to *explicitly define cardinality on each connection*, or keep 1-to-1 as default, and require a special flag to be set to support one-to-many relations.
+
+### Dealing with arrival order
 
 We can't be certain that events will arrive into the processing pipeline in order, as they would be defined in the flow, even if that's how it physically happens. There can be many reason for such situation, like delays in intervals of data fetching from different chains, speed of RPC endpoints, bugs, reprocessing scenarios. 
 
@@ -200,7 +205,7 @@ Therefore matching needs to be possible in both directions, again reinforcing th
 
 When a new event arrives, the matching engine should try to find flows with that event and iteratively try to "proceed" in both directions, fetching neighbouring events via correlation keys, until some flow is filled from start to finish (or ignore it when it isn't)
 
-#### Defining correlation key
+### Defining correlation key
 
 As suggested above, transaction flows should be defined in a declarative way. This strongly suggests that correlation keys *should not be defined on an event*, but rather *on the connection in the flow*. In other words, when a person writes a code that will normalize and cast an event into internal interop event, they might not know which of the fields of the event wll be used as a correlation key. For example, imagine an event with following fields:
 
@@ -216,7 +221,7 @@ It also means that there can be multiple correlation keys for the same event.
 
 Additional advantage of having correlation in the flow declaration is that it can be presented graphically and changed graphically.
 
-#### Potential interface for flow visualization
+### Potential interface for flow visualization
 
 <figure>
     <img src="../../static/assets/interop_ui_branching.svg" alt="Visualisation of interop flow">
