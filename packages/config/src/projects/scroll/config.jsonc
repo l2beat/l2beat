@@ -64,6 +64,7 @@
     "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid-2",
     "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "PlonkVerifierPostEuclid-2",
+    "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "PlonkVerifierPostFeynman",
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",

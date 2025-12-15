@@ -325,6 +325,16 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
+  '1701025211190912681772481128523426351562426117847395998223683709327746845867':
+    {
+      title: 'Aggregation program for SHARP prover',
+      description:
+        'Cairo program that squashes the state diffs of several blocks.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator/main.cairo#L15',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
       title: 'Aggregation program for SHARP prover',
@@ -350,6 +360,16 @@ program_hash = {use the value obtained in step 6}
 print(pedersen_hash(from_bytes(b"AGGREGATOR"), program_hash))\`
 The output should be the aggregation program hash in dec.
       `,
+    },
+  '918745833886511857768061986591752808672496300091957204265383861063635175685':
+    {
+      title: 'Starknet OS',
+      proverSystemProject: ProjectId('stwo'),
+      description:
+        'Proves correct state transition for a range of consecutive Starknet transactions.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os.cairo#L69',
+      verificationStatus: 'notVerified',
     },
   '793595346346724189681221050719974054861327641387231526786912662354259445535':
     {
@@ -455,8 +475,16 @@ Steps:
     proverSystemProject: ProjectId('openvmprover'),
     verificationStatus: 'notVerified',
   },
+  '0x0062333dc88631be7af046cc8d3c24f346de172aa2030a28b445ab500889d297': {
+    title: 'Executable of the Scroll bundle program (v9, v10)',
+    description:
+      'Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1’s perspective.',
+    proverSystemProject: ProjectId('openvmprover'),
+    verificationStatus: 'notVerified',
+
+  },
   '0x003ac2e012d8a7fb1495d94839fe36559b52fd6d60a532884c7558de2b88bf72': {
-    title: 'Executable of the Scroll bundle program',
+    title: 'Executable of the Scroll bundle program (v8)',
     description:
       'Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1’s perspective.',
     programUrl:

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x2d98338aadc5b4137c741c150437df99226cf826
+
+# Diff at Mon, 15 Dec 2025 11:47:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f32188a189b610d3421727ce662471c1af7b2be6 block: 1765195735
+- current timestamp: 1765798707
+
+## Description
+
+Deployed new verifier contracts with an updated zk bundle program hash.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.8:
++        {"startBatchIndex":0,"verifier":"eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5"}
+      values.latestVerifier.9:
++        {"startBatchIndex":0,"verifier":"eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"}
+      values.legacyVerifiersLength.7:
++        0
+      values.legacyVerifiersLength.8:
++        0
+      values.verifierVersions.8:
++        9
+      values.verifierVersions.9:
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostFeynman (eth:0x749fC77A1a131632a8b88e8703E489557660C75e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5.sol} |   0
+ ...:0x4F438522956c8826B9e29B4c775b2d8a6a803181.sol | 107 +++++++++++++++++++++
+ ...:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485.sol | 107 +++++++++++++++++++++
+ 3 files changed, 214 insertions(+)
+```
+
 Generated with discovered.json: 0xbe7d80075c21f9f1fb91802e776ebe39e44711af
 
 # Diff at Mon, 08 Dec 2025 12:10:06 GMT:
