@@ -17,6 +17,9 @@ export function BottomBar() {
   const { discover, killCommand } = useDiscoveryCommand()
   const setOpen = useSearchStore((state) => state.setOpen)
 
+  // By default when using bottom bar
+  const useDevMode = true
+
   useEffect(() => {
     async function onKeyUp(e: KeyboardEvent) {
       if (e.code === 'F1') {
@@ -44,7 +47,7 @@ export function BottomBar() {
           return
         }
 
-        await discover(project)
+        await discover(project, useDevMode)
       }
       if (e.code === 'KeyK' && e.altKey) {
         killCommand()
