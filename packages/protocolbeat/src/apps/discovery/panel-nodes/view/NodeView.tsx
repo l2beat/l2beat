@@ -8,6 +8,7 @@ import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
+  VALUE_SEPARATOR_HEIGHT,
 } from '../store/utils/constants'
 import { getColor } from './colors/colors'
 
@@ -23,6 +24,19 @@ export function NodeView(props: NodeViewProps) {
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
+
+  const addressFields = props.node.fields.filter(
+    (field) =>
+      field.type === 'address' &&
+      !props.node.hiddenFields.includes(field.name),
+  )
+  const valueFields = props.node.fields.filter(
+    (field) =>
+      field.type === 'value' && !props.node.hiddenFields.includes(field.name),
+  )
+  const showValueSeparator = props.node.fields.some(
+    (field) => field.type === 'value',
+  )
 
   return (
     <div
@@ -60,16 +74,28 @@ export function NodeView(props: NodeViewProps) {
           )}
         </div>
       </div>
-      {props.node.fields
-        .filter((field) => !props.node.hiddenFields.includes(field.name))
-        .map((field, i) => (
-          <NodeField
-            key={i}
-            field={field}
-            selected={props.selected}
-            isDimmed={props.isDimmed}
-          />
-        ))}
+      {addressFields.map((field, i) => (
+        <NodeField
+          key={`address-${field.name}-${i}`}
+          field={field}
+          selected={props.selected}
+          isDimmed={props.isDimmed}
+        />
+      ))}
+      {showValueSeparator && (
+        <div
+          className="mx-1 border-t border-coffee-400/50"
+          style={{ height: VALUE_SEPARATOR_HEIGHT }}
+        />
+      )}
+      {valueFields.map((field, i) => (
+        <NodeField
+          key={`value-${field.name}-${i}`}
+          field={field}
+          selected={props.selected}
+          isDimmed={props.isDimmed}
+        />
+      ))}
       {props.node.hiddenFields.length > 0 && (
         <div
           className="flex items-end justify-center text-center text-coffee-200/40 text-xs italic"
@@ -107,14 +133,27 @@ function NodeField(props: {
   selected: boolean
   isDimmed?: boolean
 }) {
-  const isHighlighted = useStore((state) =>
-    state.selected.includes(props.field.target),
-  )
-  const targetHidden = useStore((state) =>
-    state.hidden.includes(props.field.target),
-  )
+  const addressField =
+    props.field.type === 'address' ? props.field : undefined
+  const isHighlighted = useStore((state) => {
+    if (!addressField) {
+      return false
+    }
+    return state.selected.includes(addressField.target)
+  })
+  const targetHidden = useStore((state) => {
+    if (!addressField) {
+      return false
+    }
+    return state.hidden.includes(addressField.target)
+  })
 
-  const isLeft = props.field.connection.from.direction === 'left'
+  const isLeft =
+    addressField && addressField.connection.from.direction === 'left'
+  const fieldLabel =
+    props.field.type === 'address'
+      ? props.field.name
+      : `${props.field.name}: ${props.field.value}`
 
   return (
     <div className="relative">
@@ -128,9 +167,9 @@ function NodeField(props: {
           lineHeight: FIELD_HEIGHT + 'px',
         }}
       >
-        {props.field.name}
+        {fieldLabel}
       </div>
-      {!targetHidden && (
+      {addressField && !targetHidden && (
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
