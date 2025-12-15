@@ -1,6 +1,6 @@
 {
   "name": "game7",
-  "timestamp": 1759481125,
+  "timestamp": 1765795563,
   "configHash": "0x4c01dbf62e89e3bc511e4d059f4bde42a1e45d583e6bf8306cb634403c827c46",
   "entries": [
     {
@@ -224,6 +224,11 @@
         "arb1:0x92329713Dc1a897D67a1C7f2a40eeeA83F5362CE": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
@@ -715,6 +720,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB",
       "type": "EOA",
       "proxyType": "EOA",
@@ -864,10 +874,10 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
+          "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-          "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -880,7 +890,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 99,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1463,11 +1473,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1530,11 +1535,6 @@
         "arb1:0xd2e4Cc9Ec636eC9cFE840A2cF6ca32B690fD921A": "ERC20Outbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SafeL2",
@@ -1671,7 +1671,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 9,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2555,6 +2555,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 385579711 },
-  "permissionsConfigHash": "0xf1547790d78f48241955a1da609925f47891a7ba8e8a8fd977418273bc4eec19"
+  "usedBlockNumbers": { "arbitrum": 410867780 },
+  "permissionsConfigHash": "0x7016758e25ffaecb7ef06e190a68c37a6799e06650c685063a30e85dbf08bc34"
 }
