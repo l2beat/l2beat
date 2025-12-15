@@ -107,11 +107,9 @@ export class InteropFinancialsLoop extends TimeLoop {
       })
 
     await this.db.transaction(async () => {
-      await Promise.all(
-        updates.map((u) =>
-          this.db.interopTransfer.updateFinancials(u.id, u.update),
-        ),
-      )
+      for (const { id, update } of updates) {
+        await this.db.interopTransfer.updateFinancials(id, update)
+      }
     })
 
     this.logger.info('Transfers processed', {
