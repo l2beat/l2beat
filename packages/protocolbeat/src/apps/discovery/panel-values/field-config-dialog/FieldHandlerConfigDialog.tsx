@@ -18,35 +18,38 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
   const editorKey = `handler-${context}-${fieldName}`
 
   return (
-    <Dialog.Root>
+    <Dialog.Root modal>
       <Dialog.Trigger asChild>
         <div className="absolute top-0 right-0 hidden h-full w-full cursor-pointer items-center justify-center bg-coffee-700/50 group-hover:flex">
           <IconEdit className="size-4 text-coffee-200/80" />
         </div>
       </Dialog.Trigger>
       <Dialog.Body className="h-full max-w-full">
-        <Dialog.Title>Handler</Dialog.Title>
+        <Dialog.Title>Handler editor</Dialog.Title>
         <div className="grid h-full grid-cols-2 gap-2">
           <div className="h-3/4 w-full">
-            <EditorView
-              features={{ lineSelection: false, rangeHighlight: false }}
-              editorId={editorKey}
-              callbacks={{
-                onSave: (content) => {
-                  model.setFieldHandler(fieldName, JSON.parse(content))
-                  return content
-                },
-              }}
-              files={[
-                {
-                  id: editorKey,
-                  name: `handler.${context}.${fieldName}`, // doesn't matter, it's not used
-                  content: JSON.stringify(handler, null, 2),
-                  readOnly: false,
-                  language: 'json',
-                },
-              ]}
-            />
+            <div className="h-full w-full border border-coffee-200 bg-coffee-900 p-4 pl-0">
+              <EditorView
+                features={{ lineSelection: false, rangeHighlight: false }}
+                editorId={editorKey}
+                disableTabs
+                callbacks={{
+                  onSave: (content) => {
+                    model.setFieldHandler(fieldName, JSON.parse(content))
+                    return content
+                  },
+                }}
+                files={[
+                  {
+                    id: editorKey,
+                    name: `handler.${context}.${fieldName}`, // doesn't matter, it's not used
+                    content: JSON.stringify(handler, null, 2),
+                    readOnly: false,
+                    language: 'json',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </div>
       </Dialog.Body>
