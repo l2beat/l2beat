@@ -30,7 +30,6 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
       meta: {
         tooltip:
           'The data availability layer where the data (transaction data or state diffs) is published.',
-        cellClassName: 'pl-3',
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)

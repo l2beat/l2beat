@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xf7d7f72591b32378caf94e08142cb7cef78996b3
+
+# Diff at Mon, 15 Dec 2025 07:34:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765464425
+- current timestamp: 1765784028
+
+## Description
+
+ms and operators change.
+
+## Watched changes
+
+```diff
+    contract Gnosis Bridge Multisig (eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_DAI (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      values.$members.1:
+-        "gno:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+Generated with discovered.json: 0x9fb1e4dffde27421816da8950d5caeeea4057028
+
+# Diff at Thu, 11 Dec 2025 14:48:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764164995
+- current timestamp: 1765464425
+
+## Description
+
+7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xe407cbc76d2dcba4c87608219a8254a23a316e5331aaac1a04865186145eddb3","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706)
+    +++ description: None
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0) {
+    +++ description: None
+      values.$members.1:
+-        "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706"
++        "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0xfa2b4a458b2745ee1b0a251270945f9925eae61d
 
 # Diff at Wed, 26 Nov 2025 13:51:08 GMT:

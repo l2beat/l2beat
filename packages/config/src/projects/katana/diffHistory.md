@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x4d1073ab88e531b0659c98506290320f2349e094
+
+# Diff at Mon, 15 Dec 2025 07:24:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765280900
+- current timestamp: 1765783036
+
+## Description
+
+new opsuccinct vkeys:
+
+aggregationVkey
+- unchanged: 0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d
+
+rangeVkeyCommitment
+- old: 0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63
+- new: 0x64c8517c14f10577381d8961139a4420420e90e528d02be96e2b0961671db248
+
+on gh this corresponds to [this pr](https://github.com/agglayer/provers/pull/316/changes)
+- update sp1 to 5.2.2
+- update alloy to 1.0
+- update agglayer to 0.12.0
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x64c8517c14f10577381d8961139a4420420e90e528d02be96e2b0961671db248"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x7179e8c558e26751a56fc2fe9ce0a84ce248cfc98cb5b7a5178655b0c5c42ea5"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x4a6e8c6abb9ec46b76062d422b6d87bb4b7e0304b4b06d554037828ce3006650"
++        "0xfda6f1430e8363d3850cb5ff3f026f6ce01ad0fad017cb06a1dcbeb72c00304d"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
++        "eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765280900 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x7179e8c558e26751a56fc2fe9ce0a84ce248cfc98cb5b7a5178655b0c5c42ea5"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x670ea57f72adba87a0f30e15352bcd858aa53b01
+
+# Diff at Thu, 11 Dec 2025 16:27:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@9f3170e1f8a0370f46b282d3c5cfa506e634cc38 block: 1765280900
+- current timestamp: 1765280900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765280900 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xfd75ece268791f13bd59dd6ea4ebc744ed3f4935
 
 # Diff at Tue, 09 Dec 2025 11:49:28 GMT:

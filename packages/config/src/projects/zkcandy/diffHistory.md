@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x22638cfa0dce8a89b1854f62b23b451687eb5e65
+
+# Diff at Thu, 11 Dec 2025 14:39:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764668728
+- current timestamp: 1765463883
+
+## Description
+
+VTL valis change.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","role":".validatorsVTL"}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70"
+      values.validatorsVTL.1:
+-        "eth:0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D"
+    }
+```
+
+```diff
+    EOA  (eth:0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564","role":".validatorsVTL"}
+    }
+```
+
 Generated with discovered.json: 0x10774cdf70b604b533ecaa657666798a4648bde8
 
 # Diff at Tue, 02 Dec 2025 09:46:44 GMT:

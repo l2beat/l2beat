@@ -36,6 +36,7 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
             headClassName: 'w-0 min-w-[154px]',
           }
         : undefined,
+      enableHiding: false,
     }),
   ]
 }

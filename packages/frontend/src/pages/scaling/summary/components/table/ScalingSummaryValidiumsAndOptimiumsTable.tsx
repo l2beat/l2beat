@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
@@ -35,11 +36,15 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     [entries, excludeAssociatedTokens, data],
   )
 
+  const columns = useMemo(
+    () =>
+      getScalingSummaryValidiumAndOptimiumsColumns({ isTvsLoading: isLoading }),
+    [isLoading],
+  )
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryValidiumAndOptimiumsColumns({
-      isTvsLoading: isLoading,
-    }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -54,5 +59,10 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }

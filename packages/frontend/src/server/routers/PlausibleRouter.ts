@@ -8,7 +8,7 @@ export function createPlausibleRouter() {
   router.get('/script.js', async (_, res) => {
     try {
       const upstreamRes = await fetch(
-        'https://plausible.io/js/script.hash.outbound-links.pageview-props.tagged-events.js',
+        'https://plausible.io/js/pa-im4rJ9-v-xGem-znhAVj5.js',
       )
       const scriptText = await upstreamRes.text()
 

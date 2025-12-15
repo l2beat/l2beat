@@ -1,4 +1,35 @@
-Generated with discovered.json: 0xdaed74e28937015fbfa25830b9e1843c8d4f5a77
+Generated with discovered.json: 0x88a4a700f394d4badf87ef8cc77e943f52d3372d
+
+# Diff at Fri, 12 Dec 2025 14:43:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1756721254
+- current timestamp: 1765550542
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756721254 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x0946ff6f123b57437dcad50bd95b473147f8f9d0
 
 # Diff at Tue, 04 Nov 2025 11:32:52 GMT:
 

@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { CallParameters, RpcClient } from '@l2beat/shared'
+import type { CallParameters, IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
   decodeFunctionResult,
@@ -49,7 +49,7 @@ export class AcrossConfigPlugin
     private chains: { id: number; name: string }[],
     private store: InteropConfigStore,
     protected logger: Logger,
-    private ethereumRpc: RpcClient,
+    private ethereumRpc: IRpcClient,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
     this.logger = logger.for(this).tag({ tag: AcrossConfig.key })

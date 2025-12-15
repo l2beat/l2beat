@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
+import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
 
 type Props = {
-  project: string
   templateId?: string
   files: {
     template: string
@@ -19,6 +20,12 @@ export function useTemplateModel({ templateId, files }: Props) {
   const queryClient = useQueryClient()
   const [templateModel, setTemplateModel] = useState(
     ContractConfigModel.fromRawJsonc(files.template),
+  )
+
+  const debouncedInvalidateSyncStatus = useDebouncedCallback(() =>
+    queryClient.invalidateQueries({
+      queryKey: ['config-sync-status'],
+    }),
   )
 
   useEffect(() => {
@@ -68,6 +75,25 @@ export function useTemplateModel({ templateId, files }: Props) {
     saveModelContents(newModel)
   }
 
+  const setDescription = (description: string | undefined) => {
+    const newModel = templateModel.setDescription(description)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldDescription = (fieldName: string) => {
+    return templateModel.getFieldDescription(fieldName)
+  }
+
+  const setFieldDescription = (
+    fieldName: string,
+    description: string | undefined,
+  ) => {
+    const newModel = templateModel.setFieldDescription(fieldName, description)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -77,17 +103,23 @@ export function useTemplateModel({ templateId, files }: Props) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['template', templateId],
+        queryKey: ['templates', templateId],
+      })
+      debouncedInvalidateSyncStatus()
+    },
+    onError: (error) => {
+      toast.error(`Failed to save template file - ${templateId}`, {
+        description: <pre>{error.message}</pre>,
       })
     },
   })
 
   const saveModelContents = (model: ContractConfigModel) => {
-    if (model.hasComments()) {
-      saveMutation.mutate(model.toString())
-    } else {
-      saveMutation.mutate(formatJson(model.peek()))
-    }
+    const toSave = model.hasComments()
+      ? model.toString()
+      : formatJson(model.peek())
+
+    saveMutation.mutate(toSave)
   }
 
   const saveRaw = useCallback(
@@ -110,8 +142,11 @@ export function useTemplateModel({ templateId, files }: Props) {
     toggleIgnoreInWatchMode,
     setFieldSeverity,
     getFieldSeverity,
+    getFieldDescription,
+    setFieldDescription,
 
     setCategory,
+    setDescription,
 
     save: saveRaw,
 
@@ -127,5 +162,6 @@ export function useTemplateModel({ templateId, files }: Props) {
     ignoreRelatives: templateModel.ignoreRelatives,
     ignoreInWatchMode: templateModel.ignoreInWatchMode,
     category: templateModel.category,
+    description: templateModel.description,
   }
 }

@@ -32,10 +32,7 @@ export const orbit: Bridge = {
       ],
       documentation: ['https://bridge-docs.orbitchain.io/'],
       repositories: ['https://github.com/orbit-chain'],
-      explorers: [
-        'https://bridge.orbitchain.io/history/token/ALL',
-        'https://explorer.orbitchain.io',
-      ],
+      explorers: ['https://bridge.orbitchain.io/history/token/ALL'],
     },
     description:
       'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between supported blockchains.',

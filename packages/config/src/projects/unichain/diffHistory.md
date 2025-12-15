@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x107cff710d67ac863678c99a28fc7dbc50146950
+
+# Diff at Fri, 12 Dec 2025 14:56:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765362369
+- current timestamp: 1765551322
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362369 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xda8f0f7f2bb04b273a24d39db6d877e9ab746281
+
+# Diff at Thu, 11 Dec 2025 14:25:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1765362369
+- current timestamp: 1765362369
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362369 (main branch discovery), not current.
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02","role":".proposer"}]
+    }
+```
+
 Generated with discovered.json: 0x33077078f3871a082357679f9efe068152ddc652
 
 # Diff at Wed, 10 Dec 2025 10:27:14 GMT:

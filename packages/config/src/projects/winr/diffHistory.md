@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x427b87a231899ad4a8e78ef94f0082160dada995
+
+# Diff at Wed, 10 Dec 2025 15:18:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1763555139
+- current timestamp: 1765379816
+
+## Description
+
+Conduit multisig added member.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0x8278b010cd73b06e0bf406e49194305cf6c03b3b
 
 # Diff at Wed, 19 Nov 2025 12:26:44 GMT:

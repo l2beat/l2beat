@@ -26,13 +26,16 @@ function SelectTrigger({
   return (
     <RadixSelect.Trigger
       className={clsx(
-        'inline-flex leading-none outline-none focus:outline-none active:outline-none',
+        'inline-flex w-full leading-none outline-none focus:outline-none active:outline-none',
         className,
       )}
       {...props}
       asChild
     >
-      <Button size="small" className="data-[state=open]:border-b-0">
+      <Button
+        size="small"
+        className="flex items-center justify-between data-[state=open]:border-b-0"
+      >
         <RadixSelect.Value placeholder={placeholder ?? 'Select'} />
         <RadixSelect.Icon>
           <IconChevronDown />

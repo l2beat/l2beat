@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
@@ -35,9 +36,14 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     [entries, excludeAssociatedTokens, data],
   )
 
+  const columns = useMemo(
+    () => getScalingSummaryNotReviewedColumns({ isTvsLoading: isLoading }),
+    [isLoading],
+  )
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryNotReviewedColumns({ isTvsLoading: isLoading }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -52,5 +58,10 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }
