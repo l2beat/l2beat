@@ -178,7 +178,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const deployedTokenRecord = deployedToken({
         chain: 'ethereum',
-        address: '0x1111111111111111111111111111111111111111',
+        address: '0x1111111111111111AAAAAAAAAbbbbbbbbbbbbbbb',
         abstractTokenId: 'TK0001',
         symbol: 'ETH',
         decimals: 18,
@@ -190,13 +190,16 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       const result = await repository.getByChainAndAddress([
         {
           chain: 'ethereum',
-          address: '0x1111111111111111111111111111111111111111',
+          address: '0x1111111111111111AAAAAAAAAbbbbbbbbbbbbbbb',
         },
       ])
 
       expect(result).toEqual([
         {
-          deployedToken: deployedTokenRecord,
+          deployedToken: {
+            ...deployedTokenRecord,
+            address: '0x1111111111111111aaaaaaaaabbbbbbbbbbbbbbb',
+          },
           abstractToken: abstractTokenRecord,
         },
       ])
@@ -208,7 +211,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const deployedTokenRecord = deployedToken({
         chain: 'arbitrum',
-        address: '0x2222222222222222222222222222222222222222',
+        address: '0x22222222222222BBBBBBBBBBBccccccccccccccc',
         abstractTokenId: null,
         symbol: 'ARB',
         decimals: 18,
@@ -220,13 +223,16 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       const result = await repository.getByChainAndAddress([
         {
           chain: 'arbitrum',
-          address: '0x2222222222222222222222222222222222222222',
+          address: '0x22222222222222BBBBBBBBBBBccccccccccccccc',
         },
       ])
 
       expect(result).toEqual([
         {
-          deployedToken: deployedTokenRecord,
+          deployedToken: {
+            ...deployedTokenRecord,
+            address: '0x22222222222222bbbbbbbbbbbccccccccccccccc',
+          },
           abstractToken: undefined,
         },
       ])
@@ -247,7 +253,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
 
       const deployedToken1 = deployedToken({
         chain: 'ethereum',
-        address: '0x1111111111111111111111111111111111111111',
+        address: '0x1111111111111111AAAAAAAAAAAAbbbbbbbbbbbb',
         abstractTokenId: 'TK0001',
         symbol: 'ETH1',
         decimals: 18,
@@ -255,7 +261,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       })
       const deployedToken2 = deployedToken({
         chain: 'arbitrum',
-        address: '0x2222222222222222222222222222222222222222',
+        address: '0x222222222222222CCCCCCCCCCCCCdddddddddddd',
         abstractTokenId: 'TK0002',
         symbol: 'ARB1',
         decimals: 6,
@@ -263,7 +269,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       })
       const deployedToken3 = deployedToken({
         chain: 'optimism',
-        address: '0x3333333333333333333333333333333333333333',
+        address: '0x3333333333333EEEEEEEEEEEEEffffffffffffff',
         abstractTokenId: null,
         symbol: 'OP1',
         decimals: 8,
@@ -277,29 +283,38 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       const result = await repository.getByChainAndAddress([
         {
           chain: 'ethereum',
-          address: '0x1111111111111111111111111111111111111111',
+          address: '0x1111111111111111AAAAAAAAAAAAbbbbbbbbbbbb',
         },
         {
           chain: 'arbitrum',
-          address: '0x2222222222222222222222222222222222222222',
+          address: '0x222222222222222CCCCCCCCCCCCCdddddddddddd',
         },
         {
           chain: 'optimism',
-          address: '0x3333333333333333333333333333333333333333',
+          address: '0x3333333333333EEEEEEEEEEEEEffffffffffffff',
         },
       ])
 
       expect(result).toEqual([
         {
-          deployedToken: deployedToken1,
+          deployedToken: {
+            ...deployedToken1,
+            address: deployedToken1.address.toLowerCase(),
+          },
           abstractToken: abstractToken1,
         },
         {
-          deployedToken: deployedToken2,
+          deployedToken: {
+            ...deployedToken2,
+            address: deployedToken2.address.toLowerCase(),
+          },
           abstractToken: abstractToken2,
         },
         {
-          deployedToken: deployedToken3,
+          deployedToken: {
+            ...deployedToken3,
+            address: deployedToken3.address.toLowerCase(),
+          },
           abstractToken: undefined,
         },
       ])
