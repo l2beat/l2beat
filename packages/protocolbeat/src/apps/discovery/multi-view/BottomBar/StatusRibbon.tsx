@@ -16,7 +16,12 @@ import { GlobalOutputsSyncBadge, OutputsSyncBadge } from './OutputsBadge'
 
 export function StatusRibbon() {
   const { project } = useProjectData()
-  const { configModel, isPending, isError } = useConfigModels()
+  const {
+    configModel,
+    templateModel,
+    isError: isModelLoadError,
+    isPending: isModelLoadPending,
+  } = useConfigModels()
 
   if (IS_READONLY) {
     return
@@ -39,9 +44,17 @@ export function StatusRibbon() {
         </div>
         <div className="flex items-center justify-center gap-2 px-1">
           <Status
-            isInSync={configModel.isInSync}
-            isError={configModel.isSyncError ?? isError}
-            isPending={configModel.isSyncPending ?? isPending}
+            isInSync={configModel.isInSync && templateModel.isInSync}
+            isError={
+              configModel.isSyncError ||
+              templateModel.isSyncError ||
+              isModelLoadError
+            }
+            isPending={
+              configModel.isSyncPending ||
+              templateModel.isSyncPending ||
+              isModelLoadPending
+            }
           />
         </div>
       </div>
@@ -94,7 +107,7 @@ function toStatusBundle(props: {
     return {
       icon: <IconTriangleAlert className="text-aux-red" />,
       tooltipContent:
-        'Local and remote config are out of sync. Changes you made might not be reflected in the configuration files',
+        'Could not sync local and remote configs. Changes you made will not be reflected in the configuration files.',
     }
   }
 
@@ -108,6 +121,6 @@ function toStatusBundle(props: {
   // Loaded but not in sync for some reason
   return {
     icon: <IconTriangleAlert className="text-aux-yellow" />,
-    tooltipContent: 'Could not load config status.',
+    tooltipContent: 'Local and remote configs are out of sync.',
   }
 }
