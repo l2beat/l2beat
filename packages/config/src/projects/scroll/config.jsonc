@@ -164,6 +164,11 @@
         "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
       }
     },
+    "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": {
+      "manualSourcePaths": {
+        "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/v0.7.1/verifier/verifier.bin"
+      }
+    },
     "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": { "category": "spam" },
     "eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3": { "category": "spam" },
     "eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3": { "category": "spam" },
