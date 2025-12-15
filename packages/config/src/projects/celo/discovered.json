@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765550224,
+  "timestamp": 1765794808,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -305,7 +305,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620595",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620605",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2035,7 +2035,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 23995853
+          "prevBlockNum": 24017312
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2333,6 +2333,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+      "ignoreInWatchMode": ["getLastProposalTimestamp"],
       "sinceTimestamp": 1764689339,
       "sinceBlock": 23926676,
       "values": {
@@ -2348,7 +2349,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765550183,
+        "getLastProposalTimestamp": 1765794779,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2402,7 +2403,7 @@
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 3014,
+        "gameCount": 4239,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3613,12 +3614,12 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/AccessManager": "0x632fa68ba17c6197923e5322a8688cf61a75adc6c4762c1c14d0b34bd7c07f10",
+    "succinct/OPSuccinct/AccessManager": "0x57aa4b6b7430cf6f540cc3ea3f53a2addf4348c8fc64b0bf9c34b7f4dae2f74b",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0xd43e10bdf24f9a99590fd00cd3f1d135a25ebad1d8fa81943db21c274c6b634a",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23997179 },
+  "usedBlockNumbers": { "ethereum": 24017432 },
   "permissionsConfigHash": "0xb8afb5f6996668d28d588b051bf77dbaaec1dd5054d2a90c4b76ab56935b8616"
 }
