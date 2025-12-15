@@ -22,6 +22,13 @@ export function createPlausibleRouter() {
 
   router.post('/event', express.text(), async (req, res) => {
     try {
+      console.log('Plausible event - IP sources:', {
+        'X-Forwarded-For': req.get('X-Forwarded-For'),
+        'X-Real-IP': req.get('X-Real-IP'),
+        'CF-Connecting-IP': req.get('CF-Connecting-IP'),
+        'socket.remoteAddress': req.socket.remoteAddress,
+      })
+
       const upstreamRes = await fetch('https://plausible.io/api/event', {
         method: 'POST',
         headers: {
