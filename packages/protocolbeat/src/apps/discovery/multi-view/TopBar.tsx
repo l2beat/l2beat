@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/Button'
+import { IS_READONLY } from '../../../config/readonly'
 import { IconClose } from '../../../icons/IconClose'
 import { IconPlus } from '../../../icons/IconPlus'
 import { IconRefresh } from '../../../icons/IconRefresh'
@@ -33,27 +34,29 @@ export function TopBar(props: { project: string }) {
         </div>
       </div>
       <div className="hidden gap-3 md:flex">
-        <div className="flex justify-center gap-1 border-coffee-400/30 border-r pr-3">
-          <Button
-            size="small"
-            className="gap-1 rounded-sm"
-            disabled={command.inFlight}
-            onClick={() => discover(props.project, useDevMode)}
-          >
-            <IconRefresh className="size-3" />
-            <span className="max-md:hidden">Discover</span>
-          </Button>
-          <Button
-            size="small"
-            variant="destructive"
-            className="rounded-sm"
-            disabled={!command.inFlight}
-            onClick={killCommand}
-          >
-            <IconClose />
-            <span className="max-md:hidden">Kill</span>
-          </Button>
-        </div>
+        {!IS_READONLY && (
+          <div className="flex justify-center gap-1 border-coffee-400/30 border-r pr-3">
+            <Button
+              size="small"
+              className="gap-1 rounded-sm"
+              disabled={command.inFlight}
+              onClick={() => discover(props.project, useDevMode)}
+            >
+              <IconRefresh className="size-3" />
+              <span className="max-md:hidden">Discover</span>
+            </Button>
+            <Button
+              size="small"
+              variant="destructive"
+              className="rounded-sm"
+              disabled={!command.inFlight}
+              onClick={killCommand}
+            >
+              <IconClose />
+              <span className="max-md:hidden">Kill</span>
+            </Button>
+          </div>
+        )}
         <div className="flex justify-center gap-1">
           <div className="inline-flex items-center gap-0.5 rounded-sm border border-coffee-400 bg-coffee-800/30 p-1">
             {layouts.map((_, i) => (
