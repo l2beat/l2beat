@@ -49,31 +49,40 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
       }
     }),
   matchFlat: (project: string, address: string) => {
-    executeStreaming(set, () => executeMatchFlat(project, address, 'templates'))
+    executeStreaming(get, set, () =>
+      executeMatchFlat(project, address, 'templates'),
+    )
   },
   matchProject: (project: string, address: string) => {
-    executeStreaming(set, () => executeMatchFlat(project, address, 'projects'))
+    executeStreaming(get, set, () =>
+      executeMatchFlat(project, address, 'projects'),
+    )
   },
   downloadAllShapes: () => {
-    executeStreaming(set, () => executeDownloadAllShapes())
+    executeStreaming(get, set, () => executeDownloadAllShapes())
   },
   discover: (project: string): Promise<boolean> => {
-    return executeStreaming(set, () =>
+    return executeStreaming(get, set, () =>
       executeDiscover(project, get().command.devMode),
     )
   },
   findMinters: (address: string) => {
-    executeStreaming(set, () => executeFindMinters(address))
+    executeStreaming(get, set, () => executeFindMinters(address))
   },
 }))
 
 function executeStreaming(
+  get: () => TerminalState,
   set: (
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,
   cmd: () => EventSource,
 ) {
   return new Promise<boolean>((resolve, reject) => {
+    if (get().command.inFlight) {
+      return
+    }
+
     try {
       let stream: EventSource | undefined
       let exitCode: number | undefined
