@@ -6,6 +6,7 @@ import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
+import type { FieldConfigModel } from '../models/FieldConfigModel'
 
 type Props = {
   project: string
@@ -102,6 +103,23 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     saveModelContents(newModel)
   }
 
+  const setFieldHandler = (
+    fieldName: string,
+    handler: FieldConfigModel['handler'],
+  ) => {
+    const newModel = configModel.setFieldHandler(
+      selectedAddress,
+      fieldName,
+      handler,
+    )
+    setConfigModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldHandler = (fieldName: string) => {
+    return configModel.getFieldHandler(selectedAddress, fieldName)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -153,6 +171,8 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    setFieldHandler,
+    getFieldHandler,
 
     setCategory,
     setDescription,

@@ -6,6 +6,7 @@ import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
+import type { FieldConfigModel } from '../models/FieldConfigModel'
 
 type Props = {
   templateId?: string
@@ -94,6 +95,19 @@ export function useTemplateModel({ templateId, files }: Props) {
     saveModelContents(newModel)
   }
 
+  const setFieldHandler = (
+    fieldName: string,
+    handler: FieldConfigModel['handler'],
+  ) => {
+    const newModel = templateModel.setFieldHandler(fieldName, handler)
+    setTemplateModel(newModel)
+    saveModelContents(newModel)
+  }
+
+  const getFieldHandler = (fieldName: string) => {
+    return templateModel.getFieldHandler(fieldName)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -150,6 +164,8 @@ export function useTemplateModel({ templateId, files }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    setFieldHandler,
+    getFieldHandler,
 
     setCategory,
     setDescription,
