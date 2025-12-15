@@ -211,6 +211,16 @@ export const badges = [
     },
   },
   {
+    id: 'EigenDAVerifier',
+    type: BadgeType.DA,
+    name: 'EigenDA with DA Verifier',
+    description: 'This project uses EigenDA and integrates the DACert Verifier to validate DA commitments.',
+    action: {
+      type: 'publicDaHighlight',
+      slug: 'eigendaverifier',
+    },
+  },
+  {
     id: 'NearDA',
     type: BadgeType.DA,
     name: 'NearDA',
