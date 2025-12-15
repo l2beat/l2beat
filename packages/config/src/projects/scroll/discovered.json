@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1765812125,
+  "timestamp": 1765815217,
   "configHash": "0x10bb9a3d1f2a82ea07be3a7c892bd8e0bab790b6e51b9b5808652202bc8c2596",
   "entries": [
     {
@@ -1044,11 +1044,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1765803623,
+        "getFirstUnfinalizedMessageEnqueueTime": 1765807943,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 975578,
-        "nextUnfinalizedQueueIndex": 975557,
+        "nextCrossDomainMessageIndex": 975586,
+        "nextUnfinalizedQueueIndex": 975566,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1415,7 +1415,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "",
+      "name": "PlonkVerifierGalileo",
       "address": "eth:0x749fC77A1a131632a8b88e8703E489557660C75e",
       "type": "Contract",
       "sourceHashes": [
@@ -2147,14 +2147,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 484388,
+        "lastFinalizedBatchIndex": 484433,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
           "lastCommittedBatchIndex": 484433,
-          "lastFinalizedBatchIndex": 484388,
-          "lastFinalizeTimestamp": 1765808399,
+          "lastFinalizedBatchIndex": 484433,
+          "lastFinalizeTimestamp": 1765812299,
           "flags": 1,
           "reserved": 0
         },
@@ -2922,7 +2922,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 22409387780720,
+        "totalBridgedUSDC": 22353024250885,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3973,9 +3973,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x67423668252b107ecc2e991953b891e728b52b4014ebcef6a0ec19c701f46ae4",
+        "messageRoot": "0x2c3e57f85c416a21fd48301372a28a5ed4790326073b6d2cef700210d38edf53",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 216175,
+        "nextMessageIndex": 216179,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -7581,6 +7581,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24018865, "scroll": 26602345 },
-  "permissionsConfigHash": "0xb115a145f659bdb1426720216585c081d1e117437096d75715371af378a98381"
+  "usedBlockNumbers": { "ethereum": 24019121, "scroll": 26605307 },
+  "permissionsConfigHash": "0xa0baebffa15523651949bad87323ad8bbcdad791bd148c76b428d1e21c769fdd"
 }
