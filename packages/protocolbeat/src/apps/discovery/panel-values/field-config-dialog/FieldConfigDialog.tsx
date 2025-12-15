@@ -2,12 +2,14 @@ import clsx from 'clsx'
 import type { Field } from '../../../../api/types'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
+import { Code } from '../../../../components/Code'
 import { Dialog } from '../../../../components/Dialog'
 import { Tabs } from '../../../../components/Tabs'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
 import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
+import { FieldHandlerConfigDialog } from './FieldHandlerConfigDialog'
 
 type Props = {
   field: Field
@@ -27,7 +29,7 @@ export function FieldConfigDialog(props: Props) {
 
   const configIgnoreMethods =
     models.configModel.ignoreMethods?.includes(fieldName)
-  const _configIgnoreRelatives =
+  const configIgnoreRelatives =
     models.configModel.ignoreRelatives?.includes(fieldName)
   const configIgnoreInWatchMode =
     models.configModel.ignoreInWatchMode?.includes(fieldName)
@@ -38,6 +40,9 @@ export function FieldConfigDialog(props: Props) {
     models.templateModel.ignoreRelatives?.includes(fieldName)
   const templateIgnoreInWatchMode =
     models.templateModel.ignoreInWatchMode?.includes(fieldName)
+
+  const configHandler = models.configModel.getFieldHandler(fieldName)
+  const templateHandler = models.templateModel.getFieldHandler(fieldName)
 
   return (
     <Dialog.Root>
@@ -97,9 +102,9 @@ export function FieldConfigDialog(props: Props) {
                     Ignore Methods
                   </IgnoreOption>
                   <IgnoreOption
-                    checked={configIgnoreMethods ?? false}
+                    checked={configIgnoreRelatives ?? false}
                     onClick={() =>
-                      models.configModel.toggleIgnoreRelatives(fieldName)
+                      models.configModel.toggleIgnoreMethods(fieldName)
                     }
                   >
                     Ignore Relatives
@@ -123,6 +128,23 @@ export function FieldConfigDialog(props: Props) {
                     models.configModel.setFieldDescription(fieldName, value)
                   }
                 />
+              </ConfigRow>
+
+              <ConfigRow headline="Handler">
+                <div className="group relative">
+                  <Code
+                    className="group-hover:pointer-events-none"
+                    content={
+                      configHandler
+                        ? JSON.stringify(configHandler, null, 2)
+                        : 'No handler defined'
+                    }
+                  />
+                  <FieldHandlerConfigDialog
+                    context="config"
+                    fieldName={fieldName}
+                  />
+                </div>
               </ConfigRow>
             </div>
           </Tabs.Content>
@@ -208,6 +230,22 @@ export function FieldConfigDialog(props: Props) {
                         )
                       }
                     />
+                  </ConfigRow>
+                  <ConfigRow headline="Handler">
+                    <div className="group relative">
+                      <Code
+                        className="group-hover:pointer-events-none"
+                        content={
+                          templateHandler
+                            ? JSON.stringify(templateHandler, null, 2)
+                            : 'No handler defined'
+                        }
+                      />
+                      <FieldHandlerConfigDialog
+                        context="template"
+                        fieldName={fieldName}
+                      />
+                    </div>
                   </ConfigRow>
                 </>
               ) : (
