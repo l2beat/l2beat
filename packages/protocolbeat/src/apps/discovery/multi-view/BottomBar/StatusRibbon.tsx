@@ -67,7 +67,6 @@ function Status(props: {
   isError: boolean
   isPending: boolean
 }) {
-  console.log('Status', props)
   const { icon, tooltipContent } = toStatusBundle(props)
 
   return (
