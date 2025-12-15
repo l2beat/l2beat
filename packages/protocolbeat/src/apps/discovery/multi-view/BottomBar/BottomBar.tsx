@@ -107,6 +107,9 @@ export function BottomBar() {
               <li>
                 <Keys keys={[altKey, 'R']} /> - Rediscover
               </li>
+              <li>
+                <Keys keys={[altKey, 'K']} /> - Kill command
+              </li>
             </ul>
           </div>
         )}
