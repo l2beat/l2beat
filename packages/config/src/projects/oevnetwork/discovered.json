@@ -1,7 +1,7 @@
 {
   "name": "oevnetwork",
   "timestamp": 1759830313,
-  "configHash": "0xb89e0c9eadf081d79513a8e995cf3ed4d715432d946c8ae3b514c76615b6100f",
+  "configHash": "0x8b372cde1aa0a0c6c16a1a509eafaa097044758af7a373259d81569bd53835b9",
   "entries": [
     {
       "name": "OneStepProverMath",

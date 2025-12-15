@@ -1,7 +1,7 @@
 {
   "name": "ethereal",
   "timestamp": 1765368374,
-  "configHash": "0x7c5dd716a2882b25314bac83271b22d979a340784cf9adf62ab8d16f123adfe8",
+  "configHash": "0x28c409b5f9b38365672f84cd64cfdb557d925ffd5a7373d186e372e1a92649c6",
   "entries": [
     {
       "name": "OneStepProverHostIo",

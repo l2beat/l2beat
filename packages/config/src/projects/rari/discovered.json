@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "timestamp": 1764334605,
-  "configHash": "0x56abf075456b2b729e9e48d438359c154276b03307f093b58a32432a88d84e9e",
+  "configHash": "0x1272731d4765ee1ac9b38125021b698807ab23bc64ea2fc1a2101c450f8e7fa6",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {

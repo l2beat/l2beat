@@ -1,7 +1,7 @@
 {
   "name": "layer2finance",
   "timestamp": 1733238599,
-  "configHash": "0xe9050406f9130e7bc39ce2c3db3a7a22acfca861397096b60016b3d92de2c184",
+  "configHash": "0x71b1cb3285dc03539eb81c79021224e6c54f03fdec083c9cd458c0c46a096f02",
   "entries": [
     {
       "address": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",

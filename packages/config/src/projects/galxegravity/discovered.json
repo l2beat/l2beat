@@ -1,7 +1,7 @@
 {
   "name": "galxegravity",
   "timestamp": 1764933656,
-  "configHash": "0xd9293631f845884d9923ab82a8bda49965675f0c3b90f65adcde7ee6db53e6a2",
+  "configHash": "0xb63d5cf563efd57540adca185dbba67463f499c802d1ee767e96c72f1c2e3bc9",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {

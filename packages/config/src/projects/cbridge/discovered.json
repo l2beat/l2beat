@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "timestamp": 1736926655,
-  "configHash": "0x65396c867a40a67941ece652fdff249ea3eef582a080f27f3adc452428913a7e",
+  "configHash": "0x154807dd69eeb2257b36c9b469d20807df515ebcde1e7eb7cd06efd6012860be",
   "entries": [
     {
       "name": "PeggedTokenBridge",

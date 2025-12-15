@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "timestamp": 1764933927,
-  "configHash": "0x4cf44129deaf3fcfe3507cdd3b05d12f4bc2ea9f04ca72e47b1eb1cbd4ccc15a",
+  "configHash": "0xb5a4c8c3bdd2115dec4ea3ef73e3e48ef946e1fb1b741e232ca1118641dbd55b",
   "entries": [
     {
       "name": "OneStepProverHostIo",

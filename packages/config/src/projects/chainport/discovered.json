@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "timestamp": 1765464194,
-  "configHash": "0x3860294d22649e054320f2096db43caba1e062560d7c191b191e94381e34145a",
+  "configHash": "0x4f2f96f038df6cca196a0f82768d75f4a027c6620f4ebc02eb1f9c7540df60c1",
   "entries": [
     {
       "name": "ChainportCongressMembersRegistry",

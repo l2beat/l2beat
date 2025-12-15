@@ -1,7 +1,7 @@
 {
   "name": "avalanche",
   "timestamp": 1746608387,
-  "configHash": "0x00b975372a873e166c13a8f5a6e9163d3c0e09772fd2553dafcf720df3bfe816",
+  "configHash": "0xdc0995967b1391b729ba456342f0f07ecfa2c3377f4f029c3a18702800579691",
   "entries": [
     {
       "address": "eth:0x8EB8a3b98659Cce290402893d0123abb75E3ab28",

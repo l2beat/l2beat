@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "timestamp": 1760362205,
-  "configHash": "0xfadeb4c6b73d340a36060899a8a4ded9ff49157e996da28176aacec2382bfdda",
+  "configHash": "0x00045b17bda5a5dceb6f9be597ce19df527ca0c1beb2a3ac6a02e3830ed60f01",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",

@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "timestamp": 1759932670,
-  "configHash": "0xaffa6238252a00c9bae2594462bdfbf4af0fbd9a8287642b89b3272a024e35e0",
+  "configHash": "0x639502e59f05c864c5a882867bbb3132cd0fdbf600487748552734ab76c8398c",
   "entries": [
     {
       "name": "Multisig 1",

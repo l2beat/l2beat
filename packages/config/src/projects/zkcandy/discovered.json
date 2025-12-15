@@ -1,7 +1,7 @@
 {
   "name": "zkcandy",
   "timestamp": 1765463883,
-  "configHash": "0x70902c55eb19067baef9ad6b8d5875388358d22a7e52a4ad5cc384be603bc8ef",
+  "configHash": "0xa5124f8c8bf0650b39cbdaed6e7d8283b84a8be99ff4994119fe50be51f66d1b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

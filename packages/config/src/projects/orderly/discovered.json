@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "timestamp": 1765550831,
-  "configHash": "0xa2f4c509c846e8514a2febbd949313ed2793093937e3cf43be1edab2efe1d845",
+  "configHash": "0x6bfede1639c19390fdf9cb5b615f89d25a52e4ee326594c24e7b2b362f5ff7fe",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1765783036,
-  "configHash": "0x64ebf917e51d14dd0b4564c672bf94ee591614d5611d10f04255dfc199e5f8b1",
+  "configHash": "0x117c0319434f9fc02c8331d8f6159f6901a26d4ab6a3b3185b1ae8e7cd1a1b8b",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

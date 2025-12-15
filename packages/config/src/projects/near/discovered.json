@@ -1,7 +1,7 @@
 {
   "name": "near",
   "timestamp": 1746523487,
-  "configHash": "0x45ce035c2699eb6b9d2983bbecabbcd90376521e580297792db86a783ae4115d",
+  "configHash": "0x1e6ea56c7db01eb236f41036e804e5d45b7b8a2132699e63b376fe20e5a7d0ec",
   "entries": [
     {
       "name": "NearProver",

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x02eb76d406e0a2b2bd362d4c60995f5bcf6b5ab5
+
+# Diff at Mon, 15 Dec 2025 13:51:44 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f32188a189b610d3421727ce662471c1af7b2be6 block: 1761895426
+- current timestamp: 1761895426
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895426 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      usedTypes.0.arg.1701025211190912681772481128523426351562426117847395998223683709327746845867:
++        "Starknet Aggregator (since Dec 2025)"
+      usedTypes.0.arg.918745833886511857768061986591752808672496300091957204265383861063635175685:
++        "StarkNet OS (since Dec 2025)"
+    }
+```
+
 Generated with discovered.json: 0xfd3177583f17eec5e5244067dec51b589ded3868
 
 # Diff at Tue, 04 Nov 2025 11:32:36 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "immutablezkevm",
   "timestamp": 1741355351,
-  "configHash": "0x471517403159206376db799d131b1290c355e58f93b25af47dbc978a3103214f",
+  "configHash": "0xeba3cc259cfa15d95cc62e9d729611e74a2fc69e49c160726c84e66d493cf123",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",

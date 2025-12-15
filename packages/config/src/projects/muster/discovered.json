@@ -1,7 +1,7 @@
 {
   "name": "muster",
   "timestamp": 1753341899,
-  "configHash": "0x3de9e0c9d40a9561898a779625053c494befef8c6d7964892f40bf46d1b69406",
+  "configHash": "0xa8fc2e4348b61d933189e78ee778fc9ec193b810d8bda7c6bdcb7913ff664660",
   "entries": [
     {
       "name": "UpgradeExecutor",

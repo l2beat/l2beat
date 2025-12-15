@@ -1,7 +1,7 @@
 {
   "name": "opticsV2",
   "timestamp": 1740653507,
-  "configHash": "0x83d567175dd2b9edd9d68f37d7f20c52c89ad57d56a7a2d231a2d76da2f008a9",
+  "configHash": "0x7e3a24cd36dd04ce861cac06c14f5cf676c15d4a7b48f2a6e60ed0114d6316a9",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",

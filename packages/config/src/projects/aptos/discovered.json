@@ -1,7 +1,7 @@
 {
   "name": "aptos",
   "timestamp": 1752073991,
-  "configHash": "0x23ad956704b5738917fc5c9813f4efdfad3c59b030ec4129bc5e5b821e2598c6",
+  "configHash": "0x1c48ef5bbd7b282649d4f27ea494f5cca3693b8ccd049cdc74c39dac4ccfaee1",
   "entries": [
     {
       "name": "LayerZero Proof Library",

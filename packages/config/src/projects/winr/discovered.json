@@ -1,7 +1,7 @@
 {
   "name": "winr",
   "timestamp": 1765379816,
-  "configHash": "0x2ab2037a702061a4a9ed3f37610c21810c839e19c10ead209b6bd4ad2fe04b71",
+  "configHash": "0xc152232f76df90d5b9efcb5ead71d3127d50778bad2c14cc68f1cf4cc0cbff05",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {

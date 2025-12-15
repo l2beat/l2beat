@@ -1,7 +1,7 @@
 {
   "name": "apechain",
   "timestamp": 1764750880,
-  "configHash": "0x18d2a648590449b2753808bbbf9b9481e9e09e07d8536752e2abafaf23d49309",
+  "configHash": "0x556195b72d814a266749833cd763a2a80238a46db01803ea35b5868a57c858a4",
   "entries": [
     {
       "name": "EspressoSGXTEEVerifier",

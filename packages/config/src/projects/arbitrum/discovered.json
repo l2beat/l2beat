@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1763976293,
-  "configHash": "0x425825273330d044a5bee85a4ef2f687bf9f8b0090e3d353ec440821db613ecc",
+  "configHash": "0x68fc74c8c794d41051965ec11361d2546af6d8505016a8b22d267fa660d804ae",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",

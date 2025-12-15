@@ -1,7 +1,7 @@
 {
   "name": "multichain",
   "timestamp": 1733239115,
-  "configHash": "0x6ec7b854076381ec2bb75df1bea12839b4c52c5870a1f3935d3c5c7cb8fdc34e",
+  "configHash": "0x5673327f95dc77db4b92074c4bbde1e203fdacb1a97b4656ef46f10f6fe4487c",
   "entries": [
     {
       "address": "eth:0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",

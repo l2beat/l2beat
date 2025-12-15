@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x2f74ec53e99ec0632c63fa9c9243d611f186d380
+
+# Diff at Mon, 15 Dec 2025 15:04:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f32188a189b610d3421727ce662471c1af7b2be6 block: 1753200107
+- current timestamp: 1753200107
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753200107 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapterUSDT (eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+      usedTypes.0.arg.1701025211190912681772481128523426351562426117847395998223683709327746845867:
++        "Starknet Aggregator (since Dec 2025)"
+      usedTypes.0.arg.918745833886511857768061986591752808672496300091957204265383861063635175685:
++        "StarkNet OS (since Dec 2025)"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      usedTypes.0.arg.1701025211190912681772481128523426351562426117847395998223683709327746845867:
++        "Starknet Aggregator (since Dec 2025)"
+      usedTypes.0.arg.918745833886511857768061986591752808672496300091957204265383861063635175685:
++        "StarkNet OS (since Dec 2025)"
+    }
+```
+
 Generated with discovered.json: 0x2a25406f5da64cf4febed41b267f95d7626e8580
 
 # Diff at Tue, 14 Oct 2025 11:52:55 GMT:

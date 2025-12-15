@@ -1,7 +1,7 @@
 {
   "name": "molten",
   "timestamp": 1765368962,
-  "configHash": "0x1af79112dae4ba0e5f2adc17cf4c90dbeaf57f65b8e6a00bf74e3c32113154dd",
+  "configHash": "0xab01155d4cd3c5e735a3fbccf9934ada50084eef4e2831ea5b2b54d32f77aab9",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {

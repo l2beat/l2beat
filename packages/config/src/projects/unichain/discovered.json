@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "timestamp": 1765551322,
-  "configHash": "0x53f42ac54aac6a462bad280ffe494d2be2b5357e54e45dd95dde0bb1d5180c6b",
+  "configHash": "0x33c2267b821aa5ccfdc51672b302dea861a54a57a88fef7179878eb05d23606f",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
