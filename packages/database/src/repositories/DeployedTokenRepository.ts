@@ -188,7 +188,7 @@ export class DeployedTokenRepository extends BaseRepository {
           pks.map((pk) =>
             eb.and([
               eb('chain', '=', pk.chain),
-              eb('address', '=', pk.address.toLowerCase())
+              eb('address', '=', pk.address.toLowerCase()),
             ]),
           ),
         ),

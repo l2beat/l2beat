@@ -132,7 +132,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       // Query with uppercase address
       const found = await repository.findByChainAndAddress({
         chain: record.chain,
-        address: record.address
+        address: record.address,
       })
       expect(found).toEqual({
         ...record,
