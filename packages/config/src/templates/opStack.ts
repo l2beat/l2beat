@@ -128,7 +128,9 @@ export function EIGENDA_DA_PROVIDER(
         fallback?.value,
       ),
       bridge,
-      badge: BADGES.DA.EigenDA,
+      badge: isUsingDACertVerifier
+        ? BADGES.DA.EigenDAVerifier
+        : BADGES.DA.EigenDA,
       fallback,
     }
   }

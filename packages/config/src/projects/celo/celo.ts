@@ -20,11 +20,7 @@ export const celo: ScalingProject = opStackL2({
   },
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
-  additionalBadges: [
-    BADGES.Other.MigratedFromL1,
-    BADGES.Stack.OPSuccinct,
-    BADGES.DA.EigenDAVerifier,
-  ],
+  additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
