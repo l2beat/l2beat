@@ -82,7 +82,7 @@ export const lighter: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC'],
+        tokens: ['USDC', 'ETH'],
       }),
     ],
     daTracking: [
