@@ -811,6 +811,135 @@
         "getWalletAt"
       ]
     },
+    "bnb:0x2d5bdc96d9c8aabbdb38c9a27398513e7e5ef84f": { // BNB BUIDL TOken
+    "fields": {
+      "$tokenData": {
+        "handler": {
+          "type": "ERC20Data"
+        }
+      },
+      "services": {
+        "handler": {
+          "type": "event",
+          "select": "serviceAddress",
+          "groupBy": "serviceId",
+          "set": {
+            "event": "DSServiceSet"
+          }
+        },
+        "edit": [
+          "pipe",
+          [
+            "to_entries"
+          ],
+          [
+            "map",
+            [
+              "set",
+              0,
+              [
+                "format",
+                "ServiceNameMapping"
+              ]
+            ]
+          ],
+          [
+            "from_entries"
+          ]
+        ]
+      }
+    },
+    "ignoreMethods": [
+      "getDSService",
+      "getWalletAt"
+    ]
+    },
+    "matic:0x2893ef551b6dd69f661ac00f11d93e5dc5dc0e99": { // MATIC BUIDL TOken
+    "fields": {
+      "$tokenData": {
+        "handler": {
+          "type": "ERC20Data"
+        }
+      },
+      "services": {
+        "handler": {
+          "type": "event",
+          "select": "serviceAddress",
+          "groupBy": "serviceId",
+          "set": {
+            "event": "DSServiceSet"
+          }
+        },
+        "edit": [
+          "pipe",
+          [
+            "to_entries"
+          ],
+          [
+            "map",
+            [
+              "set",
+              0,
+              [
+                "format",
+                "ServiceNameMapping"
+              ]
+            ]
+          ],
+          [
+            "from_entries"
+          ]
+        ]
+      }
+    },
+    "ignoreMethods": [
+      "getDSService",
+      "getWalletAt"
+    ]
+    },
+    "avax:0x53fc82f14f009009b440a706e31c9021e1196a2f": { // AVAX BUIDL TOken
+    "fields": {
+      "$tokenData": {
+        "handler": {
+          "type": "ERC20Data"
+        }
+      },
+      "services": {
+        "handler": {
+          "type": "event",
+          "select": "serviceAddress",
+          "groupBy": "serviceId",
+          "set": {
+            "event": "DSServiceSet"
+          }
+        },
+        "edit": [
+          "pipe",
+          [
+            "to_entries"
+          ],
+          [
+            "map",
+            [
+              "set",
+              0,
+              [
+                "format",
+                "ServiceNameMapping"
+              ]
+            ]
+          ],
+          [
+            "from_entries"
+          ]
+        ]
+      }
+    },
+    "ignoreMethods": [
+      "getDSService",
+      "getWalletAt"
+    ]
+    },
     "oeth:0xa1cdab15bba75a80df4089cafba013e376957cf5": { // OP BUIDL TOken
       "fields": {
         "$tokenData": {
@@ -853,6 +982,202 @@
         "getDSService",
         "getWalletAt"
       ]
+    },
+    "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A": { // Arb TRUST Service
+      "types": {
+      "RoleIdToName": {
+        "typeCaster": "Mapping",
+        "arg": {
+          "0": "NONE",
+          "1": "MASTER",
+          "2": "ISSUER",
+          "4": "EXCHANGE",
+          "8": "TRANSFER_AGENT"
+        }
+      }
+     },
+     "fields": {
+      "roles": {
+        "handler": {
+          "type": "event",
+          "select": "targetAddress",
+          "groupBy": "role",
+          "add": {
+            "event": "DSTrustServiceRoleAdded"
+          },
+          "remove": {
+            "event": "DSTrustServiceRoleRemoved"
+          }
+        },
+        "edit": [
+          "pipe",
+          [
+            "to_entries"
+          ],
+          [
+            "map",
+            [
+              "set",
+              0,
+              [
+                "format",
+                "RoleIdToName"
+              ]
+            ]
+          ],
+          [
+            "from_entries"
+          ]
+        ]
+      }
+     }
+    },
+    "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218": { // Bnb TRUST Service
+    "types": {
+    "RoleIdToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "NONE",
+        "1": "MASTER",
+        "2": "ISSUER",
+        "4": "EXCHANGE",
+        "8": "TRANSFER_AGENT"
+      }
+    }
+   },
+   "fields": {
+    "roles": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": {
+          "event": "DSTrustServiceRoleAdded"
+        },
+        "remove": {
+          "event": "DSTrustServiceRoleRemoved"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "to_entries"
+        ],
+        [
+          "map",
+          [
+            "set",
+            0,
+            [
+              "format",
+              "RoleIdToName"
+            ]
+          ]
+        ],
+        [
+          "from_entries"
+        ]
+      ]
+    }
+   }
+    },
+    "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc": { // OP TRUST Service
+    "types": {
+    "RoleIdToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "NONE",
+        "1": "MASTER",
+        "2": "ISSUER",
+        "4": "EXCHANGE",
+        "8": "TRANSFER_AGENT"
+      }
+    }
+   },
+   "fields": {
+    "roles": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": {
+          "event": "DSTrustServiceRoleAdded"
+        },
+        "remove": {
+          "event": "DSTrustServiceRoleRemoved"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "to_entries"
+        ],
+        [
+          "map",
+          [
+            "set",
+            0,
+            [
+              "format",
+              "RoleIdToName"
+            ]
+          ]
+        ],
+        [
+          "from_entries"
+        ]
+      ]
+    }
+   }
+    },
+    "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6": { // AVAX TRUST Service
+    "types": {
+    "RoleIdToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "NONE",
+        "1": "MASTER",
+        "2": "ISSUER",
+        "4": "EXCHANGE",
+        "8": "TRANSFER_AGENT"
+      }
+    }
+   },
+   "fields": {
+    "roles": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": {
+          "event": "DSTrustServiceRoleAdded"
+        },
+        "remove": {
+          "event": "DSTrustServiceRoleRemoved"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "to_entries"
+        ],
+        [
+          "map",
+          [
+            "set",
+            0,
+            [
+              "format",
+              "RoleIdToName"
+            ]
+          ]
+        ],
+        [
+          "from_entries"
+        ]
+      ]
+    }
+   }
     }
   }
 }
