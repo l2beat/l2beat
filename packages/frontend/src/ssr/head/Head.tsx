@@ -43,11 +43,14 @@ export function Head({ manifest, metadata }: HeadProps) {
       <TwitterMeta {...metadata} />
       {env.DEPLOYMENT_ENV === 'production' && (
         <>
-          <script defer data-domain="l2beat.com" src="/plausible/script.js" />
+          <script
+            async
+            src="https://plausible.io/js/pa-im4rJ9-v-xGem-znhAVj5.js"
+          />
           <script
             dangerouslySetInnerHTML={{
               __html:
-                'window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}}; plausible.init({ endpoint: "/plausible/event"})',
+                'window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}}; plausible.init()',
             }}
           />
         </>
