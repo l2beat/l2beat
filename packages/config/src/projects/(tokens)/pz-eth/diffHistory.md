@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x13fa8dd74eaa3ed1b8c15b4efbb4d1b83de62367
+
+# Diff at Mon, 15 Dec 2025 07:41:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1759764256
+- current timestamp: 1765784407
+
+## Description
+
+subvault added. liquidity from vault with index 1 removed.
+
+## Watched changes
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) {
+    +++ description: None
+      values.subvaultAt.2:
++        [0,"eth:0x4b0B5106EDeCFbDA379C323eB626966984135D9E","eth:0xD07f6Eb2b72e1ae22f391A584117E1954D93988b"]
+      values.subvaultsCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0xa46f5ead34d5cded127fa0301547b5bef2b66fbd
 
 # Diff at Mon, 06 Oct 2025 15:32:39 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "pz-eth",
-  "timestamp": 1759764256,
+  "timestamp": 1765784407,
   "configHash": "0x9bb84d1693661924cc8c838cbd488ae8b0b7f223b7026d6416cf8f74b70ba273",
   "entries": [
     {
@@ -93,13 +93,18 @@
             0,
             "eth:0x388b844870761ad3D6643C3754d00bB50F2A25f5",
             "eth:0xC2886FbAa5fe0713aC68441B20C2f2d8665b6598"
+          ],
+          [
+            0,
+            "eth:0x4b0B5106EDeCFbDA379C323eB626966984135D9E",
+            "eth:0xD07f6Eb2b72e1ae22f391A584117E1954D93988b"
           ]
         ],
-        "subvaultsCount": 2,
+        "subvaultsCount": 3,
         "symbioticAdapter": "eth:0x99D02C680f33ee693a2fa6bCf77DC8654313ecFe",
         "symbol": "pzETH",
-        "totalAssets": "8047069421658650625731",
-        "totalSupply": "8046600560700448851461",
+        "totalAssets": "5632475903854361961908",
+        "totalSupply": "5631591471702965876848",
         "withdrawalPause": false,
         "withdrawalStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
       },
@@ -260,6 +265,6 @@
   "usedTemplates": {
     "tokens/RenzoRestakedLST": "0x82933430eac16a95ae7215d2317647eab809b59acc2b4aa8d3d0fe1b91f801f9"
   },
-  "usedBlockNumbers": { "ethereum": 23519601 },
+  "usedBlockNumbers": { "ethereum": 24016567 },
   "permissionsConfigHash": "0x8fe74906d593c4911ea19ee28d0f5efffbe5f9a931ad789212dd625cfba1d1ad"
 }
