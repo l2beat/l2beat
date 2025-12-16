@@ -1,7 +1,6 @@
-import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { LayerZeroV2Config } from './layerzero/layerzero.config'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
@@ -180,6 +179,82 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       '0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6',
     ),
   },
+  {
+    chain: 'polygonpos',
+    eid: 30109,
+    usdcPool: {
+      address: EthereumAddress('0x9Aa02D4Fae7F58b8E8f34c66E756cC734DAc7fe4'),
+      tokenAddress: Address32.from(
+        '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7'),
+      tokenAddress: Address32.from(
+        '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0x6CE9bf8CDaB780416AD1fd87b318A077D2f50EaC',
+    ),
+  },
+  {
+    chain: 'apechain',
+    eid: 30312,
+    nativePool: {
+      address: EthereumAddress('0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48'),
+      tokenAddress: Address32.from(
+        '0xf4D9235269a96aaDaFc9aDAe454a0618eBE37949',
+      ),
+      token: 'ETH',
+    },
+    usdcPool: {
+      address: EthereumAddress('0x2086f755A6d9254045C257ea3d382ef854849B0f'),
+      tokenAddress: Address32.from(
+        '0xF1815bd50389c46847f0Bda824eC8da914045D14',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0xEb8d955d8Ae221E5b502851ddd78E6C4498dB4f6'),
+      tokenAddress: Address32.from(
+        '0x674843C06FF83502ddb4D37c2E09C01cdA38cbc8',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0xBE574b6219C6D985d08712e90C21A88fd55f1ae8',
+    ),
+  },
+  // zksync2 does not have stargate
+  {
+    chain: 'abstract',
+    eid: 30324,
+    nativePool: {
+      address: EthereumAddress('0x221F0E1280Ec657503ca55c708105F1e1529527D'),
+      tokenAddress: Address32.NATIVE,
+      token: 'ETH',
+    },
+    usdcPool: {
+      address: EthereumAddress('0x91a5Fe991ccB876d22847967CEd24dCd7A426e0E'),
+      tokenAddress: Address32.from(
+        '0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0x943C484278b8bE05D119DfC73CfAa4c9D8f11A76'),
+      tokenAddress: Address32.from(
+        '0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0x183D6b82680189bB4dB826F739CdC9527D467B25',
+    ),
+  },
 ])
 
 const StargateV2CreditsSent = createInteropEventType<{
@@ -199,31 +274,24 @@ export class StargatePlugin implements InteropPlugin {
   constructor(private configs: InteropConfigStore) {}
 
   capture(input: LogToCapture) {
-    // trying an awkward fix:
-    const lznetworks = this.configs.get(LayerZeroV2Config)
-    if (!lznetworks) return
-
-    const lznetwork = lznetworks.find((x) => x.chain === input.chain)
-    if (!lznetwork) return
-    assert(lznetwork.endpointV2, 'We capture only chains with endpoints')
-    // awkward fix end
-
     const network = STARGATE_NETWORKS.find((b) => b.chain === input.chain)
     if (!network) {
       return
     }
 
     const poolAddresses = [
-      network.nativePool.address,
+      network.nativePool?.address,
       network.usdcPool.address,
       network.usdtPool?.address,
     ].filter((addy): addy is EthereumAddress => !!addy)
 
     const oftSent = parseOFTSent(input.log, poolAddresses)
     if (oftSent) {
-      const pool = [network.nativePool, network.usdcPool].find(
-        (t) => t.address === EthereumAddress(input.log.address),
-      )
+      const pool = [
+        network.nativePool,
+        network.usdcPool,
+        network.usdtPool,
+      ].find((t) => t?.address === EthereumAddress(input.log.address))
       if (!pool) {
         return
       }
@@ -269,9 +337,11 @@ export class StargatePlugin implements InteropPlugin {
 
     const oftReceived = parseOFTReceived(input.log, poolAddresses)
     if (oftReceived) {
-      const pool = [network.nativePool, network.usdcPool].find(
-        (t) => t.address === EthereumAddress(input.log.address),
-      )
+      const pool = [
+        network.nativePool,
+        network.usdcPool,
+        network.usdtPool,
+      ].find((t) => t?.address === EthereumAddress(input.log.address))
       if (!pool) {
         return
       }

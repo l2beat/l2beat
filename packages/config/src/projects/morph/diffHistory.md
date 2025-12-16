@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xeaa84ac11a5bb336786b858b3efc28acc55c464d
+
+# Diff at Mon, 15 Dec 2025 07:37:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1764602402
+- current timestamp: 1765784209
+
+## Description
+
+challenger added + challenge made and resolved.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      values.challengers.35:
++        "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497"
+      values.proveRemaining:
+-        "903000000000000000"
++        "1503000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xf261729c11c937790cd954fb18a5bd2f8c76ae40
 
 # Diff at Mon, 01 Dec 2025 15:21:11 GMT:

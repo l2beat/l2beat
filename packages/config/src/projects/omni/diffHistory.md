@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xf7d7f72591b32378caf94e08142cb7cef78996b3
+
+# Diff at Mon, 15 Dec 2025 07:34:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765464425
+- current timestamp: 1765784028
+
+## Description
+
+ms and operators change.
+
+## Watched changes
+
+```diff
+    contract Gnosis Bridge Multisig (eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_DAI (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      values.$members.1:
+-        "gno:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
 Generated with discovered.json: 0x9fb1e4dffde27421816da8950d5caeeea4057028
 
 # Diff at Thu, 11 Dec 2025 14:48:25 GMT:

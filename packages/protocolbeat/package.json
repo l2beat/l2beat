@@ -39,6 +39,7 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.27.0",
     "sonner": "^2.0.7",
+    "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {

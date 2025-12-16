@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x1ee880a85a95b20283158759aa0d1936f5e2f5d3
+
+# Diff at Mon, 15 Dec 2025 07:35:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765464471
+- current timestamp: 1765784042
+
+## Description
+
+new proposal: add gattaca to sc and increase emergency threshold from 6 to 7/9.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        26
++        27
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (eth:0x9B17fdA35eD7EB7bB11a73AB69D0462045364514)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        13
++        14
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xEdB91449947ca7d74243Af9b39DCbb4D86F636c0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         |  953 --------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |   35 -
+ .../ProverSet}/ERC1967Proxy.p.sol                  |    0
+ .../ProverSet}/ProverSet.sol                       |    0
+ .../ERC1967Proxy.p.sol => /dev/null                |  594 -----
+ .../ProverSet.sol => /dev/null                     | 2287 --------------------
+ 6 files changed, 3869 deletions(-)
+```
+
 Generated with discovered.json: 0xe8c0a26cf6c7d493f96e2e66670f216114ff39a9
 
 # Diff at Thu, 11 Dec 2025 14:53:07 GMT:
