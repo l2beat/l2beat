@@ -50,7 +50,7 @@ export function DisplayControls() {
             name={key}
             checked={value}
             onCheckedChange={(checked) => setDisplay(key, !!checked)}
-            className="w-full rounded-sm hover:bg-surface-tertiary"
+            className="w-full rounded-sm hover:bg-surface-primary-hover"
           >
             {DISPLAY_OPTIONS[key]}
           </Checkbox>
