@@ -204,6 +204,7 @@ export interface InteropEventDb {
 
 export interface InteropPlugin {
   name: string
+  capturesEvents?: Map<string, string[]>
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
