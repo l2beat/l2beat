@@ -16,14 +16,14 @@ interface Props {
 
 export function ScalingSummaryNotReviewedTable({ entries }: Props) {
   const {
-    display: { excludeAssociatedTokens, includeRwaRestrictedTokens },
+    display: { excludeAssociatedTokens, excludeRwaRestrictedTokens },
   } = useDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'notReviewed',
     excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(

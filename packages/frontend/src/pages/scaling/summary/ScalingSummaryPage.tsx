@@ -56,7 +56,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
           <DisplayControlsContextProvider
             initialValues={{
               excludeAssociatedTokens: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: true,
             }}
           >
             <TableFilterContextProvider>

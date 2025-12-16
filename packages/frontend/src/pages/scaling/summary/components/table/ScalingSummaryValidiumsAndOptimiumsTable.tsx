@@ -16,14 +16,14 @@ interface Props {
 
 export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   const {
-    display: { excludeAssociatedTokens, includeRwaRestrictedTokens },
+    display: { excludeAssociatedTokens, excludeRwaRestrictedTokens },
   } = useDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'validiumsAndOptimiums',
     excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(
