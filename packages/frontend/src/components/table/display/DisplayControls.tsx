@@ -4,6 +4,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { InfoIcon } from '~/icons/Info'
 import { SlidersIcon } from '~/icons/Sliders'
 import {
   type DisplayControlsKey,
@@ -52,10 +58,48 @@ export function DisplayControls() {
             onCheckedChange={(checked) => setDisplay(key, !!checked)}
             className="w-full rounded-sm hover:bg-surface-primary-hover"
           >
-            {DISPLAY_OPTIONS[key]}
+            <div className="flex items-center gap-1">
+              {DISPLAY_OPTIONS[key]}
+              {key === 'excludeRwaRestrictedTokens' && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="size-3.5" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Centralized RWAs with access, transfer, transparency or
+                    onchain liquidity restrictions. A more formal framework for
+                    RWAs is in the works!
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
           </Checkbox>
         ))}
       </PopoverContent>
     </Popover>
   )
+}
+
+{
+  /* <Tooltip>
+<Checkbox
+  name="includeRwaRestrictedTokens"
+  checked={includeRwaRestrictedTokens}
+  onCheckedChange={(checked) => setIncludeRwaRestrictedTokens(!!checked)}
+>
+  <div className="flex items-center gap-1">
+    <div>Include restricted RWA tokens</div>
+    <TooltipTrigger asChild>
+      <div className="flex size-4 items-center justify-center">
+        <InfoIcon className="size-3.5" />
+      </div>
+    </TooltipTrigger>
+  </div>
+</Checkbox>
+<TooltipContent>
+  Centralized RWAs with access, transfer, transparency or onchain
+  liquidity restrictions. A more formal framework for RWAs is in the
+  works!
+</TooltipContent>
+</Tooltip> */
 }
