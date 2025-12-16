@@ -1,15 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
-import { DISPLAY_OPTIONS } from './displayOptions'
+import { DISPLAY_OPTIONS, type DisplayOptionsKey } from './displayOptions'
 
-export type DisplayControlsKey = keyof typeof DISPLAY_OPTIONS
-
-type DisplayControlsState = Record<DisplayControlsKey, boolean | undefined>
+type DisplayControlsState = Record<DisplayOptionsKey, boolean | undefined>
 
 type DisplayControlsContextValue = {
   displayState: DisplayControlsState
-  getDisplay: (key: DisplayControlsKey) => boolean
-  setDisplay: (key: DisplayControlsKey, value: boolean) => void
+  getDisplay: (key: DisplayOptionsKey) => boolean
+  setDisplay: (key: DisplayOptionsKey, value: boolean) => void
 }
 
 const DisplayControlsContext = createContext<
@@ -32,19 +30,19 @@ export function DisplayControlsContextProvider({
   initialValues,
 }: {
   children: React.ReactNode
-  initialValues: Partial<Record<DisplayControlsKey, boolean>>
+  initialValues: Partial<Record<DisplayOptionsKey, boolean>>
 }) {
   const [state, setState] = useState<DisplayControlsState>(
     () =>
       Object.fromEntries(
         Object.keys(DISPLAY_OPTIONS).map((key) => [
           key,
-          initialValues[key as DisplayControlsKey],
+          initialValues[key as DisplayOptionsKey],
         ]),
       ) as DisplayControlsState,
   )
 
-  const getDisplay = (key: DisplayControlsKey): boolean => {
+  const getDisplay = (key: DisplayOptionsKey): boolean => {
     const value = state[key]
     assert(
       value !== undefined,
@@ -53,7 +51,7 @@ export function DisplayControlsContextProvider({
     return value
   }
 
-  const setDisplay = (key: DisplayControlsKey, value: boolean) => {
+  const setDisplay = (key: DisplayOptionsKey, value: boolean) => {
     assert(
       state[key] !== undefined,
       `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,

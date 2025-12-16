@@ -11,18 +11,19 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
 import { SlidersIcon } from '~/icons/Sliders'
+import { useDisplayControlsContext } from './DisplayControlsContext'
 import {
-  type DisplayControlsKey,
-  useDisplayControlsContext,
-} from './DisplayControlsContext'
-import { DISPLAY_OPTIONS } from './displayOptions'
+  DISPLAY_OPTIONS,
+  type DisplayOption,
+  type DisplayOptionsKey,
+} from './displayOptions'
 
 export function DisplayControls() {
   const { displayState, setDisplay } = useDisplayControlsContext()
 
   const providedEntries = Object.entries(displayState).filter(
     ([_, value]) => value !== undefined,
-  ) as [DisplayControlsKey, boolean][]
+  ) as [DisplayOptionsKey, boolean][]
 
   const checkedEntries = providedEntries.filter(([_, value]) => value).length
 
@@ -50,31 +51,30 @@ export function DisplayControls() {
         align="end"
         side="bottom"
       >
-        {providedEntries.map(([key, value]) => (
-          <Checkbox
-            key={key}
-            name={key}
-            checked={value}
-            onCheckedChange={(checked) => setDisplay(key, !!checked)}
-            className="w-full rounded-sm hover:bg-surface-primary-hover"
-          >
-            <div className="flex items-center gap-1">
-              {DISPLAY_OPTIONS[key]}
-              {key === 'excludeRwaRestrictedTokens' && (
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="size-3.5" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Centralized RWAs with access, transfer, transparency or
-                    onchain liquidity restrictions. A more formal framework for
-                    RWAs is in the works!
-                  </TooltipContent>
-                </Tooltip>
-              )}
-            </div>
-          </Checkbox>
-        ))}
+        {providedEntries.map(([key, value]) => {
+          const option: DisplayOption = DISPLAY_OPTIONS[key]
+          return (
+            <Checkbox
+              key={key}
+              name={key}
+              checked={value}
+              onCheckedChange={(checked) => setDisplay(key, !!checked)}
+              className="w-full rounded-sm hover:bg-surface-primary-hover"
+            >
+              <div className="flex items-center gap-1">
+                {option.label}
+                {option.tooltip && (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <InfoIcon className="size-3.5" />
+                    </TooltipTrigger>
+                    <TooltipContent>{option.tooltip}</TooltipContent>
+                  </Tooltip>
+                )}
+              </div>
+            </Checkbox>
+          )
+        })}
       </PopoverContent>
     </Popover>
   )
