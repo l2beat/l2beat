@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765794808,
+  "timestamp": 1765882362,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -305,7 +305,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620605",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620616",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2035,7 +2035,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24017312
+          "prevBlockNum": 24024484
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2349,7 +2349,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765794779,
+        "getLastProposalTimestamp": 1765882235,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2404,7 +2404,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 4239,
+        "gameCount": 4678,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3622,6 +3622,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24017432 },
+  "usedBlockNumbers": { "ethereum": 24024690 },
   "permissionsConfigHash": "0xb8afb5f6996668d28d588b051bf77dbaaec1dd5054d2a90c4b76ab56935b8616"
 }
