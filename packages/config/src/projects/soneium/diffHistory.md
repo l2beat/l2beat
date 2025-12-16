@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x39ae43d1b739dcbba9de64f67cc106ee290c96b1
+Generated with discovered.json: 0x18926f682ff6793b5d3c2838a9953da1a2e9f08a
 
-# Diff at Fri, 12 Dec 2025 14:54:11 GMT:
+# Diff at Fri, 12 Dec 2025 16:20:09 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764933869
@@ -20,10 +20,15 @@ discovery. Values are for block 1764933869 (main branch discovery), not current.
     contract DisputeGameFactory (eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 +++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
       values.game42:
 +        "eth:0x0000000000000000000000000000000000000000"
       values.initBondGame42:
 +        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
       fieldMeta.game42:
 +        {"severity":"HIGH"}
     }

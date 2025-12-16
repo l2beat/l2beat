@@ -321,6 +321,14 @@ Verify:
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
+    title: 'Kailua fault proof program (SOON)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
+    programUrl: 'https://github.com/soonlabs/kailua-soon',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
