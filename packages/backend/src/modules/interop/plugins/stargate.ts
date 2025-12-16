@@ -130,7 +130,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       token: 'USDT',
     },
     tokenMessaging: EthereumAddress(
-      '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',
+      '0x19cFCE47eD54a88614648DC3f19A5980097007dD',
     ),
   },
   {
@@ -300,7 +300,6 @@ export class StargatePlugin implements InteropPlugin {
         if (busRodeLog) {
           const busRode = parseBusRode(busRodeLog, [network.tokenMessaging])
           const passenger = busRode && decodeBusPassenger(busRode.passenger)
-
           if (busRode && passenger) {
             return [
               StargateV2OFTSentBusRode.create(input, {
