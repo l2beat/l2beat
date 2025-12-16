@@ -79,27 +79,3 @@ export function DisplayControls() {
     </Popover>
   )
 }
-
-{
-  /* <Tooltip>
-<Checkbox
-  name="includeRwaRestrictedTokens"
-  checked={includeRwaRestrictedTokens}
-  onCheckedChange={(checked) => setIncludeRwaRestrictedTokens(!!checked)}
->
-  <div className="flex items-center gap-1">
-    <div>Include restricted RWA tokens</div>
-    <TooltipTrigger asChild>
-      <div className="flex size-4 items-center justify-center">
-        <InfoIcon className="size-3.5" />
-      </div>
-    </TooltipTrigger>
-  </div>
-</Checkbox>
-<TooltipContent>
-  Centralized RWAs with access, transfer, transparency or onchain
-  liquidity restrictions. A more formal framework for RWAs is in the
-  works!
-</TooltipContent>
-</Tooltip> */
-}

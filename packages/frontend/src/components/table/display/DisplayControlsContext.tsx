@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
-import { DISPLAY_OPTIONS, type DisplayOptionsKey } from './displayOptions'
+import type { DisplayOptionsKey } from './displayOptions'
 
-type DisplayControlsState = Record<DisplayOptionsKey, boolean | undefined>
+type DisplayControlsState = Partial<Record<DisplayOptionsKey, boolean>>
 
 type DisplayControlsContextValue = {
   displayState: DisplayControlsState
@@ -30,17 +30,9 @@ export function DisplayControlsContextProvider({
   initialValues,
 }: {
   children: React.ReactNode
-  initialValues: Partial<Record<DisplayOptionsKey, boolean>>
+  initialValues: DisplayControlsState
 }) {
-  const [state, setState] = useState<DisplayControlsState>(
-    () =>
-      Object.fromEntries(
-        Object.keys(DISPLAY_OPTIONS).map((key) => [
-          key,
-          initialValues[key as DisplayOptionsKey],
-        ]),
-      ) as DisplayControlsState,
-  )
+  const [state, setState] = useState<DisplayControlsState>(initialValues)
 
   const getDisplay = (key: DisplayOptionsKey): boolean => {
     const value = state[key]
