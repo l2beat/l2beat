@@ -2,12 +2,11 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { useDisplayControlsContext } from '~/components/table/display/DisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { api } from '~/trpc/React'
-import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
 import { toTableRows } from '../../utils/ToTableRows'
 import { getScalingTvsColumns } from './columns'
 
@@ -24,25 +23,24 @@ export function ScalingTvsTable({
   breakdownType,
   ignoreUnderReviewIcon,
 }: Props) {
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { getDisplay } = useDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
     api.tvs.table.useQuery({
       type: tab,
-      excludeAssociatedTokens,
-      excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+      excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
+      excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
     })
 
   const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
-        excludeAssociatedTokens,
+        excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
         sevenDayBreakdown,
       }),
-    [entries, excludeAssociatedTokens, sevenDayBreakdown],
+    [entries, getDisplay, sevenDayBreakdown],
   )
 
   const columns = useMemo(
@@ -50,15 +48,10 @@ export function ScalingTvsTable({
       getScalingTvsColumns({
         ignoreUnderReviewIcon,
         breakdownType,
-        excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+        excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
         isTvsLoading,
       }),
-    [
-      breakdownType,
-      ignoreUnderReviewIcon,
-      includeRwaRestrictedTokens,
-      isTvsLoading,
-    ],
+    [breakdownType, ignoreUnderReviewIcon, getDisplay, isTvsLoading],
   )
 
   const table = useTable({

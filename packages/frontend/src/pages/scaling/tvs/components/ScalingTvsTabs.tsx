@@ -20,6 +20,7 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -53,14 +54,17 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <TableFilters
-        entries={[
-          ...props.rollups,
-          ...props.validiumsAndOptimiums,
-          ...props.others,
-          ...props.notReviewed,
-        ]}
-      />
+      <div className="flex items-center justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+            ...props.notReviewed,
+          ]}
+        />
+        <DisplayControls />
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

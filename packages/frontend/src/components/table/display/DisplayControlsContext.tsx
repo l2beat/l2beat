@@ -7,7 +7,8 @@ export type DisplayControlsKey = keyof typeof DISPLAY_OPTIONS
 type DisplayControlsState = Record<DisplayControlsKey, boolean | undefined>
 
 type DisplayControlsContextValue = {
-  display: DisplayControlsState
+  displayState: DisplayControlsState
+  getDisplay: (key: DisplayControlsKey) => boolean
   setDisplay: (key: DisplayControlsKey, value: boolean) => void
 }
 
@@ -43,6 +44,15 @@ export function DisplayControlsContextProvider({
       ) as DisplayControlsState,
   )
 
+  const getDisplay = (key: DisplayControlsKey): boolean => {
+    const value = state[key]
+    assert(
+      value !== undefined,
+      `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,
+    )
+    return value
+  }
+
   const setDisplay = (key: DisplayControlsKey, value: boolean) => {
     assert(
       state[key] !== undefined,
@@ -54,7 +64,8 @@ export function DisplayControlsContextProvider({
   return (
     <DisplayControlsContext.Provider
       value={{
-        display: state,
+        displayState: state,
+        getDisplay,
         setDisplay,
       }}
     >

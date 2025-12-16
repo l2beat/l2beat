@@ -19,7 +19,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 export const getScalingTvsColumns = (
   opts: CommonProjectColumnsOptions & {
     breakdownType: 'bridgeType' | 'assetCategory'
-    excludeRwaRestrictedTokens: boolean
+    excludeRwaRestrictedTokens?: boolean
     isTvsLoading?: boolean
   },
 ) => [
@@ -175,7 +175,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
 }
 
 const getTokenAssetCategoryColumns = (opts: {
-  excludeRwaRestrictedTokens: boolean
+  excludeRwaRestrictedTokens?: boolean
   isTvsLoading?: boolean
 }) =>
   compact([

@@ -12,9 +12,9 @@ import {
 import { DISPLAY_OPTIONS } from './displayOptions'
 
 export function DisplayControls() {
-  const { display, setDisplay } = useDisplayControlsContext()
+  const { displayState, setDisplay } = useDisplayControlsContext()
 
-  const providedEntries = Object.entries(display).filter(
+  const providedEntries = Object.entries(displayState).filter(
     ([_, value]) => value !== undefined,
   ) as [DisplayControlsKey, boolean][]
 
