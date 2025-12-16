@@ -16,12 +16,14 @@ interface Props {
 
 export function ScalingSummaryOthersTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
-  const { display } = useDisplayControlsContext()
+  const {
+    display: { excludeAssociatedTokens, includeRwaRestrictedTokens },
+  } = useDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'others',
-    excludeAssociatedTokens: display.excludeAssociated,
-    includeRwaRestrictedTokens: display.includeRestrictedRwas,
+    excludeAssociatedTokens,
+    includeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(
@@ -29,9 +31,9 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
       toTableRows({
         projects: entries,
         sevenDayBreakdown: data,
-        excludeAssociatedTokens: display.excludeAssociated ?? false,
+        excludeAssociatedTokens,
       }),
-    [entries, display.excludeAssociated, data],
+    [entries, excludeAssociatedTokens, data],
   )
 
   const columns = useMemo(

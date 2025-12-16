@@ -55,8 +55,8 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
           <ChartTabs className="lg:hidden" charts={[tvsChart, activityChart]} />
           <DisplayControlsContextProvider
             initialValues={{
-              excludeAssociated: false,
-              includeRestrictedRwas: true,
+              excludeAssociatedTokens: false,
+              includeRwaRestrictedTokens: true,
             }}
           >
             <TableFilterContextProvider>

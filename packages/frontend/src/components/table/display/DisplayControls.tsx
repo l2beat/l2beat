@@ -14,9 +14,11 @@ import { DISPLAY_OPTIONS } from './displayOptions'
 export function DisplayControls() {
   const { display, setDisplay } = useDisplayControlsContext()
 
-  const entries = Object.entries(display) as [DisplayControlsKey, boolean][]
+  const providedEntries = Object.entries(display).filter(
+    ([_, value]) => value !== undefined,
+  ) as [DisplayControlsKey, boolean][]
 
-  const checkedEntries = entries.filter(([_, value]) => value).length
+  const checkedEntries = providedEntries.filter(([_, value]) => value).length
 
   const trigger = (
     <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-primary p-2 font-semibold text-base">
@@ -38,23 +40,21 @@ export function DisplayControls() {
         {trigger}
       </PopoverTrigger>
       <PopoverContent
-        className="!bg-surface-primary max-w-66 p-2"
+        className="!bg-surface-primary max-w-fit p-2"
         align="end"
         side="bottom"
       >
-        <div className="flex flex-col">
-          {entries.map(([key, value]) => (
-            <Checkbox
-              key={key}
-              name={key}
-              checked={value}
-              onCheckedChange={(checked) => setDisplay(key, !!checked)}
-              className="w-full rounded-sm hover:bg-surface-tertiary"
-            >
-              {DISPLAY_OPTIONS[key]}
-            </Checkbox>
-          ))}
-        </div>
+        {providedEntries.map(([key, value]) => (
+          <Checkbox
+            key={key}
+            name={key}
+            checked={value}
+            onCheckedChange={(checked) => setDisplay(key, !!checked)}
+            className="w-full rounded-sm hover:bg-surface-tertiary"
+          >
+            {DISPLAY_OPTIONS[key]}
+          </Checkbox>
+        ))}
       </PopoverContent>
     </Popover>
   )
