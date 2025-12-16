@@ -197,7 +197,9 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['from_entries', 'prop'])).toBeFalsy() // String property not allowed
       expect(validateBlip(['from_entries', ['key', 'value']])).toBeFalsy() // Key-value pair not allowed
       expect(validateBlip(['from_entries', ['key', 123]])).toBeFalsy() // Key-value with number not allowed
-      expect(validateBlip(['from_entries', ['key', ['get', 'prop']]])).toBeFalsy() // Nested blip as value not allowed
+      expect(
+        validateBlip(['from_entries', ['key', ['get', 'prop']]]),
+      ).toBeFalsy() // Nested blip as value not allowed
       expect(
         validateBlip(['from_entries', 'prop1', ['key2', 'value2']]),
       ).toBeFalsy() // Mixed string and pairs not allowed

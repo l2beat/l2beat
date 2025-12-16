@@ -1,7 +1,7 @@
 {
   "name": "buidl-token",
   "timestamp": 1765304803,
-  "configHash": "0x0d4df8668065b3c85cf0504519a7a00f2cc7da940f6a60add055ebe3703281c0",
+  "configHash": "0x84f2be886b15e081d9a32a3b19158f4f4e7070a0c23e7b84a52c45d144200815",
   "entries": [
     {
       "name": "OmnibusTBEController",
@@ -210,14 +210,7 @@
     {
       "address": "arb1:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -257,14 +250,7 @@
     {
       "address": "arb1:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeliveryProviderImplementation",
@@ -900,6 +886,13 @@
         "getInitializedVersion": 1,
         "owner": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": [
+          "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517"
+        ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 23,
         "wormholeRelayer": "arb1:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -980,82 +973,12 @@
     {
       "address": "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x2184fA618cf512a466963FB75fe167330475f685",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xa8671C2002946a518C3a607Ed3C345C39Eed9110",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xcb221553a2A8aDA16162c6b4F00e544db38aF6Cd",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -1216,14 +1139,7 @@
     {
       "address": "avax:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TrustService",
@@ -1393,14 +1309,7 @@
     {
       "address": "avax:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "avax:0x95aeb44a3eB601Aa9C0a1df309ECF15293C7fD07",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -1656,19 +1565,7 @@
     {
       "address": "avax:0x4eEFDeB2B8A89724cF3A84B47dda34aeDDdEcAB4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "avax:0x5072Ed40EBa6bE38C2370cAD1Cb1df0202924e53",
@@ -2047,65 +1944,7 @@
     {
       "address": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x4777faC58460644f20e5648C8296dB8e4f661a37",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x4Ba71e52FE77f692F07122DF557CB5710146Ab6f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "avax:0xf56720a7D78d13650cB497cc3a84d7eF1780D5F9",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ComplianceServiceRegulated",
@@ -2184,19 +2023,7 @@
     {
       "address": "bnb:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SecuritizeBridge",
@@ -2227,6 +2054,7 @@
         "getInitializedVersion": 1,
         "owner": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": ["eth:0x189Fd44eF6901C1D096C95E41909d83743b97229"],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 4,
         "wormholeRelayer": "bnb:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -2266,6 +2094,13 @@
         "getInitializedVersion": 1,
         "owner": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": [
+          "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E"
+        ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 4,
         "wormholeRelayer": "bnb:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -2737,14 +2572,7 @@
     {
       "address": "bnb:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeliveryProviderImplementation",
@@ -3150,80 +2978,7 @@
     {
       "address": "bnb:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x043f7fB0C2C665475E02d4Fc1de278A57df794f7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x1B31a8D64a2C971cb2a6d74f106AFcF701a2b66E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x22A2BcBF82DcFbE2BEFF9bee373B8268EdaFA437",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x876dCDCe0bEC69B8797B908c28Bc949FA6eCacd5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xDFA4Dd98f2f9ef297544D38711a4F25E8995aF64",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "bnb:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -3304,14 +3059,7 @@
     {
       "address": "bnb:0xF3AAe1168fBF3a5cf1CB4B57C5C8C5e9401627D9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenIssuer",
@@ -3880,6 +3628,7 @@
         "getInitializedVersion": 1,
         "owner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": ["bnb:0x043f7fB0C2C665475E02d4Fc1de278A57df794f7"],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 2,
         "wormholeRelayer": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -4553,14 +4302,7 @@
     {
       "address": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OmnibusTBEController",
@@ -5062,13 +4804,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "simple target proxy",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x103b907c2278CC0a51Ac5e700b84Da9bFd65B1D1",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1707934331,
       "sinceBlock": 19227901,
       "values": {
@@ -5098,13 +4833,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1734449555,
       "sinceBlock": 21423173,
       "values": { "$immutable": true },
@@ -5241,6 +4969,13 @@
         "getInitializedVersion": 1,
         "owner": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": [
+          "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517"
+        ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 2,
         "wormholeRelayer": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -5254,14 +4989,7 @@
     {
       "address": "eth:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9908d94b5Cf1a9e4F3c769AaF64f01a7630FB5f4",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TransactionRelayer",
@@ -5501,145 +5229,7 @@
     {
       "address": "eth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x07A1EBFb9a9A421249DDC71Bddb8860cc077E3a9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x090F220fa6BAA22bE107971acf8963546C4Da366",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0A65a40a4B2F64D3445A628aBcFC8128625483A4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Dac900f26DE70336f2320F7CcEDeE70fF6A1a5B",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x13cdc85f7bCD5C1F9CBBFF0e2D11532Eb9ABef74",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x189Fd44eF6901C1D096C95E41909d83743b97229",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1dc378568cefD4596C5F9f9A14256D8250b56369",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1Df0616fD703643411d62C34DFBFA3A261dF7dab",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1E5d83Ff1a6d32C53F25937664c53E9B57E37021",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x32708a900a740846445Fd49c0C00df15701720a2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3a68756d0335E75C909bA1e8fEFC1D4832C36c60",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x41A5F31c45Fa12913E125914Bd79Ef49beFA1a1f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc7Ca0CE7626940838A87656656C6Af92B95abd00",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD75c86c3e3761e2B2A7960aFb670850923899473",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf33675685C8Ee774c7f5655C93AfEdC7B9818EcD",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf8e91Fa34311876302D36D14B4F246044FD4332a",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xFC4392dA2C4A3090431Fb87F4F7De63BC6885644",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -5708,14 +5298,7 @@
     {
       "address": "eth:0xF3AAe1168fBF3a5cf1CB4B57C5C8C5e9401627D9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x008075B22bEc05C7D0fb789e3420b76056D76cab",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RegistryService",
@@ -5944,14 +5527,46 @@
     {
       "address": "matic:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "name": "WormholeRelayer",
+      "address": "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
+        "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1686938312,
+      "sinceBlock": 43985499,
+      "values": {
+        "$admin": "matic:0x0000000000000000000000000000000000000000",
+        "$implementation": "matic:0xE4451E8479115CeA6B785bf71C1CD4ADa963991c",
+        "$pastUpgrades": [
+          [
+            "2023-06-16T17:58:32.000Z",
+            "0x4f8f4b51a16fbf0e12f9dd38aeb4a64e2ea53ce5b241e9ce9ae9d560a7cba90e",
+            ["matic:0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"]
+          ],
+          [
+            "2023-06-16T17:58:32.000Z",
+            "0x4f8f4b51a16fbf0e12f9dd38aeb4a64e2ea53ce5b241e9ce9ae9d560a7cba90e",
+            ["matic:0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"]
+          ],
+          [
+            "2024-01-27T02:57:42.000Z",
+            "0x31ae8d433765f07a285ea5ae7d587ee1c315edda01e4b863bfc6802b0992cf8a",
+            ["matic:0xE4451E8479115CeA6B785bf71C1CD4ADa963991c"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "getDefaultDeliveryProvider": "matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
+      },
+      "implementationNames": {
+        "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": "SimpleProxy",
+        "matic:0xE4451E8479115CeA6B785bf71C1CD4ADa963991c": "WormholeRelayer"
+      }
     },
     {
       "name": "DSToken",
@@ -6110,6 +5725,16 @@
       }
     },
     {
+      "address": "matic:0x53207E216540125e322CdA8A693b0b89576DEb46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "matic:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "",
       "address": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
       "type": "Contract",
@@ -6157,6 +5782,52 @@
       "implementationNames": {
         "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C": "ERC1967Proxy",
         "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512": ""
+      }
+    },
+    {
+      "name": "DeliveryProviderImplementation",
+      "address": "matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
+        "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1686937706,
+      "sinceBlock": 43985248,
+      "values": {
+        "$admin": "matic:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+        "$implementation": "matic:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD",
+        "$pastUpgrades": [
+          [
+            "2023-06-16T17:48:26.000Z",
+            "0x041265d9c8c43b17249618970dde3200a4239e4899e3734ca258b7137efbde9a",
+            ["matic:0xedd08D4363820603fb1B261F7667B8ee170c37a5"]
+          ],
+          [
+            "2023-06-16T17:48:26.000Z",
+            "0x041265d9c8c43b17249618970dde3200a4239e4899e3734ca258b7137efbde9a",
+            ["matic:0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"]
+          ],
+          [
+            "2023-11-07T19:12:51.000Z",
+            "0xb5dc040b3c3d836ba33461265741d7b7e7a353292ba292d39658e468571a6fa0",
+            ["matic:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "chainId": 5,
+        "coreRelayer": "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+        "getRewardAddress": "matic:0x53207E216540125e322CdA8A693b0b89576DEb46",
+        "getSupportedKeys": 6,
+        "owner": "matic:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+        "pendingOwner": "matic:0x0000000000000000000000000000000000000000",
+        "pricingWallet": "matic:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+        "rewardAddress": "matic:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      },
+      "implementationNames": {
+        "matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
+        "matic:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD": "DeliveryProviderImplementation"
       }
     },
     {
@@ -6287,14 +5958,46 @@
     {
       "address": "matic:0xC95C7Eb94a83aCFdF21A6dc9654c02496335B8Bc",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SecuritizeBridge",
+      "address": "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1730903112,
+      "sinceBlock": 63957797,
+      "values": {
+        "$admin": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "matic:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373",
+        "$pastUpgrades": [
+          [
+            "2024-11-06T14:25:12.000Z",
+            "0xe5c5b12f8375fbfe8a4b2b965d2808bf4913c933b80f60ea611b32ed28845aa2",
+            ["matic:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "dsServiceConsumer": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+        "dsToken": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+        "gasLimit": 2500000,
+        "getImplementationAddress": "matic:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373",
+        "getInitializedVersion": 1,
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "paused": false,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "whChainId": 5,
+        "wormholeRelayer": "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": "ERC1967Proxy",
+        "matic:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": "SecuritizeBridge"
+      }
     },
     {
       "name": "",
@@ -6324,60 +6027,7 @@
     {
       "address": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xA082446441f69554265158f98Ec9C156760fD161",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xb0580C67DEA0A945756732E6f10e00bA6E9f0491",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xBcC23bB9875AE6f9b4488855E3ACd42Ee91743Da",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "matic:0xE944D53eEd3Eb14753275506ea2E5C47E62F6385",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -6403,6 +6053,11 @@
         "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69": "ERC1967Proxy",
         "matic:0xe071e5F1c961F3F0C069e9d6411160da11104623": ""
       }
+    },
+    {
+      "address": "matic:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -6432,31 +6087,12 @@
     {
       "address": "matic:0xF3AAe1168fBF3a5cf1CB4B57C5C8C5e9401627D9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -6949,26 +6585,12 @@
     {
       "address": "oeth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0x62c8b3DF494eAf002721b7ae6A58F87E6C8250f3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeliveryProviderImplementation",
@@ -7302,6 +6924,13 @@
         "getInitializedVersion": 1,
         "owner": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "paused": false,
+        "remoteBridge": [
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517"
+        ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "whChainId": 24,
         "wormholeRelayer": "oeth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
@@ -7384,19 +7013,7 @@
     {
       "address": "oeth:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenReallocator",
@@ -7466,65 +7083,7 @@
     {
       "address": "oeth:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x347Ac8666F5292354CF817505f46CDA034379512",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0x4B2883f6a2B59c71a39668Be97d51A665D6D6607",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xcaC0569B0f62596E3bD2eE8F3b52fF3aFD979E99",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xd4F79641011dA1Db577FCf6E47c77D3D5e9F84B9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -13181,6 +12740,88 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletCount() view returns (uint256)"
     ],
+    "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
+      "constructor(address impl)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD": [
+      "error AddressIsZero()",
+      "error CallerMustBeOwner()",
+      "error CallerMustBeOwnerOrPricingWallet()",
+      "error CallerMustBePendingOwner()",
+      "error CallerNotApproved(address msgSender)",
+      "error ChainIdIsZero()",
+      "error ExceedsMaximumBudget(uint16 targetChain, uint256 exceedingValue, uint256 maximumBudget)",
+      "error FailedToInitializeImplementation(string reason)",
+      "error GasPriceIsZero()",
+      "error ImplementationAlreadyInitialized()",
+      "error MaxRefundGreaterThanGasLimitCost(uint256 maxRefund, uint256 gasLimitCost)",
+      "error MaxRefundGreaterThanGasLimitCostOnSourceChain(uint256 maxRefund, uint256 gasLimitCost)",
+      "error NativeCurrencyPriceIsZero()",
+      "error Overflow(uint256 value, uint256 max)",
+      "error PriceIsZero(uint16 chain)",
+      "error UnexpectedExecutionParamsVersion(uint8 version, uint8 expectedVersion)",
+      "error UnsupportedExecutionParamsVersion(uint8 version)",
+      "error WrongChainId()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AssetConversionBufferUpdated(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ChainSupportUpdated(uint16 targetChain, bool isSupported)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event DeliverGasOverheadUpdated(uint256 indexed oldGasOverhead, uint256 indexed newGasOverhead)",
+      "event OwnershipTransfered(address indexed oldOwner, address indexed newOwner)",
+      "event RewardAddressUpdated(address indexed newAddress)",
+      "event TargetChainAddressUpdated(uint16 indexed targetChain, bytes32 indexed newAddress)",
+      "event Upgraded(address indexed implementation)",
+      "event WormholeRelayerUpdated(address coreRelayer)",
+      "function assetConversionBuffer(uint16 targetChain) view returns (uint16 buffer, uint16 bufferDenominator)",
+      "function chainId() view returns (uint16)",
+      "function confirmOwnershipTransferRequest()",
+      "function coreRelayer() view returns (address)",
+      "function deliverGasOverhead(uint16 targetChain) view returns (uint256)",
+      "function gasPrice(uint16 targetChain) view returns (uint256)",
+      "function getRewardAddress() view returns (address)",
+      "function getSupportedKeys() view returns (uint256 bitmap)",
+      "function getTargetChainAddress(uint16 targetChain) view returns (bytes32 deliveryProviderAddress)",
+      "function initialize()",
+      "function isChainSupported(uint16 targetChain) view returns (bool supported)",
+      "function isInitialized(address impl) view returns (bool)",
+      "function isMessageKeyTypeSupported(uint8 keyType) view returns (bool supported)",
+      "function maximumBudget(uint16 targetChain) view returns (uint256)",
+      "function nativeCurrencyPrice(uint16 targetChain) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function pricingWallet() view returns (address)",
+      "function quoteAssetConversion(uint16 targetChain, uint256 currentChainAmount) view returns (uint256 targetChainAmount)",
+      "function quoteDeliveryOverhead(uint16 targetChain) view returns (uint256 nativePriceQuote)",
+      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParams) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
+      "function quoteEvmDeliveryPrice(uint16 targetChain, uint256 gasLimit, uint256 receiverValue) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerUnitGasUnused)",
+      "function quoteGasCost(uint16 targetChain, uint256 gasAmount) view returns (uint256 totalCost)",
+      "function quoteGasPrice(uint16 targetChain) view returns (uint256 price)",
+      "function rewardAddress() view returns (address)",
+      "function submitOwnershipTransferRequest(uint16 thisRelayerChainId, address newOwner)",
+      "function targetChainAddress(uint16 targetChain) view returns (bytes32)",
+      "function updateAssetConversionBuffer(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
+      "function updateAssetConversionBuffers(tuple(uint16 chainId, uint16 buffer, uint16 bufferDenominator)[] updates)",
+      "function updateConfig(tuple(bool updateAssetConversionBuffer, bool updateDeliverGasOverhead, bool updatePrice, bool updateTargetChainAddress, bool updateMaximumBudget, bool updateSupportedChain, bool isSupported, uint16 chainId, uint16 buffer, uint16 bufferDenominator, uint256 newGasOverhead, uint256 gasPrice, uint256 nativeCurrencyPrice, bytes32 targetChainAddress, uint256 maximumTotalBudget)[] updates, tuple(bool updateWormholeRelayer, bool updateRewardAddress, bool updateSupportedKeyTypes, address coreRelayer, address rewardAddress, uint256 supportedKeyTypesBitmap) coreConfig)",
+      "function updateDeliverGasOverhead(uint16 chainId, uint256 newGasOverhead)",
+      "function updateDeliverGasOverheads(tuple(uint16 chainId, uint256 newGasOverhead)[] overheadUpdates)",
+      "function updateMaximumBudget(uint16 targetChain, uint256 maximumTotalBudget)",
+      "function updateMaximumBudgets(tuple(uint16 chainId, uint256 maximumTotalBudget)[] updates)",
+      "function updatePrice(uint16 updateChainId, uint256 updateGasPrice, uint256 updateNativeCurrencyPrice)",
+      "function updatePrices(tuple(uint16 chainId, uint256 gasPrice, uint256 nativeCurrencyPrice)[] updates)",
+      "function updatePricingWallet(address newPricingWallet)",
+      "function updateRewardAddress(address newAddress)",
+      "function updateSupportedChain(uint16 targetChain, bool isSupported)",
+      "function updateSupportedChains(tuple(uint16 chainId, bool isSupported)[] updates)",
+      "function updateSupportedMessageKeyTypes(uint8 keyType, bool supported)",
+      "function updateTargetChainAddress(uint16 targetChain, bytes32 newAddress)",
+      "function updateTargetChainAddresses(tuple(uint16 chainId, bytes32 targetChainAddress)[] updates)",
+      "function updateWormholeRelayer(address newAddress)",
+      "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
+    ],
     "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -13196,6 +12837,54 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BridgeAddressAdd(uint16 chainId, address bridgeAddress)",
+      "event BridgeAddressRemove(uint16 chainId)",
+      "event DSTokenBridgeReceive(uint16 sourceChainId, address dsToken, address investorWallet, uint256 value)",
+      "event DSTokenBridgeSend(uint16 targetChainId, address dsToken, address investorWallet, uint256 value)",
+      "event GasLimitUpdate(uint256 oldGasLimit, uint256 newGasLimit)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function bridgeAddresses(uint16) view returns (address)",
+      "function bridgeDSTokens(uint16 targetChain, uint256 value) payable",
+      "function dsServiceConsumer() view returns (address)",
+      "function dsToken() view returns (address)",
+      "function gasLimit() view returns (uint256)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize(uint16 _whChainId, address _wormholeRelayer, address _dsToken, address _owner)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function quoteBridge(uint16 targetChain) view returns (uint256 cost)",
+      "function receiveWormholeMessages(bytes payload, bytes[], bytes32 sourceBridge, uint16 sourceChain, bytes32) payable",
+      "function removeBridgeAddress(uint16 chainId)",
+      "function renounceOwnership()",
+      "function setBridgeAddress(uint16 chainId, address bridgeAddress)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateGasLimit(uint256 _gasLimit)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function whChainId() view returns (uint16)",
+      "function wormholeRelayer() view returns (address)"
     ],
     "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE": [
       "constructor(address implementation, bytes _data) payable",
@@ -13219,6 +12908,12 @@
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": [
+      "constructor(address implementation, bytes initData)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
     "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743": [
@@ -13261,6 +12956,14 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -13268,6 +12971,74 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0xE4451E8479115CeA6B785bf71C1CD4ADa963991c": [
+      "constructor(address wormhole)",
+      "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
+      "error ContractUpgradeFailed(bytes failure)",
+      "error DeliveryProviderCannotReceivePayment()",
+      "error DeliveryProviderDoesNotSupportMessageKeyType(uint8 keyType)",
+      "error DeliveryProviderDoesNotSupportTargetChain(address relayer, uint16 chainId)",
+      "error GovernanceActionAlreadyConsumed(bytes32 hash)",
+      "error InsufficientRelayerFunds(uint256 msgValue, uint256 minimum)",
+      "error InvalidDefaultDeliveryProvider(bytes32 defaultDeliveryProvider)",
+      "error InvalidDeliveryVaa(string reason)",
+      "error InvalidEmitter(bytes32 emitter, bytes32 registered, uint16 chainId)",
+      "error InvalidFork()",
+      "error InvalidGovernanceChainId(uint16 parsed, uint16 expected)",
+      "error InvalidGovernanceContract(bytes32 parsed, bytes32 expected)",
+      "error InvalidGovernanceVM(string reason)",
+      "error InvalidMsgValue(uint256 msgValue, uint256 totalFee)",
+      "error InvalidOverrideGasLimit()",
+      "error InvalidOverrideReceiverValue()",
+      "error InvalidPayloadAction(uint8 parsed, uint8 expected)",
+      "error InvalidPayloadChainId(uint16 parsed, uint16 expected)",
+      "error InvalidPayloadId(uint8 parsed, uint8 expected)",
+      "error InvalidPayloadLength(uint256 received, uint256 expected)",
+      "error InvalidPayloadModule(bytes32 parsed, bytes32 expected)",
+      "error MessageKeysLengthDoesNotMatchMessagesLength(uint256 keys, uint256 vaas)",
+      "error NotAnEvmAddress(bytes32)",
+      "error ReentrantDelivery(address msgSender, address lockedBy)",
+      "error TargetChainIsNotThisChain(uint16 targetChain)",
+      "error TooManyMessageKeys(uint256 numMessageKeys)",
+      "error UnexpectedExecutionInfoVersion(uint8 version, uint8 expectedVersion)",
+      "error VaaKeysDoNotMatchVaas(uint8 index)",
+      "error VersionMismatchOverride(uint8 instructionVersion, uint8 overrideVersion)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash, uint8 status, uint256 gasUsed, uint8 refundStatus, bytes additionalStatusInfo, bytes overridesInfo)",
+      "event SendEvent(uint64 indexed sequence, uint256 deliveryQuote, uint256 paymentForExtraReceiverValue)",
+      "event Upgraded(address indexed implementation)",
+      "function checkAndExecuteUpgradeMigration()",
+      "function deliver(bytes[] encodedVMs, bytes encodedDeliveryVAA, address relayerRefundAddress, bytes deliveryOverrides) payable",
+      "function deliveryAttempted(bytes32 deliveryHash) view returns (bool attempted)",
+      "function deliveryFailureBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
+      "function deliverySuccessBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
+      "function forward(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
+      "function forwardPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable",
+      "function forwardToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
+      "function forwardVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable",
+      "function getDefaultDeliveryProvider() view returns (address deliveryProvider)",
+      "function getRegisteredWormholeRelayerContract(uint16 chainId) view returns (bytes32)",
+      "function initialize(address defaultDeliveryProvider)",
+      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParameters, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
+      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
+      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
+      "function quoteNativeForChain(uint16 targetChain, uint256 currentChainAmount, address deliveryProviderAddress) view returns (uint256 targetChainAmount)",
+      "function registerWormholeRelayerContract(bytes encodedVm)",
+      "function resend(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, bytes newEncodedExecutionParameters, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
+      "function resendToEvm(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, uint256 newGasLimit, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
+      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
+      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable returns (uint64 sequence)",
+      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable returns (uint64 sequence)",
+      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
+      "function setDefaultDeliveryProvider(bytes encodedVm)",
+      "function submitContractUpgrade(bytes encodedVm)"
     ],
     "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69": [
       "constructor(address implementation, bytes _data) payable",
@@ -14483,6 +14254,5 @@
     "ethereum": 23976993,
     "optimism": 144853013,
     "polygonpos": 80099855
-  },
-  "permissionsConfigHash": "0x037033ce9b69a824c9ce0b4e0253268aad7052f87526601c3e4d7ad7b68b924a"
+  }
 }

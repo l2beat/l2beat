@@ -785,6 +785,36 @@
           ]
         }
       }
+    },
+    "eth:0x189Fd44eF6901C1D096C95E41909d83743b97229": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
+    },
+    "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
+    },
+    "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
+    },
+    "bnb:0x043f7fB0C2C665475E02d4Fc1de278A57df794f7": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
+    },
+    "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
+    },
+    "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": {
+      "fields": {
+        "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
+      }
     }
   }
 }

@@ -1114,9 +1114,9 @@ describe(executeBlip.name, () => {
       expect(() => executeBlip({} as ContractValue, ['from_entries'])).toThrow(
         'from_entries requires an array input',
       )
-      expect(() => executeBlip([1, 2] as ContractValue, ['from_entries'])).toThrow(
-        'from_entries expects an array of [key, value] pairs',
-      )
+      expect(() =>
+        executeBlip([1, 2] as ContractValue, ['from_entries']),
+      ).toThrow('from_entries expects an array of [key, value] pairs')
       expect(() =>
         executeBlip([['a', 1, 2]] as ContractValue, ['from_entries']),
       ).toThrow('from_entries expects an array of [key, value] pairs')
