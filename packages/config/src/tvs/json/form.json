@@ -36,7 +36,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "form-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -47,7 +47,8 @@
         "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
         "chain": "form",
         "decimals": 6,
-        "sinceTimestamp": 1734726123
+        "sinceTimestamp": 1734726123,
+        "untilTimestamp": 1765519200
       },
       "category": "stablecoin",
       "source": "external",
@@ -62,7 +63,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "form-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
@@ -73,7 +74,8 @@
         "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
         "chain": "form",
         "decimals": 6,
-        "sinceTimestamp": 1734703173
+        "sinceTimestamp": 1734703173,
+        "untilTimestamp": 1765519200
       },
       "category": "stablecoin",
       "source": "external",
