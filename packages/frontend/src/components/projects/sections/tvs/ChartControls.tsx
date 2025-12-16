@@ -12,7 +12,7 @@ export function ChartControls({ projectId }: { projectId: string }) {
     filter: { type: 'projects', projectIds: [projectId] },
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const timeRange = useMemo(

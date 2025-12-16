@@ -23,7 +23,7 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'notReviewed',
     excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(

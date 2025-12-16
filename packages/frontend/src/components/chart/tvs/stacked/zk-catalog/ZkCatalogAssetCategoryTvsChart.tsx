@@ -36,7 +36,7 @@ export function ZkCatalogAssetCategoryTvsChart({
     projects: projectsForTvs,
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
@@ -100,7 +100,7 @@ export function ZkCatalogAssetCategoryTvsChart({
       dataKeys={dataKeys}
       toggleDataKey={toggleDataKey}
       project={project}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={!includeRwaRestrictedTokens}
     />
   )
 }

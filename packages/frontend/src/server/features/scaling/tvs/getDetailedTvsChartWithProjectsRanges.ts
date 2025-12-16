@@ -13,7 +13,7 @@ import { rangeToResolution } from './utils/range'
 export const TvsChartWithProjectsRangesDataParams = v.object({
   range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
-  includeRwaRestrictedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
   projects: v.array(
     v.object({
       projectId: v.string().transform((value) => value as ProjectId),
@@ -52,14 +52,14 @@ export type DetailedTvsChartWithProjectsRangesData = {
 export async function getDetailedTvsChartWithProjectsRanges({
   range,
   excludeAssociatedTokens,
-  includeRwaRestrictedTokens,
+  excludeRwaRestrictedTokens,
   projects,
 }: TvsChartWithProjectsRangesDataParams): Promise<DetailedTvsChartWithProjectsRangesData> {
   if (env.MOCK) {
     return getMockDetailedTvsChartWithProjectsRangesData({
       range,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
       projects,
     })
   }
@@ -72,7 +72,7 @@ export async function getDetailedTvsChartWithProjectsRanges({
     getSummedTvsValues(projects, range, {
       forSummary: false,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
     }),
   ])
 

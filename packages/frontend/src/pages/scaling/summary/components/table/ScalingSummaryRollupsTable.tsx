@@ -23,7 +23,7 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'rollups',
     excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(

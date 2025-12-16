@@ -23,7 +23,7 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'others',
     excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(

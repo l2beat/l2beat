@@ -28,7 +28,7 @@ export function BridgesTvsChart() {
     range,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(

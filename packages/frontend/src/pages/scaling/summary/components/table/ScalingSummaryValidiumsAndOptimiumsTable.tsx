@@ -23,7 +23,7 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'validiumsAndOptimiums',
     excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(

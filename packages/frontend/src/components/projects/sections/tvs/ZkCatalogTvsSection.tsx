@@ -91,7 +91,7 @@ function ChartControls({
     projects: projectsForTvs,
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const timeRange = useMemo(
@@ -128,7 +128,7 @@ function TvsProjectStats({
     projects: projectsForTvs,
     range: optionToRange('7d'),
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const stats = getStats(data)

@@ -29,7 +29,7 @@ export function ProjectAssetCategoryTvsChart({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
@@ -93,7 +93,7 @@ export function ProjectAssetCategoryTvsChart({
       dataKeys={dataKeys}
       toggleDataKey={toggleDataKey}
       project={project}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={!includeRwaRestrictedTokens}
     />
   )
 }

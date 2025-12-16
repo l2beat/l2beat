@@ -88,7 +88,7 @@ export function createPublicApiRouter() {
         type: type ?? 'layer2',
         projectIds: projectIds?.split(',') ?? [],
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
-        includeRwaRestrictedTokens: includeRwaRestrictedTokens === 'true',
+        excludeRwaRestrictedTokens: includeRwaRestrictedTokens === 'false',
       })
       res.json(data)
     },
@@ -113,7 +113,7 @@ export function createPublicApiRouter() {
         slug,
         range: optionToRange(range ?? '30d'),
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
-        includeRwaRestrictedTokens: includeRwaRestrictedTokens === 'true',
+        excludeRwaRestrictedTokens: includeRwaRestrictedTokens === 'false',
       })
       res.json(data)
     },

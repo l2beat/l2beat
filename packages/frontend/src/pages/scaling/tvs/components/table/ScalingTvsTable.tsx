@@ -32,7 +32,7 @@ export function ScalingTvsTable({
     api.tvs.table.useQuery({
       type: tab,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
     })
 
   const data = useMemo(
@@ -50,7 +50,7 @@ export function ScalingTvsTable({
       getScalingTvsColumns({
         ignoreUnderReviewIcon,
         breakdownType,
-        includeRwaRestrictedTokens,
+        excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
         isTvsLoading,
       }),
     [

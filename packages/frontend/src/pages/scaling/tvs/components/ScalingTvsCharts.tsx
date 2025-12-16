@@ -49,7 +49,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     range,
     excludeAssociatedTokens,
     filter,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const timeRange = getChartTimeRangeFromData(
@@ -65,7 +65,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={range}
       excludeAssociatedTokens={excludeAssociatedTokens}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={!includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -76,7 +76,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       filter={filter}
       range={range}
       excludeAssociatedTokens={excludeAssociatedTokens}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={!includeRwaRestrictedTokens}
       milestones={milestones}
     />
   )

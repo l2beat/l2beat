@@ -18,7 +18,7 @@ export function TvsProjectStats({
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'projects',
     projectIds: [projectId],
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const projectData = data?.projects[projectId]

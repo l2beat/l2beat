@@ -34,7 +34,7 @@ export function ZkCatalogBridgeTypeTvsChart({
     projects: projectsForTvs,
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(

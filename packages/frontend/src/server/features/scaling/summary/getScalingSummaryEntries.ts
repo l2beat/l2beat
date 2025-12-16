@@ -51,7 +51,7 @@ export async function getScalingSummaryEntries() {
     get7dTvsBreakdown({
       type: 'layer2',
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
     getActivityLatestUops(projects),
     getApprovedOngoingAnomalies(),

@@ -27,7 +27,7 @@ export function ProjectBridgeTypeTvsChart({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(

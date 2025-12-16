@@ -8,7 +8,7 @@ export async function getScalingSummaryApiData() {
     getTvsChart({
       range: optionToRange('30d'),
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
     }),
   ])
