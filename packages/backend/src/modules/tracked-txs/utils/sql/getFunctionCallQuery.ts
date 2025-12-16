@@ -30,11 +30,24 @@ export function getFunctionCallQuery(
       ),
       allowed_calls(to_addr, selector) AS (
         VALUES
-          ${uniqueConfigs.map((c) => `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`).join(',')}
+          ${
+            uniqueConfigs.length > 0
+              ? uniqueConfigs
+                  .map(
+                    (c) =>
+                      `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
+                  )
+                  .join(',')
+              : '(NULL, NULL)'
+          }
       ),
       full_input_to(to_addr) AS (
         VALUES
-          ${fullInputAddresses.map((a) => `(${a})`).join(',')}
+          ${
+            fullInputAddresses.length > 0
+              ? fullInputAddresses.map((a) => `(${a})`).join(',')
+              : '(NULL)'
+          }
       ),
       traces_filtered AS (
         SELECT

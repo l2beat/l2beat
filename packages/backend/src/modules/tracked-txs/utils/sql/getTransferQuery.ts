@@ -19,17 +19,28 @@ export function getTransferQuery(
       ),
       allowed_pairs(from_addr, to_addr) AS (
         VALUES
-          ${uniqueTransfersConfigs
-            .filter((tc) => tc.from)
-            .map((tc) => `(${tc.from?.toLowerCase()}, ${tc.to.toLowerCase()})`)
-            .join(',')}
+          ${
+            uniqueTransfersConfigs.length > 0
+              ? uniqueTransfersConfigs
+                  .filter((tc) => tc.from)
+                  .map(
+                    (tc) =>
+                      `(${tc.from?.toLowerCase()}, ${tc.to.toLowerCase()})`,
+                  )
+                  .join(',')
+              : '(NULL, NULL)'
+          }
       ),
       allowed_to_only(to_addr) AS (
         VALUES
-          ${uniqueTransfersConfigs
-            .filter((tc) => !tc.from)
-            .map((tc) => `(${tc.to.toLowerCase()})`)
-            .join(',')}
+          ${
+            uniqueTransfersConfigs.length > 0
+              ? uniqueTransfersConfigs
+                  .filter((tc) => !tc.from)
+                  .map((tc) => `(${tc.to.toLowerCase()})`)
+                  .join(',')
+              : '(NULL)'
+          }
       ),
       traces_filtered AS (
         SELECT
