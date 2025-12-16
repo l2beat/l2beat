@@ -86,7 +86,7 @@ export class TrackedTxsClient {
       ),
     ])
 
-    this.logger.info('Fetched from BigQuery', {
+    this.logger.info('Fetched from 3rd party API', {
       transfersCount: transfers.length,
       functionCallsCount: functionCalls.length,
       from,
