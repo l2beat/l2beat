@@ -1,7 +1,5 @@
-import type { QueryParamTypes } from '@google-cloud/bigquery/build/src/bigquery'
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import type { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
+import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 
 export function getFunctionCallQuery(
   configs: {
@@ -11,74 +9,99 @@ export function getFunctionCallQuery(
   }[],
   from: UnixTime,
   to: UnixTime,
-): BigQueryClientQuery {
-  const fullInputAddresses = configs
-    .filter((c) => c.getFullInput)
-    .map((c) => c.address.toLowerCase())
+): string {
+  const uniqueConfigs = unique(configs, (c) => `${c.address}-${c.selector}`)
+  const fullInputAddresses = uniq(
+    uniqueConfigs
+      .filter((c) => c.getFullInput)
+      .map((c) => c.address.toLowerCase()),
+  )
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
-
-  const params = [
-    fullInputAddresses,
-    fromDate,
-    toDate,
-    ...configs.flatMap((c) => [
-      c.address.toLowerCase(),
-      c.selector.toLowerCase() + '%',
-    ]),
-    fromDate,
-    toDate,
-  ]
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
   const query = `
-    SELECT DISTINCT
-      txs.hash,
-      traces.to_address,
-      txs.block_number,
-      txs.block_timestamp,
-      txs.receipt_gas_used,
-      txs.gas_price,
-      txs.receipt_blob_gas_used,
-      txs.receipt_blob_gas_price,
-      (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
-      (LENGTH(REPLACE(REGEXP_REPLACE(SUBSTR(txs.input, 3), '([0-9A-Fa-f]{2})', '\\\\1x'), '00x', '')) / 3) AS non_zero_bytes,
-      CASE
-        WHEN traces.to_address IN UNNEST(?) THEN traces.input
-      ELSE
-      LEFT(traces.input, 10)
-    END
-      AS input,
-    FROM
-      bigquery-public-data.crypto_ethereum.transactions AS txs
-    JOIN
-      bigquery-public-data.crypto_ethereum.traces AS traces
-    ON
-      txs.hash = traces.transaction_hash
-      AND traces.call_type = 'call'
-      AND traces.status = 1
-      AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp <= TIMESTAMP(?)
-      AND (
-        ${configs
-          .map(() => '(traces.to_address = ? AND traces.input LIKE ?)')
-          .join(' OR ')}
+    WITH
+      params AS (
+        SELECT
+          from_iso8601_timestamp('${fromDate}') AS t_start,
+          from_iso8601_timestamp('${toDate}') AS t_end
+      ),
+      allowed_calls(to_addr, selector) AS (
+        VALUES
+          ${uniqueConfigs.map((c) => `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`).join(',')}
+      ),
+      full_input_to(to_addr) AS (
+        VALUES
+          ${fullInputAddresses.map((a) => `(${a})`).join(',')}
+      ),
+      traces_filtered AS (
+        SELECT
+          tr.tx_hash,
+          tr.to,
+          tr.block_time,
+          tr.input,
+          to_hex(tr.input) AS input_hex,
+          substr(tr.input, 1, 4) AS selector
+        FROM ethereum.traces tr
+        CROSS JOIN params p
+        WHERE tr.call_type = 'call'
+          AND tr.success = true
+          AND tr.block_time >= p.t_start
+          AND tr.block_time <=  p.t_end
+      ),
+      traces_allowed AS (
+        SELECT tr.*
+        FROM traces_filtered tr
+        JOIN allowed_calls ac
+          ON tr.to = ac.to_addr
+        AND tr.selector = ac.selector
+      ),
+      blobs AS (
+        SELECT
+            blobs.tx_hash,
+            blobs.blob_base_fee
+        FROM ethereum.blobs as blobs
+        CROSS JOIN params p
+        WHERE blobs.beacon_slot_time >= p.t_start
+          AND blobs.beacon_slot_time <= p.t_end
+      ),
+      txs_filtered AS (
+        SELECT
+          tx.hash,
+          tx.block_number,
+          tx.block_time,
+          tx.gas_used,
+          tx.gas_price,
+          tx.blob_versioned_hashes
+        FROM ethereum.transactions tx
+        CROSS JOIN params p
+        WHERE tx.block_time >= p.t_start
+          AND tx.block_time <=  p.t_end
       )
-    WHERE
-      txs.block_timestamp >= TIMESTAMP(?)
-      AND txs.block_timestamp <= TIMESTAMP(?)
+
+    SELECT DISTINCT
+      tx.hash,
+      tr.to,
+      tx.block_number,
+      tx.block_time,
+      tx.gas_used,
+      tx.gas_price,
+      tx.blob_versioned_hashes,
+      blobs.blob_base_fee,
+      length(tr.input) AS data_length,
+      length(replace(regexp_replace(to_hex(tr.input), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
+      CASE
+        WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
+        ELSE tr.selector
+      END AS input
+    FROM txs_filtered tx
+    JOIN traces_allowed tr
+      ON tx.hash = tr.tx_hash
+    LEFT JOIN blobs
+      ON tx.hash = blobs.tx_hash;     
   `
 
-  // @ts-expect-error BigQuery types are wrong
-  const types: QueryParamTypes = [
-    ['STRING'],
-    'STRING',
-    'STRING',
-    ...configs.flatMap(() => ['STRING', 'STRING']),
-    'STRING',
-    'STRING',
-  ]
-
-  return { query, params, types, limitInGb: 22 }
+  return query
 }

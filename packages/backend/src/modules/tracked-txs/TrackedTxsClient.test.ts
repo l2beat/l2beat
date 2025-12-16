@@ -7,10 +7,9 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
 import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { DuneClient } from '../../peripherals/dune/DuneClient'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -27,10 +26,7 @@ import {
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import {
-  BigQueryFunctionCallResult,
-  BigQueryTransferResult,
-} from './types/model'
+import type { DuneFunctionCallResult, DuneTransferResult } from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -41,7 +37,10 @@ const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
 describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
     it('calls big query, parses results', async () => {
-      const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
+      const bigquery = getMockDuneClient([
+        TRANSFERS_RESPONSE,
+        FUNCTIONS_RESPONSE,
+      ])
       const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
 
       const data = await trackedTxsClient.getData(
@@ -52,8 +51,18 @@ describe(TrackedTxsClient.name, () => {
 
       // calls both internal methods
       expect(bigquery.query).toHaveBeenCalledTimes(2)
-      expect(bigquery.query).toHaveBeenNthCalledWith(1, TRANSFERS_SQL)
-      expect(bigquery.query).toHaveBeenNthCalledWith(2, FUNCTIONS_SQL)
+      expect(bigquery.query).toHaveBeenNthCalledWith(
+        1,
+        TRANSFERS_SQL,
+        'medium',
+        expect.anything(),
+      )
+      expect(bigquery.query).toHaveBeenNthCalledWith(
+        2,
+        FUNCTIONS_SQL,
+        'medium',
+        expect.anything(),
+      )
 
       // returns parsed data returned from internal methods
       expect(data).toEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
@@ -62,23 +71,23 @@ describe(TrackedTxsClient.name, () => {
 
   describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
-      const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
+      const dune = getMockDuneClient([])
+      const trackedTxsClient = new TrackedTxsClient(dune, Logger.SILENT)
 
       await trackedTxsClient.getTransfers([], FROM, TO)
 
-      expect(bigquery.query).not.toHaveBeenCalled()
+      expect(dune.query).not.toHaveBeenCalled()
     })
   })
 
   describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
-      const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
+      const dune = getMockDuneClient([])
+      const trackedTxsClient = new TrackedTxsClient(dune, Logger.SILENT)
 
       await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 
-      expect(bigquery.query).not.toHaveBeenCalled()
+      expect(dune.query).not.toHaveBeenCalled()
     })
   })
 })
@@ -227,112 +236,100 @@ const CONFIGURATIONS = [
   >,
 ] as const
 
-const TRANSFERS_RESPONSE = [
+const TRANSFERS_RESPONSE: DuneTransferResult[] = [
   {
     hash: TX_HASH,
-    from_address: CONFIGURATIONS[0].properties.params.from,
-    to_address: CONFIGURATIONS[0].properties.params.to,
-    block_timestamp: toBigQueryDate(FROM),
+    from: CONFIGURATIONS[0].properties.params.from!,
+    to: CONFIGURATIONS[0].properties.params.to,
+    block_time: FROM,
     block_number: BLOCK,
-    gas_price: 25,
-    receipt_gas_used: 100,
-    transaction_type: 2,
+    gas_price: 25n,
+    gas_used: 100,
     data_length: 100,
     non_zero_bytes: 60,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
 ]
 
-const parsedTransfers = v
-  .array(BigQueryTransferResult)
-  .parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
   [CONFIGURATIONS[0]],
-  parsedTransfers,
+  TRANSFERS_RESPONSE,
 )
 
-const FUNCTIONS_RESPONSE = [
+const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
   {
     hash: TX_HASH,
     block_number: BLOCK,
-    block_timestamp: toBigQueryDate(FROM),
-    to_address: CONFIGURATIONS[1].properties.params.address,
-    gas_price: 1000,
-    receipt_gas_used: 200000,
+    block_time: FROM,
+    to: CONFIGURATIONS[1].properties.params.address,
+    gas_price: 1000n,
+    gas_used: 200000,
     input: CONFIGURATIONS[1].properties.params.selector,
-    transaction_type: 2,
     data_length: 100,
     non_zero_bytes: 60,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
     block_number: BLOCK,
-    block_timestamp: toBigQueryDate(FROM),
-    to_address: CONFIGURATIONS[2].properties.params.address,
-    gas_price: 1500,
-    receipt_gas_used: 200000,
+    block_time: FROM,
+    to: CONFIGURATIONS[2].properties.params.address,
+    gas_price: 1500n,
+    gas_used: 200000,
     input: sharpInput,
-    transaction_type: 3,
     data_length: 0,
     non_zero_bytes: 0,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
     block_number: BLOCK,
-    block_timestamp: toBigQueryDate(FROM),
-    to_address: CONFIGURATIONS[3].properties.params.address,
-    gas_price: 1500,
-    receipt_gas_used: 200000,
+    block_time: FROM,
+    to: CONFIGURATIONS[3].properties.params.address,
+    gas_price: 1500n,
+    gas_used: 200000,
     input: elasticChainSharedBridgeCommitBatchesInput,
-    transaction_type: 3,
     data_length: 0,
     non_zero_bytes: 0,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
     block_number: BLOCK,
-    block_timestamp: toBigQueryDate(FROM),
-    to_address: CONFIGURATIONS[4].properties.params.address,
-    gas_price: 1500,
-    receipt_gas_used: 200000,
+    block_time: FROM,
+    to: CONFIGURATIONS[4].properties.params.address,
+    gas_price: 1500n,
+    gas_used: 200000,
     input: agglayerSharedBridgeVerifyBatchesInput,
-    transaction_type: 3,
     data_length: 0,
     non_zero_bytes: 0,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
     block_number: BLOCK,
-    block_timestamp: toBigQueryDate(FROM),
-    to_address: CONFIGURATIONS[5].properties.params.address,
-    gas_price: 1500,
-    receipt_gas_used: 200000,
+    block_time: FROM,
+    to: CONFIGURATIONS[5].properties.params.address,
+    gas_price: 1500n,
+    gas_used: 200000,
     input: elasticChainSharedBridgeExecuteBatchesPost29Input,
-    transaction_type: 3,
     data_length: 0,
     non_zero_bytes: 0,
-    receipt_blob_gas_used: 300,
-    receipt_blob_gas_price: 3,
+    blob_versioned_hashes: ['0x1'],
+    blob_base_fee: 3n,
   },
 ]
 
-const parsedFunctionCalls = v
-  .array(BigQueryFunctionCallResult)
-  .parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
   [CONFIGURATIONS[3], CONFIGURATIONS[4], CONFIGURATIONS[5]],
-  parsedFunctionCalls,
+  FUNCTIONS_RESPONSE,
 )
 
 const TRANSFERS_SQL = getTransferQuery(
@@ -361,12 +358,8 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
   TO,
 )
 
-function toBigQueryDate(timestamp: UnixTime) {
-  return { value: UnixTime.toDate(timestamp).toISOString() }
-}
-
-function getMockBiqQuery(responses: unknown[][]) {
-  const client = mockObject<BigQueryClient>({
+function getMockDuneClient(responses: unknown[][]) {
+  const client = mockObject<DuneClient>({
     query: mockFn(),
   })
 

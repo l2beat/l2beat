@@ -6,13 +6,14 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { writeFileSync } from 'fs'
+import type { DuneClient } from '../../peripherals/dune/DuneClient'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
-  BigQueryFunctionCallResult,
-  BigQueryTransferResult,
+  DuneFunctionCallResult,
+  DuneTransferResult,
   type TrackedTxFunctionCallResult,
   type TrackedTxResult,
   type TrackedTxTransferResult,
@@ -25,7 +26,7 @@ export class TrackedTxsClient {
   private logger: Logger
 
   constructor(
-    private readonly bigquery: BigQueryClient,
+    private readonly duneClient: DuneClient,
     logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -110,9 +111,17 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.bigquery.query(query)
-    const parsedResult = v.array(BigQueryTransferResult).parse(queryResult)
-    return transformTransfersQueryResult(transfersConfig, parsedResult)
+    writeFileSync(
+      `improved-dune-transfer-${UnixTime.toDate(from).toISOString()}-${UnixTime.toDate(to).toISOString()}.sql`,
+      query,
+    )
+
+    const queryResult = await this.duneClient.query(
+      query,
+      'large',
+      v.array(DuneTransferResult),
+    )
+    return transformTransfersQueryResult(transfersConfig, queryResult)
   }
 
   async getFunctionCalls(
@@ -146,10 +155,16 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.bigquery.query(query)
-    // function calls and sharp submissions need the same fields for the later transform logic
-    // this is why we parse all the results with the same parser
-    const parsedResult = v.array(BigQueryFunctionCallResult).parse(queryResult)
+    writeFileSync(
+      `improved-dune-function-call-${UnixTime.toDate(from).toISOString()}-${UnixTime.toDate(to).toISOString()}.sql`,
+      query,
+    )
+
+    const queryResult = await this.duneClient.query(
+      query,
+      'large',
+      v.array(DuneFunctionCallResult),
+    )
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
@@ -157,7 +172,7 @@ export class TrackedTxsClient {
       functionCallsConfig,
       sharpSubmissionsConfig,
       sharedBridgesConfig,
-      parsedResult,
+      queryResult,
     )
   }
 }

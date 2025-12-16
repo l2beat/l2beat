@@ -26,11 +26,7 @@ const CONFIGURATIONS = [
 
 describe(getFunctionCallQuery.name, () => {
   it('returns valid SQL', () => {
-    const { query, params, types, limitInGb } = getFunctionCallQuery(
-      CONFIGURATIONS,
-      FROM,
-      TO,
-    )
+    const query = getFunctionCallQuery(CONFIGURATIONS, FROM, TO)
 
     expect(query).toEqual(`
     SELECT DISTINCT
@@ -69,32 +65,5 @@ describe(getFunctionCallQuery.name, () => {
       txs.block_timestamp >= TIMESTAMP(?)
       AND txs.block_timestamp <= TIMESTAMP(?)
   `)
-
-    expect(params).toEqual([
-      [ADDRESS_2.toLowerCase()],
-      UnixTime.toDate(FROM).toISOString(),
-      UnixTime.toDate(TO).toISOString(),
-      ADDRESS_1.toLowerCase(),
-      SELECTOR_1.toLowerCase() + '%',
-      ADDRESS_2.toLowerCase(),
-      SELECTOR_2.toLowerCase() + '%',
-      UnixTime.toDate(FROM).toISOString(),
-      UnixTime.toDate(TO).toISOString(),
-    ])
-
-    // @ts-expect-error BigQuery types are wrong
-    expect(types).toEqual([
-      ['STRING'],
-      'STRING',
-      'STRING',
-      'STRING',
-      'STRING',
-      'STRING',
-      'STRING',
-      'STRING',
-      'STRING',
-    ])
-
-    expect(limitInGb).toEqual(22)
   })
 })

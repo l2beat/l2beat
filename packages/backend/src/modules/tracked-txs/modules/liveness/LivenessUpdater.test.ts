@@ -138,12 +138,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      receiptGasUsed: 200,
+      gasUsed: 200,
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
       receiptBlobGasPrice: null,
-      receiptBlobGasUsed: null,
+      blobGasUsed: null,
     },
   ]
 }

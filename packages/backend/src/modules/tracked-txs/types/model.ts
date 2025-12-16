@@ -34,6 +34,24 @@ export const BigQueryFunctionCallResult = v.object({
   ]),
 })
 
+export type DuneFunctionCallResult = v.infer<typeof DuneFunctionCallResult>
+export const DuneFunctionCallResult = v.object({
+  hash: v.string(),
+  to: v.string().transform(EthereumAddress),
+  block_number: v.number(),
+  block_time: v.string().transform((v) => UnixTime.fromDate(new Date(v))),
+  gas_used: v.number(),
+  gas_price: v.unknown().transform((v) => BigInt(v as string)),
+  blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
+  blob_base_fee: v.union([
+    v.unknown().transform((v) => BigInt(v as string)),
+    v.null(),
+  ]),
+  data_length: v.number(),
+  non_zero_bytes: v.number(),
+  input: v.string(),
+})
+
 export type TrackedTxFunctionCallResult = {
   formula: 'functionCall'
   id: TrackedTxId
@@ -45,12 +63,12 @@ export type TrackedTxFunctionCallResult = {
   blockTimestamp: UnixTime
   toAddress: EthereumAddress
   input: string
-  receiptGasUsed: number
+  gasUsed: number
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
-  receiptBlobGasUsed: number | null
-  receiptBlobGasPrice: bigint | null
+  blobVersionedHashes: string[] | null
+  blobBaseFee: bigint | null
 }
 
 export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
@@ -73,6 +91,24 @@ export const BigQueryTransferResult = v.object({
   ]),
 })
 
+export type DuneTransferResult = v.infer<typeof DuneTransferResult>
+export const DuneTransferResult = v.object({
+  hash: v.string(),
+  from: v.string().transform(EthereumAddress),
+  to: v.string().transform(EthereumAddress),
+  block_number: v.number(),
+  block_time: v.string().transform((v) => UnixTime.fromDate(new Date(v))),
+  gas_used: v.number(),
+  gas_price: v.unknown().transform((v: unknown) => BigInt(v as string)),
+  blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
+  blob_base_fee: v.union([
+    v.unknown().transform((v) => BigInt(v as string)),
+    v.null(),
+  ]),
+  data_length: v.number(),
+  non_zero_bytes: v.number(),
+})
+
 export type TrackedTxTransferResult = {
   formula: 'transfer'
   projectId: ProjectId
@@ -84,10 +120,10 @@ export type TrackedTxTransferResult = {
   blockTimestamp: UnixTime
   fromAddress: EthereumAddress
   toAddress: EthereumAddress
-  receiptGasUsed: number
+  gasUsed: number
   gasPrice: bigint
   calldataGasUsed: number
   dataLength: number
-  receiptBlobGasUsed: number | null
-  receiptBlobGasPrice: bigint | null
+  blobVersionedHashes: string[] | null
+  blobBaseFee: bigint | null
 }

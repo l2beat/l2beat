@@ -61,7 +61,7 @@ describe(L2CostsUpdater.name, () => {
           txHash: transactions[0].hash,
           timestamp: transactions[0].blockTimestamp,
           configurationId: transactions[0].id,
-          gasUsed: transactions[0].receiptGasUsed,
+          gasUsed: transactions[0].gasUsed,
           gasPrice: transactions[0].gasPrice,
           //  input: 0x00aa00bbff
           calldataLength: 5,
@@ -73,7 +73,7 @@ describe(L2CostsUpdater.name, () => {
           txHash: transactions[1].hash,
           timestamp: transactions[1].blockTimestamp,
           configurationId: transactions[1].id,
-          gasUsed: transactions[1].receiptGasUsed,
+          gasUsed: transactions[1].gasUsed,
           gasPrice: transactions[1].gasPrice,
           //  input: 0x
           calldataLength: 0,
@@ -176,12 +176,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      receiptGasUsed: 200,
+      gasUsed: 200,
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
       receiptBlobGasPrice: 10n,
-      receiptBlobGasUsed: 100,
+      blobGasUsed: 100,
     },
   ]
 }

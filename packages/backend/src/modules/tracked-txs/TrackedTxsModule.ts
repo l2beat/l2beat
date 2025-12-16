@@ -1,7 +1,7 @@
 import { CoingeckoQueryService } from '@l2beat/shared'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { DuneClient } from '../../peripherals/dune/DuneClient'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -27,12 +27,12 @@ export function createTrackedTxsModule(
   logger = logger.tag({ module: 'tracked-txs' })
 
   const indexerService = new IndexerService(peripherals.database)
-  const bigQueryClient = peripherals.getClient(
-    BigQueryClient,
-    config.trackedTxsConfig.bigQuery,
-  )
 
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient, logger)
+  const duneClient = peripherals.getClient(DuneClient, {
+    apiKey: config.trackedTxsConfig.duneApiKey,
+  })
+
+  const trackedTxsClient = new TrackedTxsClient(duneClient, logger)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )

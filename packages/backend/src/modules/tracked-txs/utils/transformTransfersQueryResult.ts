@@ -5,7 +5,7 @@ import type {
 import { assert } from '@l2beat/shared-pure'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
-  BigQueryTransferResult,
+  DuneTransferResult,
   TrackedTxTransferResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
@@ -14,14 +14,14 @@ export function transformTransfersQueryResult(
   configs: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
   >[],
-  queryResults: BigQueryTransferResult[],
+  queryResults: DuneTransferResult[],
 ): TrackedTxTransferResult[] {
   return queryResults.flatMap((r) => {
     const matchingConfigs = configs.filter(
       (t) =>
         (t.properties.params.from
-          ? t.properties.params.from === r.from_address
-          : true) && t.properties.params.to === r.to_address,
+          ? t.properties.params.from === r.from
+          : true) && t.properties.params.to === r.to,
     )
 
     assert(
@@ -39,20 +39,20 @@ export function transformTransfersQueryResult(
           subtype: matchingConfig.properties.subtype,
           hash: r.hash,
           blockNumber: r.block_number,
-          blockTimestamp: r.block_timestamp,
-          fromAddress: r.from_address,
-          toAddress: r.to_address,
-          receiptGasUsed: r.receipt_gas_used,
+          blockTimestamp: r.block_time,
+          fromAddress: r.from,
+          toAddress: r.to,
+          gasUsed: r.gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,
           calldataGasUsed: calculateCalldataGasUsed(
             r.block_number,
             r.data_length,
             r.non_zero_bytes,
-            r.receipt_gas_used,
+            r.gas_used,
           ),
-          receiptBlobGasUsed: r.receipt_blob_gas_used,
-          receiptBlobGasPrice: r.receipt_blob_gas_price,
+          blobVersionedHashes: r.blob_versioned_hashes,
+          blobBaseFee: r.blob_base_fee,
         }) as const,
     )
   })

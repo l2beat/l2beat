@@ -4,6 +4,7 @@ import type { TrackedTxId } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
+import { ONE_BLOB_GAS } from '../../utils/const'
 
 export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
   type = 'l2costs' as const
@@ -35,12 +36,14 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,
       configurationId: tx.id,
-      gasUsed: tx.receiptGasUsed,
+      gasUsed: tx.gasUsed,
       gasPrice: tx.gasPrice,
       calldataLength: tx.dataLength,
       calldataGasUsed: tx.calldataGasUsed,
-      blobGasUsed: tx.receiptBlobGasUsed,
-      blobGasPrice: tx.receiptBlobGasPrice,
+      blobGasUsed: tx.blobVersionedHashes
+        ? tx.blobVersionedHashes.length * ONE_BLOB_GAS
+        : null,
+      blobGasPrice: tx.blobBaseFee,
     }))
   }
 }
