@@ -18,13 +18,24 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
   const editorKey = `handler-${context}-${fieldName}`
 
   return (
-    <Dialog.Root modal>
+    <Dialog.Root>
       <Dialog.Trigger asChild>
         <div className="absolute top-0 right-0 hidden h-full w-full cursor-pointer items-center justify-center bg-coffee-700/50 group-hover:flex">
           <IconEdit className="size-4 text-coffee-200/80" />
         </div>
       </Dialog.Trigger>
-      <Dialog.Body className="h-full max-w-full">
+      <Dialog.Body
+        onEscapeKeyDown={(e) => {
+          e.preventDefault()
+        }}
+        onPointerDownOutside={(e) => {
+          e.preventDefault()
+        }}
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+        className="h-full max-w-full"
+      >
         <Dialog.Title>Handler editor</Dialog.Title>
         <div className="grid h-full grid-cols-2 gap-2">
           <div className="h-3/4 w-full">
