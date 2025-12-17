@@ -323,7 +323,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       calldataGasUsed: 10,
       dataLength: 5,
       blobVersionedHashes: null,
-      blobBaseFee: null,
     },
     {
       formula: 'transfer',
@@ -341,7 +340,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       calldataGasUsed: 0,
       dataLength: 0,
       blobVersionedHashes: null,
-      blobBaseFee: null,
     },
     {
       formula: 'transfer',
@@ -359,7 +357,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       calldataGasUsed: 0,
       dataLength: 0,
       blobVersionedHashes: null,
-      blobBaseFee: null,
     },
   ]
 }

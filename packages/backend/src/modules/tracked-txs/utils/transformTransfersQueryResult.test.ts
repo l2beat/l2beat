@@ -84,7 +84,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: 1n,
         blob_versioned_hashes: ['0x1'],
       },
       {
@@ -97,7 +96,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
-        blob_base_fee: null,
         blob_versioned_hashes: null,
       },
       {
@@ -110,7 +108,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 300,
         data_length: 300,
         non_zero_bytes: 200,
-        blob_base_fee: 1324n,
         blob_versioned_hashes: ['0x1'],
       },
     ]
@@ -130,7 +127,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasPrice: 10n,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: 1n,
         blobVersionedHashes: ['0x1'],
       },
       {
@@ -148,7 +144,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasPrice: 10n,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: 1n,
         blobVersionedHashes: ['0x1'],
       },
       {
@@ -166,7 +161,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasPrice: 20n,
         calldataGasUsed: 16 * 150 + 4 * (200 - 150),
         dataLength: 200,
-        blobBaseFee: null,
         blobVersionedHashes: null,
       },
       {
@@ -184,7 +178,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasPrice: 30n,
         calldataGasUsed: 16 * 200 + 4 * (300 - 200),
         dataLength: 300,
-        blobBaseFee: 1324n,
         blobVersionedHashes: ['0x1'],
       },
     ]
@@ -243,7 +236,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: 1n,
         blob_versioned_hashes: ['0x1'],
       },
       // After Pectra - high compute
@@ -257,7 +249,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
-        blob_base_fee: null,
         blob_versioned_hashes: null,
       },
       // After Pectra - low compute
@@ -271,7 +262,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 300,
         data_length: 10_000,
         non_zero_bytes: 200,
-        blob_base_fee: 1324n,
         blob_versioned_hashes: ['0x1'],
       },
     ]
@@ -291,7 +281,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasPrice: 10n,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: 1n,
         blobVersionedHashes: ['0x1'],
       },
       {
@@ -309,7 +298,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasUsed: 200,
         calldataGasUsed: 40 * 150 + 10 * (200 - 150),
         dataLength: 200,
-        blobBaseFee: null,
         blobVersionedHashes: null,
       },
       {
@@ -327,7 +315,6 @@ describe(transformTransfersQueryResult.name, () => {
         gasUsed: 300,
         calldataGasUsed: 40 * 200 + 10 * (10_000 - 200),
         dataLength: 10_000,
-        blobBaseFee: 1324n,
         blobVersionedHashes: ['0x1'],
       },
     ]
@@ -360,7 +347,6 @@ describe(transformTransfersQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: 1n,
         blob_versioned_hashes: ['0x1'],
       },
     ]

@@ -124,7 +124,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 10,
-      blobBaseFee: null,
       blobVersionedHashes: null,
     },
     {
@@ -142,7 +141,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
-      blobBaseFee: null,
       blobVersionedHashes: null,
     },
   ]

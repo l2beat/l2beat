@@ -270,7 +270,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     const retryOptions = toRetryOptions('RELIABLE')
     dune = withRetries(
       new DuneClient({
-        logger,
         http: http,
         apiKey: config.trackedTxsConfig.duneApiKey,
       }),

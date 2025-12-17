@@ -118,7 +118,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         data_length: 100,
         non_zero_bytes: 100,
         blob_versioned_hashes: null,
-        blob_base_fee: null,
       },
       {
         hash: txHashes[1],
@@ -131,7 +130,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         data_length: 200,
         non_zero_bytes: 150,
         blob_versioned_hashes: null,
-        blob_base_fee: null,
       },
       {
         hash: txHashes[2],
@@ -144,7 +142,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         data_length: 300,
         non_zero_bytes: 200,
         blob_versioned_hashes: null,
-        blob_base_fee: null,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -164,7 +161,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         calldataGasUsed: 16 * 100 + 4 * (100 - 100),
         dataLength: 100,
         blobVersionedHashes: null,
-        blobBaseFee: null,
       },
       {
         formula: 'functionCall',
@@ -182,7 +178,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         calldataGasUsed: 16 * 150 + 4 * (200 - 150),
         dataLength: 200,
         blobVersionedHashes: null,
-        blobBaseFee: null,
       },
       {
         formula: 'functionCall',
@@ -200,7 +195,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         calldataGasUsed: 16 * 200 + 4 * (300 - 200),
         dataLength: 300,
         blobVersionedHashes: null,
-        blobBaseFee: null,
       },
     ]
 
@@ -238,7 +232,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 100,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
     ]
@@ -283,7 +277,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
     ]
@@ -304,7 +298,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
     ]
@@ -367,7 +361,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
       {
@@ -380,7 +374,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 70,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
     ]
@@ -401,7 +395,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
       {
@@ -419,7 +413,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 100,
         calldataGasUsed: 16 * 70 + 4 * (100 - 70),
         dataLength: 100,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
     ]
@@ -473,7 +467,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
     ]
@@ -494,7 +488,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
     ]
@@ -552,7 +546,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 100,
         data_length: 100,
         non_zero_bytes: 100,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
       // After Pectra - high compute
@@ -566,7 +560,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
       // After Pectra - low compute
@@ -580,7 +574,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_used: 300,
         data_length: 10_000,
         non_zero_bytes: 200,
-        blob_base_fee: null,
+
         blob_versioned_hashes: null,
       },
     ]
@@ -600,7 +594,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 100,
         calldataGasUsed: 16 * 100 + 4 * (100 - 100),
         dataLength: 100,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
       {
@@ -618,7 +612,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 200,
         calldataGasUsed: 40 * 150 + 10 * (200 - 150),
         dataLength: 200,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
       {
@@ -636,7 +630,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasUsed: 300,
         calldataGasUsed: 40 * 200 + 10 * (10_000 - 200),
         dataLength: 10_000,
-        blobBaseFee: null,
+
         blobVersionedHashes: null,
       },
     ]
