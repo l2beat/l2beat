@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { updateConfigFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
+import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ConfigModel } from '../models/ConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
@@ -120,6 +121,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldHandler(selectedAddress, fieldName)
   }
 
+  const getFieldHandlerString = (fieldName: string) => {
+    return configModel.getFieldHandlerString(selectedAddress, fieldName)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -143,9 +148,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
   })
 
   const saveModelContents = (model: ConfigModel) => {
+    const stringifiedModel = model.toString()
     const toSave = model.hasComments()
-      ? model.toString()
-      : formatJson(model.peek())
+      ? stringifiedModel
+      : formatJson(JSON.parse(removeJSONTrailingCommas(stringifiedModel)))
     saveMutation.mutate(toSave)
   }
 
@@ -173,7 +179,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setFieldDescription,
     setFieldHandler,
     getFieldHandler,
-
+    getFieldHandlerString,
     setCategory,
     setDescription,
 

@@ -48,6 +48,7 @@ export {
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
+export { UserHandlers } from './discovery/handlers/user'
 export {
   type ClingoFact,
   type ClingoValue,

@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { writeTemplateFile } from '../../../api/api'
 import { useDebouncedCallback } from '../../../utils/debounce'
 import { formatJson } from '../../../utils/formatJson'
+import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
 import { toggleInList } from '../../../utils/toggleInList'
 import { ContractConfigModel } from '../models/ContractConfigModel'
 import type { FieldConfigModel } from '../models/FieldConfigModel'
@@ -108,6 +109,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldHandler(fieldName)
   }
 
+  const getFieldHandlerString = (fieldName: string) => {
+    return templateModel.getFieldHandlerString(fieldName)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -129,10 +134,10 @@ export function useTemplateModel({ templateId, files }: Props) {
   })
 
   const saveModelContents = (model: ContractConfigModel) => {
+    const stringifiedModel = model.toString()
     const toSave = model.hasComments()
-      ? model.toString()
-      : formatJson(model.peek())
-
+      ? stringifiedModel
+      : formatJson(JSON.parse(removeJSONTrailingCommas(stringifiedModel)))
     saveMutation.mutate(toSave)
   }
 
@@ -166,7 +171,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     setFieldDescription,
     setFieldHandler,
     getFieldHandler,
-
+    getFieldHandlerString,
     setCategory,
     setDescription,
 

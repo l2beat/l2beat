@@ -2,6 +2,7 @@ import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
 import { IconChecked } from '../icons/IconChcked'
 import { IconChevronDown } from '../icons/IconChevronDown'
+import { cn } from '../utils/cn'
 import { Button } from './Button'
 
 export const Select = {
@@ -53,20 +54,16 @@ function SelectContent({
   return (
     <RadixSelect.Portal>
       <RadixSelect.Content
-        className={clsx(
-          'z-[1000] border border-coffee-400 bg-coffee-600',
+        className={cn(
+          'z-[1000] max-h-[400px] border border-coffee-400 bg-coffee-600',
           className,
         )}
         position="popper"
         {...props}
       >
-        <RadixSelect.ScrollUpButton className="flex h-[15px] cursor-default items-center justify-center text-coffee-900">
-          <IconChevronDown className="rotate-180" />
-        </RadixSelect.ScrollUpButton>
-        <RadixSelect.Viewport className="p-1">{children}</RadixSelect.Viewport>
-        <RadixSelect.ScrollDownButton className="flex h-[15px] cursor-default items-center justify-center text-coffee-900">
-          <IconChevronDown />
-        </RadixSelect.ScrollDownButton>
+        <RadixSelect.Viewport className="max-h-[400px] p-1">
+          {children}
+        </RadixSelect.Viewport>
       </RadixSelect.Content>
     </RadixSelect.Portal>
   )
@@ -107,7 +104,7 @@ function SelectItem({
   return (
     <RadixSelect.Item
       className={clsx(
-        'group relative flex cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-none focus:outline-none active:outline-none',
+        'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-none focus:outline-none active:outline-none',
         className,
       )}
       {...props}

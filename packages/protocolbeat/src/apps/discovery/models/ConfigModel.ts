@@ -116,6 +116,10 @@ export class ConfigModel {
     return this.overrides[id]?.getFieldHandler(fieldName)
   }
 
+  getFieldHandlerString(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldHandlerString(fieldName)
+  }
+
   setCategory(id: string, category: ContractConfigSchema['category']) {
     return this.patchOverride(id, (override) => override.setCategory(category))
   }

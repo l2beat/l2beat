@@ -9,7 +9,7 @@ import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { ConfigRow } from '../contract-config-dialog/ContractConfigDialog'
 import { DescriptionEditor } from '../contract-config-dialog/DescriptionEditor'
-import { FieldHandlerConfigDialog } from './FieldHandlerConfigDialog'
+import { FieldHandlerConfigDialog } from './handler-dialog/FieldHandlerConfigDialog'
 
 type Props = {
   field: Field
