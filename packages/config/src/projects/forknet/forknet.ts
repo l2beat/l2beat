@@ -67,6 +67,7 @@ export const forknet: ScalingProject = agglayer({
       },
     }),
   ],
+  usesEthereumBlobs: true,
   milestones: [
     {
       title: 'Forknet Launch',
