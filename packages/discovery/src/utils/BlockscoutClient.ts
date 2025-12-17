@@ -145,7 +145,7 @@ export class BlockscoutClient implements IEtherscanClient {
     }
   }
 
-  // Returns undefined if the method is not supported by API.
+  // Returns undefined if the method is not supported by API, or Hash256.ZERO if parsing fails.
   async getContractDeploymentTx(
     address: EthereumAddress,
   ): Promise<Hash256 | undefined> {
