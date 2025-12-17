@@ -89,7 +89,6 @@ export function transformFunctionCallsQueryResult(
             r.gas_used,
           ),
           blobVersionedHashes: r.blob_versioned_hashes,
-          blobBaseFee: r.blob_base_fee,
         }) as const,
     )
 

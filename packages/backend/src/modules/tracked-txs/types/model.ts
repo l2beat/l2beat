@@ -43,10 +43,6 @@ export const DuneFunctionCallResult = v.object({
   gas_used: v.number(),
   gas_price: v.unknown().transform((v) => BigInt(v as string)),
   blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
-  blob_base_fee: v.union([
-    v.unknown().transform((v) => BigInt(v as string)),
-    v.null(),
-  ]),
   data_length: v.number(),
   non_zero_bytes: v.number(),
   input: v.string(),
@@ -68,7 +64,6 @@ export type TrackedTxFunctionCallResult = {
   calldataGasUsed: number
   dataLength: number
   blobVersionedHashes: string[] | null
-  blobBaseFee: bigint | null
 }
 
 export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
@@ -101,10 +96,6 @@ export const DuneTransferResult = v.object({
   gas_used: v.number(),
   gas_price: v.unknown().transform((v: unknown) => BigInt(v as string)),
   blob_versioned_hashes: v.union([v.array(v.string()), v.null()]),
-  blob_base_fee: v.union([
-    v.unknown().transform((v) => BigInt(v as string)),
-    v.null(),
-  ]),
   data_length: v.number(),
   non_zero_bytes: v.number(),
 })
@@ -125,5 +116,4 @@ export type TrackedTxTransferResult = {
   calldataGasUsed: number
   dataLength: number
   blobVersionedHashes: string[] | null
-  blobBaseFee: bigint | null
 }

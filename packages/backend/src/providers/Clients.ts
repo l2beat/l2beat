@@ -22,7 +22,9 @@ import {
   StarknetClient,
   type SvmBlockClient,
   SvmRpcClient,
+  toRetryOptions,
   VoyagerClient,
+  withRetries,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -265,11 +267,20 @@ export function initClients(config: Config, logger: Logger): Clients {
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
-    dune = new DuneClient({
-      logger,
-      http: http,
-      apiKey: config.trackedTxsConfig.duneApiKey,
-    })
+    const retryOptions = toRetryOptions('RELIABLE')
+    dune = withRetries(
+      new DuneClient({
+        logger,
+        http: http,
+        apiKey: config.trackedTxsConfig.duneApiKey,
+      }),
+      {
+        initialTimeoutMs: retryOptions.initialRetryDelayMs,
+        maxAttempts: retryOptions.maxRetries,
+        maxTimeoutMs: retryOptions.maxRetryDelayMs,
+        logger,
+      },
+    )
   }
 
   const coingeckoClient = new CoingeckoClient({

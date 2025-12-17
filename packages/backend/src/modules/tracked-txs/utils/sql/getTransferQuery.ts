@@ -62,15 +62,6 @@ export function getTransferQuery(
             OR tr.to IN (SELECT to_addr FROM allowed_to_only)
           )
       ),
-      blobs AS (
-        SELECT
-            blobs.tx_hash,
-            blobs.blob_base_fee
-        FROM ethereum.blobs as blobs
-        CROSS JOIN params p
-        WHERE blobs.beacon_slot_time >= p.t_start
-          AND blobs.beacon_slot_time <= p.t_end
-      ),
       txs_filtered AS (
         SELECT
           tx.hash,
@@ -94,14 +85,11 @@ export function getTransferQuery(
       tx.gas_used,
       tx.gas_price,
       tx.blob_versioned_hashes,
-      blobs.blob_base_fee,
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes
     FROM txs_filtered tx
     JOIN traces_filtered tr
-      ON tx.hash = tr.tx_hash
-    LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;
+      ON tx.hash = tr.tx_hash;
   `
 
   return query
