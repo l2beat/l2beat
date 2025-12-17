@@ -51,6 +51,10 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       if (tx.blobVersionedHashes && !blobBaseFee) {
         throw new Error(`Blob base fee not found for block ${tx.blockNumber}`)
       }
+
+      const blobGasUsed = tx.blobVersionedHashes
+        ? tx.blobVersionedHashes.length * ONE_BLOB_GAS
+        : null
       return {
         timestamp: tx.blockTimestamp,
         txHash: tx.hash,
@@ -59,10 +63,8 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
         gasPrice: tx.gasPrice,
         calldataLength: tx.dataLength,
         calldataGasUsed: tx.calldataGasUsed,
-        blobGasUsed: tx.blobVersionedHashes
-          ? tx.blobVersionedHashes.length * ONE_BLOB_GAS
-          : null,
-        blobGasPrice: blobBaseFee ?? null,
+        blobGasUsed,
+        blobGasPrice: blobGasUsed ? (blobBaseFee ?? null) : null,
       }
     })
   }
