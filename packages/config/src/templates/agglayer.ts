@@ -653,12 +653,14 @@ function buildOpstackClosedSections(
   const riskView = {
     ...baseRiskView,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      ),
-      secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-    },
+    sequencerFailure: config.discovery.hasContract('OptimismPortal2_neutered')
+      ? RISK_VIEW.SEQUENCER_NO_MECHANISM(true)
+      : {
+          ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+            HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+          ),
+          secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+        },
   }
 
   const usesBlobs = config.usesEthereumBlobs ?? false
@@ -678,8 +680,10 @@ function buildOpstackClosedSections(
     },
     operator: config.nonTemplateTechnology?.operator,
     forceTransactions:
-      config.nonTemplateTechnology?.forceTransactions ??
-      FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+      (config.nonTemplateTechnology?.forceTransactions ??
+      config.discovery.hasContract('OptimismPortal2_neutered'))
+        ? FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM
+        : FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
     exitMechanisms:
       config.nonTemplateTechnology?.exitMechanisms ??
       buildExitMechanisms(context),
