@@ -6,9 +6,8 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { writeFileSync } from 'fs'
 import type { DuneClient } from '../../peripherals/dune/DuneClient'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
@@ -111,11 +110,6 @@ export class TrackedTxsClient {
       to,
     )
 
-    writeFileSync(
-      `improved-dune-transfer-${UnixTime.toDate(from).toISOString()}-${UnixTime.toDate(to).toISOString()}.sql`,
-      query,
-    )
-
     const queryResult = await this.duneClient.query(
       query,
       'large',
@@ -153,11 +147,6 @@ export class TrackedTxsClient {
       ),
       from,
       to,
-    )
-
-    writeFileSync(
-      `improved-dune-function-call-${UnixTime.toDate(from).toISOString()}-${UnixTime.toDate(to).toISOString()}.sql`,
-      query,
     )
 
     const queryResult = await this.duneClient.query(

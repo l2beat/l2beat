@@ -54,13 +54,13 @@ describe(TrackedTxsClient.name, () => {
       expect(bigquery.query).toHaveBeenNthCalledWith(
         1,
         TRANSFERS_SQL,
-        'medium',
+        'large',
         expect.anything(),
       )
       expect(bigquery.query).toHaveBeenNthCalledWith(
         2,
         FUNCTIONS_SQL,
-        'medium',
+        'large',
         expect.anything(),
       )
 

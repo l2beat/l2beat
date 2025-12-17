@@ -101,7 +101,7 @@ export function getTransferQuery(
     JOIN traces_filtered tr
       ON tx.hash = tr.tx_hash
     LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;     
+      ON tx.hash = blobs.tx_hash;
   `
 
   return query

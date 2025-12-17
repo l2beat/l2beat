@@ -5,6 +5,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxResult } from '../../types/model'
 import { L2CostsUpdater } from './L2CostsUpdater'
+import { ONE_BLOB_GAS } from '../../utils/const'
 
 const MIN_TIMESTAMP = UnixTime.now()
 
@@ -79,7 +80,7 @@ describe(L2CostsUpdater.name, () => {
           calldataLength: 0,
           calldataGasUsed: 0,
           blobGasPrice: 10n,
-          blobGasUsed: 100,
+          blobGasUsed: ONE_BLOB_GAS,
         },
       ]
 

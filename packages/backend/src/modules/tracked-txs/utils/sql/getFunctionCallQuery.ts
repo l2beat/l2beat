@@ -1,5 +1,4 @@
-import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
+import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
 
 export function getFunctionCallQuery(
   configs: {
@@ -10,11 +9,15 @@ export function getFunctionCallQuery(
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const fullInputAddresses = uniq(
+  const fullInputAddresses = unique(
     configs.filter((c) => c.getFullInput).map((c) => c.address.toLowerCase()),
   )
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
+  const uniqueConfigs = unique(
+    configs,
+    (c) => `${c.address.toLowerCase()}-${c.selector.toLowerCase()}`,
+  )
 
   // To calculate the non-zero bytes we are grouping bytes by adding 'x' sign between each byte
   // and then removing all '00x' sequences. Next step is to divide length of result by 3 as this is length of '00x' sequence.
@@ -28,8 +31,8 @@ export function getFunctionCallQuery(
       allowed_calls(to_addr, selector) AS (
         VALUES
           ${
-            configs.length > 0
-              ? configs
+            uniqueConfigs.length > 0
+              ? uniqueConfigs
                   .map(
                     (c) =>
                       `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
@@ -110,7 +113,7 @@ export function getFunctionCallQuery(
     JOIN traces_allowed tr
       ON tx.hash = tr.tx_hash
     LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;     
+      ON tx.hash = blobs.tx_hash;
   `
 
   return query
