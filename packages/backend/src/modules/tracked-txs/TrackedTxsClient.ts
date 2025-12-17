@@ -8,7 +8,7 @@ import type {
 } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { DuneClient } from '../../peripherals/dune/DuneClient'
+import type { DuneQueryService } from '../../peripherals/dune/DuneQueryService'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
   DuneFunctionCallResult,
@@ -25,7 +25,7 @@ export class TrackedTxsClient {
   private logger: Logger
 
   constructor(
-    private readonly duneClient: DuneClient,
+    private readonly duneQueryService: DuneQueryService,
     logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -110,7 +110,7 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.duneClient.query(
+    const queryResult = await this.duneQueryService.query(
       query,
       'large',
       v.array(DuneTransferResult),
@@ -149,7 +149,7 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.duneClient.query(
+    const queryResult = await this.duneQueryService.query(
       query,
       'large',
       v.array(DuneFunctionCallResult),

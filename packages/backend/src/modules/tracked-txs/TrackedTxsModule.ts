@@ -2,6 +2,7 @@ import { CoingeckoQueryService } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
+import { DuneQueryService } from '../../peripherals/dune/DuneQueryService'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -31,7 +32,12 @@ export function createTrackedTxsModule(
   const duneClient = providers.clients.dune
   assert(duneClient, 'Dune client is required')
 
-  const trackedTxsClient = new TrackedTxsClient(duneClient, logger)
+  const duneQueryService = new DuneQueryService({
+    logger,
+    duneClient,
+  })
+
+  const trackedTxsClient = new TrackedTxsClient(duneQueryService, logger)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )

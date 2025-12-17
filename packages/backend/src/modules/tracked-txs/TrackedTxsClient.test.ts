@@ -9,7 +9,7 @@ import type {
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
-import type { DuneClient } from '../../peripherals/dune/DuneClient'
+import type { DuneQueryService } from '../../peripherals/dune/DuneQueryService'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -37,11 +37,14 @@ const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
 describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
     it('calls big query, parses results', async () => {
-      const bigquery = getMockDuneClient([
+      const duneQueryService = getMockDuneQueryService([
         TRANSFERS_RESPONSE,
         FUNCTIONS_RESPONSE,
       ])
-      const trackedTxsClient = new TrackedTxsClient(bigquery, Logger.SILENT)
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
 
       const data = await trackedTxsClient.getData(
         CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
@@ -50,14 +53,14 @@ describe(TrackedTxsClient.name, () => {
       )
 
       // calls both internal methods
-      expect(bigquery.query).toHaveBeenCalledTimes(2)
-      expect(bigquery.query).toHaveBeenNthCalledWith(
+      expect(duneQueryService.query).toHaveBeenCalledTimes(2)
+      expect(duneQueryService.query).toHaveBeenNthCalledWith(
         1,
         TRANSFERS_SQL,
         'large',
         expect.anything(),
       )
-      expect(bigquery.query).toHaveBeenNthCalledWith(
+      expect(duneQueryService.query).toHaveBeenNthCalledWith(
         2,
         FUNCTIONS_SQL,
         'large',
@@ -71,23 +74,29 @@ describe(TrackedTxsClient.name, () => {
 
   describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
-      const dune = getMockDuneClient([])
-      const trackedTxsClient = new TrackedTxsClient(dune, Logger.SILENT)
+      const duneQueryService = getMockDuneQueryService([])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
 
       await trackedTxsClient.getTransfers([], FROM, TO)
 
-      expect(dune.query).not.toHaveBeenCalled()
+      expect(duneQueryService.query).not.toHaveBeenCalled()
     })
   })
 
   describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
-      const dune = getMockDuneClient([])
-      const trackedTxsClient = new TrackedTxsClient(dune, Logger.SILENT)
+      const duneQueryService = getMockDuneQueryService([])
+      const trackedTxsClient = new TrackedTxsClient(
+        duneQueryService,
+        Logger.SILENT,
+      )
 
       await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 
-      expect(dune.query).not.toHaveBeenCalled()
+      expect(duneQueryService.query).not.toHaveBeenCalled()
     })
   })
 })
@@ -248,7 +257,6 @@ const TRANSFERS_RESPONSE: DuneTransferResult[] = [
     data_length: 100,
     non_zero_bytes: 60,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
 ]
 
@@ -269,7 +277,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     data_length: 100,
     non_zero_bytes: 60,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
@@ -282,7 +289,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
@@ -295,7 +301,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
@@ -308,7 +313,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
   {
     hash: TX_HASH,
@@ -321,7 +325,6 @@ const FUNCTIONS_RESPONSE: DuneFunctionCallResult[] = [
     data_length: 0,
     non_zero_bytes: 0,
     blob_versioned_hashes: ['0x1'],
-    blob_base_fee: 3n,
   },
 ]
 
@@ -358,14 +361,14 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
   TO,
 )
 
-function getMockDuneClient(responses: unknown[][]) {
-  const client = mockObject<DuneClient>({
+function getMockDuneQueryService(responses: unknown[][]) {
+  const service = mockObject<DuneQueryService>({
     query: mockFn(),
   })
 
   for (const response of responses) {
-    client.query.resolvesToOnce(response)
+    service.query.resolvesToOnce(response)
   }
 
-  return client
+  return service
 }
