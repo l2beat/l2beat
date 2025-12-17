@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import type { DisplayOptionsKey } from './displayOptions'
 
 type DisplayControlsState = Partial<Record<DisplayOptionsKey, boolean>>
@@ -34,22 +34,27 @@ export function DisplayControlsContextProvider({
 }) {
   const [state, setState] = useState<DisplayControlsState>(initialValues)
 
-  const getDisplay = (key: DisplayOptionsKey): boolean => {
-    const value = state[key]
-    assert(
-      value !== undefined,
-      `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,
-    )
-    return value
-  }
+  const getDisplay = useCallback(
+    (key: DisplayOptionsKey): boolean => {
+      const value = state[key]
+      assert(
+        value !== undefined,
+        `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,
+      )
+      return value
+    },
+    [state],
+  )
 
-  const setDisplay = (key: DisplayOptionsKey, value: boolean) => {
-    assert(
-      state[key] !== undefined,
-      `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,
-    )
-    setState((prev) => ({ ...prev, [key]: value }))
-  }
+  const setDisplay = useCallback((key: DisplayOptionsKey, value: boolean) => {
+    setState((prev) => {
+      assert(
+        prev[key] !== undefined,
+        `DisplayControlsContext.ts: "${key}" was not provided in initialValues`,
+      )
+      return { ...prev, [key]: value }
+    })
+  }, [])
 
   return (
     <DisplayControlsContext.Provider
