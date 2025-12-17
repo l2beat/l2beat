@@ -1,4 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -35,6 +41,12 @@ export const sxt: ScalingProject = zkStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  daProvider: {
+    layer: DA_LAYERS.AVAIL,
+    riskView: RISK_VIEW.DATA_AVAIL(false),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
+    bridge: DA_BRIDGES.NONE,
   },
   nonTemplateTrackedTxs: [
     {
