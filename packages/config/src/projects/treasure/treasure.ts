@@ -17,6 +17,7 @@ const v26UpgradeTS = UnixTime(1742933423)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const treasure: ScalingProject = zkStackL2({
+  chainId,
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1733875200), // 2024-12-11T00:00:00Z
@@ -61,7 +62,6 @@ export const treasure: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,

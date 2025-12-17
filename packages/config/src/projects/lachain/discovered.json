@@ -115,7 +115,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "zkVmDiamond",
+      "name": "Diamond",
       "address": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1004,5 +1004,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23674967 },
-  "permissionsConfigHash": "0x41f1dc28d1238e8149d2bf430e0e798f5f7637bb060ad62b71d4e54457a77380"
+  "permissionsConfigHash": "0x86793cba1c7e13c9aada6dbee6df18271d1c55457da012c913679f87d2d5458c"
 }
