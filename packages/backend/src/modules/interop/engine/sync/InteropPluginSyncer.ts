@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, InteropPluginStatusRecord } from '@l2beat/database'
 import type { Clients } from '../../../../providers/Clients'
 import type { InteropPlugin } from '../../plugins/types'
 
@@ -14,15 +14,29 @@ export class InteropPluginSyncer {
     this.logger = logger.for(this)
   }
 
-  start() {
+  async start() {
     for (const plugin of this.plugins) {
       if (plugin.capturesEvents) {
-        this.syncPlugin(plugin)
+        await this.syncPlugin(plugin)
       }
     }
   }
 
-  syncPlugin(plugin: InteropPlugin) {
-    const pluginConfig = this.db.interopPluginStatus.findByPluginName(plugin.name)
+  async syncPlugin(plugin: InteropPlugin) {
+    let pluginStatus = await this.db.interopPluginStatus.findByPluginName(
+      plugin.name,
+    )
+    if (!pluginStatus) {
+      pluginStatus = await this.initializePluginStatus(plugin.name)
+    }
+  }
+
+  async initializePluginStatus(pluginName: string) {
+    const record: InteropPluginStatusRecord = {
+      pluginName,
+      syncedBlockRanges: {},
+      resyncRequestedFrom: null,
+    }
+    return await this.db.interopPluginStatus.insert(record)
   }
 }

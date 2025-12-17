@@ -15,7 +15,7 @@ export type InteropPluginSyncedBlockRanges = Record<
 
 export interface InteropPluginStatusRecord {
   pluginName: string
-  syncedBlockRanges: InteropPluginSyncedBlockRanges | null
+  syncedBlockRanges: InteropPluginSyncedBlockRanges
   resyncRequestedFrom: UnixTime | null
 }
 
@@ -29,8 +29,7 @@ export function toRecord(
 ): InteropPluginStatusRecord {
   return {
     pluginName: row.pluginName,
-    syncedBlockRanges:
-      row.syncedBlockRanges as InteropPluginSyncedBlockRanges | null,
+    syncedBlockRanges: row.syncedBlockRanges as InteropPluginSyncedBlockRanges,
     resyncRequestedFrom: toTimestamp(row.resyncRequestedFrom),
   }
 }
@@ -55,11 +54,15 @@ function toUpdateRow(
 }
 
 export class InteropPluginStatusRepository extends BaseRepository {
-  async insert(record: InteropPluginStatusRecord): Promise<void> {
-    await this.db
+  async insert(
+    record: InteropPluginStatusRecord,
+  ): Promise<InteropPluginStatusRecord> {
+    const row = await this.db
       .insertInto('InteropPluginStatus')
       .values(toRow(record))
-      .execute()
+      .returningAll()
+      .executeTakeFirstOrThrow()
+    return toRecord(row)
   }
 
   async updateByPluginName(

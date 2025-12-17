@@ -4,7 +4,6 @@ import { describeDatabase } from '../test/database'
 import {
   type InteropPluginStatusRecord,
   InteropPluginStatusRepository,
-  type InteropPluginSyncedBlockRanges,
 } from './InteropPluginStatusRepository'
 
 describeDatabase(InteropPluginStatusRepository.name, (db) => {
@@ -16,42 +15,45 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
 
   describe(InteropPluginStatusRepository.prototype.insert.name, () => {
     it('inserts record with optional fields', async () => {
-      const record = config({
+      const record = status({
         pluginName: 'plugin-a',
-        syncedBlockRanges: ranges({
+        syncedBlockRanges: {
           ethereum: {
             syncedFrom: 1,
             syncedTo: 10,
             lastOpError: 'Call timeout',
           },
           arbitrum: { syncedFrom: 5, syncedTo: 50 },
-        }),
+        },
         resyncRequestedFrom: UnixTime(123),
       })
 
-      await repository.insert(record)
+      const inserted = await repository.insert(record)
+      expect(inserted).toEqual(record)
 
       const stored = await repository.findByPluginName(record.pluginName)
       expect(stored).toEqual(record)
     })
 
     it('accepts null optional fields', async () => {
-      const record = config({
+      const record = status({
         pluginName: 'plugin-a',
-        syncedBlockRanges: null,
+        syncedBlockRanges: {},
         resyncRequestedFrom: null,
       })
 
-      await repository.insert(record)
+      const inserted = await repository.insert(record)
+      expect(inserted).toEqual(record)
 
       const stored = await repository.findByPluginName(record.pluginName)
       expect(stored).toEqual(record)
     })
 
     it('throws error when inserting duplicate pluginName', async () => {
-      const record = config({ pluginName: 'plugin-a' })
+      const record = status({ pluginName: 'plugin-a' })
 
-      await repository.insert(record)
+      const inserted = await repository.insert(record)
+      expect(inserted).toEqual(record)
 
       await expect(repository.insert(record)).toBeRejected()
     })
@@ -61,21 +63,21 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
     InteropPluginStatusRepository.prototype.updateByPluginName.name,
     () => {
       it('updates record and returns number of affected rows', async () => {
-        const record = config({
+        const record = status({
           pluginName: 'plugin-a',
-          syncedBlockRanges: ranges({
+          syncedBlockRanges: {
             ethereum: {
               syncedFrom: 1,
               syncedTo: 10,
               lastOpError: 'Call timeout',
             },
-          }),
+          },
           resyncRequestedFrom: UnixTime(100),
         })
         await repository.insert(record)
 
         const updated = await repository.updateByPluginName(record.pluginName, {
-          syncedBlockRanges: ranges({
+          syncedBlockRanges: {
             ethereum: {
               syncedFrom: 5,
               syncedTo: 50,
@@ -86,7 +88,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
               syncedTo: 70,
               lastOpError: 'RPC Error: 500',
             },
-          }),
+          },
           resyncRequestedFrom: null,
         })
 
@@ -95,7 +97,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
         const stored = await repository.findByPluginName(record.pluginName)
         expect(stored).toEqual({
           ...record,
-          syncedBlockRanges: ranges({
+          syncedBlockRanges: {
             ethereum: {
               syncedFrom: 5,
               syncedTo: 50,
@@ -106,7 +108,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
               syncedTo: 70,
               lastOpError: 'RPC Error: 500',
             },
-          }),
+          },
           resyncRequestedFrom: null,
         })
       })
@@ -123,12 +125,12 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
 
   describe(InteropPluginStatusRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
-      const a = config({ pluginName: 'plugin-a' })
-      const b = config({
+      const a = status({ pluginName: 'plugin-a' })
+      const b = status({
         pluginName: 'plugin-b',
-        syncedBlockRanges: ranges({
+        syncedBlockRanges: {
           ethereum: { syncedFrom: 1, syncedTo: 10 },
-        }),
+        },
       })
 
       await repository.insert(a)
@@ -140,18 +142,12 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
   })
 })
 
-function config(
+function status(
   overrides: Partial<InteropPluginStatusRecord> & { pluginName: string },
 ): InteropPluginStatusRecord {
   return {
     pluginName: overrides.pluginName,
-    syncedBlockRanges: overrides.syncedBlockRanges ?? null,
+    syncedBlockRanges: overrides.syncedBlockRanges ?? {},
     resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
   }
-}
-
-function ranges(
-  value: InteropPluginSyncedBlockRanges,
-): InteropPluginSyncedBlockRanges {
-  return value
 }
