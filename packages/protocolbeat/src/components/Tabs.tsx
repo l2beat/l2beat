@@ -37,10 +37,19 @@ function TabsContent({
   )
 }
 
-function TabsList({ children, className, ...props }: RadixTabs.TabsListProps) {
+function TabsList({
+  children,
+  className,
+  align = 'left',
+  ...props
+}: RadixTabs.TabsListProps & { align?: 'left' | 'right' }) {
   return (
     <RadixTabs.List
-      className={cn('flex border-coffee-400 border-b', className)}
+      className={cn(
+        'flex border-coffee-400 border-b',
+        align === 'left' ? 'justify-start' : 'justify-end',
+        className,
+      )}
       {...props}
     >
       {children}

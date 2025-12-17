@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import type { ApiHandlersResponse } from '../../../../../api/types'
 import { Dialog } from '../../../../../components/Dialog'
-import { Select } from '../../../../../components/Select'
 import { IconEdit } from '../../../../../icons/IconEdit'
 import { useAvailableHandlers } from '../../../hooks/useAvailableHandlers'
 import { useConfigModels } from '../../../hooks/useConfigModels'
 import { HandlerEditor } from './HandlerEditor'
+import { HandlerSelector } from './HandlerSelector'
 
 type Props = {
   context: 'config' | 'template'
@@ -14,10 +14,10 @@ type Props = {
 }
 
 export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
+  const editorKey = `handler-${context}-${fieldName}`
   const models = useConfigModels()
   const model = context === 'config' ? models.configModel : models.templateModel
-  const { handlers, isPending, parseRaw, detectHandler } =
-    useAvailableHandlers()
+  const { handlers, parseRaw, detectHandler } = useAvailableHandlers()
 
   const [handlerString, setHandlerString] = useState(
     model.getFieldHandlerString(fieldName) ?? '',
@@ -29,26 +29,24 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
 
   const [errors, setErrors] = useState<string | undefined>(undefined)
 
-  const detectedHandler = useMemo(() => {
-    return detectHandler(handlerString)
-  }, [handlerString])
-
   useEffect(() => {
-    if (detectedHandler) {
-      setSelectedHandler(detectedHandler)
-    } else {
-      setSelectedHandler(undefined)
+    const detected = detectHandler(handlerString)
+    if (detected) {
+      setSelectedHandler(detected)
     }
-  }, [detectedHandler])
+  }, [handlerString])
 
   function onSave(content: string) {
     const result = parseRaw(content)
     if (!result.ok) {
-      return { newContent: content, isOk: false }
+      toast.error('Cannot save handler.', {
+        description: <pre>{result.message}</pre>,
+      })
+      return false
     }
-    toast.success('Handler saved')
+    toast.success('Handler saved.')
     model.setFieldHandler(fieldName, result.model)
-    return { newContent: content, isOk: true }
+    return true
   }
 
   function onChange(content: string) {
@@ -85,14 +83,15 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
         onInteractOutside={(e) => {
           e.preventDefault()
         }}
-        className="h-full max-w-full"
+        className="h-full max-w-full overflow-y-hidden"
       >
         <Dialog.Title>Handler editor</Dialog.Title>
-        <div className="grid h-full grid-cols-2 gap-2">
-          <div className="h-3/4 w-full">
+        <div className="grid h-full grid-cols-5 gap-2">
+          <div className="col-span-3 h-3/4 w-full">
             <div className="h-full w-full border border-coffee-200 bg-coffee-900 p-4 pl-0">
               <HandlerEditor
                 context={context}
+                editorKey={editorKey}
                 fieldName={fieldName}
                 contents={handlerString}
                 selectedHandler={selectedHandler}
@@ -101,33 +100,14 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
               />
             </div>
           </div>
-          <div className="w-full">
-            <Select.Root
-              key={handlers.length}
-              value={selectedHandler?.type}
-              onValueChange={onSelectedHandlerChange}
-            >
-              <Select.Trigger
-                className="max-w-fit"
-                placeholder={
-                  isPending ? 'Loading handlers...' : 'Select handler'
-                }
-                disabled={isPending}
-              />
-              <Select.Content>
-                <Select.Group>
-                  <Select.Label>
-                    Available handlers ({handlers.length})
-                  </Select.Label>
-                  {handlers.map((handler) => (
-                    <Select.Item key={handler.type} value={handler.type}>
-                      {handler.type}
-                    </Select.Item>
-                  ))}
-                </Select.Group>
-              </Select.Content>
-            </Select.Root>
-            {errors && <div className="text-coffee-300 text-sm">{errors}</div>}
+          <div className="col-span-2 w-full">
+            <HandlerSelector
+              handlers={handlers}
+              selectedHandler={selectedHandler}
+              onSelectedHandlerChange={onSelectedHandlerChange}
+            />
+
+            {errors && <div className="text-coffee-300 text-xs">{errors}</div>}
           </div>
         </div>
       </Dialog.Body>

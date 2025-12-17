@@ -59,6 +59,7 @@ function SelectContent({
           className,
         )}
         position="popper"
+        style={{ width: 'var(--radix-select-trigger-width)' }}
         {...props}
       >
         <RadixSelect.Viewport className="max-h-[400px] p-1">

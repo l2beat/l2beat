@@ -10,6 +10,7 @@ import { EditorView } from '../../../../../components/editor/views/EditorView'
 type HandlerEditorProps = {
   context: 'config' | 'template'
   fieldName: string
+  editorKey: string
   contents: string
   selectedHandler: ApiHandlersResponse['handlers'][number] | undefined
   onSave: EditorSaveCallback
@@ -17,14 +18,12 @@ type HandlerEditorProps = {
 }
 
 export function HandlerEditor({
-  context,
-  fieldName,
+  editorKey,
   contents,
   selectedHandler,
   onSave,
   onChange,
 }: HandlerEditorProps) {
-  const editorKey = `handler-${context}-${fieldName}`
   const editor = useCodeStore((store) => store.editors[editorKey])
 
   const file = useMemo(() => {
@@ -39,7 +38,7 @@ export function HandlerEditor({
 
   const uri = useMemo(() => {
     return editor?.createUri(file)
-  }, [editorKey, file])
+  }, [file])
 
   // monaco schema synchronization
   useEffect(() => {
@@ -63,28 +62,11 @@ export function HandlerEditor({
     }
   }, [selectedHandler, uri])
 
-  // filling editor with basic handler structure when changing
-  useEffect(() => {
-    if (selectedHandler && editor) {
-      const basicHandler = JSON.stringify(
-        { type: selectedHandler.type },
-        null,
-        2,
-      )
-      editor.setFile({
-        id: editorKey,
-        name: editorKey,
-        content: basicHandler,
-        readOnly: false,
-        language: 'json',
-      })
-    }
-  }, [selectedHandler, editorKey])
-
   return (
     <EditorView
       features={{ lineSelection: false, rangeHighlight: false }}
       editorId={editorKey}
+      disableTabs
       callbacks={{
         onSave,
         onChange,

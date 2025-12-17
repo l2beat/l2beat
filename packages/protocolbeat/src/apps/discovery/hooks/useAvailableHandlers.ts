@@ -39,13 +39,13 @@ export function useAvailableHandlers() {
     const maybeJsonc = tryParsingJsonc(content)
 
     if (!maybeJsonc) {
-      return { ok: false, message: 'Invalid JSONC.' } as const
+      return { ok: false, message: 'Invalid JSONC' } as const
     }
 
     const result = HandlerBaseSchema.safeParse(maybeJsonc)
 
     if (!result.success) {
-      return { ok: false, message: 'Invalid base definition.' } as const
+      return { ok: false, message: 'Invalid base definition' } as const
     }
 
     const handlerType = result.data.type
@@ -55,7 +55,7 @@ export function useAvailableHandlers() {
     )
 
     if (!matchingHandler) {
-      return { ok: false, message: 'Unsupported handler type.' } as const
+      return { ok: false, message: 'Unsupported handler type' } as const
     }
 
     const handlerSchema = matchingHandler.schema
