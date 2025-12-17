@@ -17,14 +17,11 @@ export function createL2CostsModule({
 
   logger = logger.tag({ feature: 'costs', module: 'costs' })
 
-  const ethereumRpcClient = providers.clients.rpcClients.find(
-    (c) => c.chain === 'ethereum',
-  )
-  assert(ethereumRpcClient, 'Ethereum RPC client is required')
+  assert(providers.blobPrice, 'Blob price provider is required')
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.database,
     logger,
-    ethereumRpcClient,
+    providers.blobPrice,
   )
 
   return {

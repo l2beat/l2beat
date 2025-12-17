@@ -1,12 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
-import type { IRpcClient, TrackedTxId } from '@l2beat/shared'
+import type { TrackedTxId } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
-import uniq from 'lodash/uniq'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { ONE_BLOB_GAS } from '../../utils/const'
+import type { BlobPriceProvider } from './BlobPriceProvider'
 
 export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
   type = 'l2costs' as const
@@ -14,7 +13,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
-    private readonly ethRpcClient: IRpcClient,
+    private readonly blobPriceProvider: BlobPriceProvider,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -24,40 +23,16 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       this.logger.info('Update skipped - no transactions to process')
       return
     }
-    const uniqueBlockNumbers = uniq(transactions.map((tx) => tx.blockNumber))
-    const newestBlock = Math.max(...uniqueBlockNumbers)
-    const oldestBlock = Math.min(...uniqueBlockNumbers)
-    this.logger.info('Getting blob base fees', {
-      newestBlock,
-      oldestBlock,
-      blocksCount: uniqueBlockNumbers.length,
-    })
-    const blockDiff = newestBlock - oldestBlock
-    const chunkCount = Math.ceil(blockDiff / 1000)
-    const blobBaseFeeByBlock = new Map<number, bigint>()
-    for (const chunk of range(chunkCount)) {
-      this.logger.info('Getting blob base fees', {
-        chunk,
-        params: {
-          blockCount: 1000,
-          newestBlock: newestBlock - chunk * 1000,
-          rewardPercentiles: [],
-        },
-      })
-      const feeHistory = await this.ethRpcClient.getFeeHistory(
-        1000,
-        newestBlock - chunk * 1000,
-        [],
-      )
-      let startBlock = feeHistory.oldestBlock
-      for (const blobBaseFee of feeHistory.baseFeePerBlobGas) {
-        if (blobBaseFee === 0n) continue
-        blobBaseFeeByBlock.set(startBlock, blobBaseFee)
-        startBlock++
-      }
-    }
+    const blockNumbers = transactions.map((tx) => tx.blockNumber)
+    const oldestBlock = Math.min(...blockNumbers)
+    const newestBlock = Math.max(...blockNumbers)
+    const blobPriceByBlock =
+      await this.blobPriceProvider.getBlobPricesByBlockRange([
+        oldestBlock,
+        newestBlock,
+      ])
 
-    const transformed = this.transform(transactions, blobBaseFeeByBlock)
+    const transformed = this.transform(transactions, blobPriceByBlock)
     await this.db.l2Cost.insertMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }

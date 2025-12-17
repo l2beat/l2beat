@@ -4,8 +4,9 @@ import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxResult } from '../../types/model'
-import { L2CostsUpdater } from './L2CostsUpdater'
 import { ONE_BLOB_GAS } from '../../utils/const'
+import type { BlobPriceProvider } from './BlobPriceProvider'
+import { L2CostsUpdater } from './L2CostsUpdater'
 
 const MIN_TIMESTAMP = UnixTime.now()
 
@@ -13,21 +14,27 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.update.name, () => {
     it('skips if no transactions', async () => {
       const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
         mockObject<Database>({ l2Cost: repository }),
         Logger.SILENT,
+        blobPriceProvider,
       )
 
       await updater.update([])
 
       expect(repository.insertMany).not.toHaveBeenCalled()
+      expect(blobPriceProvider.getBlobPricesByBlockRange).not.toHaveBeenCalled()
     })
 
     it('transforms and saves to db ', async () => {
       const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
+      blobPriceProvider.getBlobPricesByBlockRange.resolvesTo(new Map())
       const updater = new L2CostsUpdater(
         mockObject<Database>({ l2Cost: repository }),
         Logger.SILENT,
+        blobPriceProvider,
       )
       const transactions = getMockTrackedTxResults()
 
@@ -41,6 +48,9 @@ describe(L2CostsUpdater.name, () => {
 
       await updater.update(transactions)
 
+      expect(blobPriceProvider.getBlobPricesByBlockRange).toHaveBeenCalledWith([
+        1, 1,
+      ])
       expect(repository.insertMany).toHaveBeenNthCalledWith(1, mockRecord)
     })
   })
@@ -48,14 +58,17 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.transform.name, () => {
     it('transforms transactions and adds details', async () => {
       const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
         mockObject<Database>({ l2Cost: repository }),
         Logger.SILENT,
+        blobPriceProvider,
       )
 
       const transactions = getMockTrackedTxResults()
+      const blobBaseFeeByBlock = new Map<number, bigint>([[1, 10n]])
 
-      const result = updater.transform(transactions)
+      const result = updater.transform(transactions, blobBaseFeeByBlock)
 
       const expected: L2CostRecord[] = [
         {
@@ -91,9 +104,11 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.deleteFromById.name, () => {
     it('calls repository deleteAfter', async () => {
       const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
         mockObject<Database>({ l2Cost: repository }),
         Logger.SILENT,
+        blobPriceProvider,
       )
 
       const id = createTrackedTxId.random()
@@ -107,6 +122,12 @@ describe(L2CostsUpdater.name, () => {
     })
   })
 })
+
+function getMockBlobPriceProvider() {
+  return mockObject<BlobPriceProvider>({
+    getBlobPricesByBlockRange: mockFn(),
+  })
+}
 
 function getMockL2CostsRepository() {
   return mockObject<Database['l2Cost']>({
@@ -163,7 +184,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 56,
-      blobBaseFee: null,
       blobVersionedHashes: null,
     },
     {
@@ -181,7 +201,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
-      blobBaseFee: 10n,
       blobVersionedHashes: ['0x2'],
     },
   ]

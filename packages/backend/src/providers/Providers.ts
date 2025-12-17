@@ -19,6 +19,7 @@ import {
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
+import { BlobPriceProvider } from '../modules/tracked-txs/modules/l2-costs/BlobPriceProvider'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './day/DayProviders'
@@ -42,6 +43,7 @@ export class Providers {
   svmBlock: SvmBlockProviders
   slotTimestamp: SlotTimestampProvider
   daBeatStats: DaBeatStatsProvider
+  blobPrice: BlobPriceProvider | undefined
 
   constructor(
     readonly config: Config,
@@ -112,6 +114,16 @@ export class Providers {
       this.clients.celestiaDaBeat,
       this.clients.availWs,
     )
+
+    const ethereumRpcClient = this.clients.rpcClients.find(
+      (c) => c.chain === 'ethereum',
+    )
+    if (ethereumRpcClient) {
+      this.blobPrice = new BlobPriceProvider(
+        logger.tag({ tag: 'blobPrice' }),
+        ethereumRpcClient,
+      )
+    }
   }
 
   getPriceProviders() {
