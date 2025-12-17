@@ -71,7 +71,8 @@ export class BlobPriceProvider {
           blockNumber >= oldestBlock &&
           blockNumber <= newestBlock
         ) {
-          if (blobPriceByBlock.has(blockNumber)) {
+          const existingBlobPrice = blobPriceByBlock.get(blockNumber)
+          if (existingBlobPrice && existingBlobPrice !== blobBaseFee) {
             throw new Error(
               `Blob price for block ${blockNumber} was already set. This indicates overlapping ranges or duplicate processing.`,
             )
