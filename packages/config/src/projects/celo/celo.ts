@@ -1,10 +1,12 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { formatEther } from 'ethers/lib/utils'
+import { CONTRACTS, DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,6 +14,23 @@ import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('celo')
 const chainId = 42220
+
+const maxChallengeDuration = discovery.getContractValue<number>(
+  'OPSuccinctFaultDisputeGame',
+  'maxChallengeDuration',
+)
+const maxProveDuration = discovery.getContractValue<number>(
+  'OPSuccinctFaultDisputeGame',
+  'maxProveDuration',
+)
+const proposerBond = discovery.getContractValue<number>(
+  'DisputeGameFactory',
+  'initBondGame42',
+)
+const challengerBond = discovery.getContractValue<number>(
+  'OPSuccinctFaultDisputeGame',
+  'challengerBond',
+)
 
 export const celo: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -22,8 +41,39 @@ export const celo: ScalingProject = opStackL2({
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
+  stateValidation: {
+    categories: [
+      {
+        title: 'Fraud proofs',
+        description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond of ${formatEther(proposerBond)} ETH. Once created, the game enters a challenge period of ${formatSeconds(maxChallengeDuration)} during which whitelisted challengers can dispute the proposal by posting a bond of ${formatEther(challengerBond)} ETH. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period of ${formatSeconds(maxProveDuration)}. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
+        references: [
+          {
+            url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
+            title: 'OP Succinct Lite architecture',
+          },
+          {
+            url: 'https://docs.celo.org/home/protocol/challengers',
+            title: 'Celo Challengers',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'the validity proof cryptography is broken or implemented incorrectly.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the proposer routes proof verification through a malicious or faulty verifier.',
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'the permissioned proposer fails to publish state roots to the L1.',
+          },
+        ],
+      },
+    ],
+  },
   architectureImage: 'celo',
   display: {
     name: 'Celo',
