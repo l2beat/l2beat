@@ -19,6 +19,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
 import { SlidersIcon } from '~/icons/Sliders'
+import { cn } from '~/utils/cn'
 import { useDisplayControlsContext } from './DisplayControlsContext'
 import {
   DISPLAY_OPTIONS,
@@ -41,11 +42,16 @@ export function DisplayControls() {
       <span className="text-label-value-14 md:text-label-value-15">
         Display
       </span>
-      {checkedCount > 0 && (
-        <div className="rounded-full bg-brand px-1.5 py-[3px] font-semibold text-2xs text-primary-invert leading-none">
-          {checkedCount}
-        </div>
-      )}
+      <div
+        className={cn(
+          'rounded-full bg-brand font-semibold text-2xs text-primary-invert leading-none transition-all',
+          checkedCount === 0
+            ? '-mr-3 scale-0 opacity-0'
+            : 'size-fit px-1.5 py-[3px]',
+        )}
+      >
+        {checkedCount}
+      </div>
     </div>
   )
 
