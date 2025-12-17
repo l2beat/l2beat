@@ -47,7 +47,6 @@ export class DuneQueryService {
       if (elapsedMs >= this.timeoutMs) {
         this.logger.error('Query timeout exceeded', {
           executionId: execution_id,
-          elapsedMs,
           timeoutMs: this.timeoutMs,
         })
         throw new Error(
@@ -61,7 +60,6 @@ export class DuneQueryService {
       } catch (error) {
         this.logger.error('Failed to get execution status', {
           executionId: execution_id,
-          elapsedMs,
           error: error instanceof Error ? error.message : String(error),
         })
         throw new Error(
@@ -76,7 +74,6 @@ export class DuneQueryService {
             this.logger.info('Query in progress:', {
               executionId: status.execution_id,
               state: status.state,
-              elapsedMs,
             })
           } else {
             // Log progress periodically even if state hasn't changed
@@ -85,7 +82,6 @@ export class DuneQueryService {
               this.logger.info('Query in progress:', {
                 executionId: status.execution_id,
                 state: status.state,
-                elapsedMs,
               })
               lastProgressLogTime = Date.now()
             }
@@ -99,7 +95,6 @@ export class DuneQueryService {
             this.logger.info('Query completed', {
               executionId: status.execution_id,
               state: status.state,
-              elapsedMs,
               executionCostCredits: status.execution_cost_credits,
               apiExportCostCredits:
                 status.result_metadata.datapoint_count / 5000,
