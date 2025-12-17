@@ -20,7 +20,7 @@ const chainId = 50104
 const trackedTxsSince = UnixTime(1742940287)
 const v26UpgradeTS = UnixTime(1743095267)
 const v29UpgradeTS = UnixTime(1761612755)
-const diamond = discovery.getContract('SophonZkEvm')
+const diamond = discovery.getContract('Diamond')
 const bridge = discovery.getContract('L1NativeTokenVault')
 const isL2AssetRouterWhitelisted =
   discovery.getContractValue<ChainSpecificAddress[]>(

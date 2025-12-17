@@ -15,7 +15,7 @@ const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
 
 const bridge = discovery.getContract('L1NativeTokenVault')
-const diamond = discovery.getContract('AbstractZkEvm')
+const diamond = discovery.getContract('Diamond')
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z

@@ -536,7 +536,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "GrvtZkEvm",
+      "name": "Diamond",
       "address": "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1452,5 +1452,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037384 },
-  "permissionsConfigHash": "0xb44d9c36131142172105d9ba20cf9c279280dc89b2af510ec07f9380513c4ddb"
+  "permissionsConfigHash": "0x1b2d2385e2d43c9373c2de57816e8eb8eb71245754bdd06a755133fc33642549"
 }
