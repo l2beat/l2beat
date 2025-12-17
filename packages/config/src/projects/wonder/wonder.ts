@@ -16,6 +16,7 @@ const discovery = new ProjectDiscovery('wonder')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const wonder: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1741634331), // 2025/03/10 19:18 UTC
   archivedAt: UnixTime(1763467188), // 2025/11/18 13:59 UTC
   additionalBadges: [BADGES.DA.CustomDA],

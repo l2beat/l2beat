@@ -11,6 +11,7 @@ const chainId = 543210
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const zeronetwork: ScalingProject = zkStackL2({
+  chainId,
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
