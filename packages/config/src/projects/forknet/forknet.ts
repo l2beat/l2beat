@@ -28,7 +28,6 @@ const sequencer = discovery.getContractValue<ChainSpecificAddress>(
 export const forknet: ScalingProject = agglayer({
   capability: 'universal',
   addedAt: UnixTime(1756724480), // 2025-09-01T12:01:20Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Forknet',
     slug: 'forknet',
