@@ -61,15 +61,6 @@ describe(getFunctionCallQuery.name, () => {
           ON tr.to = ac.to_addr
         AND tr.selector = ac.selector
       ),
-      blobs AS (
-        SELECT
-            blobs.tx_hash,
-            blobs.blob_base_fee
-        FROM ethereum.blobs as blobs
-        CROSS JOIN params p
-        WHERE blobs.beacon_slot_time >= p.t_start
-          AND blobs.beacon_slot_time <= p.t_end
-      ),
       txs_filtered AS (
         SELECT
           tx.hash,
@@ -93,7 +84,6 @@ describe(getFunctionCallQuery.name, () => {
       tx.gas_used,
       tx.gas_price,
       tx.blob_versioned_hashes,
-      blobs.blob_base_fee,
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
@@ -102,9 +92,7 @@ describe(getFunctionCallQuery.name, () => {
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash
-    LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;
+      ON tx.hash = tr.tx_hash;
   `)
   })
 
@@ -151,15 +139,6 @@ describe(getFunctionCallQuery.name, () => {
           ON tr.to = ac.to_addr
         AND tr.selector = ac.selector
       ),
-      blobs AS (
-        SELECT
-            blobs.tx_hash,
-            blobs.blob_base_fee
-        FROM ethereum.blobs as blobs
-        CROSS JOIN params p
-        WHERE blobs.beacon_slot_time >= p.t_start
-          AND blobs.beacon_slot_time <= p.t_end
-      ),
       txs_filtered AS (
         SELECT
           tx.hash,
@@ -183,7 +162,6 @@ describe(getFunctionCallQuery.name, () => {
       tx.gas_used,
       tx.gas_price,
       tx.blob_versioned_hashes,
-      blobs.blob_base_fee,
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
@@ -192,9 +170,7 @@ describe(getFunctionCallQuery.name, () => {
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash
-    LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;
+      ON tx.hash = tr.tx_hash;
   `)
   })
 
@@ -237,15 +213,6 @@ describe(getFunctionCallQuery.name, () => {
           ON tr.to = ac.to_addr
         AND tr.selector = ac.selector
       ),
-      blobs AS (
-        SELECT
-            blobs.tx_hash,
-            blobs.blob_base_fee
-        FROM ethereum.blobs as blobs
-        CROSS JOIN params p
-        WHERE blobs.beacon_slot_time >= p.t_start
-          AND blobs.beacon_slot_time <= p.t_end
-      ),
       txs_filtered AS (
         SELECT
           tx.hash,
@@ -269,7 +236,6 @@ describe(getFunctionCallQuery.name, () => {
       tx.gas_used,
       tx.gas_price,
       tx.blob_versioned_hashes,
-      blobs.blob_base_fee,
       length(tx.data) AS data_length,
       length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
@@ -278,9 +244,7 @@ describe(getFunctionCallQuery.name, () => {
       END AS input
     FROM txs_filtered tx
     JOIN traces_allowed tr
-      ON tx.hash = tr.tx_hash
-    LEFT JOIN blobs
-      ON tx.hash = blobs.tx_hash;
+      ON tx.hash = tr.tx_hash;
   `)
   })
 })

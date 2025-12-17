@@ -27,36 +27,81 @@ describe(L2CostsUpdater.name, () => {
       expect(blobPriceProvider.getBlobPricesByBlockRange).not.toHaveBeenCalled()
     })
 
-    it('transforms and saves to db ', async () => {
+    it('transforms and saves to db', async () => {
       const repository = getMockL2CostsRepository()
-      const blobPriceProvider = getMockBlobPriceProvider()
-      blobPriceProvider.getBlobPricesByBlockRange.resolvesTo(new Map())
+      const transactions = getMockTrackedTxResults()
+      const blobPricesByBlock = new Map<number, bigint>([[2, 10n]])
+      const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
       const updater = new L2CostsUpdater(
         mockObject<Database>({ l2Cost: repository }),
         Logger.SILENT,
         blobPriceProvider,
       )
-      const transactions = getMockTrackedTxResults()
-
-      const mockRecord: L2CostRecord[] = [
-        mockObject<L2CostRecord>({
-          txHash: '0x123',
-        }),
-      ]
-
-      updater.transform = mockFn().returns(mockRecord)
 
       await updater.update(transactions)
 
       expect(blobPriceProvider.getBlobPricesByBlockRange).toHaveBeenCalledWith([
-        1, 1,
+        1, 2,
       ])
-      expect(repository.insertMany).toHaveBeenNthCalledWith(1, mockRecord)
+      expect(repository.insertMany).toHaveBeenCalledTimes(1)
+      const insertedRecords = repository.insertMany.calls[0]?.args[0] as
+        | L2CostRecord[]
+        | undefined
+      expect(insertedRecords).not.toEqual(undefined)
+      expect(insertedRecords?.length).toEqual(2)
+    })
+
+    it('handles transactions across multiple blocks', async () => {
+      const repository = getMockL2CostsRepository()
+      const transactions: TrackedTxResult[] = [
+        {
+          ...getMockTrackedTxResults()[0],
+          blockNumber: 100,
+        },
+        {
+          ...getMockTrackedTxResults()[1],
+          blockNumber: 200,
+        },
+      ]
+      const blobPricesByBlock = new Map<number, bigint>([
+        [100, 10n],
+        [200, 20n],
+      ])
+      const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+
+      await updater.update(transactions)
+
+      expect(blobPriceProvider.getBlobPricesByBlockRange).toHaveBeenCalledWith([
+        100, 200,
+      ])
+      expect(repository.insertMany).toHaveBeenCalledTimes(1)
+    })
+
+    it('throws error when blob price is missing for transaction with blob hashes', async () => {
+      const repository = getMockL2CostsRepository()
+      const transactions = getMockTrackedTxResults()
+      // Transaction at block 1 has blobVersionedHashes but no price provided
+      const blobPricesByBlock = new Map<number, bigint>()
+      const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+
+      await expect(updater.update(transactions)).toBeRejectedWith(
+        'Blob base fee not found for block 2',
+      )
     })
   })
 
   describe(L2CostsUpdater.prototype.transform.name, () => {
-    it('transforms transactions and adds details', async () => {
+    it('transforms transactions and adds details', () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
@@ -66,7 +111,7 @@ describe(L2CostsUpdater.name, () => {
       )
 
       const transactions = getMockTrackedTxResults()
-      const blobBaseFeeByBlock = new Map<number, bigint>([[1, 10n]])
+      const blobBaseFeeByBlock = new Map<number, bigint>([[2, 10n]])
 
       const result = updater.transform(transactions, blobBaseFeeByBlock)
 
@@ -99,6 +144,64 @@ describe(L2CostsUpdater.name, () => {
 
       expect(result).toEqualUnsorted(expected)
     })
+
+    it('throws error when blob price is missing for transaction with blob hashes', () => {
+      const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+
+      const transactions = getMockTrackedTxResults()
+      const blobBaseFeeByBlock = new Map<number, bigint>()
+
+      expect(() => updater.transform(transactions, blobBaseFeeByBlock)).toThrow(
+        'Blob base fee not found for block 2',
+      )
+    })
+
+    it('handles multiple blob hashes correctly', () => {
+      const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+
+      const transactions: TrackedTxResult[] = [
+        {
+          ...getMockTrackedTxResults()[1],
+          blobVersionedHashes: ['0x1', '0x2', '0x3'],
+        },
+      ]
+      const blobBaseFeeByBlock = new Map<number, bigint>([[2, 10n]])
+
+      const result = updater.transform(transactions, blobBaseFeeByBlock)
+
+      expect(result[0].blobGasUsed).toEqual(3 * ONE_BLOB_GAS)
+      expect(result[0].blobGasPrice).toEqual(10n)
+    })
+
+    it('handles null blob price when transaction has no blob hashes', () => {
+      const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+
+      const transactions = [getMockTrackedTxResults()[0]]
+      const blobBaseFeeByBlock = new Map<number, bigint>()
+
+      const result = updater.transform(transactions, blobBaseFeeByBlock)
+
+      expect(result[0].blobGasPrice).toEqual(null)
+      expect(result[0].blobGasUsed).toEqual(null)
+    })
   })
 
   describe(L2CostsUpdater.prototype.deleteFromById.name, () => {
@@ -123,9 +226,13 @@ describe(L2CostsUpdater.name, () => {
   })
 })
 
-function getMockBlobPriceProvider() {
+function getMockBlobPriceProvider(
+  blobPricesByBlockRange?: Map<number, bigint>,
+) {
   return mockObject<BlobPriceProvider>({
-    getBlobPricesByBlockRange: mockFn(),
+    getBlobPricesByBlockRange: mockFn().resolvesTo(
+      blobPricesByBlockRange ?? new Map(),
+    ),
   })
 }
 
@@ -191,7 +298,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       id: getMockRuntimeConfigurations()[1].id,
       type: 'liveness',
       subtype: 'stateUpdates',
-      blockNumber: 1,
+      blockNumber: 2,
       blockTimestamp: UnixTime.now(),
       hash: '',
       fromAddress: EthereumAddress.random(),
