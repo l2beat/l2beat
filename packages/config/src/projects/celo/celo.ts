@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { CONTRACTS, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -22,8 +22,13 @@ export const celo: ScalingProject = opStackL2({
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
+  additionalStateValidationReferences: [
+    {
+      url: 'https://docs.celo.org/home/protocol/challengers',
+      title: 'Celo Challengers',
+    },
+  ],
   architectureImage: 'celo',
   display: {
     name: 'Celo',

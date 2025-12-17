@@ -1,7 +1,7 @@
 {
   "name": "wonder",
   "timestamp": 1753944481,
-  "configHash": "0xa43b2e09690f893e423e2b1b56578189bb8331a70aefdbe094c82e3cf4dcb43f",
+  "configHash": "0x86e5e55daf5f50f11cf24c8e9eaff601322099d8846e596180636f6904d556e4",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -296,7 +296,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "zkVmDiamond",
+      "name": "Diamond",
       "address": "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1077,5 +1077,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037398 },
-  "permissionsConfigHash": "0x4c51a1fc79176c0f8067fc77db6b0dbbb88fba944ec4cde42441ad5a16816bc2"
+  "permissionsConfigHash": "0x61e6ecbeeb0a56fca206aa8b48ff6a5ea1855245eb3cc275396561e9d8cf62b0"
 }
