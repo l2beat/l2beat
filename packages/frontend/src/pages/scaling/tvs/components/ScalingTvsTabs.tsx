@@ -63,7 +63,9 @@ export function ScalingTvsTabs(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <DisplayControls />
+        <div className="max-md:mt-4 max-md:mr-4">
+          <DisplayControls />
+        </div>
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
