@@ -18,7 +18,7 @@ import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
-import { InteropPluginConfigRepository } from './repositories/InteropPluginConfigRepository'
+import { InteropPluginStatusRepository } from './repositories/InteropPluginStatusRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
@@ -61,7 +61,7 @@ export function createDatabase(
     interopMessage: new InteropMessageRepository(db),
     interopTransfer: new InteropTransferRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
-    interopPluginConfig: new InteropPluginConfigRepository(db),
+    interopPluginStatus: new InteropPluginStatusRepository(db),
     // #endregion
 
     // #region DA BEAT

@@ -1,7 +1,7 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { InteropPluginConfig } from '../kysely/generated/types'
+import type { InteropPluginStatus } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
 export type InteropPluginSyncedBlockRanges = Record<
@@ -13,20 +13,20 @@ export type InteropPluginSyncedBlockRanges = Record<
   }
 >
 
-export interface InteropPluginConfigRecord {
+export interface InteropPluginStatusRecord {
   pluginName: string
   syncedBlockRanges: InteropPluginSyncedBlockRanges | null
   resyncRequestedFrom: UnixTime | null
 }
 
-export type InteropPluginConfigUpdateable = Omit<
-  Updateable<InteropPluginConfigRecord>,
+export type InteropPluginStatusUpdateable = Omit<
+  Updateable<InteropPluginStatusRecord>,
   'pluginName'
 >
 
 export function toRecord(
-  row: Selectable<InteropPluginConfig>,
-): InteropPluginConfigRecord {
+  row: Selectable<InteropPluginStatus>,
+): InteropPluginStatusRecord {
   return {
     pluginName: row.pluginName,
     syncedBlockRanges:
@@ -36,8 +36,8 @@ export function toRecord(
 }
 
 export function toRow(
-  record: InteropPluginConfigRecord,
-): Insertable<InteropPluginConfig> {
+  record: InteropPluginStatusRecord,
+): Insertable<InteropPluginStatus> {
   return {
     pluginName: record.pluginName,
     syncedBlockRanges: record.syncedBlockRanges,
@@ -46,28 +46,28 @@ export function toRow(
 }
 
 function toUpdateRow(
-  record: InteropPluginConfigUpdateable,
-): Updateable<InteropPluginConfig> {
+  record: InteropPluginStatusUpdateable,
+): Updateable<InteropPluginStatus> {
   return {
     syncedBlockRanges: record.syncedBlockRanges,
     resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
   }
 }
 
-export class InteropPluginConfigRepository extends BaseRepository {
-  async insert(record: InteropPluginConfigRecord): Promise<void> {
+export class InteropPluginStatusRepository extends BaseRepository {
+  async insert(record: InteropPluginStatusRecord): Promise<void> {
     await this.db
-      .insertInto('InteropPluginConfig')
+      .insertInto('InteropPluginStatus')
       .values(toRow(record))
       .execute()
   }
 
   async updateByPluginName(
     pluginName: string,
-    patch: InteropPluginConfigUpdateable,
+    patch: InteropPluginStatusUpdateable,
   ): Promise<number> {
     const result = await this.db
-      .updateTable('InteropPluginConfig')
+      .updateTable('InteropPluginStatus')
       .set(toUpdateRow(patch))
       .where('pluginName', '=', pluginName)
       .executeTakeFirst()
@@ -77,9 +77,9 @@ export class InteropPluginConfigRepository extends BaseRepository {
 
   async findByPluginName(
     pluginName: string,
-  ): Promise<InteropPluginConfigRecord | undefined> {
+  ): Promise<InteropPluginStatusRecord | undefined> {
     const row = await this.db
-      .selectFrom('InteropPluginConfig')
+      .selectFrom('InteropPluginStatus')
       .selectAll()
       .where('pluginName', '=', pluginName)
       .executeTakeFirst()
@@ -87,9 +87,9 @@ export class InteropPluginConfigRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getAll(): Promise<InteropPluginConfigRecord[]> {
+  async getAll(): Promise<InteropPluginStatusRecord[]> {
     const rows = await this.db
-      .selectFrom('InteropPluginConfig')
+      .selectFrom('InteropPluginStatus')
       .selectAll()
       .execute()
 
@@ -98,7 +98,7 @@ export class InteropPluginConfigRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('InteropPluginConfig')
+      .deleteFrom('InteropPluginStatus')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

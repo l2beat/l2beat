@@ -516,7 +516,7 @@ model Chain {
   deployedTokens DeployedToken[]
 }
 
-model InteropPluginConfig {
+model InteropPluginStatus {
   pluginName          String    @id @db.VarChar(255)
   syncedBlockRanges   Json?
   resyncRequestedFrom DateTime? @db.Timestamp(6)

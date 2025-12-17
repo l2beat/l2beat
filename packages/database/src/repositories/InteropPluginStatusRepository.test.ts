@@ -2,19 +2,19 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type InteropPluginConfigRecord,
-  InteropPluginConfigRepository,
+  type InteropPluginStatusRecord,
+  InteropPluginStatusRepository,
   type InteropPluginSyncedBlockRanges,
-} from './InteropPluginConfigRepository'
+} from './InteropPluginStatusRepository'
 
-describeDatabase(InteropPluginConfigRepository.name, (db) => {
-  const repository = db.interopPluginConfig
+describeDatabase(InteropPluginStatusRepository.name, (db) => {
+  const repository = db.interopPluginStatus
 
   afterEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(InteropPluginConfigRepository.prototype.insert.name, () => {
+  describe(InteropPluginStatusRepository.prototype.insert.name, () => {
     it('inserts record with optional fields', async () => {
       const record = config({
         pluginName: 'plugin-a',
@@ -58,7 +58,7 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
   })
 
   describe(
-    InteropPluginConfigRepository.prototype.updateByPluginName.name,
+    InteropPluginStatusRepository.prototype.updateByPluginName.name,
     () => {
       it('updates record and returns number of affected rows', async () => {
         const record = config({
@@ -121,7 +121,7 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
     },
   )
 
-  describe(InteropPluginConfigRepository.prototype.getAll.name, () => {
+  describe(InteropPluginStatusRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
       const a = config({ pluginName: 'plugin-a' })
       const b = config({
@@ -141,8 +141,8 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
 })
 
 function config(
-  overrides: Partial<InteropPluginConfigRecord> & { pluginName: string },
-): InteropPluginConfigRecord {
+  overrides: Partial<InteropPluginStatusRecord> & { pluginName: string },
+): InteropPluginStatusRecord {
   return {
     pluginName: overrides.pluginName,
     syncedBlockRanges: overrides.syncedBlockRanges ?? null,

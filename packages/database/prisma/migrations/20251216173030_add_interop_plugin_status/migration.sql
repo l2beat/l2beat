@@ -1,8 +1,8 @@
 -- CreateTable
-CREATE TABLE "InteropPluginConfig" (
+CREATE TABLE "InteropPluginStatus" (
     "pluginName" VARCHAR(255) NOT NULL,
     "syncedBlockRanges" JSONB,
     "resyncRequestedFrom" TIMESTAMP(6),
 
-    CONSTRAINT "InteropPluginConfig_pkey" PRIMARY KEY ("pluginName")
+    CONSTRAINT "InteropPluginStatus_pkey" PRIMARY KEY ("pluginName")
 );
