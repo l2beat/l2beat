@@ -5,7 +5,7 @@
   "initialAddresses": ["eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "AbstractZkEvm"
+    "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "Diamond"
   },
   "overrides": {
     "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {

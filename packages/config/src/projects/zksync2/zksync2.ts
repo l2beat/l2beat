@@ -50,7 +50,6 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
     },
   },
-  diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
     name: 'zksync2',
     chainId,

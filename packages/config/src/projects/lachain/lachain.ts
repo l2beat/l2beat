@@ -88,7 +88,6 @@ export const lachain: ScalingProject = zkStackL2({
     },
   ],
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   usesEthereumBlobs: true,
   // gas token LAC not on coingecko, no significant other TVS or activity
   // nonTemplateEscrows: [

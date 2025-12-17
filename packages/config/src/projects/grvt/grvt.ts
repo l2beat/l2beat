@@ -44,7 +44,6 @@ export const grvt: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
-  diamondContract: discovery.getContract('GrvtZkEvm'),
   chainId,
   daProvider: {
     layer: DA_LAYERS.NONE,

@@ -41,7 +41,6 @@ export const zkcandy: ScalingProject = zkStackL2({
     },
   },
   discovery,
-  diamondContract: discovery.getContract('zkCandyZkEvm'),
   chainConfig: {
     name: 'zkcandy',
     chainId,

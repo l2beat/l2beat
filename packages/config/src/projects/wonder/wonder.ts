@@ -52,7 +52,6 @@ export const wonder: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,

@@ -44,7 +44,6 @@ export const lens: ScalingProject = zkStackL2({
     },
   },
   discovery,
-  diamondContract: discovery.getContract('LensZkEvm'),
   chainConfig: {
     name: 'lens',
     chainId,

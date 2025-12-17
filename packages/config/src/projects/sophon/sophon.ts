@@ -77,7 +77,6 @@ export const sophon: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: diamond,
   daProvider: {
     layer: DA_LAYERS.AVAIL,
     riskView: RISK_VIEW.DATA_AVAIL(true),

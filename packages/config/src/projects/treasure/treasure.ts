@@ -62,7 +62,6 @@ export const treasure: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,

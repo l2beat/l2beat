@@ -57,7 +57,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
