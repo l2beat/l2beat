@@ -2,18 +2,16 @@ import type { Logger } from '@l2beat/backend-tools'
 import { EthRpcClient } from '@l2beat/shared'
 import { Http } from '@l2beat/shared/build/clients2/Http'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { chain } from 'lodash'
 import type { InteropPlugin } from '../../plugins/types'
 
-function createRpcClients(chains: string[]) {}
-export class PluginSyncer {
+export class InteropPluginSyncer {
   constructor(
     private chains: { name: string; type: 'evm' }[],
     private plugins: InteropPlugin[],
     private tokenDbClient: TokenDbClient,
     private logger: Logger,
   ) {
-    this.logger = logger.for(this).tag({ chain, tag: chain })
+    this.logger = logger.for(this)
   }
 
   async start() {
