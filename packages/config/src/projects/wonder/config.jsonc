@@ -9,16 +9,6 @@
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "overrides": {
-    "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": {
-      "fields": {
-        "validators": {
-          "handler": {
-            "type": "hardcoded",
-            "value": ["eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
-          }
-        }
-      }
-    },
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       "fields": {
         "validatorsVTL": {
