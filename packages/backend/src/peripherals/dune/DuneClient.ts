@@ -10,6 +10,11 @@ import {
 } from './types'
 
 type Performance = 'small' | 'medium' | 'large'
+type Dependencies = {
+  logger: Logger
+  http: HttpClient
+  apiKey: string
+}
 
 export class DuneClient {
   private logger: Logger
@@ -18,19 +23,8 @@ export class DuneClient {
   private pollingIntervalMs = 1000
   private progressLogIntervalMs = 30 * 1000
 
-  constructor(
-    logger: Logger,
-    private readonly httpClient: HttpClient,
-    private readonly apiKey: string,
-  ) {
-    this.logger = logger.for(this)
-  }
-
-  static create(
-    services: { httpClient: HttpClient; logger: Logger },
-    options: { apiKey: string },
-  ) {
-    return new DuneClient(services.logger, services.httpClient, options.apiKey)
+  constructor(private readonly $: Dependencies) {
+    this.logger = $.logger.for(this)
   }
 
   async query<T>(
@@ -161,11 +155,11 @@ export class DuneClient {
   }
 
   fetch(path: string, method: 'GET' | 'POST', body?: unknown) {
-    return this.httpClient.fetch(`${this.baseUrl}${path}`, {
+    return this.$.http.fetch(`${this.baseUrl}${path}`, {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-Dune-API-Key': this.apiKey,
+        'X-Dune-API-Key': this.$.apiKey,
       },
       body: body ? JSON.stringify(body) : undefined,
     })
