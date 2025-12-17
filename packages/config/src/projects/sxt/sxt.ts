@@ -80,6 +80,7 @@ export const sxt: ScalingProject = zkStackL2({
       },
     },
   ],
+  chainId,
   chainConfig: {
     name: 'sxt',
     chainId,

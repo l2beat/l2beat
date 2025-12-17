@@ -33,6 +33,7 @@ const assetBridgingWhitelistedText = isL2AssetRouterWhitelisted
   : ''
 
 export const sophon: ScalingProject = zkStackL2({
+  chainId,
   discovery,
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z

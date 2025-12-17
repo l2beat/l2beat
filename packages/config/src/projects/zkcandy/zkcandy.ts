@@ -17,6 +17,7 @@ const v26UpgradeTS = UnixTime(1742997647)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const zkcandy: ScalingProject = zkStackL2({
+  chainId,
   capability: 'universal',
   addedAt: UnixTime(1706088230), // 2024-01-24T09:23:50Z
   additionalPurposes: ['Gaming'],
