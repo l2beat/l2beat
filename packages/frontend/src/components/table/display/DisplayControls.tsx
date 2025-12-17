@@ -25,7 +25,7 @@ export function DisplayControls() {
     ([_, value]) => value !== undefined,
   ) as [DisplayOptionsKey, boolean][]
 
-  const checkedEntries = providedEntries.filter(([_, value]) => value).length
+  const checkedCount = providedEntries.filter(([_, value]) => value).length
 
   const trigger = (
     <div className="mb-1 flex h-8 w-fit items-center gap-1.5 rounded-lg bg-surface-primary p-2 font-semibold text-base">
@@ -33,9 +33,9 @@ export function DisplayControls() {
       <span className="text-label-value-14 md:text-label-value-15">
         Display
       </span>
-      {checkedEntries > 0 && (
+      {checkedCount > 0 && (
         <div className="rounded-full bg-brand px-1.5 py-[3px] font-semibold text-2xs text-primary-invert leading-none">
-          {checkedEntries}
+          {checkedCount}
         </div>
       )}
     </div>
