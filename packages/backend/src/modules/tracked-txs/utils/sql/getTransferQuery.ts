@@ -1,4 +1,5 @@
 import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 
 export function getTransferQuery(
   transfersConfig: { from?: EthereumAddress; to: EthereumAddress }[],
@@ -8,6 +9,11 @@ export function getTransferQuery(
   const uniqueTransfersConfigs = unique(
     transfersConfig,
     (tc) => `${tc.from}-${tc.to}`,
+  )
+
+  const [uniqueWithFrom, uniqueWithoutFrom] = partition(
+    uniqueTransfersConfigs,
+    (tc) => tc.from,
   )
 
   const query = `
@@ -20,9 +26,8 @@ export function getTransferQuery(
       allowed_pairs(from_addr, to_addr) AS (
         VALUES
           ${
-            uniqueTransfersConfigs.length > 0
-              ? uniqueTransfersConfigs
-                  .filter((tc) => tc.from)
+            uniqueWithFrom.length > 0
+              ? uniqueWithFrom
                   .map(
                     (tc) =>
                       `(${tc.from?.toLowerCase()}, ${tc.to.toLowerCase()})`,
@@ -34,9 +39,8 @@ export function getTransferQuery(
       allowed_to_only(to_addr) AS (
         VALUES
           ${
-            uniqueTransfersConfigs.length > 0
-              ? uniqueTransfersConfigs
-                  .filter((tc) => !tc.from)
+            uniqueWithoutFrom.length > 0
+              ? uniqueWithoutFrom
                   .map((tc) => `(${tc.to.toLowerCase()})`)
                   .join(',')
               : '(NULL)'
