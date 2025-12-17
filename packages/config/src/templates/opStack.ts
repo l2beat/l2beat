@@ -199,6 +199,7 @@ interface OpStackConfigCommon {
   portal?: EntryParameters
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
+  additionalStateValidationReferences?: { title: string; url: string }[]
   milestones?: Milestone[]
   ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
@@ -682,6 +683,7 @@ function getStateValidation(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
+  const additionalRefs = templateVars.additionalStateValidationReferences ?? []
   switch (fraudProofType) {
     case 'None': {
       const l2OutputOracle =
@@ -1080,6 +1082,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
                 url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
                 title: 'OP Succinct Lite architecture',
               },
+              ...additionalRefs,
             ],
             risks: [
               {
