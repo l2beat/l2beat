@@ -41,8 +41,10 @@ export function FieldConfigDialog(props: Props) {
   const templateIgnoreInWatchMode =
     models.templateModel.ignoreInWatchMode?.includes(fieldName)
 
-  const configHandler = models.configModel.getFieldHandler(fieldName)
-  const templateHandler = models.templateModel.getFieldHandler(fieldName)
+  const configHandlerString =
+    models.configModel.getFieldHandlerString(fieldName)
+  const templateHandlerString =
+    models.templateModel.getFieldHandlerString(fieldName)
 
   return (
     <Dialog.Root>
@@ -134,11 +136,7 @@ export function FieldConfigDialog(props: Props) {
                 <div className="group relative">
                   <Code
                     className="group-hover:pointer-events-none"
-                    content={
-                      configHandler
-                        ? JSON.stringify(configHandler, null, 2)
-                        : 'No handler defined'
-                    }
+                    content={configHandlerString ?? 'No handler defined'}
                   />
                   <FieldHandlerConfigDialog
                     context="config"
@@ -235,11 +233,7 @@ export function FieldConfigDialog(props: Props) {
                     <div className="group relative">
                       <Code
                         className="group-hover:pointer-events-none"
-                        content={
-                          templateHandler
-                            ? JSON.stringify(templateHandler, null, 2)
-                            : 'No handler defined'
-                        }
+                        content={templateHandlerString ?? 'No handler defined'}
                       />
                       <FieldHandlerConfigDialog
                         context="template"
