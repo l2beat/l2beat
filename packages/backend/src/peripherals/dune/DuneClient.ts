@@ -14,17 +14,19 @@ type Dependencies = {
   logger: Logger
   http: HttpClient
   apiKey: string
+  pollingIntervalMs?: number
 }
 
 export class DuneClient {
   private logger: Logger
   private baseUrl = 'https://api.dune.com/api/'
   private timeoutMs = 2 * UnixTime.MINUTE * 1000
-  private pollingIntervalMs = 1000
   private progressLogIntervalMs = 30 * 1000
+  private pollingIntervalMs: number
 
   constructor(private readonly $: Dependencies) {
     this.logger = $.logger.for(this)
+    this.pollingIntervalMs = $.pollingIntervalMs ?? 1000
   }
 
   async query<T>(
@@ -154,7 +156,7 @@ export class DuneClient {
     return DuneExecutionResultResponse.parse(response)
   }
 
-  fetch(path: string, method: 'GET' | 'POST', body?: unknown) {
+  private fetch(path: string, method: 'GET' | 'POST', body?: unknown) {
     return this.$.http.fetch(`${this.baseUrl}${path}`, {
       method,
       headers: {
