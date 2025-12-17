@@ -1,0 +1,15 @@
+export const WALK_AWAY_PASSED_PROJECTS = [
+  'arbitrum',
+  'base',
+  'optimism',
+  'ink',
+  'unichain',
+  'facet',
+]
+
+export const WALK_AWAY_NOT_PASSED_PROJECTS = [
+  'lighter',
+  'zksync2',
+  'starknet',
+  'scroll',
+]

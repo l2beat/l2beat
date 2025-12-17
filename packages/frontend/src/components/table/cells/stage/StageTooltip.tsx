@@ -13,18 +13,22 @@ import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { UnderReviewIcon } from '~/icons/UnderReview'
+import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
+import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { cn } from '~/utils/cn'
 
 interface StageTooltipProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
   emergencyWarning?: string
+  walkAway?: 'passed' | 'not-passed'
 }
 
 export function StageTooltip({
   stageConfig,
   isAppchain,
   emergencyWarning,
+  walkAway,
 }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
   const missing =
@@ -65,6 +69,22 @@ export function StageTooltip({
         )
       ) : null}
       <HorizontalSeparator className="my-3" />
+      {walkAway === 'passed' && (
+        <Callout
+          color="green"
+          body="Users can exit if all permissioned actors, including the Security Council, disappear."
+          icon={<WalkAwayPassedIcon className="size-4" />}
+          className={cn('mb-3 gap-2! px-3 py-2')}
+        />
+      )}
+      {walkAway === 'not-passed' && (
+        <Callout
+          color="red"
+          body="Users are not able to exit if all permissioned actors, including the Security Council, disappear."
+          icon={<WalkAwayNotPassedIcon className="size-4" />}
+          className={cn('mb-3 gap-2! px-3 py-2')}
+        />
+      )}
       {emergencyWarning && (
         <Callout
           color="yellow"

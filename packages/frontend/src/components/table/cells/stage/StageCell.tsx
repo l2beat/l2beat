@@ -9,6 +9,8 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { StopwatchIcon } from '~/icons/Stopwatch'
+import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
+import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { StageTooltip } from './StageTooltip'
 
 interface StageCellProps {
@@ -16,6 +18,7 @@ interface StageCellProps {
   isAppchain: boolean
   href?: string
   emergencyWarning?: string
+  walkAway?: 'passed' | 'not-passed'
 }
 
 export function StageCell({
@@ -23,6 +26,7 @@ export function StageCell({
   isAppchain,
   href,
   emergencyWarning,
+  walkAway,
 }: StageCellProps) {
   const content = (
     <div className="flex gap-1">
@@ -36,6 +40,10 @@ export function StageCell({
         stageConfig.downgradePending &&
         !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
       {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
+      {walkAway === 'passed' && <WalkAwayPassedIcon className="-mt-px" />}
+      {walkAway === 'not-passed' && (
+        <WalkAwayNotPassedIcon className="-mt-px" />
+      )}
     </div>
   )
 
@@ -53,6 +61,7 @@ export function StageCell({
           stageConfig={stageConfig}
           isAppchain={isAppchain}
           emergencyWarning={emergencyWarning}
+          walkAway={walkAway}
         />
         <p className="mt-3 text-label-value-13 text-secondary">
           Click to view details

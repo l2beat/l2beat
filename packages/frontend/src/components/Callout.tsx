@@ -7,6 +7,7 @@ const calloutVariants = cva('flex rounded-lg', {
   variants: {
     color: {
       red: 'bg-negative/20',
+      green: 'bg-positive/20',
       yellow: 'bg-yellow-700/20',
       blue: 'bg-blue-700/20',
       gray: 'bg-gray-500/20',
