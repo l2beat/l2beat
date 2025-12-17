@@ -16,7 +16,7 @@ const discovery = new ProjectDiscovery('sxt')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.Avail],
   display: {
     name: 'Space and Time',
     slug: 'sxt',
