@@ -791,6 +791,9 @@ importers:
       '@types/d3-force':
         specifier: ^3.0.10
         version: 3.0.10
+      '@types/markdown-it':
+        specifier: ^14.1.2
+        version: 14.1.2
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.10
@@ -818,6 +821,9 @@ importers:
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
+      markdown-it:
+        specifier: ^14.1.0
+        version: 14.1.0
       mocha:
         specifier: ^10.2.0
         version: 10.7.3

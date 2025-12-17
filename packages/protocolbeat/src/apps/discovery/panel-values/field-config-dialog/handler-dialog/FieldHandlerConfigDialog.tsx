@@ -83,12 +83,12 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
         onInteractOutside={(e) => {
           e.preventDefault()
         }}
-        className="h-full max-w-full overflow-y-hidden"
+        className="flex h-[85vh] max-w-full flex-col"
       >
         <Dialog.Title>Handler editor</Dialog.Title>
-        <div className="grid h-full grid-cols-5 gap-2">
-          <div className="col-span-3 h-3/4 w-full">
-            <div className="h-full w-full border border-coffee-200 bg-coffee-900 p-4 pl-0">
+        <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
+          <div className="col-span-3 flex min-h-0 w-full flex-col">
+            <div className="flex min-h-0 flex-1 flex-col border border-coffee-200 bg-coffee-900 p-4 pl-0">
               <HandlerEditor
                 context={context}
                 editorKey={editorKey}
@@ -100,7 +100,7 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
               />
             </div>
           </div>
-          <div className="col-span-2 w-full">
+          <div className="col-span-2 flex h-full min-h-0 w-full">
             <HandlerSelector
               handlers={handlers}
               selectedHandler={selectedHandler}
