@@ -34,6 +34,7 @@ export const DuneExecutionStatusResponse = v.union([
     state: v.literal('QUERY_STATE_COMPLETED'),
     result_metadata: v.object({
       datapoint_count: v.number(),
+      execution_time_millis: v.number(),
     }),
     execution_cost_credits: v.number(),
   }),
