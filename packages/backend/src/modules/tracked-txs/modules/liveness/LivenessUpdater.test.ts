@@ -120,12 +120,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       type: 'liveness',
       subtype: 'batchSubmissions',
       id: getMockRuntimeConfigurations()[0].id,
-      receiptGasUsed: 100,
+      gasUsed: 100,
       gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 10,
-      receiptBlobGasPrice: null,
-      receiptBlobGasUsed: null,
+      blobBaseFee: null,
+      blobVersionedHashes: null,
     },
     {
       formula: 'transfer',
@@ -142,8 +142,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
-      receiptBlobGasPrice: null,
-      blobGasUsed: null,
+      blobBaseFee: null,
+      blobVersionedHashes: null,
     },
   ]
 }
