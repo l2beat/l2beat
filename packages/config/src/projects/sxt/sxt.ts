@@ -94,7 +94,7 @@ export const sxt: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
+  diamondContract: discovery.getContract('Diamond'),
   milestones: [
     {
       title: 'Mainnet Launch',
