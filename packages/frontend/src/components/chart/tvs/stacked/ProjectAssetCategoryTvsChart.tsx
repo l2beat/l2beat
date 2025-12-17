@@ -20,7 +20,7 @@ export function ProjectAssetCategoryTvsChart({
   milestones,
 }: ProjectAssetCategoryTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     assetCategoryTvsChartMeta,
   )
@@ -29,7 +29,7 @@ export function ProjectAssetCategoryTvsChart({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
@@ -93,7 +93,7 @@ export function ProjectAssetCategoryTvsChart({
       dataKeys={dataKeys}
       toggleDataKey={toggleDataKey}
       project={project}
-      excludeRwaRestrictedTokens={!includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
     />
   )
 }

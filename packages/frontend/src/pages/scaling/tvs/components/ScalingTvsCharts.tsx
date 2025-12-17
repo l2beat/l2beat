@@ -95,12 +95,7 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
       <ChartControlsWrapper>
-        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          <div className="flex flex-wrap items-center gap-1">
-            {/* <ExcludeAssociatedTokensCheckbox />
-            <IncludeRwaRestrictedTokensCheckbox /> */}
-          </div>
-        </TvsChartUnitControls>
+        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </div>

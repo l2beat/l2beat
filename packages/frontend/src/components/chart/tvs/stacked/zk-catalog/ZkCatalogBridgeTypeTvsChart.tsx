@@ -27,14 +27,14 @@ export function ZkCatalogBridgeTypeTvsChart({
   projectsForTvs,
 }: ZkCatalogBridgeTypeTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
     range,
     excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: !includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
