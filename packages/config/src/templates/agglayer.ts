@@ -355,13 +355,28 @@ function resolveVariant(input: AgglayerConfigInput): AgglayerVariant {
     return input.variant
   }
 
-  if (input.discovery.hasContract('L1StandardBridge_neutered')) {
-    return 'cdk-opgeth-sovereign'
+  if (input.discovery.hasContract('PolygonDataCommittee'))
+    return 'cdk-erigon-validium'
+
+  if (input.discovery.hasContract('AggchainECDSAMultisig')) {
+    if (input.discovery.hasContract('SystemConfig'))
+      return 'cdk-opgeth-sovereign'
+    return 'cdk-erigon-sovereign'
   }
 
-  return input.discovery.hasContract('AggchainECDSAMultisig')
-    ? 'cdk-erigon-sovereign'
-    : 'cdk-erigon-validium'
+  return 'cdk-erigon-sovereign' // fallback to worst
+
+  // const hasAggchainFEPValidity =
+  //   Number(
+  //     input.discovery.getContractValueOrUndefined(
+  //       'AggchainFEP',
+  //       'CONSENSUS_TYPE',
+  //     ),
+  //   ) === 1
+
+  // if (hasAggchainFEPValidity) {
+  //   return 'cdk-opgeth-zkrollup'
+  // }
 }
 
 function buildSharedContext(config: AgglayerConfig): SharedContext {
