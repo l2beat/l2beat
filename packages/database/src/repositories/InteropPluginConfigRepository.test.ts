@@ -19,7 +19,11 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
       const record = config({
         pluginName: 'plugin-a',
         syncedBlockRanges: ranges({
-          ethereum: { syncedFrom: 1, syncedTo: 10 },
+          ethereum: {
+            syncedFrom: 1,
+            syncedTo: 10,
+            lastOpError: 'Call timeout',
+          },
           arbitrum: { syncedFrom: 5, syncedTo: 50 },
         }),
         resyncRequestedFrom: UnixTime(123),
@@ -60,7 +64,11 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
         const record = config({
           pluginName: 'plugin-a',
           syncedBlockRanges: ranges({
-            ethereum: { syncedFrom: 1, syncedTo: 10 },
+            ethereum: {
+              syncedFrom: 1,
+              syncedTo: 10,
+              lastOpError: 'Call timeout',
+            },
           }),
           resyncRequestedFrom: UnixTime(100),
         })
@@ -68,8 +76,16 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
 
         const updated = await repository.updateByPluginName(record.pluginName, {
           syncedBlockRanges: ranges({
-            ethereum: { syncedFrom: 5, syncedTo: 50 },
-            optimism: { syncedFrom: 7, syncedTo: 70 },
+            ethereum: {
+              syncedFrom: 5,
+              syncedTo: 50,
+              lastOpError: 'Error parsing body',
+            },
+            optimism: {
+              syncedFrom: 7,
+              syncedTo: 70,
+              lastOpError: 'RPC Error: 500',
+            },
           }),
           resyncRequestedFrom: null,
         })
@@ -80,8 +96,16 @@ describeDatabase(InteropPluginConfigRepository.name, (db) => {
         expect(stored).toEqual({
           ...record,
           syncedBlockRanges: ranges({
-            ethereum: { syncedFrom: 5, syncedTo: 50 },
-            optimism: { syncedFrom: 7, syncedTo: 70 },
+            ethereum: {
+              syncedFrom: 5,
+              syncedTo: 50,
+              lastOpError: 'Error parsing body',
+            },
+            optimism: {
+              syncedFrom: 7,
+              syncedTo: 70,
+              lastOpError: 'RPC Error: 500',
+            },
           }),
           resyncRequestedFrom: null,
         })

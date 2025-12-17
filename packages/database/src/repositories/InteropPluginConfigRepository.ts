@@ -9,6 +9,7 @@ export type InteropPluginSyncedBlockRanges = Record<
   {
     syncedFrom: number
     syncedTo: number
+    lastOpError?: string
   }
 >
 
