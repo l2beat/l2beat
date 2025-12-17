@@ -17,6 +17,7 @@ const v26UpgradeTS = UnixTime(1742983103)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1723680000), // 2024-08-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],

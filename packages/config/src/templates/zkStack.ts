@@ -92,6 +92,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
+  chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -266,6 +267,27 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   if (!daProvider) {
     baseBadges.push(BADGES.DA.EthereumBlobs)
   }
+
+  // chainid diamond address sanity check
+  const zkChainsChainIdArr = templateVars.discovery.getContractValue<number[]>(
+    'BridgeHub',
+    'getAllZKChainChainIDs',
+  )
+  const zkChainsAddressArr = templateVars.discovery.getContractValue<
+    ChainSpecificAddress[]
+  >('BridgeHub', 'getAllZKChains')
+
+  // Map chainId <-> diamond address
+  const chainIdToDiamondAddress: Record<number, ChainSpecificAddress> = {}
+  for (let i = 0; i < zkChainsChainIdArr.length; i++) {
+    chainIdToDiamondAddress[zkChainsChainIdArr[i]] = zkChainsAddressArr[i]
+  }
+
+  assert(
+    chainIdToDiamondAddress[templateVars.chainId] ===
+      templateVars.diamondContract.address,
+    `Diamond address ${chainIdToDiamondAddress[templateVars.chainId]} does not match for the given chainId ${templateVars.chainId} in project ${templateVars.discovery.projectName}`,
+  )
 
   return {
     type: 'layer2',

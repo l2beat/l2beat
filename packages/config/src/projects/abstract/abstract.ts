@@ -19,6 +19,7 @@ const diamond = discovery.getContract('AbstractZkEvm')
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
+  chainId,
   display: {
     name: 'Abstract',
     slug: 'abstract',
