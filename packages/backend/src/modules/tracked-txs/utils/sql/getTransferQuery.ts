@@ -46,10 +46,7 @@ export function getTransferQuery(
         SELECT
           tr.tx_hash,
           tr."from",
-          tr.to,
-          tr.block_time,
-          tr.input,
-          to_hex(tr.input) AS input_hex
+          tr.to
         FROM ethereum.traces tr
         CROSS JOIN params p
         WHERE tr.success = true
@@ -77,7 +74,8 @@ export function getTransferQuery(
           tx.block_time,
           tx.gas_used,
           tx.gas_price,
-          tx.blob_versioned_hashes
+          tx.blob_versioned_hashes,
+          tx.data
         FROM ethereum.transactions tx
         CROSS JOIN params p
         WHERE tx.block_time >= p.t_start
@@ -93,8 +91,8 @@ export function getTransferQuery(
       tx.gas_price,
       tx.blob_versioned_hashes,
       blobs.blob_base_fee,
-      length(tr.input) AS data_length,
-      length(replace(regexp_replace(to_hex(tr.input), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes
+      length(tx.data) AS data_length,
+      length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes
     FROM txs_filtered tx
     JOIN traces_filtered tr
       ON tx.hash = tr.tx_hash

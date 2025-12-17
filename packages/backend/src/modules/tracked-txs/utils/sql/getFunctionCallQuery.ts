@@ -1,4 +1,4 @@
-import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 
 export function getFunctionCallQuery(
@@ -10,11 +10,8 @@ export function getFunctionCallQuery(
   from: UnixTime,
   to: UnixTime,
 ): string {
-  const uniqueConfigs = unique(configs, (c) => `${c.address}-${c.selector}`)
   const fullInputAddresses = uniq(
-    uniqueConfigs
-      .filter((c) => c.getFullInput)
-      .map((c) => c.address.toLowerCase()),
+    configs.filter((c) => c.getFullInput).map((c) => c.address.toLowerCase()),
   )
   const fromDate = UnixTime.toDate(from).toISOString()
   const toDate = UnixTime.toDate(to).toISOString()
@@ -31,8 +28,8 @@ export function getFunctionCallQuery(
       allowed_calls(to_addr, selector) AS (
         VALUES
           ${
-            uniqueConfigs.length > 0
-              ? uniqueConfigs
+            configs.length > 0
+              ? configs
                   .map(
                     (c) =>
                       `(${c.address.toLowerCase()}, ${c.selector.toLowerCase()})`,
@@ -55,7 +52,6 @@ export function getFunctionCallQuery(
           tr.to,
           tr.block_time,
           tr.input,
-          to_hex(tr.input) AS input_hex,
           substr(tr.input, 1, 4) AS selector
         FROM ethereum.traces tr
         CROSS JOIN params p
@@ -87,7 +83,8 @@ export function getFunctionCallQuery(
           tx.block_time,
           tx.gas_used,
           tx.gas_price,
-          tx.blob_versioned_hashes
+          tx.blob_versioned_hashes,
+          tx.data
         FROM ethereum.transactions tx
         CROSS JOIN params p
         WHERE tx.block_time >= p.t_start
@@ -103,8 +100,8 @@ export function getFunctionCallQuery(
       tx.gas_price,
       tx.blob_versioned_hashes,
       blobs.blob_base_fee,
-      length(tr.input) AS data_length,
-      length(replace(regexp_replace(to_hex(tr.input), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
+      length(tx.data) AS data_length,
+      length(replace(regexp_replace(to_hex(tx.data), '([0-9A-Fa-f]{2})', '$1x'), '00x', '')) / 3 AS non_zero_bytes,
       CASE
         WHEN tr.to IN (SELECT to_addr FROM full_input_to) THEN tr.input
         ELSE tr.selector
