@@ -119,26 +119,26 @@ interface AgglayerBaseConfig {
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
-interface AgglayerValidiumConfig extends AgglayerBaseConfig {
+interface AgglayerCdkErigonValidiumConfig extends AgglayerBaseConfig {
   variant: 'cdk-erigon-validium'
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
 }
 
-interface AgglayerPessimisticConfig extends AgglayerBaseConfig {
+interface AgglayerCdkErigonSovereignConfig extends AgglayerBaseConfig {
   variant: 'cdk-erigon-sovereign'
   customDa?: ProjectCustomDa
 }
 
-interface AgglayerOpstackClosedConfig extends AgglayerBaseConfig {
+interface AgglayerCdkOpgethSovereignConfig extends AgglayerBaseConfig {
   variant: 'cdk-opgeth-sovereign'
   customDa?: ProjectCustomDa
 }
 
 type AgglayerConfigInput =
-  | AgglayerValidiumConfig
-  | AgglayerPessimisticConfig
-  | AgglayerOpstackClosedConfig
+  | AgglayerCdkErigonValidiumConfig
+  | AgglayerCdkErigonSovereignConfig
+  | AgglayerCdkOpgethSovereignConfig
   | (AgglayerBaseConfig & {
       variant?: undefined
       daProvider?: DAProvider
@@ -146,9 +146,9 @@ type AgglayerConfigInput =
     })
 
 type AgglayerConfig =
-  | AgglayerValidiumConfig
-  | AgglayerPessimisticConfig
-  | AgglayerOpstackClosedConfig
+  | AgglayerCdkErigonValidiumConfig
+  | AgglayerCdkErigonSovereignConfig
+  | AgglayerCdkOpgethSovereignConfig
 
 interface SharedContext {
   variant: AgglayerVariant
@@ -336,7 +336,8 @@ function normalizeConfig(input: AgglayerConfigInput): AgglayerConfig {
     variant === 'cdk-opgeth-sovereign'
   ) {
     const hasDaProvider =
-      'daProvider' in input && (input as AgglayerValidiumConfig).daProvider
+      'daProvider' in input &&
+      (input as AgglayerCdkErigonValidiumConfig).daProvider
     assert(
       !hasDaProvider,
       'Agglayer cdk-erigon-sovereign and cdk-opgeth-sovereign variants ignore DA providers; remove daProvider or set variant to cdk-erigon-validium.',
@@ -415,7 +416,7 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
 }
 
 function buildValidiumSections(
-  config: AgglayerValidiumConfig,
+  config: AgglayerCdkErigonValidiumConfig,
   context: SharedContext,
 ): VariantSections {
   const dacInfo = getDacInfo(config.discovery)
@@ -567,7 +568,7 @@ function buildPessimisticRiskView(
 }
 
 function buildPessimisticSections(
-  config: AgglayerPessimisticConfig,
+  config: AgglayerCdkErigonSovereignConfig,
   context: SharedContext,
 ): VariantSections {
   const riskView = buildPessimisticRiskView(context)
@@ -630,7 +631,7 @@ function buildPessimisticSections(
 }
 
 function buildOpstackClosedSections(
-  config: AgglayerOpstackClosedConfig,
+  config: AgglayerCdkOpgethSovereignConfig,
   context: SharedContext,
 ): VariantSections {
   const baseRiskView = buildPessimisticRiskView(context)
@@ -707,7 +708,7 @@ function buildOpstackClosedSections(
 }
 
 function resolveValidiumDaProvider(
-  config: AgglayerValidiumConfig,
+  config: AgglayerCdkErigonValidiumConfig,
   context: SharedContext,
   dacInfo?: DacInfo,
 ): DAProvider {
