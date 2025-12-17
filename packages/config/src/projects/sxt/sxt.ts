@@ -1,4 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +16,13 @@ const discovery = new ProjectDiscovery('sxt')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.EthereumCalldata],
+  daProvider: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    riskView: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    technology: TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
+  },
   display: {
     name: 'Space and Time',
     slug: 'sxt',
