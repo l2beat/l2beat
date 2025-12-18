@@ -44,8 +44,9 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
       })
       return false
     }
-    toast.success('Handler saved.')
     model.setFieldHandler(fieldName, result.model)
+    setHandlerString(model.getFieldHandlerString(fieldName) ?? '')
+    toast.success('Handler saved.')
     return true
   }
 
