@@ -27,6 +27,11 @@ import {
   getContractTags,
   updateContractTag,
 } from './defidisco/contractTags'
+import {
+  getFundsData,
+  fetchAllFundsForProject,
+  fetchFundsForSingleContract,
+} from './defidisco/fundsData'
 import { generatePermissionsReport } from './defidisco/generatePermissionsReport'
 import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import { detectPermissionsWithAI, combineSourceFiles } from './defidisco/aiPermissionDetection'
@@ -460,6 +465,68 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       console.error('Error calculating V2 score:', error)
       res.status(500).json({ error: 'Failed to calculate V2 score' })
     }
+  })
+
+  // Funds data endpoints
+  app.get('/api/projects/:project/funds-data', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = getFundsData(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error loading funds data:', error)
+      res.status(500).json({ error: 'Failed to load funds data' })
+    }
+  })
+
+  app.post('/api/projects/:project/funds-data/fetch', async (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+    const { contractAddress, forceRefresh } = req.body as { contractAddress?: string; forceRefresh?: boolean }
+
+    // Set up Server-Sent Events headers
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Cache-Control'
+    })
+
+    const sendProgress = (message: string) => {
+      res.write(`data: ${message.replace(/\n/g, '\\n')}\n\n`)
+    }
+
+    try {
+      if (contractAddress) {
+        // Fetch for single contract
+        await fetchFundsForSingleContract(paths, project, contractAddress, sendProgress, forceRefresh ?? false)
+      } else {
+        // Fetch for all tagged contracts
+        await fetchAllFundsForProject(paths, project, sendProgress, forceRefresh ?? false)
+      }
+      sendProgress('DONE')
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      sendProgress(`Error: ${errorMessage}`)
+    }
+
+    res.end()
   })
 
   app.use(express.static(STATIC_ROOT))

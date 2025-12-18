@@ -15,7 +15,7 @@ import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
-import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
+import { sanitizeDiscoveryOutput} from './sanitizeDiscoveryOutput'
 import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
@@ -49,10 +49,12 @@ export class UpdateMonitor {
     this.logger.info('Started')
     if (this.runOnStart) {
       await this.updateNotifier.handleStart()
-      this.taskQueue.addToFront(UnixTime.now())
+      // DEFIDISCO FIX: Use timestamp 1 minute in the past to ensure block exists
+      this.taskQueue.addToFront(UnixTime.now() - UnixTime.MINUTE)
     }
     return this.clock.onNewHour((timestamp) => {
-      this.taskQueue.addToFront(timestamp)
+      // DEFIDISCO FIX: Use timestamp 1 minute in the past to ensure block exists
+      this.taskQueue.addToFront(timestamp - UnixTime.MINUTE)
     })
   }
 
@@ -143,13 +145,15 @@ export class UpdateMonitor {
         return
       }
 
+      // DEFIDISCO FIX: Pass explicit timestamp instead of 'useCurrentTimestamp' to avoid
+      // DiscoveryRunner calling UnixTime.now() again and creating future timestamps
       const runResult = await runner.discoverWithRetry(
         projectConfig,
         timestamp,
         this.logger,
         undefined,
         undefined,
-        'useCurrentTimestamp', // for dependent discoveries
+        { [projectConfig.name]: { timestamp } }, // Use explicit timestamp
       )
 
       // read previous state (committed vs DB) and prime flat sources if needed
@@ -274,6 +278,13 @@ export class UpdateMonitor {
     } else {
       this.logger.info('Using database record', project)
       previousDiscovery = databaseEntry.discovery
+    }
+
+    // DEFIDISCO FIX: On first run (no DB entry, no flat sources), skip re-discovery
+    // and just use the disk discovery directly. This avoids the slow double-discovery
+    // on initial startup. Flat sources will be populated from the current discovery run.
+    if (!databaseEntry && !flatSourceEntry) {
+      return diskDiscovery
     }
 
     const runResult = await runner.discoverWithRetry(

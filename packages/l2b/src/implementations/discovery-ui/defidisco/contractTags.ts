@@ -64,53 +64,40 @@ export function updateContractTag(
     return existingNormalized === normalizedAddress
   })
 
-  if (updateRequest.isExternal !== undefined) {
+  // Determine the new values for all tag fields
+  const existingTag = existingTagIndex >= 0 ? contractTags[existingTagIndex] : undefined
+  const newIsExternal = updateRequest.isExternal ?? existingTag?.isExternal ?? false
+  const newFetchBalances = updateRequest.fetchBalances ?? existingTag?.fetchBalances ?? false
+  const newFetchPositions = updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
+  const newCentralization = updateRequest.centralization !== undefined
+    ? updateRequest.centralization
+    : existingTag?.centralization
+  const newLikelihood = updateRequest.likelihood !== undefined
+    ? updateRequest.likelihood
+    : existingTag?.likelihood
+
+  // Check if any meaningful tag data exists (any of the 3 boolean fields is true)
+  const hasAnyTagData = newIsExternal || newFetchBalances || newFetchPositions
+
+  if (hasAnyTagData) {
     // Create or update tag entry
     const newTag: ContractTag = {
-      contractAddress: normalizedAddress,  // Use normalized address with eth: prefix
-      isExternal: updateRequest.isExternal,
+      contractAddress: normalizedAddress,
+      isExternal: newIsExternal,
+      centralization: newCentralization,
+      likelihood: newLikelihood,
+      fetchBalances: newFetchBalances || undefined, // Only store if true
+      fetchPositions: newFetchPositions || undefined, // Only store if true
       timestamp: new Date().toISOString(),
     }
 
-    // Preserve existing centralization and likelihood if not explicitly updated
     if (existingTagIndex >= 0) {
-      const existingTag = contractTags[existingTagIndex]
-      newTag.centralization = updateRequest.centralization !== undefined
-        ? updateRequest.centralization
-        : existingTag.centralization
-      newTag.likelihood = updateRequest.likelihood !== undefined
-        ? updateRequest.likelihood
-        : existingTag.likelihood
-    } else {
-      // New tag - apply provided values
-      newTag.centralization = updateRequest.centralization
-      newTag.likelihood = updateRequest.likelihood
-    }
-
-    if (existingTagIndex >= 0) {
-      // Update existing tag
       contractTags[existingTagIndex] = newTag
     } else {
-      // Add new tag
       contractTags.push(newTag)
     }
-  } else if (updateRequest.centralization !== undefined || updateRequest.likelihood !== undefined) {
-    // Update only centralization/likelihood for existing tag
-    if (existingTagIndex >= 0) {
-      const existingTag = contractTags[existingTagIndex]
-      contractTags[existingTagIndex] = {
-        ...existingTag,
-        centralization: updateRequest.centralization !== undefined
-          ? updateRequest.centralization
-          : existingTag.centralization,
-        likelihood: updateRequest.likelihood !== undefined
-          ? updateRequest.likelihood
-          : existingTag.likelihood,
-        timestamp: new Date().toISOString(),
-      }
-    }
   } else if (existingTagIndex >= 0) {
-    // Remove tag if all fields are undefined and tag exists
+    // Remove tag if all boolean fields are false
     contractTags.splice(existingTagIndex, 1)
   }
 

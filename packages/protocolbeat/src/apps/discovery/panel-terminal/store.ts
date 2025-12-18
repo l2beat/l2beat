@@ -5,6 +5,7 @@ import {
   executeFindMinters,
   executeMatchFlat,
   executeGeneratePermissionsReport,
+  executeFetchFunds,
 } from '../../../api/api'
 
 interface CommandState {
@@ -29,6 +30,7 @@ interface TerminalState {
   downloadAllShapes: () => void
   findMinters: (address: string) => void
   generatePermissionsReport: (project: string) => void
+  fetchFunds: (project: string) => void
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -69,6 +71,9 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   },
   generatePermissionsReport: (project: string) => {
     executeStreaming(set, () => executeGeneratePermissionsReport(project))
+  },
+  fetchFunds: (project: string) => {
+    executeStreaming(set, () => executeFetchFunds(project))
   },
 }))
 

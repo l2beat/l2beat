@@ -138,6 +138,106 @@ git fetch upstream && git merge upstream/main
 - **Resolution**: Works like any other path - navigates the data structure and recursively extracts all addresses
 - **Display**: Shows all resolved addresses with click-to-select functionality
 
+### Continuous Permission Monitoring ✅
+**Automated Change Detection**: Monitors permission changes alongside discovery updates
+- **Location**: `packages/backend/src/modules/update-monitor/defidisco/`
+- **Trigger**: Automatically runs when discovery detects changes (`diff.length > 0`)
+- **Components**:
+  - **PermissionResolver**: Resolves owner paths and detects changes
+  - **PermissionResolutionRepository**: Stores append-only resolution history
+  - **UpdateNotifier.notifyPermissionChanges()**: Formats Discord alerts
+- **Database Schema**:
+  - `PermissionResolution` table: Stores resolution blobs with timestamp
+  - `UpdateDiff.details` field: Stores permission change metadata (JSONB)
+  - Migration: `20251202000000_add_permission_monitoring`
+- **Change Detection**:
+  - ✅ Detects added/removed owner addresses (resolved from paths)
+  - ❌ Ignores config changes (manually marked as permissioned)
+  - ❌ Ignores manual updates (scores, descriptions, checked status)
+- **Discord Notifications**:
+  - Sent to INTERNAL channel only
+  - Shows added/removed owners with contract names
+  - Groups resolution errors at end of message
+  - Format: 🔒 **Permission Changes Detected: project-name**
+- **Error Handling**: Resolution errors logged but don't stop processing
+- **Performance**: Only re-resolves when discovery changes detected
+- **Documentation**: See `packages/backend/src/modules/update-monitor/defidisco/README.md`
+
+### Funds Tracking ✅
+**Contract Funds Data**: Fetches and displays token balances and DeFi positions for contracts
+- **Data Source**: Uses `defiscan-endpoints` service (calls DeBank API for balances/positions)
+- **Storage**: `funds-data.json` per project in `packages/config/src/projects/{project}/`
+- **UI Component**: `FundsSection.tsx` in DeFiScan panel (between V2 Scoring and Status of Review)
+- **Control Button**: `FundsTagsButton.tsx` - toggle "Fetch Balances" / "Fetch Positions" per contract
+
+**Enabling Funds Fetching**:
+1. Select contract(s) in the graph view
+2. Click "Funds" button in controls
+3. Check "Fetch Token Balances" and/or "Fetch DeFi Positions"
+4. In DeFiScan panel, click "Fetch Funds" button to retrieve data
+
+**Contract Tags Extension**:
+```json
+{
+  "contractAddress": "eth:0x...",
+  "isExternal": true,
+  "fetchBalances": true,
+  "fetchPositions": false
+}
+```
+
+**Funds Data Structure** (`funds-data.json`):
+```json
+{
+  "version": "1.0",
+  "lastModified": "2025-12-09T...",
+  "contracts": {
+    "eth:0x123...": {
+      "balances": {
+        "tokens": [{ "symbol": "ETH", "usdValue": 1000, ... }],
+        "totalUsdValue": 5000,
+        "timestamp": "...",
+        "source": "debank"
+      },
+      "positions": {
+        "protocols": [{ "name": "Aave", "totalUsdValue": 10000, ... }],
+        "totalUsdValue": 10000,
+        "timestamp": "...",
+        "source": "debank"
+      },
+      "lastFetched": "2025-12-09T...",
+      "error": null
+    }
+  }
+}
+```
+
+**Running with Funds Support**:
+```bash
+# Option 1: Start defiscan-endpoints separately
+cd ~/defidisco/packages/defiscan-endpoints && pnpm start
+# In another terminal:
+cd ~/defidisco/packages/config && l2b ui
+
+# Option 2: Use startup script
+cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
+```
+
+**Environment Configuration** (defiscan-endpoints/.env):
+```bash
+DEBANK_API_KEY=your-debank-api-key
+PORT=3001
+```
+
+**API Endpoints**:
+- `GET /api/projects/:project/funds-data` - Get cached funds data
+- `POST /api/projects/:project/funds-data/fetch` - Trigger fetch (SSE for progress)
+
+**Files**:
+- Backend: `packages/l2b/src/implementations/discovery-ui/defidisco/fundsData.ts`
+- Frontend: `packages/protocolbeat/src/apps/discovery/defidisco/FundsSection.tsx`
+- Control: `packages/protocolbeat/src/apps/discovery/defidisco/FundsTagsButton.tsx`
+
 ---
 
 ## Development Guidelines

@@ -1,0 +1,171 @@
+import type { Env } from '@l2beat/backend-tools'
+import type { ChainConfig } from '@l2beat/config'
+import {
+  ConfigReader,
+  type DiscoveryChainConfig,
+  getDiscoveryPaths,
+  getMulticall3Config,
+} from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { DefiUpdateMonitorConfig, DiscordConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
+
+export function getDefiUpdateMonitorConfig(
+  env: Env,
+  flags: FeatureFlags,
+  chains: ChainConfig[],
+  isLocal: boolean | undefined,
+): DefiUpdateMonitorConfig | false {
+  if (!flags.isEnabled('defiUpdateMonitor')) {
+    return false
+  }
+
+  const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
+
+  // Filter to DeFi projects only
+  const allProjects = configReader.readAllDiscoveredProjects()
+  const defiProjects = allProjects.filter((project) => {
+    const config = configReader.readConfig(project)
+    return config.structure.defidisco?.scanPermissions === true
+  })
+
+  // Build chain list from DeFi projects only
+  const allChains = [
+    ...new Set(
+      defiProjects
+        .flatMap((project) => configReader.readDiscovery(project).entries)
+        .map((entry) => ChainSpecificAddress.longChain(entry.address)),
+    ),
+  ]
+
+  const enabledChains = allChains.filter((chain) =>
+    flags.isEnabled('defiUpdateMonitor', chain),
+  )
+  const disabledChains = allChains.filter(
+    (chain) => !flags.isEnabled('defiUpdateMonitor', chain),
+  )
+
+  return {
+    configReader,
+    paths,
+    runOnStart: isLocal
+      ? env.boolean('DEFI_UPDATE_MONITOR_RUN_ON_START', true)
+      : undefined,
+    updateDifferEnabled: flags.isEnabled('defiUpdateMonitor', 'updateDiffer'),
+    discord: getDiscordConfig(env, isLocal),
+    chains: enabledChains.map((chain) =>
+      getChainDiscoveryConfig(env, chain, chains),
+    ),
+    disabledChains,
+    cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
+    cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
+    updateMessagesRetentionPeriodDays: env.integer(
+      ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
+      30,
+    ),
+  }
+}
+
+function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
+  const token = env.optionalString('DISCORD_TOKEN')
+  const internalChannelId = env.optionalString('INTERNAL_DISCORD_CHANNEL_ID')
+  const publicChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
+
+  const discordEnabled =
+    !!token && !!internalChannelId && (isLocal || !!publicChannelId)
+
+  return (
+    discordEnabled && {
+      token,
+      publicChannelId,
+      internalChannelId,
+      callsPerMinute: 3000,
+    }
+  )
+}
+
+function getChainDiscoveryConfig(
+  env: Env,
+  chain: string,
+  chains: ChainConfig[],
+): DiscoveryChainConfig {
+  const chainConfig = chains.find((c) => c.name === chain)
+  if (!chainConfig) {
+    throw new Error('Unknown chain: ' + chain)
+  }
+
+  const multicallV3 = chainConfig.multicallContracts?.find(
+    (x) => x.version === '3',
+  )
+
+  const multicallConfig = multicallV3
+    ? getMulticall3Config(
+        multicallV3.sinceBlock,
+        multicallV3.address,
+        multicallV3.batchSize,
+      )
+    : undefined
+
+  const explorerApi = chainConfig.apis.find(
+    (x) =>
+      x.type === 'etherscan' ||
+      x.type === 'routescan' ||
+      x.type === 'blockscout' ||
+      x.type === 'sourcify',
+  )
+
+  if (!explorerApi) {
+    throw new Error('Missing explorerApi for chain: ' + chain)
+  }
+
+  const ENV_NAME = chain.toUpperCase()
+
+  return {
+    name: chainConfig.name,
+    chainId: chainConfig.chainId,
+    rpcUrl: env.string([
+      `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
+      `${ENV_NAME}_RPC_URL`,
+    ]),
+    eventRpcUrl: env.optionalString(`${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`),
+    reorgSafeDepth: env.optionalInteger([
+      `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
+      `${ENV_NAME}_REORG_SAFE_DEPTH`,
+    ]),
+    beaconApiUrl: env.optionalString([
+      'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
+      'ETHEREUM_BEACON_API_URL',
+    ]),
+    celestiaApiUrl: env.optionalString([
+      'CELESTIA_API_URL_FOR_DISCOVERY',
+      'CELESTIA_API_URL',
+    ]),
+    coingeckoApiKey: env.optionalString([
+      'COINGECKO_API_KEY_FOR_DISCOVERY',
+      'COINGECKO_API_KEY',
+    ]),
+    multicall: multicallConfig,
+    explorer:
+      explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'
+        ? {
+            type: explorerApi.type,
+            url: explorerApi.url,
+            unsupported: {
+              getContractCreation: explorerApi.contractCreationUnsupported,
+            },
+          }
+        : explorerApi.type === 'sourcify'
+          ? {
+              type: explorerApi.type,
+              chainId: explorerApi.chainId,
+            }
+          : {
+              type: explorerApi.type,
+              url: env.string('ETHERSCAN_API_URL'),
+              apiKey: env.string('ETHERSCAN_API_KEY'),
+              // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
+              chainId: chainConfig.chainId!,
+            },
+  }
+}

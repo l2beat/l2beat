@@ -9,9 +9,11 @@ import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
+import { createDefiUpdateMonitorModule } from './modules/defi-update-monitor/DefiUpdateMonitorModule'
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
+import { createPermissionMonitorModule } from './modules/permission-monitor/PermissionMonitorModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -60,6 +62,8 @@ export class Application {
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
+      createDefiUpdateMonitorModule(deps),
+      createPermissionMonitorModule(deps),
       createFlatSourcesModule(deps),
       createTrackedTxsModule(deps),
       initTvsModule(deps),

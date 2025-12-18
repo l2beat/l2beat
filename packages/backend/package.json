@@ -45,6 +45,7 @@
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",
+    "@l2beat/l2b": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",

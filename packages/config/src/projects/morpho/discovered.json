@@ -1,7 +1,7 @@
 {
   "name": "morpho",
-  "timestamp": 1758827629,
-  "configHash": "0x2d4451735ab3c8e193b21f9b3987459fcc236b73db55c7187c0155ca6ed0e2ab",
+  "timestamp": 1764700344,
+  "configHash": "0x673148c312473323b1431f02af604e75b82819bd644ad777435e7f1798418547",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -25,14 +25,7 @@
       "sinceBlock": 21439510,
       "values": {
         "$immutable": true,
-        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-        "writeFunctionPermissions": [
-          {
-            "skipped": true,
-            "reason": "sourceCodeTooLarge",
-            "sizeBytes": 260362
-          }
-        ]
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
       },
       "implementationNames": {
         "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24": "MetaMorphoV1_1Factory"
@@ -50,11 +43,6 @@
     },
     {
       "address": "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x32b9800409c3A6Ace972Cbb5a33145e071DD94CE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -78,83 +66,7 @@
           "validAt": 0
         },
         "root": "0x33634061d69bab33333f3cc46065e9afdbb9dbb4bebe485b2728b3a7ab853bfc",
-        "timelock": 432000,
-        "writeFunctionPermissions": [
-          {
-            "function": "acceptRoot",
-            "signature": "function acceptRoot()",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "claim",
-            "signature": "function claim(address account, address reward, uint256 claimable, bytes32[] calldata proof)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "revokePendingRoot",
-            "signature": "function revokePendingRoot()",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "setOwner",
-            "signature": "function setOwner(address newOwner)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 1
-          },
-          {
-            "function": "setRoot",
-            "signature": "function setRoot(bytes32 newRoot, bytes32 newIpfsHash)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 5
-          },
-          {
-            "function": "setRootUpdater",
-            "signature": "function setRootUpdater(address updater, bool active)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 2
-          },
-          {
-            "function": "setTimelock",
-            "signature": "function setTimelock(uint256 newTimelock)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 3
-          },
-          {
-            "function": "submitRoot",
-            "signature": "function submitRoot(bytes32 newRoot, bytes32 newIpfsHash)",
-            "file": "src/UniversalRewardsDistributor.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          }
-        ]
+        "timelock": 432000
       },
       "implementationNames": {
         "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb": "UniversalRewardsDistributor"
@@ -170,19 +82,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1709715275,
       "sinceBlock": 19375066,
-      "values": {
-        "$immutable": true,
-        "writeFunctionPermissions": [
-          {
-            "function": "createMorphoChainlinkOracleV2",
-            "signature": "function createMorphoChainlinkOracleV2(\n        IERC4626 baseVault,\n        uint256 baseVaultConversionSample,\n        AggregatorV3Interface baseFeed1,\n        AggregatorV3Interface baseFeed2,\n        uint256 baseTokenDecimals,\n        IERC4626 quoteVault,\n        uint256 quoteVaultConversionSample,\n        AggregatorV3Interface quoteFeed1,\n        AggregatorV3Interface quoteFeed2,\n        uint256 quoteTokenDecimals,\n        bytes32 salt\n    )",
-            "file": "src/morpho-chainlink/MorphoChainlinkOracleV2Factory.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true
-          }
-        ]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766": "MorphoChainlinkOracleV2Factory"
       }
@@ -203,9 +103,6 @@
         "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
         "ST_ETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "WRAPPED_NATIVE": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 33 }
-        ],
         "WST_ETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -213,7 +110,7 @@
       }
     },
     {
-      "address": "eth:0x4203aF750DE8F4707DACC2CA7e5dC91121DD5B59",
+      "address": "eth:0x435eC8504b628FD7871914A5023567715544Abae",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -255,19 +152,9 @@
         "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "MORPHO",
-        "totalSupply": "1000000000000000000000000000",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "writeFunctionPermissions": [
-          {
-            "function": "upgradeToAndCall",
-            "signature": "function upgradeToAndCall(address newImplementation, bytes memory data)",
-            "file": "lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Utils.sol",
-            "permissionType": "none",
-            "category": "other"
-          }
-        ]
+        "totalSupply": "999999999801032726017310661",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": "ERC1967Proxy",
         "eth:0x4364fd2371b6318159366abFA51f190df5C24852": "MorphoTokenEthereum"
@@ -290,16 +177,7 @@
       "sinceBlock": 21414664,
       "values": {
         "$immutable": true,
-        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-        "writeFunctionPermissions": [
-          {
-            "function": "createPreLiquidation",
-            "signature": "function createPreLiquidation(Id id, PreLiquidationParams calldata preLiquidationParams)",
-            "file": "src/PreLiquidationFactory.sol",
-            "permissionType": "none",
-            "category": "other"
-          }
-        ]
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
       },
       "implementationNames": {
         "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476": "PreLiquidationFactory"
@@ -322,18 +200,7 @@
       "sinceBlock": 18883124,
       "values": {
         "$immutable": true,
-        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-        "writeFunctionPermissions": [
-          {
-            "function": "borrowRate",
-            "signature": "function borrowRate(MarketParams memory marketParams, Market memory market)",
-            "file": "src/AdaptiveCurveIrm.sol",
-            "permissionType": "msgSender",
-            "category": "liquidation",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          }
-        ]
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
       },
       "implementationNames": {
         "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC": "AdaptiveCurveIrm"
@@ -366,87 +233,7 @@
         "name": "Morpho Token",
         "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
         "symbol": "MORPHO",
-        "totalSupply": "999999993235098806276489841",
-        "writeFunctionPermissions": [
-          {
-            "function": "approve",
-            "signature": "function approve(address spender, uint256 amount)",
-            "file": "lib/semitransferable-token/lib/solmate/src/tokens/ERC20.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "burn",
-            "signature": "function burn(uint256 amount)",
-            "file": "lib/semitransferable-token/src/Token.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "mint",
-            "signature": "function mint(address to, uint256 amount)",
-            "file": "lib/semitransferable-token/src/Token.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "permit",
-            "signature": "function permit(\n        address owner,\n        address spender,\n        uint256 value,\n        uint256 deadline,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    )",
-            "file": "lib/semitransferable-token/lib/solmate/src/tokens/ERC20.sol",
-            "permissionType": "none",
-            "category": "other",
-            "requireStatementCount": 2
-          },
-          {
-            "function": "setOwner",
-            "signature": "function setOwner(address newOwner)",
-            "file": "lib/semitransferable-token/src/Auth.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "setPublicCapability",
-            "signature": "function setPublicCapability(\n        bytes4 functionSig,\n        bool enabled\n    )",
-            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
-            "permissionType": "none",
-            "category": "administrative"
-          },
-          {
-            "function": "setRoleCapability",
-            "signature": "function setRoleCapability(\n        uint8 role,\n        bytes4 functionSig,\n        bool enabled\n    )",
-            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
-            "permissionType": "none",
-            "category": "administrative"
-          },
-          {
-            "function": "setUserRole",
-            "signature": "function setUserRole(\n        address user,\n        uint8 role,\n        bool enabled\n    )",
-            "file": "lib/semitransferable-token/src/RolesAuthority.sol",
-            "permissionType": "none",
-            "category": "administrative"
-          },
-          {
-            "function": "transfer",
-            "signature": "function transfer(address to, uint256 amount)",
-            "file": "lib/semitransferable-token/src/Token.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transferFrom",
-            "signature": "function transferFrom(\n    address from,\n    address to,\n    uint256 amount\n  )",
-            "file": "lib/semitransferable-token/src/Token.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          }
-        ]
+        "totalSupply": "999999993235098806276489841"
       },
       "implementationNames": {
         "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": "MorphoToken"
@@ -462,19 +249,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1703778611,
       "sinceBlock": 18885106,
-      "values": {
-        "$immutable": true,
-        "writeFunctionPermissions": [
-          {
-            "function": "createUrd",
-            "signature": "function createUrd(\n        address initialOwner,\n        uint256 initialTimelock,\n        bytes32 initialRoot,\n        bytes32 initialIpfsHash,\n        bytes32 salt\n    )",
-            "file": "src/UrdFactory.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true
-          }
-        ]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D": "UrdFactory"
       }
@@ -493,27 +268,7 @@
         "$immutable": true,
         "LEGACY_MORPHO": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
         "NEW_MORPHO": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
-        "underlying": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-        "writeFunctionPermissions": [
-          {
-            "function": "depositFor",
-            "signature": "function depositFor(address account, uint256 value)",
-            "file": "src/Wrapper.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 4
-          },
-          {
-            "function": "withdrawTo",
-            "signature": "function withdrawTo(address account, uint256 value)",
-            "file": "src/Wrapper.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          }
-        ]
+        "underlying": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999"
       },
       "implementationNames": {
         "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123": "Wrapper"
@@ -539,161 +294,7 @@
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0xec6ac4ec6469375712b671d38548b711c7a4a17b4db99be41e0eb9f28cafdd2d",
         "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
-        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
-        "writeFunctionPermissions": [
-          {
-            "function": "accrueInterest",
-            "signature": "function accrueInterest(MarketParams memory marketParams)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "borrow",
-            "signature": "function borrow(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        address receiver\n    )",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "liquidation",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 9
-          },
-          {
-            "function": "createMarket",
-            "signature": "function createMarket(MarketParams memory marketParams)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "enableIrm",
-            "signature": "function enableIrm(address irm)",
-            "file": "src/Morpho.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 10
-          },
-          {
-            "function": "enableLltv",
-            "signature": "function enableLltv(uint256 lltv)",
-            "file": "src/Morpho.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 9
-          },
-          {
-            "function": "flashLoan",
-            "signature": "function flashLoan(address token, uint256 assets, bytes calldata data)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "liquidation",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 5
-          },
-          {
-            "function": "liquidate",
-            "signature": "function liquidate(\n        MarketParams memory marketParams,\n        address borrower,\n        uint256 seizedAssets,\n        uint256 repaidShares,\n        bytes calldata data\n    )",
-            "file": "src/Morpho.sol",
-            "permissionType": "none",
-            "category": "liquidation",
-            "requireStatementCount": 3
-          },
-          {
-            "function": "repay",
-            "signature": "function repay(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        bytes calldata data\n    )",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "liquidation",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "setAuthorization",
-            "signature": "function setAuthorization(address authorized, bool newIsAuthorized)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 5
-          },
-          {
-            "function": "setAuthorizationWithSig",
-            "signature": "function setAuthorizationWithSig(Authorization memory authorization, Signature calldata signature)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 4
-          },
-          {
-            "function": "setFee",
-            "signature": "function setFee(MarketParams memory marketParams, uint256 newFee)",
-            "file": "src/Morpho.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 8
-          },
-          {
-            "function": "setFeeRecipient",
-            "signature": "function setFeeRecipient(address newFeeRecipient)",
-            "file": "src/Morpho.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 7
-          },
-          {
-            "function": "setOwner",
-            "signature": "function setOwner(address newOwner)",
-            "file": "src/Morpho.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 11
-          },
-          {
-            "function": "supply",
-            "signature": "function supply(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        bytes calldata data\n    )",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 7
-          },
-          {
-            "function": "supplyCollateral",
-            "signature": "function supplyCollateral(MarketParams memory marketParams, uint256 assets, address onBehalf, bytes calldata data)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          },
-          {
-            "function": "withdraw",
-            "signature": "function withdraw(\n        MarketParams memory marketParams,\n        uint256 assets,\n        uint256 shares,\n        address onBehalf,\n        address receiver\n    )",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          },
-          {
-            "function": "withdrawCollateral",
-            "signature": "function withdrawCollateral(MarketParams memory marketParams, uint256 assets, address onBehalf, address receiver)",
-            "file": "src/Morpho.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          }
-        ]
+        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa"
       },
       "implementationNames": {
         "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": "Morpho"
@@ -714,54 +315,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2430015647464185564221932",
-        "writeFunctionPermissions": [
-          {
-            "function": "approve",
-            "signature": "function approve(address guy, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "deposit",
-            "signature": "function deposit()",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          },
-          {
-            "function": "transfer",
-            "signature": "function transfer(address dst, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "transferFrom",
-            "signature": "function transferFrom(address src, address dst, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "withdraw",
-            "signature": "function withdraw(uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          }
-        ]
+        "totalSupply": "2787522463126466628993882"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -816,9 +370,8 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 268,
-        "VERSION": "1.3.0",
-        "writeFunctionPermissions": []
+        "nonce": 269,
+        "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": "GnosisSafeProxy",
@@ -836,7 +389,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xEEb1645eDa43F591d6b69e2460d7EED4b4057Ac6",
+      "address": "eth:0xE161c14651ec72b696ab461a5aE51043E680B3Ff",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -857,12 +410,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x32b9800409c3A6Ace972Cbb5a33145e071DD94CE",
+          "eth:0xE161c14651ec72b696ab461a5aE51043E680B3Ff",
           "eth:0x8836C35AE6f1Cd0Bc70D9130994356800B6A54b2",
           "eth:0x1b30044ED3a4dCEEEfEAcE47E2d0a3648A10d63f",
           "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
-          "eth:0x4203aF750DE8F4707DACC2CA7e5dC91121DD5B59",
-          "eth:0xEEb1645eDa43F591d6b69e2460d7EED4b4057Ac6",
+          "eth:0x435eC8504b628FD7871914A5023567715544Abae",
           "eth:0xB93B521e8766e57C3A806b07F483Dba2A2d98ac5",
           "eth:0xca6409Ca3AbE139a5B95579Af3D37864157Bb4Df"
         ],
@@ -870,10 +422,9 @@
         "domainSeparator": "0x24e8f4d15b0127ba5d3500a549e3db292195100c6468b72858f7b13877fbc34e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 110,
-        "VERSION": "1.3.0",
-        "writeFunctionPermissions": []
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 131,
+        "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9": "GnosisSafeProxy",
@@ -892,53 +443,7 @@
       "sinceBlock": 19375099,
       "values": {
         "$immutable": true,
-        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-        "writeFunctionPermissions": [
-          {
-            "function": "reallocateTo",
-            "signature": "function reallocateTo(address vault, Withdrawal[] calldata withdrawals, MarketParams calldata supplyMarketParams)",
-            "file": "src/PublicAllocator.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "setAdmin",
-            "signature": "function setAdmin(address vault, address newAdmin)",
-            "file": "src/PublicAllocator.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyAdmin"],
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "setFee",
-            "signature": "function setFee(address vault, uint256 newFee)",
-            "file": "src/PublicAllocator.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyAdmin"],
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "setFlowCaps",
-            "signature": "function setFlowCaps(address vault, FlowCapsConfig[] calldata config)",
-            "file": "src/PublicAllocator.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyAdmin"],
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transferFee",
-            "signature": "function transferFee(address vault, address payable feeRecipient)",
-            "file": "src/PublicAllocator.sol",
-            "permissionType": "modifier",
-            "category": "financial",
-            "modifiers": ["onlyAdmin"],
-            "hasMsgSenderCheck": true
-          }
-        ]
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
       },
       "implementationNames": {
         "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": "PublicAllocator"
@@ -1320,6 +825,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682"
   },
-  "usedBlockNumbers": { "ethereum": 23442069 },
-  "permissionsConfigHash": "0x6c8d880d09271570b027b13466247947ed2b5a74e8024c1074225f344a933d97"
+  "usedBlockNumbers": { "ethereum": 23927583 },
+  "permissionsConfigHash": "0xce490d36f08495636b3f59781adcd16ba96ce204f2bb73f786a1d545aaadcbff"
 }

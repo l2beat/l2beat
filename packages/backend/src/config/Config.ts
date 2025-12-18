@@ -35,6 +35,8 @@ export interface Config {
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly permissionMonitor: PermissionMonitorConfig | false
+  readonly defiUpdateMonitor: DefiUpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
   readonly flatSourceModuleEnabled: boolean
   readonly lzOAppsEnabled: boolean
@@ -184,6 +186,15 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
 }
+
+export interface PermissionMonitorConfig {
+  readonly configReader: ConfigReader
+  readonly configBasePath: string
+  readonly runOnStart?: boolean
+  readonly discord: DiscordConfig | false
+}
+
+export type DefiUpdateMonitorConfig = UpdateMonitorConfig
 
 export interface VerifiersConfig {
   readonly verifiers: OnchainVerifier[]

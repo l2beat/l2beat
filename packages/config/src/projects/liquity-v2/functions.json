@@ -1,0 +1,1346 @@
+{
+  "version": "1.0",
+  "lastModified": "2025-12-17T10:02:45.345Z",
+  "contracts": {
+    "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
+      "functions": [
+        {
+          "functionName": "offset",
+          "isPermissioned": false,
+          "description": "Cancels the specified amount of liquidated BOLD debt against BOLD tokens held in the pool, transfers liquidated collateral to the pool, and updates collateral rewards accounting for depositors.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-15T09:30:45.137Z"
+        }
+      ]
+    },
+    "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": {
+      "functions": [
+        {
+          "functionName": "fetchPrice",
+          "isPermissioned": false,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+            }
+          ],
+          "timestamp": "2025-12-15T13:08:00.491Z"
+        }
+      ]
+    },
+    "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
+      "functions": [
+        {
+          "functionName": "setBranchAddresses",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:34.192Z"
+        },
+        {
+          "functionName": "setCollateralRegistry",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:34.193Z"
+        }
+      ]
+    },
+    "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": {
+      "functions": [
+        {
+          "functionName": "sendColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.208Z"
+        },
+        {
+          "functionName": "sendCollToDefaultPool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.209Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.214Z"
+        },
+        {
+          "functionName": "accountForReceivedColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.215Z"
+        },
+        {
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.216Z"
+        },
+        {
+          "functionName": "mintAggInterest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.218Z"
+        },
+        {
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.219Z"
+        },
+        {
+          "functionName": "setShutdownFlag",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:43.220Z"
+        }
+      ]
+    },
+    "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": {
+      "functions": [
+        {
+          "functionName": "sendColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.474Z"
+        },
+        {
+          "functionName": "sendCollToDefaultPool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.476Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.477Z"
+        },
+        {
+          "functionName": "accountForReceivedColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.478Z"
+        },
+        {
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.479Z"
+        },
+        {
+          "functionName": "mintAggInterest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.480Z"
+        },
+        {
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.481Z"
+        },
+        {
+          "functionName": "setShutdownFlag",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:50.482Z"
+        }
+      ]
+    },
+    "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T09:58:52.556Z"
+        }
+      ]
+    },
+    "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": {
+      "functions": [
+        {
+          "functionName": "sendColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.882Z"
+        },
+        {
+          "functionName": "sendCollToDefaultPool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.883Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.884Z"
+        },
+        {
+          "functionName": "accountForReceivedColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.defaultPoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.885Z"
+        },
+        {
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.886Z"
+        },
+        {
+          "functionName": "mintAggInterest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.stabilityPool"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.886Z"
+        },
+        {
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.887Z"
+        },
+        {
+          "functionName": "setShutdownFlag",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:07.887Z"
+        }
+      ]
+    },
+    "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:10.298Z"
+        }
+      ]
+    },
+    "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": {
+      "functions": [
+        {
+          "functionName": "setAddManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.420Z"
+        },
+        {
+          "functionName": "setRemoveManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.421Z"
+        },
+        {
+          "functionName": "setRemoveManagerWithReceiver",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.422Z"
+        },
+        {
+          "functionName": "openTrove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.423Z"
+        },
+        {
+          "functionName": "openTroveAndJoinInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.424Z"
+        },
+        {
+          "functionName": "adjustTroveInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            },
+            {
+              "path": "$self.interestIndividualDelegateOf.account"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.425Z"
+        },
+        {
+          "functionName": "setInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.430Z"
+        },
+        {
+          "functionName": "removeInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.432Z"
+        },
+        {
+          "functionName": "registerBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.433Z"
+        },
+        {
+          "functionName": "lowerBatchManagementFee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.434Z"
+        },
+        {
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.435Z"
+        },
+        {
+          "functionName": "setInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.436Z"
+        },
+        {
+          "functionName": "kickFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.437Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.440Z"
+        },
+        {
+          "functionName": "switchBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.442Z"
+        },
+        {
+          "functionName": "shutdown",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.444Z"
+        },
+        {
+          "functionName": "shutdownFromOracleFailure",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:44.447Z"
+        }
+      ]
+    },
+    "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": {
+      "functions": [
+        {
+          "functionName": "setAddManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.766Z"
+        },
+        {
+          "functionName": "setRemoveManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.767Z"
+        },
+        {
+          "functionName": "setRemoveManagerWithReceiver",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.768Z"
+        },
+        {
+          "functionName": "openTrove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.768Z"
+        },
+        {
+          "functionName": "openTroveAndJoinInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.769Z"
+        },
+        {
+          "functionName": "adjustTroveInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            },
+            {
+              "path": "$self.interestIndividualDelegateOf.account"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.770Z"
+        },
+        {
+          "functionName": "setInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.771Z"
+        },
+        {
+          "functionName": "removeInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.771Z"
+        },
+        {
+          "functionName": "registerBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.772Z"
+        },
+        {
+          "functionName": "lowerBatchManagementFee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.773Z"
+        },
+        {
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.773Z"
+        },
+        {
+          "functionName": "setInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.774Z"
+        },
+        {
+          "functionName": "kickFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.775Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.776Z"
+        },
+        {
+          "functionName": "switchBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.776Z"
+        },
+        {
+          "functionName": "shutdown",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.777Z"
+        },
+        {
+          "functionName": "shutdownFromOracleFailure",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T09:59:51.778Z"
+        }
+      ]
+    },
+    "eth:0xe8119fC02953B27a1b48D2573855738485A17329": {
+      "functions": [
+        {
+          "functionName": "setAddManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.651Z"
+        },
+        {
+          "functionName": "setRemoveManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.652Z"
+        },
+        {
+          "functionName": "setRemoveManagerWithReceiver",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.657Z"
+        },
+        {
+          "functionName": "openTrove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.658Z"
+        },
+        {
+          "functionName": "openTroveAndJoinInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.659Z"
+        },
+        {
+          "functionName": "adjustTroveInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            },
+            {
+              "path": "$self.interestIndividualDelegateOf.account"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.660Z"
+        },
+        {
+          "functionName": "setInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.661Z"
+        },
+        {
+          "functionName": "removeInterestIndividualDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.662Z"
+        },
+        {
+          "functionName": "registerBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.664Z"
+        },
+        {
+          "functionName": "lowerBatchManagementFee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.668Z"
+        },
+        {
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.669Z"
+        },
+        {
+          "functionName": "setInterestBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.671Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.672Z"
+        },
+        {
+          "functionName": "switchBatchManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@troveNFT.ownerOf"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.673Z"
+        },
+        {
+          "functionName": "shutdown",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.674Z"
+        },
+        {
+          "functionName": "shutdownFromOracleFailure",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@priceFeed"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:41.676Z"
+        }
+      ]
+    },
+    "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b": {
+      "functions": [
+        {
+          "functionName": "sendCollToActivePool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:43.999Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activePoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:44.004Z"
+        },
+        {
+          "functionName": "increaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:44.007Z"
+        },
+        {
+          "functionName": "decreaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:44.008Z"
+        }
+      ]
+    },
+    "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:45.816Z"
+        }
+      ]
+    },
+    "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0": {
+      "functions": [
+        {
+          "functionName": "sendCollToActivePool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:48.660Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activePoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:48.665Z"
+        },
+        {
+          "functionName": "increaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:48.666Z"
+        },
+        {
+          "functionName": "decreaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:48.668Z"
+        }
+      ]
+    },
+    "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": {
+      "functions": [
+        {
+          "functionName": "sendCollToActivePool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:51.519Z"
+        },
+        {
+          "functionName": "receiveColl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activePoolAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:51.520Z"
+        },
+        {
+          "functionName": "increaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:51.525Z"
+        },
+        {
+          "functionName": "decreaseBoldDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:51.527Z"
+        }
+      ]
+    },
+    "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386": {
+      "functions": [
+        {
+          "functionName": "insert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.406Z"
+        },
+        {
+          "functionName": "remove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.407Z"
+        },
+        {
+          "functionName": "reInsert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.411Z"
+        },
+        {
+          "functionName": "insertIntoBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.414Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.416Z"
+        },
+        {
+          "functionName": "reInsertBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:01:57.418Z"
+        }
+      ]
+    },
+    "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1": {
+      "functions": [
+        {
+          "functionName": "insert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.984Z"
+        },
+        {
+          "functionName": "remove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.989Z"
+        },
+        {
+          "functionName": "reInsert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.990Z"
+        },
+        {
+          "functionName": "insertIntoBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.991Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.992Z"
+        },
+        {
+          "functionName": "reInsertBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:00.993Z"
+        }
+      ]
+    },
+    "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": {
+      "functions": [
+        {
+          "functionName": "setParams",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:02.622Z"
+        }
+      ]
+    },
+    "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4": {
+      "functions": [
+        {
+          "functionName": "insert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.629Z"
+        },
+        {
+          "functionName": "remove",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.636Z"
+        },
+        {
+          "functionName": "reInsert",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.637Z"
+        },
+        {
+          "functionName": "insertIntoBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.638Z"
+        },
+        {
+          "functionName": "removeFromBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.640Z"
+        },
+        {
+          "functionName": "reInsertBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:26.641Z"
+        }
+      ]
+    },
+    "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:39.890Z"
+        }
+      ]
+    },
+    "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B": {
+      "functions": [
+        {
+          "functionName": "triggerBoldRewards",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activePool"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:43.041Z"
+        },
+        {
+          "functionName": "offset",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:43.046Z"
+        }
+      ]
+    },
+    "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": {
+      "functions": [
+        {
+          "functionName": "triggerBoldRewards",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activePool"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:45.340Z"
+        },
+        {
+          "functionName": "offset",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManager"
+            }
+          ],
+          "timestamp": "2025-12-17T10:02:45.345Z"
+        }
+      ]
+    }
+  }
+}

@@ -312,6 +312,8 @@ export interface ContractTag {
   isExternal: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
   likelihood?: Likelihood
+  fetchBalances?: boolean
+  fetchPositions?: boolean
   timestamp: string
 }
 
@@ -320,4 +322,65 @@ export interface ApiContractTagsUpdateRequest {
   isExternal?: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
   likelihood?: Likelihood
+  fetchBalances?: boolean
+  fetchPositions?: boolean
+}
+
+// Funds data types
+export interface ApiFundsDataResponse {
+  version: string
+  lastModified: string
+  contracts: Record<string, ContractFundsData>
+}
+
+export interface ContractFundsData {
+  balances?: {
+    tokens: FundsTokenBalance[]
+    totalUsdValue: number
+    timestamp: string
+    source: string
+  }
+  positions?: {
+    protocols: FundsPositionProtocol[]
+    totalUsdValue: number
+    timestamp: string
+    source: string
+  }
+  lastFetched: string
+  error?: string
+}
+
+export interface FundsTokenBalance {
+  assetAddress: string
+  symbol: string
+  name: string
+  balance: string
+  decimals: number
+  usdValue: number
+}
+
+export interface FundsPositionProtocol {
+  id: string
+  name: string
+  chain: string
+  logoUrl?: string
+  items: FundsPositionItem[]
+  totalUsdValue: number
+}
+
+export interface FundsPositionItem {
+  name?: string
+  stats: {
+    assetUsdValue: number
+    debtUsdValue: number
+    netUsdValue: number
+  }
+  tokens: FundsPositionToken[]
+}
+
+export interface FundsPositionToken {
+  symbol: string
+  name: string
+  amount: number
+  price: number
 }

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState, useEffect, useMemo } from 'react'
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import type { AdminModuleScore, LetterGrade, Likelihood, Impact, ApiAddressType } from '../api/types'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import { useContractTags } from '../hooks/useContractTags'
-import { updateContractTag, updateFunction } from '../api/api'
+import { updateContractTag, updateFunction, getProject } from '../api/api'
+import { ProxyTypeTag } from '../apps/discovery/defidisco/ProxyTypeTag'
+import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 
 interface AdminsInventoryBreakdownProps {
   score: AdminModuleScore
@@ -286,10 +288,12 @@ function LikelihoodPicker({
  */
 function AdminSection({
   admin,
+  proxyType,
   onUpdateLikelihood,
   onUpdateImpact,
 }: {
   admin: any
+  proxyType?: string
   onUpdateLikelihood: (adminAddress: string, likelihood: Likelihood) => void
   onUpdateImpact: (contractAddress: string, functionName: string, impact: Impact) => void
 }) {
@@ -343,6 +347,7 @@ function AdminSection({
         >
           {admin.adminType}
         </span>
+        <ProxyTypeTag proxyType={proxyType} />
         <button
           onClick={(e) => {
             e.stopPropagation()
@@ -426,6 +431,16 @@ export function AdminsInventoryBreakdown({ score }: AdminsInventoryBreakdownProp
   const queryClient = useQueryClient()
   const { data: contractTags } = useContractTags(project!)
   const gradeColor = getGradeColor(score.grade)
+
+  // Fetch project data for proxy type information
+  const { data: projectData } = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project!),
+    enabled: !!project,
+  })
+
+  // Build proxy type lookup map
+  const proxyTypeMap = useMemo(() => buildProxyTypeMap(projectData), [projectData])
 
   // Mutation for updating likelihood
   const updateLikelihoodMutation = useMutation({
@@ -511,6 +526,7 @@ export function AdminsInventoryBreakdown({ score }: AdminsInventoryBreakdownProp
               <AdminSection
                 key={admin.adminAddress}
                 admin={admin}
+                proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
                 onUpdateLikelihood={handleUpdateLikelihood}
                 onUpdateImpact={handleUpdateImpact}
               />

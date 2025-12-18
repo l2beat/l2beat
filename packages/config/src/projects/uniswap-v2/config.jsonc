@@ -11,6 +11,9 @@
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
     "eth:0x53a328f4086d7c0f1fa19e594c9b842125263026"
   ],
+  "defidisco": {
+    "scanPermissions": false
+  },
   "overrides": {
     "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       "ignoreDiscovery": true

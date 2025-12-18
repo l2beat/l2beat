@@ -46,6 +46,7 @@ export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
+export type { PermissionResolutionRecord } from './repositories/PermissionResolutionRepository'
 export type {
   ProjectValueRecord,
   SummedByTimestampProjectValueRecord,
@@ -69,7 +70,10 @@ export type { TokenValueRecord } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
-export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
+export type {
+  UpdateDiffRecord,
+  UpdateDiffType,
+} from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
