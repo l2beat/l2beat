@@ -156,7 +156,10 @@ export const intmax: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stackedRiskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:
