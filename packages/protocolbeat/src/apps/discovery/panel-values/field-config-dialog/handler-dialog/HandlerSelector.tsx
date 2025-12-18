@@ -22,7 +22,7 @@ export function HandlerSelector(props: HandlerSelectorProps) {
       >
         <div className="mb-1 flex gap-2 border-coffee-400">
           <Select.Root
-            value={props.selectedHandler?.type}
+            value={props.selectedHandler?.type ?? ''}
             onValueChange={props.onSelectedHandlerChange}
           >
             <Select.Trigger placeholder="Select handler" />
