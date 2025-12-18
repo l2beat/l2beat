@@ -23,6 +23,10 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
     model.getFieldHandlerString(fieldName) ?? '',
   )
 
+  useEffect(() => {
+    setHandlerString(model.getFieldHandlerString(fieldName) ?? '')
+  }, [model, fieldName])
+
   const [selectedHandler, setSelectedHandler] = useState<
     ApiHandlersResponse['handlers'][number] | undefined
   >(undefined)
@@ -30,10 +34,7 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
   const [errors, setErrors] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    const detected = detectHandler(handlerString)
-    if (detected) {
-      setSelectedHandler(detected)
-    }
+    setSelectedHandler(detectHandler(handlerString))
   }, [handlerString])
 
   function onSave(content: string) {
@@ -45,7 +46,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
       return false
     }
     model.setFieldHandler(fieldName, result.model)
-    setHandlerString(model.getFieldHandlerString(fieldName) ?? '')
     toast.success('Handler saved.')
     return true
   }
