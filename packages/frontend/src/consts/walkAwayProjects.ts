@@ -7,22 +7,4 @@ export const WALK_AWAY_PASSED_PROJECTS = [
   'facet',
 ]
 
-export const WALK_AWAY_NOT_PASSED_PROJECTS = [
-  'lighter',
-  'zksync2',
-  'starknet',
-  'scroll',
-  'linea',
-  'katana',
-  'bob',
-  'paradex',
-  'abstract',
-  'zksync',
-  'zircuit',
-  'loopring',
-  'aztec',
-  'zeronetwork',
-  'intmax',
-  'phala',
-  'sxt',
-]
+export const WALK_AWAY_NOT_PASSED_PROJECTS = ['starknet', 'scroll', 'aztec']
