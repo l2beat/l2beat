@@ -50,6 +50,10 @@ export class Providers {
     readonly logger: Logger,
   ) {
     this.clients = initClients(config, logger)
+    const ethereumRpcClient = this.clients.rpcClients.find(
+      (c) => c.chain === 'ethereum',
+    )
+
     this.block = new BlockProviders(this.clients.block)
     this.logs = new LogsProviders(this.clients.logs)
     this.svmBlock = new SvmBlockProviders(this.clients.svmBlock)
@@ -115,14 +119,8 @@ export class Providers {
       this.clients.availWs,
     )
 
-    const ethereumRpcClient = this.clients.rpcClients.find(
-      (c) => c.chain === 'ethereum',
-    )
     if (ethereumRpcClient) {
-      this.blobPrice = new BlobPriceProvider(
-        logger.tag({ tag: 'blobPrice' }),
-        ethereumRpcClient,
-      )
+      this.blobPrice = new BlobPriceProvider(logger, ethereumRpcClient)
     }
   }
 
