@@ -2,6 +2,9 @@
  * Example with complex formatting
  */
 export const complexMarkdownExample = `
+>
+> This is a placeholder for the handler documentation to see how it looks. Will be replaced soon ;))
+>
 ## Configuration Steps
 
 Follow these steps to configure the handler:
