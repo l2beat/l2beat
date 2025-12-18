@@ -1,10 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Parser } from '@l2beat/validate'
-import type { DuneClient } from './DuneClient'
+import type { DuneClient, DunePerformance } from './DuneClient'
 import type { DuneExecutionState } from './types'
 
-type Performance = 'small' | 'medium' | 'large'
 type Dependencies = {
   logger: Logger
   duneClient: DuneClient
@@ -27,7 +26,7 @@ export class DuneQueryService {
 
   async query<T>(
     sql: string,
-    performance: Performance,
+    performance: DunePerformance,
     resultSchema: Parser<T>,
   ): Promise<T> {
     const { execution_id } = await this.$.duneClient.executeSql(

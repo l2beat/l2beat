@@ -5,7 +5,12 @@ import {
   DuneExecutionStatusResponse,
 } from './types'
 
-type Performance = 'small' | 'medium' | 'large'
+/*
+  Dune has three query engine sizes: small, medium, and large. 
+  The query engine size determines the amount of resources allocated to your query. 
+  This means that queries executed on a larger query engine will run faster and are less likely to time out.
+*/
+export type DunePerformance = 'small' | 'medium' | 'large'
 type Dependencies = {
   http: HttpClient
   apiKey: string
@@ -16,7 +21,7 @@ export class DuneClient {
 
   constructor(private readonly $: Dependencies) {}
 
-  async executeSql(sql: string, performance: Performance) {
+  async executeSql(sql: string, performance: DunePerformance) {
     const response = await this.fetch('v1/sql/execute', 'POST', {
       sql,
       performance,
