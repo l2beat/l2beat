@@ -106,8 +106,8 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
       >
         <Dialog.Title>Handler editor</Dialog.Title>
         <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
-          <div className="col-span-3 flex min-h-0 w-full flex-col gap-2">
-            <div className="flex min-h-0 flex-1 flex-col border border-coffee-200 bg-coffee-900 p-4 pl-0">
+          <div className="col-span-3 flex min-h-0 w-full flex-col gap-2 border-coffee-400 border-r pr-2">
+            <div className="flex min-h-0 flex-1 flex-col border border-coffee-400 bg-coffee-900 p-4 pl-0">
               <HandlerEditor
                 context={context}
                 editorKey={editorKey}
