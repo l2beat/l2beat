@@ -12,15 +12,15 @@ type HandlerSelectorProps = {
 }
 
 export function HandlerSelector(props: HandlerSelectorProps) {
-  const [tab, setTab] = useState<'description' | 'examples'>('description')
+  const [tab, setTab] = useState('docs')
   return (
     <div className="flex h-full w-full flex-col">
       <Tabs.Root
         value={tab}
-        onValueChange={(value) => setTab(value as 'description' | 'examples')}
+        onValueChange={(value) => setTab(value)}
         className="flex h-full flex-col"
       >
-        <div className="mb-1 flex gap-2 border-coffee-400">
+        <div className="mb-1 flex flex-col gap-2 border-coffee-400">
           <Select.Root
             value={props.selectedHandler?.type ?? ''}
             onValueChange={props.onSelectedHandlerChange}
@@ -38,21 +38,38 @@ export function HandlerSelector(props: HandlerSelectorProps) {
           </Select.Root>
 
           <Tabs.List align="right" className="-mb-2 border-b-0">
-            <Tabs.Trigger value="description" className="mb-1 border-b-none">
+            <Tabs.Trigger value="manual" className="mb-1 border-b-none">
+              Editor manual
+            </Tabs.Trigger>
+            <Tabs.Trigger value="docs" className="mb-1 border-b-none">
               Documentation
             </Tabs.Trigger>
             <Tabs.Trigger value="examples" className="mb-1 border-b-none">
               Examples
             </Tabs.Trigger>
+            <Tabs.Trigger value="preview" className="mb-1 border-b-none">
+              Field preview
+            </Tabs.Trigger>
           </Tabs.List>
         </div>
         <div className="min-h-0 flex-1 border border-coffee-400">
-          <Tabs.Content value="description" className="h-full py-0">
+          <Tabs.Content value="manual" className="h-full py-0">
+            <div className="h-full overflow-y-auto bg-coffee-800 p-1">
+              <Markdown>{getEditorManualMarkdown()}</Markdown>
+            </div>
+          </Tabs.Content>
+          <Tabs.Content value="docs" className="h-full py-0">
             <div className="h-full overflow-y-auto bg-coffee-800 p-1">
               <Markdown>{complexMarkdownExample}</Markdown>
             </div>
           </Tabs.Content>
+
           <Tabs.Content value="examples" className="h-full py-0">
+            <div className="h-full overflow-y-auto bg-coffee-800 p-1">
+              <Markdown>{complexMarkdownExample}</Markdown>
+            </div>
+          </Tabs.Content>
+          <Tabs.Content value="preview" className="h-full py-0">
             <div className="h-full overflow-y-auto bg-coffee-800 p-1">
               <Markdown>{complexMarkdownExample}</Markdown>
             </div>
@@ -61,4 +78,15 @@ export function HandlerSelector(props: HandlerSelectorProps) {
       </Tabs.Root>
     </div>
   )
+}
+
+function getEditorManualMarkdown() {
+  return `
+  ### Editor manual
+
+  - Definitions are validated against a \`schema\` - switching between handlers will update the schema in the editor so you can see the errors and intellisense.
+  - Editor is using \`jsonc\` syntax - you can use comments and multi-line strings.
+  - Editor will try to automatically detect the handler type based on the contents (\`type\` property).
+  - You've added a handler and can't see it in the list? Make sure you've re-built the discovery package and restarted the server.
+  `
 }
