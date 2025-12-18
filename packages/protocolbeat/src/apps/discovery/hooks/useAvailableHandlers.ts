@@ -36,6 +36,10 @@ export function useAvailableHandlers() {
   }
 
   function validateRawHandler(content: string) {
+    if (content.trim() === '') {
+      return { ok: true, model: undefined } as const
+    }
+
     const maybeJsonc = tryParsingJsonc(content)
 
     if (!maybeJsonc) {
