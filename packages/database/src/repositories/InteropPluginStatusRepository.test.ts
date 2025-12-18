@@ -21,7 +21,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
           ethereum: {
             syncedFrom: 1,
             syncedTo: 10,
-            lastOpError: 'Call timeout',
           },
           arbitrum: { syncedFrom: 5, syncedTo: 50 },
         },
@@ -69,7 +68,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
             ethereum: {
               syncedFrom: 1,
               syncedTo: 10,
-              lastOpError: 'Call timeout',
             },
           },
           resyncRequestedFrom: UnixTime(100),
@@ -81,12 +79,10 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
             ethereum: {
               syncedFrom: 5,
               syncedTo: 50,
-              lastOpError: 'Error parsing body',
             },
             optimism: {
               syncedFrom: 7,
               syncedTo: 70,
-              lastOpError: 'RPC Error: 500',
             },
           },
           resyncRequestedFrom: null,
@@ -101,12 +97,10 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
             ethereum: {
               syncedFrom: 5,
               syncedTo: 50,
-              lastOpError: 'Error parsing body',
             },
             optimism: {
               syncedFrom: 7,
               syncedTo: 70,
-              lastOpError: 'RPC Error: 500',
             },
           },
           resyncRequestedFrom: null,
