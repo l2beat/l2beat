@@ -122,11 +122,7 @@ The tvs feature is configured via the following environment variables:
 
 The tracked-txs feature is configured via the following environment variables:
 
-- `BIGQUERY_CLIENT_EMAIL` - BigQuery credentials
-- `BIGQUERY_PRIVATE_KEY` - BigQuery credentials
-- `BIGQUERY_PROJECT_ID` - BigQuery credentials
-- `BIGQUERY_LIMIT_GB` - Optional. Defaults to 15
-- `BIGQUERY_WARNING_LIMIT_GB` - Optional. Defaults to 8
+- `DUNE_API_KEY`
 
 **Feature flags:**
 
