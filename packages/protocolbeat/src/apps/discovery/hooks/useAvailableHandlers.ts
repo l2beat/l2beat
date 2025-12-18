@@ -1,5 +1,5 @@
 import type { FieldConfigSchema } from '@l2beat/discovery'
-import { fromJsonSchema, v } from '@l2beat/validate'
+import { fromJsonSchema, type JsonSchema, v } from '@l2beat/validate'
 import { useQuery } from '@tanstack/react-query'
 import { parse } from 'comment-json'
 import { useMemo } from 'react'
@@ -60,7 +60,9 @@ export function useAvailableHandlers() {
 
     const handlerSchema = matchingHandler.schema
 
-    const handlerResult = fromJsonSchema(handlerSchema).safeParse(result.data)
+    const handlerResult = fromJsonSchema(handlerSchema as JsonSchema).safeParse(
+      result.data,
+    )
 
     if (!handlerResult.success) {
       return {
