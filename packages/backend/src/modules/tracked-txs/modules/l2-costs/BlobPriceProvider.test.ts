@@ -24,7 +24,7 @@ describe(BlobPriceProvider.name, () => {
     }
   }
 
-  describe('getBlobPricesByBlockRange', () => {
+  describe(BlobPriceProvider.prototype.getBlobPricesByBlockRange.name, () => {
     it('throws error when oldestBlock > newestBlock', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
         getFeeHistory: mockFn(),

@@ -19,7 +19,7 @@ describe(DuneQueryService.name, () => {
     })
   }
 
-  describe('query', () => {
+  describe(DuneQueryService.prototype.query.name, () => {
     it('completes successfully when query finishes immediately', async () => {
       const executionId = 'exec-123'
       const resultRows = [{ col1: 'value1' }, { col1: 'value2' }]
