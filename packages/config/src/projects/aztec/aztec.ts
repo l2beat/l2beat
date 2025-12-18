@@ -151,7 +151,7 @@ export const aztec: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      executionDelay: finalizationPeriod
+      executionDelay: finalizationPeriod,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
