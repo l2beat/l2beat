@@ -11,7 +11,7 @@ export function positionsRouter(
 
   router.get('/', async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-      const { address, chain_id } = req.query
+      const { address, chain_id, force_refresh } = req.query
 
       // Validate address
       if (!address || typeof address !== 'string') {
@@ -34,10 +34,15 @@ export function positionsRouter(
       // Parse optional chain_id
       const chainId = chain_id && typeof chain_id === 'string' ? chain_id : undefined
 
-      // Fetch positions
-      const result = await positionService.getPositions(addr, chainId)
+      // Parse optional force_refresh
+      const forceRefresh = force_refresh === 'true'
 
-      res.json(result)
+      // Fetch positions
+      const result = await positionService.getPositions(addr, chainId, forceRefresh)
+
+      // Return array with cached flag in response header
+      res.setHeader('X-Cached', result.cached.toString())
+      res.json(result.data)
     } catch (error) {
       logger.error('Error fetching positions', error)
       next(error)

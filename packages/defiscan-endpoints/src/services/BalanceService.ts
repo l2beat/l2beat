@@ -4,6 +4,11 @@ import type { DebankClient } from '../clients/DebankClient'
 import type { BalanceResponse, TokenBalance } from '../types/api'
 import type { Cache } from '../utils/cache'
 
+export interface BalanceResult {
+  data: BalanceResponse
+  cached: boolean
+}
+
 export class BalanceService {
   constructor(
     private readonly debankClient: DebankClient,
@@ -15,19 +20,24 @@ export class BalanceService {
     contractAddress: EthereumAddress,
     assetAddresses?: EthereumAddress[],
     chainId?: string,
-  ): Promise<BalanceResponse> {
+    forceRefresh?: boolean,
+  ): Promise<BalanceResult> {
     // Default to Ethereum mainnet if no chain specified
     const chain = chainId ?? 'eth'
     const cacheKey = `balances:${contractAddress}:${chain}:${assetAddresses?.join(',') ?? 'all'}`
 
-    // Check cache first
-    const cached = this.cache.get(cacheKey)
-    if (cached) {
-      this.logger.info('Balance cache hit', { contractAddress, chain })
-      return cached
+    // Check cache first (unless force refresh)
+    if (!forceRefresh) {
+      const cached = this.cache.get(cacheKey)
+      if (cached) {
+        this.logger.info('CACHE HIT - Returning cached balances', { contractAddress, chain, timestamp: cached.timestamp })
+        return { data: cached, cached: true }
+      }
+    } else {
+      this.logger.info('FORCE REFRESH - Bypassing cache', { contractAddress, chain })
     }
 
-    this.logger.info('Fetching balances from DeBank', { contractAddress, chain })
+    this.logger.info('FETCHING - Getting balances from DeBank', { contractAddress, chain })
 
     // Fetch from DeBank
     const debankBalances =
@@ -61,6 +71,6 @@ export class BalanceService {
     // Cache the result
     this.cache.set(cacheKey, response)
 
-    return response
+    return { data: response, cached: false }
   }
 }

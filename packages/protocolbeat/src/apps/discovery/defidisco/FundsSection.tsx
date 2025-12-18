@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getFundsData, executeFetchFunds } from '../../../api/api'
 import type { ContractFundsData, FundsTokenBalance, FundsPositionProtocol } from '../../../api/types'
 import { useContractTags } from '../../../hooks/useContractTags'
+import { usePanelStore } from '../store/panel-store'
 
 interface FundsSectionProps {
   project: string
+  projectData: any
 }
 
 function formatUsdValue(value: number): string {
@@ -31,10 +33,12 @@ function ContractFundsRow({
   contractAddress,
   fundsData,
   contractName,
+  onSelect,
 }: {
   contractAddress: string
   fundsData: ContractFundsData
   contractName?: string
+  onSelect?: () => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -44,6 +48,11 @@ function ContractFundsRow({
 
   const shortAddress = contractAddress.replace('eth:', '').slice(0, 10) + '...'
   const displayName = contractName || shortAddress
+
+  const handleSelectClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onSelect?.()
+  }
 
   return (
     <div className="border-b border-coffee-700 last:border-b-0">
@@ -55,6 +64,19 @@ function ContractFundsRow({
           <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
           <span className="text-coffee-200">{displayName}</span>
           <span className="text-coffee-500 text-xs">({shortAddress})</span>
+          {onSelect && (
+            <button
+              onClick={handleSelectClick}
+              className="text-blue-400 hover:text-blue-300 px-1"
+              title="Select contract in graph"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </button>
+          )}
         </div>
         <div className="flex items-center gap-4">
           {fundsData.error && (
@@ -182,10 +204,11 @@ function ProtocolRow({ protocol }: { protocol: FundsPositionProtocol }) {
   )
 }
 
-export function FundsSection({ project }: FundsSectionProps) {
+export function FundsSection({ project, projectData }: FundsSectionProps) {
   const queryClient = useQueryClient()
   const [isFetching, setIsFetching] = useState(false)
   const [fetchProgress, setFetchProgress] = useState<string[]>([])
+  const [forceRefresh, setForceRefresh] = useState(false)
 
   const { data: fundsData, isLoading, error } = useQuery({
     queryKey: ['funds-data', project],
@@ -193,6 +216,18 @@ export function FundsSection({ project }: FundsSectionProps) {
   })
 
   const { data: contractTags } = useContractTags(project)
+
+  // Build contract name lookup map from projectData
+  const contractNameMap = useMemo(() => {
+    if (!projectData?.entries) return new Map<string, string>()
+    const map = new Map<string, string>()
+    projectData.entries.forEach((entry: any) => {
+      [...entry.initialContracts, ...entry.discoveredContracts].forEach((c: any) => {
+        map.set(c.address.toLowerCase(), c.name)
+      })
+    })
+    return map
+  }, [projectData])
 
   // Count contracts with funds fetching enabled
   const contractsWithFundsEnabled = contractTags?.tags.filter(
@@ -205,7 +240,7 @@ export function FundsSection({ project }: FundsSectionProps) {
     setIsFetching(true)
     setFetchProgress([])
 
-    const eventSource = executeFetchFunds(project)
+    const eventSource = executeFetchFunds(project, undefined, forceRefresh)
 
     eventSource.onmessage = (event) => {
       const message = event.data.replace(/\\n/g, '\n')
@@ -266,22 +301,36 @@ export function FundsSection({ project }: FundsSectionProps) {
     <div className="border-b border-b-coffee-600 pb-2">
       <div className="flex items-center justify-between p-2">
         <h2 className="font-bold text-2xl text-blue-600">Funds Data:</h2>
-        <button
-          className={`px-3 py-1 rounded text-sm ${
-            isFetching
-              ? 'bg-coffee-600 text-coffee-400 cursor-not-allowed'
-              : 'bg-blue-600 text-white hover:bg-blue-500'
-          }`}
-          onClick={handleFetchFunds}
-          disabled={isFetching || contractsWithFundsEnabled === 0}
-          title={
-            contractsWithFundsEnabled === 0
-              ? 'No contracts marked for funds fetching'
-              : 'Fetch funds data for all marked contracts'
-          }
-        >
-          {isFetching ? 'Fetching...' : `Fetch Funds (${contractsWithFundsEnabled})`}
-        </button>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-1 text-xs text-coffee-400 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={forceRefresh}
+              onChange={(e) => setForceRefresh(e.target.checked)}
+              disabled={isFetching}
+              className="w-3 h-3"
+            />
+            Force refresh
+          </label>
+          <button
+            className={`px-3 py-1 rounded text-sm ${
+              isFetching
+                ? 'bg-coffee-600 text-coffee-400 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-500'
+            }`}
+            onClick={handleFetchFunds}
+            disabled={isFetching || contractsWithFundsEnabled === 0}
+            title={
+              contractsWithFundsEnabled === 0
+                ? 'No contracts marked for funds fetching'
+                : forceRefresh
+                  ? 'Force fetch funds data for all marked contracts (ignores 24h cache)'
+                  : 'Fetch funds data for all marked contracts (skips if fetched within 24h)'
+            }
+          >
+            {isFetching ? 'Fetching...' : `Fetch Funds (${contractsWithFundsEnabled})`}
+          </button>
+        </div>
       </div>
 
       <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
@@ -331,6 +380,8 @@ export function FundsSection({ project }: FundsSectionProps) {
                     key={address}
                     contractAddress={address}
                     fundsData={data}
+                    contractName={contractNameMap.get(address.toLowerCase())}
+                    onSelect={() => usePanelStore.getState().select(address)}
                   />
                 )
               )}

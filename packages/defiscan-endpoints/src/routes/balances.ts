@@ -11,7 +11,7 @@ export function balancesRouter(
 
   router.get('/', async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-      const { contract_address, asset_addresses, chain_id } = req.query
+      const { contract_address, asset_addresses, chain_id, force_refresh } = req.query
 
       // Validate contract_address
       if (!contract_address || typeof contract_address !== 'string') {
@@ -51,10 +51,16 @@ export function balancesRouter(
       // Parse optional chain_id
       const chainId = chain_id && typeof chain_id === 'string' ? chain_id : undefined
 
-      // Fetch balances
-      const result = await balanceService.getBalances(contractAddr, assetAddrs, chainId)
+      // Parse optional force_refresh
+      const forceRefresh = force_refresh === 'true'
 
-      res.json(result)
+      // Fetch balances
+      const result = await balanceService.getBalances(contractAddr, assetAddrs, chainId, forceRefresh)
+
+      res.json({
+        ...result.data,
+        cached: result.cached,
+      })
     } catch (error) {
       logger.error('Error fetching balances', error)
       next(error)

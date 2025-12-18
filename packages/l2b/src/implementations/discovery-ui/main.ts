@@ -497,7 +497,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       return
     }
     const { project } = paramsValidation.data
-    const { contractAddress } = req.body as { contractAddress?: string }
+    const { contractAddress, forceRefresh } = req.body as { contractAddress?: string; forceRefresh?: boolean }
 
     // Set up Server-Sent Events headers
     res.writeHead(200, {
@@ -515,10 +515,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     try {
       if (contractAddress) {
         // Fetch for single contract
-        await fetchFundsForSingleContract(paths, project, contractAddress, sendProgress)
+        await fetchFundsForSingleContract(paths, project, contractAddress, sendProgress, forceRefresh ?? false)
       } else {
         // Fetch for all tagged contracts
-        await fetchAllFundsForProject(paths, project, sendProgress)
+        await fetchAllFundsForProject(paths, project, sendProgress, forceRefresh ?? false)
       }
       sendProgress('DONE')
     } catch (error) {

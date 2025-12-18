@@ -64,7 +64,7 @@ export function DeFiScanPanel() {
       </div>
       <div className="overflow-auto">
         <V2ScoringSection project={project} />
-        <FundsSection project={project} />
+        <FundsSection project={project} projectData={response.data} />
         <StatusOfReviewSection
           projectData={response.data}
           contractTags={contractTags}

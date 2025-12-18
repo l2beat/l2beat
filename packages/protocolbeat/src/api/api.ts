@@ -347,14 +347,14 @@ export async function getFundsData(project: string): Promise<ApiFundsDataRespons
   return data as ApiFundsDataResponse
 }
 
-export function executeFetchFunds(project: string, contractAddress?: string): EventSource {
+export function executeFetchFunds(project: string, contractAddress?: string, forceRefresh?: boolean): EventSource {
   // For SSE with POST, we need a workaround since EventSource only supports GET
   // We'll use fetch with a ReadableStream instead, but for simplicity, we'll use a pattern
   // that works with the existing terminal pattern
 
   // Create an EventSource-like wrapper using fetch
   const url = `/api/projects/${project}/funds-data/fetch`
-  const body = contractAddress ? JSON.stringify({ contractAddress }) : JSON.stringify({})
+  const body = JSON.stringify({ contractAddress, forceRefresh })
 
   // Use a custom approach - create a fetch request and return a mock EventSource
   const eventSource = new EventSource('about:blank')

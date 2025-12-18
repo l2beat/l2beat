@@ -79,22 +79,33 @@ export function getContractsToFetch(
 interface FetchOptions {
   fetchBalances?: boolean
   fetchPositions?: boolean
+  forceRefresh?: boolean
+}
+
+export interface FetchResult {
+  data: ContractFundsData
+  balancesCached: boolean
+  positionsCached: boolean
 }
 
 export async function fetchFundsForContract(
   contractAddress: string,
   options: FetchOptions,
-): Promise<ContractFundsData> {
+): Promise<FetchResult> {
   const result: ContractFundsData = {
     lastFetched: new Date().toISOString(),
   }
 
+  let balancesCached = false
+  let positionsCached = false
+
   // Normalize address - remove eth: prefix for API calls
   const cleanAddress = contractAddress.replace(/^eth:/i, '')
+  const forceRefreshParam = options.forceRefresh ? '&force_refresh=true' : ''
 
   try {
     if (options.fetchBalances) {
-      const balancesUrl = `${DEFISCAN_ENDPOINTS_URL}/balances?contract_address=${cleanAddress}&chain_id=eth`
+      const balancesUrl = `${DEFISCAN_ENDPOINTS_URL}/balances?contract_address=${cleanAddress}&chain_id=eth${forceRefreshParam}`
       const balancesResponse = await fetch(balancesUrl)
 
       if (!balancesResponse.ok) {
@@ -114,7 +125,10 @@ export async function fetchFundsForContract(
         total_usd_value: number
         timestamp: string
         source: string
+        cached: boolean
       }
+
+      balancesCached = balancesData.cached
 
       result.balances = {
         tokens: balancesData.balances.map((b): FundsTokenBalance => ({
@@ -132,8 +146,11 @@ export async function fetchFundsForContract(
     }
 
     if (options.fetchPositions) {
-      const positionsUrl = `${DEFISCAN_ENDPOINTS_URL}/positions?address=${cleanAddress}&chain_id=eth`
+      const positionsUrl = `${DEFISCAN_ENDPOINTS_URL}/positions?address=${cleanAddress}&chain_id=eth${forceRefreshParam}`
       const positionsResponse = await fetch(positionsUrl)
+
+      // Get cached status from header
+      positionsCached = positionsResponse.headers.get('X-Cached') === 'true'
 
       if (!positionsResponse.ok) {
         throw new Error(`Positions API returned ${positionsResponse.status}: ${positionsResponse.statusText}`)
@@ -202,13 +219,14 @@ export async function fetchFundsForContract(
     console.error(`Error fetching funds for ${contractAddress}:`, error)
   }
 
-  return result
+  return { data: result, balancesCached, positionsCached }
 }
 
 export async function fetchAllFundsForProject(
   paths: DiscoveryPaths,
   project: string,
   onProgress?: (message: string) => void,
+  forceRefresh: boolean = false,
 ): Promise<ApiFundsDataResponse> {
   const contractsToFetch = getContractsToFetch(paths, project)
   const existingData = getFundsData(paths, project)
@@ -218,29 +236,52 @@ export async function fetchAllFundsForProject(
     return existingData
   }
 
-  onProgress?.(`Found ${contractsToFetch.length} contracts to fetch funds for`)
+  onProgress?.(`Found ${contractsToFetch.length} contracts to fetch funds for${forceRefresh ? ' (force refresh)' : ''}`)
 
   const contracts = { ...existingData.contracts }
+  let fetchedFromApi = 0
+  let returnedFromCache = 0
 
   for (let i = 0; i < contractsToFetch.length; i++) {
     const contract = contractsToFetch[i]
-    onProgress?.(`[${i + 1}/${contractsToFetch.length}] Fetching funds for ${contract.address}...`)
 
-    const fundsData = await fetchFundsForContract(contract.address, {
+    onProgress?.(`[${i + 1}/${contractsToFetch.length}] Requesting ${contract.address}...`)
+
+    const fetchResult = await fetchFundsForContract(contract.address, {
       fetchBalances: contract.fetchBalances,
       fetchPositions: contract.fetchPositions,
+      forceRefresh,
     })
 
-    contracts[contract.address] = fundsData
+    contracts[contract.address] = fetchResult.data
 
-    if (fundsData.error) {
-      onProgress?.(`  Error: ${fundsData.error}`)
+    // Determine cache status for logging
+    const balancesStatus = contract.fetchBalances
+      ? (fetchResult.balancesCached ? 'CACHED' : 'FETCHED')
+      : 'N/A'
+    const positionsStatus = contract.fetchPositions
+      ? (fetchResult.positionsCached ? 'CACHED' : 'FETCHED')
+      : 'N/A'
+
+    // Count based on whether any data was actually fetched from API
+    const anyFetched = (contract.fetchBalances && !fetchResult.balancesCached) ||
+                       (contract.fetchPositions && !fetchResult.positionsCached)
+    if (anyFetched) {
+      fetchedFromApi++
     } else {
-      const balanceValue = fundsData.balances?.totalUsdValue ?? 0
-      const positionsValue = fundsData.positions?.totalUsdValue ?? 0
-      onProgress?.(`  Balances: $${balanceValue.toLocaleString()}, Positions: $${positionsValue.toLocaleString()}`)
+      returnedFromCache++
+    }
+
+    if (fetchResult.data.error) {
+      onProgress?.(`  ERROR: ${fetchResult.data.error}`)
+    } else {
+      const balanceValue = fetchResult.data.balances?.totalUsdValue ?? 0
+      const positionsValue = fetchResult.data.positions?.totalUsdValue ?? 0
+      onProgress?.(`  Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`)
     }
   }
+
+  onProgress?.(`Summary: ${fetchedFromApi} fetched from API, ${returnedFromCache} returned from cache`)
 
   const result: ApiFundsDataResponse = {
     version: '1.0',
@@ -259,6 +300,7 @@ export async function fetchFundsForSingleContract(
   project: string,
   contractAddress: string,
   onProgress?: (message: string) => void,
+  forceRefresh: boolean = false,
 ): Promise<ApiFundsDataResponse> {
   const tags = getContractTags(paths, project)
   const tag = tags.tags.find(t =>
@@ -270,17 +312,18 @@ export async function fetchFundsForSingleContract(
     return getFundsData(paths, project)
   }
 
-  onProgress?.(`Fetching funds for ${contractAddress}...`)
+  onProgress?.(`Requesting ${contractAddress}${forceRefresh ? ' (force refresh)' : ''}...`)
 
-  const fundsData = await fetchFundsForContract(contractAddress, {
+  const fetchResult = await fetchFundsForContract(contractAddress, {
     fetchBalances: tag.fetchBalances,
     fetchPositions: tag.fetchPositions,
+    forceRefresh,
   })
 
   const existingData = getFundsData(paths, project)
   const contracts = {
     ...existingData.contracts,
-    [contractAddress]: fundsData,
+    [contractAddress]: fetchResult.data,
   }
 
   const result: ApiFundsDataResponse = {
@@ -291,12 +334,20 @@ export async function fetchFundsForSingleContract(
 
   saveFundsData(paths, project, result)
 
-  if (fundsData.error) {
-    onProgress?.(`Error: ${fundsData.error}`)
+  // Log cache status
+  const balancesStatus = tag.fetchBalances
+    ? (fetchResult.balancesCached ? 'CACHED' : 'FETCHED')
+    : 'N/A'
+  const positionsStatus = tag.fetchPositions
+    ? (fetchResult.positionsCached ? 'CACHED' : 'FETCHED')
+    : 'N/A'
+
+  if (fetchResult.data.error) {
+    onProgress?.(`ERROR: ${fetchResult.data.error}`)
   } else {
-    const balanceValue = fundsData.balances?.totalUsdValue ?? 0
-    const positionsValue = fundsData.positions?.totalUsdValue ?? 0
-    onProgress?.(`Balances: $${balanceValue.toLocaleString()}, Positions: $${positionsValue.toLocaleString()}`)
+    const balanceValue = fetchResult.data.balances?.totalUsdValue ?? 0
+    const positionsValue = fetchResult.data.positions?.totalUsdValue ?? 0
+    onProgress?.(`Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`)
   }
 
   onProgress?.('Funds data saved successfully')

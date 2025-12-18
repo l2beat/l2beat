@@ -4,6 +4,11 @@ import type { DebankClient } from '../clients/DebankClient'
 import type { PositionResponse } from '../types/api'
 import type { Cache } from '../utils/cache'
 
+export interface PositionResult {
+  data: PositionResponse
+  cached: boolean
+}
+
 export class PositionService {
   constructor(
     private readonly debankClient: DebankClient,
@@ -14,19 +19,24 @@ export class PositionService {
   async getPositions(
     address: EthereumAddress,
     chainId?: string,
-  ): Promise<PositionResponse> {
+    forceRefresh?: boolean,
+  ): Promise<PositionResult> {
     // Default to Ethereum mainnet if no chain specified
     const chain = chainId ?? 'eth'
     const cacheKey = `positions:${address}:${chain}`
 
-    // Check cache first
-    const cached = this.cache.get(cacheKey)
-    if (cached) {
-      this.logger.info('Position cache hit', { address, chain })
-      return cached
+    // Check cache first (unless force refresh)
+    if (!forceRefresh) {
+      const cached = this.cache.get(cacheKey)
+      if (cached) {
+        this.logger.info('CACHE HIT - Returning cached positions', { address, chain })
+        return { data: cached, cached: true }
+      }
+    } else {
+      this.logger.info('FORCE REFRESH - Bypassing cache', { address, chain })
     }
 
-    this.logger.info('Fetching positions from DeBank', { address, chain })
+    this.logger.info('FETCHING - Getting positions from DeBank', { address, chain })
 
     // Fetch from DeBank - currently returns raw data
     // In the future, we can add transformation here
@@ -35,6 +45,6 @@ export class PositionService {
     // Cache the result
     this.cache.set(cacheKey, result)
 
-    return result
+    return { data: result, cached: false }
   }
 }
