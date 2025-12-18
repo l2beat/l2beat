@@ -138,7 +138,7 @@ export const celestia: BaseProject = {
       CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
       The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
       blockTime: 6, // seconds (CIP-26)
-      consensusFinality: 1, // instant finality with CometBFT
+      consensusFinality: 1, // instant finality with CometBFT, time_iota_ms
       unbondingPeriod: UnixTime.DAY * 14 + UnixTime.HOUR, // ~14 days (CIP-37)
     },
     dataAvailabilitySampling: {
