@@ -311,6 +311,32 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-sUSN",
+      "priceId": "staked-usn",
+      "symbol": "sUSN",
+      "name": "Staked USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54924/large/sUSN_Logo.png?1742538935",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02411565EF1A14DeCFBe83d2e987ccEd918cD752508a3d9c55DEb67148d14D17",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586104
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "starknet-tBTC",
       "priceId": "tbtc",
       "symbol": "tBTC",
@@ -401,6 +427,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-USN",
+      "priceId": "noon-usn",
+      "symbol": "USN",
+      "name": "Noon USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53948/large/image_%289%29.png?1737788246",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x01e6545Cab7BA4ac866768ba5e1Bd540893762286ED3feA7f9C02bFa147e135B",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586433
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
