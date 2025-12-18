@@ -15,7 +15,7 @@ Three repos need to be downloaded for the generation of the SMTB onchain verifie
 
 Each repo must be built using the `go build .` command.
 
-![SMTB verification process](/images/zk-catalog/smtb-verification.png)
+![SMTB verification process](../../../static/images/zk-catalog/smtb-verification.png)
 
 The first step consists in generating the r1cs file from the circuit source codes, which are written in Go and can be found [here](https://github.com/worldcoin/semaphore-mtb/tree/master/prover). To do so, run the following command inside the `semaphore-mtb` directory:
 
