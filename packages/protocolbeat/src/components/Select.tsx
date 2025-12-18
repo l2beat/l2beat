@@ -62,9 +62,23 @@ function SelectContent({
         style={{ width: 'var(--radix-select-trigger-width)' }}
         {...props}
       >
+        <RadixSelect.ScrollUpButton className="flex cursor-pointer items-center justify-center py-1">
+          <div className="absolute top-0 left-0 mt-3 flex h-0 w-full items-center justify-center">
+            <div className="-mt-1.5 absolute h-5 w-[calc(100%-2px)] bg-gradient-to-t from-transparent to-coffee-400" />
+            <IconChevronDown className="rotate-180" />
+          </div>
+        </RadixSelect.ScrollUpButton>
+
         <RadixSelect.Viewport className="max-h-[400px] p-1">
           {children}
         </RadixSelect.Viewport>
+
+        <RadixSelect.ScrollDownButton className="flex h-0 cursor-pointer items-center justify-center py-1">
+          <div className="absolute bottom-0 left-0 mb-2 flex h-0 w-full items-center justify-center">
+            <div className="absolute h-5 w-[calc(100%-2px)] bg-gradient-to-b from-transparent to-coffee-400" />
+            <IconChevronDown />
+          </div>
+        </RadixSelect.ScrollDownButton>
       </RadixSelect.Content>
     </RadixSelect.Portal>
   )
