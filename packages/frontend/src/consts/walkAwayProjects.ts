@@ -5,6 +5,7 @@ export const WALK_AWAY_PASSED_PROJECTS = [
   'ink',
   'unichain',
   'facet',
+  'aztec',
 ]
 
-export const WALK_AWAY_NOT_PASSED_PROJECTS = ['starknet', 'scroll', 'aztec']
+export const WALK_AWAY_NOT_PASSED_PROJECTS = ['starknet', 'scroll']
