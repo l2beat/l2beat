@@ -25,15 +25,17 @@ describe(BlobPriceProvider.name, () => {
   }
 
   describe('getBlobPricesByBlockRange', () => {
-    it('returns empty map when oldestBlock > newestBlock', async () => {
+    it('throws error when oldestBlock > newestBlock', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
         getFeeHistory: mockFn(),
       })
       const provider = createProvider(mockRpcClient)
 
-      const result = await provider.getBlobPricesByBlockRange([100, 50])
-
-      expect(result).toEqual(new Map())
+      await expect(
+        provider.getBlobPricesByBlockRange([100, 50]),
+      ).toBeRejectedWith(
+        'Invalid block range: oldestBlock (100) is greater than newestBlock (50)',
+      )
       expect(mockRpcClient.getFeeHistory).not.toHaveBeenCalled()
     })
 

@@ -16,7 +16,9 @@ export class BlobPriceProvider {
     const [oldestBlock, newestBlock] = blockRange
 
     if (oldestBlock > newestBlock) {
-      return new Map()
+      throw new Error(
+        `Invalid block range: oldestBlock (${oldestBlock}) is greater than newestBlock (${newestBlock})`,
+      )
     }
 
     const blockDiff = newestBlock - oldestBlock
@@ -43,10 +45,7 @@ export class BlobPriceProvider {
       newestBlock,
       oldestBlock,
       blocksCount,
-      chunks: chunkParams.map((p) => ({
-        blockCount: p.blockCount,
-        newestBlock: p.newestBlock,
-      })),
+      chunks: chunkParams.length,
     })
 
     // Execute all RPC calls in parallel
