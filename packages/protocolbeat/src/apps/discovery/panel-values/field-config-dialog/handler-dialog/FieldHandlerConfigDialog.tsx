@@ -126,11 +126,14 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
                 </div>
               )}
               <Dialog.Close asChild>
-                <Button variant="destructive">Discard</Button>
+                <Button variant="destructive" className="rounded-sm">
+                  Discard
+                </Button>
               </Dialog.Close>
               <Button
                 onClick={() => onSave(handlerEditorContent)}
                 disabled={!isDirty}
+                className="rounded-sm"
               >
                 <div className="flex items-center justify-center gap-1">
                   Save <Kbd keys={[[ctrlKey, 'S']]} size="sm" />
