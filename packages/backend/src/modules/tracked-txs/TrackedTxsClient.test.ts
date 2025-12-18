@@ -36,7 +36,7 @@ const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
 
 describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
-    it('calls big query, parses results', async () => {
+    it('calls dune query service, parses results', async () => {
       const duneQueryService = getMockDuneQueryService([
         TRANSFERS_RESPONSE,
         FUNCTIONS_RESPONSE,

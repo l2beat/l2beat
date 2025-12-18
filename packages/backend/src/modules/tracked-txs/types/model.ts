@@ -12,28 +12,6 @@ export type TrackedTxResult =
   | TrackedTxTransferResult
   | TrackedTxFunctionCallResult
 
-export type BigQueryFunctionCallResult = v.infer<
-  typeof BigQueryFunctionCallResult
->
-export const BigQueryFunctionCallResult = v.object({
-  hash: v.string(),
-  block_number: v.number(),
-  block_timestamp: v
-    .object({ value: v.string() })
-    .transform((v) => UnixTime.fromDate(new Date(v.value))),
-  to_address: v.string().transform(EthereumAddress),
-  input: v.string(),
-  receipt_gas_used: v.number(),
-  gas_price: v.unknown().transform((v) => BigInt(v as string)),
-  data_length: v.number(),
-  non_zero_bytes: v.number(),
-  receipt_blob_gas_used: v.union([v.number(), v.null()]),
-  receipt_blob_gas_price: v.union([
-    v.unknown().transform((v) => BigInt(v as string)),
-    v.null(),
-  ]),
-})
-
 export type DuneFunctionCallResult = v.infer<typeof DuneFunctionCallResult>
 export const DuneFunctionCallResult = v.object({
   hash: v.string(),
@@ -65,26 +43,6 @@ export type TrackedTxFunctionCallResult = {
   dataLength: number
   blobVersionedHashes: string[] | null
 }
-
-export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
-export const BigQueryTransferResult = v.object({
-  hash: v.string(),
-  block_number: v.number(),
-  block_timestamp: v
-    .object({ value: v.string() })
-    .transform((v) => UnixTime.fromDate(new Date(v.value))),
-  from_address: v.string().transform(EthereumAddress),
-  to_address: v.string().transform(EthereumAddress),
-  receipt_gas_used: v.number(),
-  gas_price: v.unknown().transform((v) => BigInt(v as string)),
-  data_length: v.number(),
-  non_zero_bytes: v.number(),
-  receipt_blob_gas_used: v.union([v.number(), v.null()]),
-  receipt_blob_gas_price: v.union([
-    v.unknown().transform((v) => BigInt(v as string)),
-    v.null(),
-  ]),
-})
 
 export type DuneTransferResult = v.infer<typeof DuneTransferResult>
 export const DuneTransferResult = v.object({
