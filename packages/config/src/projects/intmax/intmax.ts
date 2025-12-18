@@ -15,6 +15,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { scroll } from '../scroll/scroll'
 
 const discovery = new ProjectDiscovery('intmax')
+const finalizationPeriod = 0 // state root immediately finalized when proven
 
 export const intmax: ScalingProject = {
   type: 'layer3',
@@ -140,7 +141,10 @@ export const intmax: ScalingProject = {
   },
 
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:
