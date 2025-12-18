@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
-const calloutVariants = cva('flex rounded-lg', {
+const calloutVariants = cva('flex items-start rounded-lg', {
   variants: {
     color: {
       red: 'bg-negative/20',
@@ -38,7 +38,7 @@ export function Callout({
 }: CalloutProps) {
   return (
     <div className={cn(calloutVariants({ color, small }), className)}>
-      <span className="self-center">{icon}</span>
+      <span className="flex h-[1lh] items-center">{icon}</span>
       <div className="flex flex-col gap-2">
         {message}
         <div>{body}</div>
