@@ -4,6 +4,8 @@ import { getFundsData, executeFetchFunds } from '../../../api/api'
 import type { ContractFundsData, FundsTokenBalance, FundsPositionProtocol } from '../../../api/types'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { usePanelStore } from '../store/panel-store'
+import { ProxyTypeTag } from './ProxyTypeTag'
+import { buildProxyTypeMap } from './proxyTypeUtils'
 
 interface FundsSectionProps {
   project: string
@@ -33,11 +35,13 @@ function ContractFundsRow({
   contractAddress,
   fundsData,
   contractName,
+  proxyType,
   onSelect,
 }: {
   contractAddress: string
   fundsData: ContractFundsData
   contractName?: string
+  proxyType?: string
   onSelect?: () => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -63,6 +67,7 @@ function ContractFundsRow({
         <div className="flex items-center gap-2">
           <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
           <span className="text-coffee-200">{displayName}</span>
+          <ProxyTypeTag proxyType={proxyType} />
           <span className="text-coffee-500 text-xs">({shortAddress})</span>
           {onSelect && (
             <button
@@ -229,6 +234,9 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     return map
   }, [projectData])
 
+  // Build proxy type lookup map from projectData
+  const proxyTypeMap = useMemo(() => buildProxyTypeMap(projectData), [projectData])
+
   // Count contracts with funds fetching enabled
   const contractsWithFundsEnabled = contractTags?.tags.filter(
     (t) => t.fetchBalances || t.fetchPositions
@@ -381,6 +389,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                     contractAddress={address}
                     fundsData={data}
                     contractName={contractNameMap.get(address.toLowerCase())}
+                    proxyType={proxyTypeMap.get(address.toLowerCase())}
                     onSelect={() => usePanelStore.getState().select(address)}
                   />
                 )

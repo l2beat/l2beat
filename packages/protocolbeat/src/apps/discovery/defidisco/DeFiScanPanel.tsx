@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getProject, getFunctions } from '../../../api/api'
@@ -9,6 +9,8 @@ import { ResultsSection } from './ResultsSection'
 import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
 import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
 import { FundsSection } from './FundsSection'
+import { ProxyTypeTag } from './ProxyTypeTag'
+import { buildProxyTypeMap } from './proxyTypeUtils'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -338,6 +340,9 @@ function buildContractsMap(projectData: any): Map<string, { address: string; nam
 function ContractsWithPermissionsTable({ projectData, functions }: { projectData: any, functions: any }) {
   const selectGlobal = usePanelStore((state) => state.select)
 
+  // Build proxy type lookup map
+  const proxyTypeMap = useMemo(() => buildProxyTypeMap(projectData), [projectData])
+
   // Build list of contracts with permissions
   // Permissions can be stored under proxy addresses, implementation addresses, or both
   const contractsMap = new Map<string, {
@@ -488,10 +493,11 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
               onClick={() => handleContractClick(contract.address)}
             >
               <div className="flex justify-between">
-                <span
-                  style={{ color: isIncomplete ? '#f87171' : 'white' }}
-                >
-                  {getContractDisplayName(contract)}
+                <span className="flex items-center gap-1.5">
+                  <span style={{ color: isIncomplete ? '#f87171' : 'white' }}>
+                    {getContractDisplayName(contract)}
+                  </span>
+                  <ProxyTypeTag proxyType={proxyTypeMap.get(contract.address.toLowerCase())} />
                 </span>
                 <span
                   style={{ color: isIncomplete ? '#f87171' : 'white' }}
