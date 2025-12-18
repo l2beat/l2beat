@@ -40,9 +40,11 @@ export function StageCell({
         stageConfig.downgradePending &&
         !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
       {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
-      {walkAway === 'passed' && <WalkAwayPassedIcon className="-mt-px" />}
+      {walkAway === 'passed' && (
+        <WalkAwayPassedIcon className="-mt-px size-5 md:size-6" />
+      )}
       {walkAway === 'not-passed' && (
-        <WalkAwayNotPassedIcon className="-mt-px" />
+        <WalkAwayNotPassedIcon className="-mt-px size-5 md:size-6" />
       )}
     </div>
   )
