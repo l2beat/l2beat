@@ -37,7 +37,7 @@ export function useAvailableHandlers() {
 
   function validateRawHandler(content: string) {
     if (content.trim() === '') {
-      return { ok: true, model: undefined } as const
+      return { ok: true, handler: undefined } as const
     }
 
     const maybeJsonc = tryParsingJsonc(content)
@@ -71,17 +71,13 @@ export function useAvailableHandlers() {
     if (!handlerResult.success) {
       return {
         ok: false,
-        message: JSON.stringify(
-          { result: handlerResult.message, path: handlerResult.path },
-          null,
-          2,
-        ),
+        message: 'Invalid handler definition',
       } as const
     }
 
     return {
       ok: true,
-      model: maybeJsonc as FieldConfigSchema['handler'],
+      handler: maybeJsonc as FieldConfigSchema['handler'],
     } as const
   }
 

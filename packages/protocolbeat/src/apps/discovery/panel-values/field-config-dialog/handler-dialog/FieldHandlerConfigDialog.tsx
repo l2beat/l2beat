@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import type { ApiHandlersResponse } from '../../../../../api/types'
+import { Button } from '../../../../../components/Button'
 import { Dialog } from '../../../../../components/Dialog'
+import { Kbd } from '../../../../../components/Kbd'
 import { IconEdit } from '../../../../../icons/IconEdit'
+import { IconTriangleAlert } from '../../../../../icons/IconTriangleAlert'
 import { useAvailableHandlers } from '../../../hooks/useAvailableHandlers'
 import { useConfigModels } from '../../../hooks/useConfigModels'
+import { useIsomorphicKeys } from '../../../hooks/useIsomorphicKeys'
 import { HandlerEditor } from './HandlerEditor'
 import { HandlerSelector } from './HandlerSelector'
 
@@ -14,49 +18,63 @@ type Props = {
 }
 
 export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
-  const editorKey = `handler-${context}-${fieldName}`
   const models = useConfigModels()
-  const model = context === 'config' ? models.configModel : models.templateModel
+  const { ctrlKey } = useIsomorphicKeys()
   const { handlers, parseRaw, detectHandler } = useAvailableHandlers()
 
-  const [handlerString, setHandlerString] = useState(
-    model.getFieldHandlerString(fieldName) ?? '',
+  const model = context === 'config' ? models.configModel : models.templateModel
+
+  const currentlyConfiguredHandler = useMemo(
+    () => model.getFieldHandlerString(fieldName) ?? '',
+    [model, fieldName],
   )
 
-  useEffect(() => {
-    setHandlerString(model.getFieldHandlerString(fieldName) ?? '')
-  }, [model, fieldName])
+  const [handlerEditorContent, setHandlerEditorContent] = useState(
+    currentlyConfiguredHandler,
+  )
+
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  )
+
+  const editorKey = `handler-${context}-${fieldName}`
+
+  // TODO: Refac dirty files in code store
+  // Not using useCodeStore since we're running in controlled mode
+  const isDirty = handlerEditorContent !== currentlyConfiguredHandler
 
   const [selectedHandler, setSelectedHandler] = useState<
     ApiHandlersResponse['handlers'][number] | undefined
   >(undefined)
 
-  const [errors, setErrors] = useState<string | undefined>(undefined)
+  useEffect(() => {
+    setHandlerEditorContent(currentlyConfiguredHandler)
+  }, [currentlyConfiguredHandler])
 
   useEffect(() => {
-    setSelectedHandler(detectHandler(handlerString))
-  }, [handlerString])
+    setSelectedHandler(detectHandler(handlerEditorContent))
+  }, [handlerEditorContent])
 
   function onSave(content: string) {
     const result = parseRaw(content)
     if (!result.ok) {
-      toast.error('Cannot save handler.', {
+      toast.error('Cannot save handler', {
         description: <pre>{result.message}</pre>,
       })
       return false
     }
-    model.setFieldHandler(fieldName, result.model)
-    toast.success('Handler saved.')
+    model.setFieldHandler(fieldName, result.handler)
+    toast.success('Handler saved')
     return true
   }
 
   function onChange(content: string) {
-    setHandlerString(content)
+    setHandlerEditorContent(content)
     const result = parseRaw(content)
     if (!result.ok) {
-      setErrors(result.message)
+      setErrorMessage(result.message)
     } else {
-      setErrors(undefined)
+      setErrorMessage(undefined)
     }
   }
 
@@ -88,17 +106,36 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
       >
         <Dialog.Title>Handler editor</Dialog.Title>
         <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
-          <div className="col-span-3 flex min-h-0 w-full flex-col">
+          <div className="col-span-3 flex min-h-0 w-full flex-col gap-2">
             <div className="flex min-h-0 flex-1 flex-col border border-coffee-200 bg-coffee-900 p-4 pl-0">
               <HandlerEditor
                 context={context}
                 editorKey={editorKey}
                 fieldName={fieldName}
-                contents={handlerString}
+                contents={handlerEditorContent}
                 selectedHandler={selectedHandler}
                 onSave={onSave}
                 onChange={onChange}
               />
+            </div>
+            <div className="flex items-start justify-end gap-2">
+              {errorMessage && (
+                <div className="flex h-full w-full items-center gap-1 border border-aux-red/20 bg-aux-red/10 p-1 text-2xs">
+                  <IconTriangleAlert className="size-4 text-aux-red" />
+                  {errorMessage}
+                </div>
+              )}
+              <Dialog.Close asChild>
+                <Button variant="destructive">Discard</Button>
+              </Dialog.Close>
+              <Button
+                onClick={() => onSave(handlerEditorContent)}
+                disabled={!isDirty}
+              >
+                <div className="flex items-center justify-center gap-1">
+                  Save <Kbd keys={[[ctrlKey, 'S']]} size="sm" />
+                </div>
+              </Button>
             </div>
           </div>
           <div className="col-span-2 flex h-full min-h-0 w-full">
@@ -107,8 +144,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
               selectedHandler={selectedHandler}
               onSelectedHandlerChange={onSelectedHandlerChange}
             />
-
-            {errors && <div className="text-coffee-300 text-xs">{errors}</div>}
           </div>
         </div>
       </Dialog.Body>
