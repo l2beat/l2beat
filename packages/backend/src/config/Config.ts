@@ -107,11 +107,7 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly bigQuery: {
-    readonly clientEmail: string
-    readonly privateKey: string
-    readonly projectId: string
-  }
+  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean

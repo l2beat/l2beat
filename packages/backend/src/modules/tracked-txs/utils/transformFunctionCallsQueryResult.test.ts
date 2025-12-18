@@ -30,7 +30,7 @@ import {
 } from '../../../test/sharedBridge'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
-  BigQueryFunctionCallResult,
+  DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
@@ -106,45 +106,42 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       {
         hash: txHashes[0],
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: SELECTOR_1,
-        to_address: ADDRESS_1,
+        to: ADDRESS_1,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 100,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+        blob_versioned_hashes: null,
       },
       {
         hash: txHashes[1],
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: SELECTOR_2,
-        to_address: ADDRESS_2,
+        to: ADDRESS_2,
         gas_price: 20n,
-        receipt_gas_used: 200,
+        gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+        blob_versioned_hashes: null,
       },
       {
         hash: txHashes[2],
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: sharpInput,
-        to_address: sharpSubmissions[0].properties.params.address,
+        to: sharpSubmissions[0].properties.params.address,
         gas_price: 30n,
-        receipt_gas_used: 300,
+        gas_used: 300,
         data_length: 300,
         non_zero_bytes: 200,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+        blob_versioned_hashes: null,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -160,11 +157,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: ADDRESS_1,
         input: SELECTOR_1,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 100 + 4 * (100 - 100),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+        blobVersionedHashes: null,
       },
       {
         formula: 'functionCall',
@@ -178,11 +174,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: ADDRESS_2,
         input: SELECTOR_2,
         gasPrice: 20n,
-        receiptGasUsed: 200,
+        gasUsed: 200,
         calldataGasUsed: 16 * 150 + 4 * (200 - 150),
         dataLength: 200,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+        blobVersionedHashes: null,
       },
       {
         formula: 'functionCall',
@@ -196,11 +191,10 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         gasPrice: 30n,
-        receiptGasUsed: 300,
+        gasUsed: 300,
         calldataGasUsed: 16 * 200 + 4 * (300 - 200),
         dataLength: 300,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+        blobVersionedHashes: null,
       },
     ]
 
@@ -227,19 +221,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       {
         hash: txHashes[0],
-        to_address: EthereumAddress.random(),
+        to: EthereumAddress.random(),
         input: 'random-string',
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 100,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
     ]
 
@@ -272,19 +266,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       {
         hash: txHashes[0],
-        to_address: sharpSubmissions[0].properties.params.address,
+        to: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
     ]
 
@@ -301,11 +295,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
     ]
 
@@ -356,32 +350,32 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       {
         hash: txHashes[0],
-        to_address: sharedBridgeCalls[0].properties.params.address,
+        to: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeCommitBatchesInput,
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
       {
         hash: txHashes[1],
-        to_address: sharedBridgeCalls[2].properties.params.address,
+        to: sharedBridgeCalls[2].properties.params.address,
         input: agglayerSharedBridgeVerifyBatchesInput,
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 70,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
     ]
 
@@ -398,11 +392,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeCommitBatchesInput,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
       {
         formula: 'functionCall',
@@ -416,11 +410,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: sharedBridgeCalls[2].properties.params.address,
         input: agglayerSharedBridgeVerifyBatchesInput,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 70 + 4 * (100 - 70),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
     ]
 
@@ -462,19 +456,19 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       {
         hash: txHashes[0],
-        to_address: sharedBridgeCalls[0].properties.params.address,
+        to: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeExecuteBatchesPost29Input,
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 60,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
     ]
 
@@ -491,11 +485,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: sharedBridgeCalls[0].properties.params.address,
         input: elasticChainSharedBridgeExecuteBatchesPost29Input,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 60 + 4 * (100 - 60),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
     ]
 
@@ -540,48 +534,48 @@ describe(transformFunctionCallsQueryResult.name, () => {
       }),
     ]
 
-    const queryResults: BigQueryFunctionCallResult[] = [
+    const queryResults: DuneFunctionCallResult[] = [
       // Before Pectra
       {
         hash: txHashes[0],
         block_number: block,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: SELECTOR_1,
-        to_address: ADDRESS_1,
+        to: ADDRESS_1,
         gas_price: 10n,
-        receipt_gas_used: 100,
+        gas_used: 100,
         data_length: 100,
         non_zero_bytes: 100,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
       // After Pectra - high compute
       {
         hash: txHashes[1],
         block_number: 22431085,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: SELECTOR_2,
-        to_address: ADDRESS_2,
+        to: ADDRESS_2,
         gas_price: 20n,
-        receipt_gas_used: 200,
+        gas_used: 200,
         data_length: 200,
         non_zero_bytes: 150,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
       // After Pectra - low compute
       {
         hash: txHashes[2],
         block_number: 22431085,
-        block_timestamp: timestamp,
+        block_time: timestamp,
         input: SELECTOR_3,
-        to_address: ADDRESS_3,
+        to: ADDRESS_3,
         gas_price: 30n,
-        receipt_gas_used: 300,
+        gas_used: 300,
         data_length: 10_000,
         non_zero_bytes: 200,
-        receipt_blob_gas_price: null,
-        receipt_blob_gas_used: null,
+
+        blob_versioned_hashes: null,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -597,11 +591,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: ADDRESS_1,
         input: SELECTOR_1,
         gasPrice: 10n,
-        receiptGasUsed: 100,
+        gasUsed: 100,
         calldataGasUsed: 16 * 100 + 4 * (100 - 100),
         dataLength: 100,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
       {
         formula: 'functionCall',
@@ -615,11 +609,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: ADDRESS_2,
         input: SELECTOR_2,
         gasPrice: 20n,
-        receiptGasUsed: 200,
+        gasUsed: 200,
         calldataGasUsed: 40 * 150 + 10 * (200 - 150),
         dataLength: 200,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
       {
         formula: 'functionCall',
@@ -633,11 +627,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         toAddress: ADDRESS_3,
         input: SELECTOR_3,
         gasPrice: 30n,
-        receiptGasUsed: 300,
+        gasUsed: 300,
         calldataGasUsed: 40 * 200 + 10 * (10_000 - 200),
         dataLength: 10_000,
-        receiptBlobGasPrice: null,
-        receiptBlobGasUsed: null,
+
+        blobVersionedHashes: null,
       },
     ]
 
