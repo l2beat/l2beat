@@ -50,6 +50,10 @@ export const sxt: ScalingProject = zkStackL2({
     technology: TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
     bridge: DA_BRIDGES.NONE,
   },
+  availDa: {
+    appIds: ['34'],
+    sinceBlock: 0,
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
