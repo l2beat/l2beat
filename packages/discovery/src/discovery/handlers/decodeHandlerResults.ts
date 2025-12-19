@@ -46,7 +46,7 @@ export function decodeHandlerResults(
   const copyBatches = orderByCopyDependencies(fields)
   for (const batch of copyBatches) {
     for (const fieldName of batch) {
-      const copy = (fieldOverrides ?? {})[fieldName]?.copy
+      const copy = fieldOverrides[fieldName]?.copy
       if (copy !== undefined) {
         if (values[copy] === undefined) {
           errors[fieldName] = `Field ${copy} not found`
@@ -59,7 +59,7 @@ export function decodeHandlerResults(
   }
 
   for (const fieldName in fieldOverrides) {
-    const edit = (fieldOverrides ?? {})[fieldName]?.edit
+    const edit = fieldOverrides[fieldName]?.edit
     if (edit !== undefined) {
       // biome-ignore lint/style/noNonNullAssertion: It's fine
       values[fieldName] = runtime.executeBlip(values[fieldName]!, edit)
