@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/TvsRelatedDisplayControlsContext'
+import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
 
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'

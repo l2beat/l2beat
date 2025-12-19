@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react'
-import type { DISPLAY_OPTIONS } from './displayOptions'
+import type { DISPLAY_OPTIONS } from '../displayOptions'
 
 type TvsRelatedDisplayOptionsKey = Extract<
   keyof typeof DISPLAY_OPTIONS,

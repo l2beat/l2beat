@@ -12,8 +12,8 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
 import { DisplayControls } from '~/components/table/display/DisplayControls'
-import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'

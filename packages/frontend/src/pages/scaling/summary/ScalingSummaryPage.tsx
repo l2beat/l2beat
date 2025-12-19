@@ -5,7 +5,7 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/Scaling
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/TvsRelatedDisplayControlsContext'
+import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
