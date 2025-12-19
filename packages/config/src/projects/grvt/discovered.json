@@ -412,10 +412,12 @@
       "name": "Governance",
       "address": "eth:0xbdC07D62fA117B195E579c2e299f037b158E7335",
       "type": "Contract",
+      "template": "adi/Governance",
       "sourceHashes": [
         "0xa55fc91686176a6d8e0cad69d00aa02758846596bd9a503c10d435c06a077ec1"
       ],
       "proxyType": "immutable",
+      "description": "Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -428,10 +430,26 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
+        "executedCount": 5,
         "minDelay": 0,
         "owner": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "scheduledShadowCount": 0,
+        "scheduledTransparentCount": 5,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pendingOwner": { "severity": "HIGH" },
+        "securityCouncil": { "severity": "HIGH" },
+        "minDelay": { "severity": "HIGH" },
+        "scheduledTransparentCount": {
+          "description": "Number of scheduled transparent proposals"
+        },
+        "scheduledShadowCount": {
+          "description": "Number of scheduled shadow proposals"
+        },
+        "executedCount": { "description": "Number of executed proposals" }
       },
       "implementationNames": {
         "eth:0xbdC07D62fA117B195E579c2e299f037b158E7335": "Governance"
@@ -1442,6 +1460,7 @@
     ]
   },
   "usedTemplates": {
+    "adi/Governance": "0x46af5a5c4f79ce9ea6efb5ec445c6bb975a26e603abb09e50fe8a0e16f4e2e32",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",

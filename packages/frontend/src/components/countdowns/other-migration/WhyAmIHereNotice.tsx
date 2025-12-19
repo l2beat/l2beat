@@ -23,7 +23,7 @@ export function WhyAmIHereNotice({
               color="red"
               className="px-3 py-2 font-bold text-paragraph-15 text-primary md:p-4 md:text-paragraph-16"
               icon={
-                <CloseIcon className="mt-[3px] size-[15px] fill-negative md:mt-1 md:size-3.5" />
+                <CloseIcon className="size-[15px] fill-negative md:size-3.5" />
               }
             />
             {reason.explanation && (

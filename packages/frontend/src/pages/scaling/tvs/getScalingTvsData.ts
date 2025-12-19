@@ -94,12 +94,12 @@ async function getQueryState(
       },
       range: optionToRange('1y'),
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
     helpers.tvs.table.prefetch({
       type: tab,
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
   return helpers.dehydrate()

@@ -100,6 +100,20 @@
       "supply": "zero"
     },
     {
+      "name": "ADI",
+      "coingeckoId": "adi-token",
+      "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+      "symbol": "ADI",
+      "decimals": 18,
+      "deploymentTimestamp": 1763656247,
+      "coingeckoListingTimestamp": 1765238400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
