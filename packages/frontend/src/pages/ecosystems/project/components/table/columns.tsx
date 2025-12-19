@@ -11,10 +11,10 @@ import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
-import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { EcosystemProjectsTableRow } from '../utils/toTableRows'
 
-const columnHelper = createColumnHelper<EcosystemProjectEntry>()
+const columnHelper = createColumnHelper<EcosystemProjectsTableRow>()
 
 export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
   return compact([
@@ -43,7 +43,6 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
           'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
       },
     }),
-    ,
     columnHelper.accessor(
       (e) => {
         if (

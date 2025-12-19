@@ -114,7 +114,10 @@ export interface EcosystemEntry {
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
   gasTokens?: string[]
-  tvsData: ProjectSevenDayTvsBreakdown | undefined
+  tvsData: {
+    withRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
+    withoutRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
+  }
 }
 
 export async function getEcosystemEntry(
@@ -278,7 +281,11 @@ export async function getEcosystemEntry(
               (f) => !EXCLUDED_FILTERS.includes(f.id),
             ) ?? []),
           ]),
-          tvsData: tvs.projects[project.id.toString()],
+          tvsData: {
+            withoutRwaRestricted: tvs.projects[project.id.toString()],
+            withRwaRestricted:
+              tvsWithRwasRestricted.projects[project.id.toString()],
+          },
         }
         return result
       })
