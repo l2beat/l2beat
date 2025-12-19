@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "adi",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
+    "eth:0xfa8b5ea9b8d36a72eb0ba66cc7abc83d9deec3b8"
+  ],
+  "names": {
+    "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B": "Diamond",
+    "eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb": "BridgeHub"
+  },
+  "overrides": {
+    "eth:0xfA8B5EA9b8d36a72Eb0ba66Cc7aBc83d9deeC3B8": {
+      "category": "bridge-canonical",
+      "description": "Legacy bridge for depositing ERC20 tokens to ADI Chain."
+    },
+    "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754": {
+      "ignoreInWatchMode": [],
+      "fields": {
+        "nonce": {
+          "description": "If increased, could mean a new verifier version is registered on DualVerifier."
+        }
+      }
+    },
+    "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": {
+      // validatorTimelock
+      "fields": {
+        "validatorVTL": {
+          // assuming the executor has all the roles, change if not the case
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

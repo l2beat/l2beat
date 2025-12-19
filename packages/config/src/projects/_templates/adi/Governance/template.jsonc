@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Allows scheduling transparent and shadow proposals, has security council with instant execution.",
+  "fields": {
+    "owner": { "severity": "HIGH" },
+    "pendingOwner": { "severity": "HIGH" },
+    "securityCouncil": { "severity": "HIGH" },
+    "minDelay": { "severity": "HIGH" },
+    "scheduledTransparentCount": {
+      "description": "Number of scheduled transparent proposals",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x23bc9f5dc037eb49c162fd08c2a4d43dfe70063149e140d502273168da0a0625"
+        ]
+      }
+    },
+    "scheduledShadowCount": {
+      "description": "Number of scheduled shadow proposals",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xbcb40fd953364ec8aed99fa0bd6dcc03103f979efde4744ad7452e556ff20ba6"
+        ]
+      }
+    },
+    "executedCount": {
+      "description": "Number of executed proposals",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x1277662f4b42b8a4069e99fb5e41ce8919d3c621156090ac08fb11adbcec66f9"
+        ]
+      }
+    }
+  }
+}

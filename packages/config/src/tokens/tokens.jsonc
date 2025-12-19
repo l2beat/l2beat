@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "ADI",
+      "address": "0x8b1484d57abbe239bb280661377363b03c89caea",
+      "coingeckoId": "adi-token"
+    },
+    {
       "symbol": "vPHA",
       "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
       "coingeckoId": "pha"
