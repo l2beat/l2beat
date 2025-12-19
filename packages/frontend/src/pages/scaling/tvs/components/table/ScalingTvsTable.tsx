@@ -2,7 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -23,7 +23,7 @@ export function ScalingTvsTable({
   breakdownType,
   ignoreUnderReviewIcon,
 }: Props) {
-  const { display } = useTvsRelatedDisplayControlsContext()
+  const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data: sevenDayBreakdown, isLoading: isTvsLoading } =

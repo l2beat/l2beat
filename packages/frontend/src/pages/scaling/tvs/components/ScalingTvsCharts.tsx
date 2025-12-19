@@ -8,7 +8,7 @@ import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControl
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
-  const { display } = useTvsRelatedDisplayControlsContext()
+  const { display } = useTvsDisplayControlsContext()
   const { state: filters } = useTableFilterContext()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [unit, setUnit] = useState<ChartUnit>('usd')

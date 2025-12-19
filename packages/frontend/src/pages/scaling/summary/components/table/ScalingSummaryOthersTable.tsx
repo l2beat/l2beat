@@ -2,7 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
@@ -16,7 +16,7 @@ interface Props {
 
 export function ScalingSummaryOthersTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
-  const { display } = useTvsRelatedDisplayControlsContext()
+  const { display } = useTvsDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'others',

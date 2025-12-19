@@ -20,7 +20,7 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
-import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
@@ -37,7 +37,7 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const { display, setDisplay } = useTvsRelatedDisplayControlsContext()
+  const { display, setDisplay } = useTvsDisplayControlsContext()
   const [breakdownType, setBreakdownType] = useState<
     'bridgeType' | 'assetCategory'
   >('bridgeType')

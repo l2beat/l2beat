@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsRelatedDisplayControlsContext'
+import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -30,14 +30,14 @@ export function ScalingTvsPage({
         <SideNavLayout>
           <MainPageHeader>Value Secured</MainPageHeader>
           <TableFilterContextProvider>
-            <TvsRelatedDisplayControlsContextProvider
+            <TvsDisplayControlsContextProvider
               initialValues={{
                 excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: true,
               }}
             >
               <ScalingTvsTabs {...entries} milestones={milestones} />
-            </TvsRelatedDisplayControlsContextProvider>
+            </TvsDisplayControlsContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
