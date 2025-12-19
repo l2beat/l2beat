@@ -2,7 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { useDisplayControlsContext } from '~/components/table/display/DisplayControlsContext'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
@@ -15,13 +15,13 @@ interface Props {
 }
 
 export function ScalingSummaryRollupsTable({ entries }: Props) {
-  const { getDisplay } = useDisplayControlsContext()
+  const { display } = useTvsRelatedDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'rollups',
-    excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
-    excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(
@@ -29,9 +29,9 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
       toTableRows({
         projects: entries,
         sevenDayBreakdown: data,
-        excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
+        excludeAssociatedTokens: display.excludeAssociatedTokens,
       }),
-    [entries, getDisplay, data],
+    [entries, display, data],
   )
 
   const columns = useMemo(

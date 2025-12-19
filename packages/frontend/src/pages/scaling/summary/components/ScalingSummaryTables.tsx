@@ -13,6 +13,7 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
 import { DisplayControls } from '~/components/table/display/DisplayControls'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -26,6 +27,7 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummary
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsRelatedDisplayControlsContext()
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -51,7 +53,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <DisplayControls />
+        <DisplayControls display={display} setDisplay={setDisplay} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

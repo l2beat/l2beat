@@ -5,7 +5,7 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/Scaling
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { DisplayControlsContextProvider } from '~/components/table/display/DisplayControlsContext'
+import { TvsRelatedDisplayControlsContextProvider } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -53,7 +53,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
             <PrimaryCard>{activityChart}</PrimaryCard>
           </div>
           <ChartTabs className="lg:hidden" charts={[tvsChart, activityChart]} />
-          <DisplayControlsContextProvider
+          <TvsRelatedDisplayControlsContextProvider
             initialValues={{
               excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
@@ -62,7 +62,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
             <TableFilterContextProvider>
               <ScalingSummaryTables {...entries} />
             </TableFilterContextProvider>
-          </DisplayControlsContextProvider>
+          </TvsRelatedDisplayControlsContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

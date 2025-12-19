@@ -21,6 +21,7 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
 import { DisplayControls } from '~/components/table/display/DisplayControls'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -36,6 +37,7 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsRelatedDisplayControlsContext()
   const [breakdownType, setBreakdownType] = useState<
     'bridgeType' | 'assetCategory'
   >('bridgeType')
@@ -64,7 +66,7 @@ export function ScalingTvsTabs(props: Props) {
           ]}
         />
         <div className="max-md:mt-4 max-md:mr-4">
-          <DisplayControls />
+          <DisplayControls display={display} setDisplay={setDisplay} />
         </div>
       </div>
       <DirectoryTabs defaultValue="rollups">

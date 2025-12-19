@@ -8,7 +8,7 @@ import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControl
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { useDisplayControlsContext } from '~/components/table/display/DisplayControlsContext'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
-  const { getDisplay } = useDisplayControlsContext()
+  const { display } = useTvsRelatedDisplayControlsContext()
   const { state: filters } = useTableFilterContext()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [unit, setUnit] = useState<ChartUnit>('usd')
@@ -44,8 +44,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   const { data } = api.tvs.detailedChart.useQuery({
     range,
     filter,
-    excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
-    excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
   })
 
   const timeRange = getChartTimeRangeFromData(
@@ -60,8 +60,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       unit={unit}
       filter={filter}
       range={range}
-      excludeAssociatedTokens={getDisplay('excludeAssociatedTokens')}
-      excludeRwaRestrictedTokens={getDisplay('excludeRwaRestrictedTokens')}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -71,8 +71,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
       unit={unit}
       filter={filter}
       range={range}
-      excludeAssociatedTokens={getDisplay('excludeAssociatedTokens')}
-      excludeRwaRestrictedTokens={getDisplay('excludeRwaRestrictedTokens')}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
       milestones={milestones}
     />
   )

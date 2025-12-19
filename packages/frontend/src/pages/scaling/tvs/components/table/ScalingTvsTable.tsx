@@ -2,7 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
-import { useDisplayControlsContext } from '~/components/table/display/DisplayControlsContext'
+import { useTvsRelatedDisplayControlsContext } from '~/components/table/display/TvsRelatedDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -23,24 +23,24 @@ export function ScalingTvsTable({
   breakdownType,
   ignoreUnderReviewIcon,
 }: Props) {
-  const { getDisplay } = useDisplayControlsContext()
+  const { display } = useTvsRelatedDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
   const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
     api.tvs.table.useQuery({
       type: tab,
-      excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
-      excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
     })
 
   const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
-        excludeAssociatedTokens: getDisplay('excludeAssociatedTokens'),
+        excludeAssociatedTokens: display.excludeAssociatedTokens,
         sevenDayBreakdown,
       }),
-    [entries, getDisplay, sevenDayBreakdown],
+    [entries, display, sevenDayBreakdown],
   )
 
   const columns = useMemo(
@@ -48,10 +48,10 @@ export function ScalingTvsTable({
       getScalingTvsColumns({
         ignoreUnderReviewIcon,
         breakdownType,
-        excludeRwaRestrictedTokens: getDisplay('excludeRwaRestrictedTokens'),
+        excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
         isTvsLoading,
       }),
-    [breakdownType, ignoreUnderReviewIcon, getDisplay, isTvsLoading],
+    [breakdownType, ignoreUnderReviewIcon, display, isTvsLoading],
   )
 
   const table = useTable({

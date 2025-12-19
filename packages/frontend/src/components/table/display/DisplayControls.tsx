@@ -20,19 +20,21 @@ import {
 import { InfoIcon } from '~/icons/Info'
 import { SlidersIcon } from '~/icons/Sliders'
 import { cn } from '~/utils/cn'
-import { useDisplayControlsContext } from './DisplayControlsContext'
 import {
   DISPLAY_OPTIONS,
   type DisplayOption,
   type DisplayOptionsKey,
 } from './displayOptions'
 
-export function DisplayControls() {
-  const { displayState, setDisplay } = useDisplayControlsContext()
-
-  const providedEntries = Object.entries(displayState).filter(
-    ([_, value]) => value !== undefined,
-  ) as [DisplayOptionsKey, boolean][]
+interface Props {
+  display: Record<DisplayOptionsKey, boolean>
+  setDisplay: (key: DisplayOptionsKey, value: boolean) => void
+}
+export function DisplayControls({ display, setDisplay }: Props) {
+  const providedEntries = Object.entries(display) as [
+    DisplayOptionsKey,
+    boolean,
+  ][]
 
   const checkedCount = providedEntries.filter(([_, value]) => value).length
 
