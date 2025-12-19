@@ -8,7 +8,7 @@ export function toTableRows({
 }: {
   projects: ScalingSummaryEntry[]
   sevenDayBreakdown: SevenDayTvsBreakdown | undefined
-  excludeAssociatedTokens: boolean
+  excludeAssociatedTokens: boolean | undefined
 }) {
   return projects.map((project) => {
     const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]

@@ -665,7 +665,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -720,7 +720,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: true,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -775,7 +775,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -817,7 +817,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -859,7 +859,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: true,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -888,7 +888,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -903,7 +903,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: false,
+              excludeRwaRestrictedTokens: true,
             },
           )
 
@@ -957,7 +957,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1027,7 +1027,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1095,7 +1095,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1149,7 +1149,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1200,7 +1200,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: true,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1230,7 +1230,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1252,7 +1252,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1274,7 +1274,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: true,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1307,7 +1307,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             300, // latestTimestamp
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1382,7 +1382,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // latestTimestamp (only timestamp 100)
             {
               excludeAssociated: true,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1427,7 +1427,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             500, // latestTimestamp - no data at this timestamp
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1442,7 +1442,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1470,7 +1470,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1487,7 +1487,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: false,
+              excludeRwaRestrictedTokens: true,
               cutOffTimestamp: 50,
             },
           )

@@ -14,11 +14,11 @@ export function TvsProjectStats({
   tvsInfo: ProjectTvsInfo | undefined
   projectId: string
 }) {
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'projects',
     projectIds: [projectId],
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const projectData = data?.projects[projectId]

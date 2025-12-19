@@ -30,11 +30,11 @@ export async function getSummedTvsValues(
   {
     forSummary,
     excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   }: {
     forSummary: boolean
     excludeAssociatedTokens: boolean
-    includeRwaRestrictedTokens: boolean
+    excludeRwaRestrictedTokens: boolean
   },
 ): Promise<SummedTvsValues[]> {
   const resolution = rangeToResolution(range)
@@ -46,7 +46,7 @@ export async function getSummedTvsValues(
       range,
       forSummary,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
     ],
   })
 
