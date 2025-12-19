@@ -1,6 +1,29 @@
-Generated with discovered.json: 0x0b8b612514f600bc51875a9b1fbf9d872b280a5c
+Generated with discovered.json: 0x20667b4906fd91f3c88cdda8703e2d17231712b7
 
-# Diff at Fri, 12 Dec 2025 14:50:02 GMT:
+# Diff at Wed, 17 Dec 2025 08:36:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@8e3e624ee8b25c3a6106ebb6a5295b78f99241f8 block: 1765550938
+- current timestamp: 1765960454
+
+## Description
+
+gas pricing changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.blobbasefeeScalar:
+-        611590
++        1014213
+    }
+```
+
+Generated with discovered.json: 0x5db3262188d8103e81401ac639b06513ae26fb63
+
+# Diff at Fri, 12 Dec 2025 16:20:02 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764933823
@@ -20,10 +43,15 @@ discovery. Values are for block 1764933823 (main branch discovery), not current.
     contract DisputeGameFactory (eth:0xe9394679d0f0676E4a2dE99F8ed6B4aCb16c5f0f) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 +++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
       values.game42:
 +        "eth:0x0000000000000000000000000000000000000000"
       values.initBondGame42:
 +        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
       fieldMeta.game42:
 +        {"severity":"HIGH"}
     }

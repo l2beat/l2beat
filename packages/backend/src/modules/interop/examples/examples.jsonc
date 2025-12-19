@@ -588,6 +588,19 @@
       }
     ]
   },
+  "stargatev2hydra": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "apechain",
+        "tx": "0xc272687be29d8fee4f68419ec9fbfce6790b9d7e82bdf1d52eb5efc581fb0ee9"
+      },
+      {
+        "chain": "base",
+        "tx": "0x17f436a6f262fdd29d104a761e98e7da668551f8e28b9ca6df4f6da4d2c29b4c"
+      }
+    ]
+  },
   "tBTC": {
     "txs": [
       {

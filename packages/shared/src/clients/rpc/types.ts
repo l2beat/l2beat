@@ -96,6 +96,20 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
 })
 
+export type EVMFeeHistory = z.infer<typeof EVMFeeHistory>
+export const EVMFeeHistory = z.object({
+  baseFeePerGas: z.array(Quantity.decode),
+  gasUsedRatio: z.array(z.number()),
+  baseFeePerBlobGas: z.array(Quantity.decode),
+  blobGasUsedRatio: z.array(z.number()),
+  oldestBlock: Quantity.decode.transform((n) => Number(n)),
+  reward: z.array(z.array(Quantity.decode)),
+})
+
+export const EVMFeeHistoryResponse = z.object({
+  result: EVMFeeHistory,
+})
+
 export const EVMCallResponse = z.object({
   result: z.string().check((s) => HEX_REGEX.test(s), 'Invalid hex string'),
 })

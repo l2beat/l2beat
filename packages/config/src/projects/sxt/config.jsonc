@@ -2,15 +2,15 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "sxt",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x742A28e22277945BBAAa34810393bf6e8512576C"],
+  "initialAddresses": ["eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"],
   "sharedModules": ["shared-zk-stack"],
-  "names": { "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": "zkVmDiamond" },
+  "names": { "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24": "Diamond" },
   "overrides": {
-    "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": {
+    "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24": {
       "fields": {
         "validators": {
           "handler": {
-            "type": "hardcoded",
+            "type": "hardcoded", // handler does not work, we take the VTL from the shared contracts
             "value": ["eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
           }
         }

@@ -22,11 +22,14 @@ import {
   StarknetClient,
   type SvmBlockClient,
   SvmRpcClient,
+  toRetryOptions,
   VoyagerClient,
+  withRetries,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
+import { DuneClient } from '../peripherals/dune/DuneClient'
 
 export interface Clients {
   block: BlockClient[]
@@ -50,6 +53,7 @@ export interface Clients {
   rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
+  dune: DuneClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -67,6 +71,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
+  let dune: DuneClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -261,6 +266,22 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
+  if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
+    const retryOptions = toRetryOptions('RELIABLE')
+    dune = withRetries(
+      new DuneClient({
+        http: http,
+        apiKey: config.trackedTxsConfig.duneApiKey,
+      }),
+      {
+        initialTimeoutMs: retryOptions.initialRetryDelayMs,
+        maxAttempts: retryOptions.maxRetries,
+        maxTimeoutMs: retryOptions.maxRetryDelayMs,
+        logger,
+      },
+    )
+  }
+
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
@@ -355,5 +376,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,
+    dune,
   }
 }
