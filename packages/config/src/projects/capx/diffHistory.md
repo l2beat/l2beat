@@ -7,7 +7,8 @@ Generated with discovered.json: 0xc7644f9c3895ad52d8d11ef67017d1e1a1d3147f
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery. Diff with latest templatized bridge:
+https://disco.l2beat.com/diff/eth:0x4c62131fFb67348A95B4d2665A8298A1f93A1E65/eth:0x888Ee1F493782E40dF65df6412f811F6bA2E705B
 
 ## Initial discovery
 
