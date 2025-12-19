@@ -10,6 +10,10 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import {
+  WALK_AWAY_NOT_PASSED_PROJECTS,
+  WALK_AWAY_PASSED_PROJECTS,
+} from '~/consts/walkAwayProjects'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -62,6 +66,13 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
             stageConfig={ctx.row.original.stage}
             isAppchain={ctx.row.original.capability === 'appchain'}
             emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
+            walkAway={
+              WALK_AWAY_PASSED_PROJECTS.includes(ctx.row.original.id)
+                ? 'passed'
+                : WALK_AWAY_NOT_PASSED_PROJECTS.includes(ctx.row.original.id)
+                  ? 'not-passed'
+                  : undefined
+            }
           />
         ),
         sortingFn: sortStages,
