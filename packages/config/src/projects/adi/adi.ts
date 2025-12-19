@@ -196,7 +196,7 @@ export const adi: ScalingProject = {
         callsItselfRollup: true,
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
+        rollupNodeSourceAvailable: 'UnderReview',
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
       },
