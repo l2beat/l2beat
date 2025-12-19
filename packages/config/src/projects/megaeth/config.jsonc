@@ -7,6 +7,20 @@
     "eth:0x1ed92e1bc9a2735216540eddd0191144681cb77e"
   ],
   "names": {
-    "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": "Megaeth Multisig"
+    "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719": "Megaeth Multisig",
+    "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": "RiscZeroSetVerifier"
+  },
+  "overrides": {
+    "eth:0x910b159F79288DD706789ec7768E979d4D88C057": {
+      "fields": {
+        "verifier": {
+          "handler": {
+            "type": "call",
+            "method": "function getVerifier(bytes4 selector) view returns (address)",
+            "args": ["0x73c457ba"] // RISC Zero Groth16 verifier v3.0.0
+          }
+        }
+      }
+    }
   }
 }

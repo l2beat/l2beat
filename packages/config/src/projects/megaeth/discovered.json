@@ -1,7 +1,7 @@
 {
   "name": "megaeth",
-  "timestamp": 1766162378,
-  "configHash": "0xa94c8d84d312a27cb30a07ef886c75066e9d5350d34c336401f4560d79230110",
+  "timestamp": 1766165581,
+  "configHash": "0x07dc697f4dcc350d2873b2e7415ca79133e8c6fc50557aa11912c1c14486be47",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -392,6 +392,19 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "RiscZeroSetVerifier",
+      "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1763954207,
+      "sinceBlock": 23865991,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": ""
+      }
+    },
+    {
       "name": "MegaUSDmPreDeposit",
       "address": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
       "type": "Contract",
@@ -409,7 +422,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 508825,
+        "getTimeUntilEnd": 505621,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -509,7 +522,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621189",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621191",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -634,7 +647,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 515958,
-          "prevBlockNum": 24047828
+          "prevBlockNum": 24048086
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -696,7 +709,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 935,
+        "gameCount": 936,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -778,7 +791,8 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "verifier": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
       },
       "implementationNames": {
         "eth:0x910b159F79288DD706789ec7768E979d4D88C057": "RiscZeroVerifierRouter"
@@ -1223,7 +1237,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x4E11970666368E0C2F8D34ecf697c4411f8110a4",
+        "lastResolved": "eth:0x25Fc6c5813d3EaAdeFAa6D4740D853E04AA7fD5E",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -2435,6 +2449,6 @@
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24047892 },
-  "permissionsConfigHash": "0x343b15a1b217d8d745261e30a7b3869b48bee8fa5fb33e3d68896eef8b7d7285"
+  "usedBlockNumbers": { "ethereum": 24048158 },
+  "permissionsConfigHash": "0x2c36b58176573258f0cb82a0f988e8fe1d752b8dbf9081632899755346cee5ac"
 }

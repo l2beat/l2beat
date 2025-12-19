@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
@@ -19,6 +20,11 @@ export const megaeth: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+  nonTemplateZkProgramHashes: [
+    ZK_PROGRAM_HASHES(
+      discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
+    ),
+  ],
   display: {
     name: 'MegaETH',
     slug: 'megaeth',

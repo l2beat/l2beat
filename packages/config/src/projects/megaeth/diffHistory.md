@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfa554cc6518e5eef3f7a01a89cbf1c4be246ca50
+Generated with discovered.json: 0x7cef133ff18eac5b63b1ae7332795b13740f2c8c
 
-# Diff at Fri, 19 Dec 2025 16:40:42 GMT:
+# Diff at Fri, 19 Dec 2025 17:34:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@15e2d615226a5b2e95a3734fe5d1e1917a844bfa block: 1764760164
-- current timestamp: 1766162378
+- current timestamp: 1766165581
 
 ## Description
 
@@ -255,6 +255,12 @@ discovery. Values are for block 1764760164 (main branch discovery), not current.
 +   Status: CREATED
     contract L1ERC721Bridge (eth:0x3D8ee269F87A7f3F0590c5C0d825FFF06212A242)
     +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroSetVerifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3)
+    +++ description: None
 ```
 
 ```diff
