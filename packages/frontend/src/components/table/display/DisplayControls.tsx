@@ -26,15 +26,15 @@ import {
   type DisplayOptionsKey,
 } from './displayOptions'
 
-interface Props {
-  display: Record<DisplayOptionsKey, boolean>
-  setDisplay: (key: DisplayOptionsKey, value: boolean) => void
+interface Props<K extends DisplayOptionsKey> {
+  display: Record<K, boolean>
+  setDisplay: (key: K, value: boolean) => void
 }
-export function DisplayControls({ display, setDisplay }: Props) {
-  const providedEntries = Object.entries(display) as [
-    DisplayOptionsKey,
-    boolean,
-  ][]
+export function DisplayControls<K extends DisplayOptionsKey>({
+  display,
+  setDisplay,
+}: Props<K>) {
+  const providedEntries = Object.entries(display) as [K, boolean][]
 
   const checkedCount = providedEntries.filter(([_, value]) => value).length
 
@@ -107,14 +107,14 @@ export function DisplayControls({ display, setDisplay }: Props) {
   )
 }
 
-function DisplayCheckbox({
+function DisplayCheckbox<K extends DisplayOptionsKey>({
   optionKey,
   value,
   setDisplay,
 }: {
-  optionKey: DisplayOptionsKey
+  optionKey: K
   value: boolean
-  setDisplay: (key: DisplayOptionsKey, value: boolean) => void
+  setDisplay: (key: K, value: boolean) => void
 }) {
   const option: DisplayOption = DISPLAY_OPTIONS[optionKey]
   return (
