@@ -298,7 +298,7 @@ The main node software does not rely on Layer 1 (L1) to reconstruct the state, b
       url: 'https://x.com/ADIChain_/status/1998366460549480470',
       date: '2025-12-09T00:00:00Z',
       description:
-        'ADI mainnet is live as an ZK stack L2 secured by the Airbender prover.',
+        'ADI mainnet is live as a ZK stack L2 secured by the Airbender prover.',
       type: 'general',
     },
   ],

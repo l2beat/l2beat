@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x16eb291919904e3566773a7272c25e8097bdd2ae
+Generated with discovered.json: 0x5479a24f48f813af17edd26d0baea0521a6a5af7
 
-# Diff at Fri, 19 Dec 2025 12:06:56 GMT:
+# Diff at Fri, 19 Dec 2025 13:22:02 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1766054776
 
 ## Description
@@ -37,7 +37,7 @@ Has Governance contract that is set as owner for many contracts, allows transpar
 ```diff
 +   Status: CREATED
     contract ChainTypeManager (eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA)
-    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,0.
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,0.
 ```
 
 ```diff
@@ -103,7 +103,7 @@ Has Governance contract that is set as owner for many contracts, allows transpar
 ```diff
 +   Status: CREATED
     contract BridgeHub (eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb)
-    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
 ```
 
 ```diff
@@ -115,7 +115,7 @@ Has Governance contract that is set as owner for many contracts, allows transpar
 ```diff
 +   Status: CREATED
     contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95)
-    +++ description: Allows scheduling transparent and shadow proposals, has security council with instant execution.
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
 ```
 
 ```diff
@@ -144,7 +144,7 @@ Has Governance contract that is set as owner for many contracts, allows transpar
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0xB272B188855128c10a933Edb62CC64c22B1f3754)
+    contract ADI Multisig 2 (eth:0xB272B188855128c10a933Edb62CC64c22B1f3754)
     +++ description: None
 ```
 
@@ -168,7 +168,7 @@ Has Governance contract that is set as owner for many contracts, allows transpar
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9)
+    contract ADI Multisig 1 (eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9)
     +++ description: None
 ```
 

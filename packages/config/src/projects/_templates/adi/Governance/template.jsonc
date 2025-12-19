@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Allows scheduling transparent and shadow proposals, has security council with instant execution.",
+  "description": "Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.",
   "fields": {
     "owner": { "severity": "HIGH" },
     "pendingOwner": { "severity": "HIGH" },

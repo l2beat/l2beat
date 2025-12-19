@@ -1,7 +1,7 @@
 {
   "name": "adi",
   "timestamp": 1766054776,
-  "configHash": "0xaf1bbf584fac6b4c0e116c77e048a3360c406ef02a12e6a1921ca1db4f72b412",
+  "configHash": "0x6ebf8d518dac0ffe6be5a8c7d289192ee029eb96fe74bb85cb6939bc89afe9eb",
   "entries": [
     {
       "name": "Diamond",
@@ -286,7 +286,7 @@
         "0x02b4caf5d4d2907355dd4d367636aba133b66f2d7152f316ff2b714915c26d61"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,0.",
+      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,0.",
       "sinceTimestamp": 1764062063,
       "sinceBlock": 23874860,
       "values": {
@@ -751,7 +751,7 @@
         "0x9899b4cd60a43768bafab09e097eb4c2b02875f309b7503d71018eccdc3b6cb8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
       "values": {
@@ -883,7 +883,7 @@
         "0xa55fc91686176a6d8e0cad69d00aa02758846596bd9a503c10d435c06a077ec1"
       ],
       "proxyType": "immutable",
-      "description": "Allows scheduling transparent and shadow proposals, has security council with instant execution.",
+      "description": "Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1154,7 +1154,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "Safe",
+      "name": "ADI Multisig 2",
       "address": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1420,7 +1420,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "ADI Multisig 1",
       "address": "eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2731,5 +2731,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24038982 },
-  "permissionsConfigHash": "0x81f951d71c7404f5b3755ab651da00ffba9e1fef3db097cb9f3ed9b45d8ac053"
+  "permissionsConfigHash": "0xeaa177040e564cd33b977384613d3ec9fe0aa9a9c128ce0234ffc54980ae9e76"
 }
