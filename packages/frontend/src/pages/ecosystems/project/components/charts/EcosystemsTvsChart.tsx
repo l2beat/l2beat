@@ -17,6 +17,7 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -47,11 +48,14 @@ export function EcosystemsTvsChart({
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range,
     excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
+    excludeRwaRestrictedTokens,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),

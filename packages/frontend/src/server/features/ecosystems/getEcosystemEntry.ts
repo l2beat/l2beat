@@ -61,6 +61,7 @@ export interface EcosystemEntry {
     width: number
     height: number
   }
+  hasRwaRestrictedTvs: boolean
   badges: BadgeWithParams[]
   colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
@@ -165,6 +166,7 @@ export async function getEcosystemEntry(
   const [
     projectsChangeReport,
     tvs,
+    tvsWithRwasRestricted,
     projectsActivity,
     projectsOngoingAnomalies,
     blobsData,
@@ -172,6 +174,7 @@ export async function getEcosystemEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({ type: 'layer2', excludeRwaRestrictedTokens: false }),
     getActivityLatestUops(allScalingProjects),
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
@@ -184,6 +187,12 @@ export async function getEcosystemEntry(
       },
     }),
   ])
+
+  const hasRwaRestrictedTvs = liveProjects.some(
+    (project) =>
+      (tvsWithRwasRestricted.projects[project.id]?.breakdown.rwaRestricted ??
+        0) > 0,
+  )
 
   const allScalingProjectsUops = allScalingProjects.reduce(
     (acc, curr) =>
@@ -205,6 +214,7 @@ export async function getEcosystemEntry(
       governance: getGovernanceLinks(ecosystem),
       ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
+    hasRwaRestrictedTvs,
     allScalingProjects: {
       tvs: tvs.total,
       uops: allScalingProjectsUops,
