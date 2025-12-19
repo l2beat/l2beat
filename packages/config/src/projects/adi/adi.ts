@@ -251,12 +251,12 @@ export const adi: ScalingProject = {
     ],
   },
   upgradesAndGovernance: `
-Upgrades are managed by Governance smart contract on L1.  The owner of smart contract (${govOwnerAddress}) can schedule either transparent or shadow proposals.
-Transparent proposals have the upgrade data onchain when sceduled. Shadow proposals post only the hash of the upgrade data onchain when proposed, and the full upgrade data during execution.
+Upgrades are managed by a Governance smart contract on L1. The owner of smart contract (${govOwnerAddress}) can schedule either transparent or shadow proposals.
+Transparent proposals have full upgrade data onchain when scheduled. Shadow proposals post only the hash of the upgrade data onchain when proposed, and the full upgrade data during execution.
 
-Scheduled proposals must wait a minimal delay before being executed (currently ${formatSeconds(minGovUpgradeDelayS)}). Governance supports a security council (${govSecurityCouncilAddress}) that can execute proposals without any delay.
+Scheduled proposals must wait a minimal delay before being executed (currently ${formatSeconds(minGovUpgradeDelayS)}). Governance supports a 'securityCouncil' role (${govSecurityCouncilAddress}) that can execute proposals without any delay.
 
-Currently, governance process does not involve any ADI tokenholders. See this link for more info: [https://docs.adi.foundation/appendix/appendix-b-governance](https://docs.adi.foundation/appendix/appendix-b-governance).
+Currently, the governance process does not involve ADI token holders. See this link for more info: [https://docs.adi.foundation/appendix/appendix-b-governance](https://docs.adi.foundation/appendix/appendix-b-governance).
   `,
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
