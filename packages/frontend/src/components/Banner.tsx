@@ -45,9 +45,7 @@ export function Banner({
 }: Props) {
   return (
     <div className={cn(bannerVariants({ type, centered }), className)}>
-      {!hideIcon && (
-        <InfoIcon className="size-[14px] shrink-0 fill-current" />
-      )}
+      {!hideIcon && <InfoIcon className="size-[14px] shrink-0 fill-current" />}
       {asMarkdown ? <Markdown>{children}</Markdown> : children}
     </div>
   )
