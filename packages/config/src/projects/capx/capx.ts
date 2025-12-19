@@ -34,7 +34,7 @@ export const capx: ScalingProject = orbitStackL2({
     },
   },
   discovery,
-  bridge: discovery.getContract('ERC20Bridge'),
+  bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   chainConfig: {
