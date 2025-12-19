@@ -7,6 +7,7 @@ export const nil: ScalingProject = upcomingL2({
   capability: 'universal',
   hasTestnet: true,
   addedAt: UnixTime(1708529553), // 2024-02-21T15:32:33Z
+  archivedAt: UnixTime(1766106445),
   display: {
     name: '=nil;',
     slug: 'nil',
