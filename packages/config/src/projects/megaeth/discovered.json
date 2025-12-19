@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1766159489,
+  "timestamp": 1766162378,
   "configHash": "0xa94c8d84d312a27cb30a07ef886c75066e9d5350d34c336401f4560d79230110",
   "entries": [
     {
@@ -18,6 +18,14 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x910b159F79288DD706789ec7768E979d4D88C057",
@@ -143,11 +151,14 @@
       "name": "SystemConfig",
       "address": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
       "type": "Contract",
+      "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x5f25d989fb6ccdc8dcf6fec90727faecf13ba2e3a9cc2d4ca902a5be71e10b9a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -163,7 +174,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0x000000000000000000000000b98c6b1a805b96707a43e1f1acfa163b68098fa6",
+        "batcherHash": "eth:0xB98c6b1A805b96707A43e1F1ACFa163B68098FA6",
         "batchInbox": "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3",
         "blobbasefeeScalar": 0,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
@@ -189,6 +200,11 @@
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
+        "opStackDA": {
+          "isSequencerSendingBlobTx": false,
+          "isUsingCelestia": false,
+          "isUsingEigenDA": "v3"
+        },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
         "optimismMintableERC20Factory": "eth:0xF875030B9464001fC0f964E47546b0AFEEbD7C61",
@@ -204,6 +220,7 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": "452312848583266388373324160190187140051835877600158453279131187530910664024",
+        "sequencerInbox": "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 23770457,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -211,10 +228,20 @@
         "version": "2.5.0",
         "VERSION": 0
       },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
+        }
+      },
       "implementationNames": {
         "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E": "Proxy",
         "eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639": "SystemConfig"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PreimageOracle",
@@ -382,7 +409,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 511717,
+        "getTimeUntilEnd": 508825,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -409,11 +436,13 @@
       "name": "SuperchainConfig",
       "address": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
       "type": "Contract",
+      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xcfa8bfbe522f3a85a5385ccb76753907d2f839d7bc257f742c9781269d7cce4d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "sinceTimestamp": 1762796855,
       "sinceBlock": 23770445,
       "values": {
@@ -443,7 +472,8 @@
       "implementationNames": {
         "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285": "Proxy",
         "eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89": "SuperchainConfig"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0x6644D495D22b0d25e904098d61520C95bEFc8EC5",
@@ -479,7 +509,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621185",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621189",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -571,11 +601,14 @@
       "name": "OptimismPortal2",
       "address": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
       "type": "Contract",
+      "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x2cb05d8405b381db83cf08312454b15a474ae2344ca5b34a2c69b3e2f3c1c87e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -600,21 +633,40 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 24047651
+          "prevBoughtGas": 515958,
+          "prevBlockNum": 24047828
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
+        "RespectedGameString": "KailuaGame",
         "respectedGameType": 1337,
         "respectedGameTypeUpdatedAt": 1762796999,
         "superchainConfig": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
         "systemConfig": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
         "version": "3.15.2"
       },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
+      },
       "implementationNames": {
         "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8": "Proxy",
         "eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9": "OptimismPortal2"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DisputeGameFactory",
@@ -644,7 +696,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 934,
+        "gameCount": 935,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -743,6 +795,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x86183e7b1D908D9A5C3Bc59cC2232F2ffE4E7145",
@@ -939,6 +997,13 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285",
+          "role": ".guardian"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1765178051,
       "sinceBlock": 23966531,
@@ -1059,6 +1124,18 @@
       ]
     },
     {
+      "address": "eth:0xB98c6b1A805b96707A43e1F1ACFa163B68098FA6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E",
+          "role": ".batcherHash"
+        }
+      ]
+    },
+    {
       "address": "eth:0xC467b03AA487b5661DA1a72dee053c26152f8D90",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1146,7 +1223,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xD310936D9195344bffA81488DfEd967CF508F987",
+        "lastResolved": "eth:0x4E11970666368E0C2F8D34ecf697c4411f8110a4",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -2350,11 +2427,14 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
+    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24047652 },
-  "permissionsConfigHash": "0x660c662540ae079363ccd34edb3a60eb476b9360a70c1ad89fff77eb2d6a657b"
+  "usedBlockNumbers": { "ethereum": 24047892 },
+  "permissionsConfigHash": "0x343b15a1b217d8d745261e30a7b3869b48bee8fa5fb33e3d68896eef8b7d7285"
 }

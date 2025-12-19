@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5dc6f5ddd5db14523db93c6bea3711bbf1e60cab
+Generated with discovered.json: 0xfa554cc6518e5eef3f7a01a89cbf1c4be246ca50
 
-# Diff at Fri, 19 Dec 2025 15:52:33 GMT:
+# Diff at Fri, 19 Dec 2025 16:40:42 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@15e2d615226a5b2e95a3734fe5d1e1917a844bfa block: 1764760164
-- current timestamp: 1766159489
+- current timestamp: 1766162378
 
 ## Description
 
@@ -23,8 +23,19 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
     +++ description: None
       receivedPermissions.0:
 -        {"permission":"guard","from":"eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285","role":".guardian"}
-      receivedPermissions.1:
--        {"permission":"interact","from":"eth:0x86183e7b1D908D9A5C3Bc59cC2232F2ffE4E7145","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.1.via:
++        [{"address":"eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F"}]
+      receivedPermissions.1.role:
+-        ".owner"
++        ".guardian"
+      receivedPermissions.1.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.1.from:
+-        "eth:0x86183e7b1D908D9A5C3Bc59cC2232F2ffE4E7145"
++        "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285"
+      receivedPermissions.1.permission:
+-        "interact"
++        "guard"
       receivedPermissions.3:
 -        {"permission":"interact","from":"eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90"}]}
       receivedPermissions.4:
@@ -65,29 +76,22 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
 
 ```diff
     contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) {
-    +++ description: None
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       values.blobbasefeeScalar:
 -        801949
 +        0
       values.owner:
 -        "eth:0x5785Df5b4234Fc63F9D6ecFe30C40b6b44619fd2"
 +        "eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6"
-      values.scalar:
--        "452312848583266388373324160190187140051835877600158453279134631875638723928"
-+        "452312848583266388373324160190187140051835877600158453279131187530910664024"
     }
 ```
 
 ```diff
     contract SuperchainConfig (eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285) {
-    +++ description: None
-      template:
--        "opstack/SuperchainConfigFake"
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
       sourceHashes.1:
 -        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
 +        "0xcfa8bfbe522f3a85a5385ccb76753907d2f839d7bc257f742c9781269d7cce4d"
-      description:
--        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       values.$implementation:
 -        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
 +        "eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89"
@@ -110,14 +114,12 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
 -        "SuperchainConfig"
       implementationNames.eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89:
 +        "SuperchainConfig"
-      category:
--        {"name":"Governance","priority":3}
     }
 ```
 
 ```diff
     contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) {
-    +++ description: None
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
       sourceHashes.1:
 -        "0x8f2cec012bf54c7d3bf484bd41d932fbb47b7977bce894ea2138262e61905a92"
 +        "0x2cb05d8405b381db83cf08312454b15a474ae2344ca5b34a2c69b3e2f3c1c87e"
@@ -132,19 +134,25 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
       values.guardian:
 -        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
 +        "eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F"
-      values.params.prevBoughtGas:
--        333101
-+        100000
-      values.params.prevBlockNum:
--        23932203
-+        24047651
       values.version:
 -        "3.14.0"
 +        "3.15.2"
+      values.RespectedGameString:
++        "KailuaGame"
       implementationNames.eth:0x31f6E6a37ce650723EBf082EC59A48779be9Af99:
 -        "OptimismPortal2"
       implementationNames.eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9:
 +        "OptimismPortal2"
+      template:
++        "opstack/OptimismPortal2"
+      description:
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
+      fieldMeta:
++        {"respectedGameType":{"severity":"HIGH"},"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","1337":"KailuaGame"}}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -234,7 +242,7 @@ discovery. Values are for block 1764760164 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E)
-    +++ description: None
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
 
 ```diff
