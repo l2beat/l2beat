@@ -417,7 +417,7 @@
         "0xa55fc91686176a6d8e0cad69d00aa02758846596bd9a503c10d435c06a077ec1"
       ],
       "proxyType": "immutable",
-      "description": "Allows scheduling transparent and shadow proposals, has security council with instant execution.",
+      "description": "Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
