@@ -1,21 +1,15 @@
-Generated with discovered.json: 0x912a639f057041cfbfb3bc6754387c33be69087b
+Generated with discovered.json: 0xc7644f9c3895ad52d8d11ef67017d1e1a1d3147f
 
-# Diff at Fri, 19 Dec 2025 09:16:30 GMT:
+# Diff at Fri, 19 Dec 2025 11:14:43 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1766135710
+- current timestamp: 1766142818
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract Safe (eth:0x03552Beb542eF2ad2e612D57d11D0DD9fa7Eb5fA)
-    +++ description: None
-```
 
 ```diff
 +   Status: CREATED
@@ -67,12 +61,6 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract CapxToken (eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Inbox (eth:0x89AB6919680c66C60968B9c5f0614fC09Aab7EE1)
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
 ```
@@ -85,8 +73,8 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract ERC20Bridge (eth:0xAAAA894f556D0eE585773190114CED3d491C0F72)
-    +++ description: None
+    contract Bridge (eth:0xAAAA894f556D0eE585773190114CED3d491C0F72)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
 ```
 
 ```diff

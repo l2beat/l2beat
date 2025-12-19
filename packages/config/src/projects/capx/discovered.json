@@ -1,49 +1,8 @@
 {
   "name": "capx",
-  "timestamp": 1766135710,
+  "timestamp": 1766142818,
   "configHash": "0xd9c3d445b7f6a823c1b11cba7283714d6864c25727bce5a3c52fddea2d1be3ac",
   "entries": [
-    {
-      "name": "Safe",
-      "address": "eth:0x03552Beb542eF2ad2e612D57d11D0DD9fa7Eb5fA",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1758847391,
-      "sinceBlock": 23443695,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x2a7e9d1DEcff084ba536b1d0180d05129e10f92E",
-          "eth:0x990B2cEcb92DBD5a3E761ad862B57D684f0C0122",
-          "eth:0x194140ABa24b327EcBDEFB1CdBB30b3589850C00",
-          "eth:0xEF56a4e4c32c7E088Dcaa742F1874dAE13c620Ff",
-          "eth:0xB95eE879eeB92B98cc7b90a6F74234B023E24B51"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x108312f879e475a1102fc5044fed354cf3c9296e8279581f784e0a8d057eda41",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 20,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x03552Beb542eF2ad2e612D57d11D0DD9fa7Eb5fA": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "address": "eth:0x194140ABa24b327EcBDEFB1CdBB30b3589850C00",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "address": "eth:0x1Dcca2fA11D53E85149d0Cf219848837aaD7b8D8",
       "type": "EOA",
@@ -56,11 +15,6 @@
           "role": ".validators"
         }
       ]
-    },
-    {
-      "address": "eth:0x2a7e9d1DEcff084ba536b1d0180d05129e10f92E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Caldera Multisig 3",
@@ -534,38 +488,6 @@
       }
     },
     {
-      "name": "CapxToken",
-      "address": "eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x7775530e16469705aa73b92f703a28b6cc38e2b9790795a7c7740a6130dc7675"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1758848087,
-      "sinceBlock": 23443752,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xa9a6197d01f729d764a66903078596c8cb962a8f826fc897b69fbf88a1f3ca8a",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Capx",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "name": "Capx",
-        "owner": "eth:0x03552Beb542eF2ad2e612D57d11D0DD9fa7Eb5fA",
-        "symbol": "CAPX",
-        "totalSupply": "1000000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F": "CapxToken"
-      }
-    },
-    {
       "name": "Inbox",
       "address": "eth:0x89AB6919680c66C60968B9c5f0614fC09Aab7EE1",
       "type": "Contract",
@@ -620,24 +542,26 @@
       }
     },
     {
-      "address": "eth:0x990B2cEcb92DBD5a3E761ad862B57D684f0C0122",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "ERC20Bridge",
+      "name": "Bridge",
       "address": "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72",
       "type": "Contract",
+      "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x99a0bf7e4c36015dcd932a0a10be16fca8b04d1f882eb51bdf729154110b65c0"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "sinceTimestamp": 1758919631,
       "sinceBlock": 23449665,
       "values": {
@@ -657,41 +581,42 @@
           "eth:0x69Af72D5dc7D59DF2164E07dEBba95e6f720f69f"
         ],
         "allowedOutboxList": ["eth:0xEf06DEbcD295ACc3E65de85a741FA192565C3df2"],
-        "delayedInboxAccs": [
-          "0x3efcb57c7f87c3b439f171fb6f4324f8a5e897ae2848afeb635f9b462d75144f",
-          "0xa396da7736ac3f12bb923e3f190f032bb8a50f9198032d0c6f5400ccfe075908",
-          "0xc1cf7a5d327a3626b418a8456aaf750251166c28b332a7f3bd4cb7e343237fee",
-          "0x6a46234af0bd95fd04920fb0a015b913adeb8d4187415238a293747bbb47516d",
-          "0x77b193a426a1d446479ecebb5ac6a7da5839eda3900079f83fe85dfb1d26ad22"
-        ],
         "delayedMessageCount": 50,
+        "inboxHistory": [
+          "eth:0x89AB6919680c66C60968B9c5f0614fC09Aab7EE1",
+          "eth:0x69Af72D5dc7D59DF2164E07dEBba95e6f720f69f"
+        ],
         "nativeToken": "eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
         "nativeTokenDecimals": 18,
+        "outboxHistory": ["eth:0xEf06DEbcD295ACc3E65de85a741FA192565C3df2"],
         "rollup": "eth:0x4967284E726eC01b26cc33c09486C0C2C0C35Efa",
         "sequencerInbox": "eth:0xdF41d94e28AA0bB35471225121BDBA710DdaF068",
-        "sequencerInboxAccs": [
-          "0xa0b193d14e7ebfddf9b48a1698aad465d1ad8da6cf5048c4bd0fa92e2fc07511",
-          "0xfa4b8b1d7a8a783a235fb02f59086edc687cf447f155300ba706b678656c5df1",
-          "0xdaa70f0950f0644ccb708cf05cb432754b8914ed8df11747d07fbceb119d0d5b",
-          "0xec948f364eb21ba5b640c886da1893dd0e7595de015d812b6ff4ae70075c557b",
-          "0x0004fd804438af9cb06f90890ea003c862c04d5179bdd1001766bb8201c1126e"
-        ],
-        "sequencerMessageCount": 1822,
-        "sequencerReportedSubMessageCount": 481922
+        "sequencerMessageCount": 1823,
+        "sequencerReportedSubMessageCount": 482716
       },
-      "errors": {
-        "delayedInboxAccs": "Processing error occurred.",
-        "sequencerInboxAccs": "Processing error occurred."
+      "fieldMeta": {
+        "allowedOutboxList": {
+          "severity": "HIGH",
+          "description": "Can make calls as the bridge, steal all funds."
+        },
+        "outboxHistory": {
+          "severity": "HIGH",
+          "description": "All Outboxes that were ever set as allowed in the bridge."
+        },
+        "allowedDelayedInboxList": {
+          "severity": "HIGH",
+          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
+        },
+        "inboxHistory": {
+          "severity": "HIGH",
+          "description": "All Inboxes that were ever set as allowed in the bridge."
+        }
       },
       "implementationNames": {
         "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72": "TransparentUpgradeableProxy",
         "eth:0x888Ee1F493782E40dF65df6412f811F6bA2E705B": "ERC20Bridge"
-      }
-    },
-    {
-      "address": "eth:0xB95eE879eeB92B98cc7b90a6F74234B023E24B51",
-      "type": "EOA",
-      "proxyType": "EOA"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
@@ -801,7 +726,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1822,
+        "batchCount": 1823,
         "batchPosterManager": "eth:0x39F46b3d2e0F4f8697d475e1b2980B3C5ef829a6",
         "batchPosters": ["eth:0x51ee49Feff474B66136b4e4B112bA9c4e34842E0"],
         "bridge": "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72",
@@ -937,11 +862,6 @@
         "eth:0x7DD439Ec22c91b0703EE7d80175fd8d5319906A1": "ERC20Outbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0xEF56a4e4c32c7E088Dcaa742F1874dAE13c620Ff",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -965,9 +885,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "eth:0x03552Beb542eF2ad2e612D57d11D0DD9fa7Eb5fA": [
-      "constructor(address _singleton)"
     ],
     "eth:0x0568880e59d04c1142b19E141A14B5a5a87300F9": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1057,54 +974,6 @@
     ],
     "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x4967284E726eC01b26cc33c09486C0C2C0C35Efa": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1242,45 +1111,6 @@
     ],
     "eth:0x81fc46411C903d8c82216d2702b8F5a17B658da3": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
-    ],
-    "eth:0x833E53F1e2D320e0768671Dee5CEc88b2d93330F": [
-      "constructor(string _name, string _symbol, address _owner)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error ERC2612ExpiredSignature(uint256 deadline)",
-      "error ERC2612InvalidSigner(address signer, address owner)",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidShortString()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error StringTooLong(string str)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)"
     ],
     "eth:0x888Ee1F493782E40dF65df6412f811F6bA2E705B": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
@@ -1654,6 +1484,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1668,6 +1499,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24045678 },
-  "permissionsConfigHash": "0x6dedcb0a3c110d7a75893b2ea8b39c7ec36b779189a0bcaf69e510e455d50962"
+  "usedBlockNumbers": { "ethereum": 24046268 },
+  "permissionsConfigHash": "0x343037e642992c07e6823e6eaa53f16ed092280e1f23f86c943d765313159b73"
 }
