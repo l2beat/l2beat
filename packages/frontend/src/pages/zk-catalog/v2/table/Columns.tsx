@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -39,9 +40,16 @@ export const zkCatalogColumns = [
     },
     cell: (ctx) => {
       return (
-        <div className="font-bold text-base">
-          {formatCurrency(ctx.row.original.tvs, 'usd')}
-        </div>
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <div className="font-bold text-base">
+              {formatCurrency(ctx.row.original.tvs.value, 'usd')}
+            </div>
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {ctx.row.original.tvs.numberOfProjects} projects
+          </TwoRowCell.Second>
+        </TwoRowCell>
       )
     },
   }),
