@@ -110,11 +110,11 @@ export function EcosystemProjectPage({
                     />
                   </div>
                   <EcosystemTvsByTokenType
-                    tvsByTokenType={ecosystem.tvsByTokenType}
+                    tvsByTokenTypeData={ecosystem.tvsByTokenType}
                     className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
                   />
                   <EcosystemTvsByStage
-                    tvsByStage={ecosystem.tvsByStage}
+                    tvsByStageData={ecosystem.tvsByStage}
                     className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
                   />
                   <EcosystemProjectsByDaLayer

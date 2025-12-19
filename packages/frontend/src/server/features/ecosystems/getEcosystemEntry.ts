@@ -84,8 +84,14 @@ export interface EcosystemEntry {
       mainText?: string
     }
   }
-  tvsByStage: TvsByStage
-  tvsByTokenType: TvsByTokenType
+  tvsByStage: {
+    withRwaRestricted: TvsByStage
+    withoutRwaRestricted: TvsByStage
+  }
+  tvsByTokenType: {
+    withRwaRestricted: TvsByTokenType
+    withoutRwaRestricted: TvsByTokenType
+  }
   projectsByDaLayer: ProjectsByDaLayer
   blobsData: BlobsData
   projectsByRaas: ProjectByRaas
@@ -225,8 +231,14 @@ export async function getEcosystemEntry(
       },
       uops: allScalingProjectsUops,
     },
-    tvsByStage: getTvsByStage(liveProjects, tvs),
-    tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
+    tvsByStage: {
+      withoutRwaRestricted: getTvsByStage(liveProjects, tvs),
+      withRwaRestricted: getTvsByStage(liveProjects, tvsWithRwasRestricted),
+    },
+    tvsByTokenType: {
+      withoutRwaRestricted: getTvsByTokenType(liveProjects, tvs),
+      withRwaRestricted: getTvsByTokenType(liveProjects, tvsWithRwasRestricted),
+    },
     projectsByDaLayer: getProjectsByDaLayer(liveProjects),
     blobsData,
     projectsByRaas: getProjectsByRaas(liveProjects),
