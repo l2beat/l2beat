@@ -899,6 +899,20 @@
       "supply": "zero"
     },
     {
+      "name": "Capx",
+      "coingeckoId": "capx-ai",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+      "symbol": "CAPX",
+      "decimals": 18,
+      "deploymentTimestamp": 1758848087,
+      "coingeckoListingTimestamp": 1762300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Cartesi Token",
       "coingeckoId": "cartesi",
       "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
