@@ -1,14 +1,20 @@
-Generated with discovered.json: 0x1998871fab596ac74eb26deb2cf8d8b0bde3e827
+Generated with discovered.json: 0x5dc6f5ddd5db14523db93c6bea3711bbf1e60cab
 
-# Diff at Fri, 19 Dec 2025 15:43:09 GMT:
+# Diff at Fri, 19 Dec 2025 15:52:33 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@15e2d615226a5b2e95a3734fe5d1e1917a844bfa block: 1764760164
-- current timestamp: 1766158922
+- current timestamp: 1766159489
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery. Untemplatized contracts diff with most similar templatized:
+- SystemConfig:                                                                                                                                                                                                       
+  https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639  (higher gas limit)
+- OptimismPortal2:                                                                                                                                                                                              
+  https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9  (no constructor params, system address)
+- SuperchainConfig:                                                                                                                                                                                                   
+  https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89  (guardian transfer functions)
 
 ## Watched changes
 
@@ -128,10 +134,10 @@ Provide description of changes. This section will be preserved.
 +        "eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F"
       values.params.prevBoughtGas:
 -        333101
-+        500000
++        100000
       values.params.prevBlockNum:
 -        23932203
-+        24047598
++        24047651
       values.version:
 -        "3.14.0"
 +        "3.15.2"

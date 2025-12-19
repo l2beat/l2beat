@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1766158922,
+  "timestamp": 1766159489,
   "configHash": "0xa94c8d84d312a27cb30a07ef886c75066e9d5350d34c336401f4560d79230110",
   "entries": [
     {
@@ -382,7 +382,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 512281,
+        "getTimeUntilEnd": 511717,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -479,7 +479,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621181",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621185",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -600,8 +600,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 500000,
-          "prevBlockNum": 24047598
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 24047651
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2355,6 +2355,6 @@
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24047605 },
+  "usedBlockNumbers": { "ethereum": 24047652 },
   "permissionsConfigHash": "0x660c662540ae079363ccd34edb3a60eb476b9360a70c1ad89fff77eb2d6a657b"
 }
