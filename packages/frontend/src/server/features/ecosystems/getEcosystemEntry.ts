@@ -27,7 +27,6 @@ import {
   get7dTvsBreakdown,
   type ProjectSevenDayTvsBreakdown,
 } from '../scaling/tvs/get7dTvsBreakdown'
-import { compareTvs } from '../scaling/tvs/utils/compareTvs'
 import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
@@ -257,39 +256,37 @@ export async function getEcosystemEntry(
       firstBanner: ecosystem.ecosystemConfig.firstBanner,
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
-    liveProjects: liveProjects
-      .map((project) => {
-        const entry = getScalingSummaryEntry(
-          project,
-          projectsChangeReport.getChanges(project.id),
-          tvs.projects[project.id.toString()],
-          projectsActivity[project.id.toString()],
-          !!projectsOngoingAnomalies[project.id.toString()],
-          zkCatalogProjects,
-        )
+    liveProjects: liveProjects.map((project) => {
+      const entry = getScalingSummaryEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvs.projects[project.id.toString()],
+        projectsActivity[project.id.toString()],
+        !!projectsOngoingAnomalies[project.id.toString()],
+        zkCatalogProjects,
+      )
 
-        const result: EcosystemProjectEntry = {
-          ...entry,
-          gasTokens: project.chainConfig?.gasTokens,
-          ecosystemInfo: project.ecosystemInfo,
-          filterable: compact([
-            ecosystem.id === 'superchain' && {
-              id: 'isPartOfSuperchain',
-              value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
-            },
-            ...(entry.filterable?.filter(
-              (f) => !EXCLUDED_FILTERS.includes(f.id),
-            ) ?? []),
-          ]),
-          tvsData: {
-            withoutRwaRestricted: tvs.projects[project.id.toString()],
-            withRwaRestricted:
-              tvsWithRwasRestricted.projects[project.id.toString()],
+      const result: EcosystemProjectEntry = {
+        ...entry,
+        gasTokens: project.chainConfig?.gasTokens,
+        ecosystemInfo: project.ecosystemInfo,
+        filterable: compact([
+          ecosystem.id === 'superchain' && {
+            id: 'isPartOfSuperchain',
+            value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
           },
-        }
-        return result
-      })
-      .sort(compareTvs),
+          ...(entry.filterable?.filter(
+            (f) => !EXCLUDED_FILTERS.includes(f.id),
+          ) ?? []),
+        ]),
+        tvsData: {
+          withoutRwaRestricted: tvs.projects[project.id.toString()],
+          withRwaRestricted:
+            tvsWithRwasRestricted.projects[project.id.toString()],
+        },
+      }
+      return result
+    }),
     upcomingProjects: upcomingProjects.map((p) =>
       getScalingUpcomingEntry(p, zkCatalogProjects),
     ),
