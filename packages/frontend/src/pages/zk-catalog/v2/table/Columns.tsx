@@ -1,3 +1,4 @@
+import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
@@ -47,7 +48,7 @@ export const zkCatalogColumns = [
             </div>
           </TwoRowCell.First>
           <TwoRowCell.Second>
-            {ctx.row.original.tvs.numberOfProjects} projects
+            {`${ctx.row.original.tvs.numberOfProjects} ${pluralize(ctx.row.original.tvs.numberOfProjects, 'project')}`}
           </TwoRowCell.Second>
         </TwoRowCell>
       )
