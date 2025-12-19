@@ -266,15 +266,6 @@ Currently, the governance process does not involve ADI token holders. See this l
     ],
     // zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],  still need to check how this actually works with Airbender
   },
-  stateDerivation: {
-    nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
-The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but MatterLabs is actively working on a solution for this.`,
-    compressionScheme:
-      'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/11_compression.md).',
-    genesisState: 'There have been neither genesis states nor regenesis.',
-    dataFormat:
-      'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/09_pubdata.md).',
-  },
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
