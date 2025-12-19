@@ -1319,13 +1319,19 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-    case 'Kailua':
-      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
-        templateVars.discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'vanguardAdvantage',
-        ),
+    case 'Kailua': {
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
       )
+      const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+      if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
+        return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      }
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        vanguardAdvantage,
+      )
+    }
     case 'KailuaSoon':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     case 'OpSuccinct':

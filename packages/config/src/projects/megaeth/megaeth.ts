@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER, RISK_VIEW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -25,6 +25,9 @@ export const megaeth: ScalingProject = opStackL2({
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],
+  nonTemplateRiskView: {
+    stateValidation: RISK_VIEW.UNDER_REVIEW_RISK,
+  },
   display: {
     name: 'MegaETH',
     slug: 'megaeth',
