@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "capx",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x89AB6919680c66C60968B9c5f0614fC09Aab7EE1"]
 }
