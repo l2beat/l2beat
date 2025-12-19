@@ -43,7 +43,7 @@ export function EcosystemPageHeader({
             />
           )}
         </div>
-        <div className="mt-2 ml-auto flex gap-3 max-md:hidden">
+        <div className="mt-4 ml-auto flex gap-3 max-md:hidden">
           {badges.map((badge) => (
             <ProjectBadge key={badge.id} badge={badge} disableTooltip />
           ))}
