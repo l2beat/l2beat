@@ -68,7 +68,10 @@ export interface EcosystemEntry {
   upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
-    tvs: number
+    tvs: {
+      withRwaRestricted: number
+      withoutRwaRestricted: number
+    }
     uops: number
   }
   banners: {
@@ -216,7 +219,10 @@ export async function getEcosystemEntry(
     },
     hasRwaRestrictedTvs,
     allScalingProjects: {
-      tvs: tvs.total,
+      tvs: {
+        withoutRwaRestricted: tvs.total,
+        withRwaRestricted: tvsWithRwasRestricted.total,
+      },
       uops: allScalingProjectsUops,
     },
     tvsByStage: getTvsByStage(liveProjects, tvs),

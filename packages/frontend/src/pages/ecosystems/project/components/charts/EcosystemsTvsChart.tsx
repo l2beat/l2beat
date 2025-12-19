@@ -42,7 +42,7 @@ export function EcosystemsTvsChart({
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsTvs: number
+  allScalingProjectsTvs: EcosystemEntry['allScalingProjects']['tvs']
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
@@ -89,7 +89,11 @@ export function EcosystemsTvsChart({
     } satisfies ChartMeta
   }, [name])
 
-  const stats = getStats(chartData, allScalingProjectsTvs)
+  const { withRwaRestricted, withoutRwaRestricted } = allScalingProjectsTvs
+  const stats = getStats(
+    chartData,
+    excludeRwaRestrictedTokens ? withoutRwaRestricted : withRwaRestricted,
+  )
   const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
