@@ -1,3 +1,4 @@
+import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
@@ -50,6 +51,7 @@ export const refactored: BaseProject[] = [
   // zk catalog v2
   sp1,
   boojum,
+  airbender,
   zkprover,
   stone,
   lineaprover,
