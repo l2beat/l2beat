@@ -898,7 +898,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be stolen if',
-                text: 'no challenger checks the published state',
+                text: 'no challenger checks the published state.',
               },
               {
                 category: 'Funds can be stolen if',
@@ -1000,7 +1000,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be stolen if',
-                text: 'no challenger checks the published state',
+                text: 'no challenger checks the published state.',
               },
               {
                 category: 'Funds can be stolen if',
