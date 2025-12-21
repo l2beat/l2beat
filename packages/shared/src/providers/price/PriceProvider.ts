@@ -9,7 +9,7 @@ export class PriceProvider {
     from: UnixTime,
     to: UnixTime,
   ): Promise<QueryResultPoint[]> {
-    return await this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
+    return this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
   }
 
   async getLatestPrices(
@@ -27,7 +27,7 @@ export class PriceProvider {
   }
 
   async getAllCoingeckoIds(): Promise<CoingeckoId[]> {
-    return await this.client.getAllCoingeckoIds()
+    return this.client.getAllCoingeckoIds()
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {
