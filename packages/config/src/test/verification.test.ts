@@ -67,12 +67,10 @@ function getDiscoveries(
     ...referencedProjects,
     ...(discovery.sharedModules ?? []), // TODO remove once entrypoints are used instead of sharedModules
   ])
-  if (allReferencedProjects) {
-    for (const sharedModule of allReferencedProjects) {
-      try {
-        result.push(configReader.readDiscovery(sharedModule))
-      } catch {}
-    }
+  for (const sharedModule of allReferencedProjects) {
+    try {
+      result.push(configReader.readDiscovery(sharedModule))
+    } catch {}
   }
 
   // TODO: this should be removed and covered by entrypoints and references
@@ -123,9 +121,7 @@ function getUniqueContractsForProject(
   chain: string,
 ): ChainSpecificAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  const uniqueProjectContracts = getUniqueContractsFromList(
-    projectContracts,
-  ).map((c) => c)
+  const uniqueProjectContracts = getUniqueContractsFromList(projectContracts)
   const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
 
   return withoutDuplicates([
