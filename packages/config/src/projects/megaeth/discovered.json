@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1766165581,
+  "timestamp": 1766400649,
   "configHash": "0x07dc697f4dcc350d2873b2e7415ca79133e8c6fc50557aa11912c1c14486be47",
   "entries": [
     {
@@ -395,13 +395,24 @@
       "name": "RiscZeroSetVerifier",
       "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
       "type": "Contract",
-      "unverified": true,
+      "template": "risc0/RiscZeroSetVerifierGroth16",
+      "sourceHashes": [
+        "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb"
+      ],
       "proxyType": "immutable",
+      "description": "Set verifier contract for RISC Zero Groth16 proofs (RISC Zero system version 2.0.0-rc.3). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
       "sinceTimestamp": 1763954207,
       "sinceBlock": 23865991,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
+        "CONTROL_ROOT_0": "0x41af18736dc9d7921c859fc95ac84da5",
+        "CONTROL_ROOT_1": "0x561f8c992a424deb37ccdf4e19c0e7db",
+        "SELECTOR": "0x73c457ba",
+        "VERSION": "2.0.0-rc.3"
+      },
       "implementationNames": {
-        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": ""
+        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": "RiscZeroGroth16Verifier"
       }
     },
     {
@@ -422,7 +433,7 @@
         "cap": 500000000000000,
         "endTime": 1766671200,
         "getDepositStatus": 3,
-        "getTimeUntilEnd": 505621,
+        "getTimeUntilEnd": 270553,
         "getTimeUntilStart": 0,
         "getUserCount": 4582,
         "isDepositActive": true,
@@ -522,7 +533,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621191",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621231",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -647,7 +658,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 515958,
-          "prevBlockNum": 24048086
+          "prevBlockNum": 24067663
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -709,7 +720,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 936,
+        "gameCount": 1001,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -1237,7 +1248,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x25Fc6c5813d3EaAdeFAa6D4740D853E04AA7fD5E",
+        "lastResolved": "eth:0xcc282727aB451FB78675A88E5Fac8207110E8f88",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -1668,6 +1679,20 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3": [
+      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "function BN254_CONTROL_ID() view returns (bytes32)",
+      "function CONTROL_ROOT_0() view returns (bytes16)",
+      "function CONTROL_ROOT_1() view returns (bytes16)",
+      "function SELECTOR() view returns (bytes4)",
+      "function VERSION() view returns (string)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -2447,8 +2472,9 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
+    "risc0/RiscZeroSetVerifierGroth16": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24048158 },
+  "usedBlockNumbers": { "ethereum": 24067663 },
   "permissionsConfigHash": "0x2c36b58176573258f0cb82a0f988e8fe1d752b8dbf9081632899755346cee5ac"
 }

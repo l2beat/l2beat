@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Set verifier contract for RISC Zero Groth16 proofs (RISC Zero system version {{VERSION}}). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root."
+}

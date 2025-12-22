@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7cef133ff18eac5b63b1ae7332795b13740f2c8c
+Generated with discovered.json: 0xeeab4b8568aaf545fb816e40fb06bfda8427d578
 
-# Diff at Fri, 19 Dec 2025 17:34:06 GMT:
+# Diff at Mon, 22 Dec 2025 11:12:03 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@15e2d615226a5b2e95a3734fe5d1e1917a844bfa block: 1764760164
-- current timestamp: 1766165581
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1764760164
+- current timestamp: 1766400649
 
 ## Description
 
@@ -15,6 +15,8 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
   https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9  (no constructor params, system address)
 - SuperchainConfig:                                                                                                                                                                                                   
   https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89  (guardian transfer functions)
+
+basti 12/22: the verifier contract source is now available. looks like a combo of the risc0 set verifier and the groth16 verifier.
 
 ## Watched changes
 
@@ -260,7 +262,7 @@ discovery. Values are for block 1764760164 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract RiscZeroSetVerifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3)
-    +++ description: None
+    +++ description: Set verifier contract for RISC Zero Groth16 proofs (RISC Zero system version 2.0.0-rc.3). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
 ```
 
 ```diff
