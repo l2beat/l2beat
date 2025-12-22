@@ -16,7 +16,11 @@ export const mvchain: ScalingProject = upcomingL3({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://genso.game/en/'],
-      socialMedia: ['https://x.com/genso_meta'],
+      socialMedia: [
+        'https://x.com/genso_meta',
+        'https://t.me/gensometajpn',
+        'https://discord.com/invite/gensometaverse',
+      ],
     },
   },
   ecosystemInfo: {
