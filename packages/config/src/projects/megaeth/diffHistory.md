@@ -16,7 +16,8 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
 - SuperchainConfig:                                                                                                                                                                                                   
   https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89  (guardian transfer functions)
 
-basti 12/22: the verifier contract source is now available. looks like an older risc0groth16 verifier.
+basti 12/22: the verifier contract source is now available. looks like an older risc0groth16 verifier: https://disco.l2beat.com/diff/eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9/eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3
+
 
 ## Watched changes
 
