@@ -3,6 +3,39 @@
   "projectId": "megaeth",
   "tokens": [
     {
+      "mode": "auto",
+      "id": "megaeth-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
+            "decimals": 18,
+            "sinceTimestamp": 1762796999
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75",
+            "decimals": 18,
+            "sinceTimestamp": 1762796999
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "megaeth-USDC",
       "priceId": "usd-coin",

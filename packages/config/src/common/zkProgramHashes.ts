@@ -450,6 +450,13 @@ Verify:
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
+    title: 'Kailua fault proof program (MegaETH)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for MegaETH chain, is a part of ZK non-interactive fault proof system.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:

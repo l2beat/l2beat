@@ -29,5 +29,11 @@
     "address": "eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599",
     "chain": "ethereum",
     "blockNumber": 23938931
+  },
+  "RiscZeroGroth16Verifier.sol_v2_0_0_rc3_megaeth": {
+    "hash": "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb",
+    "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+    "chain": "ethereum",
+    "blockNumber": 24067663
   }
 }
