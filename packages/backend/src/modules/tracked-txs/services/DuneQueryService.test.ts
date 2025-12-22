@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { DuneClient } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
 import { expect, mockFn, mockObject } from 'earl'
-import type { DuneClient } from './DuneClient'
 import { DuneQueryService } from './DuneQueryService'
 
 describe(DuneQueryService.name, () => {

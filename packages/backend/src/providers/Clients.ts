@@ -6,6 +6,7 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
+  DuneClient,
   EigenApiClient,
   FuelClient,
   HttpClient,
@@ -29,7 +30,6 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
-import { DuneClient } from '../peripherals/dune/DuneClient'
 
 export interface Clients {
   block: BlockClient[]

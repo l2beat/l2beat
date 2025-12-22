@@ -17,6 +17,7 @@ export function createUpdateMonitorModule({
   config,
   logger,
   peripherals,
+  db,
   clock,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.updateMonitor) {
@@ -34,7 +35,7 @@ export function createUpdateMonitorModule({
     : undefined
 
   const updateMessagesService = new UpdateMessagesService(
-    peripherals.database,
+    db,
     config.updateMonitor.updateMessagesRetentionPeriodDays,
   )
 
@@ -42,19 +43,14 @@ export function createUpdateMonitorModule({
   const projectService = new ProjectService()
 
   const updateNotifier = new UpdateNotifier(
-    peripherals.database,
+    db,
     discordClient,
     logger,
     updateMessagesService,
     projectService,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
-    ? new UpdateDiffer(
-        configReader,
-        peripherals.database,
-        discoveryOutputCache,
-        logger,
-      )
+    ? new UpdateDiffer(configReader, db, discoveryOutputCache, logger)
     : undefined
 
   // TODO: get rid of that once we achieve full library separation
@@ -83,7 +79,7 @@ export function createUpdateMonitorModule({
     updateNotifier,
     updateDiffer,
     configReader,
-    peripherals.database,
+    db,
     clock,
     discoveryOutputCache,
     logger,
@@ -93,7 +89,7 @@ export function createUpdateMonitorModule({
   )
 
   const updateMonitorController = new UpdateMonitorController(
-    peripherals.database,
+    db,
     configReader,
     projectService,
   )
