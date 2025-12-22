@@ -16,7 +16,6 @@ import { UpdateNotifier } from './UpdateNotifier'
 export function createUpdateMonitorModule({
   config,
   logger,
-  peripherals,
   db,
   clock,
 }: ModuleDependencies): ApplicationModule | undefined {
@@ -31,7 +30,7 @@ export function createUpdateMonitorModule({
   const configReader = config.updateMonitor.configReader
 
   const discordClient = config.updateMonitor.discord
-    ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
+    ? new DiscordClient(new HttpClient(), config.updateMonitor.discord)
     : undefined
 
   const updateMessagesService = new UpdateMessagesService(
@@ -60,7 +59,7 @@ export function createUpdateMonitorModule({
   const runner = createDiscoveryRunner(
     paths,
     http,
-    peripherals,
+    db,
     Logger.SILENT,
     chains,
     !!cacheEnabled,

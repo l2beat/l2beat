@@ -25,10 +25,6 @@ export class DiscordClient {
     }
   }
 
-  static create(services: { httpClient: HttpClient }, options: DiscordConfig) {
-    return new DiscordClient(services.httpClient, options)
-  }
-
   async sendMessage(message: string, channel: Channel) {
     if (message.length > MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')

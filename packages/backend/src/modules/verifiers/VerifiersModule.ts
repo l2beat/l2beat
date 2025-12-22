@@ -4,7 +4,6 @@ import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
 export function createVerifiersModule({
   config,
   logger,
-  peripherals,
   db,
   clock,
 }: ModuleDependencies): ApplicationModule | undefined {
@@ -17,7 +16,6 @@ export function createVerifiersModule({
 
   const refresher = new VerifiersStatusRefresher({
     db,
-    peripherals,
     clock,
     logger,
     verifiers: config.verifiers.verifiers,
