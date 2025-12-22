@@ -392,15 +392,15 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "RiscZeroSetVerifier",
+      "name": "RiscZeroGroth16Verifier",
       "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
       "type": "Contract",
-      "template": "risc0/RiscZeroSetVerifierGroth16",
+      "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
         "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb"
       ],
       "proxyType": "immutable",
-      "description": "Set verifier contract for RISC Zero Groth16 proofs (RISC Zero system version 2.0.0-rc.3). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
+      "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).",
       "sinceTimestamp": 1763954207,
       "sinceBlock": 23865991,
       "values": {
@@ -2472,9 +2472,9 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
-    "risc0/RiscZeroSetVerifierGroth16": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 24067663 },
-  "permissionsConfigHash": "0x2c36b58176573258f0cb82a0f988e8fe1d752b8dbf9081632899755346cee5ac"
+  "permissionsConfigHash": "0x895fcc32bc50d53c3a55e2a513121eb13803b606f1e6c4468bb3658d503a2ac2"
 }

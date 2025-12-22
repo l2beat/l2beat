@@ -13,10 +13,7 @@ export const megaeth: ScalingProject = opStackL2({
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Kailua',
@@ -71,6 +68,13 @@ export const megaeth: ScalingProject = opStackL2({
     chainId: 4326,
     explorerUrl: 'https://megaexplorer.xyz',
     sinceTimestamp: UnixTime(1762797011),
-    apis: [],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://alpha.megaeth.com/rpc',
+        callsPerMinute: 300,
+      },
+      { type: 'blockscout', url: 'https://megaeth.blockscout.com/api' },
+    ],
   },
 })
