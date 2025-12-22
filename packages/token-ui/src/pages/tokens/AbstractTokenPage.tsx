@@ -30,7 +30,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
-import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
@@ -203,7 +202,7 @@ function AbstractTokenView({
               {token.deployedTokens.length !== 0 ? (
                 token.deployedTokens.map((token) => (
                   <div
-                    key={getDeployedTokenDisplayId(token)}
+                    key={`${token.chain}+${token.address}`}
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
                     {token.chain} ({token.symbol})

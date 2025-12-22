@@ -18,7 +18,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
-import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 
 export function TokensSummaryPage() {
   const [selectedAbstractToken, setSelectedAbstractToken] = useState<
@@ -76,7 +75,7 @@ export function TokensSummaryPage() {
                       <div className="mt-1 ml-6 flex flex-col items-start gap-1">
                         {token.deployedTokens.map((deployedToken) => (
                           <button
-                            key={getDeployedTokenDisplayId(deployedToken)}
+                            key={`${deployedToken.chain}+${deployedToken.address}`}
                             className={cn(
                               'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
                               selectedDeployedToken?.chain ===
@@ -104,7 +103,7 @@ export function TokensSummaryPage() {
                     {data?.deployedWithoutAbstractTokens.map((token) => {
                       return (
                         <button
-                          key={getDeployedTokenDisplayId(token)}
+                          key={`${token.chain}+${token.address}`}
                           className={cn(
                             'w-full rounded-md p-2 text-left text-muted-foreground text-sm',
                             selectedDeployedToken?.chain === token.chain &&

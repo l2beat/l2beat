@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x92bd382af727e0adaf442ac5ad277e6086a0ca10
+
+# Diff at Fri, 19 Dec 2025 13:23:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a2695d64aef8f9e1ff8ab83d80056987e84f332 block: 1753944311
+- current timestamp: 1753944311
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944311 (main branch discovery), not current.
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
++        5
++++ description: Number of scheduled shadow proposals
+      values.scheduledShadowCount:
++        0
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
++        5
+      template:
++        "adi/Governance"
+      description:
++        "Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay."
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"pendingOwner":{"severity":"HIGH"},"securityCouncil":{"severity":"HIGH"},"minDelay":{"severity":"HIGH"},"scheduledTransparentCount":{"description":"Number of scheduled transparent proposals"},"scheduledShadowCount":{"description":"Number of scheduled shadow proposals"},"executedCount":{"description":"Number of executed proposals"}}
+    }
+```
+
 Generated with discovered.json: 0xac54f2cadd241ee4a70ca45bcf5b2c22900e7726
 
 # Diff at Wed, 17 Dec 2025 14:34:30 GMT:
