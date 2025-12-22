@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "CAPX",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F"
+    },
+    {
       "symbol": "ADI",
       "address": "0x8b1484d57abbe239bb280661377363b03c89caea",
       "coingeckoId": "adi-token"
