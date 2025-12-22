@@ -1,6 +1,6 @@
 {
   "name": "game7",
-  "timestamp": 1765795563,
+  "timestamp": 1766407241,
   "configHash": "0x4c01dbf62e89e3bc511e4d059f4bde42a1e45d583e6bf8306cb634403c827c46",
   "entries": [
     {
@@ -1392,6 +1392,11 @@
       ]
     },
     {
+      "address": "arb1:0xDe87572d7e556B2EBfD4410F1835A503b175794c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1660,6 +1665,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
+          "arb1:0xDe87572d7e556B2EBfD4410F1835A503b175794c",
           "arb1:0x4058A4d6017676e55F0539f772e9618Db49158CC",
           "arb1:0xF9189a9ddf98952D85cdF9365D644Dfb0FBC08FC",
           "arb1:0x823DeFCBf7Be01b6469a22E163bc15BdFfb6C649",
@@ -1670,8 +1676,8 @@
         "domainSeparator": "0xed81df6d2e565162dbc772fda77cdcebe0f704265c7c16deb0f4f3a391b101e0",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 14,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2555,6 +2561,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 410867780 },
-  "permissionsConfigHash": "0x7016758e25ffaecb7ef06e190a68c37a6799e06650c685063a30e85dbf08bc34"
+  "usedBlockNumbers": { "arbitrum": 413317483 },
+  "permissionsConfigHash": "0x0ae059bcd1b8282dae819436abb9dab52d244d72167279f2de93b904b707ad1a"
 }
