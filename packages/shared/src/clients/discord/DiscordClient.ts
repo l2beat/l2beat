@@ -4,13 +4,19 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
 import { RateLimiter } from '@l2beat/backend-tools'
-import type { HttpClient } from '@l2beat/shared'
 import type { RequestInit } from 'node-fetch'
-import type { DiscordConfig } from '../../config/Config'
+import type { HttpClient } from '../http/HttpClient'
 
-export const MAX_MESSAGE_LENGTH = 2000
+export const DISCORD_MAX_MESSAGE_LENGTH = 2000
 
-export type Channel = 'PUBLIC' | 'INTERNAL'
+export type DiscordChannelType = 'PUBLIC' | 'INTERNAL'
+
+interface DiscordConfig {
+  readonly token: string
+  readonly publicChannelId?: string
+  readonly internalChannelId: string
+  readonly callsPerMinute: number
+}
 
 export class DiscordClient {
   constructor(
@@ -25,8 +31,8 @@ export class DiscordClient {
     }
   }
 
-  async sendMessage(message: string, channel: Channel) {
-    if (message.length > MAX_MESSAGE_LENGTH) {
+  async sendMessage(message: string, channel: DiscordChannelType) {
+    if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
     if (channel === 'PUBLIC' && this.config.publicChannelId) {
@@ -38,7 +44,7 @@ export class DiscordClient {
   }
 
   private async send(message: string, channelId: string) {
-    if (message.length > MAX_MESSAGE_LENGTH) {
+    if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 

@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   formatAsAsciiTable,
@@ -9,10 +10,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import {
-  type DiscordClient,
-  MAX_MESSAGE_LENGTH,
-} from '../../peripherals/discord/DiscordClient'
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
   type DailyReminderChainEntry,
@@ -277,8 +274,12 @@ describe(UpdateNotifier.name, () => {
         '```',
       ].join('\n')
 
-      expect(internalMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
-      expect(publicMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(internalMessage.length).toBeLessThanOrEqual(
+        DISCORD_MAX_MESSAGE_LENGTH,
+      )
+      expect(publicMessage.length).toBeLessThanOrEqual(
+        DISCORD_MAX_MESSAGE_LENGTH,
+      )
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
@@ -632,7 +633,7 @@ describe(UpdateNotifier.name, () => {
 
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async (msg: string) => {
-          expect(msg.length <= MAX_MESSAGE_LENGTH)
+          expect(msg.length <= DISCORD_MAX_MESSAGE_LENGTH)
         },
       })
 
