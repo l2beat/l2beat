@@ -11,7 +11,11 @@ export const arbitrumOrbit: BaseProject = {
   display: {
     description: 'The Arbitrum Orbit is a network of Arbitrum chains.',
     links: {
-      websites: ['https://arbitrum.io', 'https://portal.arbitrum.io/'],
+      websites: [
+        'https://arbitrum.io',
+        'https://portal.arbitrum.io/',
+        'https://arbitrum.foundation/orbit',
+      ],
       bridges: ['https://bridge.arbitrum.io/'],
     },
     badges: [BADGES.Stack.Orbit],
