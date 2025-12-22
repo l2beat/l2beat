@@ -44,7 +44,6 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@polkadot/api": "^12.4.2",
-    "discord.js": "^14.21.0",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",

@@ -7,7 +7,6 @@ import {
   CelestiaRpcClient,
   CoingeckoClient,
   DiscordClient,
-  DiscordWebhookClient,
   DuneClient,
   EigenApiClient,
   FuelClient,
@@ -57,7 +56,6 @@ export interface Clients {
   near: NearClient | undefined
   dune: DuneClient | undefined
   discord: DiscordClient | undefined
-  discordWebhook: DiscordWebhookClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -77,7 +75,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
   let discord: DiscordClient | undefined
-  let discordWebhook: DiscordWebhookClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -364,12 +361,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     discord = new DiscordClient(http, config.updateMonitor.discord)
   }
 
-  if (config.anomalies && config.anomalies.anomaliesWebhookUrl) {
-    discordWebhook = new DiscordWebhookClient(
-      config.anomalies.anomaliesWebhookUrl,
-    )
-  }
-
   return {
     block: blockClients,
     logs: logsClients,
@@ -394,6 +385,5 @@ export function initClients(config: Config, logger: Logger): Clients {
     lighter: lighterClient,
     dune,
     discord,
-    discordWebhook,
   }
 }

@@ -1,3 +1,4 @@
+import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { AnomalyNotifier } from './AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
@@ -8,7 +9,6 @@ export function createAnomaliesModule({
   logger,
   db,
   blockProcessors,
-  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.anomalies) {
     logger.info('Anomalies module disabled')
@@ -16,11 +16,11 @@ export function createAnomaliesModule({
   }
   logger = logger.tag({ feature: 'anomalies', module: 'anomalies' })
 
-  const anomaliesNotifier = providers.clients.discordWebhook
+  const anomaliesNotifier = config.anomalies.anomaliesWebhookUrl
     ? new AnomalyNotifier(
         logger,
         clock,
-        providers.clients.discordWebhook,
+        new DiscordWebhookClient(config.anomalies.anomaliesWebhookUrl),
         db,
         config.anomalies.anomaliesMinDuration,
       )
