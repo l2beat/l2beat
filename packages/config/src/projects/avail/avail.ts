@@ -489,17 +489,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
         ],
       },
       {
-        projectId: ProjectId('space-and-time'),
-        name: 'Space and Time',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appIds: ['34'],
-          },
-        ],
-      },
-      {
         projectId: ProjectId('art-peace'),
         name: 'art-peace',
         daTrackingConfig: [
