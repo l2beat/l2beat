@@ -12,8 +12,9 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import type { TvsByStage } from '~/server/features/ecosystems/getTvsByStage'
+import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
@@ -50,13 +51,20 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function EcosystemTvsByStage({
-  tvsByStage,
+  tvsByStageData: { withRwaRestricted, withoutRwaRestricted },
   className,
 }: {
-  tvsByStage: TvsByStage
+  tvsByStageData: EcosystemEntry['tvsByStage']
   className?: string
 }) {
   const breakpoint = useBreakpoint()
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
+
+  const tvsByStage = excludeRwaRestrictedTokens
+    ? withoutRwaRestricted
+    : withRwaRestricted
 
   const chartData = [
     {

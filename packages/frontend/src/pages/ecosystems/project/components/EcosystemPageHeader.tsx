@@ -3,6 +3,8 @@ import {
   type BadgeWithParams,
   ProjectBadge,
 } from '~/components/projects/ProjectBadge'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
 
@@ -10,12 +12,19 @@ interface Props {
   logo: EcosystemEntry['logo']
   badges: BadgeWithParams[]
   links: EcosystemEntry['links']['header']
+  hasRwaRestrictedTvs: EcosystemEntry['hasRwaRestrictedTvs']
 }
 
-export function EcosystemPageHeader({ logo, badges, links }: Props) {
+export function EcosystemPageHeader({
+  logo,
+  badges,
+  links,
+  hasRwaRestrictedTvs,
+}: Props) {
+  const { display, setDisplay } = useEcosystemDisplayControlsContext()
   return (
-    <header className="flex items-center">
-      <div>
+    <header>
+      <div className="flex items-center justify-between">
         <div className="flex h-20 items-center gap-2">
           <img
             src={logo.light}
@@ -34,14 +43,19 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
             />
           )}
         </div>
+        <div className="mt-4 ml-auto flex gap-3 max-md:hidden">
+          {badges.map((badge) => (
+            <ProjectBadge key={badge.id} badge={badge} disableTooltip />
+          ))}
+        </div>
+      </div>
+      <div className="mt-1 flex justify-between">
         <div className="max-md:hidden">
           <DesktopProjectLinks projectLinks={links} />
         </div>
-      </div>
-      <div className="ml-auto flex gap-3 max-md:hidden">
-        {badges.map((badge) => (
-          <ProjectBadge key={badge.id} badge={badge} disableTooltip />
-        ))}
+        {hasRwaRestrictedTvs && (
+          <DisplayControls display={display} setDisplay={setDisplay} />
+        )}
       </div>
     </header>
   )

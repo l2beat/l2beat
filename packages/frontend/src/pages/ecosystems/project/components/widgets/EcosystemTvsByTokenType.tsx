@@ -10,7 +10,9 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
+import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { TvsByTokenType } from '~/server/features/ecosystems/getTvsByTokenType'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -47,13 +49,20 @@ const tokenTypeLabels: Record<keyof TvsByTokenType, string> = {
 }
 
 export function EcosystemTvsByTokenType({
-  tvsByTokenType,
+  tvsByTokenTypeData: { withRwaRestricted, withoutRwaRestricted },
   className,
 }: {
-  tvsByTokenType: TvsByTokenType
+  tvsByTokenTypeData: EcosystemEntry['tvsByTokenType']
   className?: string
 }) {
   const breakpoint = useBreakpoint()
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
+  const tvsByTokenType = excludeRwaRestrictedTokens
+    ? withoutRwaRestricted
+    : withRwaRestricted
+
   const chartData = useMemo(() => {
     return [
       {
