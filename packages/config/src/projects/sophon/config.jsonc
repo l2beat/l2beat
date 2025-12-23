@@ -8,7 +8,7 @@
   ],
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "names": {
-    "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
+    "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "Diamond",
     "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
     "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },

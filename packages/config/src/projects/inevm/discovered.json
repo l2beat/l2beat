@@ -1,6 +1,6 @@
 {
   "name": "inevm",
-  "timestamp": 1765368769,
+  "timestamp": 1765971533,
   "configHash": "0xf3c0b2ddd8b93967c01dba12e5ceab75f2b064e3cb203019afe3ab5d9a61bdfa",
   "entries": [
     {
@@ -399,15 +399,15 @@
         "challengeManager": "arb1:0x9Df55ed5546D9837E28f95f22daA66383957b16f",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "300000000000000000",
+        "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 16116,
+        "firstUnresolvedNode": 16267,
         "inbox": "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18938095,
-        "latestConfirmed": 16115,
-        "latestNodeCreated": 16266,
+        "latestConfirmed": 16266,
+        "latestNodeCreated": 16267,
         "loserStakeEscrow": "arb1:0xB2a5970fB30dc34AD65c914db855766ea62f1f41",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x38Cb5EfbCb3e8783abbBb00210522586e79Ea1D8",
@@ -1819,6 +1819,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409158367 },
+  "usedBlockNumbers": { "arbitrum": 411572978 },
   "permissionsConfigHash": "0x88cde0f9d9215a23d1b78a9b80141d64a23850ac7470b3a86575e8d70798328a"
 }

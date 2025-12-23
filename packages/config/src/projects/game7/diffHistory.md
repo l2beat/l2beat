@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x78a1cad0284b988f06aa1c9dde25875574fef2bd
+
+# Diff at Mon, 15 Dec 2025 10:48:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd14f4ee9b75848e73e6bb3839620bb1517c84c0 block: 1759481125
+- current timestamp: 1765795563
+
+## Description
+
+Conduit msig key rotation.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0xd2ffa95b8fed6964f9c8d9891d9ce069cdef0a02
 
 # Diff at Fri, 03 Oct 2025 08:47:18 GMT:

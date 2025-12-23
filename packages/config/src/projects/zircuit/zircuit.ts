@@ -276,6 +276,24 @@ export const zircuit: ScalingProject = {
           functionSignature:
             'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
           sinceTimestamp: UnixTime(1756148051),
+          untilTimestamp: UnixTime(1764017747),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+          { type: 'liveness', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x92Ef6Af472b39F1b363da45E35530c24619245A4',
+          ),
+          selector: '0x2685d148',
+          functionSignature:
+            'function proposeL2OutputV3(bytes32 _outputRoot, uint64 _claimNonce, address _claimSenderAddress, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
+          sinceTimestamp: UnixTime(1764017747),
         },
       },
     ],

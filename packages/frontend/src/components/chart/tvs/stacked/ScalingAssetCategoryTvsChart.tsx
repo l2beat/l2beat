@@ -13,7 +13,7 @@ interface Props {
   range: ChartRange
   unit: ChartUnit
   excludeAssociatedTokens: boolean
-  includeRwaRestrictedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
 }
 
 export function ScalingAssetCategoryTvsChart({
@@ -22,7 +22,7 @@ export function ScalingAssetCategoryTvsChart({
   range,
   unit,
   excludeAssociatedTokens,
-  includeRwaRestrictedTokens,
+  excludeRwaRestrictedTokens,
 }: Props) {
   const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useScalingTvsDataKeys()
@@ -31,7 +31,7 @@ export function ScalingAssetCategoryTvsChart({
     range,
     excludeAssociatedTokens,
     filter,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
@@ -92,7 +92,7 @@ export function ScalingAssetCategoryTvsChart({
       syncedUntil={data?.syncedUntil}
       dataKeys={assetCategoryDataKeys}
       toggleDataKey={assetCategoryToggleDataKey}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
     />
   )
 }

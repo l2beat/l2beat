@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc4d43ab7a3f21ecadfd181a7177a92b7190b55cc
+
+# Diff at Mon, 15 Dec 2025 07:47:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1761643706
+- current timestamp: 1765784441
+
+## Description
+
+ignore in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      template:
++        "tokens/Lido/TriggerableWithdrawalsGateway"
+    }
+```
+
 Generated with discovered.json: 0xe2e25b60ce7c849d7415fa8a81c84b21615028da
 
 # Diff at Wed, 05 Nov 2025 12:48:10 GMT:

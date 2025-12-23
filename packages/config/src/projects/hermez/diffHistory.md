@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x8e8e9b525c83e83e50eb1c274f538546980f6ee8
+
+# Diff at Mon, 15 Dec 2025 07:37:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1738736459
+- current timestamp: 1765784148
+
+## Description
+
+ignore: archive.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xe407cbc76d2dcba4c87608219a8254a23a316e5331aaac1a04865186145eddb3","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0xb0d99ddd5a2dec9106069463ec8cdd7aef3a5d75
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1525,5 +1525,9 @@
   "static/images/upgrades-and-governance/agglayer.png": "d6b47eefd3b2ca22c2a86d4ee6400c8c",
   "static/icons/optimai.png": "efcaad73c70a7197b43926de057ed5e1",
   "static/meta-images/scaling/projects/optimai/opengraph-image.png": "3862e6af1e98d64ecd22996a24277a2f",
-  "static/images/architecture/celo.png": "0adf5a0d54c5c23c35100cc3699fba91"
+  "static/images/architecture/celo.png": "0adf5a0d54c5c23c35100cc3699fba91",
+  "static/images/badges/EigenDAVerifier.png": "275e8f4ea51385efb6f145737ff5eb0b",
+  "static/meta-images/publications/governance-review-78.png": "7b58914cf086ce94cebee0b1d73344f2",
+  "static/icons/airbender.png": "0b3d39bd877b06007df23ffb811598cf",
+  "static/meta-images/zk-catalog/projects/airbender/opengraph-image.png": "ff406ac255d6d3f4de4a0d1663b37ff5"
 }

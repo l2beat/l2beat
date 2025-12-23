@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1765550303,
+  "timestamp": 1766048031,
   "configHash": "0xd238af9607ffb878f8c4b8db8bb4e8bdc00ce8100fa3d110447ab682a6609526",
   "entries": [
     {
@@ -31,8 +31,8 @@
         "BASIS_POINT_SCALE": 10000,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1765152061,
-        "netFeeRevenue": 0,
+        "lastDisbursementTime": 1765742383,
+        "netFeeRevenue": "40431348588665756580",
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
         "OPTIMISM_WALLET": "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292668275",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292668504",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -295,10 +295,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 83536949,
+        "basefee": 30293994,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 4800728,
+        "blobBaseFee": 1774087,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 312,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -308,15 +308,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x09aaa7234267058ab14f36708555675b3def34ad0dcaa912abc8e868b43b10de",
+        "hash": "0xa8d959823f4ae7139178bd5e2496d5cd151c96f96cdb97858024a69f06efa3a0",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 23997171,
+        "number": 24038407,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 1,
-        "timestamp": 1765550111,
+        "sequenceNumber": 0,
+        "timestamp": 1766047847,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1277,7 +1277,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "20160000000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1454,8 +1454,9 @@
         ],
         "$upgradeCount": 4,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9755,
+        "gameCount": 9892,
         "gameImpls": [
           "eth:0x979Cb7E329bA213fB9d6c5F7771eC6a3109BDC93",
           "eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2",
@@ -1477,6 +1478,7 @@
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1569,8 +1571,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 310736,
-          "prevBlockNum": 23997166
+          "prevBoughtGas": 821744,
+          "prevBlockNum": 24038410
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2391,7 +2393,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2423,7 +2425,7 @@
       "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -2438,12 +2440,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 47,
-        "VERSION": "1.3.0"
+        "nonce": 48,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -2511,7 +2513,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293111870",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293114444",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2590,12 +2592,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xAe563B4Ce2813dA5B8Ec56834DF8119Eda221692",
+        "anchorGame": "eth:0xCA35a3c2d4387E67C2aB0150A735564Cbe91ab4d",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xa392f5e330e3588f766fb1f25d2affce2d8d77a2c71bc4cd8a09feccafa06d48",
-          39076595
+          "0x3974771d639739747070a83b65f1075a8e2ab9086e8f9bcc4f5c8fd199324798",
+          39325618
         ],
         "initVersion": 1,
         "paused": false,
@@ -2837,7 +2839,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2845,7 +2847,7 @@
       "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -2856,17 +2858,16 @@
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
-        "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
-        "getModules": [],
+        "domainSeparator": "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "NAME": "Gnosis Safe",
-        "nonce": 112,
-        "VERSION": "1.1.1"
+        "nonce": 113,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "Proxy",
-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -3941,51 +3942,6 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedMasterCopy(address masterCopy)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeMasterCopy(address _masterCopy)",
-      "function changeThreshold(uint256 _threshold)",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getMessageHash(bytes message) view returns (bytes32)",
-      "function getModules() view returns (address[])",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isOwner(address owner) view returns (bool)",
-      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signMessage(bytes _data)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -4864,7 +4820,7 @@
     "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x7ff210fc156b22239c3f3600c36a17973eaf33fba84ec8a38bdf4e6fa2cada17",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -4891,6 +4847,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 39380478, "ethereum": 23997186 },
+  "usedBlockNumbers": { "base": 39629342, "ethereum": 24038422 },
   "permissionsConfigHash": "0xd25a5eff2a5f073abfd913bad4e07d007ed642590440c9ea464cf4f8bb472326"
 }

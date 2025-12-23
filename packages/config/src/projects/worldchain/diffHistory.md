@@ -1,6 +1,46 @@
-Generated with discovered.json: 0xf1d644ff25fd3425d67478047ec83d6156989448
+Generated with discovered.json: 0x84406a7c4065418a90dc548ae4a5042e5d60029e
 
-# Diff at Fri, 12 Dec 2025 14:57:04 GMT:
+# Diff at Thu, 18 Dec 2025 09:02:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765551356
+- current timestamp: 1766048460
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x42eb78ad4f661a3a26a68f1b3c1626c957cbeb0a
+
+# Diff at Fri, 12 Dec 2025 16:20:24 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764325163
@@ -20,10 +60,15 @@ discovery. Values are for block 1764325163 (main branch discovery), not current.
     contract DisputeGameFactory (eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 +++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
       values.game42:
 +        "eth:0x0000000000000000000000000000000000000000"
       values.initBondGame42:
 +        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
       fieldMeta.game42:
 +        {"severity":"HIGH"}
     }

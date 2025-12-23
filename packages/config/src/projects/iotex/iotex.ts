@@ -17,7 +17,11 @@ export const iotex: ScalingProject = upcomingL2({
       websites: ['https://iotex.io/'],
       documentation: ['https://docs.iotex.io/'],
       repositories: ['https://github.com/iotexproject'],
-      socialMedia: ['https://x.com/iotex_io'],
+      socialMedia: [
+        'https://x.com/iotex_io',
+        'https://discord.com/invite/iotex',
+        'https://t.me/IoTeXGroup',
+      ],
       bridges: ['https://bridge.iotex.io'],
       explorers: ['https://iotexscan.io'],
     },

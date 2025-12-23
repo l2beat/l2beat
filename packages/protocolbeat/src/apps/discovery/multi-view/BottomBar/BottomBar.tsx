@@ -1,26 +1,27 @@
-import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../../config/readonly'
-import { useTerminalStore } from '../../panel-terminal/store'
+import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useMultiViewStore } from '../store'
 import { Keys } from './Keys'
 import { StatusRibbon } from './StatusRibbon'
 
 export function BottomBar() {
-  const queryClient = useQueryClient()
   const { project } = useParams()
   const [hintOpen, setHintOpen] = useState(false)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
   const addPanel = useMultiViewStore((state) => state.addPanel)
   const removePanel = useMultiViewStore((state) => state.removePanel)
   const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
-  const discover = useTerminalStore((state) => state.discover)
+  const { discover, killCommand } = useDiscoveryCommand()
   const setOpen = useSearchStore((state) => state.setOpen)
 
+  // By default when using bottom bar
+  const useDevMode = true
+
   useEffect(() => {
-    function onKeyUp(e: KeyboardEvent) {
+    async function onKeyUp(e: KeyboardEvent) {
       if (e.code === 'F1') {
         setHintOpen((open) => !open)
       }
@@ -46,10 +47,10 @@ export function BottomBar() {
           return
         }
 
-        discover(project).then(() => {
-          queryClient.invalidateQueries({ queryKey: ['projects', project] })
-          queryClient.invalidateQueries({ queryKey: ['config-sync-status'] })
-        })
+        await discover(project, useDevMode)
+      }
+      if (e.code === 'KeyK' && e.altKey) {
+        killCommand()
       }
     }
 
@@ -108,6 +109,9 @@ export function BottomBar() {
               <hr className="my-1" />
               <li>
                 <Keys keys={[altKey, 'R']} /> - Rediscover
+              </li>
+              <li>
+                <Keys keys={[altKey, 'K']} /> - Kill command
               </li>
             </ul>
           </div>

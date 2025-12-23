@@ -25,7 +25,7 @@ export async function getAtTimestampsPerProjectQuery(
   oldestTimestamp: number,
   latestTimestamp: number,
   excludeAssociated: boolean,
-  includeRwaRestrictedTokens: boolean,
+  excludeRwaRestrictedTokens: boolean,
   cutOffTimestamp?: number,
 ): Promise<SummedByTimestampTvsPerProject> {
   const allValues = await db.tvsTokenValue.getSummedAtTimestampsByProjects(
@@ -33,7 +33,7 @@ export async function getAtTimestampsPerProjectQuery(
     latestTimestamp,
     {
       excludeAssociated,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
       cutOffTimestamp,
     },
   )

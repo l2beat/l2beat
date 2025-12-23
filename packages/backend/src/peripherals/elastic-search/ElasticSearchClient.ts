@@ -42,6 +42,10 @@ export class ElasticSearchClient {
     documents: any[],
     index: string,
   ): Promise<BulkResponse> {
+    if (documents.length === 0) {
+      return { isSuccess: true }
+    }
+
     const operations = documents.flatMap((doc) => [
       { index: { _index: index } },
       doc,

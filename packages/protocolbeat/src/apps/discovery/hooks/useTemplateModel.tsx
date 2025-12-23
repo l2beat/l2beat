@@ -135,6 +135,12 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.toString()
   }, [templateModel])
 
+  const isInSync = useMemo(() => {
+    return !templateModel.diff(
+      ContractConfigModel.fromRawJsonc(files.template ?? '{}'),
+    )
+  }, [templateModel, files.template])
+
   return {
     templateModel,
     toggleIgnoreMethods,
@@ -163,5 +169,9 @@ export function useTemplateModel({ templateId, files }: Props) {
     ignoreInWatchMode: templateModel.ignoreInWatchMode,
     category: templateModel.category,
     description: templateModel.description,
+
+    isInSync,
+    isSyncPending: saveMutation.isPending,
+    isSyncError: saveMutation.isError,
   }
 }

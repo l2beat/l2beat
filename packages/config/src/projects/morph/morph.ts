@@ -77,7 +77,7 @@ export const morph: ScalingProject = {
         'https://t.me/MorphL2official',
         'https://blog.morphl2.io/',
         'https://medium.com/@morphlayer2',
-        'https://discord.com/invite/MorphLayer',
+        'https://discord.com/invite/morphnetwork',
         'https://youtube.com/@morphofficiall2',
       ],
     },

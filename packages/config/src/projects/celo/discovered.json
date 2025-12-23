@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1765550224,
+  "timestamp": 1766048053,
   "configHash": "0x233391dc575aec1c6373568f5fc4beaa61aa5ba9e6cfb85c5ae995f6196a9e0b",
   "entries": [
     {
@@ -305,7 +305,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620595",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620620",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1290,7 +1290,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1322,7 +1322,7 @@
       "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -1337,12 +1337,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 47,
-        "VERSION": "1.3.0"
+        "nonce": 48,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -2034,8 +2034,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 23995853
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 24037433
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2333,6 +2333,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+      "ignoreInWatchMode": ["getLastProposalTimestamp"],
       "sinceTimestamp": 1764689339,
       "sinceBlock": 23926676,
       "values": {
@@ -2348,7 +2349,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1765550183,
+        "getLastProposalTimestamp": 1766048015,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2401,8 +2402,9 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
-        "gameCount": 3014,
+        "gameCount": 5505,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -2421,6 +2423,7 @@
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -3600,7 +3603,7 @@
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x7ff210fc156b22239c3f3600c36a17973eaf33fba84ec8a38bdf4e6fa2cada17",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -3613,12 +3616,12 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/AccessManager": "0x632fa68ba17c6197923e5322a8688cf61a75adc6c4762c1c14d0b34bd7c07f10",
+    "succinct/OPSuccinct/AccessManager": "0x57aa4b6b7430cf6f540cc3ea3f53a2addf4348c8fc64b0bf9c34b7f4dae2f74b",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0xd43e10bdf24f9a99590fd00cd3f1d135a25ebad1d8fa81943db21c274c6b634a",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23997179 },
+  "usedBlockNumbers": { "ethereum": 24038424 },
   "permissionsConfigHash": "0xb8afb5f6996668d28d588b051bf77dbaaec1dd5054d2a90c4b76ab56935b8616"
 }

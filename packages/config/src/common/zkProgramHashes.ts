@@ -37,8 +37,8 @@ const zkProgramHashes: Record<
     
     Verify:
     
-    1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.1 \` . Commit hash should be  \`4408f080e40526eaf2e327ac651e106842478523 \`.
-    2. Make sure docker is running by running  \`docker ps \`
+    1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.1\` . Commit hash should be  \`4408f080e40526eaf2e327ac651e106842478523\`.
+    2. Make sure docker is running by running  \`docker ps\`
     3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
         `,
   },
@@ -59,8 +59,8 @@ Prepare:
 
 Verify:
 
-1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.1 \` . Commit hash should be  \`4408f080e40526eaf2e327ac651e106842478523 \`.
-2. Make sure docker is running by running  \`docker ps \`
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.1\` . Commit hash should be  \`4408f080e40526eaf2e327ac651e106842478523\`.
+2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
   },
@@ -90,9 +90,9 @@ Prepare:
 
 Verify:
 
-1. Checkout the correct branch in [agglayer/op-succinct](https://github.com/agglayer/op-succinct) repo:  \`git checkout v3.1.0-agglayer \` . Commit hash should be  \`9af9cecad2c7f6ee17c87e9bba616ef4d638c958 \`.
-2. Make sure docker is running by running  \`docker ps \`
-3. From the  \`op-succinct/programs/aggregation \` dir:  \`cargo prove build --elf-name aggregation-elf --docker --tag v5.1.0 --output-directory ../../elf \` to generate aggregation program elf from sources
+1. Checkout the correct branch in [agglayer/op-succinct](https://github.com/agglayer/op-succinct) repo:  \`git checkout v3.1.0-agglayer\` . Commit hash should be  \`9af9cecad2c7f6ee17c87e9bba616ef4d638c958\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct/programs/aggregation\` dir:  \`cargo prove build --elf-name aggregation-elf --docker --tag v5.1.0 --output-directory ../../elf\` to generate aggregation program elf from sources
 4. From op-succinct/elf dir:  \`cargo prove vkey --elf aggregation-elf \` to check the verification key of this elf.
     `,
   },
@@ -121,7 +121,22 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/agglayer/agglayer/tree/v0.3.3-post.4/crates/pessimistic-proof-program',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+    Prepare:
+    
+    1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+    2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+    3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+    
+    Verify:
+    
+    1. Checkout the correct branch in [agglayer repo](https://github.com/agglayer/agglayer/tree/main): \`git checkout v0.3.3-post.4\`. Commit hash should be \`df072abc86fa89e12b17204246325983272a1141\`
+    2. Make sure docker is running by running \`docker ps\`
+    3. From the root dir: \`cargo make install-cargo-prove\` to install the correct version of sp1 toolchain
+    4. From the root dir: \`cargo make pp-elf\` to generate pessimistic program elf from sources
+    5. From the pessimistic-proof/elf dir: \`cargo prove vkey --elf riscv32im-succinct-zkvm-elf\` to check the verification key of this elf
+      `,
   },
   '0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639': {
     title: 'Pessimistic program of agglayer',
@@ -151,9 +166,39 @@ Verify:
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered sequencer signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     programUrl:
-      'https://github.com/agglayer/provers/tree/v1.1.3/crates/aggchain-proof-program',
+      'https://github.com/agglayer/provers/tree/v1.1.2/crates/aggchain-proof-program',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v1.1.2\`. Commit hash should be \`f8580024d771580217ded443f85e42919d682595\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make install-cargo-prove\` to install the correct version of sp1 toolchain
+4. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources
+5. Compute vkey hash bytes of the generated \`crates/aggchain-proof-program/elf/riscv32im-succinct-zkvm-elf\` using SP1 toolchain, e.g. by this simple rust script:
+
+\`\`\`
+use sp1_sdk::{HashableKey, Prover, CpuProver};
+
+fn main() {
+    let elf_path = std::env::args().nth(1).expect("Provide elf_path");
+    let elf_bytes = std::fs::read(&elf_path).expect("File read error");
+    let prover = CpuProver::new();
+    let (_pk, vkey) = Prover::setup(&prover, &elf_bytes);
+    let comm = vkey.hash_bytes();
+    let hex: String = comm.iter().
+        map(|b| format!("{:02x}", b)).collect();
+    println!("0x{}", hex);
+}
+\`\`\`
+    `,
   },
   '0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6': {
     title: 'Aggchain program of agglayer',
@@ -162,7 +207,36 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v1.5.0\`. Commit hash should be \`347a140649383d8f5aa5a14907a45cfa756426af\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources
+4. Compute vkey hash bytes of the generated \`crates/aggchain-proof-program/elf/riscv32im-succinct-zkvm-elf\` using SP1 toolchain, e.g. by this simple rust script:
+
+\`\`\`
+use sp1_sdk::{HashableKey, Prover, CpuProver};
+
+fn main() {
+    let elf_path = std::env::args().nth(1).expect("Provide elf_path");
+    let elf_bytes = std::fs::read(&elf_path).expect("File read error");
+    let prover = CpuProver::new();
+    let (_pk, vkey) = Prover::setup(&prover, &elf_bytes);
+    let comm = vkey.hash_bytes();
+    let hex: String = comm.iter().
+        map(|b| format!("{:02x}", b)).collect();
+    println!("0x{}", hex);
+}
+\`\`\`
+    `,
   },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
     title: 'Aggchain program of agglayer',
@@ -171,7 +245,37 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.8.0/crates/aggchain-proof-program', // ??? verify version tag
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+  Prepare:
+  
+  1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+  2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+  3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+  
+
+  Verify:
+  
+  1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v1.8.0\`. Commit hash should be \`df2e48ad8432a863bdc0a939108d37a69f4bea4e\`
+  2. Make sure docker is running by running \`docker ps\`
+  3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources
+  4. Compute vkey hash bytes of the generated \`crates/aggchain-proof-program/elf/riscv32im-succinct-zkvm-elf\` using SP1 toolchain, e.g. by this simple rust script:
+  
+  \`\`\`
+  use sp1_sdk::{HashableKey, Prover, CpuProver};
+  
+  fn main() {
+      let elf_path = std::env::args().nth(1).expect("Provide elf_path");
+      let elf_bytes = std::fs::read(&elf_path).expect("File read error");
+      let prover = CpuProver::new();
+      let (_pk, vkey) = Prover::setup(&prover, &elf_bytes);
+      let comm = vkey.hash_bytes();
+      let hex: String = comm.iter().
+          map(|b| format!("{:02x}", b)).collect();
+      println!("0x{}", hex);
+  }
+  \`\`\`
+      `,
   },
   '0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef': {
     title: 'Celestia Blobstream DA bridge program',
@@ -249,9 +353,33 @@ Verify:
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.4.0-rc.1/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`
+3. Make sure the correct version of sp1 toolchain is installed: \`sp1up -v v5.2.4\`
+4. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [succinctlabs/op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v3.4.0-rc.1\` . Commit hash should be  \`c010f100c50ed226c86762b1a2845b13da0280bd \`.
+2. Make sure docker is running by running  \`docker ps \`
+3. From the  \`op-succinct/programs/aggregation \` dir:  \`cargo prove build --elf-name aggregation-elf --docker --tag v5.2.0 --output-directory ../../elf\` to generate aggregation program elf from sources
+4. From op-succinct/elf dir:  \`cargo prove vkey --elf aggregation-elf \` to check the verification key of this elf.
+    `,
   },
   '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x64c8517c14f10577381d8961139a4420420e90e528d02be96e2b0961671db248': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
@@ -314,6 +442,14 @@ Verify:
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
+  '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
+    title: 'Kailua fault proof program (SOON)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
+    programUrl: 'https://github.com/soonlabs/kailua-soon',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
@@ -369,6 +505,16 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
+  '1701025211190912681772481128523426351562426117847395998223683709327746845867':
+    {
+      title: 'Aggregation program for SHARP prover',
+      description:
+        'Cairo program that squashes the state diffs of several blocks.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator/main.cairo#L15',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
       title: 'Aggregation program for SHARP prover',
@@ -394,6 +540,16 @@ program_hash = {use the value obtained in step 6}
 print(pedersen_hash(from_bytes(b"AGGREGATOR"), program_hash))\`
 The output should be the aggregation program hash in dec.
       `,
+    },
+  '918745833886511857768061986591752808672496300091957204265383861063635175685':
+    {
+      title: 'Starknet OS',
+      proverSystemProject: ProjectId('stwo'),
+      description:
+        'Proves correct state transition for a range of consecutive Starknet transactions.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os.cairo#L69',
+      verificationStatus: 'notVerified',
     },
   '793595346346724189681221050719974054861327641387231526786912662354259445535':
     {
@@ -535,6 +691,15 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
 } 
 \`\`\`
     `,
+  },
+  '0x0062333dc88631be7af046cc8d3c24f346de172aa2030a28b445ab500889d297': {
+    title: 'Executable of the Scroll bundle program',
+    description:
+      "Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1's perspective.",
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.1/crates/circuits/bundle-circuit',
+    proverSystemProject: ProjectId('openvmprover'),
+    verificationStatus: 'notVerified',
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',

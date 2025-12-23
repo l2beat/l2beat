@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xf296991ff8a06dd252ac4afef3f2e3c09a9ebe8c
+
+# Diff at Fri, 19 Dec 2025 12:27:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6a2695d64aef8f9e1ff8ab83d80056987e84f332 block: 1765211471
+- current timestamp: 1766146814
+
+## Description
+
+Registered a new chain with chain ID 5010405 in zksync ecosystem (version 30.1, zksyncOS, probably Airbender). The base token is Sophon token (https://etherscan.io/address/0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0), so probably it's Sophon upgrade.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.17:
++        {"chainId":5010405,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x27c3e74A53885afa564334abA5a7A336C8411Db2"}
+      values.getAllZKChainChainIDs.17:
++        5010405
+      values.getAllZKChains.17:
++        "eth:0xD08FE81c77860E66525b773fDBeB0b171b9E9e91"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        18
++        19
+    }
+```
+
 Generated with discovered.json: 0x8f3ad86e6cb5a3ac833ea3d094d8dba369f96f39
 
 # Diff at Mon, 08 Dec 2025 16:36:19 GMT:
