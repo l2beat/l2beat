@@ -30,10 +30,10 @@ export const alephzero: ScalingProject = orbitStackL2({
       explorers: ['https://evm-explorer.alephzero.org/'],
       repositories: ['https://github.com/Cardinal-Cryptography'],
       socialMedia: [
-        'https://x.com/Aleph__Zero'
-        'https://discord.com/invite/alephzero'
-        'https://t.me/AlephZeroFoundation'
-        'https://www.youtube.com/@AlephZero'
+        'https://x.com/Aleph__Zero',
+        'https://discord.com/invite/alephzero',
+        'https://t.me/AlephZeroFoundation',
+        'https://www.youtube.com/@AlephZero',
       ],
     },
   },
