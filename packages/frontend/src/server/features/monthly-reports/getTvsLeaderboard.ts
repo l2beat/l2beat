@@ -3,6 +3,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import type { ChartRange } from '~/utils/range/range'
 
 export interface TvsLeaderboard {
   projects: Record<
@@ -22,20 +23,21 @@ type TvsLeaderboardProjectFilter = v.infer<typeof TvsLeaderboardProjectFilter>
 
 export async function getTvsLeaderboard(
   props: TvsLeaderboardProjectFilter,
-  range: { type: 'custom'; from: UnixTime; to: UnixTime },
+  range: ChartRange,
 ): Promise<TvsLeaderboard> {
   if (env.MOCK) {
     return getMockTvsBreakdownData(props.projectIds)
   }
 
+  const from = range[0] ?? 0
   const projectsValues = await queryExecutor.execute({
     name: 'getAtTimestampsPerProjectQuery',
     args: [
-      range.from,
-      range.to,
+      from,
+      range[1],
       true,
-      false,
-      range.from - 30 * UnixTime.DAY, // Cut off 30 days before the range
+      true,
+      from - 30 * UnixTime.DAY, // Cut off 30 days before the range
     ],
   })
 

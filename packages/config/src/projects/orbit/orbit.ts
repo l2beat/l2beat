@@ -23,10 +23,7 @@ export const orbit: Bridge = {
       'Orbit Bridge has been hacked on 1 Jan 2024 and is potentially not safe to use.',
     category: 'Token Bridge',
     links: {
-      websites: [
-        'https://bridge.orbitchain.io/',
-        'https://orbitchain.io/about',
-      ],
+      websites: ['https://orbitchain.io/about'],
       bridges: ['https://bridge.orbitchain.io/'],
       socialMedia: [
         'https://twitter.com/Orbit_Chain',
@@ -35,10 +32,7 @@ export const orbit: Bridge = {
       ],
       documentation: ['https://bridge-docs.orbitchain.io/'],
       repositories: ['https://github.com/orbit-chain'],
-      explorers: [
-        'https://bridge.orbitchain.io/history/token/ALL',
-        'https://explorer.orbitchain.io',
-      ],
+      explorers: ['https://bridge.orbitchain.io/history/token/ALL'],
     },
     description:
       'Orbit Bridge is part of the Orbit Chain project. It is a cross-chain bridge that allows users to transfer tokens between supported blockchains.',
@@ -92,7 +86,6 @@ export const orbit: Bridge = {
       'Avalanche',
       'Celo',
       'Fantom',
-      'destination',
       'HECO',
       'ICON',
       'OKC',

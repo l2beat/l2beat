@@ -5,7 +5,7 @@ import type {
   Project,
   TvsToken,
 } from '@l2beat/config'
-import type { RpcClient } from '@l2beat/shared'
+import type { IRpcClient } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -38,7 +38,7 @@ export async function getAggLayerTokens(
   associatedTokens: string[],
   escrow: LegacyEscrow & { sharedEscrow: AggLayerEscrow },
   chainOfL1Escrow: ChainConfig,
-  rpcClient: RpcClient,
+  rpcClient: IRpcClient,
   localStorage: LocalStorage,
   logger: Logger,
 ): Promise<TvsToken[]> {

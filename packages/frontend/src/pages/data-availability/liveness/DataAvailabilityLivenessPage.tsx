@@ -6,6 +6,8 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
+import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -33,6 +35,9 @@ export function DataAvailabilityLivenessPage({
           <MainPageHeader description="DA bridges liveness shows how actively different DA layers are posting data availability attestations to Ethereum, and whether there are any significant deviations from their usual submission schedule.">
             Liveness
           </MainPageHeader>
+          {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
+            <TrackedTxsOutageNotice type="page" mobileFull />
+          )}
           <Controls />
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>

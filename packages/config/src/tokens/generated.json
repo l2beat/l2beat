@@ -100,6 +100,20 @@
       "supply": "zero"
     },
     {
+      "name": "ADI",
+      "coingeckoId": "adi-token",
+      "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+      "symbol": "ADI",
+      "decimals": 18,
+      "deploymentTimestamp": 1763656247,
+      "coingeckoListingTimestamp": 1765238400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -894,6 +908,20 @@
       "coingeckoListingTimestamp": 1622419200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Capx",
+      "coingeckoId": "capx-ai",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+      "symbol": "CAPX",
+      "decimals": 18,
+      "deploymentTimestamp": 1758848087,
+      "coingeckoListingTimestamp": 1762300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4296,6 +4324,20 @@
       "coingeckoListingTimestamp": 1599868800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Phala Vault",
+      "coingeckoId": "pha",
+      "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
+      "symbol": "vPHA",
+      "decimals": 18,
+      "deploymentTimestamp": 1736539223,
+      "coingeckoListingTimestamp": 1599868800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12451/large/phala.png?1696512270",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -9469,6 +9511,28 @@
       }
     },
     {
+      "name": "Startale USD",
+      "coingeckoId": "startale-usd",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "symbol": "USDSC",
+      "decimals": 6,
+      "deploymentTimestamp": 1763565991,
+      "coingeckoListingTimestamp": 1764633600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70883/large/stataleusd.png?1764393252",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "uBTC",
       "coingeckoId": "wrapped-bitcoin-universal",
       "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
@@ -13121,6 +13185,20 @@
       }
     },
     {
+      "name": "RAIN",
+      "coingeckoId": "rain",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "symbol": "RAIN",
+      "decimals": 18,
+      "deploymentTimestamp": 1756216201,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -14746,6 +14824,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "BOB",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "symbol": "BOB",
+      "decimals": 18,
+      "deploymentTimestamp": 1739374645,
+      "coingeckoListingTimestamp": 1763596800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54720/large/BOB_symbol_colour.png?1741195397",
+      "chainId": 60808,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (BOB)",
       "coingeckoId": "usd-coin",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
@@ -16129,6 +16221,28 @@
       "coingeckoListingTimestamp": 1722556800,
       "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741375647,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
       "chainId": 21000000,
       "source": "external",
       "supply": "totalSupply",

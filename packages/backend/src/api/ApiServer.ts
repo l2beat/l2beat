@@ -6,7 +6,6 @@ import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
 import { createApiLogger } from './logger'
-import { createApiMetrics } from './metrics'
 
 export class ApiServer {
   private readonly app: Koa
@@ -24,11 +23,15 @@ export class ApiServer {
       this.logger.error('Request failed', err, ctx.toJSON())
     })
 
-    this.app.use(createApiMetrics())
     this.app.use(conditional())
     this.app.use(etag())
 
     const router = new Router()
+
+    router.get('/health', (ctx) => {
+      ctx.status = 200
+      ctx.body = 'OK'
+    })
 
     for (const childRouter of routers) {
       router.use(childRouter.routes(), childRouter.allowedMethods())

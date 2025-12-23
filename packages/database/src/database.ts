@@ -24,7 +24,6 @@ import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
-import { ProjectValueRepository } from './repositories/ProjectValueRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
@@ -109,7 +108,6 @@ export function createDatabase(
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),
     tvsTokenMetadata: new TokenMetadataRepository(db),
-    tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
 
     // #region

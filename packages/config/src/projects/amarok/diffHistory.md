@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x7dbf30998221d177f6e5063cbda93efe64638ecf
+
+# Diff at Thu, 11 Dec 2025 14:43:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764757760
+- current timestamp: 1765464153
+
+## Description
+
+UMA whitelist changes.
+
+## Watched changes
+
+```diff
+    contract IdentifierWhitelist (eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570) {
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+      values.whitelistedIdentifiers.270:
++        "0x4153534552545f54525554483200000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xbb5e745842a9a1a2df423ca97b0828c55d7342a2
+
+# Diff at Wed, 03 Dec 2025 10:30:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1757063689
+- current timestamp: 1764757760
+
+## Description
+
+7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      template:
++        "uniswap/calibur7702"
+      sourceHashes:
++        ["0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"]
+      values:
++        {"$implementation":"eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00","CUSTOM_STORAGE_ROOT":"0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600","domainBytes":"0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","domainSeparator":"0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301","eip712Domain":{"fields":"0x1f","name":"Calibur","version":"1.0.0","chainId":1,"verifyingContract":"eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259","salt":"0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","extensions":[]},"ENTRY_POINT":"eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108","keyAt":[],"keyCount":0,"keyHashes":0,"namespaceAndVersion":"Uniswap.Calibur.1.0.0"}
+    }
+```
+
 Generated with discovered.json: 0xec6af707c5b17cd06908f39d6d0439b3e804360d
 
 # Diff at Fri, 05 Sep 2025 09:16:08 GMT:

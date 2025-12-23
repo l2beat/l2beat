@@ -76,7 +76,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
     this.blockHeight = blockNumber
 
     return async () => {
-      await this.$.db.tvsBlockTimestamp.insertMany([
+      await this.$.db.tvsBlockTimestamp.upsertMany([
         {
           configurationId: configurations[0].id,
           chain: configurations[0].properties.chainName,

@@ -6,14 +6,14 @@ import { TokenValueRepository } from './TokenValueRepository'
 describeDatabase(TokenValueRepository.name, (db) => {
   const repository = db.tvsTokenValue
 
-  describe(TokenValueRepository.prototype.insertMany.name, () => {
+  describe(TokenValueRepository.prototype.upsertMany.name, () => {
     it('inserts new records', async () => {
       const records = [
         tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
         tokenValue('b', 'arbitrum', UnixTime(100), 1000, 1000, 800, 500, 20),
       ]
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(2)
 
       const result = await repository.getAll()
@@ -21,7 +21,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
 
     it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
+      const inserted = await repository.upsertMany([])
       expect(inserted).toEqual(0)
     })
 
@@ -42,17 +42,37 @@ describeDatabase(TokenValueRepository.name, (db) => {
         )
       }
 
-      const inserted = await repository.insertMany(records)
+      const inserted = await repository.upsertMany(records)
       expect(inserted).toEqual(1500)
 
       const result = await repository.getAll()
       expect(result.length).toEqual(1500)
     })
+
+    it('updates existing records on conflict', async () => {
+      const initialRecords = [
+        tokenValue('a', 'ethereum', UnixTime(100), 10, 10000, 8000, 5000, 10),
+        tokenValue('b', 'arbitrum', UnixTime(100), 1000, 1000, 800, 500, 20),
+      ]
+
+      await repository.upsertMany(initialRecords)
+
+      const updatedRecords = [
+        tokenValue('a', 'ethereum', UnixTime(100), 20, 20000, 16000, 10000, 15),
+        tokenValue('b', 'arbitrum', UnixTime(100), 2000, 2000, 1600, 1000, 25),
+      ]
+
+      const inserted = await repository.upsertMany(updatedRecords)
+      expect(inserted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted(updatedRecords)
+    })
   })
 
   describe(TokenValueRepository.prototype.getByProject.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tokenValue('a', 'ethereum', UnixTime(50), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
         tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
@@ -142,7 +162,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.getByTokenIdInTimeRange.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000, 10),
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500, 10),
@@ -249,7 +269,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.getByProjectAtOrBefore.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         // Token A with multiple timestamps
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
@@ -332,7 +352,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.getLastNonZeroValue.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         // Token A with multiple timestamps
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
@@ -374,7 +394,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     TokenValueRepository.prototype.deleteByConfigInTimeRange.name,
     () => {
       it('deletes data in range for matching config', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
           tokenValue('b', 'ethereum', UnixTime(2), 2, 2000, 1600, 1000, 20),
           tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500, 30),
@@ -397,7 +417,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       })
 
       it('returns 0 if no matching config found', async () => {
-        await repository.insertMany([
+        await repository.upsertMany([
           tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
         ])
 
@@ -419,7 +439,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.checkIfExists.name, () => {
     beforeEach(async () => {
-      await repository.insertMany([
+      await repository.upsertMany([
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
         tokenValue('a', 'ethereum', UnixTime(200), 2, 2000, 1600, 1000, 10),
         tokenValue('b', 'arbitrum', UnixTime(150), 10, 10000, 8000, 5000, 20),
@@ -515,7 +535,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
 
       // Insert token values at different timestamps
-      await repository.insertMany([
+      await repository.upsertMany([
         // Timestamp 100
         tokenValue(
           'a', // eth-canonical-ether
@@ -645,7 +665,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -700,7 +720,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: true,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -755,7 +775,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -797,7 +817,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -839,7 +859,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: true,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -868,7 +888,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
             },
           )
 
@@ -883,7 +903,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               forSummary: false,
               excludeAssociated: false,
-              includeRwaRestrictedTokens: false,
+              excludeRwaRestrictedTokens: true,
             },
           )
 
@@ -937,7 +957,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1007,7 +1027,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1075,7 +1095,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1129,7 +1149,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1180,7 +1200,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: true,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1210,7 +1230,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1232,7 +1252,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: false,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1254,7 +1274,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               {
                 forSummary: false,
                 excludeAssociated: true,
-                includeRwaRestrictedTokens: true,
+                excludeRwaRestrictedTokens: false,
               },
             )
 
@@ -1287,7 +1307,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             300, // latestTimestamp
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1362,7 +1382,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // latestTimestamp (only timestamp 100)
             {
               excludeAssociated: true,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1407,7 +1427,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             500, // latestTimestamp - no data at this timestamp
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1422,7 +1442,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1450,7 +1470,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: true,
+              excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
           )
@@ -1467,7 +1487,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             {
               excludeAssociated: false,
-              includeRwaRestrictedTokens: false,
+              excludeRwaRestrictedTokens: true,
               cutOffTimestamp: 50,
             },
           )

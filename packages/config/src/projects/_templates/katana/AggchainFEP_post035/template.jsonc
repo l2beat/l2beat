@@ -35,7 +35,10 @@
     },
     "optimisticModeManager": {
       "permissions": [
-        { "type": "interact", "description": "toggle the 'optimisticMode'." }
+        {
+          "type": "interact",
+          "description": "toggle the 'optimisticMode'."
+        }
       ]
     },
     "aggchainManager": {
@@ -56,7 +59,7 @@
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
         // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
         "args": [
-          "0x622142ba8035695383551428b698950d3d4a6a53629c90a86d7192cfb221ae4e"
+          "0xfda6f1430e8363d3850cb5ff3f026f6ce01ad0fad017cb06a1dcbeb72c00304d"
         ]
       }
     },
@@ -74,6 +77,10 @@
     },
     "useDefaultVkeys": {
       "description:": "ONLY FOR AGGCHAIN VKEYS, uses the vkeys from the AgglayerManager if true. Make sure to extract the custom vkeys saved in this contract if False.",
+      "severity": "HIGH"
+    },
+    "AGGCHAIN_TYPE": {
+      "description": "0: ECDSA sig verification, 1: limited to vkeys in Gateway with 1 as second byte",
       "severity": "HIGH"
     }
   }

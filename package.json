@@ -58,7 +58,7 @@
     "checkout": "pnpm clean && pnpm && pnpm build"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.2",
+    "@biomejs/biome": "2.3.8",
     "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.6",

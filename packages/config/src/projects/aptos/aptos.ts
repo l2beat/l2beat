@@ -23,6 +23,7 @@ export const aptos: Bridge = {
         'https://theaptosbridge.com/bridge',
         'https://layerzero.network/',
       ],
+      documentation: ['https://aptos.dev/'],
       repositories: [
         'https://github.com/LayerZero-Labs',
         'https://github.com/aptos-labs',
@@ -82,7 +83,20 @@ export const aptos: Bridge = {
         'Aptos Bridge is built on top of LayerZero protocol. LayerZero relies on Oracles to periodically submit source chain block hashes to the destination chain.\
         Once block hash is submitted, Relayers can provide the merkle proof for the transfers. Token Bridge owner can withdraw all funds from the bridge escrow\
         after placing the bridge in an emergency withdrawal mode that will allow them to transfer all tokens out after 1 week delay.',
-      references: [],
+      references: [
+        {
+          title: 'LayerZero Aptos docs: Receive messages',
+          url: 'https://docs.layerzero.network/v1/developers/aptos/receive-messages',
+        },
+        {
+          title: 'LayerZero v1 docs: Configuring Custom Oracle',
+          url: 'https://docs.layerzero.network/v1/developers/evm/oracle/configuring-custom-oracle',
+        },
+        {
+          title: 'L2BEAT: LayerZero security model analysis',
+          url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+        },
+      ],
       risks: [
         {
           category: 'Users can be censored if',

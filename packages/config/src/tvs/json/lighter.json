@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "lighter-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+        "decimals": 18,
+        "sinceTimestamp": 1737090335
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lighter-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",

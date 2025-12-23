@@ -28,8 +28,8 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { LivenessChartResolution } from '~/server/features/scaling/liveness/utils/chartRange'
 import { formatRange } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 
 interface LivenessChartDataPoint {
   timestamp: number
@@ -47,7 +47,7 @@ interface Props {
   tickCount?: number
   lastValidTimestamp: number | undefined
   anyAnomalyLive: boolean
-  resolution: LivenessChartResolution
+  resolution: ChartResolution
 }
 
 const chartMeta = {
@@ -233,7 +233,7 @@ function LivenessCustomTooltip({
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
-  resolution: LivenessChartResolution
+  resolution: ChartResolution
   lastValidTimestamp: number | undefined
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null

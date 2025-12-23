@@ -24,6 +24,7 @@ const daLayerColumn = columnHelper.accessor('name', {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
   },
+  enableHiding: false,
 })
 
 const baseColumns = [indexColumn, logoColumn, daLayerColumn]

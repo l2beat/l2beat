@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "DAO contract used for proposals and token voting",
+  "description": "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.",
   "ignoreMethods": [
     "getProposal",
     "getProposalState",

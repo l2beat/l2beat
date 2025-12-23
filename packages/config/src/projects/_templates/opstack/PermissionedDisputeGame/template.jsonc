@@ -16,12 +16,7 @@
         "args": []
       },
       "edit": ["format", "OpStackAbsolutePrestate"]
-    },
-    "proposer": {
-      "permissions": [{ "type": "propose" }]
-    },
-    "challenger": {
-      "permissions": [{ "type": "challenge" }]
     }
+    // proposer and challenger permissions are manually set in projects that use this dispute game actively
   }
 }

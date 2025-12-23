@@ -20,6 +20,10 @@ function main() {
     apiKey: config.coingeckoApiKey,
   })
 
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
+
   app.use(
     '/trpc',
     trpcExpress.createExpressMiddleware({

@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x567c1823b2a5b7d61feaa88d9c83d47e26551e74
+
+# Diff at Mon, 15 Dec 2025 16:14:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c617e27cd7f65519be3bc9bb0e27c564ec208785 block: 1765195735
+- current timestamp: 1765815217
+
+## Description
+
+Galileo protocol upgrade new verifiers
+(https://gov.scroll.io/proposals/72907322044331380548190357610154468026012921395152333929550231764240959817459)
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.8:
++        {"startBatchIndex":0,"verifier":"eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5"}
+      values.latestVerifier.9:
++        {"startBatchIndex":0,"verifier":"eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"}
+      values.legacyVerifiersLength.7:
++        0
+      values.legacyVerifiersLength.8:
++        0
+      values.verifierVersions.8:
++        9
+      values.verifierVersions.9:
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierGalileo (eth:0x749fC77A1a131632a8b88e8703E489557660C75e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5.sol} |   0
+ ...:0x4F438522956c8826B9e29B4c775b2d8a6a803181.sol | 107 +++++++++++++++++++++
+ ...:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485.sol | 107 +++++++++++++++++++++
+ 3 files changed, 214 insertions(+)
+```
+
+Generated with discovered.json: 0xbe7d80075c21f9f1fb91802e776ebe39e44711af
+
+# Diff at Mon, 08 Dec 2025 12:10:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ad507cd19b68d4c8b8c5db516c85b7611b095b1b block: 1760089209
+- current timestamp: 1765195735
+
+## Description
+
+AgoraGovernor voting delay and voting window updated by the Scroll Security Council. Per the Constitution, the voting period and voting delay should be 7 days and 3 days, respectively. Based on the updated 2-second block time, the corresponding block counts for the governor parameters were recalculated. 302400 blocks * 2s = 7 days and 129600 blocks * 2s = 3 days.
+
+## Watched changes
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        172800
++        129600
+      values.votingPeriod:
+-        403200
++        302400
+    }
+```
+
 Generated with discovered.json: 0x77701f39a79a42731801e050830ad5e9af2641e7
 
 # Diff at Fri, 10 Oct 2025 09:41:22 GMT:

@@ -3,16 +3,16 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getBucketValuesRange } from '~/utils/range/range'
+import { ChartRange, type ChartResolution } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import { CostsTimeRange, getCostsRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const CostsChartParams = v.object({
-  range: CostsTimeRange,
+  range: ChartRange,
   filter: CostsProjectsFilter,
 })
 export type CostsChartParams = v.infer<typeof CostsChartParams>
@@ -44,12 +44,12 @@ type CostsChartData = {
  * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd][] - all numbers
  */
 export async function getCostsChart({
-  range: timeRange,
+  range,
   filter,
 }: CostsChartParams): Promise<CostsChartData> {
   if (env.MOCK) {
     return getMockCostsChartData({
-      range: timeRange,
+      range,
       filter,
     })
   }
@@ -59,12 +59,11 @@ export async function getCostsChart({
   if (projects.length === 0) {
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
-  const resolution = rangeToResolution({ type: timeRange })
-  const [from, to] = getCostsRange({ type: timeRange })
+  const resolution = rangeToResolution(range)
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
-    [from, to],
+    range,
   )
 
   if (data.length === 0) {
@@ -81,8 +80,10 @@ export async function getCostsChart({
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
 
-  const expectedTo = getCostsExpectedTimestamp(resolution)
-  const adjustedTo = isCostsSynced(syncedUntil) ? maxTimestamp : expectedTo
+  const expectedTo = getCostsExpectedTimestamp(range[1], resolution)
+  const adjustedTo = isCostsSynced({ to: range[1], syncedUntil })
+    ? maxTimestamp
+    : expectedTo
 
   const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
@@ -133,16 +134,13 @@ export async function getCostsChart({
   }
 }
 
-function getMockCostsChartData({
-  range: timeRange,
-}: CostsChartParams): CostsChartData {
-  const resolution = rangeToResolution({ type: timeRange })
-  const [from, to] = getBucketValuesRange(
-    timeRange === 'max' ? { type: '1y' } : { type: timeRange },
+function getMockCostsChartData({ range }: CostsChartParams): CostsChartData {
+  const resolution = rangeToResolution(range)
+
+  const timestamps = generateTimestamps(
+    [range[0] ?? 1573776000, range[1]],
     resolution,
   )
-
-  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {
     chart: timestamps.map((timestamp) => [
@@ -168,7 +166,7 @@ function getMockCostsChartData({
 
 function sumByTimestamp(
   records: AggregatedL2CostRecord[],
-  resolution: 'daily' | 'hourly' | 'sixHourly',
+  resolution: ChartResolution,
 ) {
   const result = new Map<
     number,

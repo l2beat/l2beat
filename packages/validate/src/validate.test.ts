@@ -117,7 +117,8 @@ describe('validate', () => {
     expect(Foo.safeValidate('xxx')).toEqual({
       success: false,
       path: '',
-      message: 'None of the enum variants matched, got string.',
+      message:
+        'None of the enum variants matched, got string. Possible values: foo, bar, baz.',
     })
   })
 
@@ -166,6 +167,26 @@ describe('validate', () => {
       success: false,
       path: '.key3',
       message: 'Strict violation, unexpected key found.',
+    })
+  })
+
+  it('passthrough object', () => {
+    type Foo = v.infer<typeof Foo>
+    const Foo = v.passthroughObject({
+      key1: v.string(),
+      key2: v.string().optional(),
+    })
+
+    expect(Foo.safeValidate({ key1: 'bar', key3: 'foo' })).toEqual({
+      success: true,
+      data: { key1: 'bar', key3: 'foo' } as Foo,
+    })
+
+    expect(
+      Foo.safeValidate({ key1: 'bar', key2: undefined, key3: 'foo' }),
+    ).toEqual({
+      success: true,
+      data: { key1: 'bar', key2: undefined, key3: 'foo' } as Foo,
     })
   })
 

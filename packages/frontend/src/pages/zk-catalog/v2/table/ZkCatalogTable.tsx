@@ -2,6 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
@@ -35,6 +36,7 @@ export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
 
   return (
     <PrimaryCard className="mt-1 max-md:mt-4">
+      <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} getHighlightId={(row) => row.id} />
     </PrimaryCard>
   )

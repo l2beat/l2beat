@@ -14,12 +14,24 @@ export const TvsResultItemSchema = v
       eth: v.number(),
       btc: v.number(),
       other: v.number(),
+      publicRwa: v.number(),
+      restrictedRwa: v.number(),
     }),
   })
   .describe('TvsChartDataPoint')
 
 export type TvsResultItem = v.infer<typeof TvsResultItemSchema>
 export const TvsResultSchema = v.array(TvsResultItemSchema)
+
+export const TokenTvsResultItemSchema = v
+  .object({
+    timestamp: v.number(),
+    valueUsd: v.union([v.number(), v.null()]),
+    amount: v.union([v.number(), v.null()]),
+  })
+  .describe('TokenTvsChartDataPoint')
+export type TokenTvsResultItem = v.infer<typeof TokenTvsResultItemSchema>
+export const TokenTvsResultSchema = v.array(TokenTvsResultItemSchema)
 
 export const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 export type TvsRange = v.infer<typeof TvsRangeSchema>

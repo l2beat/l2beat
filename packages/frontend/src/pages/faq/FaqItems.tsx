@@ -150,7 +150,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Which third-party services do you use?',
     answer: [
-      'We use Alchemy, QuickNode, Blast API, Google BigQuery, CoinGecko, Etherscan, and Blockscout for different types of data.',
+      'We use Alchemy, QuickNode, Blast API, CoinGecko, Etherscan, and Blockscout for different types of data.',
     ],
   },
 ]

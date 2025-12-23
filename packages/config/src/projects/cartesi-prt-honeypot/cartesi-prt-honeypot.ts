@@ -326,6 +326,21 @@ export const cartesiprthoneypot: ScalingProject = {
       description: 'Cartesi PRT Honeypot deployed to Ethereum mainnet.',
       type: 'general',
     },
+    {
+      title: 'Cartesi PRT Honeypot reached a fail-stop state',
+      url: 'https://x.com/cartesiproject/status/1970902442259685855',
+      date: '2025-09-24T00:00:00Z',
+      description:
+        'The chain is permanently frozen after the team managed to find a bug in the PRT contracts.',
+      type: 'incident',
+    },
+    {
+      title: 'Cartesi PRT Honeypot postmortem',
+      url: 'https://cartesi.io/blog/prt_honeypot_postmortem/',
+      date: '2025-10-21T00:00:00Z',
+      description: 'Postmortem of the fail-stop incident.',
+      type: 'incident',
+    },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

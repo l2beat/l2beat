@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
@@ -7,6 +8,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingActivityData(
   req: Request,
@@ -56,7 +58,7 @@ async function getCachedData() {
 
   await Promise.all([
     helpers.activity.recategorisedChart.prefetch({
-      range: '1y',
+      range: optionToRange('1y', { offset: -UnixTime.DAY }),
       filter: {
         type: 'projects',
         projectIds: entries.map((entry) => entry.id),

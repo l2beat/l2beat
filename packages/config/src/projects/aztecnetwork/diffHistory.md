@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xd77408fb42fcb38ae63330bbed9a337614a63893
+
+# Diff at Mon, 01 Dec 2025 15:07:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9d76c328276d849f78accd8054caeafb4f665931 block: 1764164738
+- current timestamp: 1764601178
+
+## Description
+
+config: add zk verifier from constructor vars.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764164738 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
++++ description: immutable, defined in constructor
+      values._epochProofVerifier:
++        "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5"
+      fieldMeta._epochProofVerifier:
++        {"description":"immutable, defined in constructor"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HonkVerifier (eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5)
+    +++ description: ZK proof verification contract.
+```
+
+Generated with discovered.json: 0xdcaace9732e56a9363f04491fed545ae18b6dffe
+
+# Diff at Wed, 26 Nov 2025 13:46:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763978160
+- current timestamp: 1764164738
+
+## Description
+
+Config: description finesse.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763978160 (main branch discovery), not current.
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      description:
+-        "DAO contract used for proposals and token voting"
++        "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots."
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
+      description:
+-        "Central staking hub. Validators (attesters) deposit stake here to register. It manages delegation of voting power and tracks which rollup instance validators are securing."
++        "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version."
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0xe05dc9D5969272831757181fFf1532B066254bf1) {
+    +++ description: A one-way public bridge to deposit AZTEC tokens to the Rollup.
+      description:
+-        "A specific bridge allowing the Aztec token ('Fee Juice') to be deposited into L2 specifically for paying gas fees. AZTEC tokens accruing in this escrow can only be used as fees for sequencers."
++        "A one-way public bridge to deposit AZTEC tokens to the Rollup."
+    }
+```
+
 Generated with discovered.json: 0xab43bd863efb9401422ee555d861ee7c61a846ae
 
 # Diff at Mon, 24 Nov 2025 14:16:59 GMT:

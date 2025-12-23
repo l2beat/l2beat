@@ -28,7 +28,7 @@ export function LinkWithThumbnail({
         'group flex gap-6 rounded-md transition-colors',
         orientation === 'horizontal' &&
           'bg-surface-primary hover:bg-surface-secondary',
-        orientation === 'vertical' && ' flex-col',
+        orientation === 'vertical' && 'flex-col',
         props.className,
       )}
     >

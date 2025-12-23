@@ -24,7 +24,7 @@ interface TerminalState {
   killCommand: () => void
   matchFlat: (project: string, address: string) => void
   matchProject: (project: string, address: string) => void
-  discover: (project: string) => Promise<void>
+  discover: (project: string) => Promise<boolean>
   downloadAllShapes: () => void
   findMinters: (address: string) => void
 }
@@ -49,33 +49,44 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
       }
     }),
   matchFlat: (project: string, address: string) => {
-    executeStreaming(set, () => executeMatchFlat(project, address, 'templates'))
+    executeStreaming(get, set, () =>
+      executeMatchFlat(project, address, 'templates'),
+    )
   },
   matchProject: (project: string, address: string) => {
-    executeStreaming(set, () => executeMatchFlat(project, address, 'projects'))
+    executeStreaming(get, set, () =>
+      executeMatchFlat(project, address, 'projects'),
+    )
   },
   downloadAllShapes: () => {
-    executeStreaming(set, () => executeDownloadAllShapes())
+    executeStreaming(get, set, () => executeDownloadAllShapes())
   },
-  discover: (project: string): Promise<void> => {
-    return executeStreaming(set, () =>
+  discover: (project: string): Promise<boolean> => {
+    return executeStreaming(get, set, () =>
       executeDiscover(project, get().command.devMode),
     )
   },
   findMinters: (address: string) => {
-    executeStreaming(set, () => executeFindMinters(address))
+    executeStreaming(get, set, () => executeFindMinters(address))
   },
 }))
 
 function executeStreaming(
+  get: () => TerminalState,
   set: (
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,
   cmd: () => EventSource,
 ) {
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<boolean>((resolve, reject) => {
+    if (get().command.inFlight) {
+      return
+    }
+
     try {
       let stream: EventSource | undefined
+      let exitCode: number | undefined
+
       set((state) => {
         const { command } = state
 
@@ -98,6 +109,12 @@ function executeStreaming(
         const text = encoded.replace(/\\n/g, '\n')
         const toAdd = text.endsWith('\n') ? text : text + '\n'
         set((state) => ({ output: state.output + toAdd }))
+
+        // Parse exit code from command output
+        const exitCodeMatch = text.match(/Process exited with code (\d+)/)
+        if (exitCodeMatch) {
+          exitCode = Number.parseInt(exitCodeMatch[1], 10)
+        }
       }
 
       // This is a known quirk of the SSE protocol - normal completion and
@@ -107,7 +124,9 @@ function executeStreaming(
         set((state) => ({
           command: { ...state.command, stream: undefined, inFlight: false },
         }))
-        resolve()
+        // Exit code 0 means success, anything else is failure
+        // If no exit code was captured, assume failure
+        resolve(exitCode === 0)
       }
     } catch (error) {
       console.log('Catch error', error)

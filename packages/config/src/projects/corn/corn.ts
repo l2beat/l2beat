@@ -92,6 +92,7 @@ export const corn: ScalingProject = orbitStackL2({
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
     sinceTimestamp: UnixTime(1732012151),
     gasTokens: ['BTCN'],
+    coingeckoPlatform: 'corn',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

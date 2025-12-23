@@ -61,6 +61,10 @@ const parseExecutionStateChanged = createEventParser(
   'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
@@ -72,6 +76,8 @@ export const ExecutionStateChanged = createInteropEventType<{
   messageId: `0x${string}`
   state: number
   $srcChain: string
+  dstTokenAddresses?: Address32[]
+  dstAmounts?: bigint[]
 }>('ccip.ExecutionStateChanged')
 
 interface CcipNetwork {
@@ -143,6 +149,28 @@ export class CCIPPlugIn implements InteropPlugin {
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
+
+      // Collect preceding Transfer events in the same transaction
+      const dstTokenAddresses: Address32[] = []
+      const dstAmounts: bigint[] = []
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          dstTokenAddresses.push(Address32.from(precedingLog.address))
+          dstAmounts.push(transfer.value)
+        }
+      }
+
       return [
         ExecutionStateChanged.create(input, {
           messageId: executionStateChanged.messageId,
@@ -151,12 +179,14 @@ export class CCIPPlugIn implements InteropPlugin {
             Object.entries(network.inboundLanes).find(
               ([_, address]) => address === inboundLane,
             )?.[0] ?? `Unknown_${inboundLane}`,
+          dstTokenAddresses:
+            dstTokenAddresses.length > 0 ? dstTokenAddresses : undefined,
+          dstAmounts: dstAmounts.length > 0 ? dstAmounts : undefined,
         }),
       ]
     }
   }
 
-  // TODO: match transfer
   // TODO: If the token is USDC, transfer should not be double-counted
 
   matchTypes = [ExecutionStateChanged]
@@ -168,20 +198,32 @@ export class CCIPPlugIn implements InteropPlugin {
 
       if (ccipSendRequests.length === 0) return
       if (delivery.args.state !== 2) return
-      // For each token in token amounts create add TRANSFER to the Result
+
       const result: MatchResult = []
-      for (const ccipSendRequested of ccipSendRequests) {
-        result.push(
-          Result.Transfer('ccip.Transfer', {
-            srcEvent: ccipSendRequested,
-            dstEvent: delivery,
-            srcTokenAddress: ccipSendRequested.args.token,
-            srcAmount: ccipSendRequested.args.amount,
-            // dstTokenAddress: ccipSendRequested.args.token, // this is the source data and contaminates the financials
-            // dstAmount: ccipSendRequested.args.amount,
-          }),
+      const dstTokenAddresses = delivery.args.dstTokenAddresses ?? []
+      const dstAmounts = delivery.args.dstAmounts ?? []
+
+      // Match each dstAmount to a CCIPSendRequested by amount
+      for (let i = 0; i < dstAmounts.length; i++) {
+        const dstAmount = dstAmounts[i]
+        const dstTokenAddress = dstTokenAddresses[i]
+        const matched = ccipSendRequests.find(
+          (req) => req.args.amount === dstAmount,
         )
+        if (matched) {
+          result.push(
+            Result.Transfer('ccip.Transfer', {
+              srcEvent: matched,
+              dstEvent: delivery,
+              srcTokenAddress: matched.args.token,
+              srcAmount: matched.args.amount,
+              dstTokenAddress,
+              dstAmount,
+            }),
+          )
+        }
       }
+
       result.push(
         Result.Message('ccip.Message', {
           app: 'CCIP Token Transfer',

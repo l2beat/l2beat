@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingCostsData(
   req: Request<unknown, unknown, unknown, { tab: 'rollups' | 'others' }>,
@@ -73,7 +74,7 @@ async function getQueryState(tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
 
   await helpers.costs.chart.prefetch({
-    range: '30d',
+    range: optionToRange('30d'),
     filter: { type: tab },
   })
   return helpers.dehydrate()

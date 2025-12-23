@@ -279,26 +279,6 @@ model TokenMetadata {
   @@index([projectId])
 }
 
-model ProjectValue {
-  timestamp     DateTime @db.Timestamp(6)
-  project       String   @db.VarChar(255)
-  type          String   @db.VarChar(255)
-  value         Float    @db.Real
-  canonical     Float    @db.Real
-  external      Float    @db.Real
-  native        Float    @db.Real
-  ether         Float    @db.Real
-  stablecoin    Float    @db.Real
-  other         Float    @db.Real
-  associated    Float    @db.Real
-  btc           Float    @default(0) @db.Real
-  rwaRestricted Float    @default(0) @db.Real
-  rwaPublic     Float    @default(0) @db.Real
-
-  @@id([timestamp, project, type])
-  @@index([type, project, timestamp])
-}
-
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)
@@ -352,16 +332,10 @@ model InteropEvent {
   expiresAt DateTime @db.Timestamp(6)
   timestamp DateTime @db.Timestamp(6)
 
-  chain       String  @db.VarChar(32)
+  chain       String @db.VarChar(32)
   blockNumber Int
-  txHash      String  @db.VarChar(66)
-  blockHash   String  @db.VarChar(66)
-  value       String? @db.VarChar(66)
-  txTo        String? @db.VarChar(66)
-  calldata    String  @default("0x") @db.Text
-  logIndex    Int?
   args        Json
-  ctx         Json    @default("{}")
+  ctx         Json   @default("{}")
 
   matched     Boolean
   unsupported Boolean
@@ -487,6 +461,7 @@ model DeployedToken {
   decimals            Int
   deploymentTimestamp DateTime @db.Timestamp(6)
   comment             String?  @db.Text
+  metadata            Json?
 
   chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
   abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)

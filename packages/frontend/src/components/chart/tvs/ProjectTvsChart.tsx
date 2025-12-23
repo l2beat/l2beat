@@ -2,31 +2,31 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartUnit } from '../types'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
-import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
+import { TvsChartRangeControls } from './TvsChartRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
 
 interface Props {
   project: ChartProject
   milestones: Milestone[]
-  defaultRange: TvsChartRange
+  defaultRange: ChartRange
 }
 
 export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
+  const [range, setRange] = useState<ChartRange>(defaultRange)
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: { type: timeRange },
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
@@ -46,20 +46,18 @@ export function ProjectTvsChart({ project, milestones, defaultRange }: Props) {
     },
   )
 
-  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const timeRange = useMemo(
+    () => getChartTimeRangeFromData(chartData),
+    [chartData],
+  )
 
   return (
     <div className="flex flex-col gap-4">
       <ChartControlsWrapper>
-        <ProjectChartTimeRange range={chartRange} />
+        <ProjectChartTimeRange timeRange={timeRange} />
         <div className="flex items-center gap-1">
           <TvsChartUnitControls unit={unit} setUnit={setUnit} />
-
-          <TvsChartTimeRangeControls
-            projectSection
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-          />
+          <TvsChartRangeControls range={range} setRange={setRange} />
         </div>
       </ChartControlsWrapper>
       <TvsChart

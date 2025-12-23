@@ -20,10 +20,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
           max: 10,
         }
       : {
-          connectionString: env.string(
-            'PUBLIC_API_URL',
-            env.optionalString('DATABASE_URL'),
-          ),
+          connectionString: env.string('DATABASE_URL'),
           application_name: env.string('DATABASE_APP_NAME', options.name),
           ssl: { rejectUnauthorized: false },
 

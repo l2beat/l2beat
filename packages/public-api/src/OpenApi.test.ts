@@ -226,6 +226,10 @@ describe(OpenApi.name, () => {
         paths: expect.a(Object),
         components: expect.a(Object),
         security: [{ apiKeyAuth: [] }],
+        externalDocs: {
+          description: 'Changelog',
+          url: 'external-docs-url',
+        },
       })
     })
 
@@ -625,6 +629,10 @@ const baseSchema: BaseOpenApiSchema = {
         'Endpoints for listing projects and retrieving detailed information about individual projects.',
     },
   ],
+  externalDocs: {
+    description: 'Changelog',
+    url: 'external-docs-url',
+  },
   components: {
     securitySchemes: {
       apiKeyAuth: {

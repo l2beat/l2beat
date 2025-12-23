@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingTvsData(
   req: Request<
@@ -91,14 +92,14 @@ async function getQueryState(
       filter: {
         type: tab,
       },
-      range: '1y',
+      range: optionToRange('1y'),
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
     helpers.tvs.table.prefetch({
       type: tab,
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
   return helpers.dehydrate()

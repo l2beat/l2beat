@@ -2,19 +2,19 @@ import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { getDb } from '~/server/database'
-import type { TimeRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 
 export async function getSummedActivityForProjects(
   projectIds: string[],
-  timeRange: TimeRange,
+  range: ChartRange,
   rangeByProject: Record<string, [UnixTime, UnixTime]>,
 ) {
   const db = getDb()
-  const range = await getFullySyncedActivityRange({ type: timeRange })
+  const fullySyncedRange = await getFullySyncedActivityRange(range)
   const records = await db.activity.getByProjectsAndTimeRange(
     projectIds.map(ProjectId),
-    range,
+    fullySyncedRange,
   )
 
   return sumByProject(records, rangeByProject)

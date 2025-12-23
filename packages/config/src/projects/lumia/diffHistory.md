@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x31ae62c98ef6c1fc89d94776a98aeb52f0a4a20d
+
+# Diff at Tue, 09 Dec 2025 11:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1761895563
+- current timestamp: 1761895563
+
+## Description
+
+config: add aggchain_type description and severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895563 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+    }
+```
+
 Generated with discovered.json: 0x768338199bc0a7cc70230a0da7b8e36c6bd93403
 
 # Diff at Fri, 31 Oct 2025 13:56:02 GMT:

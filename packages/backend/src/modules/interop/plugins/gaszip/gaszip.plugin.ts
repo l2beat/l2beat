@@ -1,4 +1,5 @@
-import { Address32 } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -41,6 +42,8 @@ export const GasZipFill = createInteropEventType<{
 export class GasZipPlugin implements InteropPlugin {
   name = 'gaszip'
 
+  constructor(private logger: Logger) {}
+
   captureTx(input: TxToCapture) {
     const network = GASZIP_NETWORKS.find((n) => n.chain === input.chain)
     if (!network) return
@@ -81,12 +84,13 @@ export class GasZipPlugin implements InteropPlugin {
       return events
     }
     if (
-      input.tx.from ===
-      GASZIP_NETWORKS.find((n) => n.chain === input.chain)?.solver
+      input.tx.from &&
+      EthereumAddress(input.tx.from) ===
+        GASZIP_NETWORKS.find((n) => n.chain === input.chain)?.solver
     ) {
       return [
         GasZipFill.createTx(input, {
-          receiver: Address32(input.tx.to ?? Address32.ZERO),
+          receiver: input.tx.to ? Address32.from(input.tx.to) : Address32.ZERO,
           amount: input.tx.value ?? 0n,
           tokenAddress: Address32.NATIVE,
         }),
@@ -140,12 +144,20 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    const gasZipDeposit = db.find(GasZipDeposit, {
-      $dstChain: gasZipFill.ctx.chain,
-      // amount: ~gasZipFill.args.amount, // TODO: we need a way to match approximate amounts (e.g. 5% tolerance)
-      destinationAddress: gasZipFill.args.receiver,
-    })
+    const gasZipDeposit = db.findApproximate(
+      GasZipDeposit,
+      {
+        $dstChain: gasZipFill.ctx.chain,
+        destinationAddress: gasZipFill.args.receiver,
+      },
+      {
+        key: 'amount',
+        valueBigInt: gasZipFill.args.amount,
+        toleranceUp: 0.05,
+      },
+    )
     if (!gasZipDeposit) return
+
     return [
       Result.Message('gaszip.Message', {
         app: 'gaszip',

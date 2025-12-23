@@ -56,6 +56,42 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+type RefreshReason =
+  | {
+      type: 'TEMPLATE_NO_LONGER_MATCHES'
+      contract: string
+      template: string
+    }
+  | {
+      type: 'TEMPLATE_MATCH_CHANGED'
+      contract: string
+      oldTemplate: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'NEW_TEMPLATE_MATCH'
+      contract: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'CONFIG_CHANGED'
+    }
+  | {
+      type: 'TEMPLATE_CONFIG_CHANGED'
+      templates: string[]
+    }
+
+export interface ApiConfigSyncStatusResponse {
+  reasons: RefreshReason[]
+}
+
+export interface ApiGlobalConfigSyncStatusResponse {
+  reasons: {
+    project: string
+    reasons: RefreshReason[]
+  }[]
+}
+
 export type ApiCreateShapeResponse =
   | {
       success: true
@@ -104,11 +140,8 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  ignoreInWatchMode?: boolean
-  ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =
@@ -121,6 +154,7 @@ export type FieldValue =
   | ObjectFieldValue
   | UnknownFieldValue
   | ErrorFieldValue
+  | EmptyFieldValue
 
 export interface AddressFieldValue {
   type: 'address'
@@ -167,6 +201,10 @@ export interface UnknownFieldValue {
 export interface ErrorFieldValue {
   type: 'error'
   error: string
+}
+
+export interface EmptyFieldValue {
+  type: 'empty'
 }
 
 export interface ApiProjectContract extends ApiAddressEntry {

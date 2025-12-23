@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -49,18 +49,26 @@ const parseDstEscrowCreated = createEventParser(
   'event DstEscrowCreated(address escrow, bytes32 hashlock, uint256 taker)',
 )
 
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
 // const parseEscrowWithdrawal = createEventParser( // emitted by the escrow itself, not the factory (and in a different tx)
 //   'event EscrowWithdrawal(bytes32 secret)',
 // )
 
 const DstEscrowCreated = createInteropEventType<{
   hashlock: `0x${string}`
+  dstTokenAddress?: Address32
+  dstAmount?: bigint
 }>('oneinch-fusion-plus.DstEscrowCreated')
 
 const SrcEscrowCreated = createInteropEventType<{
   hashlock: string
   srcTokenId: bigint
+  srcTokenAddress?: Address32
   srcAmount: bigint
+  dstAmount: bigint
 }>('oneinch-fusion-plus.SrcEscrowCreated')
 
 export class OneinchFusionPlusPlugin implements InteropPlugin {
@@ -74,20 +82,76 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
 
     const dstEscrowCreated = parseDstEscrowCreated(input.log, [network.address])
     if (dstEscrowCreated) {
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let dstTokenAddress: Address32 | undefined
+      let dstAmount: bigint | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          // dst address must match `to` of Transfer
+          if (
+            transfer.to.toLowerCase() === dstEscrowCreated.escrow.toLowerCase()
+          ) {
+            dstTokenAddress = Address32.from(precedingLog.address)
+            dstAmount = transfer.value
+            break
+          }
+        }
+      }
       return [
         DstEscrowCreated.create(input, {
           hashlock: dstEscrowCreated.hashlock,
+          dstTokenAddress: dstTokenAddress ?? Address32.NATIVE, // if we do not find a Transfer event, assume native
+          dstAmount,
         }),
       ]
     }
 
     const srcEscrowCreated = parseSrcEscrowCreated(input.log, [network.address])
     if (srcEscrowCreated) {
+      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
+      let srcTokenAddress: Address32 | undefined
+
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
+
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          // src escrow address unknown
+          if (transfer.value === srcEscrowCreated.srcImmutables.amount) {
+            srcTokenAddress = Address32.from(precedingLog.address)
+            break
+          }
+        }
+      }
       return [
         SrcEscrowCreated.create(input, {
           hashlock: srcEscrowCreated.srcImmutables.hashlock,
           srcTokenId: srcEscrowCreated.srcImmutables.token, // 1inch token id, not token address
           srcAmount: srcEscrowCreated.srcImmutables.amount,
+          srcTokenAddress: srcTokenAddress ?? Address32.NATIVE, // if we do not find a Transfer event, assume native
+          dstAmount: srcEscrowCreated.dstImmutablesComplement.amount,
         }),
       ]
     }
@@ -112,9 +176,12 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
         }),
         Result.Transfer('oneinch-fusion-plus.Transfer', {
           srcEvent: srcEscrowCreated,
+          srcTokenAddress: srcEscrowCreated.args.srcTokenAddress,
           srcAmount: srcEscrowCreated.args.srcAmount,
-          // need 1inch token ID mapping
           dstEvent: dstEscrowCreated,
+          dstTokenAddress: dstEscrowCreated.args.dstTokenAddress,
+          dstAmount:
+            dstEscrowCreated.args.dstAmount ?? srcEscrowCreated.args.dstAmount,
         }),
       ]
     }

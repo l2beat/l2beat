@@ -53,6 +53,7 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly newClientsEnabled: boolean
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -106,11 +107,7 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly bigQuery: {
-    readonly clientEmail: string
-    readonly privateKey: string
-    readonly projectId: string
-  }
+  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean

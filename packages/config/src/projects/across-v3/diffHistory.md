@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xdbde8201080b3ee7a8ec50c99be45ca53769bb8a
+
+# Diff at Thu, 11 Dec 2025 14:43:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1763977586
+- current timestamp: 1765464119
+
+## Description
+
+UMA whitelist changes.
+
+## Watched changes
+
+```diff
+    contract IdentifierWhitelist (eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570) {
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+      values.whitelistedIdentifiers.270:
++        "0x4153534552545f54525554483200000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xe14899ad67375505474d7ddd77ed32649b5e0104
 
 # Diff at Mon, 24 Nov 2025 09:54:16 GMT:

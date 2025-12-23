@@ -7,6 +7,7 @@ import {
   type AbstractTokenRecord,
   toAbstractTokenRecord,
 } from './AbstractTokenRepository'
+import type { TokenSource } from './TokenMetadataRepository'
 
 export type DeployedTokenRecord = {
   symbol: string
@@ -16,6 +17,19 @@ export type DeployedTokenRecord = {
   abstractTokenId: string | null
   decimals: number
   deploymentTimestamp: UnixTime
+  metadata: DeployedTokenMetadata | null
+}
+
+export type DeployedTokenMetadata = {
+  tvs?: TvsMetadata
+}
+
+type TvsMetadata = {
+  includeInCalculations: boolean
+  source: TokenSource
+  supply?: 'totalSupply' | 'circulatingSupply' | 'zero'
+  bridgedUsing: { name: string; slug?: string }[]
+  excludeFromTotal: boolean
 }
 
 export type DeployedTokenPrimaryKey = Pick<
@@ -31,6 +45,7 @@ export type DeployedTokenUpdateable = Omit<
 function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
   return {
     ...row,
+    metadata: row.metadata as DeployedTokenMetadata,
     deploymentTimestamp: UnixTime.fromDate(row.deploymentTimestamp),
   }
 }
@@ -38,6 +53,7 @@ function toRecord(row: Selectable<DeployedToken>): DeployedTokenRecord {
 function toRow(record: DeployedTokenRecord): Insertable<DeployedToken> {
   return {
     ...record,
+    address: record.address.toLowerCase(),
     deploymentTimestamp: UnixTime.toDate(record.deploymentTimestamp),
   }
 }
@@ -66,7 +82,7 @@ export class DeployedTokenRepository extends BaseRepository {
       .updateTable('DeployedToken')
       .set(toUpdateRow(patch))
       .where('chain', '=', pk.chain)
-      .where('address', '=', pk.address)
+      .where('address', '=', pk.address.toLowerCase())
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
@@ -106,7 +122,7 @@ export class DeployedTokenRepository extends BaseRepository {
           pks.map((pk) =>
             eb.and([
               eb('chain', '=', pk.chain),
-              eb('address', '=', pk.address),
+              eb('address', '=', pk.address.toLowerCase()),
             ]),
           ),
         ),
@@ -122,6 +138,7 @@ export class DeployedTokenRepository extends BaseRepository {
         abstractTokenId: row.abstractTokenId,
         decimals: row.decimals,
         deploymentTimestamp: row.deploymentTimestamp,
+        metadata: row.metadata as DeployedTokenMetadata,
       }),
       abstractToken:
         row.AbstractToken_id === null ||
@@ -151,7 +168,7 @@ export class DeployedTokenRepository extends BaseRepository {
       .selectFrom('DeployedToken')
       .selectAll()
       .where('chain', '=', pk.chain)
-      .where((eb) => eb.fn('lower', ['address']), '=', pk.address.toLowerCase())
+      .where('address', '=', pk.address.toLowerCase())
       .executeTakeFirst()
     return row ? toRecord(row) : undefined
   }
@@ -171,7 +188,7 @@ export class DeployedTokenRepository extends BaseRepository {
           pks.map((pk) =>
             eb.and([
               eb('chain', '=', pk.chain),
-              eb(eb.fn('lower', ['address']), '=', pk.address.toLowerCase()),
+              eb('address', '=', pk.address.toLowerCase()),
             ]),
           ),
         ),
@@ -210,7 +227,7 @@ export class DeployedTokenRepository extends BaseRepository {
           keys.map((key) =>
             eb.and([
               eb('chain', '=', key.chain),
-              eb('address', '=', key.address),
+              eb('address', '=', key.address.toLowerCase()),
             ]),
           ),
         ),
@@ -223,7 +240,7 @@ export class DeployedTokenRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('DeployedToken')
       .where('chain', '=', key.chain)
-      .where('address', '=', key.address)
+      .where('address', '=', key.address.toLowerCase())
       .executeTakeFirst()
 
     return Number(result.numDeletedRows)
@@ -241,7 +258,7 @@ export class DeployedTokenRepository extends BaseRepository {
           keys.map((key) =>
             eb.and([
               eb('chain', '=', key.chain),
-              eb('address', '=', key.address),
+              eb('address', '=', key.address.toLowerCase()),
             ]),
           ),
         ),

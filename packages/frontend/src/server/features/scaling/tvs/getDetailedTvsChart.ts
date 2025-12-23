@@ -2,7 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getTimestampedValuesRange } from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -13,12 +13,12 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const DetailedTvsChartDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
-  includeRwaRestrictedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
   filter: TvsProjectFilter,
 })
 
@@ -51,14 +51,14 @@ export type DetailedTvsChartData = {
 export async function getDetailedTvsChart({
   range,
   excludeAssociatedTokens,
-  includeRwaRestrictedTokens,
+  excludeRwaRestrictedTokens,
   filter,
 }: DetailedTvsChartDataParams): Promise<DetailedTvsChartData> {
   if (env.MOCK) {
     return getMockDetailedTvsChartData({
       range,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
       filter,
     })
   }
@@ -78,11 +78,11 @@ export async function getDetailedTvsChart({
     getEthPrices(),
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
-      { type: range },
+      range,
       {
         forSummary,
         excludeAssociatedTokens,
-        includeRwaRestrictedTokens,
+        excludeRwaRestrictedTokens,
       },
     ),
   ])
@@ -152,9 +152,11 @@ function getChartData(
 function getMockDetailedTvsChartData({
   range,
 }: DetailedTvsChartDataParams): DetailedTvsChartData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
-  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
+  const resolution = rangeToResolution(range)
+  const timestamps = generateTimestamps(
+    [range[0] ?? 1573776000, range[1]],
+    resolution,
+  )
 
   return {
     chart: timestamps.map((timestamp) => {

@@ -32,6 +32,8 @@ const upgradeDelay = discovery.getContractValue<number>(
   'approvedUpgradeNoticePeriod',
 )
 
+const finalizationPeriod = 0 // state root immediately finalized when proven
+
 export const lighter: ScalingProject = {
   id: ProjectId('lighter'),
   type: 'layer2',
@@ -48,10 +50,7 @@ export const lighter: ScalingProject = {
     purposes: ['Exchange'],
     links: {
       websites: ['https://lighter.xyz', 'https://app.lighter.xyz/'],
-      explorers: [
-        'https://app.lighter.xyz/explorer',
-        'https://scan.lighter.xyz',
-      ],
+      explorers: ['https://app.lighter.xyz/explorer'],
       documentation: [
         'https://docs.lighter.xyz',
         'https://assets.lighter.xyz/whitepaper.pdf',
@@ -85,7 +84,7 @@ export const lighter: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC'],
+        tokens: ['USDC', 'ETH'],
       }),
     ],
     daTracking: [
@@ -155,7 +154,10 @@ export const lighter: ScalingProject = {
     },
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),

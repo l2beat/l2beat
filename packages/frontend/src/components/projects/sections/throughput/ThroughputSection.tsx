@@ -12,6 +12,7 @@ import {
 } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { api } from '~/trpc/React'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
+import { optionToRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -76,7 +77,7 @@ function ThroughputChartStats({
 }) {
   const { includeScalingOnly } = useIncludeScalingOnly()
   const { data, isLoading } = api.da.projectCharts.useQuery({
-    range: { type: '1y' },
+    range: optionToRange('1y'),
     projectId,
     includeScalingOnly,
   })

@@ -77,6 +77,9 @@ export function TerminalPanel() {
                 queryClient.invalidateQueries({
                   queryKey: ['projects', project],
                 })
+                queryClient.invalidateQueries({
+                  queryKey: ['config-sync-status', project],
+                })
               })
             }}
             disabled={command.inFlight}

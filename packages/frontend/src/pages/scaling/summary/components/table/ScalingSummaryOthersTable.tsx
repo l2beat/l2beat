@@ -1,10 +1,10 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { api } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
@@ -15,14 +15,13 @@ interface Props {
 }
 
 export function ScalingSummaryOthersTable({ entries }: Props) {
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { sorting, setSorting } = useTableSorting()
+  const { display } = useTvsDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'others',
-    excludeAssociatedTokens,
-    includeRwaRestrictedTokens,
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
   })
 
   const tableEntries = useMemo(
@@ -30,14 +29,19 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
       toTableRows({
         projects: entries,
         sevenDayBreakdown: data,
-        excludeAssociatedTokens,
+        excludeAssociatedTokens: display.excludeAssociatedTokens,
       }),
-    [entries, excludeAssociatedTokens, data],
+    [entries, display, data],
+  )
+
+  const columns = useMemo(
+    () => getScalingSummaryOthersColumns({ isTvsLoading: isLoading }),
+    [isLoading],
   )
 
   const table = useTable({
     data: tableEntries,
-    columns: getScalingSummaryOthersColumns({ isTvsLoading: isLoading }),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -52,5 +56,10 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }

@@ -13,6 +13,7 @@ export const theElasticNetwork: BaseProject = {
       'An ever-expanding, verifiable network of blockchains, powered by ZKsync.',
     links: {
       websites: ['https://www.zksync.io/'],
+      documentation: ['https://docs.zksync.io/'],
     },
     badges: [BADGES.Stack.ZKStack, BADGES.Infra.ElasticChain],
   },

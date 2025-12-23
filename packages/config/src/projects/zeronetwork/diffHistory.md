@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xec8e8c9837eb474bf94a5076909d5bd2daeec7a7
+
+# Diff at Wed, 17 Dec 2025 14:34:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1761642925
+- current timestamp: 1761642925
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642925 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "ZeroNetworkZkEvm"
++        "Diamond"
+    }
+```
+
 Generated with discovered.json: 0x80e37145096bf011f65dcb7b8edbc508860ae765
 
 # Diff at Tue, 04 Nov 2025 11:34:55 GMT:

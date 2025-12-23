@@ -1,3 +1,208 @@
+Generated with discovered.json: 0x443621b0a482954adff179d54d034389cb3171d2
+
+# Diff at Tue, 09 Dec 2025 11:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1764944434
+- current timestamp: 1764944434
+
+## Description
+
+config: add aggchain_type description and severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764944434 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+    }
+```
+
+Generated with discovered.json: 0x0f7414680e40539757f082e90d4f4cba820571c2
+
+# Diff at Fri, 05 Dec 2025 14:21:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1764668970
+- current timestamp: 1764944434
+
+## Description
+
+removal of the rollup proof system, leaving only the pessimistic proofs for the agglayer shared bridge.
+
+## Watched changes
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      name:
+-        "PolygonZkEVM"
++        "AggchainECDSAMultisig"
+      template:
+-        "polygon-cdk/PolygonZkEVM"
++        "polygon-cdk/AggchainECDSAMultisig"
+      sourceHashes.1:
+-        "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
++        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
+      description:
+-        "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches."
++        "System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s)."
+      values.$implementation:
+-        "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
++        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"
+      values.$pastUpgrades.5:
++        ["2025-12-03T09:13:23.000Z","0xd8eb9f7bf7594d047e0c8b254b3893eb05daf692b1688adaacd21af144efe2a5",["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.calculatePolPerForceBatch:
+-        0
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.INITIALIZE_TX_BRIDGE_LIST_LEN_LEN:
+-        249
+      values.INITIALIZE_TX_BRIDGE_PARAMS:
+-        "0x80808401c9c38094"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS:
+-        "0x80b9"
+      values.INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA:
+-        "0x80b8"
+      values.INITIALIZE_TX_CONSTANT_BYTES:
+-        32
+      values.INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA:
+-        31
+      values.INITIALIZE_TX_DATA_LEN_EMPTY_METADATA:
+-        228
+      values.INITIALIZE_TX_EFFECTIVE_PERCENTAGE:
+-        "0xff"
+      values.SIGNATURE_INITIALIZE_TX_R:
+-        "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0"
+      values.SIGNATURE_INITIALIZE_TX_S:
+-        "0x000000000000000000000000000000000000000000000000000000005ca1ab1e"
+      values.SIGNATURE_INITIALIZE_TX_V:
+-        27
+      values.TIMESTAMP_RANGE:
+-        36
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.AGGCHAIN_ECDSA_MULTISIG_VERSION:
++        "v1.0.0"
+      values.AGGCHAIN_TYPE:
++        "0x0000"
+      values.aggchainManager:
++        "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0xc0dac73cba4ff88501dbcab20fea961458322f918942474c014269419567e2c3"
+      values.aggchainSigners:
++        ["eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A"]
+      values.aggLayerGateway:
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
++++ severity: HIGH
+      values.CONSENSUS_TYPE:
++        1
+      values.getAggchainMultisigHash:
++        "0xc0dac73cba4ff88501dbcab20fea961458322f918942474c014269419567e2c3"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A","url":"https://zkevm-rpc.com/"}]
+      values.getAggchainSigners:
++        ["eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.pendingAggchainManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        false
+      values.version:
++        "v1.0.0"
+      fieldMeta.CONSENSUS_TYPE:
++        {"severity":"HIGH","description":"0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"}
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E:
+-        "PolygonZkEVMEtrog"
+      implementationNames.eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21:
++        "AggchainECDSAMultisig"
+    }
+```
+
+```diff
+    EOA  (eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "sign state transitions (replaces state validation for this aggchain)."
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggchainECDSAMultisig.sol                      | 2242 ++++++++++++++++++++
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonZkEVMEtrog.sol => /dev/null             | 1712 ---------------
+ 3 files changed, 2242 insertions(+), 1712 deletions(-)
+```
+
+Generated with discovered.json: 0xa38963d2c667d239cd3db794bf068686d4edf895
+
+# Diff at Tue, 02 Dec 2025 09:50:40 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2ff2c0fcad19f3cf20f79b990ed6b3c41d29f33f block: 1762264397
+- current timestamp: 1764668970
+
+## Description
+
+Rotated trusted sequencer.
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVM (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
++        "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A"
+    }
+```
+
 Generated with discovered.json: 0x54221313aa301d944b9222ccf30030d468212c59
 
 # Diff at Tue, 04 Nov 2025 11:33:54 GMT:

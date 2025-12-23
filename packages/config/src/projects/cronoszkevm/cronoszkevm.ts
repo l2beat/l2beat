@@ -17,6 +17,7 @@ const v26UpgradeTS = UnixTime(1742983103)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1723680000), // 2024-08-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
@@ -56,7 +57,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
@@ -75,7 +75,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A#code#F1#L50',
+          url: 'https://etherscan.io/address/0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691#code#F1#L60',
         },
       ],
     },

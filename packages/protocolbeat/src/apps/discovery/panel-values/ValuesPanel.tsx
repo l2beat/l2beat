@@ -1,17 +1,18 @@
-import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
-import { findSelected } from '../../../utils/findSelected'
-import { usePanelStore } from '../store/panel-store'
+import { IconShape } from '../../../icons/IconShape'
+import { useConfigModels } from '../hooks/useConfigModels'
+import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
+import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDialog'
 import { FieldDisplay } from './Field'
+import { FieldTag } from './FieldTag'
 import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
 
@@ -20,53 +21,58 @@ export function ValuesPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const selectedAddress = usePanelStore((state) => state.selected)
 
-  if (response.isPending) {
+  const { selected, isError, isPending } = useProjectData()
+
+  if (isPending) {
     return <LoadingState />
   }
-  if (response.isError) {
+  if (isError) {
     return <ErrorState />
   }
-
-  const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">
       {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
-        <Display selected={selected} blockNumber={selected.blockNumber} />
+        <Display
+          project={project}
+          selected={selected}
+          blockNumber={selected.blockNumber}
+        />
       )}
     </div>
   )
 }
 
 function Display({
-  selected,
+  project,
   blockNumber,
+  selected,
 }: {
+  project: string
   selected: ApiProjectContract | ApiAddressEntry
   blockNumber: number
 }) {
+  const { configModel, templateModel, canModify } = useConfigModels()
+  const templateIgnoredMethods = templateModel.ignoreMethods ?? []
+  const configIgnoredMethods = configModel.ignoreMethods ?? []
+  const ignoredMethods = [
+    ...new Set(configIgnoredMethods.concat(templateIgnoredMethods)),
+  ]
   const chain = selected.chain
 
-  const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
   const addresses = getAddressesToCopy(selected)
 
-  const dialog = addresses && canAddShape(selected) && !IS_READONLY && (
+  const templateDialog = addresses && canAddShape(selected) && !IS_READONLY && (
     <TemplateDialog.Root
       key={`${project}-${selected.address}`}
       project={project}
       selectedName={selected.name}
     >
-      <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
+      <TemplateDialog.Trigger>
+        <IconShape />
+      </TemplateDialog.Trigger>
       <TemplateDialog.Body
         addresses={addresses}
         project={project}
@@ -76,10 +82,12 @@ function Display({
     </TemplateDialog.Root>
   )
 
+  const contractConfigDialog = canModify && <ContractConfigDialog />
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
             {selected.name ?? 'Unknown'}
@@ -87,7 +95,10 @@ function Display({
               <span className="text-aux-red"> (Unverified)</span>
             )}
           </div>
-          {dialog}
+          <div className="flex items-center gap-2">
+            {templateDialog}
+            {contractConfigDialog}
+          </div>
         </div>
         <WithHeadline headline="Address">
           <AddressDisplay
@@ -117,9 +128,7 @@ function Display({
                   <span className="flex items-center gap-1">
                     {selected.template.shape.name}
                     {selected.template.shape.hasCriteria && (
-                      <Badge className="bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow">
-                        + Criteria
-                      </Badge>
+                      <Badge>+ Criteria</Badge>
                     )}
                   </span>
                 </div>
@@ -133,18 +142,14 @@ function Display({
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
-                  <p className="text-aux-teal ">{role}</p>
+                  <p className="text-aux-teal">{role}</p>
                 ))}
               </div>
             </WithHeadline>
           </div>
         )}
 
-        {selected.description && (
-          <WithHeadline headline="Description">
-            <p className="font-serif text-sm italic">{selected.description}</p>
-          </WithHeadline>
-        )}
+        <Description />
         {selected.isReachable && (
           <WithHeadline headline="Reachable">
             <p className="text-aux-teal">Yes</p>
@@ -155,6 +160,7 @@ function Display({
             <p className="text-coffee-200/40">No</p>
           </WithHeadline>
         )}
+        <Category />
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>
@@ -197,6 +203,15 @@ function Display({
           <ol>
             {selected.fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />
+            ))}
+            {ignoredMethods.map((method, i) => (
+              <FieldDisplay
+                key={i}
+                field={{
+                  name: method,
+                  value: { type: 'empty' },
+                }}
+              />
             ))}
           </ol>
         </Folder>
@@ -267,10 +282,12 @@ function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {
   )
 }
 
-function Badge(props: { children: React.ReactNode; className?: string }) {
+function Badge(props: { children: React.ReactNode }) {
   return (
     <span
-      className={`flex max-w-fit items-center justify-center gap-1 rounded-md px-2 py-0.5 text-xs ${props.className}`}
+      className={
+        'flex max-w-fit items-center justify-center gap-1 rounded-md bg-aux-yellow/10 px-1 py-0.5 text-aux-yellow text-xs'
+      }
     >
       {props.children}
     </span>
@@ -284,4 +301,61 @@ function WithHeadline(props: { headline: string; children: React.ReactNode }) {
       {props.children}
     </div>
   )
+}
+
+function Category() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const category = configModel.category ?? templateModel.category
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Category">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!category) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Category">
+      <div className="flex items-center gap-1">
+        {configModel.category && (
+          <FieldTag source="config">{configModel.category}</FieldTag>
+        )}
+        {templateModel.category && (
+          <FieldTag source="template">{templateModel.category}</FieldTag>
+        )}
+      </div>
+    </WithHeadline>
+  )
+}
+
+function Description() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const description = configModel.description ?? templateModel.description
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Description">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!description) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Description">
+      <p className="font-serif text-sm italic">{description}</p>
+    </WithHeadline>
+  )
+}
+
+function SkeletonLine() {
+  return <div className="h-3 w-full animate-breath rounded bg-coffee-400/50" />
 }

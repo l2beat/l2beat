@@ -57,8 +57,8 @@ export function TvsBreakdownSummaryBox({
       >
         {isLoading ? (
           <div className="flex items-end gap-3.5 lg:flex-col lg:items-center lg:gap-0.5">
-            <Skeleton className="h-6 w-24 " />
-            <Skeleton className="h-4 w-13 " />
+            <Skeleton className="h-6 w-24" />
+            <Skeleton className="h-4 w-13" />
           </div>
         ) : (
           <ValueWithPercentageChange

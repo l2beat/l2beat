@@ -17,7 +17,10 @@ export {
 } from './discovery/analysis/AddressAnalyzer'
 export { codeIsEOA } from './discovery/analysis/codeIsEOA'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
-export { TemplateService } from './discovery/analysis/TemplateService'
+export {
+  type RefreshReason,
+  TemplateService,
+} from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
@@ -126,6 +129,7 @@ export {
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,
+  type FieldConfigSchema,
 } from './schemas/schemas'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'

@@ -2,18 +2,18 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { AssetCategoryTvsChart } from './AssetCategoryTvsChart'
 
 interface Props {
   filter: TvsProjectFilter
   milestones: Milestone[]
-  range: TvsChartRange
+  range: ChartRange
   unit: ChartUnit
   excludeAssociatedTokens: boolean
-  includeRwaRestrictedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
 }
 
 export function ScalingAssetCategoryTvsChart({
@@ -22,7 +22,7 @@ export function ScalingAssetCategoryTvsChart({
   range,
   unit,
   excludeAssociatedTokens,
-  includeRwaRestrictedTokens,
+  excludeRwaRestrictedTokens,
 }: Props) {
   const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useScalingTvsDataKeys()
@@ -31,7 +31,7 @@ export function ScalingAssetCategoryTvsChart({
     range,
     excludeAssociatedTokens,
     filter,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
@@ -92,7 +92,7 @@ export function ScalingAssetCategoryTvsChart({
       syncedUntil={data?.syncedUntil}
       dataKeys={assetCategoryDataKeys}
       toggleDataKey={assetCategoryToggleDataKey}
-      includeRwaRestrictedTokens={includeRwaRestrictedTokens}
+      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
     />
   )
 }

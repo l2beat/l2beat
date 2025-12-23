@@ -1,0 +1,46 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "megaeth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "megaeth-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+            "decimals": 6,
+            "sinceTimestamp": 1764062435
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+            "decimals": 6,
+            "sinceTimestamp": 1761268271
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Predeposit; not connected to an L2"
+          }
+        ]
+      },
+      "isAssociated": false
+    }
+  ]
+}

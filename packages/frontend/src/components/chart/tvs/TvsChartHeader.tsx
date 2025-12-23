@@ -1,6 +1,6 @@
 import { INFINITY } from '~/consts/characters'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'
 import { PercentChange } from '../../PercentChange'
@@ -10,7 +10,7 @@ interface Props {
   unit: string
   value: number | undefined
   change: number | undefined
-  range: TvsChartRange
+  range: ChartRange
   timeRange: [number, number] | undefined
 }
 
@@ -22,7 +22,7 @@ export function TvsChartHeader({
   timeRange,
 }: Props) {
   const changeOverTime =
-    range === 'max' ? (
+    range[0] === null ? (
       INFINITY
     ) : change !== undefined ? (
       <PercentChange value={change} textClassName="lg:w-[63px] lg:text-base" />
@@ -35,7 +35,7 @@ export function TvsChartHeader({
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h1>
-        <ChartTimeRange range={timeRange} />
+        <ChartTimeRange timeRange={timeRange} />
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">

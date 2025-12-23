@@ -20,14 +20,14 @@ export function ProjectBridgeTypeTvsChart({
   milestones,
 }: ProjectBridgeTypeTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(

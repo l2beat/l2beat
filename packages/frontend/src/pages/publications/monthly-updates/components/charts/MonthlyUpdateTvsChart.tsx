@@ -11,7 +11,7 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -35,13 +35,9 @@ export function MonthlyUpdateTvsChart({
 }) {
   const id = useId()
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: {
-      type: 'custom',
-      from,
-      to,
-    },
+    range: [from, to],
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
     filter: {
       type: 'projects',
       projectIds: entries,
@@ -77,11 +73,11 @@ export function MonthlyUpdateTvsChart({
   }, [type])
 
   const stats = getStats(chartData, allScalingProjectsTvs)
-  const range = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
-      <Header range={range} stats={stats} unit={'usd'} />
+      <Header timeRange={timeRange} stats={stats} unit={'usd'} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
@@ -126,11 +122,11 @@ export function MonthlyUpdateTvsChart({
 }
 
 function Header({
-  range,
+  timeRange,
   stats,
   unit,
 }: {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
   stats: { total: number; marketShare: number } | undefined
   unit: string
 }) {
@@ -138,7 +134,7 @@ function Header({
     <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
-        <EcosystemChartTimeRange range={range} />
+        <EcosystemChartTimeRange timeRange={timeRange} />
       </div>
       <div className="text-right">
         {stats?.total ? (

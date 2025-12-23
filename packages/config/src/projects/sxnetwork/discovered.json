@@ -1,6 +1,6 @@
 {
   "name": "sxnetwork",
-  "timestamp": 1756118197,
+  "timestamp": 1764335299,
   "configHash": "0xf377179ab655b5646196044b477044ba1563b23550d2e4ad59328f3a9d78fa08",
   "entries": [
     {
@@ -207,13 +207,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 862,
+        "firstUnresolvedNode": 1052,
         "inbox": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895273,
-        "latestConfirmed": 861,
-        "latestNodeCreated": 861,
+        "latestConfirmed": 1051,
+        "latestNodeCreated": 1051,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -593,7 +593,7 @@
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 592,
+        "delayedMessageCount": 902,
         "inboxHistory": [
           "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
@@ -603,8 +603,8 @@
         "outboxHistory": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 998,
-        "sequencerReportedSubMessageCount": 4754403
+        "sequencerMessageCount": 1188,
+        "sequencerReportedSubMessageCount": 5836982
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -711,7 +711,31 @@
     {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
-      "proxyType": "EOA"
+      "template": "uniswap/calibur7702",
+      "sourceHashes": [
+        "0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00",
+        "CUSTOM_STORAGE_ROOT": "0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600",
+        "domainBytes": "0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+        "domainSeparator": "0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301",
+        "eip712Domain": {
+          "fields": "0x1f",
+          "name": "Calibur",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+          "salt": "0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+          "extensions": []
+        },
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "keyAt": [],
+        "keyCount": 0,
+        "keyHashes": 0,
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
+      }
     },
     {
       "address": "eth:0xb77b85Bc59f7C48C21Aa32c6230CD4262Fa79f5b",
@@ -956,7 +980,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 998,
+        "batchCount": 1188,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -993,7 +1017,7 @@
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 592,
+        "totalDelayedMessagesRead": 902,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1044,7 +1068,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 595,
+        "nonce": 785,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1188,6 +1212,73 @@
     }
   ],
   "abis": {
+    "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00": [
+      "error AllowanceExceeded()",
+      "error CallFailed(bytes reason)",
+      "error CannotRegisterRootKey()",
+      "error CannotUpdateRootKey()",
+      "error ExcessiveInvalidation()",
+      "error FnSelectorNotRecognized()",
+      "error IncorrectSender()",
+      "error IndexOutOfBounds()",
+      "error InvalidHookResponse()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error KeyDoesNotExist()",
+      "error KeyExpired(uint40 expiration)",
+      "error NotEntryPoint()",
+      "error OnlyAdminCanSelfCall()",
+      "error SignatureExpired()",
+      "error TransferNativeFailed()",
+      "error Unauthorized()",
+      "error UnsupportedExecutionMode()",
+      "event ApproveNative(address indexed owner, address indexed spender, uint256 value)",
+      "event ApproveNativeTransient(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event EntryPointUpdated(address indexed newEntryPoint)",
+      "event KeySettingsUpdated(bytes32 indexed keyHash, uint256 settings)",
+      "event NativeAllowanceUpdated(address indexed spender, uint256 value)",
+      "event NonceInvalidated(uint256 nonce)",
+      "event Registered(bytes32 indexed keyHash, tuple(uint8 keyType, bytes publicKey) key)",
+      "event Revoked(bytes32 indexed keyHash)",
+      "event TransferFromNative(address indexed from, address indexed to, uint256 value)",
+      "event TransferFromNativeTransient(address indexed from, address indexed to, uint256 value)",
+      "function CUSTOM_STORAGE_ROOT() view returns (bytes32)",
+      "function ENTRY_POINT() view returns (address)",
+      "function approveNative(address spender, uint256 amount) returns (bool)",
+      "function approveNativeTransient(address spender, uint256 amount) returns (bool)",
+      "function domainBytes() view returns (bytes)",
+      "function domainSeparator() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall) payable",
+      "function execute(tuple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall, uint256 nonce, bytes32 keyHash, address executor, uint256 deadline) signedBatchedCall, bytes wrappedSignature) payable",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32)",
+      "function getKey(bytes32 keyHash) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function getKeySettings(bytes32 keyHash) view returns (uint256)",
+      "function getSeq(uint256 key) view returns (uint256 seq)",
+      "function hashTypedData(bytes32 hash) view returns (bytes32)",
+      "function invalidateNonce(uint256 newNonce)",
+      "function isRegistered(bytes32 keyHash) view returns (bool)",
+      "function isValidSignature(bytes32 digest, bytes wrappedSignature) view returns (bytes4)",
+      "function keyAt(uint256 i) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function keyCount() view returns (uint256)",
+      "function keyHashes() view returns (uint256 _spacer)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function namespaceAndVersion() pure returns (string)",
+      "function nativeAllowance(address spender) view returns (uint256 allowance)",
+      "function nonceSequenceNumber(uint256 key) view returns (uint256 seq)",
+      "function register(tuple(uint8 keyType, bytes publicKey) key)",
+      "function revoke(bytes32 keyHash)",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool result)",
+      "function transferFromNative(address from, address recipient, uint256 amount) returns (bool)",
+      "function transferFromNativeTransient(address from, address recipient, uint256 amount) returns (bool)",
+      "function transientNativeAllowance(address spender) view returns (uint256)",
+      "function update(bytes32 keyHash, uint256 settings)",
+      "function updateEntryPoint(address entryPoint)",
+      "function updateSalt(uint96 prefix)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
+    ],
     "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
@@ -1893,8 +1984,9 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23217566 },
+  "usedBlockNumbers": { "ethereum": 23897369 },
   "permissionsConfigHash": "0xba06cc4477cd3666917e2aac5957799314bb2b673315e1bd03e269606baacfae"
 }

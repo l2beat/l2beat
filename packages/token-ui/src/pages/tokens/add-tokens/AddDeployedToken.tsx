@@ -158,6 +158,7 @@ export function AddDeployedToken() {
         deploymentTimestamp: dateTimeInputToUnixTimestamp(
           values.deploymentTimestamp,
         ),
+        metadata: values.metadata ?? null,
       },
     })
   }

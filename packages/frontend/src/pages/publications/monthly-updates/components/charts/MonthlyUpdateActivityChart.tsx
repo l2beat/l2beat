@@ -13,7 +13,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -38,7 +38,7 @@ export function MonthlyUpdateActivityChart({
 }) {
   const id = useId()
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: 'custom', from, to },
+    range: [from, to],
     filter: {
       type: 'projects',
       projectIds: entries,
@@ -69,11 +69,11 @@ export function MonthlyUpdateActivityChart({
   )
 
   const stats = getStats(chartData, allScalingProjectsUops)
-  const range = getChartRange(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
-      <Header range={range} stats={stats} />
+      <Header timeRange={timeRange} stats={stats} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
@@ -117,10 +117,10 @@ export function MonthlyUpdateActivityChart({
 }
 
 function Header({
-  range,
+  timeRange,
   stats,
 }: {
-  range: [number, number] | undefined
+  timeRange: [number, number] | undefined
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
@@ -128,7 +128,7 @@ function Header({
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">
-          <EcosystemChartTimeRange range={range} />
+          <EcosystemChartTimeRange timeRange={timeRange} />
         </div>
       </div>
       <div className="text-right">

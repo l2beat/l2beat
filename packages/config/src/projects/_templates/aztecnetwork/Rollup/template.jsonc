@@ -30,6 +30,13 @@
     "getAvailableValidatorFlushes"
   ],
   "fields": {
+    "_epochProofVerifier": {
+      "description": "immutable, defined in constructor",
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5"
+      }
+    },
     "getManaLimit": {
       "severity": "HIGH",
       "description": "gas limit, currently 0 to prevent transactions"

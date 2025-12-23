@@ -143,7 +143,7 @@ export const phala: ScalingProject = opStackL2({
       },
     },
   ],
-  associatedTokens: ['PHA'],
+  associatedTokens: ['PHA', 'vPHA'],
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPSuccinct],
   milestones: [
     {

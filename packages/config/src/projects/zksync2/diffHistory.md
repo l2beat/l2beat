@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x667d34758dc7ab7f508a697998388d4b78d91751
+
+# Diff at Wed, 17 Dec 2025 14:34:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1762505590
+- current timestamp: 1762505590
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762505590 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      name:
+-        "ZKsync"
++        "Diamond"
+    }
+```
+
 Generated with discovered.json: 0x590ee357be3bc5a84f20b382997f1a5966b14d53
 
 # Diff at Wed, 19 Nov 2025 10:32:40 GMT:

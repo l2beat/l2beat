@@ -6,7 +6,11 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { SCALING_SUMMARY_TIME_RANGE } from './ScalingSummaryPage'
+import { optionToRange } from '~/utils/range/range'
+import {
+  SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
+  SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
+} from './ScalingSummaryPage'
 
 export async function getScalingSummaryData(
   req: Request,
@@ -48,20 +52,24 @@ export async function getScalingSummaryData(
 async function getCachedData() {
   const helpers = getSsrHelpers()
 
+  const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
+  const activityChartRange = optionToRange(
+    ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
+  )
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
     helpers.tvs.recategorisedChart.prefetch({
-      range: SCALING_SUMMARY_TIME_RANGE,
+      range: tvsChartRange,
       filter: { type: 'layer2' },
     }),
     helpers.activity.recategorisedChart.prefetch({
-      range: SCALING_SUMMARY_TIME_RANGE,
+      range: activityChartRange,
       filter: { type: 'all' },
     }),
     helpers.tvs.table.prefetch({
       type: 'rollups',
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
 

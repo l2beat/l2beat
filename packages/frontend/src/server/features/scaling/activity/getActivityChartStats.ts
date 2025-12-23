@@ -1,3 +1,4 @@
+import { optionToRange } from '~/utils/range/range'
 import { getRecategorisedActivityChart } from './getRecategorisedActivityChart'
 import { countPerSecond } from './utils/countPerSecond'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
@@ -22,7 +23,10 @@ export type ActivityChartStats = {
 export async function getActivityChartStats(
   filter: ActivityProjectFilter,
 ): Promise<ActivityChartStats> {
-  const { data: chartData } = await getRecategorisedActivityChart(filter, '30d')
+  const { data: chartData } = await getRecategorisedActivityChart(
+    filter,
+    optionToRange('30d'),
+  )
 
   const latestData = chartData.at(-1)
   if (!latestData) {

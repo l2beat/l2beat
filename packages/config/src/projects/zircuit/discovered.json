@@ -1,12 +1,33 @@
 {
   "name": "zircuit",
-  "timestamp": 1762276375,
+  "timestamp": 1764934764,
   "configHash": "0xa721fd52d401a16b9fbcadc5ade3f759ae184f4a9e202f3f14da01d3d1fa0a64",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
     },
     {
       "address": "eth:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
@@ -79,7 +100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 23725893
+          "prevBlockNum": 23946083
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -126,7 +147,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639758",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639847",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -215,7 +236,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x55baff01a4d31b7dd4257fdb3509fffb44fb2fcc634cb987ae812f322bde0fcf"
+        "0xe99a7b3921e19ba67802b943b31b611bea7fa413649085f55e087689879522d5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -224,7 +245,7 @@
       "sinceBlock": 20219924,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0x83085450544c3F360a40720859EbB1bfd311584D",
+        "$implementation": "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F",
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:47.000Z",
@@ -240,9 +261,14 @@
             "2025-08-22T22:25:59.000Z",
             "0x1d729201879e9035259d12fc58020a8f4dd1cb7c6972f915a6fcef15f89756d6",
             ["eth:0x83085450544c3F360a40720859EbB1bfd311584D"]
+          ],
+          [
+            "2025-11-24T20:55:47.000Z",
+            "0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",
+            ["eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
@@ -260,7 +286,7 @@
         "L2_OUTPUT_ORACLE_SLOT": "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815",
         "l2OutputOracle": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "minimumGasLimit": 7000000,
-        "operatorFeeConstant": 23225000000,
+        "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
@@ -271,6 +297,7 @@
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
         "optimismMintableERC20Factory": "eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
         "optimismPortal": "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
+        "OSAKA_TX_MAX_GAS": 16777216,
         "overhead": 0,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "resourceConfig": {
@@ -302,7 +329,7 @@
       },
       "implementationNames": {
         "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff": "Proxy",
-        "eth:0x83085450544c3F360a40720859EbB1bfd311584D": "SystemConfig"
+        "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -313,7 +340,7 @@
       "template": "opstack/zircuit/L1StandardBridge",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x2ffe3729df0a4fa39ab88f1451d7d0023e7f6d680f4a8d025a68111673392470"
+        "0x9733115edac1c0966aa238bb30a01bdd75f6a36d3a16307293cbcae2925923d0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.",
@@ -321,7 +348,7 @@
       "sinceBlock": 20219925,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb",
+        "$implementation": "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98",
         "$pastUpgrades": [
           [
             "2024-07-02T16:11:59.000Z",
@@ -357,9 +384,14 @@
             "2025-08-05T13:35:59.000Z",
             "0x12d1d0dde1bafad169722a0d6a42fafad00cacc19282bc0f7de4ad39b70afed1",
             ["eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb"]
+          ],
+          [
+            "2025-11-24T20:55:47.000Z",
+            "0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",
+            ["eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "accessController": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "messenger": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
         "MESSENGER": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
@@ -371,7 +403,7 @@
       },
       "implementationNames": {
         "eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8": "Proxy",
-        "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb": "L1StandardBridge"
+        "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
@@ -450,11 +482,6 @@
         {
           "permission": "upgrade",
           "from": "eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
           "role": "admin"
         },
         {
@@ -630,13 +657,13 @@
       "name": "L2OutputOracle",
       "address": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
       "type": "Contract",
-      "template": "opstack/zircuit/L2OutputOracle_SP1",
+      "template": "opstack/zircuit/L2OutputOracle_SP1_nokeepalive",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x409b9567c50661b673c0f84e9b8ed470f1ca48bc04fb1c8d09f8cac545e82cf8"
+        "0x84bf4755b102b4cd8d19384ef5bfaddf44ffd1503ed4c898b67a9911fefea750"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. If allowBootstrapKeepalive is set to true (currently false), then this contract accepts a state root without proof if the operator has not updated the state in 4h. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.",
+      "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.",
       "ignoreInWatchMode": [
         "latestBlockNumber",
         "latestOutputIndex",
@@ -649,7 +676,7 @@
       "sinceBlock": 20219923,
       "values": {
         "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65",
+        "$implementation": "eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6",
         "$pastUpgrades": [
           [
             "2024-07-02T16:12:59.000Z",
@@ -685,11 +712,20 @@
             "2025-08-22T22:25:59.000Z",
             "0x1d729201879e9035259d12fc58020a8f4dd1cb7c6972f915a6fcef15f89756d6",
             ["eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65"]
+          ],
+          [
+            "2025-11-24T20:55:47.000Z",
+            "0x7e05b5e49355a8b5e46139a79cae4374dc441b3f53adabd248a2851997e45323",
+            ["eth:0x3311fee5e49F6c6549d58e266338E46e777b4872"]
+          ],
+          [
+            "2025-11-24T23:38:35.000Z",
+            "0x284701d1524b8a7166ba82ea47dc77604122182f0a94ff1f24f85d8eb41b7016",
+            ["eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"]
           ]
         ],
-        "$upgradeCount": 7,
-        "aggregationVkey": "0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452",
-        "allowBootstrapKeepalive": false,
+        "$upgradeCount": 9,
+        "aggregationVkey": "0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605",
         "challenger": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
@@ -699,28 +735,25 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 21165479,
-        "latestOutputIndex": 34627,
+        "latestBlockNumber": 22496300,
+        "latestOutputIndex": 35433,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 34627,
-        "nextBlockNumber": 21165480,
-        "nextOutputIndex": 34628,
+        "latestOutputProposedV3": 35433,
+        "nextBlockNumber": 22496301,
+        "nextOutputIndex": 35434,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
-        "rangeVkeyCommitment": "0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3",
-        "rollupConfigHash": "0x4443cede364fd50e63d976126c720d4b12b9a608e1005e42f95d619b552a913c",
+        "rangeVkeyCommitment": "0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1",
+        "rollupConfigHash": "0x276a52b0a54d364177f8ad6dc069bd5801791dcd5cf5c5d237edbe2541e1bac4",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719935831,
         "superchainConfig": "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "timeLimitOutputRootSubmissionSeconds": 2592000,
         "timeLimitOutputRootSubmissionSecondsFmt": "1mo",
-        "verifierV2": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
         "verifierV3": "eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67",
-        "version": "3.0.0",
-        "withdrawalKeepalivePeriodSeconds": 14400,
-        "withdrawalKeepalivePeriodSecondsFmt": "4h"
+        "version": "3.1.0"
       },
       "fieldMeta": {
         "proposer": { "severity": "HIGH" },
@@ -730,7 +763,7 @@
       },
       "implementationNames": {
         "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4": "Proxy",
-        "eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65": "L2OutputOracle"
+        "eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6": "L2OutputOracle"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -793,48 +826,6 @@
           "role": ".batcherHash"
         }
       ]
-    },
-    {
-      "name": "VerifierV2",
-      "address": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
-      "type": "Contract",
-      "template": "opstack/zircuit/Verifier",
-      "sourceHashes": [
-        "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x709abb48f790c58a1517d5b15d470a3b3058adc8ff1953bb2764302ffd552c1b"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. The verifier is now unused as the project migrated to SP1.",
-      "sinceTimestamp": 1741569827,
-      "sinceBlock": 22013168,
-      "values": {
-        "$admin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0",
-        "$pastUpgrades": [
-          [
-            "2025-03-11T01:01:59.000Z",
-            "0x82c8840f615a9681634471d0ca91ae7ab00e483dbc01dbf4b16a0efe042c7e2a",
-            ["eth:0xD5B424AC36928E2da7dA9eCA9807938a56988F5a"]
-          ],
-          [
-            "2025-05-07T18:25:23.000Z",
-            "0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",
-            ["eth:0x89223192E728a830F09b32d93D51AaC88b6a466e"]
-          ],
-          [
-            "2025-06-11T21:09:23.000Z",
-            "0x273c02e325a3bd80d508d1b259225e739853611a87491e1bbb1642141a6b1612",
-            ["eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "digest": "0x167f5fa574c6c6d9dec2cca7c084f607c905044487a03eb3290089b218bd1f0f"
-      },
-      "implementationNames": {
-        "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737": "Proxy",
-        "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0": "VerifierV2"
-      },
-      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Zircuit Multisig 1",
@@ -931,14 +922,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
           "role": "admin",
           "via": [
@@ -974,7 +957,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 17,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1050,12 +1033,20 @@
           {
             "selector": "0xa4594c59",
             "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
           }
         ],
         "allVerifiers": [
           {
             "selector": "0xa4594c59",
             "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          },
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
           }
         ],
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
@@ -1128,21 +1119,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 9140058294,
+        "basefee": 26755486,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 2,
+        "blobBaseFee": 1949084,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xfcbddddcbbf612f8f9ad395706d62ee0b975aa66e7ba4671871481e81c816cc8",
+        "hash": "0x3138ca79a820e83bb82fc44f83f54ada2922011b64ec97ad4d8db493627d0aee",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23727365,
-        "operatorFeeConstant": 23225000000,
+        "number": 23946506,
+        "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 6,
-        "timestamp": 1762276343,
+        "sequenceNumber": 0,
+        "timestamp": 1764934739,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -1278,6 +1269,15 @@
     }
   ],
   "abis": {
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1287,6 +1287,42 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20Escape(address indexed user, address indexed localToken, address indexed remoteToken, uint256 amount)",
+      "event ERC20EscapeResolver(address indexed user, address indexed l2Contract, address indexed localToken, address remoteToken, uint256 amount)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint64 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function accessController() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function escapeERC20(address _localToken, address _remoteToken, bool _isRemoteTokenUpgradable, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof)",
+      "function escapeERC20ThroughResolver(address _localToken, address _remoteToken, bool _isRemoteTokenUpgradable, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof, tuple(address l2Contract, bytes data) _resolverData)",
+      "function escapedAmount(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _messenger, address _superchainConfig)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function superchainConfig() view returns (address)",
+      "function version() view returns (string)"
     ],
     "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091": [
       "constructor(address _admin)",
@@ -1350,8 +1386,74 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "eth:0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0": [
-      "function digest() view returns (bytes32)"
+    "eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6": [
+      "constructor()",
+      "error BlockNotProposed()",
+      "error BootstrapAlreadyPerformed()",
+      "error InvalidInitialization()",
+      "error L1BlockHashNotAvailable()",
+      "error L1BlockHashNotCheckpointed()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event AggregationVkeyUpdated(bytes32 indexed oldAggregationVkey, bytes32 indexed newAggregationVkey)",
+      "event Initialized(uint64 version)",
+      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
+      "event OutputProposedV2(bytes32 indexed poseidonStateRoot, uint256 indexed l2OutputIndex, uint256 batchIndex, bytes32 batchHash)",
+      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposerUpdated(address indexed proposer, bool added)",
+      "event RangeVkeyCommitmentUpdated(bytes32 indexed oldRangeVkeyCommitment, bytes32 indexed newRangeVkeyCommitment)",
+      "event RollupConfigHashUpdated(bytes32 indexed oldRollupConfigHash, bytes32 indexed newRollupConfigHash)",
+      "event VerifierUpdated(address indexed oldVerifier, address indexed newVerifier)",
+      "function CHALLENGER() view returns (address)",
+      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function PROPOSER() view returns (address)",
+      "function acceptOwnership()",
+      "function aggregationVkey() view returns (bytes32)",
+      "function bootstrapL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint64 _senderNonce, address _senderAddress)",
+      "function challenger() view returns (address)",
+      "function checkpointBlockHash(uint256 _blockNumber)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function deleteL2Outputs(uint256 _l2OutputIndex)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
+      "function getL2OutputExtension(uint256 _l2OutputIndex) view returns (tuple(uint64 senderNonce, address senderAddress))",
+      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
+      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
+      "function historicBlockHashes(uint256) view returns (bytes32)",
+      "function initialize(tuple(uint256 l2ChainId, uint256 l2BlockTime, uint256 startingBlockNumber, uint256 startingTimestamp, address proposer, address challenger, address verifierV3, uint256 finalizationPeriodSeconds, bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash, address owner, address superchainConfig, uint256 timeLimitOutputRootSubmissionSeconds) _initParams)",
+      "function initializerVersion() view returns (uint8)",
+      "function isL2OutputFinalized(uint256 _l2OutputIndex) view returns (bool isFinalized)",
+      "function l2BlockTime() view returns (uint256)",
+      "function l2ChainId() view returns (uint256)",
+      "function latestBlockNumber() view returns (uint256)",
+      "function latestOutputIndex() view returns (uint256)",
+      "function nextBlockNumber() view returns (uint256)",
+      "function nextOutputIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proposeL2OutputV3(bytes32 _outputRoot, uint64 _claimNonce, address _claimSenderAddress, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable",
+      "function proposer() view returns (address)",
+      "function rangeVkeyCommitment() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function rollupConfigHash() view returns (bytes32)",
+      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
+      "function setTimeLimitOutputRootSubmissionSeconds(uint256 _timeLimitOutputRootSubmissionSeconds)",
+      "function startingBlockNumber() view returns (uint256)",
+      "function startingTimestamp() view returns (uint256)",
+      "function superchainConfig() view returns (address)",
+      "function timeLimitOutputRootSubmissionSeconds() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function updateAggregationVkey(bytes32 _aggregationVkey)",
+      "function updateRangeVkeyCommitment(bytes32 _rangeVkeyCommitment)",
+      "function updateRollupConfigHash(bytes32 _rollupConfigHash)",
+      "function updateVerifierV3(address _verifierV3)",
+      "function verifierV3() view returns (address)",
+      "function version() view returns (string)"
     ],
     "eth:0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",
@@ -1401,80 +1503,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x6AB82bb139383BB758348fBb81EdA57458e59f65": [
-      "constructor()",
-      "error BlockNotProposed()",
-      "error InvalidInitialization()",
-      "error L1BlockHashNotAvailable()",
-      "error L1BlockHashNotCheckpointed()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event AggregationVkeyUpdated(bytes32 indexed oldAggregationVkey, bytes32 indexed newAggregationVkey)",
-      "event Initialized(uint64 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputProposedV2(bytes32 indexed poseidonStateRoot, uint256 indexed l2OutputIndex, uint256 batchIndex, bytes32 batchHash)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProposerUpdated(address indexed proposer, bool added)",
-      "event RangeVkeyCommitmentUpdated(bytes32 indexed oldRangeVkeyCommitment, bytes32 indexed newRangeVkeyCommitment)",
-      "event RollupConfigHashUpdated(bytes32 indexed oldRollupConfigHash, bytes32 indexed newRollupConfigHash)",
-      "event VerifierUpdated(address indexed oldVerifier, address indexed newVerifier)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function acceptOwnership()",
-      "function aggregationVkey() view returns (bytes32)",
-      "function allowBootstrapKeepalive() view returns (bool)",
-      "function bootstrapL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber)",
-      "function bootstrapV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)",
-      "function challenger() view returns (address)",
-      "function checkpointBlockHash(uint256 _blockNumber)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function getL2OutputRootWithFinalization(uint256 _l2OutputIndex) view returns (bytes32 outputRoot, uint256 finalizedTimestamp)",
-      "function historicBlockHashes(uint256) view returns (bytes32)",
-      "function initialize(tuple(uint256 l2ChainId, uint256 l2BlockTime, uint256 startingBlockNumber, uint256 startingTimestamp, address proposer, address challenger, address verifierV3, address verifierV2, uint256 finalizationPeriodSeconds, uint256 withdrawalKeepalivePeriodSeconds, bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash, address owner, address superchainConfig, uint256 timeLimitOutputRootSubmissionSeconds, bool allowBootstrapKeepalive) _initParams)",
-      "function initializerVersion() view returns (uint8)",
-      "function isL2OutputFinalized(uint256 _l2OutputIndex) view returns (bool isFinalized)",
-      "function l2BlockTime() view returns (uint256)",
-      "function l2ChainId() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable",
-      "function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable",
-      "function proposer() view returns (address)",
-      "function rangeVkeyCommitment() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function rollupConfigHash() view returns (bytes32)",
-      "function setFinalizationPeriodSeconds(uint256 newFinalizationPeriodLength)",
-      "function setTimeLimitOutputRootSubmissionSeconds(uint256 _timeLimitOutputRootSubmissionSeconds)",
-      "function setWithdrawalKeepalivePeriodSeconds(uint256 _withdrawalKeepalivePeriodSeconds)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function superchainConfig() view returns (address)",
-      "function timeLimitOutputRootSubmissionSeconds() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function updateAggregationVkey(bytes32 _aggregationVkey)",
-      "function updateRangeVkeyCommitment(bytes32 _rangeVkeyCommitment)",
-      "function updateRollupConfigHash(bytes32 _rollupConfigHash)",
-      "function updateVerifierV3(address _verifierV3)",
-      "function verifierV2() view returns (address)",
-      "function verifierV3() view returns (address)",
-      "function verifyV2(bytes bundleProof, bytes publicInput) view",
-      "function version() view returns (string)",
-      "function withdrawalKeepalivePeriodSeconds() view returns (uint256)"
     ],
     "eth:0x6bc726C993103197C41d787dd72eCd4D2e1614E8": [
       "constructor(address messenger_, address l2TokenBridge_, address l1Token_, address l2Token_)",
@@ -1597,60 +1625,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0x83085450544c3F360a40720859EbB1bfd311584D": [
-      "constructor()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function L2_OUTPUT_ORACLE_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function basefeeScalar() view returns (uint32)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobbasefeeScalar() view returns (uint32)",
-      "function eip1559Denominator() view returns (uint32)",
-      "function eip1559Elasticity() view returns (uint32)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, tuple(uint32 basefeeScalar, uint32 blobbasefeeScalar, uint32 operatorFeeScalar, uint64 operatorFeeConstant, uint64 gasLimit) _gasConfig, bytes32 _batcherHash, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address l2OutputOracle, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function l2OutputOracle() view returns (address addr_)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function operatorFeeConstant() view returns (uint64)",
-      "function operatorFeeScalar() view returns (uint32)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
-      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() view returns (string)"
-    ],
     "eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error ErrorNotAdmin()",
@@ -1723,15 +1697,60 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "eth:0xC25D093D3A3f58952252D2e763BEAF2559dc9737": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function L2_OUTPUT_ORACLE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function OSAKA_TX_MAX_GAS() view returns (uint256)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function initialize(address _owner, tuple(uint32 basefeeScalar, uint32 blobbasefeeScalar, uint32 operatorFeeScalar, uint64 operatorFeeConstant, uint64 gasLimit) _gasConfig, bytes32 _batcherHash, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address l2OutputOracle, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function l2OutputOracle() view returns (address addr_)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint16 _spacer, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() view returns (string)"
     ],
     "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": [
       "constructor(address _singleton)"
@@ -1858,42 +1877,6 @@
       "function initialize(address _bridge)",
       "function version() view returns (string)"
     ],
-    "eth:0xFF30d6E9acecc919e4E9e1A2e67980ee44Df6Ebb": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error AddressInsufficientBalance(address account)",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error ReentrancyGuardReentrantCall()",
-      "error SafeERC20FailedOperation(address token)",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20Escape(address indexed user, address indexed localToken, address indexed remoteToken, uint256 amount)",
-      "event ERC20EscapeResolver(address indexed user, address indexed l2Contract, address indexed localToken, address remoteToken, uint256 amount)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event Initialized(uint64 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function accessController() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function escapeERC20(address _localToken, address _remoteToken, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof)",
-      "function escapeERC20ThroughResolver(address _localToken, address _remoteToken, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, tuple(uint256 nonce, uint256 balance, bytes32 storageRoot, bytes32 codeHash) _accountState, bytes[] _stateProof, uint256 _tokenBalance, bytes[] _storageProof, tuple(address l2Contract, bytes data) _resolverData)",
-      "function escapedAmount(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function initialize(address _messenger, address _superchainConfig)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function paused() view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "zircuit:0x4200000000000000000000000000000000000015": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2017,14 +2000,13 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "opstack/zircuit/L1StandardBridge": "0x2f9c34737989113306a892abba83353771734bbf57cae7245088154cbf90be77",
-    "opstack/zircuit/L2OutputOracle_SP1": "0x28706f73dc8dbc091be1b1f7b62d6c3c2c6d16eafcfff8002a5e33b8f6984021",
+    "opstack/zircuit/L2OutputOracle_SP1_nokeepalive": "0xb017000b1b08d71c470a169b11174fa0c5fd03e42503e110ea979137b68baf76",
     "opstack/zircuit/OptimismPortal": "0xc3cdbd0b6752833adcaa14487b9cfc1f863a5770d71a98ce9969ae1e4ccafefb",
     "opstack/zircuit/ResolverRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/zircuit/SuperchainConfig": "0x88333adf1f4e7a6bbd8da95cbcd6e91ee1dbda7da976597818c96c0dbef27421",
-    "opstack/zircuit/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 23727367, "zircuit": 21170080 },
-  "permissionsConfigHash": "0x8b999edebb73312fc58543d4a2c5075e319a5a3bf22f04422934a85fd7dc17de"
+  "usedBlockNumbers": { "ethereum": 23946508, "zircuit": 22499274 },
+  "permissionsConfigHash": "0x047b7dfc9f81c2302de301125a9ed2ce8ccf448613cbf95ee6608134768d3655"
 }
