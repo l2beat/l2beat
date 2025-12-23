@@ -32,6 +32,8 @@ const upgradeDelay = discovery.getContractValue<number>(
   'approvedUpgradeNoticePeriod',
 )
 
+const finalizationPeriod = 0 // state root immediately finalized when proven
+
 export const lighter: ScalingProject = {
   id: ProjectId('lighter'),
   type: 'layer2',
@@ -152,7 +154,10 @@ export const lighter: ScalingProject = {
     },
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),

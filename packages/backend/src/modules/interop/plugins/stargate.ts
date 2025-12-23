@@ -422,7 +422,6 @@ export class StargatePlugin implements InteropPlugin {
       const oftReceivedBatch = db.findAll(StargateV2OFTReceived, { guid })
       if (oftReceivedBatch.length === 0) return
 
-      const token = oftReceivedBatch[0].args.token
       const destinationEid = oftReceivedBatch[0].args.destinationEid
       const oftSentBusRodeBatch: EventOf<typeof StargateV2OFTSentBusRode>[] = []
 
@@ -431,6 +430,8 @@ export class StargatePlugin implements InteropPlugin {
         ticketId < busDriven.args.startTicketId + busDriven.args.numPassengers;
         ticketId++
       ) {
+        const token =
+          oftReceivedBatch[ticketId - busDriven.args.startTicketId].args.token
         const oftSentBusRode = db.find(StargateV2OFTSentBusRode, {
           ticketId,
           destinationEid,
@@ -445,6 +446,7 @@ export class StargatePlugin implements InteropPlugin {
           app: 'stargate-v2-bus',
           srcEvent: packetSent,
           dstEvent: packetDelivered,
+          extraEvents: [busDriven],
         }),
       ]
 
@@ -452,7 +454,6 @@ export class StargatePlugin implements InteropPlugin {
         const passengerReceiver = Address32.cropToEthereumAddress(
           oftSentBusRode.args.receiver as Address32,
         )
-
         const matchedIndex = oftReceivedBatch.findIndex(
           (o) => o.args.receiver === passengerReceiver,
         )

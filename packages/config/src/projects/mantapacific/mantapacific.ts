@@ -30,7 +30,7 @@ export const mantapacific: ScalingProject = opStackL2({
       ],
       repositories: ['https://github.com/Manta-Network'],
       socialMedia: [
-        'https://discord.gg/mantanetwork',
+        'https://discord.com/invite/ktZWgwSu93',
         'https://twitter.com/MantaNetwork',
         'https://mantanetwork.medium.com/',
         'https://t.me/mantanetworkofficial',

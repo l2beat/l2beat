@@ -200,6 +200,19 @@ export class EthRpcClient {
     return LogsResponse.parse(data)
   }
 
+  async getFeeHistory(
+    blockCount: number,
+    newestBlock: number,
+    rewardPercentiles: number[],
+  ): Promise<FeeHistory> {
+    const data = await this.rawCall('eth_feeHistory', [
+      encodeQuantity(BigInt(blockCount)),
+      encodeBlock(BigInt(newestBlock)),
+      rewardPercentiles,
+    ])
+    return FeeHistory.parse(data)
+  }
+
   async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
     const response = await this.http.fetch(this.url, {
@@ -479,6 +492,15 @@ const BlockWithTransactionsResponse = v.union([
 ])
 const ReceiptResponse = v.union([v.null(), RpcReceipt])
 const LogsResponse = v.array(RpcLog)
+export type FeeHistory = v.infer<typeof FeeHistory>
+const FeeHistory = v.object({
+  baseFeePerGas: v.array(vQuantity),
+  gasUsedRatio: v.array(v.number()),
+  baseFeePerBlobGas: v.array(vQuantity),
+  blobGasUsedRatio: v.array(v.number()),
+  oldestBlock: vQuantity,
+  reward: v.array(v.array(vQuantity)),
+})
 
 const JsonRpcResponse = v.union([
   v.passthroughObject({

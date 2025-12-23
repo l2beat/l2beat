@@ -100,6 +100,20 @@
       "supply": "zero"
     },
     {
+      "name": "ADI",
+      "coingeckoId": "adi-token",
+      "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+      "symbol": "ADI",
+      "decimals": 18,
+      "deploymentTimestamp": 1763656247,
+      "coingeckoListingTimestamp": 1765238400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -894,6 +908,20 @@
       "coingeckoListingTimestamp": 1622419200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Capx",
+      "coingeckoId": "capx-ai",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+      "symbol": "CAPX",
+      "decimals": 18,
+      "deploymentTimestamp": 1758848087,
+      "coingeckoListingTimestamp": 1762300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

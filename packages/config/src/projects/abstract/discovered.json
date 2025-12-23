@@ -159,7 +159,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "AbstractZkEvm",
+      "name": "Diamond",
       "address": "eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1413,5 +1413,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 23832364 },
-  "permissionsConfigHash": "0x701692b3e87382e9e8d9e830ec157d9ec34245df6fb40c3cec39df92fe768a04"
+  "permissionsConfigHash": "0xc3c16800a3b243c8de6593225e0a1c9267e77084b4ab5166c714f014a2864dc7"
 }

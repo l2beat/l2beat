@@ -77,7 +77,7 @@ export const rss3: ScalingProject = opStackL2({
       repositories: ['https://github.com/rss3-network'],
       socialMedia: [
         'https://twitter.com/rss3_',
-        'https://discord.com/invite/rss3-network',
+        'https://discord.com/invite/euq4xyGPsU',
         'https://t.me/rss3_en',
       ],
     },

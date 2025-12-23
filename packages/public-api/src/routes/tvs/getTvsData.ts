@@ -23,7 +23,7 @@ export async function getTvsData(
 
   const records = await queryExecutor.execute({
     name: 'getSummedByTimestampTvsValuesQuery',
-    args: [projectIds, [from, to], forSummary, false, true],
+    args: [projectIds, [from, to], forSummary, false, false],
   })
 
   if (records.length === 0) {

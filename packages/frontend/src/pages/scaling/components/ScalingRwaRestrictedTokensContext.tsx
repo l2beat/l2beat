@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 
 type ScalingRwaRestrictedTokensContextValue = {
-  includeRwaRestrictedTokens: boolean
-  setIncludeRwaRestrictedTokens: (value: boolean) => void
+  excludeRwaRestrictedTokens: boolean
+  setExcludeRwaRestrictedTokens: (value: boolean) => void
 }
 
 const ScalingRwaRestrictedTokensContext = createContext<
@@ -25,13 +25,13 @@ export function ScalingRwaRestrictedTokensContextProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [value, setValue] = useState<boolean>(false)
+  const [value, setValue] = useState<boolean>(true)
 
   return (
     <ScalingRwaRestrictedTokensContext.Provider
       value={{
-        includeRwaRestrictedTokens: value,
-        setIncludeRwaRestrictedTokens: setValue,
+        excludeRwaRestrictedTokens: value,
+        setExcludeRwaRestrictedTokens: setValue,
       }}
     >
       {children}

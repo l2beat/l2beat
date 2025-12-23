@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "capx",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "capx-CAPX",
+      "priceId": "capx-ai",
+      "symbol": "CAPX",
+      "name": "Capx",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+        "chain": "ethereum",
+        "escrowAddress": "0xAAAA894f556D0eE585773190114CED3d491C0F72",
+        "decimals": 18,
+        "sinceTimestamp": 1762300800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

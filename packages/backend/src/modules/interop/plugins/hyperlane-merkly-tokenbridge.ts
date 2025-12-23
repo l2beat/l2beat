@@ -41,6 +41,18 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chainId: 10,
       address: EthereumAddress('0xC110E7FAA95680c79937CCACa3d1caB7902bE25e'),
     },
+    // no apechain
+    {
+      chain: 'polygonpos',
+      chainId: 137,
+      address: EthereumAddress('0x0cb0354E9C51960a7875724343dfC37B93d32609'),
+    },
+    // no zksync2
+    {
+      chain: 'abstract',
+      chainId: 2741,
+      address: EthereumAddress('0xa0be52cEA8BDC5CF39ca6EdB4FeBb9610ef68750'),
+    },
   ],
 )
 

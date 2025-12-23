@@ -16,6 +16,7 @@ const trackedTxsSince = UnixTime(1742928599)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const lens: ScalingProject = zkStackL2({
+  chainId,
   capability: 'universal',
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.DA.AvailVector],
@@ -43,7 +44,6 @@ export const lens: ScalingProject = zkStackL2({
     },
   },
   discovery,
-  diamondContract: discovery.getContract('LensZkEvm'),
   chainConfig: {
     name: 'lens',
     chainId,

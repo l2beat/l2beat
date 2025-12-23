@@ -69,7 +69,7 @@ async function getCachedData() {
     helpers.tvs.table.prefetch({
       type: 'rollups',
       excludeAssociatedTokens: false,
-      includeRwaRestrictedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
 

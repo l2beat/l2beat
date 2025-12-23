@@ -86,7 +86,6 @@ export const orbit: Bridge = {
       'Avalanche',
       'Celo',
       'Fantom',
-      'destination',
       'HECO',
       'ICON',
       'OKC',

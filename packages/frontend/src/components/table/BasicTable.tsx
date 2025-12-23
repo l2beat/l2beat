@@ -284,6 +284,7 @@ export function BasicTableRow<T extends BasicTableRow>({
           <TableRow
             key={`additional-row-${additionalRowIndex}`}
             highlightId={highlightId}
+            className={getRowClassNames(row.original.backgroundColor)}
           >
             {row.getVisibleCells().map((cell, index) => {
               const additionalRows =

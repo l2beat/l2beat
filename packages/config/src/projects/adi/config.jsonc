@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "adi",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B",
+    "eth:0xfa8b5ea9b8d36a72eb0ba66cc7abc83d9deec3b8"
+  ],
+  "names": {
+    "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B": "Diamond",
+    "eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb": "BridgeHub",
+    "eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9": "ADI Multisig 1",
+    "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754": "ADI Multisig 2"
+  },
+  "overrides": {
+    "eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb": {
+      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
+    },
+    "eth:0xfA8B5EA9b8d36a72Eb0ba66Cc7aBc83d9deeC3B8": {
+      "category": "bridge-canonical",
+      "description": "Legacy bridge for depositing ERC20 tokens to ADI Chain."
+    },
+    "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754": {
+      "ignoreInWatchMode": [],
+      "fields": {
+        "nonce": {
+          "description": "If increased, could mean a new verifier version is registered on DualVerifier."
+        }
+      }
+    },
+    "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": {
+      // validatorTimelock
+      "fields": {
+        "validatorVTL": {
+          // assuming the executor has all the roles, change if not the case
+          "handler": {
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { cn } from '~/utils/cn'
 import { Banner } from './Banner'
 
-export function BigQueryOutageNotice({
+export function TrackedTxsOutageNotice({
   className,
   mobileFull,
   type,
