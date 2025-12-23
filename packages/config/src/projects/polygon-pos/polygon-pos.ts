@@ -63,6 +63,7 @@ export const polygonpos: ScalingProject = {
       documentation: ['https://docs.polygon.technology/pos/'],
       socialMedia: [
         'https://twitter.com/0xPolygon',
+        'https://t.me/polygonofficial',
         'https://forum.polygon.technology/',
         'https://reddit.com/r/0xPolygon/',
         'https://facebook.com/0xPolygon.Technology',
