@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xb67a2769a3d58cb459919833fc2299ddfe483d3c
+
+# Diff at Mon, 22 Dec 2025 12:47:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765880191
+- current timestamp: 1766407578
+
+## Description
+
+maxbalance increased to 250M USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        175000000000000
++        250000000000000
+    }
+```
+
 Generated with discovered.json: 0x1d22cd74f01b030838674a4dbd9e6270695c69c4
 
 # Diff at Tue, 16 Dec 2025 10:17:34 GMT:

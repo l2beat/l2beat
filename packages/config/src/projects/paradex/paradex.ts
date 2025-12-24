@@ -328,7 +328,8 @@ export const paradex: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_ST,
       executionDelay: finalizationPeriod,
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    // dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    dataAvailability: RISK_VIEW.UNDER_REVIEW_RISK, // encrypted onchain DA has equal risk as DAC for external DA
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
