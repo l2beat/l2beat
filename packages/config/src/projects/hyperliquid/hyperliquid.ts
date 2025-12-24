@@ -44,9 +44,13 @@ export const hyperliquid: Bridge = {
       websites: ['https://hyperfoundation.org/'],
       explorers: ['https://app.hyperliquid.xyz/explorer'],
       bridges: ['https://app.hyperliquid.xyz/trade'],
-      socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
       repositories: ['https://github.com/hyperliquid-dex'],
+      socialMedia: [
+        'https://x.com/HyperliquidX',
+        'https://discord.com/invite/hyperliquid',
+        'https://t.me/hyperliquid_announcements',
+      ],
     },
   },
   config: {
