@@ -47,6 +47,14 @@ export class MonacoCodeEditor<T extends EditorType> {
       ) as ToMonaco<T>
     }
   }
+
+  setJsonDiagnostics(diagnostics: monaco.languages.json.DiagnosticsOptions) {
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions(diagnostics)
+  }
+
+  getJsonDiagnostics() {
+    return monaco.languages.json.jsonDefaults.diagnosticsOptions
+  }
 }
 
 function init() {

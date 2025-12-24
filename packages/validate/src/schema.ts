@@ -99,6 +99,8 @@ function decompose(imp: Imp<unknown>, state: State): object {
             decompose(v, state),
           ]),
         ),
+        // true by default according to spec
+        ...(imp.meta.strict ? { additionalProperties: false } : {}),
       }
       const required = Object.entries(imp.meta.schema)
         .filter(

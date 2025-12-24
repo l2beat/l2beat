@@ -85,6 +85,22 @@ export class ContractConfigModel {
     return this.fields[name]?.description
   }
 
+  setFieldHandler(name: string, handler: FieldConfigSchema['handler']) {
+    return this.patchField(name, (field) => field.setHandler(handler))
+  }
+
+  getFieldHandler(name: string) {
+    return this.fields[name]?.handler
+  }
+
+  getFieldHandlerString(name: string) {
+    const handler = this.fields[name]?.handler
+
+    if (handler) {
+      return stringify(handler, null, 2)
+    }
+  }
+
   setDescription(description: string | undefined) {
     const trimmed = description?.trim()
 
