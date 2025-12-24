@@ -6,6 +6,8 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
+  DiscordClient,
+  DuneClient,
   EigenApiClient,
   FuelClient,
   HttpClient,
@@ -29,7 +31,6 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
-import { DuneClient } from '../peripherals/dune/DuneClient'
 
 export interface Clients {
   block: BlockClient[]
@@ -54,6 +55,7 @@ export interface Clients {
   starknetClients: StarknetClient[]
   near: NearClient | undefined
   dune: DuneClient | undefined
+  discord: DiscordClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -72,6 +74,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
+  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -354,6 +357,10 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
+  if (config.updateMonitor && config.updateMonitor.discord) {
+    discord = new DiscordClient(http, config.updateMonitor.discord)
+  }
+
   return {
     block: blockClients,
     logs: logsClients,
@@ -377,5 +384,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     voyager: voyagerClient,
     lighter: lighterClient,
     dune,
+    discord,
   }
 }

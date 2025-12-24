@@ -4,7 +4,7 @@ import { LivenessUpdater } from './LivenessUpdater'
 export function createLivenessModule({
   config,
   logger,
-  peripherals,
+  db,
 }: ModuleDependencies):
   | (ApplicationModule & { updater: LivenessUpdater })
   | undefined {
@@ -15,7 +15,7 @@ export function createLivenessModule({
 
   logger = logger.tag({ feature: 'liveness', module: 'liveness' })
 
-  const livenessUpdater = new LivenessUpdater(peripherals.database, logger)
+  const livenessUpdater = new LivenessUpdater(db, logger)
 
   return {
     updater: livenessUpdater,

@@ -11,7 +11,6 @@ import {
 } from '@l2beat/discovery'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { Peripherals } from '../../peripherals/Peripherals'
 import { DatabaseCache } from './DatabaseCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { RedisCache } from './RedisCache'
@@ -19,7 +18,7 @@ import { RedisCache } from './RedisCache'
 export function createDiscoveryRunner(
   paths: DiscoveryPaths,
   http: HttpClient,
-  peripherals: Peripherals,
+  db: Database,
   discoveryLogger: Logger,
   chainConfigs: DiscoveryChainConfig[],
   cacheEnabled: boolean,
@@ -32,7 +31,7 @@ export function createDiscoveryRunner(
 
   if (cacheEnabled) {
     const l1Cache = new InMemoryCache(5000)
-    const l2Cache = decodeCacheUri(cacheUri, peripherals.database)
+    const l2Cache = decodeCacheUri(cacheUri, db)
     discoveryCache = new LeveledCache(l1Cache, l2Cache)
   }
 

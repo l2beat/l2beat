@@ -5,14 +5,14 @@ import { FlatSourcesController } from './api/FlatSourcesController'
 export function createFlatSourcesModule({
   config,
   logger,
-  peripherals,
+  db,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.flatSourceModuleEnabled) {
     logger.info('Flat sources module disabled')
     return
   }
 
-  const controller = new FlatSourcesController(peripherals.database)
+  const controller = new FlatSourcesController(db)
 
   return {
     routers: [createFlatSourcesRouter(controller)],

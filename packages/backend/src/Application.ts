@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
-import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
@@ -16,7 +15,6 @@ import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
-import { Peripherals } from './peripherals/Peripherals'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
 
@@ -41,15 +39,12 @@ export class Application {
       config.clock.hourlyCutoffDays,
       config.clock.sixHourlyCutoffDays,
     )
-    const http = new HttpClient()
-    const peripherals = new Peripherals(db, http, logger)
     const providers = new Providers(config, logger)
     const deps: ModuleDependencies = {
       config,
       logger,
       clock,
       providers,
-      peripherals,
       db,
       blockProcessors: [],
     }

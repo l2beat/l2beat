@@ -8,7 +8,6 @@ import {
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,
@@ -31,8 +30,6 @@ const mockVerifiers: OnchainVerifier[] = [
 describe(VerifiersStatusRefresher.name, () => {
   describe(VerifiersStatusRefresher.prototype.getBlockscoutClient.name, () => {
     it('creates correct client', () => {
-      const getClientMock = mockFn().returns(mockObject<BlockscoutV2Client>())
-
       const verifierChainId = ChainId.ETHEREUM
 
       const chainConfigMock = mockObject<ChainConfig>({
@@ -46,17 +43,12 @@ describe(VerifiersStatusRefresher.name, () => {
       })
 
       const refresher = createVerifierStatusRefresher({
-        peripherals: mockObject<Peripherals>({
-          getClient: getClientMock,
-        }),
         chains: [chainConfigMock],
       })
 
-      refresher.getBlockscoutClient(verifierChainId)
+      const client = refresher.getBlockscoutClient(verifierChainId)
 
-      expect(getClientMock).toHaveBeenCalledWith(BlockscoutV2Client, {
-        url: 'https://eth.blockscout.com/api/v2',
-      })
+      expect(client).toBeA(BlockscoutV2Client)
     })
 
     it('throws if blockscout url is not configured', () => {
@@ -131,7 +123,6 @@ function createVerifierStatusRefresher(
 ) {
   return new VerifiersStatusRefresher({
     db: mockDatabase(),
-    peripherals: mockObject<Peripherals>(),
     clock: mockObject<Clock>(),
     logger: Logger.SILENT,
     verifiers: [],
