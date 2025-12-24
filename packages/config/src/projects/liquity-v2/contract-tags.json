@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-15T13:07:53.974Z",
+  "lastModified": "2025-12-22T08:12:18.342Z",
   "tags": [
     {
       "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
@@ -166,8 +166,9 @@
     {
       "contractAddress": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
       "isExternal": false,
+      "likelihood": "mitigated",
       "fetchBalances": true,
-      "timestamp": "2025-12-09T18:45:50.050Z"
+      "timestamp": "2025-12-22T08:04:15.800Z"
     },
     {
       "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
@@ -184,19 +185,63 @@
     {
       "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
       "isExternal": false,
+      "likelihood": "mitigated",
       "fetchBalances": true,
-      "timestamp": "2025-12-15T09:15:58.623Z"
+      "timestamp": "2025-12-22T08:04:37.541Z"
     },
     {
       "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
       "isExternal": false,
+      "likelihood": "mitigated",
       "fetchBalances": true,
-      "timestamp": "2025-12-15T09:16:02.246Z"
+      "timestamp": "2025-12-22T08:04:27.192Z"
     },
     {
       "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "isExternal": true,
       "timestamp": "2025-12-15T13:07:53.974Z"
+    },
+    {
+      "contractAddress": "eth:0x0000000000000000000000000000000000000000",
+      "isExternal": false,
+      "likelihood": "low",
+      "timestamp": "2025-12-22T08:12:18.341Z"
+    },
+    {
+      "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:09.087Z"
+    },
+    {
+      "contractAddress": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:11.956Z"
+    },
+    {
+      "contractAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:20.195Z"
+    },
+    {
+      "contractAddress": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:24.252Z"
+    },
+    {
+      "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:30.812Z"
+    },
+    {
+      "contractAddress": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
+      "isExternal": false,
+      "likelihood": "mitigated",
+      "timestamp": "2025-12-22T08:04:35.165Z"
     }
   ]
 }

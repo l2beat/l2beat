@@ -76,8 +76,8 @@ export function updateContractTag(
     ? updateRequest.likelihood
     : existingTag?.likelihood
 
-  // Check if any meaningful tag data exists (any of the 3 boolean fields is true)
-  const hasAnyTagData = newIsExternal || newFetchBalances || newFetchPositions
+  // Check if any meaningful tag data exists (boolean fields true OR likelihood assigned)
+  const hasAnyTagData = newIsExternal || newFetchBalances || newFetchPositions || newLikelihood !== undefined
 
   if (hasAnyTagData) {
     // Create or update tag entry

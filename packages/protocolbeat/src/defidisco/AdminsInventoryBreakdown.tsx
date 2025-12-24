@@ -284,6 +284,14 @@ function LikelihoodPicker({
 }
 
 /**
+ * Check if an address is the zero address (permission revoked)
+ */
+function isZeroAddress(address: string): boolean {
+  const normalized = address.toLowerCase().replace('eth:', '')
+  return normalized === '0x0000000000000000000000000000000000000000'
+}
+
+/**
  * Admin section component - displays functions for a single admin address
  */
 function AdminSection({
@@ -299,6 +307,7 @@ function AdminSection({
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
+  const isRevoked = isZeroAddress(admin.adminAddress)
 
   // Calculate worst grade among all functions for this admin
   const worstGrade = admin.functions.length > 0 && admin.likelihood
@@ -338,24 +347,37 @@ function AdminSection({
             {worstGrade}
           </span>
         )}
-        <span
-          className="inline-block px-1.5 py-0.5 rounded border text-xs capitalize"
-          style={{
-            color: getAdminTypeColor(admin.adminType),
-            borderColor: getAdminTypeColor(admin.adminType) + '40'
-          }}
-        >
-          {admin.adminType}
-        </span>
+        {isRevoked ? (
+          <span
+            className="inline-block px-1.5 py-0.5 rounded border text-xs font-semibold"
+            style={{
+              color: '#10b981', // green-500
+              borderColor: '#10b98140',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)'
+            }}
+          >
+            Revoked
+          </span>
+        ) : (
+          <span
+            className="inline-block px-1.5 py-0.5 rounded border text-xs capitalize"
+            style={{
+              color: getAdminTypeColor(admin.adminType),
+              borderColor: getAdminTypeColor(admin.adminType) + '40'
+            }}
+          >
+            {admin.adminType}
+          </span>
+        )}
         <ProxyTypeTag proxyType={proxyType} />
         <button
           onClick={(e) => {
             e.stopPropagation()
-            selectGlobal(admin.adminAddress)
+            if (!isRevoked) selectGlobal(admin.adminAddress)
           }}
-          className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors text-sm"
+          className={`font-medium text-sm ${isRevoked ? 'text-coffee-400 cursor-default' : 'text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors'}`}
         >
-          {admin.adminName}
+          {isRevoked ? '0x0000...0000' : admin.adminName}
         </button>
         <span className="text-coffee-500 text-xs mx-1">|</span>
         <span className="text-xs text-coffee-400">Likelihood:</span>

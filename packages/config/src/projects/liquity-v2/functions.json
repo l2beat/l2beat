@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-17T10:02:45.345Z",
+  "lastModified": "2025-12-22T07:46:33.268Z",
   "contracts": {
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
       "functions": [
@@ -36,22 +36,28 @@
         {
           "functionName": "setBranchAddresses",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "The permissioned allows owner of the permission to record core contract addresses for a given branch in the BOLDToken contract. It is used once, purely for contract initialization upon deployment.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T09:58:34.192Z"
+          "timestamp": "2025-12-22T07:31:40.575Z"
         },
         {
           "functionName": "setCollateralRegistry",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "The permission allows owner of the permission to record the CollateralRegistry core contract address in the BOLDToken contract. It is used once, purely for contract initialization upon deployment, and it renounces ownership after recording the address.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T09:58:34.193Z"
+          "timestamp": "2025-12-22T07:31:59.777Z"
         }
       ]
     },
@@ -60,6 +66,9 @@
         {
           "functionName": "sendColl",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers collateral to the specified address",
           "ownerDefinitions": [
             {
               "path": "$self.borrowerOperationsAddress"
@@ -71,17 +80,20 @@
               "path": "$self.stabilityPool"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.208Z"
+          "timestamp": "2025-12-22T07:40:37.714Z"
         },
         {
           "functionName": "sendCollToDefaultPool",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Transfers the collateral from a redistribution liquidation to the DefaultPool",
           "ownerDefinitions": [
             {
               "path": "$self.troveManagerAddress"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.209Z"
+          "timestamp": "2025-12-22T07:40:27.293Z"
         },
         {
           "functionName": "receiveColl",
@@ -112,6 +124,9 @@
         {
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Upon a Trove debt change it mints the aggregate pending interest since the last minting operation and updates the interest accounting, incorporating the Trove debt change.",
           "ownerDefinitions": [
             {
               "path": "$self.borrowerOperationsAddress"
@@ -120,11 +135,14 @@
               "path": "$self.troveManagerAddress"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.216Z"
+          "timestamp": "2025-12-22T07:37:22.835Z"
         },
         {
           "functionName": "mintAggInterest",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Mints the aggregate pending interest since the last minting operation and updates the interest accounting",
           "ownerDefinitions": [
             {
               "path": "$self.borrowerOperationsAddress"
@@ -133,27 +151,33 @@
               "path": "$self.stabilityPool"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.218Z"
+          "timestamp": "2025-12-22T07:33:12.644Z"
         },
         {
           "functionName": "mintBatchManagementFeeAndAccountForChange",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Upon a batch fee operation it mints the aggregate pending interest since the last minting operation and updates the interest accounting, incorporating the batch fee charged.",
           "ownerDefinitions": [
             {
               "path": "$self.troveManagerAddress"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.219Z"
+          "timestamp": "2025-12-22T07:37:43.643Z"
         },
         {
           "functionName": "setShutdownFlag",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Raises the shutdown flag, i.e. sets the recorded shutdown time to current time",
           "ownerDefinitions": [
             {
               "path": "$self.troveManagerAddress"
             }
           ],
-          "timestamp": "2025-12-17T09:58:43.220Z"
+          "timestamp": "2025-12-22T07:39:06.327Z"
         }
       ]
     },
@@ -264,12 +288,15 @@
         {
           "functionName": "setAddresses",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the addresses of the relevant V2 protocol contract upon initialisation.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T09:58:52.556Z"
+          "timestamp": "2025-12-22T07:42:05.598Z"
         }
       ]
     },
@@ -380,12 +407,15 @@
         {
           "functionName": "setAddresses",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the relevant addresses of the V2 contracts upon initialisation.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T09:59:10.298Z"
+          "timestamp": "2025-12-22T07:42:42.782Z"
         }
       ]
     },
@@ -959,12 +989,15 @@
         {
           "functionName": "setAddresses",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the relevant addresses for the V2 upon initialization.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T10:01:45.816Z"
+          "timestamp": "2025-12-22T07:46:33.268Z"
         }
       ]
     },
@@ -1201,12 +1234,15 @@
         {
           "functionName": "setParams",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the different parameters and addresses of V2 upon initialization.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T10:02:02.622Z"
+          "timestamp": "2025-12-22T07:46:07.287Z"
         }
       ]
     },
@@ -1285,12 +1321,15 @@
         {
           "functionName": "setAddresses",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Sets the addresses of the relevant V2 contracts upon initialisation.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2025-12-17T10:02:39.890Z"
+          "timestamp": "2025-12-22T07:44:55.956Z"
         }
       ]
     },
@@ -1299,22 +1338,28 @@
         {
           "functionName": "triggerBoldRewards",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Upon interest minting, updates the pool's reward accounting for depositors with the interest portion assigned to the SP",
           "ownerDefinitions": [
             {
               "path": "$self.activePool"
             }
           ],
-          "timestamp": "2025-12-17T10:02:43.041Z"
+          "timestamp": "2025-12-22T07:45:27.158Z"
         },
         {
           "functionName": "offset",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Cancels the specified amount of liquidated BOLD debt against BOLD tokens held in the pool, transfers liquidated collateral to the pool, and updates collateral rewards accounting for depositors",
           "ownerDefinitions": [
             {
               "path": "$self.troveManager"
             }
           ],
-          "timestamp": "2025-12-17T10:02:43.046Z"
+          "timestamp": "2025-12-22T07:45:14.832Z"
         }
       ]
     },
@@ -1323,22 +1368,28 @@
         {
           "functionName": "triggerBoldRewards",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Upon interest minting, updates the pool's reward accounting for depositors with the interest portion assigned to the SP",
           "ownerDefinitions": [
             {
               "path": "$self.activePool"
             }
           ],
-          "timestamp": "2025-12-17T10:02:45.340Z"
+          "timestamp": "2025-12-22T07:45:34.379Z"
         },
         {
           "functionName": "offset",
           "isPermissioned": true,
+          "checked": true,
+          "score": "low-risk",
+          "description": "Cancels the specified amount of liquidated BOLD debt against BOLD tokens held in the pool, transfers liquidated collateral to the pool, and updates collateral rewards accounting for depositors",
           "ownerDefinitions": [
             {
               "path": "$self.troveManager"
             }
           ],
-          "timestamp": "2025-12-17T10:02:45.345Z"
+          "timestamp": "2025-12-22T07:45:41.727Z"
         }
       ]
     }

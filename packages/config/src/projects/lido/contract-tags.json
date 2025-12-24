@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-11T16:48:37.577Z",
+  "lastModified": "2025-12-22T11:11:07.519Z",
   "tags": [
     {
       "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
@@ -125,7 +125,9 @@
     {
       "contractAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
       "isExternal": false,
-      "timestamp": "2025-11-11T16:48:37.568Z"
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T09:10:56.361Z"
     },
     {
       "contractAddress": "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec",
@@ -136,6 +138,41 @@
       "contractAddress": "eth:0x294ED1f214F4e0ecAE31C3Eae4F04EBB3b36C9d0",
       "isExternal": false,
       "timestamp": "2025-11-11T16:15:10.291Z"
+    },
+    {
+      "contractAddress": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T09:10:40.472Z"
+    },
+    {
+      "contractAddress": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T09:10:51.982Z"
+    },
+    {
+      "contractAddress": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T09:12:42.227Z"
+    },
+    {
+      "contractAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T09:13:09.617Z"
+    },
+    {
+      "contractAddress": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2025-12-22T11:11:07.519Z"
     }
   ]
 }

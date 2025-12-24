@@ -1047,6 +1047,19 @@ export function FunctionFolder({
               </div>
             )}
 
+          {/* Description Section */}
+          <div className="p-3">
+            <label className="block text-xs text-coffee-300 mb-2">
+              Function Description
+            </label>
+            <textarea
+              value={localDescription}
+              onChange={handleDescriptionChange}
+              placeholder="Add a description for this function..."
+              className="w-full h-20 px-2 py-1 text-xs font-mono bg-coffee-800 text-coffee-100 border border-coffee-600 rounded resize-none focus:outline-none focus:border-coffee-500"
+            />
+          </div>
+
             {/* Add dependency form */}
             {isAddingDependency && (
               <div className="bg-coffee-800 p-3 rounded">
@@ -1107,19 +1120,6 @@ export function FunctionFolder({
                 )}
               </div>
             )}
-          </div>
-
-          {/* Description Section */}
-          <div className="p-3">
-            <label className="block text-xs text-coffee-300 mb-2">
-              Function Description
-            </label>
-            <textarea
-              value={localDescription}
-              onChange={handleDescriptionChange}
-              placeholder="Add a description for this function..."
-              className="w-full h-20 px-2 py-1 text-xs font-mono bg-coffee-800 text-coffee-100 border border-coffee-600 rounded resize-none focus:outline-none focus:border-coffee-500"
-            />
           </div>
 
           <div className="p-3">
