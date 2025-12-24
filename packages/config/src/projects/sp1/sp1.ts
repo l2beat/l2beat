@@ -24,7 +24,10 @@ export const sp1: BaseProject = {
       websites: ['https://www.succinct.xyz'],
       documentation: ['https://docs.succinct.xyz/docs/sp1/introduction'],
       repositories: ['https://github.com/succinctlabs/sp1'],
-      socialMedia: ['https://x.com/SuccinctLabs'],
+      socialMedia: [
+        'https://x.com/SuccinctLabs',
+        'https://discord.com/invite/succinctlabs',
+      ],
     },
     badges: [],
   },
