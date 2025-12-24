@@ -31,6 +31,7 @@ export const t3rn: ScalingProject = underReviewL3({
         'https://x.com/t3rn_io',
         'https://github.com/t3rn/t3rn',
         'https://discord.com/invite/S5kHFQTtp6',
+        'https://t.me/T3RN_official',
       ],
     },
   },
