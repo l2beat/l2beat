@@ -14,7 +14,7 @@ export const litecoinvm: ScalingProject = upcomingL2({
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://litvm.com/'],
-      socialMedia: ['https://x.com/LitecoinVM'],
+      socialMedia: ['https://x.com/LitecoinVM', 'https://t.me/litecoinvm'],
     },
   },
   ecosystemInfo: {
