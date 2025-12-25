@@ -27,6 +27,7 @@ export const karak: ScalingProject = opStackL2({
       socialMedia: [
         'https://twitter.com/Karak_Network',
         'https://t.me/Karak_Network',
+        'https://discord.com/invite/opengdp',
       ],
     },
   },
