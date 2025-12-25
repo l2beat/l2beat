@@ -49,7 +49,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   lisk: 'lisk',
   redstone: 'redstone',
   soneium: 'soneium',
-  wc: 'worldchain'
+  wc: 'worldchain',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
