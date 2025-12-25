@@ -31,6 +31,7 @@ export const lisk: ScalingProject = opStackL2({
       repositories: ['https://github.com/LiskHQ/lisk-node'],
       socialMedia: [
         'https://x.com/LiskHQ',
+        'https://discord.com/invite/lisk',
         'https://lisk.chat/',
         'https://reddit.com/r/lisk/',
         'https://facebook.com/LiskHQ',
