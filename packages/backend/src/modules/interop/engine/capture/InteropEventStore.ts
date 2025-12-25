@@ -20,16 +20,11 @@ export class InteropEventStore implements InteropEventDb {
   }
 
   async start() {
-    const start = Date.now()
-    console.log('Started')
     const records = await this.db.interopEvent.getUnmatched()
     for (const record of records) {
       const event = fromDbRecord(record)
       this.eventDb.addEvent(event)
     }
-    console.log('Finished')
-    console.log(Date.now() - start)
-    // process.exit(1)
   }
 
   async saveNewEvents(events: InteropEvent[]): Promise<void> {
