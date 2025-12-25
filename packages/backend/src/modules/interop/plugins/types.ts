@@ -203,13 +203,13 @@ export interface InteropEventDb {
   ): InteropEvent<T> | undefined
 }
 
-interface EventToCaptureParams {
+export interface EventToCaptureParams {
   addresses: ChainSpecificAddress[]
 }
 
 export interface InteropPlugin {
   name: string
-  capturesEvents?: Map<string, EventToCaptureParams>
+  getCapturedEvents?: () => { [eventSignature: string]: EventToCaptureParams }
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]

@@ -45,6 +45,11 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   gateway: 'gateway',
   ethereal: 'ethereal',
   jovay: 'jovay',
+  lens: 'lens',
+  lisk: 'lisk',
+  redstone: 'redstone',
+  soneium: 'soneium',
+  wc: 'worldchain'
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
@@ -110,6 +115,11 @@ ChainSpecificAddress.fromLong = function from(
 ) {
   const shortChainName =
     LONG_TO_SHORT_CHAIN_NAMES[longChainName as LONG_CHAIN_NAME]
+
+  if (!shortChainName) {
+    throw new TypeError(`Unknown long chain name: ${longChainName}`)
+  }
+
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
 }
 

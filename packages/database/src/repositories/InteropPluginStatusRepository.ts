@@ -4,17 +4,25 @@ import { BaseRepository } from '../BaseRepository'
 import type { InteropPluginStatus } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
-export type InteropPluginSyncedBlockRanges = Record<
-  string, // chain
-  {
-    syncedFrom: number
-    syncedTo: number
-  }
->
+export type InteropPluginSyncedBlockRanges = {
+  perChain: Record<
+    string, // chain
+    {
+      from: {
+        block: number
+        timestamp: UnixTime
+      }
+      to: {
+        block: number
+        timestamp: UnixTime
+      }
+    }
+  >
+}
 
 export interface InteropPluginStatusRecord {
   pluginName: string
-  syncedBlockRanges: InteropPluginSyncedBlockRanges
+  syncedBlockRanges: InteropPluginSyncedBlockRanges | null
   resyncRequestedFrom: UnixTime | null
 }
 
@@ -27,7 +35,7 @@ export function toRecord(
   row: Selectable<InteropPluginStatus>,
 ): InteropPluginStatusRecord {
   return {
-    pluginName: row.pluginName,
+    ...row,
     syncedBlockRanges: row.syncedBlockRanges as InteropPluginSyncedBlockRanges,
     resyncRequestedFrom: toTimestamp(row.resyncRequestedFrom),
   }
@@ -37,7 +45,7 @@ export function toRow(
   record: InteropPluginStatusRecord,
 ): Insertable<InteropPluginStatus> {
   return {
-    pluginName: record.pluginName,
+    ...record,
     syncedBlockRanges: record.syncedBlockRanges,
     resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
   }
@@ -47,6 +55,7 @@ function toUpdateRow(
   record: InteropPluginStatusUpdateable,
 ): Updateable<InteropPluginStatus> {
   return {
+    ...record,
     syncedBlockRanges: record.syncedBlockRanges,
     resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
   }

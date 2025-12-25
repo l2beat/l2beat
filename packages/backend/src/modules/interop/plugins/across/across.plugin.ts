@@ -1,8 +1,9 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type EventToCaptureParams,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -13,9 +14,10 @@ import {
 } from '../types'
 import { AcrossConfig } from './across.config'
 
-const parseFundsDeposited = createEventParser(
-  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
-)
+const fundsDepositedLog =
+  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)'
+const parseFundsDeposited = createEventParser(fundsDepositedLog)
+
 export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
   originChainId: number
@@ -25,12 +27,14 @@ export const AcrossFundsDeposited = createInteropEventType<{
   amount: bigint
 }>('across.FundsDeposited', { direction: 'outgoing' })
 
-const parseFilledRelay = createEventParser(
-  'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
-)
-const parseFilledV3Relay = createEventParser(
-  'event FilledV3Relay(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address indexed relayer, address depositor, address recipient, bytes message, (address updatedRecipient, bytes updatedMessage, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
-)
+const filledRelayLog =
+  'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)'
+const parseFilledRelay = createEventParser(filledRelayLog)
+
+const filledV3RelayLog =
+  'event FilledV3Relay(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address indexed relayer, address depositor, address recipient, bytes message, (address updatedRecipient, bytes updatedMessage, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)'
+const parseFilledV3Relay = createEventParser(filledV3RelayLog)
+
 // For both V3 and V4 event capturing
 export const AcrossFilledRelay = createInteropEventType<{
   $srcChain: string
@@ -43,8 +47,30 @@ export const AcrossFilledRelay = createInteropEventType<{
 
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
+  capturesEvents?: Record<string, EventToCaptureParams> | undefined
 
   constructor(private configs: InteropConfigStore) {}
+
+  getCapturedEvents() {
+    const acrossNetworks = this.configs.get(AcrossConfig) ?? []
+    const spokePoolAddresses = acrossNetworks
+      .filter((network) => !['hyperevm', 'solana'].includes(network.chain)) //
+      .map((network) =>
+        ChainSpecificAddress.fromLong(network.chain, network.spokePool),
+      )
+
+    return {
+      [fundsDepositedLog]: {
+        addresses: spokePoolAddresses,
+      },
+      [filledRelayLog]: {
+        addresses: spokePoolAddresses,
+      },
+      [filledV3RelayLog]: {
+        addresses: spokePoolAddresses,
+      },
+    }
+  }
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(AcrossConfig)

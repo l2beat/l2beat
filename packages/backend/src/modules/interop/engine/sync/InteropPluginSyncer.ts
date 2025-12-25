@@ -1,23 +1,68 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropPluginStatusRecord } from '@l2beat/database'
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { EthRpcClient, Http, toEVMBlock, toEVMLog } from '@l2beat/shared'
+import {
+  assert,
+  ChainSpecificAddress,
+  type EthereumAddress,
+} from '@l2beat/shared-pure'
+import isNil from 'lodash/isNil'
+import { encodeEventTopics, parseAbi } from 'viem'
+import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { Clients } from '../../../../providers/Clients'
 import type { InteropPlugin } from '../../plugins/types'
+import { getItemsToCapture } from '../capture/getItemsToCapture'
+
+const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
+const DEFAULT_RESYNC_BLOCKS = 21_000n
 
 interface LogQuery {
-  topics: string[]
-  addresses: EthereumAddress[]
+  topic0s: Set<string>
+  addresses: Set<EthereumAddress>
 }
 
 export class InteropPluginSyncer {
+  private rpcClients: { [chain: string]: EthRpcClient } = {}
+
   constructor(
-    private chains: { name: string; type: 'evm' }[],
-    private clients: Clients,
+    private capturedChains: { name: string; type: 'evm' }[],
+    private chainConfigs: ChainApi[],
     private plugins: InteropPlugin[],
     private db: Database,
     private logger: Logger,
+    private clients: Clients,
   ) {
     this.logger = logger.for(this)
+  }
+
+  getRpcClient(chain: string) {
+    let client = this.rpcClients[chain]
+    if (!client) {
+      const chainConfig = this.chainConfigs.find((c) => c.name === chain)
+      if (!chainConfig) {
+        throw new Error(`Missing configuration for chain ${chain}`)
+      }
+      const rpcConfig = chainConfig.blockApis.find((a) => a.type === 'rpc')
+      if (!rpcConfig || rpcConfig.type !== 'rpc') {
+        throw new Error(`Missing RPC config for chain ${chain}`)
+      }
+
+      const rpcLogger = this.logger
+        .for(EthRpcClient.name)
+        .tag({ source: chain })
+
+      const http = new Http({
+        logger: rpcLogger,
+      })
+
+      client = new EthRpcClient(
+        http,
+        rpcConfig.url,
+        `${EthRpcClient.name}:${chain}`,
+      )
+      this.rpcClients[chain] = client
+    }
+    return client
   }
 
   async start() {
@@ -27,35 +72,87 @@ export class InteropPluginSyncer {
   }
 
   async syncPlugin(plugin: InteropPlugin) {
-    if (!plugin.capturesEvents) {
+    if (!plugin.getCapturedEvents) {
       // This plugin doesn't support re-syncing.
       return
     }
-    let pluginStatus = await this.db.interopPluginStatus.findByPluginName(
-      plugin.name,
-    )
-    if (!pluginStatus) {
-      pluginStatus = await this.initializePluginStatus(plugin.name)
-    }
-
-    const logQueriesPerChain = this.generateLogQueriesPerChain(
-      plugin.capturesEvents,
+    const pluginStatus = await this.getPluginStatus(plugin)
+    const logQueryPerChain = this.generateLogQueryPerChain(
+      plugin.getCapturedEvents(),
     )
 
-    for (const [chain, logQueries] of logQueriesPerChain) {
-      if (!this.chains.map((c) => c.name).includes(chain)) {
+    const blocksToProcessPerChain = new Map<string, Set<bigint>>()
+
+    for (const [chain, logQuery] of logQueryPerChain) {
+      if (!this.capturedChains.map((c) => c.name).includes(chain)) {
         this.logger.warn(
-          `Skipping events from chain ${chain} for plugin ${plugin.name} because it's turned off in config`,
+          `Skipping events from chain '${chain}' (requested by plugin '${plugin.name}') because it's turned off in config`,
+        )
+        continue
+      }
+      const client = this.getRpcClient(chain)
+      const latestBlock = await client.getBlockByNumber('latest', false)
+      assert(latestBlock)
+      assert(!isNil(latestBlock.number))
+      const isSyncedTo =
+        pluginStatus.syncedBlockRanges?.perChain[chain].to.block
+
+      let syncFrom: bigint
+      if (isSyncedTo !== undefined) {
+        if (isSyncedTo >= latestBlock.number) {
+          // No new block since last sync
+          continue
+        }
+        syncFrom = BigInt(isSyncedTo) + 1n
+      } else {
+        syncFrom = latestBlock.number - DEFAULT_RESYNC_BLOCKS
+        const fromBlock = await client.getBlockByNumber(BigInt(syncFrom), false)
+        assert(fromBlock)
+        const _syncFromTimestamp = fromBlock.timestamp
+      }
+      if (syncFrom > latestBlock.number) {
+        this.logger.error(
+          `Plugin ${plugin.name} is synced futher than the latest block. ${syncFrom} > ${latestBlock.number}`,
         )
       }
-      for (const logQuery of logQueries) {
-        const client = this.clients.getRpcClient(chain)
-        const _syncedRangesPerChain = pluginStatus.syncedBlockRanges[chain]
-        const syncFrom = 1 // TODO: add +1 to syncedTo or get from Plugin
-        const syncTo = 100 // TODO: next day
-        client.getLogs(syncFrom, syncTo, logQuery.addresses, logQuery.topics)
+
+      const min = (a: bigint, b: bigint) => (a < b ? a : b)
+      const syncTo = min(
+        syncFrom + DEFAULT_LOGS_MAX_BLOCK_RANGE,
+        latestBlock.number,
+      )
+
+      console.log('Asking for logs:', {
+        chain,
+        syncFrom,
+        syncTo,
+        addresses: logQuery.addresses,
+        topics: [logQuery.topic0s],
+      })
+
+      const logs = await client.getLogs({
+        fromBlock: syncFrom,
+        toBlock: syncTo,
+        address: Array.from(logQuery.addresses),
+        topics: [Array.from(logQuery.topic0s)],
+      })
+
+      const blocksToProcess = new Set<bigint>()
+      for (const log of logs) {
+        assert(log.blockNumber)
+        blocksToProcess.add(log.blockNumber)
       }
+      blocksToProcessPerChain.set(chain, blocksToProcess)
     }
+
+    const toRun = []
+    for (const [chain, blockNumbers] of blocksToProcessPerChain) {
+      toRun.push(this.captureBlocks(chain, blockNumbers))
+    }
+    await Promise.all(toRun)
+    // TODO: in transaction
+    // capture
+    // update status
 
     // TODO: run .capture
 
@@ -66,60 +163,70 @@ export class InteropPluginSyncer {
     // TODO: call matching loop here, not as TimeLoop outside
   }
 
-  generateLogQueriesPerChain(
-    capturesEvents: NonNullable<InteropPlugin['capturesEvents']>,
-  ) {
-    type LongChain = ReturnType<typeof ChainSpecificAddress.longChain>
-    type Topic = string
-    const chainToAddressToTopics = new Map<
-      LongChain,
-      Map<EthereumAddress, Topic[]>
-    >()
-
-    for (const [event, params] of capturesEvents) {
-      for (const address of params.addresses) {
-        const longChain: LongChain = ChainSpecificAddress.longChain(address)
-        const ethAddress = ChainSpecificAddress.address(address)
-        const perChain = getOrSetDefault(
-          chainToAddressToTopics,
-          longChain,
-          () => new Map(),
-        )
-        const perAddress = getOrSetDefault(perChain, ethAddress, () => [])
-        perAddress.push(event)
-      }
+  private async captureBlocks(chain: string, blockNumbers: Set<bigint>) {
+    const client = this.getRpcClient(chain)
+    let count = 0
+    for (const blockNumber of blockNumbers) {
+      count++
+      console.log(
+        `Getting block ${blockNumber} for chain ${chain} ${(100 * count) / blockNumbers.size}%`,
+      )
+      const block = await client.getBlockByNumber(blockNumber, true)
+      const logs = await client.getLogs({
+        fromBlock: blockNumber,
+        toBlock: blockNumber,
+      })
+      // TODO: check that logs are consistent with block
+      assert(block)
+      const evmBlock = toEVMBlock(Number(block.number), block)
+      const evmLogs = logs.map(toEVMLog)
+      const toCapture = getItemsToCapture(chain, evmBlock, evmLogs)
     }
+  }
 
-    const result = new Map<LongChain, LogQuery[]>()
-    for (const [longChain, addressToTopics] of chainToAddressToTopics) {
-      const queriesForChain: LogQuery[] = []
-      for (const [ethAddress, topics] of addressToTopics) {
-        queriesForChain.push({
-          addresses: [ethAddress],
-          topics,
-        })
-      }
-      result.set(longChain, queriesForChain)
+  private async getPluginStatus(plugin: InteropPlugin) {
+    let pluginStatus = await this.db.interopPluginStatus.findByPluginName(
+      plugin.name,
+    )
+    if (!pluginStatus) {
+      pluginStatus = await this.initializePluginStatus(plugin.name)
     }
-
-    return result
+    return pluginStatus
   }
 
   async initializePluginStatus(pluginName: string) {
     const record: InteropPluginStatusRecord = {
       pluginName,
-      syncedBlockRanges: {},
+      syncedBlockRanges: null,
       resyncRequestedFrom: null,
     }
     return await this.db.interopPluginStatus.insert(record)
   }
-}
 
-function getOrSetDefault<K, V>(map: Map<K, V>, key: K, defaultFn: () => V): V {
-  let value = map.get(key)
-  if (!value) {
-    value = defaultFn()
-    map.set(key, value)
+  generateLogQueryPerChain(
+    capturedEvents: ReturnType<NonNullable<InteropPlugin['getCapturedEvents']>>,
+  ) {
+    type LongChain = ReturnType<typeof ChainSpecificAddress.longChain>
+    const chainToLogQuery = new Map<LongChain, LogQuery>()
+
+    for (const [eventSignature, params] of Object.entries(capturedEvents)) {
+      const abi = parseAbi([eventSignature as string])
+      // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
+      const topic0 = encodeEventTopics({ abi } as any)[0]
+
+      for (const address of params.addresses) {
+        const longChain: LongChain = ChainSpecificAddress.longChain(address)
+        const ethAddress = ChainSpecificAddress.address(address)
+        let logQuery = chainToLogQuery.get(longChain)
+        if (!logQuery) {
+          logQuery = { topic0s: new Set(), addresses: new Set() }
+          chainToLogQuery.set(longChain, logQuery)
+        }
+        logQuery.topic0s.add(topic0)
+        logQuery.addresses.add(ethAddress)
+      }
+    }
+
+    return chainToLogQuery
   }
-  return value
 }

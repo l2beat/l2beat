@@ -15,7 +15,13 @@ import type {
 } from '../../clients/rpc/types'
 import type { BlockClient, LogsClient } from '../../clients/types'
 import { toRetryOptions } from '../../tools'
-import { EthRpcClient, type RpcTransaction } from '../EthRpcClient'
+import {
+  EthRpcClient,
+  RpcLog,
+  type RpcBlock,
+  type RpcBlockWithTransactions,
+  type RpcTransaction,
+} from '../EthRpcClient'
 import { Http } from '../Http'
 import { withRetries } from '../retries'
 
@@ -137,28 +143,7 @@ export class RpcClientCompat implements IRpcClient {
     const block = includeTxs
       ? await this.ethRpcClient.getBlockByNumber(bnParam, true)
       : await this.ethRpcClient.getBlockByNumber(bnParam, false)
-    if (block === null) {
-      throw new Error(`Block ${blockNumber} not found`)
-    }
-    if (block.hash === null || block.number === null) {
-      throw new Error(`Block ${blockNumber} is pending`)
-    }
-    const base: EVMBlock = {
-      hash: block.hash,
-      number: Number(block.number),
-      timestamp: Number(block.timestamp),
-      logsBloom: block.logsBloom,
-      parentBeaconBlockRoot: block.parentBeaconBlockRoot,
-    }
-    if (includeTxs) {
-      return {
-        ...base,
-        transactions: block.transactions.map((tx) =>
-          toTx(tx as RpcTransaction),
-        ),
-      } satisfies EVMBlockWithTransactions
-    }
-    return base
+    return toEVMBlock(blockNumber, block)
   }
 
   async getTransaction(txHash: string): Promise<EVMTransaction> {
@@ -205,17 +190,7 @@ export class RpcClientCompat implements IRpcClient {
         address: addresses as EthereumAddress[] | undefined,
         topics: topics,
       })
-      return logs.map(
-        (log): EVMLog => ({
-          address: log.address,
-          blockHash: log.blockHash ?? '',
-          blockNumber: Number(log.blockNumber ?? 0),
-          data: log.data,
-          logIndex: Number(log.logIndex ?? -1),
-          topics: log.topics,
-          transactionHash: log.transactionHash ?? '',
-        }),
-      )
+      return logs.map(toEVMLog)
     } catch (e) {
       if (isLimitExceededError(e)) {
         const midpoint = Math.floor((from + to) / 2)
@@ -302,4 +277,50 @@ function isLimitExceededError(e: unknown) {
       e.message.includes('eth_getLogs is limited to a 10,000 range') ||
       e.message.includes('returned more than 10000'))
   )
+}
+
+export function toEVMLog(log: RpcLog): EVMLog {
+  return {
+    address: log.address,
+    blockHash: log.blockHash ?? '',
+    blockNumber: Number(log.blockNumber ?? 0),
+    data: log.data,
+    logIndex: Number(log.logIndex ?? -1),
+    topics: log.topics,
+    transactionHash: log.transactionHash ?? '',
+  }
+}
+
+export function toEVMBlock(
+  blockNumber: number | 'latest',
+  block: RpcBlock | null,
+): EVMBlock
+export function toEVMBlock(
+  blockNumber: number | 'latest',
+  block: RpcBlockWithTransactions | null,
+): EVMBlockWithTransactions
+export function toEVMBlock(
+  blockNumber: number | 'latest',
+  block: RpcBlock | RpcBlockWithTransactions | null,
+): EVMBlock | EVMBlockWithTransactions {
+  if (block === null) {
+    throw new Error(`Block ${blockNumber} not found`)
+  }
+  if (block.hash === null || block.number === null) {
+    throw new Error(`Block ${blockNumber} is pending`)
+  }
+  const base: EVMBlock = {
+    hash: block.hash,
+    number: Number(block.number),
+    timestamp: Number(block.timestamp),
+    logsBloom: block.logsBloom,
+    parentBeaconBlockRoot: block.parentBeaconBlockRoot,
+  }
+  if (block.transactions) {
+    return {
+      ...base,
+      transactions: block.transactions.map((tx) => toTx(tx as RpcTransaction)),
+    } satisfies EVMBlockWithTransactions
+  }
+  return base
 }
