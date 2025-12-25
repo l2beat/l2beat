@@ -32,6 +32,25 @@ describe(InMemoryEventDb.name, () => {
     expect(db.find(EventA, { a: 'four' })).toEqual(undefined)
   })
 
+  it('can find a new event after the first query', () => {
+    // This is a test to prevent a bug that occured before.
+    // A dynamic index (called Lookup) was constructed during
+    // the first query. But that index was not updated with
+    // new events later.
+    const db = new InMemoryEventDb()
+
+    const eventA1 = EventA.mock({ a: 'one' })
+    db.addEvent(eventA1)
+    // Here the index (Lookup) is constructed for EventA
+    expect(db.find(EventA, { a: 'one' })).toEqual(eventA1)
+
+    const eventA2 = EventA.mock({ a: 'two' })
+    // This call should update the index of EventA
+    db.addEvent(eventA2)
+    // so that it can be found later:
+    expect(db.find(EventA, { a: 'two' })).toEqual(eventA2)
+  })
+
   it('can remove an event', () => {
     const db = new InMemoryEventDb()
     const events = [
