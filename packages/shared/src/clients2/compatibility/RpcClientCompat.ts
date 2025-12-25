@@ -17,9 +17,9 @@ import type { BlockClient, LogsClient } from '../../clients/types'
 import { toRetryOptions } from '../../tools'
 import {
   EthRpcClient,
-  RpcLog,
   type RpcBlock,
   type RpcBlockWithTransactions,
+  type RpcLog,
   type RpcTransaction,
 } from '../EthRpcClient'
 import { Http } from '../Http'
@@ -299,6 +299,10 @@ export function toEVMBlock(
   blockNumber: number | 'latest',
   block: RpcBlockWithTransactions | null,
 ): EVMBlockWithTransactions
+export function toEVMBlock(
+  blockNumber: number | 'latest',
+  block: RpcBlock | RpcBlockWithTransactions | null,
+): EVMBlock | EVMBlockWithTransactions
 export function toEVMBlock(
   blockNumber: number | 'latest',
   block: RpcBlock | RpcBlockWithTransactions | null,
