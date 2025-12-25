@@ -9,12 +9,13 @@ import {
 import isNil from 'lodash/isNil'
 import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
-import type { Clients } from '../../../../providers/Clients'
-import type { InteropPlugin } from '../../plugins/types'
+import type { InteropEvent, InteropPlugin } from '../../plugins/types'
 import { getItemsToCapture } from '../capture/getItemsToCapture'
+import type { InteropEventStore } from '../capture/InteropEventStore'
+import type { InteropMatchingLoop } from '../match/InteropMatchingLoop'
 
 const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
-const DEFAULT_RESYNC_BLOCKS = 21_000n
+const DEFAULT_RESYNC_BLOCKS = 100n
 
 interface LogQuery {
   topic0s: Set<string>
@@ -22,15 +23,17 @@ interface LogQuery {
 }
 
 export class InteropPluginSyncer {
+  private matcherLocked = false
   private rpcClients: { [chain: string]: EthRpcClient } = {}
 
   constructor(
     private capturedChains: { name: string; type: 'evm' }[],
     private chainConfigs: ChainApi[],
     private plugins: InteropPlugin[],
+    private store: InteropEventStore,
     private db: Database,
     private logger: Logger,
-    private clients: Clients,
+    private matcher: InteropMatchingLoop,
   ) {
     this.logger = logger.for(this)
   }
@@ -147,7 +150,7 @@ export class InteropPluginSyncer {
 
     const toRun = []
     for (const [chain, blockNumbers] of blocksToProcessPerChain) {
-      toRun.push(this.captureBlocks(chain, blockNumbers))
+      toRun.push(this.captureBlocks(chain, blockNumbers, plugin))
     }
     await Promise.all(toRun)
     // TODO: in transaction
@@ -163,7 +166,12 @@ export class InteropPluginSyncer {
     // TODO: call matching loop here, not as TimeLoop outside
   }
 
-  private async captureBlocks(chain: string, blockNumbers: Set<bigint>) {
+  private async captureBlocks(
+    chain: string,
+    blockNumbers: Set<bigint>,
+    plugin: InteropPlugin,
+  ) {
+    assert(plugin.capture)
     const client = this.getRpcClient(chain)
     let count = 0
     for (const blockNumber of blockNumbers) {
@@ -181,6 +189,22 @@ export class InteropPluginSyncer {
       const evmBlock = toEVMBlock(Number(block.number), block)
       const evmLogs = logs.map(toEVMLog)
       const toCapture = getItemsToCapture(chain, evmBlock, evmLogs)
+      if (plugin.capture) {
+        for (const logToCapture of toCapture.logsToCapture) {
+          const captured = plugin.capture(logToCapture)
+          const events: InteropEvent[] = []
+          if (captured) {
+            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+            await this.store.saveNewEvents(events)
+
+            if (!this.matcherLocked) {
+              this.matcherLocked = true
+              await this.matcher.run()
+              this.matcherLocked = false
+            }
+          }
+        }
+      }
     }
   }
 
