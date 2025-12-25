@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x94a645aa40d7cad228ba1990fc69e9573e891ca6
+
+# Diff at Mon, 22 Dec 2025 13:14:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765380548
+- current timestamp: 1766409107
+
+## Description
+
+permissioned actors change (EOA to 2/3 Multisig).
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.insuranceFundOperator:
+-        "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011"
++        "eth:0x47104B9f952ff19DB43DAeB7689aE51A0eD4890c"
+      values.treasury:
+-        "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4"
++        "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
++++ severity: HIGH
+      values.getMaster:
+-        "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41"
++        "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2"
+    }
+```
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400,"role":".getMaster"}]
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) {
+    +++ description: Manages the list of validators and the network governor.
+      values.validators.0:
+-        "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41"
+      values.validators.1:
+-        "eth:0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa"
++        "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f"
+      values.validators.2:
+-        "eth:0xfcB73F6405F6B9be91013d9477d81833a69C9c0D"
++        "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d"
+      values.validators.3:
+-        "eth:0x1c0F4f6daf0E0f32C5482672fa5342784915df21"
++        "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C"
+    }
+```
+
+```diff
+    EOA  (eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1","description":"can commit, verify, execute batches, and revert committed but not yet executed batches.","role":".validators"},{"permission":"upgrade","from":"eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]},{"permission":"upgrade","from":"eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]},{"permission":"upgrade","from":"eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA","role":"admin","via":[{"address":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400}]}]
+      controlsMajorityOfUpgradePermissions:
+-        true
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67","delay":1814400,"role":".getMaster"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/lighter/.flat/Safe/Safe.sol       | 1088 ++++++++++++++++++++
+ .../projects/lighter/.flat/Safe/SafeProxy.p.sol    |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765380548 (main branch discovery), not current.
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) {
+    +++ description: None
+      name:
+-        "Safe"
++        "Lighter Multisig 2"
+    }
+```
+
 Generated with discovered.json: 0x6d2780a260e6de90a129661efbbf94e3a7f9946e
 
 # Diff at Wed, 10 Dec 2025 15:30:12 GMT:

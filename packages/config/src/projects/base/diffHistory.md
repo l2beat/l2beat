@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x20f948e50297f6760705068cdd350c9964b85dc2
+
+# Diff at Mon, 22 Dec 2025 12:18:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1766048031
+- current timestamp: 1766405804
+
+## Description
+
+fee market config changes.
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.daFootprintGasScalar:
+-        312
++        325
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.daFootprintGasScalar:
+-        312
++        325
+      values.eip1559Elasticity:
+-        5
++        6
+      values.minBaseFee:
+-        200000
++        500000
+    }
+```
+
 Generated with discovered.json: 0x0c83b76276c2fc8f2ccc88b513719dceb30815a8
 
 # Diff at Thu, 18 Dec 2025 08:55:12 GMT:
