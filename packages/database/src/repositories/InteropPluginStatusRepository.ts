@@ -9,11 +9,11 @@ export type InteropPluginSyncedBlockRanges = {
     string, // chain
     {
       from: {
-        block: number
+        block: bigint
         timestamp: UnixTime
       }
       to: {
-        block: number
+        block: bigint
         timestamp: UnixTime
       }
     }

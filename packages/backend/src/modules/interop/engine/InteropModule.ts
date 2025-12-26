@@ -10,8 +10,8 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropPluginSyncer } from './sync/InteropPluginSyncer'
 
-const MODE: 'match' | 'sync' = 'match'
-// const MODE: 'match' | 'sync' = 'sync'
+// const MODE: 'match' | 'sync' = 'match'
+const MODE: 'match' | 'sync' = 'sync'
 
 export function createInteropModule({
   config,
@@ -66,7 +66,6 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
-    matcher,
   )
 
   const router = createInteropRouter(
@@ -160,7 +159,7 @@ export function createInteropModule({
     await matcher.run()
     if (MODE === 'match') return
     await pluginSyncer.start()
-    // await matcher.run()
+    await matcher.run()
   }
 
   return { routers: [router], start }
