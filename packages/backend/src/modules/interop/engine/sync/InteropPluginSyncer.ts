@@ -1,23 +1,36 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropPluginStatusRecord } from '@l2beat/database'
 import type { InteropPluginSyncedBlockRanges } from '@l2beat/database/dist/repositories/InteropPluginStatusRepository'
-import { EthRpcClient, Http, toEVMBlock, toEVMLog } from '@l2beat/shared'
+import {
+  EthRpcClient,
+  Http,
+  toEVMBlock,
+  toEVMLog,
+  UpsertMap,
+} from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
   type EthereumAddress,
+  type LongChainName,
   UnixTime,
 } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
+import type { Log as ViemLog } from 'viem'
 import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import { onlyConsistent } from '../../../block-sync/BlockIndexer'
-import type { InteropEvent, InteropPlugin } from '../../plugins/types'
-import { getItemsToCapture } from '../capture/getItemsToCapture'
+import type {
+  DataRequest,
+  InteropEvent,
+  InteropPlugin,
+  LogToCapture,
+} from '../../plugins/types'
+import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
 const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
-const DEFAULT_RESYNC_BLOCKS = 50n
+const DEFAULT_RESYNC_BLOCKS = 2_000n
 
 interface LogQuery {
   topic0s: Set<string>
@@ -46,16 +59,16 @@ export class InteropPluginSyncer {
   }
 
   async syncNextRange(plugin: InteropPlugin) {
-    if (!plugin.getCapturedEvents) {
+    if (!plugin.getDataRequests || !plugin.capture) {
       // This plugin doesn't support re-syncing.
       return
     }
     const pluginStatus = await this.getPluginStatus(plugin)
-    const logQueryPerChain = this.generateLogQueryPerChain(
-      plugin.getCapturedEvents(),
+    const logQueryPerChain = this.processEvmEventDataRequests(
+      plugin.getDataRequests(),
     )
 
-    const blocksToProcessPerChain = new Map<string, bigint[]>()
+    const interopEventsPerChain: InteropEvent[][] = []
 
     for (const [chain, logQuery] of logQueryPerChain) {
       if (!this.enabledChains.map((c) => c.name).includes(chain)) {
@@ -64,19 +77,51 @@ export class InteropPluginSyncer {
         )
         continue
       }
-      const nextRangeData = await this.fetchNextSignificantBlocks(
+      const logs = await this.fetchLogsForNextRange(
         chain,
         logQuery,
         pluginStatus.syncedBlockRanges?.perChain[chain],
       )
-      blocksToProcessPerChain.set(chain, nextRangeData.blocksToProcess)
+
+      const logsPerTx = new UpsertMap<string, ViemLog[]>()
+      for (const log of logs.logs) {
+        assert(log.transactionHash)
+        const v = logsPerTx.getOrInsert(log.transactionHash, [])
+        v.push(logToViemLog(toEVMLog(log)))
+      }
+
+      const interopEvents = []
+      for (const log of logs.logs) {
+        assert(log.transactionHash)
+        assert(log.blockNumber)
+        assert(log.blockTimestamp)
+
+        const logToCapture: LogToCapture = {
+          log: logToViemLog(toEVMLog(log)),
+          txLogs: logsPerTx.get(log.transactionHash) ?? [],
+          tx: { hash: log.transactionHash },
+          chain,
+          block: {
+            number: Number(log.blockNumber),
+            hash: '123',
+            logsBloom: '123',
+            timestamp: Number(log.blockTimestamp),
+            transactions: [],
+          },
+        }
+
+        const produced = plugin.capture(logToCapture)
+        if (produced) {
+          interopEvents.push(
+            produced.map((p) => ({ ...p, plugin: plugin.name })),
+          )
+        }
+      }
+
+      interopEventsPerChain.push(interopEvents.flat())
     }
 
-    const toRun = []
-    for (const [chain, blockNumbers] of blocksToProcessPerChain) {
-      toRun.push(this.captureBlocks(chain, blockNumbers, plugin))
-    }
-    const capturedEvents = (await Promise.all(toRun)).flat()
+    await this.store.saveNewEvents(interopEventsPerChain.flat())
 
     // TODO: in transaction
     // TODO: update plugin status
@@ -88,7 +133,7 @@ export class InteropPluginSyncer {
     // TODO: call matching loop here, not as TimeLoop outside
   }
 
-  private async fetchNextSignificantBlocks(
+  private async fetchLogsForNextRange(
     chain: string,
     logQuery: LogQuery,
     syncedBlockRanges:
@@ -135,14 +180,8 @@ export class InteropPluginSyncer {
       topics: [Array.from(logQuery.topic0s)],
     })
 
-    const uniqueBlocksToProcess = new Set<bigint>()
-    for (const log of logs) {
-      assert(log.blockNumber)
-      uniqueBlocksToProcess.add(log.blockNumber)
-    }
-
     return {
-      blocksToProcess: Array.from(uniqueBlocksToProcess),
+      logs,
       origFrom: prevFrom,
       from: syncFrom,
       to: {
@@ -211,25 +250,19 @@ export class InteropPluginSyncer {
     return await this.db.interopPluginStatus.insert(record)
   }
 
-  generateLogQueryPerChain(
-    capturedEvents: ReturnType<NonNullable<InteropPlugin['getCapturedEvents']>>,
-  ) {
-    type LongChain = ReturnType<typeof ChainSpecificAddress.longChain>
-    const chainToLogQuery = new Map<LongChain, LogQuery>()
+  processEvmEventDataRequests(dataRequests: DataRequest[]) {
+    const chainToLogQuery = new UpsertMap<LongChainName, LogQuery>()
+    const eventRequests = dataRequests.filter((r) => r.type === 'evmEvent')
 
-    for (const [eventSignature, params] of Object.entries(capturedEvents)) {
-      const abi = parseAbi([eventSignature as string])
-      // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
-      const topic0 = encodeEventTopics({ abi } as any)[0]
-
-      for (const address of params.addresses) {
-        const longChain: LongChain = ChainSpecificAddress.longChain(address)
+    for (const eventRequest of eventRequests) {
+      const topic0 = toEventSelector(eventRequest.signature)
+      for (const address of eventRequest.addresses) {
+        const longChain = ChainSpecificAddress.longChain(address)
         const ethAddress = ChainSpecificAddress.address(address)
-        let logQuery = chainToLogQuery.get(longChain)
-        if (!logQuery) {
-          logQuery = { topic0s: new Set(), addresses: new Set() }
-          chainToLogQuery.set(longChain, logQuery)
-        }
+        const logQuery = chainToLogQuery.getOrInsert(longChain, {
+          topic0s: new Set(),
+          addresses: new Set(),
+        })
         logQuery.topic0s.add(topic0)
         logQuery.addresses.add(ethAddress)
       }
@@ -267,4 +300,10 @@ export class InteropPluginSyncer {
     }
     return client
   }
+}
+
+function toEventSelector(eventSignature: string): string {
+  const abi = parseAbi([eventSignature as string])
+  // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
+  return encodeEventTopics({ abi } as any)[0]
 }

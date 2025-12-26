@@ -3,6 +3,7 @@ import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type EventToCaptureParams,
   findChain,
   type InteropEvent,
@@ -51,25 +52,33 @@ export class AcrossPlugin implements InteropPlugin {
 
   constructor(private configs: InteropConfigStore) {}
 
-  getCapturedEvents() {
+  getDataRequests(): DataRequest[] {
     const acrossNetworks = this.configs.get(AcrossConfig) ?? []
     const spokePoolAddresses = acrossNetworks
-      .filter((network) => !['hyperevm', 'solana'].includes(network.chain)) //
+      // skip solana - non-EVM
+      // skip hyperevm - can't find proper chain prefix
+      .filter((network) => !['hyperevm', 'solana'].includes(network.chain))
       .map((network) =>
         ChainSpecificAddress.fromLong(network.chain, network.spokePool),
       )
 
-    return {
-      [fundsDepositedLog]: {
+    return [
+      {
+        type: 'evmEvent',
+        signature: fundsDepositedLog,
         addresses: spokePoolAddresses,
       },
-      [filledRelayLog]: {
+      {
+        type: 'evmEvent',
+        signature: filledRelayLog,
         addresses: spokePoolAddresses,
       },
-      [filledV3RelayLog]: {
+      {
+        type: 'evmEvent',
+        signature: filledV3RelayLog,
         addresses: spokePoolAddresses,
       },
-    }
+    ]
   }
 
   capture(input: LogToCapture) {
