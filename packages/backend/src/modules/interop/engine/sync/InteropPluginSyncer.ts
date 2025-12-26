@@ -30,7 +30,7 @@ import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
 const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
-const DEFAULT_RESYNC_BLOCKS = 2_000n
+const DEFAULT_RESYNC_BLOCKS = 900n
 
 interface LogQuery {
   topic0s: Set<string>
@@ -70,6 +70,10 @@ export class InteropPluginSyncer {
 
     const interopEventsPerChain: InteropEvent[][] = []
 
+    // BEGIN: Block based
+    const blocksToProcessPerChain = new Map<string, bigint[]>()
+    // END
+
     for (const [chain, logQuery] of logQueryPerChain) {
       if (!this.enabledChains.map((c) => c.name).includes(chain)) {
         this.logger.warn(
@@ -83,43 +87,60 @@ export class InteropPluginSyncer {
         pluginStatus.syncedBlockRanges?.perChain[chain],
       )
 
-      const logsPerTx = new UpsertMap<string, ViemLog[]>()
+      // BEGIN: Block based
+      const uniqueBlocksToProcess = new Set<bigint>()
       for (const log of logs.logs) {
-        assert(log.transactionHash)
-        const v = logsPerTx.getOrInsert(log.transactionHash, [])
-        v.push(logToViemLog(toEVMLog(log)))
-      }
-
-      const interopEvents = []
-      for (const log of logs.logs) {
-        assert(log.transactionHash)
         assert(log.blockNumber)
-        assert(log.blockTimestamp)
-
-        const logToCapture: LogToCapture = {
-          log: logToViemLog(toEVMLog(log)),
-          txLogs: logsPerTx.get(log.transactionHash) ?? [],
-          tx: { hash: log.transactionHash },
-          chain,
-          block: {
-            number: Number(log.blockNumber),
-            hash: '123',
-            logsBloom: '123',
-            timestamp: Number(log.blockTimestamp),
-            transactions: [],
-          },
-        }
-
-        const produced = plugin.capture(logToCapture)
-        if (produced) {
-          interopEvents.push(
-            produced.map((p) => ({ ...p, plugin: plugin.name })),
-          )
-        }
+        uniqueBlocksToProcess.add(log.blockNumber)
       }
+      blocksToProcessPerChain.set(chain, Array.from(uniqueBlocksToProcess))
+      // END
 
-      interopEventsPerChain.push(interopEvents.flat())
+      // const logsPerTx = new UpsertMap<string, ViemLog[]>()
+      // for (const log of logs.logs) {
+      //   assert(log.transactionHash)
+      //   const v = logsPerTx.getOrInsert(log.transactionHash, [])
+      //   v.push(logToViemLog(toEVMLog(log)))
+      // }
+
+      // const interopEvents = []
+      // for (const log of logs.logs) {
+      //   assert(log.transactionHash)
+      //   assert(log.blockNumber)
+      //   assert(log.blockTimestamp)
+
+      //   const logToCapture: LogToCapture = {
+      //     log: logToViemLog(toEVMLog(log)),
+      //     txLogs: logsPerTx.get(log.transactionHash) ?? [],
+      //     tx: { hash: log.transactionHash },
+      //     chain,
+      //     block: {
+      //       number: Number(log.blockNumber),
+      //       hash: '123',
+      //       logsBloom: '123',
+      //       timestamp: Number(log.blockTimestamp),
+      //       transactions: [],
+      //     },
+      //   }
+
+      //   const produced = plugin.capture(logToCapture)
+      //   if (produced) {
+      //     interopEvents.push(
+      //       produced.map((p) => ({ ...p, plugin: plugin.name })),
+      //     )
+      //   }
+      // }
+
+      // interopEventsPerChain.push(interopEvents.flat())
+
     }
+    // BEGIN: Block based
+    const toRun = []
+    for (const [chain, blockNumbers] of blocksToProcessPerChain) {
+      toRun.push(this.captureBlocks(chain, blockNumbers, plugin))
+    }
+    interopEventsPerChain.push(((await Promise.all(toRun)).flat()))
+    // END
 
     await this.store.saveNewEvents(interopEventsPerChain.flat())
 
