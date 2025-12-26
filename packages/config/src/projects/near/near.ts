@@ -36,7 +36,10 @@ export const near: Bridge = {
       bridges: ['https://rainbowbridge.app/'],
       documentation: ['https://docs.near.org/'],
       repositories: ['https://github.com/aurora-is-near/rainbow-bridge'],
-      socialMedia: ['https://twitter.com/auroraisnear'],
+      socialMedia: [
+        'https://twitter.com/auroraisnear',
+        'https://discord.com/invite/nearprotocol',
+      ],
     },
     description:
       'Rainbow bridge is a light client based bridge between NEAR/AURORA and Ethereum that allows for asset and data movement between these chains. For better gas efficiency from NEAR to Ethereum, it leverages optimistic validation, which adds some trust assumption and latency.',
