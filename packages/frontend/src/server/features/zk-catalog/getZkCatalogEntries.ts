@@ -28,7 +28,10 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
-  tvs: number
+  tvs: {
+    value: number
+    numberOfProjects: number
+  }
   techStack: ProjectZkCatalogInfo['techStack']
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
 }
@@ -50,7 +53,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     .map((project) =>
       getZkCatalogEntry(project, allProjects, tvs, contractUtils),
     )
-    .sort((a, b) => b.tvs - a.tvs)
+    .sort((a, b) => b.tvs.value - a.tvs.value)
 }
 
 function getZkCatalogEntry(
@@ -68,7 +71,7 @@ function getZkCatalogEntry(
     tvs,
     allProjects,
   )
-  const { tvs: tvsForProject } = getZkCatalogProjectTvs(
+  const { tvs: tvsForProject, numberOfProjects } = getZkCatalogProjectTvs(
     project,
     allProjects,
     tvs,
@@ -82,7 +85,10 @@ function getZkCatalogEntry(
     name: project.name,
     icon: getProjectIcon(project.slug),
     creator: project.zkCatalogInfo.creator,
-    tvs: tvsForProject,
+    tvs: {
+      value: tvsForProject,
+      numberOfProjects,
+    },
     techStack: project.zkCatalogInfo.techStack,
     trustedSetupsByProofSystem,
     filterable: [
