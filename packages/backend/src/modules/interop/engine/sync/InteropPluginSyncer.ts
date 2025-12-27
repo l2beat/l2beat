@@ -142,6 +142,7 @@ export class InteropPluginSyncer {
     // interopEventsPerChain.push(((await Promise.all(toRun)).flat()))
     // END
 
+    // TODO: make this idempotent?
     await this.store.saveNewEvents(interopEventsPerChain.flat())
 
     // TODO: in transaction

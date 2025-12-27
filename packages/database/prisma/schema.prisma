@@ -518,6 +518,20 @@ model Chain {
 
 model InteropPluginStatus {
   pluginName          String    @id @db.VarChar(255)
-  syncedBlockRanges   Json?
   resyncRequestedFrom DateTime? @db.Timestamp(6)
+
+  syncedRanges InteropPluginSyncedRange[]
+}
+
+model InteropPluginSyncedRange {
+  pluginName    String   @db.VarChar(255)
+  chain         String   @db.VarChar(255)
+  fromBlock     Int
+  fromTimestamp DateTime @db.Timestamp(6)
+  toBlock       Int
+  toTimestamp   DateTime @db.Timestamp(6)
+
+  pluginStatus InteropPluginStatus @relation(fields: [pluginName], references: [pluginName], onDelete: Cascade)
+
+  @@id([pluginName, chain])
 }

@@ -17,13 +17,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
     it('inserts record with optional fields', async () => {
       const record = status({
         pluginName: 'plugin-a',
-        syncedBlockRanges: {
-          ethereum: {
-            syncedFrom: 1,
-            syncedTo: 10,
-          },
-          arbitrum: { syncedFrom: 5, syncedTo: 50 },
-        },
         resyncRequestedFrom: UnixTime(123),
       })
 
@@ -37,7 +30,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
     it('accepts null optional fields', async () => {
       const record = status({
         pluginName: 'plugin-a',
-        syncedBlockRanges: {},
         resyncRequestedFrom: null,
       })
 
@@ -64,27 +56,11 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
       it('updates record and returns number of affected rows', async () => {
         const record = status({
           pluginName: 'plugin-a',
-          syncedBlockRanges: {
-            ethereum: {
-              syncedFrom: 1,
-              syncedTo: 10,
-            },
-          },
           resyncRequestedFrom: UnixTime(100),
         })
         await repository.insert(record)
 
         const updated = await repository.updateByPluginName(record.pluginName, {
-          syncedBlockRanges: {
-            ethereum: {
-              syncedFrom: 5,
-              syncedTo: 50,
-            },
-            optimism: {
-              syncedFrom: 7,
-              syncedTo: 70,
-            },
-          },
           resyncRequestedFrom: null,
         })
 
@@ -93,16 +69,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
         const stored = await repository.findByPluginName(record.pluginName)
         expect(stored).toEqual({
           ...record,
-          syncedBlockRanges: {
-            ethereum: {
-              syncedFrom: 5,
-              syncedTo: 50,
-            },
-            optimism: {
-              syncedFrom: 7,
-              syncedTo: 70,
-            },
-          },
           resyncRequestedFrom: null,
         })
       })
@@ -122,9 +88,6 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
       const a = status({ pluginName: 'plugin-a' })
       const b = status({
         pluginName: 'plugin-b',
-        syncedBlockRanges: {
-          ethereum: { syncedFrom: 1, syncedTo: 10 },
-        },
       })
 
       await repository.insert(a)
@@ -141,7 +104,6 @@ function status(
 ): InteropPluginStatusRecord {
   return {
     pluginName: overrides.pluginName,
-    syncedBlockRanges: overrides.syncedBlockRanges ?? {},
     resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
   }
 }

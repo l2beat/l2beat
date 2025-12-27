@@ -42,6 +42,7 @@ export type {
   InteropMessageUniqueAppsRecord,
 } from './repositories/InteropMessageRepository'
 export type { InteropPluginStatusRecord } from './repositories/InteropPluginStatusRepository'
+export type { InteropPluginSyncedRangeRecord } from './repositories/InteropPluginSyncedRangeRepository'
 export type {
   InteropMissingTokenInfo,
   InteropTransferRecord,
