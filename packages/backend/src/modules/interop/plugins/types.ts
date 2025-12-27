@@ -2,6 +2,7 @@ import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
+  type ChainSpecificAddress,
   EthereumAddress,
   type Transaction,
   UnixTime,
@@ -202,8 +203,21 @@ export interface InteropEventDb {
   ): InteropEvent<T> | undefined
 }
 
+export interface EventToCaptureParams {
+  addresses: ChainSpecificAddress[]
+}
+
+export type DataRequest = EvmEventDataRequest
+
+interface EvmEventDataRequest {
+  type: 'evmEvent'
+  signature: string
+  addresses: ChainSpecificAddress[]
+}
+
 export interface InteropPlugin {
   name: string
+  getDataRequests?: () => DataRequest[]
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]

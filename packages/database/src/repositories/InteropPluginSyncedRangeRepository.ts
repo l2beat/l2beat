@@ -1,0 +1,90 @@
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { Insertable, Selectable } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
+import type { InteropPluginSyncedRange } from '../kysely/generated/types'
+import { fromTimestamp, toTimestamp } from '../utils/timestamp'
+
+export interface InteropPluginSyncedRangeRecord {
+  pluginName: string
+  chain: string
+  fromBlock: number
+  fromTimestamp: UnixTime
+  toBlock: number
+  toTimestamp: UnixTime
+}
+
+export function toRecord(
+  row: Selectable<InteropPluginSyncedRange>,
+): InteropPluginSyncedRangeRecord {
+  return {
+    ...row,
+    fromTimestamp: toTimestamp(row.fromTimestamp),
+    toTimestamp: toTimestamp(row.toTimestamp),
+  }
+}
+
+export function toRow(
+  record: InteropPluginSyncedRangeRecord,
+): Insertable<InteropPluginSyncedRange> {
+  return {
+    ...record,
+    fromTimestamp: fromTimestamp(record.fromTimestamp),
+    toTimestamp: fromTimestamp(record.toTimestamp),
+  }
+}
+
+export class InteropPluginSyncedRangeRepository extends BaseRepository {
+  async upsert(record: InteropPluginSyncedRangeRecord): Promise<void> {
+    await this.db
+      .insertInto('InteropPluginSyncedRange')
+      .values(toRow(record))
+      .onConflict((cb) =>
+        cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
+          fromBlock: eb.ref('excluded.fromBlock'),
+          fromTimestamp: eb.ref('excluded.fromTimestamp'),
+          toBlock: eb.ref('excluded.toBlock'),
+          toTimestamp: eb.ref('excluded.toTimestamp'),
+        })),
+      )
+      .execute()
+  }
+
+  async getAll(): Promise<InteropPluginSyncedRangeRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropPluginSyncedRange')
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async deleteByPluginName(pluginName: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncedRange')
+      .where('pluginName', '=', pluginName)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByPluginNameAndChain(
+    pluginName: string,
+    chain: string,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncedRange')
+      .where('pluginName', '=', pluginName)
+      .where('chain', '=', chain)
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncedRange')
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+}
