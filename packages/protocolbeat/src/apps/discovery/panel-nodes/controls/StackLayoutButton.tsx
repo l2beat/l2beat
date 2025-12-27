@@ -107,6 +107,9 @@ function toLayoutNodes(baseNodes: readonly Node[]) {
   for (const node of nodes) {
     const chainA = getChain(node.base.id)
     for (const field of node.base.fields) {
+      if (field.type !== 'address') {
+        continue
+      }
       const other = byId.get(field.target)
       if (other && other !== node && getChain(other.base.id) === chainA) {
         if (!node.connectionsOut.includes(other)) {
@@ -279,6 +282,7 @@ function groupByLevel(nodes: LayoutNode[]) {
       }
 
       const uniqueChildren = node.base.fields
+        .filter((f) => f.type === 'address')
         .flatMap((f) => f.target)
         .filter((id) => order.indexOf(id) === -1)
       order.splice(index, 0, ...uniqueChildren)

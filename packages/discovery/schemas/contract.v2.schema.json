@@ -9,6 +9,7 @@
       "enum": [
         "new Arbitrum proxy",
         "call implementation proxy",
+        "simple target proxy",
         "zkSync Lite proxy",
         "zkLighter proxy",
         "zkSpace proxy",

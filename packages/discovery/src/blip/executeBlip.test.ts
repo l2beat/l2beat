@@ -1072,6 +1072,67 @@ describe(executeBlip.name, () => {
     })
   })
 
+  describe('from_entries operations', () => {
+    it('converts entry arrays to objects', () => {
+      const input: ContractValue = [
+        ['x', 'one'],
+        ['y', 'two'],
+        ['z', 'three'],
+      ]
+      const result = executeBlip(input, ['from_entries'])
+      expect(result).toEqual({ x: 'one', y: 'two', z: 'three' })
+    })
+
+    it('handles empty arrays', () => {
+      const input: ContractValue = []
+      const result = executeBlip(input, ['from_entries'])
+      expect(result).toEqual({})
+    })
+
+    it('works with nested values', () => {
+      const input: ContractValue = [
+        ['user', { name: 'Alice' }],
+        ['flags', [true, false]],
+      ]
+      const result = executeBlip(input, ['from_entries'])
+      expect(result).toEqual({ user: { name: 'Alice' }, flags: [true, false] })
+    })
+
+    it('overwrites duplicate keys with later entries', () => {
+      const input: ContractValue = [
+        ['a', 1],
+        ['a', 2],
+      ]
+      const result = executeBlip(input, ['from_entries'])
+      expect(result).toEqual({ a: 2 })
+    })
+
+    it('works in pipes with to_entries for round trips', () => {
+      const input = { a: 1, b: 2 }
+      const result = executeBlip(input, [
+        'pipe',
+        ['to_entries'],
+        ['from_entries'],
+      ])
+      expect(result).toEqual({ a: 1, b: 2 })
+    })
+
+    it('throws on invalid input', () => {
+      expect(() => executeBlip({} as ContractValue, ['from_entries'])).toThrow(
+        'from_entries requires an array input',
+      )
+      expect(() =>
+        executeBlip([1, 2] as ContractValue, ['from_entries']),
+      ).toThrow('from_entries expects an array of [key, value] pairs')
+      expect(() =>
+        executeBlip([['a', 1, 2]] as ContractValue, ['from_entries']),
+      ).toThrow('from_entries expects an array of [key, value] pairs')
+      expect(() =>
+        executeBlip([[1, 2]] as ContractValue, ['from_entries']),
+      ).toThrow('from_entries keys must be strings')
+    })
+  })
+
   describe('length operations', () => {
     it('returns length of arrays', () => {
       expect(executeBlip([1, 2, 3], ['length'])).toEqual(3)

@@ -86,6 +86,10 @@ import {
   ScrollAccessControlHandlerDefinition,
 } from './ScrollAccessControlHandler'
 import {
+  SecuritizeRemoteBridgeHandler,
+  SecuritizeRemoteBridgeHandlerDefinition,
+} from './SecuritizeRemoteBridge'
+import {
   StarkWareGovernanceHandler,
   StarkWareGovernanceHandlerDefinition,
 } from './StarkWareGovernanceHandler'
@@ -144,6 +148,7 @@ export const UserHandlerDefinition = v.union([
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
+  SecuritizeRemoteBridgeHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -214,5 +219,7 @@ export function getUserHandler(
       return new EventTraceHandler(field, definition, abi)
     case 'crossChainAccessControl':
       return new CrossChainAccessControlHandler(field, definition, abi)
+    case 'securitizeRemoteBridge':
+      return new SecuritizeRemoteBridgeHandler(field, definition)
   }
 }

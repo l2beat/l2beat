@@ -4,6 +4,7 @@ import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
+  VALUE_SEPARATOR_HEIGHT,
 } from './constants'
 
 export function updateNodePositions(state: State): State {
@@ -20,13 +21,25 @@ export function updateNodePositions(state: State): State {
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
     const start = state.positionsBeforeMove[node.id]
+    const hiddenFieldsSet = new Set(node.hiddenFields)
+    const addressFields = node.fields.filter((field) => field.type === 'address')
+    const valueFields = node.fields.filter((field) => field.type === 'value')
+    const visibleAddressCount = addressFields.filter(
+      (field) => !hiddenFieldsSet.has(field.name),
+    ).length
+    const visibleValueCount = valueFields.filter(
+      (field) => !hiddenFieldsSet.has(field.name),
+    ).length
+    const hasValueSection = valueFields.length > 0
     const hiddenFieldsHeight =
-      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+      hiddenFieldsSet.size > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
     nodeDimensions[node.id] = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
-        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+        visibleAddressCount * FIELD_HEIGHT +
+        (hasValueSection ? VALUE_SEPARATOR_HEIGHT : 0) +
+        visibleValueCount * FIELD_HEIGHT +
         BOTTOM_PADDING +
         hiddenFieldsHeight,
       x: start ? start.x + dx : node.box.x,
@@ -44,30 +57,64 @@ export function updateNodePositions(state: State): State {
       }
 
       const hiddenFieldsSet = new Set(node.hiddenFields)
+      let visibleAddressIndex = 0
+      let visibleValueIndex = 0
 
-      let visibleIndex = 0
+      const visibleAddressCount = node.fields.filter(
+        (field) =>
+          field.type === 'address' &&
+          !hiddenFieldsSet.has(field.name),
+      ).length
+      const hasValueSection = node.fields.some((f) => f.type === 'value')
 
-      const processedFields = node.fields.map((field, index) => {
+      const addressStartY = box.y + HEADER_HEIGHT
+      const valueStartY =
+        addressStartY +
+        visibleAddressCount * FIELD_HEIGHT +
+        (hasValueSection ? VALUE_SEPARATOR_HEIGHT : 0)
+
+      const processedFields = node.fields.map((field) => {
+        const isHidden = hiddenFieldsSet.has(field.name)
+
+        if (field.type === 'value') {
+          const currentValueIndex = visibleValueIndex
+          if (!isHidden) {
+            visibleValueIndex++
+          }
+
+          const fieldBox = {
+            x: box.x,
+            y: valueStartY + currentValueIndex * FIELD_HEIGHT,
+            width: box.width,
+            height: FIELD_HEIGHT,
+          }
+
+          return {
+            ...field,
+            box: fieldBox,
+          }
+        }
+
+        const currentVisibleIndex = visibleAddressIndex
+        if (!isHidden) {
+          visibleAddressIndex++
+        }
+
+        const fieldBox = {
+          x: box.x,
+          y: addressStartY + currentVisibleIndex * FIELD_HEIGHT,
+          width: box.width,
+          height: FIELD_HEIGHT,
+        }
+
         const to = nodeDimensions[field.target]
         if (!to) {
           // this should never happen
           throw new Error('missing dimensions for node ' + field.target)
         }
-
-        const currentVisibleIndex = visibleIndex
-
-        if (!hiddenFieldsSet.has(field.name)) {
-          visibleIndex++
-        }
-
         return {
           ...field,
-          box: {
-            x: box.x,
-            y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-            width: box.width,
-            height: FIELD_HEIGHT,
-          },
+          box: fieldBox,
           connection: {
             nodeId: field.target,
             ...processConnection(currentVisibleIndex, box, to),

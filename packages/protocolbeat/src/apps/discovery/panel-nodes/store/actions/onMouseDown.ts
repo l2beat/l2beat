@@ -1,4 +1,4 @@
-import type { State } from '../State'
+import type { AddressField, State } from '../State'
 import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,
@@ -61,7 +61,12 @@ export function onMouseDown(
         if (event.metaKey || event.altKey) {
           selected = []
 
-          const field = node.fields.find((f) => boxContains(f.box, x, y))
+          const field = node.fields.find(
+            (f): f is AddressField =>
+              f.type === 'address' &&
+              !node.hiddenFields.includes(f.name) &&
+              boxContains(f.box, x, y),
+          )
           if (field !== undefined) {
             selected = [field.target]
           }

@@ -80,6 +80,79 @@ describe(EtherscanClient.name, () => {
     expect(await result).toEqual(Hash256.ZERO)
   })
 
+  it('retries getContractSource when ABI is Unknown Exception', async () => {
+    const ADDRESS = EthereumAddress.random()
+    const unknownExceptionResponse = {
+      message: 'OK',
+      result: [
+        {
+          SourceCode: '',
+          ABI: 'Unknown Exception',
+          ContractName: 'Unknown',
+          CompilerVersion: 'v0.8.0',
+          OptimizationUsed: '',
+          Runs: '',
+          ConstructorArguments: '',
+          EVMVersion: '',
+          Library: '',
+          LicenseType: '',
+          Proxy: '',
+          Implementation: '',
+          SwarmSource: '',
+        },
+      ],
+    }
+    const verifiedResponse = {
+      message: 'OK',
+      result: [
+        {
+          SourceCode: 'contract Test {}',
+          ABI: '[]',
+          ContractName: 'Test',
+          CompilerVersion: 'v0.8.0',
+          OptimizationUsed: '',
+          Runs: '',
+          ConstructorArguments: '',
+          EVMVersion: '',
+          Library: '',
+          LicenseType: '',
+          Proxy: '',
+          Implementation: '',
+          SwarmSource: '',
+        },
+      ],
+    }
+
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn()
+        .resolvesToOnce(unknownExceptionResponse)
+        .resolvesToOnce(verifiedResponse),
+    })
+
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const result = client.getContractSource(ADDRESS)
+    await time.runAllAsync()
+
+    expect(await result).toEqual({
+      name: 'Test',
+      isVerified: true,
+      abi: [],
+      solidityVersion: 'v0.8.0',
+      constructorArguments: '',
+      remappings: [],
+      libraries: {},
+      files: { 'Test.sol': 'contract Test {}' },
+    })
+    expect(httpClient.fetch).toHaveBeenCalledTimes(2)
+  })
+
   it('retries when etherscan response is unparseable', async () => {
     const ADDRESS = EthereumAddress.random()
     const TX_HASH = Hash256.random()

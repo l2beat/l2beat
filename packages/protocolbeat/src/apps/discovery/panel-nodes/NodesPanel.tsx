@@ -73,6 +73,15 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const keysToHideOnLoad = preferences.hideLargeArrays
           ? getKeysToHideOnLoad(contract.fields)
           : []
+        const nodeFields = toNodeFields(contract.fields)
+        const defaultHiddenFields = [
+          ...new Set([
+            ...keysToHideOnLoad,
+            ...nodeFields
+              .filter((field) => field.type === 'value')
+              .map((field) => field.name),
+          ]),
+        ]
 
         const node: Node = {
           id: contract.address,
@@ -86,8 +95,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           color: 0,
           hueShift,
           data: null,
-          fields: toNodeFields(contract.fields),
-          hiddenFields: keysToHideOnLoad,
+          fields: nodeFields,
+          hiddenFields: defaultHiddenFields,
         }
         nodes.push(node)
       }
@@ -205,6 +214,7 @@ function getNodeFields(
     }
     return [
       {
+        type: 'address',
         name: path,
         target: value.address,
         box: { x: 0, y: 0, width: 0, height: 0 },
@@ -215,7 +225,14 @@ function getNodeFields(
       },
     ]
   }
-  return []
+  return [
+    {
+      type: 'value',
+      name: path,
+      value: formatFieldValue(value),
+      box: { x: 0, y: 0, width: 0, height: 0 },
+    },
+  ]
 }
 
 function extractFieldValue(value: FieldValue): string {
@@ -226,6 +243,33 @@ function extractFieldValue(value: FieldValue): string {
       return value.address
     case 'number':
       return value.value
+    case 'boolean':
+      return value.value.toString()
+    case 'hex':
+      return value.value
+    case 'unknown':
+      return value.value
+    case 'error':
+      return value.error
+    default:
+      return ''
+  }
+}
+
+function formatFieldValue(value: FieldValue): string {
+  switch (value.type) {
+    case 'string':
+      return value.value
+    case 'number':
+      return value.value
+    case 'boolean':
+      return value.value.toString()
+    case 'hex':
+      return value.value
+    case 'unknown':
+      return value.value
+    case 'error':
+      return `Error: ${value.error}`
     default:
       return ''
   }

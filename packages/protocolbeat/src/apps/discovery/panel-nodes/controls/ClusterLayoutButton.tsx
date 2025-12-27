@@ -54,10 +54,12 @@ export function ClusterLayoutButton() {
 
     const links = simulationNodes
       .flatMap((node) =>
-        node.fields.map((field) => ({
-          source: node.id,
-          target: field.target,
-        })),
+        node.fields
+          .filter((field) => field.type === 'address')
+          .map((field) => ({
+            source: node.id,
+            target: field.target,
+          })),
       )
       .filter((l) => simNodes.some((sn) => sn.id === l.target))
 

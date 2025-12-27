@@ -1,4 +1,5 @@
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
+import type { AddressField } from '../store/State'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -18,6 +19,9 @@ export function NodesAndConnections() {
   const connections = visible
     .flatMap((node) =>
       node.fields.map((field, i) => {
+        if (field.type !== 'address') {
+          return null
+        }
         const shouldHide =
           hidden.includes(field.target) ||
           node.hiddenFields.includes(field.name)
@@ -53,6 +57,7 @@ export function NodesAndConnections() {
     isHighlighted: boolean
     isDashed: boolean
     isDimmed: boolean
+    isGrayedOut: boolean
   }[]
 
   let minX = Number.POSITIVE_INFINITY
@@ -92,13 +97,21 @@ export function NodesAndConnections() {
                   .filter((n) => selected.includes(n.id))
                   .flatMap((n) =>
                     n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
+                      .filter(
+                        (f): f is AddressField =>
+                          f.type === 'address' &&
+                          !n.hiddenFields.includes(f.name),
+                      )
                       .map((f) => f.target),
                   ),
                 ...visible
                   .filter((n) =>
                     n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
+                      .filter(
+                        (f): f is AddressField =>
+                          f.type === 'address' &&
+                          !n.hiddenFields.includes(f.name),
+                      )
                       .some((f) => selected.includes(f.target)),
                   )
                   .map((n) => n.id),
