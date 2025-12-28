@@ -526,9 +526,9 @@ model InteropPluginStatus {
 model InteropPluginSyncedRange {
   pluginName    String   @db.VarChar(255)
   chain         String   @db.VarChar(255)
-  fromBlock     Int
+  fromBlock     BigInt
   fromTimestamp DateTime @db.Timestamp(6)
-  toBlock       Int
+  toBlock       BigInt
   toTimestamp   DateTime @db.Timestamp(6)
 
   pluginStatus InteropPluginStatus @relation(fields: [pluginName], references: [pluginName], onDelete: Restrict)

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "InteropPluginSyncedRange" ALTER COLUMN "fromBlock" SET DATA TYPE BIGINT,
+ALTER COLUMN "toBlock" SET DATA TYPE BIGINT;

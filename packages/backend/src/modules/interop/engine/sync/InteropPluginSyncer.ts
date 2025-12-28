@@ -1,10 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropPluginStatusRecord } from '@l2beat/database'
-import type { InteropPluginSyncedBlockRanges } from '@l2beat/database/dist/repositories/InteropPluginStatusRepository'
+import type {
+  BlockRangeWithTimestamps,
+  Database,
+  InteropPluginStatusRecord,
+} from '@l2beat/database'
 import {
   EthRpcClient,
   Http,
-  toEVMBlock,
+  type RpcLog,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
@@ -19,14 +22,12 @@ import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
 import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
-import { onlyConsistent } from '../../../block-sync/BlockIndexer'
 import type {
   DataRequest,
-  InteropEvent,
   InteropPlugin,
   LogToCapture,
 } from '../../plugins/types'
-import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
+import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
 const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
@@ -60,19 +61,12 @@ export class InteropPluginSyncer {
 
   async syncNextRange(plugin: InteropPlugin) {
     if (!plugin.getDataRequests || !plugin.capture) {
-      // This plugin doesn't support re-syncing.
-      return
+      return // This plugin doesn't support re-syncing.
     }
-    const pluginStatus = await this.getPluginStatus(plugin)
-    const logQueryPerChain = this.processEvmEventDataRequests(
+
+    const logQueryPerChain = this.groupEventDataRequests(
       plugin.getDataRequests(),
     )
-
-    const interopEventsPerChain: InteropEvent[][] = []
-
-    // // BEGIN: Block based
-    // const blocksToProcessPerChain = new Map<string, bigint[]>()
-    // // END
 
     for (const [chain, logQuery] of logQueryPerChain) {
       if (!this.enabledChains.map((c) => c.name).includes(chain)) {
@@ -81,176 +75,156 @@ export class InteropPluginSyncer {
         )
         continue
       }
-      const logs = await this.fetchLogsForNextRange(
-        chain,
-        logQuery,
-        pluginStatus.syncedBlockRanges?.perChain[chain],
-      )
-
-      // // BEGIN: Block based
-      // const uniqueBlocksToProcess = new Set<bigint>()
-      // for (const log of logs.logs) {
-      //   assert(log.blockNumber)
-      //   uniqueBlocksToProcess.add(log.blockNumber)
-      // }
-      // blocksToProcessPerChain.set(chain, Array.from(uniqueBlocksToProcess))
-      // // END
-
-      const logsPerTx = new UpsertMap<string, ViemLog[]>()
-      for (const log of logs.logs) {
-        assert(log.transactionHash)
-        const v = logsPerTx.getOrInsert(log.transactionHash, [])
-        v.push(logToViemLog(toEVMLog(log)))
-      }
-
-      const interopEvents = []
-      for (const log of logs.logs) {
-        assert(log.transactionHash)
-        assert(log.blockNumber)
-        assert(log.blockTimestamp)
-
-        const logToCapture: LogToCapture = {
-          log: logToViemLog(toEVMLog(log)),
-          txLogs: logsPerTx.get(log.transactionHash) ?? [],
-          tx: { hash: log.transactionHash },
-          chain,
-          block: {
-            number: Number(log.blockNumber),
-            hash: '123',
-            logsBloom: '123',
-            timestamp: Number(log.blockTimestamp),
-            transactions: [],
-          },
-        }
-
-        const produced = plugin.capture(logToCapture)
-        if (produced) {
-          interopEvents.push(
-            produced.map((p) => ({ ...p, plugin: plugin.name })),
-          )
-        }
-      }
-
-      interopEventsPerChain.push(interopEvents.flat())
-
+      await this.syncNextChainRange(plugin, chain, logQuery)
     }
-    // BEGIN: Block based
-    // const toRun = []
-    // for (const [chain, blockNumbers] of blocksToProcessPerChain) {
-    //   toRun.push(this.captureBlocks(chain, blockNumbers, plugin))
-    // }
-    // interopEventsPerChain.push(((await Promise.all(toRun)).flat()))
-    // END
-
-    // TODO: make this idempotent?
-    await this.store.saveNewEvents(interopEventsPerChain.flat())
-
-    // TODO: in transaction
-    // TODO: update plugin status
-    // await this.store.saveNewEvents(events)
-    // update pluginStatus
 
     // TODO: Add try/catch error handling
+    // TODO: save lastOpError
+  }
 
-    // TODO: call matching loop here, not as TimeLoop outside
+  private async syncNextChainRange(
+    plugin: InteropPlugin,
+    chain: string,
+    logQueryForChain: LogQuery,
+  ) {
+    assert(plugin.capture)
+
+    const syncData = await this.calculateNextRange(plugin.name, chain)
+    const logs = await this.fetchLogsForNextRange(
+      chain,
+      logQueryForChain,
+      syncData.nextRange,
+    )
+
+    const logsPerTx = new UpsertMap<string, ViemLog[]>()
+    for (const log of logs) {
+      assert(log.transactionHash)
+      const v = logsPerTx.getOrInsert(log.transactionHash, [])
+      v.push(logToViemLog(toEVMLog(log)))
+    }
+
+    const interopEvents = []
+    for (const log of logs) {
+      assert(log.transactionHash)
+      assert(log.blockNumber)
+      assert(log.blockTimestamp)
+
+      const logToCapture: LogToCapture = {
+        log: logToViemLog(toEVMLog(log)),
+        txLogs: logsPerTx.get(log.transactionHash) ?? [],
+        tx: { hash: log.transactionHash },
+        chain,
+        block: {
+          number: Number(log.blockNumber),
+          hash: '123',
+          logsBloom: '123',
+          timestamp: Number(log.blockTimestamp),
+          transactions: [],
+        },
+      }
+
+      const produced = plugin.capture(logToCapture)
+      if (produced) {
+        interopEvents.push(produced.map((p) => ({ ...p, plugin: plugin.name })))
+      }
+    }
+
+    // TODO: in transaction
+    await this.store.saveNewEvents(interopEvents.flat()) // TODO: make this idempotent?
+    await this.db.interopPluginSyncedRange.upsert({
+      pluginName: plugin.name,
+      chain,
+      ...syncData.fullRange,
+    })
+    // TODO: update plugin status
+
+    // TODO: add try catch
+    // TODO: save error
+  }
+
+  private async calculateNextRange(
+    pluginName: string,
+    chain: string,
+  ): Promise<{
+    nextRange: { from: bigint; to: bigint }
+    fullRange: BlockRangeWithTimestamps
+  }> {
+    const client = this.getRpcClient(chain)
+    const syncedRange =
+      await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
+        pluginName,
+        chain,
+      )
+    const latestBlock = await client.getBlockByNumber('latest', false)
+    assert(latestBlock && !isNil(latestBlock.number))
+
+    let nextFrom: bigint
+    let fullFrom: bigint
+    let fullFromTimestamp: UnixTime
+
+    if (syncedRange) {
+      fullFrom = syncedRange.fromBlock
+      fullFromTimestamp = syncedRange.fromTimestamp
+      nextFrom = syncedRange.toBlock + 1n
+    } else {
+      fullFrom = latestBlock.number - DEFAULT_RESYNC_BLOCKS
+      const fromBlock = await client.getBlockByNumber(fullFrom, false)
+      assert(fromBlock)
+      nextFrom = fullFrom
+      fullFromTimestamp = UnixTime(Number(fromBlock.timestamp))
+    }
+
+    let nextTo: bigint
+    let fullTo: bigint
+    let fullToTimestamp: UnixTime
+
+    nextTo = nextFrom + DEFAULT_LOGS_MAX_BLOCK_RANGE - 1n
+    assert(nextTo > nextFrom)
+    if (nextTo >= latestBlock.number) {
+      nextTo = latestBlock.number
+      fullTo = nextTo
+      fullToTimestamp = UnixTime(Number(latestBlock.timestamp))
+    } else {
+      const toBlock = await client.getBlockByNumber(nextTo, false)
+      assert(toBlock)
+      fullTo = nextTo
+      fullToTimestamp = UnixTime(Number(toBlock.timestamp))
+    }
+
+    return {
+      nextRange: { from: nextFrom, to: nextTo },
+      fullRange: {
+        fromBlock: fullFrom,
+        fromTimestamp: fullFromTimestamp,
+        toBlock: fullTo,
+        toTimestamp: fullToTimestamp,
+      },
+    }
   }
 
   private async fetchLogsForNextRange(
     chain: string,
     logQuery: LogQuery,
-    syncedBlockRanges:
-      | InteropPluginSyncedBlockRanges['perChain'][0]
-      | undefined,
-  ) {
+    range: { from: bigint; to: bigint },
+  ): Promise<RpcLog[]> {
     const client = this.getRpcClient(chain)
-    const latestBlock = await client.getBlockByNumber('latest', false)
-    assert(latestBlock && !isNil(latestBlock.number))
-
-    let prevFrom = syncedBlockRanges?.from
-    if (!prevFrom) {
-      const fromBlockNumber = latestBlock.number - DEFAULT_RESYNC_BLOCKS
-      const fromBlock = await client.getBlockByNumber(fromBlockNumber, false)
-      assert(fromBlock)
-      prevFrom = {
-        block: fromBlockNumber,
-        timestamp: UnixTime(Number(fromBlock.timestamp)),
-      }
-    }
-
-    const prevTo = syncedBlockRanges?.from
-    const syncFrom = prevTo?.block ?? prevFrom.block
-    const min = (a: bigint, b: bigint) => (a < b ? a : b)
-    const syncTo = min(
-      syncFrom + DEFAULT_LOGS_MAX_BLOCK_RANGE,
-      latestBlock.number,
-    )
-    const syncToBlock = await client.getBlockByNumber(syncTo, false)
-    assert(syncToBlock && !isNil(syncToBlock.number))
 
     this.logger.info('Getting logs', {
       chain,
-      syncFrom,
-      syncTo,
+      from: range.from,
+      to: range.to,
       addresses: logQuery.addresses,
       topics: [logQuery.topic0s],
     })
 
     const logs = await client.getLogs({
-      fromBlock: syncFrom,
-      toBlock: syncTo,
+      fromBlock: range.from,
+      toBlock: range.to,
       address: Array.from(logQuery.addresses),
       topics: [Array.from(logQuery.topic0s)],
     })
 
-    return {
-      logs,
-      origFrom: prevFrom,
-      from: syncFrom,
-      to: {
-        block: syncToBlock.number,
-        timestamp: UnixTime(Number(syncToBlock.timestamp)),
-      },
-    }
-  }
-
-  private async captureBlocks(
-    chain: string,
-    blockNumbers: bigint[],
-    plugin: InteropPlugin,
-  ): Promise<InteropEvent[]> {
-    assert(plugin.capture)
-    const interopEvents: InteropEvent[] = []
-    const client = this.getRpcClient(chain)
-    let count = 0
-    for (const blockNumber of blockNumbers) {
-      count++
-      console.log(
-        `Getting block ${blockNumber} for chain ${chain} ${(100 * count) / blockNumbers.length}%`,
-      )
-      const block = await client.getBlockByNumber(blockNumber, true)
-      const logs = await client.getLogs({
-        fromBlock: blockNumber,
-        toBlock: blockNumber,
-      })
-      assert(block)
-      const evmBlock = toEVMBlock(Number(block.number), block)
-      const evmLogs = logs.map(toEVMLog)
-      if (onlyConsistent([evmBlock], evmLogs).length !== 1) {
-        throw new Error(
-          `Couldn't consistently find logs for block ${evmBlock.number} on chain ${chain}`,
-        )
-      }
-      const toCapture = getItemsToCapture(chain, evmBlock, evmLogs)
-      for (const logToCapture of toCapture.logsToCapture) {
-        const captured = plugin.capture(logToCapture)
-        if (captured) {
-          interopEvents.push(
-            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
-          )
-        }
-      }
-    }
-    return interopEvents
+    return logs
   }
 
   private async getPluginStatus(plugin: InteropPlugin) {
@@ -266,13 +240,12 @@ export class InteropPluginSyncer {
   async initializePluginStatus(pluginName: string) {
     const record: InteropPluginStatusRecord = {
       pluginName,
-      syncedBlockRanges: null,
       resyncRequestedFrom: null,
     }
     return await this.db.interopPluginStatus.insert(record)
   }
 
-  processEvmEventDataRequests(dataRequests: DataRequest[]) {
+  groupEventDataRequests(dataRequests: DataRequest[]) {
     const chainToLogQuery = new UpsertMap<LongChainName, LogQuery>()
     const eventRequests = dataRequests.filter((r) => r.type === 'evmEvent')
 

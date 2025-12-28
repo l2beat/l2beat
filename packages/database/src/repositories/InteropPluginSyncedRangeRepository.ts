@@ -4,20 +4,25 @@ import { BaseRepository } from '../BaseRepository'
 import type { InteropPluginSyncedRange } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
-export interface InteropPluginSyncedRangeRecord {
-  pluginName: string
-  chain: string
-  fromBlock: number
+export interface BlockRangeWithTimestamps {
+  fromBlock: bigint
   fromTimestamp: UnixTime
-  toBlock: number
+  toBlock: bigint
   toTimestamp: UnixTime
 }
+
+export type InteropPluginSyncedRangeRecord = {
+  pluginName: string
+  chain: string
+} & BlockRangeWithTimestamps
 
 export function toRecord(
   row: Selectable<InteropPluginSyncedRange>,
 ): InteropPluginSyncedRangeRecord {
   return {
     ...row,
+    fromBlock: BigInt(row.fromBlock),
+    toBlock: BigInt(row.toBlock),
     fromTimestamp: toTimestamp(row.fromTimestamp),
     toTimestamp: toTimestamp(row.toTimestamp),
   }
@@ -28,6 +33,8 @@ export function toRow(
 ): Insertable<InteropPluginSyncedRange> {
   return {
     ...record,
+    fromBlock: record.fromBlock.toString(),
+    toBlock: record.toBlock.toString(),
     fromTimestamp: fromTimestamp(record.fromTimestamp),
     toTimestamp: fromTimestamp(record.toTimestamp),
   }
@@ -56,6 +63,20 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async findByPluginNameAndChain(
+    pluginName: string,
+    chain: string,
+  ): Promise<InteropPluginSyncedRangeRecord | undefined> {
+    const row = await this.db
+      .selectFrom('InteropPluginSyncedRange')
+      .selectAll()
+      .where('pluginName', '=', pluginName)
+      .where('chain', '=', chain)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async deleteByPluginName(pluginName: string): Promise<number> {

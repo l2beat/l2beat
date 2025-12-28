@@ -31,9 +31,9 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const record = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
-        fromBlock: 1,
+        fromBlock: 1n,
         fromTimestamp: UnixTime(100),
-        toBlock: 2,
+        toBlock: 2n,
         toTimestamp: UnixTime(200),
       })
       await repository.upsert(record)
@@ -41,9 +41,9 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const updated = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
-        fromBlock: 10,
+        fromBlock: 10n,
         fromTimestamp: UnixTime(1000),
-        toBlock: 20,
+        toBlock: 20n,
         toTimestamp: UnixTime(2000),
       })
       await repository.upsert(updated)
@@ -113,6 +113,40 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropPluginSyncedRangeRepository.prototype.findByPluginNameAndChain.name,
+    () => {
+      it('returns the matching range', async () => {
+        await insertPlugins(['plugin-a', 'plugin-b'])
+        const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = range({ pluginName: 'plugin-b', chain: 'ethereum' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+
+        const found = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'arbitrum',
+        )
+        expect(found).toEqual(a2)
+      })
+
+      it('returns undefined when no matching range exists', async () => {
+        await insertPlugins(['plugin-a'])
+        await repository.upsert(
+          range({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+
+        const found = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'arbitrum',
+        )
+        expect(found).toEqual(undefined)
+      })
+    },
+  )
+
   describe(InteropPluginSyncedRangeRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
       await insertPlugins(['plugin-a', 'plugin-b'])
@@ -148,9 +182,9 @@ function range(
   return {
     pluginName: overrides.pluginName,
     chain: overrides.chain,
-    fromBlock: overrides.fromBlock ?? 1,
+    fromBlock: overrides.fromBlock ?? 1n,
     fromTimestamp: overrides.fromTimestamp ?? UnixTime(100),
-    toBlock: overrides.toBlock ?? 2,
+    toBlock: overrides.toBlock ?? 2n,
     toTimestamp: overrides.toTimestamp ?? UnixTime(200),
   }
 }
