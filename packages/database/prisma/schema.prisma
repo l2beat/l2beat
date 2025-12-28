@@ -531,7 +531,7 @@ model InteropPluginSyncedRange {
   toBlock       Int
   toTimestamp   DateTime @db.Timestamp(6)
 
-  pluginStatus InteropPluginStatus @relation(fields: [pluginName], references: [pluginName], onDelete: Cascade)
+  pluginStatus InteropPluginStatus @relation(fields: [pluginName], references: [pluginName], onDelete: Restrict)
 
   @@id([pluginName, chain])
 }
