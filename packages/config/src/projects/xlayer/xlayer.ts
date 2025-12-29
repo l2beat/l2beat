@@ -112,7 +112,9 @@ export const xlayer: ScalingProject = agglayer({
       sinceBlock: inboxStartBlock,
       untilBlock: 24081293,
       inbox: ChainSpecificAddress.address(sequencerInbox),
-      sequencers: [EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d')],
+      sequencers: [
+        EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d'),
+      ],
     },
     {
       type: 'ethereum',
