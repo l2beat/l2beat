@@ -33,7 +33,7 @@ export const alephzero: ScalingProject = orbitStackL2({
         'https://x.com/Aleph__Zero',
         'https://discord.com/invite/alephzero',
         'https://t.me/AlephZeroFoundation',
-        'https://www.youtube.com/@AlephZero',
+        'https://youtube.com/@AlephZero',
       ],
     },
   },
