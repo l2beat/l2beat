@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5df1bc6503c58b1b19f1501ea4b422e23a49edda
+
+# Diff at Mon, 29 Dec 2025 10:14:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1765461274
+- current timestamp: 1767003202
+
+## Description
+
+Rotated batcher address.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d"
++        "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459"
+    }
+```
+
 Generated with discovered.json: 0x35aec606f1bf653110095fa92d32c417480edf34
 
 # Diff at Fri, 12 Dec 2025 16:20:25 GMT:
