@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xa992c6a178ca14961a84e46c6221a1001441f22c
+
+# Diff at Mon, 22 Dec 2025 12:43:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765795563
+- current timestamp: 1766407241
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xDe87572d7e556B2EBfD4410F1835A503b175794c"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x78a1cad0284b988f06aa1c9dde25875574fef2bd
 
 # Diff at Mon, 15 Dec 2025 10:48:35 GMT:

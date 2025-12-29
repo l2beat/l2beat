@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xff17c4c7a3bce27641b857b230acc2b28c6afb3b
+
+# Diff at Mon, 22 Dec 2025 12:46:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1753944311
+- current timestamp: 1766407495
+
+## Description
+
+New template was applied, changes are old.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        5
++        21
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        5
++        21
+    }
+```
+
 Generated with discovered.json: 0x92bd382af727e0adaf442ac5ad277e6086a0ca10
 
 # Diff at Fri, 19 Dec 2025 13:23:44 GMT:

@@ -27,8 +27,9 @@
     "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302",
     "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "LayerZero Executor",
-    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": "Stargate Verifier",
-    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": "Nethermind Verifier",
+    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": "Stargate DVN",
+    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": "Nethermind DVN",
+    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "LayerZero DVN",
     "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
