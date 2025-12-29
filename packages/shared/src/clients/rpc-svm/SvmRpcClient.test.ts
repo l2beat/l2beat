@@ -99,6 +99,27 @@ describe(SvmRpcClient.name, () => {
 
       expect(result).toEqual({ timestamp: mockTime })
     })
+
+    it('handles skipped slot error and tries previous slot', async () => {
+      const mockTime = UnixTime.now()
+
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce({
+            error: {
+              code: -32009,
+              message:
+                'Slot 123 was skipped, or missing due to ledger jump to recent snapshot',
+            },
+          })
+          .resolvesToOnce({ result: mockTime }),
+      })
+
+      const client = mockClient({ http, generateId: () => 'unique-id' })
+      const result = await client.getSlotTime(123)
+
+      expect(result).toEqual({ timestamp: mockTime })
+    })
   })
 
   describe(SvmRpcClient.prototype.query.name, () => {
@@ -138,6 +159,19 @@ describe(SvmRpcClient.name, () => {
       })
 
       expect(validationInfo.success).toEqual(false)
+    })
+
+    it('returns true for skipped slot error', async () => {
+      const client = mockClient({})
+      const validationInfo = client.validateResponse({
+        error: {
+          code: -32009,
+          message:
+            'Slot 4979844 was skipped, or missing due to ledger jump to recent snapshot',
+        },
+      })
+
+      expect(validationInfo.success).toEqual(true)
     })
 
     it('returns true otherwise', async () => {
