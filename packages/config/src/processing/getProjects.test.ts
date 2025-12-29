@@ -422,6 +422,24 @@ describe('getProjects', () => {
         }
       }
     })
+
+    describe('every untilTimestamp (if present) is greater than sinceTimestamp', () => {
+      for (const project of projects) {
+        const trackedTxsConfig = project.trackedTxsConfig
+        if (!trackedTxsConfig) continue
+
+        it(project.id, () => {
+          for (const config of trackedTxsConfig) {
+            if (config.untilTimestamp) {
+              expect(config.untilTimestamp).toBeGreaterThan(
+                config.sinceTimestamp,
+              )
+            }
+          }
+        })
+      }
+    })
+
     describe('transfers', () => {
       it('every configuration points to unique transfer params', () => {
         const transfers = new Set<string>()
