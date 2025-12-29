@@ -871,8 +871,8 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://boundless-xyz.github.io/kailua/quickstart.html',
-                title: 'Disputes - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
               },
             ],
           },
