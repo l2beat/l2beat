@@ -29,6 +29,7 @@ export const t3rn: ScalingProject = underReviewL3({
       repositories: ['https://github.com/t3rn'],
       socialMedia: [
         'https://x.com/t3rn_io',
+        'https://t.me/T3RN_official',
         'https://github.com/t3rn/t3rn',
         'https://discord.com/invite/S5kHFQTtp6',
         'https://t.me/T3RN_official',

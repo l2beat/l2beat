@@ -801,8 +801,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '918745833886511857768061986591752808672496300091957204265383861063635175685', // Starknet OS (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,
@@ -845,8 +860,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '1701025211190912681772481128523426351562426117847395998223683709327746845867', // Aggregator (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,
