@@ -119,6 +119,21 @@ export const grvt: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: UnixTime(1766777387),
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E',
+        ), // grvt diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1766777387),
       },
     },
     {
@@ -134,6 +149,24 @@ export const grvt: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: UnixTime(1766777387),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E',
+        ), // grvt diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: UnixTime(1766777387),
       },
     },
     {
@@ -149,6 +182,24 @@ export const grvt: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: UnixTime(1766777387),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E',
+        ), // grvt diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1766777387),
       },
     },
   ],
