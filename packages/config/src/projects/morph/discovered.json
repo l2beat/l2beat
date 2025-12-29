@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1765784209,
+  "timestamp": 1766409308,
   "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
   "entries": [
     {
@@ -318,9 +318,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25496,
+        "nextCrossDomainMessageIndex": 25506,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25487,
+        "pendingQueueIndex": 25499,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -643,7 +643,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchChallenged": 46672,
+        "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -680,20 +680,22 @@
           "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be",
           "eth:0x111BC31F5cfE920004FD17449BDb5e476C02AEC5",
           "eth:0x3b065B18EdFFC7cf3D751E33d45C1FB4fD78d57b",
-          "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497"
+          "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
+          "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
+          "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442"
         ],
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 46860,
-        "lastFinalizedBatchIndex": 46672,
+        "lastCommittedBatchIndex": 47137,
+        "lastFinalizedBatchIndex": 47058,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
         "proofRewardPercent": 70,
         "proofWindow": 259200,
-        "proveRemaining": "1503000000000000000",
+        "proveRemaining": "2103000000000000000",
         "revertReqIndex": 0,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
@@ -717,6 +719,18 @@
     },
     {
       "address": "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -800,6 +814,18 @@
       ]
     },
     {
+      "address": "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
       "address": "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
       "type": "EOA",
       "proxyType": "EOA",
@@ -870,7 +896,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 52,
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1075,7 +1101,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25496,
+        "messageNonce": 25506,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1767,6 +1793,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24016552 },
-  "permissionsConfigHash": "0xb206b5a348921423646acbfe87771833c9d61d836316ddfae06b1af82180b764"
+  "usedBlockNumbers": { "ethereum": 24068382 },
+  "permissionsConfigHash": "0xefdcc617002db190d56ff112178e63e3c6c871ae8ff06e1ac054958d8326d9ce"
 }

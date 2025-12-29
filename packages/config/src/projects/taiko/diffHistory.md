@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x1ae97f80694bc71618aa24b1a55d25c432bd3f69
+
+# Diff at Mon, 22 Dec 2025 13:12:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784042
+- current timestamp: 1766409056
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        23
++        24
+      values.proposalIds.23:
++        "601076267109018851735115853749277719853690519575"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
 Generated with discovered.json: 0x1ee880a85a95b20283158759aa0d1936f5e2f5d3
 
 # Diff at Mon, 15 Dec 2025 07:35:28 GMT:

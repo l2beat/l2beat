@@ -35,6 +35,7 @@ export const inevm: ScalingProject = orbitStackL3({
       socialMedia: [
         'https://x.com/injective',
         'https://discord.com/invite/injective',
+        'https://t.me/joininjective',
       ],
     },
   },
