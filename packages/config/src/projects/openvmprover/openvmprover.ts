@@ -30,7 +30,7 @@ export const openvmprover: BaseProject = {
         'https://github.com/openvm-org/openvm',
         'https://github.com/scroll-tech/zkvm-prover/tree/master',
       ],
-      socialMedia: ['https://t.me/openvm'],
+      socialMedia: ['https://t.me/openvm', 'https://x.com/openvm_org'],
     },
     badges: [],
   },
