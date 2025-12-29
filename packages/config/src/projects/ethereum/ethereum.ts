@@ -43,8 +43,8 @@ export const ethereum: BaseProject = {
         'https://beaconcha.in/',
       ],
       socialMedia: [
-        'https://x.com/ethereum'
-        'https://discord.com/invite/ethereum-org'
+        'https://x.com/ethereum',
+        'https://discord.com/invite/ethereum-org',
       ],
     },
     badges: [],
