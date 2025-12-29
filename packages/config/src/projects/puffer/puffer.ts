@@ -22,7 +22,7 @@ export const puffer: ScalingProject = upcomingL2({
         'https://x.com/puffer_unifi',
         'https://discord.com/invite/pufferfi',
         'https://medium.com/puffer-fi',
-        'https://t.me/puffer_fi'
+        'https://t.me/puffer_fi',
       ],
     },
   },
