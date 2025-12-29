@@ -9,7 +9,8 @@ export function ScrollWithGradient({
     const { scrollTop, scrollHeight, clientHeight } = node
 
     const isScrolledToTop = scrollTop === 0
-    const isScrolledToBottom = scrollTop + clientHeight === scrollHeight
+    const isScrolledToBottom =
+      Math.round(scrollTop + clientHeight) >= scrollHeight
     if (isScrolledToTop && isScrolledToBottom) return
 
     if (!isScrolledToTop && !isScrolledToBottom) {
