@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1766409308,
+  "timestamp": 1767086336,
   "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
   "entries": [
     {
@@ -36,10 +36,12 @@
       "name": "ZkEvmVerifierV1",
       "address": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423",
       "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
         "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
       ],
       "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
       "sinceTimestamp": 1763718611,
       "sinceBlock": 23846603,
       "values": {
@@ -318,9 +320,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25506,
+        "nextCrossDomainMessageIndex": 25510,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25499,
+        "pendingQueueIndex": 25509,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -687,8 +689,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 47137,
-        "lastFinalizedBatchIndex": 47058,
+        "lastCommittedBatchIndex": 47428,
+        "lastFinalizedBatchIndex": 47353,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -1101,7 +1103,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25506,
+        "messageNonce": 25510,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1791,8 +1793,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24068382 },
+  "usedBlockNumbers": { "ethereum": 24124509 },
   "permissionsConfigHash": "0xefdcc617002db190d56ff112178e63e3c6c871ae8ff06e1ac054958d8326d9ce"
 }
