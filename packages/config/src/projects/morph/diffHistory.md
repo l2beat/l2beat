@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xc8359820c62ccbc6c3b0ab68b9060fc4b0d9ad43
+
+# Diff at Tue, 30 Dec 2025 09:36:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2aabbed9e63a26852d81ab1dd3b3ffb7ad2417d9 block: 1766409308
+- current timestamp: 1767086336
+
+## Description
+
+add verifier template description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766409308 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423) {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      template:
++        "morph/ZkEvmVerifierV1"
+      description:
++        "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs."
+    }
+```
+
 Generated with discovered.json: 0x289be4763ca53294dcd911ca30afab503ce4a62e
 
 # Diff at Mon, 22 Dec 2025 13:16:12 GMT:
