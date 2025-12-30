@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import type { Insertable, Selectable, Updateable } from 'kysely'
+import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropPluginSyncedRange } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'
@@ -14,7 +15,13 @@ export interface BlockRangeWithTimestamps {
 export type InteropPluginSyncedRangeRecord = {
   pluginName: string
   chain: string
+  lastError: string | null
 } & BlockRangeWithTimestamps
+
+export type InteropPluginSyncedRangeUpdateable = Omit<
+  Updateable<InteropPluginSyncedRangeRecord>,
+  'pluginName' | 'chain'
+>
 
 export function toRecord(
   row: Selectable<InteropPluginSyncedRange>,
@@ -40,6 +47,20 @@ export function toRow(
   }
 }
 
+function toUpdateRow(
+  record: InteropPluginSyncedRangeUpdateable,
+): Updateable<InteropPluginSyncedRange> {
+  return {
+    ...record,
+    fromBlock: isNil(record.fromBlock)
+      ? record.fromBlock
+      : record.fromBlock.toString(),
+    toBlock: isNil(record.toBlock) ? record.toBlock : record.toBlock.toString(),
+    fromTimestamp: fromTimestamp(record.fromTimestamp),
+    toTimestamp: fromTimestamp(record.toTimestamp),
+  }
+}
+
 export class InteropPluginSyncedRangeRepository extends BaseRepository {
   async upsert(record: InteropPluginSyncedRangeRecord): Promise<void> {
     await this.db
@@ -51,6 +72,7 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
           fromTimestamp: eb.ref('excluded.fromTimestamp'),
           toBlock: eb.ref('excluded.toBlock'),
           toTimestamp: eb.ref('excluded.toTimestamp'),
+          lastError: eb.ref('excluded.lastError'),
         })),
       )
       .execute()
@@ -77,6 +99,21 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
+  }
+
+  async updateByPluginNameAndChain(
+    pluginName: string,
+    chain: string,
+    patch: InteropPluginSyncedRangeUpdateable,
+  ): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropPluginSyncedRange')
+      .set(toUpdateRow(patch))
+      .where('pluginName', '=', pluginName)
+      .where('chain', '=', chain)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
   }
 
   async deleteByPluginName(pluginName: string): Promise<number> {

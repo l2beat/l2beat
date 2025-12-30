@@ -46,73 +46,81 @@ export class InteropPluginSyncer {
     private db: Database,
     private logger: Logger,
     private delayMs = 10 * 1_000,
+    private errorDelayMs = 10 * 1_000,
   ) {
     this.logger = logger.for(this)
   }
 
   async start() {
-    if (!this.plugin.getDataRequests || !this.plugin.capture) {
-      return // This plugin doesn't support re-syncing.
-    }
-
-    const logQueryPerChain = this.groupEventDataRequests(
-      this.plugin.getDataRequests(),
-    )
-
-    // TODO: make sure this is called to have plugin config created
-    await this.getPluginStatus(this.plugin.name)
-
-    const tasksPerChain = []
-    for (const [chain, logQuery] of logQueryPerChain) {
-      if (!this.enabledChains.map((c) => c.name).includes(chain)) {
-        continue
+    try {
+      if (!this.plugin.getDataRequests || !this.plugin.capture) {
+        return // This plugin doesn't support re-syncing.
       }
-      const syncLoop = this.chainSyncLoop(chain, logQuery)
-      tasksPerChain.push(syncLoop)
+
+      const logQueryPerChain = this.groupEventDataRequests(
+        this.plugin.getDataRequests(),
+      )
+
+      await this.getPluginStatus(this.plugin.name) // init plugin status if null
+
+      const tasksPerChain = []
+      for (const [chain, logQuery] of logQueryPerChain) {
+        if (!this.enabledChains.map((c) => c.name).includes(chain)) {
+          continue
+        }
+        const syncLoop = this.chainSyncLoop(chain, logQuery)
+        tasksPerChain.push(syncLoop)
+      }
+
+      await this.clearPluginError()
+      await Promise.all(tasksPerChain)
+    } catch (error) {
+      this.savePluginError(error)
+      await this.sleepMs(this.errorDelayMs ?? this.delayMs)
     }
-
-    await Promise.all(tasksPerChain)
-
-    // TODO: Add try/catch error handling
-    // TODO: save lastOpError
   }
 
   private async chainSyncLoop(chain: string, logQueryForChain: LogQuery) {
     while (true) {
-      const syncData = await this.calculateNextRange(this.plugin.name, chain)
-      if (!syncData) {
-        await this.sleepMs(this.delayMs)
-        continue
-      }
+      try {
+        const syncData = await this.calculateNextRange(this.plugin.name, chain)
+        if (!syncData) {
+          await this.sleepMs(this.delayMs)
+          continue
+        }
 
-      const interopEvents = await this.captureRange(
-        chain,
-        syncData.nextRange,
-        logQueryForChain,
-      )
-
-      await this.db.transaction(async () => {
-        await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
-        await this.db.interopPluginSyncedRange.upsert({
-          pluginName: this.plugin.name,
+        const interopEvents = await this.captureRange(
           chain,
-          ...syncData.fullRange,
+          syncData.nextRange,
+          logQueryForChain,
+        )
+
+        await this.db.transaction(async () => {
+          await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+          await this.db.interopPluginSyncedRange.upsert({
+            pluginName: this.plugin.name,
+            chain,
+            ...syncData.fullRange,
+            lastError: null,
+          })
+          // TODO: update plugin status
         })
-        // TODO: update plugin status
-      })
 
-      this.logger.info('New range synced', {
-        chain,
-        pluginName: this.plugin.name,
-        range: syncData.nextRange,
-      })
+        this.logger.info('New range synced', {
+          chain,
+          pluginName: this.plugin.name,
+          range: syncData.nextRange,
+        })
 
-      if (syncData.fullRange.toBlock === syncData.latestBlockNumber) {
-        await this.sleepMs(this.delayMs)
+        await this.clearChainSyncError(chain)
+
+        if (syncData.fullRange.toBlock === syncData.latestBlockNumber) {
+          await this.sleepMs(this.delayMs)
+        }
+      } catch (error) {
+        await this.saveChainSyncError(chain, error)
+        await this.sleepMs(this.errorDelayMs ?? this.delayMs)
       }
-
-      // TODO: add try catch
-      // TODO: save error
     }
   }
 
@@ -263,6 +271,7 @@ export class InteropPluginSyncer {
     if (!pluginStatus) {
       pluginStatus = await this.db.interopPluginStatus.insert({
         pluginName,
+        lastError: null,
         resyncRequestedFrom: null,
       })
     }
@@ -325,10 +334,59 @@ export class InteropPluginSyncer {
   private async sleepMs(ms: number) {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
+
+  private async clearPluginError() {
+    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
+      lastError: null,
+    })
+  }
+
+  private async clearChainSyncError(chain: string) {
+    await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
+      this.plugin.name,
+      chain,
+      {
+        lastError: null,
+      },
+    )
+  }
+
+  private async savePluginError(error: unknown) {
+    this.logger.error('Error in syncer', error, {
+      pluginName: this.plugin.name,
+    })
+    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
+      lastError: errorToString(error),
+    })
+  }
+
+  private async saveChainSyncError(chain: string, error: unknown) {
+    const lastError = errorToString(error)
+    this.logger.error('Error syncing chain', error, {
+      pluginName: this.plugin.name,
+      chain,
+    })
+    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
+      lastError,
+    })
+    await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
+      this.plugin.name,
+      chain,
+      {
+        lastError,
+      },
+    )
+  }
 }
 
 function toEventSelector(eventSignature: string): string {
   const abi = parseAbi([eventSignature as string])
   // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
   return encodeEventTopics({ abi } as any)[0]
+}
+
+function errorToString(error: unknown): string {
+  return error instanceof Error
+    ? JSON.stringify(error, Object.getOwnPropertyNames(error))
+    : JSON.stringify({ message: String(error), value: error })
 }

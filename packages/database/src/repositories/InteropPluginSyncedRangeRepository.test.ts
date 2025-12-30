@@ -31,6 +31,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const record = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
+        lastError: 'Some RPC error',
         fromBlock: 1n,
         fromTimestamp: UnixTime(100),
         toBlock: 2n,
@@ -41,6 +42,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const updated = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
+        lastError: 'fixed',
         fromBlock: 10n,
         fromTimestamp: UnixTime(1000),
         toBlock: 20n,
@@ -147,6 +149,67 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropPluginSyncedRangeRepository.prototype.updateByPluginNameAndChain
+      .name,
+    () => {
+      it('updates record and returns number of affected rows', async () => {
+        await insertPlugins(['plugin-a'])
+        const record = range({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Some RPC error',
+          fromBlock: 1n,
+          fromTimestamp: UnixTime(100),
+          toBlock: 2n,
+          toTimestamp: UnixTime(200),
+        })
+        await repository.upsert(record)
+
+        const updated = await repository.updateByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+          {
+            lastError: null,
+            fromBlock: 10n,
+            fromTimestamp: UnixTime(1000),
+            toBlock: 20n,
+            toTimestamp: UnixTime(2000),
+          },
+        )
+
+        expect(updated).toEqual(1)
+
+        const stored = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+        )
+        expect(stored).toEqual({
+          ...record,
+          lastError: null,
+          fromBlock: 10n,
+          fromTimestamp: UnixTime(1000),
+          toBlock: 20n,
+          toTimestamp: UnixTime(2000),
+        })
+      })
+
+      it('returns 0 when no matching range exists', async () => {
+        await insertPlugins(['plugin-a'])
+
+        const updated = await repository.updateByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+          {
+            lastError: 'Some error',
+          },
+        )
+
+        expect(updated).toEqual(0)
+      })
+    },
+  )
+
   describe(InteropPluginSyncedRangeRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
       await insertPlugins(['plugin-a', 'plugin-b'])
@@ -167,6 +230,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     for (const pluginName of new Set(pluginNames)) {
       await statusRepository.insert({
         pluginName,
+        lastError: null,
         resyncRequestedFrom: null,
       })
     }
@@ -186,5 +250,6 @@ function range(
     fromTimestamp: overrides.fromTimestamp ?? UnixTime(100),
     toBlock: overrides.toBlock ?? 2n,
     toTimestamp: overrides.toTimestamp ?? UnixTime(200),
+    lastError: overrides.lastError ?? null,
   }
 }

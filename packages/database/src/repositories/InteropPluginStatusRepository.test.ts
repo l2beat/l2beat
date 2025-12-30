@@ -17,6 +17,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
     it('inserts record with optional fields', async () => {
       const record = status({
         pluginName: 'plugin-a',
+        lastError: 'Some RPC error',
         resyncRequestedFrom: UnixTime(123),
       })
 
@@ -30,6 +31,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
     it('accepts null optional fields', async () => {
       const record = status({
         pluginName: 'plugin-a',
+        lastError: null,
         resyncRequestedFrom: null,
       })
 
@@ -56,11 +58,13 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
       it('updates record and returns number of affected rows', async () => {
         const record = status({
           pluginName: 'plugin-a',
+          lastError: 'Some RPC error',
           resyncRequestedFrom: UnixTime(100),
         })
         await repository.insert(record)
 
         const updated = await repository.updateByPluginName(record.pluginName, {
+          lastError: null,
           resyncRequestedFrom: null,
         })
 
@@ -69,6 +73,7 @@ describeDatabase(InteropPluginStatusRepository.name, (db) => {
         const stored = await repository.findByPluginName(record.pluginName)
         expect(stored).toEqual({
           ...record,
+          lastError: null,
           resyncRequestedFrom: null,
         })
       })
@@ -104,6 +109,7 @@ function status(
 ): InteropPluginStatusRecord {
   return {
     pluginName: overrides.pluginName,
+    lastError: overrides.lastError ?? null,
     resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
   }
 }

@@ -4,6 +4,7 @@ import isNil from 'lodash/isNil'
 export function fromTimestamp(timestamp: UnixTime): Date
 export function fromTimestamp(timestamp: null): null
 export function fromTimestamp(timestamp: undefined): undefined
+export function fromTimestamp(timestamp: UnixTime | undefined): Date | undefined
 export function fromTimestamp(
   timestamp: UnixTime | null | undefined,
 ): Date | null | undefined

@@ -6,6 +6,7 @@ import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
 export interface InteropPluginStatusRecord {
   pluginName: string
+  lastError: string | null
   resyncRequestedFrom: UnixTime | null
 }
 
