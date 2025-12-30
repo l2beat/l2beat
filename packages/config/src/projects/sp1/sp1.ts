@@ -193,6 +193,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('omni'),
         sinceTimestamp: UnixTime(1748856160),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1737359447)
+      },
       // archived projects
       {
         projectId: ProjectId('gpt'),
