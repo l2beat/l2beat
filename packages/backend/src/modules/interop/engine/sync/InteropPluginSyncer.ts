@@ -1,9 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  BlockRangeWithTimestamps,
-  Database,
-  InteropPluginStatusRecord,
-} from '@l2beat/database'
+import type { BlockRangeWithTimestamps, Database } from '@l2beat/database'
 import {
   EthRpcClient,
   Http,
@@ -24,14 +20,15 @@ import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type {
   DataRequest,
+  InteropEvent,
   InteropPlugin,
   LogToCapture,
 } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
-const DEFAULT_LOGS_MAX_BLOCK_RANGE = 2_000n
-const DEFAULT_RESYNC_BLOCKS = 900n
+const DEFAULT_LOGS_RANGE = 2_000n
+const DEFAULT_RESYNC_BLOCKS = 20_000n
 
 interface LogQuery {
   topic0s: Set<string>
@@ -44,57 +41,88 @@ export class InteropPluginSyncer {
   constructor(
     private enabledChains: { name: string; type: 'evm' }[],
     private chainConfigs: ChainApi[],
-    private plugins: InteropPlugin[],
+    private plugin: InteropPlugin,
     private store: InteropEventStore,
     private db: Database,
     private logger: Logger,
+    private delayMs = 10 * 1_000,
   ) {
     this.logger = logger.for(this)
   }
 
   async start() {
-    // For now let's not Promise.all to not overwhelm RPCs
-    for (const plugin of this.plugins) {
-      await this.syncNextRange(plugin)
-    }
-  }
-
-  async syncNextRange(plugin: InteropPlugin) {
-    if (!plugin.getDataRequests || !plugin.capture) {
+    if (!this.plugin.getDataRequests || !this.plugin.capture) {
       return // This plugin doesn't support re-syncing.
     }
 
     const logQueryPerChain = this.groupEventDataRequests(
-      plugin.getDataRequests(),
+      this.plugin.getDataRequests(),
     )
 
+    // TODO: make sure this is called to have plugin config created
+    await this.getPluginStatus(this.plugin.name)
+
+    const tasksPerChain = []
     for (const [chain, logQuery] of logQueryPerChain) {
       if (!this.enabledChains.map((c) => c.name).includes(chain)) {
-        this.logger.warn(
-          `Skipping events from chain '${chain}' (requested by plugin '${plugin.name}') because it's turned off in config`,
-        )
         continue
       }
-      await this.syncNextChainRange(plugin, chain, logQuery)
+      const syncLoop = this.chainSyncLoop(chain, logQuery)
+      tasksPerChain.push(syncLoop)
     }
+
+    await Promise.all(tasksPerChain)
 
     // TODO: Add try/catch error handling
     // TODO: save lastOpError
   }
 
-  private async syncNextChainRange(
-    plugin: InteropPlugin,
-    chain: string,
-    logQueryForChain: LogQuery,
-  ) {
-    assert(plugin.capture)
+  private async chainSyncLoop(chain: string, logQueryForChain: LogQuery) {
+    while (true) {
+      const syncData = await this.calculateNextRange(this.plugin.name, chain)
+      if (!syncData) {
+        await this.sleepMs(this.delayMs)
+        continue
+      }
 
-    const syncData = await this.calculateNextRange(plugin.name, chain)
-    const logs = await this.fetchLogsForNextRange(
-      chain,
-      logQueryForChain,
-      syncData.nextRange,
-    )
+      const interopEvents = await this.captureRange(
+        chain,
+        syncData.nextRange,
+        logQueryForChain,
+      )
+
+      await this.db.transaction(async () => {
+        await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+        await this.db.interopPluginSyncedRange.upsert({
+          pluginName: this.plugin.name,
+          chain,
+          ...syncData.fullRange,
+        })
+        // TODO: update plugin status
+      })
+
+      this.logger.info('New range synced', {
+        chain,
+        pluginName: this.plugin.name,
+        range: syncData.nextRange,
+      })
+
+      if (syncData.fullRange.toBlock === syncData.latestBlockNumber) {
+        await this.sleepMs(this.delayMs)
+      }
+
+      // TODO: add try catch
+      // TODO: save error
+    }
+  }
+
+  private async captureRange(
+    chain: string,
+    range: { from: bigint; to: bigint },
+    logQueryForChain: LogQuery,
+  ): Promise<InteropEvent[]> {
+    assert(this.plugin.capture)
+    const logs = await this.fetchLogsForRange(chain, logQueryForChain, range)
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
     for (const log of logs) {
@@ -107,7 +135,6 @@ export class InteropPluginSyncer {
     for (const log of logs) {
       assert(log.transactionHash)
       assert(log.blockNumber)
-      assert(log.blockTimestamp)
 
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
@@ -116,39 +143,36 @@ export class InteropPluginSyncer {
         chain,
         block: {
           number: Number(log.blockNumber),
+          // Fake the following fields, since block is not used and soon will be removed
           hash: '123',
           logsBloom: '123',
-          timestamp: Number(log.blockTimestamp),
+          timestamp: UnixTime(100),
           transactions: [],
         },
       }
 
-      const produced = plugin.capture(logToCapture)
+      const produced = this.plugin.capture(logToCapture)
       if (produced) {
-        interopEvents.push(produced.map((p) => ({ ...p, plugin: plugin.name })))
+        interopEvents.push(
+          produced.map((p) => ({ ...p, plugin: this.plugin.name })),
+        )
       }
     }
 
-    // TODO: in transaction
-    await this.store.saveNewEvents(interopEvents.flat()) // TODO: make this idempotent?
-    await this.db.interopPluginSyncedRange.upsert({
-      pluginName: plugin.name,
-      chain,
-      ...syncData.fullRange,
-    })
-    // TODO: update plugin status
-
-    // TODO: add try catch
-    // TODO: save error
+    return interopEvents.flat()
   }
 
   private async calculateNextRange(
     pluginName: string,
     chain: string,
-  ): Promise<{
-    nextRange: { from: bigint; to: bigint }
-    fullRange: BlockRangeWithTimestamps
-  }> {
+  ): Promise<
+    | {
+        nextRange: { from: bigint; to: bigint }
+        fullRange: BlockRangeWithTimestamps
+        latestBlockNumber: bigint
+      }
+    | undefined
+  > {
     const client = this.getRpcClient(chain)
     const syncedRange =
       await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
@@ -157,6 +181,10 @@ export class InteropPluginSyncer {
       )
     const latestBlock = await client.getBlockByNumber('latest', false)
     assert(latestBlock && !isNil(latestBlock.number))
+
+    if (syncedRange?.toBlock === latestBlock.number) {
+      return undefined
+    }
 
     let nextFrom: bigint
     let fullFrom: bigint
@@ -178,7 +206,7 @@ export class InteropPluginSyncer {
     let fullTo: bigint
     let fullToTimestamp: UnixTime
 
-    nextTo = nextFrom + DEFAULT_LOGS_MAX_BLOCK_RANGE - 1n
+    nextTo = nextFrom + DEFAULT_LOGS_RANGE - 1n
     assert(nextTo > nextFrom)
     if (nextTo >= latestBlock.number) {
       nextTo = latestBlock.number
@@ -199,10 +227,11 @@ export class InteropPluginSyncer {
         toBlock: fullTo,
         toTimestamp: fullToTimestamp,
       },
+      latestBlockNumber: latestBlock.number,
     }
   }
 
-  private async fetchLogsForNextRange(
+  private async fetchLogsForRange(
     chain: string,
     logQuery: LogQuery,
     range: { from: bigint; to: bigint },
@@ -227,22 +256,18 @@ export class InteropPluginSyncer {
     return logs
   }
 
-  private async getPluginStatus(plugin: InteropPlugin) {
-    let pluginStatus = await this.db.interopPluginStatus.findByPluginName(
-      plugin.name,
-    )
-    if (!pluginStatus) {
-      pluginStatus = await this.initializePluginStatus(plugin.name)
-    }
-    return pluginStatus
-  }
+  private async getPluginStatus(pluginName: string) {
+    let pluginStatus =
+      await this.db.interopPluginStatus.findByPluginName(pluginName)
 
-  async initializePluginStatus(pluginName: string) {
-    const record: InteropPluginStatusRecord = {
-      pluginName,
-      resyncRequestedFrom: null,
+    if (!pluginStatus) {
+      pluginStatus = await this.db.interopPluginStatus.insert({
+        pluginName,
+        resyncRequestedFrom: null,
+      })
     }
-    return await this.db.interopPluginStatus.insert(record)
+
+    return pluginStatus
   }
 
   groupEventDataRequests(dataRequests: DataRequest[]) {
@@ -284,6 +309,7 @@ export class InteropPluginSyncer {
 
       const http = new Http({
         logger: rpcLogger,
+        maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
       })
 
       client = new EthRpcClient(
@@ -294,6 +320,10 @@ export class InteropPluginSyncer {
       this.rpcClients[chain] = client
     }
     return client
+  }
+
+  private async sleepMs(ms: number) {
+    await new Promise((resolve) => setTimeout(resolve, ms))
   }
 }
 

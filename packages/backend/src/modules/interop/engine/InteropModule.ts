@@ -59,14 +59,18 @@ export function createInteropModule({
     logger,
   )
 
-  const pluginSyncer = new InteropPluginSyncer(
-    config.interop.capture.chains,
-    config.chainConfig,
-    plugins.eventPlugins,
-    eventStore,
-    db,
-    logger,
-  )
+  const pluginSyncers: InteropPluginSyncer[] = []
+  for (const plugin of plugins.eventPlugins) {
+    const pluginSyncer = new InteropPluginSyncer(
+      config.interop.capture.chains,
+      config.chainConfig,
+      plugin,
+      eventStore,
+      db,
+      logger,
+    )
+    pluginSyncers.push(pluginSyncer)
+  }
 
   const router = createInteropRouter(
     db,
@@ -127,7 +131,7 @@ export function createInteropModule({
     await eventStore.start()
 
     if (config.interop && config.interop.matching) {
-      // matcher.start()
+      matcher.start()
       // await relayRootIndexer.start()
       // await relayIndexer.start()
     }
@@ -156,10 +160,12 @@ export function createInteropModule({
       eventPlugins: plugins.eventPlugins.length,
     })
 
-    await matcher.run()
+    // await matcher.run()
     if (MODE === 'match') return
-    await pluginSyncer.start()
-    await matcher.run()
+    for (const pluginSyncer of pluginSyncers) {
+      await pluginSyncer.start()
+    }
+    // await matcher.run()
   }
 
   return { routers: [router], start }
@@ -170,4 +176,5 @@ async function clearDb(db: Database) {
   await db.interopEvent.deleteAll()
   await db.interopTransfer.deleteAll()
   await db.interopMessage.deleteAll()
+  await db.interopPluginSyncedRange.deleteAll()
 }
