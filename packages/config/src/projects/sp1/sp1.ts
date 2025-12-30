@@ -195,7 +195,7 @@ export const sp1: BaseProject = {
       },
       {
         projectId: ProjectId('morph'),
-        sinceTimestamp: UnixTime(1737359447)
+        sinceTimestamp: UnixTime(1737359447),
       },
       // archived projects
       {
