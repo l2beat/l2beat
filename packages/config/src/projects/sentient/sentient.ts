@@ -16,7 +16,10 @@ export const sentient: ScalingProject = upcomingL2({
     links: {
       websites: ['https://sentient.foundation/'],
       repositories: ['https://github.com/sentient-agi'],
-      socialMedia: ['https://x.com/SentientAGI'],
+      socialMedia: [
+        'https://x.com/SentientAGI',
+        'https://discord.com/invite/sentientfoundation',
+      ],
     },
   },
   ecosystemInfo: {
