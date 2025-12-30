@@ -1279,6 +1279,10 @@ function getRiskViewStateValidation(
     case 'OpSuccinctFDP': {
       return {
         ...RISK_VIEW.STATE_FP_1R_ZK,
+        sentiment: 'warning', // whitelist for challengers!
+        description:
+          RISK_VIEW.STATE_FP_1R_ZK.description +
+          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
         initialBond: formatEther(
