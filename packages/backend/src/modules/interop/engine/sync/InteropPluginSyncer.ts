@@ -75,8 +75,7 @@ export class InteropPluginSyncer {
       await this.clearPluginError()
       await Promise.all(tasksPerChain)
     } catch (error) {
-      this.savePluginError(error)
-      await this.sleepMs(this.errorDelayMs ?? this.delayMs)
+      this.savePluginError(error, 'SYNCING STOPPED! ')
     }
   }
 
@@ -103,7 +102,7 @@ export class InteropPluginSyncer {
             ...syncData.fullRange,
             lastError: null,
           })
-          // TODO: update plugin status
+          await this.clearChainSyncError(chain)
         })
 
         this.logger.info('New range synced', {
@@ -111,8 +110,6 @@ export class InteropPluginSyncer {
           pluginName: this.plugin.name,
           range: syncData.nextRange,
         })
-
-        await this.clearChainSyncError(chain)
 
         if (syncData.fullRange.toBlock === syncData.latestBlockNumber) {
           await this.sleepMs(this.delayMs)
@@ -351,12 +348,12 @@ export class InteropPluginSyncer {
     )
   }
 
-  private async savePluginError(error: unknown) {
+  private async savePluginError(error: unknown, prefix?: string) {
     this.logger.error('Error in syncer', error, {
       pluginName: this.plugin.name,
     })
     await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
-      lastError: errorToString(error),
+      lastError: (prefix ?? '') + errorToString(error),
     })
   }
 
