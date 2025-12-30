@@ -209,7 +209,7 @@ export class InteropPluginSyncer {
       fullFrom = BigInt(
         await getBlockNumberAtOrBefore(
           UnixTime.now() - DEFAULT_RESYNC_DAYS * UnixTime.DAY,
-          0,
+          1,
           Number(latestBlock.number),
           async (number: number) => {
             const block = await client.getBlockByNumber(BigInt(number), false)
