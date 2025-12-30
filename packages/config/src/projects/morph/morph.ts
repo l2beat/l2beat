@@ -58,6 +58,7 @@ export const morph: ScalingProject = {
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   proofSystem: {
     type: 'Optimistic',
+    name: 'SP1',
   },
   display: {
     name: 'Morph',
