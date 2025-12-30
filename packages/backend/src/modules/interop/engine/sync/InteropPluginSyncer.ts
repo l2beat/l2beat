@@ -34,7 +34,7 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
   optimism: 10_000n,
 }
 
-const DEFAULT_RESYNC_DAYS = 2
+const DEFAULT_RESYNC_DAYS = 1
 
 interface LogQuery {
   topic0s: Set<string>
