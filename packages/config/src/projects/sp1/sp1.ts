@@ -284,6 +284,19 @@ export const sp1: BaseProject = {
         ],
         verificationStatus: 'notVerified',
       },
+      {
+        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
     ],
   },
 }
