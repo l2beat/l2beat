@@ -6983,6 +6983,26 @@
   ],
   "soneium": [
     {
+      "symbol": "LOOT",
+      "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "KYO",
+      "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDSC",
       "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
       "category": "stablecoin",
