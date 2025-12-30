@@ -20,7 +20,11 @@ export const agglayer: BaseProject = {
       ],
       explorers: ['https://visualizer.agglayer.dev/'],
       repositories: ['https://github.com/AggLayer'],
-      socialMedia: ['https://x.com/agglayer'],
+      socialMedia: [
+        'https://x.com/agglayer',
+        'https://discord.com/invite/0xpolygoncommunity',
+        'https://t.me/polygonofficial',
+      ],
     },
     badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],
   },
