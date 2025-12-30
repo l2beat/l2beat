@@ -14,12 +14,12 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
+import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -56,7 +56,6 @@ export const morph: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   proofSystem: {
     type: 'Optimistic',
   },
@@ -89,7 +88,7 @@ export const morph: ScalingProject = {
       dataAvailabilityOnL1: true,
       rollupNodeSourceAvailable: 'UnderReview',
       stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: false,
+      fraudProofSystemAtLeast5Outsiders: true,
     },
     stage1: {
       principle: false,
@@ -171,8 +170,8 @@ export const morph: ScalingProject = {
       ...RISK_VIEW.STATE_FP_1R_ZK,
       description:
         RISK_VIEW.STATE_FP_1R_ZK.description +
-        ' The system currently operates with a single whitelisted challenger.',
-      sentiment: 'bad',
+        ' The system currently operates with at least 5 whitelisted challengers external to the team.',
+      sentiment: 'warning',
       challengeDelay: challengeWindow,
       initialBond: formatEther(
         discovery.getContractValue<number>('L1Staking', 'stakingValue'),
@@ -210,11 +209,15 @@ export const morph: ScalingProject = {
     categories: [
       {
         title: 'Fraud proofs',
-        description: `Morph uses an one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
+        description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
+          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
           delivered, otherwise the state root is considered invalid and the root proposer bond, which is set currently to ${stakingValue} ETH, is slashed. The zkEVM used is SP1 from Succinct.\
           If the valid proof is delivered, the Challenger loses the challenge bond. The MorphAdminMSig can override any batch (both unfinalized and finalized), potentially preventing the ability to provide valid ZK proofs.`,
         references: [
+          {
+            title: 'Whitelisted Challengers - Morph Docs',
+            url: 'https://docs.morphl2.io/docs/how-morph-works/optimistic-zkevm/#challenger-address-list',
+          },
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
@@ -294,6 +297,11 @@ export const morph: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkProgramHashes: [
+      ZK_PROGRAM_HASHES(
+        discovery.getContractValue('ZkEvmVerifierV1', 'programVkey'),
+      ),
+    ],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),

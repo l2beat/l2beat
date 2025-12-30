@@ -803,4 +803,11 @@ Verify:
 2. Execute recompute_hashes.sh script: \`chmod +x recompute_hashes.sh\`  and \`./recompute_hashes.sh\`. Note that the script may require a specific version of \`foundryup-zksync\` and it will suggest the command to install it. However you might need to manually clear git working tree in the repo foundry-zksync (probably in ~/.foundry/matter-labs/foundry-zksync) to change versions.
     `,
   },
+  '0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e': {
+    title: 'Morph Guest Program (zkEVM Executor)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
 }
