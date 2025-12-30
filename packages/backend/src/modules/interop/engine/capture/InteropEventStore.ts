@@ -16,7 +16,7 @@ export class InteropEventStore implements InteropEventDb {
     private db: Database,
     inMemoryLimit: number,
   ) {
-    this.eventDb = new InMemoryEventDb(50000000) //inMemoryLimit)
+    this.eventDb = new InMemoryEventDb(inMemoryLimit)
   }
 
   async start() {

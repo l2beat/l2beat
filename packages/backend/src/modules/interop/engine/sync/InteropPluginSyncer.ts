@@ -18,6 +18,7 @@ import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
 import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
+import { getBlockNumberAtOrBefore } from '../../../../peripherals/getBlockNumberAtOrBefore'
 import type {
   DataRequest,
   InteropEvent,
@@ -27,8 +28,13 @@ import type {
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
-const DEFAULT_LOGS_RANGE = 2_000n
-const DEFAULT_RESYNC_BLOCKS = 20_000n
+const LOG_QUERY_RANGE: Record<string, bigint> = {
+  DEFAULT: 2_000n,
+  arbitrum: 10_000n,
+  optimism: 10_000n,
+}
+
+const DEFAULT_RESYNC_DAYS = 2
 
 interface LogQuery {
   topic0s: Set<string>
@@ -200,7 +206,19 @@ export class InteropPluginSyncer {
       fullFromTimestamp = syncedRange.fromTimestamp
       nextFrom = syncedRange.toBlock + 1n
     } else {
-      fullFrom = latestBlock.number - DEFAULT_RESYNC_BLOCKS
+      fullFrom = BigInt(
+        await getBlockNumberAtOrBefore(
+          UnixTime.now() - DEFAULT_RESYNC_DAYS * UnixTime.DAY,
+          0,
+          Number(latestBlock.number),
+          async (number: number) => {
+            const block = await client.getBlockByNumber(BigInt(number), false)
+            assert(block)
+            return { timestamp: Number(block.timestamp) }
+          },
+        ),
+      )
+      // fullFrom = latestBlock.number - DEFAULT_RESYNC_BLOCKS
       const fromBlock = await client.getBlockByNumber(fullFrom, false)
       assert(fromBlock)
       nextFrom = fullFrom
@@ -211,7 +229,8 @@ export class InteropPluginSyncer {
     let fullTo: bigint
     let fullToTimestamp: UnixTime
 
-    nextTo = nextFrom + DEFAULT_LOGS_RANGE - 1n
+    const queryRange = LOG_QUERY_RANGE[chain] ?? LOG_QUERY_RANGE.DEFAULT
+    nextTo = nextFrom + queryRange - 1n
     assert(nextTo > nextFrom)
     if (nextTo >= latestBlock.number) {
       nextTo = latestBlock.number

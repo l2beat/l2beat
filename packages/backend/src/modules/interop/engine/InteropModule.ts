@@ -173,8 +173,8 @@ export function createInteropModule({
 
 async function clearDb(db: Database) {
   if (MODE === 'match') return
-  await db.interopEvent.deleteAll()
-  await db.interopTransfer.deleteAll()
-  await db.interopMessage.deleteAll()
-  await db.interopPluginSyncedRange.deleteAll()
+  // await db.interopEvent.deleteAll()
+  // await db.interopTransfer.deleteAll()
+  // await db.interopMessage.deleteAll()
+  // await db.interopPluginSyncedRange.deleteAll()
 }
