@@ -32,6 +32,7 @@ export const silentData: ScalingProject = opStackL2({
         'https://linkedin.com/company/69477792',
         'https://twitter.com/SilentDataApp',
         'https://podcasts.apple.com/podcast/applied-blockchain-podcast/id1653098459',
+        'https://open.spotify.com/show/0OF5Q1zM9oPxDlDdC18AZY',
       ],
     },
   },
