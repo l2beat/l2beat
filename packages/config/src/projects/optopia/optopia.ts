@@ -26,6 +26,7 @@ export const optopia: ScalingProject = opStackL2({
         'https://x.com/Optopia_AI',
         'https://discord.com/invite/BFr9hXPDY6',
         'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33',
+        'https://t.me/Optopia_Community',
       ],
     },
   },
