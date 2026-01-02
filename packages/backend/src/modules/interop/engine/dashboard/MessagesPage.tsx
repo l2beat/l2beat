@@ -8,6 +8,19 @@ import {
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
 
+function ShortenedHash({ hash }: { hash: string | undefined }) {
+  if (!hash) return null
+  if (hash.length <= 14) return <>{hash}</>
+  return (
+    <>
+      <span style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>
+        {hash}
+      </span>
+      {`${hash.slice(0, 6)}...${hash.slice(-4)}`}
+    </>
+  )
+}
+
 function MessagesTable(props: {
   messages: InteropMessageRecord[]
   getExplorerUrl: (chain: string) => string | undefined
@@ -46,10 +59,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
                   >
-                    {e.srcTxHash}
+                    <ShortenedHash hash={e.srcTxHash} />
                   </a>
                 ) : (
-                  e.srcTxHash
+                  <ShortenedHash hash={e.srcTxHash} />
                 )}
               </td>
               <td>{e.dstChain}</td>
@@ -59,10 +72,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
                   >
-                    {e.dstTxHash}
+                    <ShortenedHash hash={e.dstTxHash} />
                   </a>
                 ) : (
-                  e.dstTxHash
+                  <ShortenedHash hash={e.dstTxHash} />
                 )}
               </td>
             </tr>
