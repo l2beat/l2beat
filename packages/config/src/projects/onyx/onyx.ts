@@ -34,6 +34,8 @@ export const onyx: ScalingProject = orbitStackL3({
         'https://x.com/OnyxDAO',
         'https://t.me/Onyx',
         'https://blog.onyx.org/',
+        'https://t.me/OnyxAnnouncements',
+        'https://youtube.com/@onyx',
       ],
     },
   },
