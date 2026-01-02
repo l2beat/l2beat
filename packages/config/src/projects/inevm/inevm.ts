@@ -12,7 +12,7 @@ export const inevm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709769600), // 2024-03-07
   archivedAt: UnixTime(1767142174),
   additionalPurposes: ['Interoperability'],
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
