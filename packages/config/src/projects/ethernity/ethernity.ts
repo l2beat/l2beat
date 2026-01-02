@@ -38,7 +38,7 @@ export const ethernity: ScalingProject = opStackL2({
         'https://instagram.com/epiconchain/',
         'https://facebook.com/EpicOnChain',
         'https://youtube.com/@EpicOnChain',
-        'https://reddit.com/r/EpicOnChain',
+        'https://reddit.com/r/EpicOnChain/',
       ],
     },
   },
