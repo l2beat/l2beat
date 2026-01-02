@@ -855,6 +855,15 @@ The **Vanguard** is a privileged actor who can always make the first child propo
                 url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
+            risks:
+              vanguardAdvantage > 604800 // 7d, arbitrary threshold
+                ? [
+                    {
+                      category: 'Funds can be frozen if',
+                      text: `the vanguard exploits their vanguard advantage (${formatSeconds(vanguardAdvantage)}), halting the chain until they propose.`,
+                    },
+                  ]
+                : [],
           },
           {
             title: 'Challenges',
