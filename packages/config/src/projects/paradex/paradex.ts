@@ -347,7 +347,7 @@ export const paradex: ScalingProject = {
   },
   dataAvailability: {
     layer: {
-      value: 'Privacy council holds decryption keys',
+      value: 'Privacy council',
       sentiment: 'bad',
       description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryptions keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
     },
