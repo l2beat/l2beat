@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb2f4bba112b345b8f0ceefd3bc41fc34c7f3cdb1
+Generated with discovered.json: 0x717d5f229eb700098c9e3b858d5ba0e5f2ff0834
 
-# Diff at Mon, 22 Dec 2025 11:51:02 GMT:
+# Diff at Fri, 02 Jan 2026 08:09:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1764760164
-- current timestamp: 1766400649
+- comparing to: main@af64ce90718299c8e665957964f0083baa176a36 block: 1764760164
+- current timestamp: 1767341266
 
 ## Description
 
@@ -18,6 +18,7 @@ Initial discovery. Untemplatized contracts diff with most similar templatized:
 
 basti 12/22: the verifier contract source is now available. looks like an older risc0groth16 verifier: https://disco.l2beat.com/diff/eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9/eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3
 
+state validation: assuming the `0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2` program hash corresponds to a valid kailua program that also verifies the eigenDA v2 commitments, the proof system is a standard kailua hybrid validity / fp system as deployed for BOB. The single large difference would be that the vanguard advantage is uint max and therefore the proof system can be delayed ~indefinitely by the vanguard.
 
 ## Watched changes
 
@@ -86,6 +87,15 @@ basti 12/22: the verifier contract source is now available. looks like an older 
       values.owner:
 -        "eth:0x5785Df5b4234Fc63F9D6ecFe30C40b6b44619fd2"
 +        "eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6"
+    }
+```
+
+```diff
+    contract MegaUSDmPreDeposit (eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6) {
+    +++ description: Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.
+      values.isDepositActive:
+-        true
++        false
     }
 ```
 

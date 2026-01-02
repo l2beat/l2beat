@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,9 +11,8 @@ const discovery = new ProjectDiscovery('megaeth')
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
-  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
+  daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Kailua',
@@ -25,6 +24,7 @@ export const megaeth: ScalingProject = opStackL2({
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],
+  stateValidationImage: 'megaeth',
   display: {
     name: 'MegaETH',
     slug: 'megaeth',
