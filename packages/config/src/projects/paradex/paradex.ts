@@ -94,7 +94,7 @@ export const paradex: ScalingProject = {
     slug: 'paradex',
     stacks: ['SN Stack'],
     description:
-      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals.',
+      'Paradex is a high-performance crypto-derivatives exchange offering zero fee and private perpetuals.',
     purposes: ['Universal', 'Exchange'],
     links: {
       websites: ['https://paradex.trade/'],
@@ -347,7 +347,7 @@ export const paradex: ScalingProject = {
   dataAvailability: {
     layer: {
       value: 'Privacy council',
-      sentiment: 'bad',
+      sentiment: 'warning',
       description: `Encrypted data is posted on Ethereum as blobs, and a privacy council of ${privacyCouncil.membersCount} members holds the decryption keys. Users are not able to independetly reconstruct the L2 state without relying on the council members.`,
     },
     bridge: DA_BRIDGES.DAC_MEMBERS({
