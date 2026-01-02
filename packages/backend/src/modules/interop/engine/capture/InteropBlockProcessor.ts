@@ -1,7 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
 import type { InteropEvent, InteropPlugin } from '../../plugins/types'
+import type { InteropSyncModes } from '../sync/InteropPluginSyncModes'
 import { getItemsToCapture } from './getItemsToCapture'
 import type { InteropEventStore } from './InteropEventStore'
 
@@ -12,6 +14,8 @@ export class InteropBlockProcessor implements BlockProcessor {
     public chain: string,
     private plugins: InteropPlugin[],
     private store: InteropEventStore,
+    private syncModes: InteropSyncModes,
+    private db: Database,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).tag({ chain, tag: chain })
@@ -43,9 +47,48 @@ export class InteropBlockProcessor implements BlockProcessor {
       }
     }
 
+    const pluginsForStatusUpdate = new Set<string>()
+
     for (const logToDecode of toCapture.logsToCapture) {
       for (const plugin of this.plugins) {
         try {
+          if (plugin.getDataRequests) {
+            // This plugin supports re-syncing
+            if (
+              this.syncModes
+                .getForPlugin(plugin.name)
+                .getForChain(this.chain) !== 'follow'
+            ) {
+              // This plugin is not in 'follow' mode
+              continue
+            }
+            const lastSynced =
+              await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
+                plugin.name,
+                this.chain,
+              )
+
+            if (this.chain === 'ethereum' && plugin.name === 'across') {
+              console.log('here')
+            }
+            const syncedToBlock = lastSynced?.toBlock
+            if (
+              syncedToBlock === undefined ||
+              syncedToBlock < BigInt(block.number - 1)
+            ) {
+              // ask to catch up
+              this.syncModes
+                .getForPlugin(plugin.name)
+                .setForChain(this.chain, 'catchUp')
+              continue
+            }
+            if (syncedToBlock >= BigInt(block.number)) {
+              // skip, we're already synced further than this block
+              continue
+            }
+            pluginsForStatusUpdate.add(plugin.name)
+          }
+
           const captured = plugin.capture?.(logToDecode)
           if (captured) {
             events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
@@ -65,7 +108,20 @@ export class InteropBlockProcessor implements BlockProcessor {
       }
     }
 
-    await this.store.saveNewEvents(events)
+    await this.db.transaction(async () => {
+      await this.store.saveNewEvents(events) // TODO: make this idempotent?
+      for (const pluginName of pluginsForStatusUpdate) {
+        await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
+          pluginName,
+          this.chain,
+          {
+            toBlock: BigInt(block.number),
+            toTimestamp: block.timestamp,
+            lastError: null,
+          },
+        )
+      }
+    })
     this.lastProcessed = block
 
     for (const [plugin, count] of Object.entries(pluginEventCounts)) {

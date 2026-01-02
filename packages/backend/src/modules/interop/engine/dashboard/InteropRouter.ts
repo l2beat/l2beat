@@ -5,6 +5,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
+import type { InteropSyncModes } from '../sync/InteropPluginSyncModes'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -14,6 +15,7 @@ export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
+  syncModes: InteropSyncModes,
   logger: Logger,
 ) {
   const router = new Router()
@@ -21,15 +23,21 @@ export function createInteropRouter(
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
 
-    const [events, messages, transfers, missingTokens, uniqueApps, syncedRanges] =
-      await Promise.all([
-        db.interopEvent.getStats(),
-        getMessagesStats(db),
-        getTransfersStats(db),
-        db.interopTransfer.getMissingTokensInfo(),
-        db.interopMessage.getUniqueAppsPerPlugin(),
-        db.interopPluginSyncedRange.getAll()
-      ])
+    const [
+      events,
+      messages,
+      transfers,
+      missingTokens,
+      uniqueApps,
+      syncedRanges,
+    ] = await Promise.all([
+      db.interopEvent.getStats(),
+      getMessagesStats(db),
+      getTransfersStats(db),
+      db.interopTransfer.getMissingTokensInfo(),
+      db.interopMessage.getUniqueAppsPerPlugin(),
+      db.interopPluginSyncedRange.getAll(),
+    ])
 
     const routerDuration = performance.now() - routerStart
 
@@ -45,6 +53,7 @@ export function createInteropRouter(
       missingTokens,
       uniqueApps,
       syncedRanges,
+      syncModes,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })

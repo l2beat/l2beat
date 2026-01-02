@@ -82,6 +82,7 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('InteropPluginSyncedRange')
       .selectAll()
+      .orderBy(['pluginName', 'chain'])
       .execute()
 
     return rows.map(toRecord)

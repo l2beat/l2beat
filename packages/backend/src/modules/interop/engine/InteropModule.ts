@@ -1,18 +1,22 @@
-import type { Database } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
+import { getTokenDbClient } from '@l2beat/token-backend'
+import { HourlyIndexer } from '../../../tools/HourlyIndexer'
+import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
 import { createInteropPlugins } from '../plugins'
+import { RelayApiClient } from '../plugins/relay/RelayApiClient'
+import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
+import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
 import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
+import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropPluginSyncer } from './sync/InteropPluginSyncer'
-import { InteropPluginSyncModes } from './sync/InteropPluginSyncModes'
-
-// const MODE: 'match' | 'sync' = 'match'
-const MODE: 'match' | 'sync' = 'sync'
+import { InteropSyncModes } from './sync/InteropPluginSyncModes'
 
 export function createInteropModule({
   config,
@@ -37,7 +41,7 @@ export function createInteropModule({
     logger,
     rpcClients: providers.clients.rpcClients,
   })
-  const syncModes = new InteropPluginSyncModes()
+  const syncModes = new InteropSyncModes()
 
   const processors = []
   if (config.interop.capture.enabled) {
@@ -46,9 +50,11 @@ export function createInteropModule({
         chain.name,
         plugins.eventPlugins,
         eventStore,
+        syncModes,
+        db,
         logger,
       )
-      // blockProcessors.push(processor)
+      blockProcessors.push(processor)
       processors.push(processor)
     }
   }
@@ -67,7 +73,7 @@ export function createInteropModule({
       config.interop.capture.chains,
       config.chainConfig,
       plugin,
-      syncModes.get(plugin.name),
+      syncModes.getForPlugin(plugin.name),
       eventStore,
       db,
       logger,
@@ -79,6 +85,7 @@ export function createInteropModule({
     db,
     config.interop,
     processors,
+    syncModes,
     logger.for('InteropRouter'),
   )
 
@@ -86,76 +93,74 @@ export function createInteropModule({
     (c) => new InteropCompareLoop(db, c, logger),
   )
 
-  // const indexerService = new IndexerService(db)
-  // const cleaner = new InteropCleanerLoop(eventStore, db, logger)
+  const indexerService = new IndexerService(db)
+  const cleaner = new InteropCleanerLoop(eventStore, db, logger)
 
-  // const hourlyIndexer = new HourlyIndexer(logger, clock)
-  // const recentPricesIndexer = new InteropRecentPricesIndexer({
-  //   db,
-  //   priceProvider: providers.price,
-  //   logger,
-  //   parents: [hourlyIndexer],
-  //   minHeight: 1,
-  //   indexerService,
-  // })
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const recentPricesIndexer = new InteropRecentPricesIndexer({
+    db,
+    priceProvider: providers.price,
+    logger,
+    parents: [hourlyIndexer],
+    minHeight: 1,
+    indexerService,
+  })
 
-  // const tokenDbClient = getTokenDbClient({
-  //   apiUrl: config.interop.financials.tokenDbApiUrl,
-  //   authToken: config.interop.financials.tokenDbAuthToken,
-  //   callSource: 'interop',
-  // })
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
 
-  // const financialsService = new InteropFinancialsLoop(
-  //   config.interop.capture.chains,
-  //   db,
-  //   tokenDbClient,
-  //   logger,
-  // )
+  const financialsService = new InteropFinancialsLoop(
+    config.interop.capture.chains,
+    db,
+    tokenDbClient,
+    logger,
+  )
 
-  // const relayApiClient = new RelayApiClient(new HttpClient())
-  // const relayRootIndexer = new RelayRootIndexer(logger)
-  // const relayIndexer = new RelayIndexer(
-  //   config.interop.config.chains,
-  //   config.interop.capture.chains.map((c) => c.name),
-  //   relayApiClient,
-  //   db,
-  //   eventStore,
-  //   relayRootIndexer,
-  //   indexerService,
-  //   logger,
-  // )
+  const relayApiClient = new RelayApiClient(new HttpClient())
+  const relayRootIndexer = new RelayRootIndexer(logger)
+  const relayIndexer = new RelayIndexer(
+    config.interop.config.chains,
+    config.interop.capture.chains.map((c) => c.name),
+    relayApiClient,
+    db,
+    eventStore,
+    relayRootIndexer,
+    indexerService,
+    logger,
+  )
 
   const start = async () => {
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
-    // await clearDb(db)
-
     await eventStore.start()
 
     if (config.interop && config.interop.matching) {
       matcher.start()
-      // await relayRootIndexer.start()
-      // await relayIndexer.start()
+      await relayRootIndexer.start()
+      await relayIndexer.start()
     }
     if (config.interop && config.interop.compare.enabled) {
-      // for (const compareLoop of compareLoops) {
-      //   compareLoop.start()
-      // }
+      for (const compareLoop of compareLoops) {
+        compareLoop.start()
+      }
     }
     if (config.interop && config.interop.cleaner) {
-      // cleaner.start()
+      cleaner.start()
     }
     if (config.interop && config.interop.financials.enabled) {
-      // await hourlyIndexer.start()
-      // await recentPricesIndexer.start()
-      // financialsService.start()
+      await hourlyIndexer.start()
+      await recentPricesIndexer.start()
+      financialsService.start()
     }
     if (config.interop && config.interop.config.enabled) {
       await configStore.start()
-      // for (const configLoop of plugins.configPlugins) {
-      //   configLoop.start()
-      // }
+      for (const configLoop of plugins.configPlugins) {
+        configLoop.start()
+      }
     }
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
@@ -163,21 +168,12 @@ export function createInteropModule({
       eventPlugins: plugins.eventPlugins.length,
     })
 
-    // await matcher.run()
-    if (MODE === 'match') return
-    for (const pluginSyncer of pluginSyncers) {
-      await pluginSyncer.start()
+    if (config.interop && config.interop.capture.chains) {
+      for (const pluginSyncer of pluginSyncers) {
+        pluginSyncer.start()
+      }
     }
-    // await matcher.run()
   }
 
   return { routers: [router], start }
-}
-
-async function clearDb(db: Database) {
-  if (MODE === 'match') return
-  await db.interopEvent.deleteAll()
-  await db.interopTransfer.deleteAll()
-  await db.interopMessage.deleteAll()
-  await db.interopPluginSyncedRange.deleteAll()
 }
