@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xc8359820c62ccbc6c3b0ab68b9060fc4b0d9ad43
+
+# Diff at Tue, 30 Dec 2025 09:36:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2aabbed9e63a26852d81ab1dd3b3ffb7ad2417d9 block: 1766409308
+- current timestamp: 1767086336
+
+## Description
+
+add verifier template description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766409308 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423) {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      template:
++        "morph/ZkEvmVerifierV1"
+      description:
++        "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x289be4763ca53294dcd911ca30afab503ce4a62e
+
+# Diff at Mon, 22 Dec 2025 13:16:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784209
+- current timestamp: 1766409308
+
+## Description
+
+challengers added and challenge resolved.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      values.challengers.36:
++        "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e"
+      values.challengers.37:
++        "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442"
+      values.proveRemaining:
+-        "1503000000000000000"
++        "2103000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xeaa84ac11a5bb336786b858b3efc28acc55c464d
 
 # Diff at Mon, 15 Dec 2025 07:37:53 GMT:

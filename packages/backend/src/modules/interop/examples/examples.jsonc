@@ -156,12 +156,12 @@
   "hyperlane": {
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x5b6825406a1e8613b22203a049df46476384e1c716f35961b709e1371d518462"
+        "chain": "base",
+        "tx": "0x6ef7715d9fbba845f1b75e73e86d13c6373aadf5ed1d3539b307fdafc67d1b03"
       },
       {
-        "chain": "base",
-        "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
+        "chain": "polygonpos",
+        "tx": "0xadcdd7cbe9de8fbed37a63270af0393a78c8443de29ba487d632a217eacd54b0"
       }
     ],
     "events": ["hyperlane.Dispatch", "hyperlane.Process"],

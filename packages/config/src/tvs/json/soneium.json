@@ -63,6 +63,51 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-KYO",
+      "priceId": "kyo",
+      "symbol": "KYO",
+      "name": "Kyo",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71031/large/Kyo.png?1765377840",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1765324800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-LOOT",
+      "priceId": "lootcoin",
+      "symbol": "LOOT",
+      "name": "Lootcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71197/large/lootcoin-logo.jpg?1766302463",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "lootcoin",
+        "decimals": 18,
+        "sinceTimestamp": 1766275200,
+        "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+        "chain": "soneium"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-nsASTR",
       "priceId": "neemo-staked-astar",
       "symbol": "nsASTR",

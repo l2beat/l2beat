@@ -9,6 +9,7 @@
     }
   },
   "names": {
-    "eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184": "DesertVerifier"
+    "eth:0x59406a5DcE71a4f631F9cd5D41996a19D6fDF184": "DesertVerifier",
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": "Lighter Multisig 2"
   }
 }

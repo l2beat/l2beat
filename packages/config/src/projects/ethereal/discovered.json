@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1765368374,
+  "timestamp": 1766406768,
   "configHash": "0x7c5dd716a2882b25314bac83271b22d979a340784cf9adf62ab8d16f123adfe8",
   "entries": [
     {
@@ -103,7 +103,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1758,
+        "batchCount": 2045,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -422,13 +422,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 145,
+        "firstUnresolvedNode": 170,
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23421301,
-        "latestConfirmed": 144,
-        "latestNodeCreated": 156,
+        "latestConfirmed": 169,
+        "latestNodeCreated": 180,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -868,8 +868,8 @@
         ],
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 1758,
-        "sequencerReportedSubMessageCount": 744986
+        "sequencerMessageCount": 2045,
+        "sequencerReportedSubMessageCount": 1002779
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1096,7 +1096,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2634,6 +2634,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409156787, "ethereal": 745636 },
+  "usedBlockNumbers": { "arbitrum": 413315588, "ethereal": 1003699 },
   "permissionsConfigHash": "0x9614115be5b8af8dd30dffa3dfd565bde41865afa3cfc6fa1f55e26102ec3326"
 }

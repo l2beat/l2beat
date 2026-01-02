@@ -9278,6 +9278,42 @@
       }
     },
     {
+      "name": "Kyo",
+      "coingeckoId": "kyo",
+      "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "symbol": "KYO",
+      "decimals": 18,
+      "deploymentTimestamp": 1760351109,
+      "coingeckoListingTimestamp": 1765324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71031/large/Kyo.png?1765377840",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lootcoin",
+      "coingeckoId": "lootcoin",
+      "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+      "symbol": "LOOT",
+      "decimals": 18,
+      "deploymentTimestamp": 1756091383,
+      "coingeckoListingTimestamp": 1766275200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71197/large/lootcoin-logo.jpg?1766302463",
+      "chainId": 1868,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Neemo Staked Astar",
       "coingeckoId": "neemo-staked-astar",
       "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",

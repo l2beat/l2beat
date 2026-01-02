@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1765380548,
+  "timestamp": 1766409107,
   "configHash": "0xded62d9fb9417d0f2fa93d8edfcf83d25d3ed3105fa2538ddfb528de6140b566",
   "entries": [
     {
@@ -19,7 +19,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x1c0F4f6daf0E0f32C5482672fa5342784915df21",
+      "address": "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -30,11 +30,6 @@
           "role": ".validators"
         }
       ]
-    },
-    {
-      "address": "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Lighter",
@@ -90,9 +85,9 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 97374,
-        "committedPriorityRequestCount": 1423278,
-        "createdMarketsPostSpot": ["ETH/USDC"],
+        "committedBatchesCount": 104812,
+        "committedPriorityRequestCount": 1504509,
+        "createdMarketsPostSpot": ["ETH/USDC", "STABLE", "XLM"],
         "createdMarketsPreSpot": [
           "USELESS",
           "TIA",
@@ -149,19 +144,19 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
-        "executedBatchesCount": 97348,
-        "executedOnChainBatchesCount": 66618,
-        "executedPriorityRequestCount": 1422980,
+        "executedBatchesCount": 104798,
+        "executedOnChainBatchesCount": 73388,
+        "executedPriorityRequestCount": 1504333,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-        "insuranceFundOperator": "eth:0x3629C998Fe1045A86c423AcaacCB9cBF7c792011",
+        "insuranceFundOperator": "eth:0x47104B9f952ff19DB43DAeB7689aE51A0eD4890c",
         "l2AssetConfigUpdates": [],
         "l2AssetRegistrations": [],
-        "lastAccountIndex": 675361,
-        "lastVerifiedEndBlockNumber": 122057444,
-        "lastVerifiedStateRoot": "0x19feb1b93852e6ab2667c9734a2531848d48c77070d87106a7773746d12c4735",
-        "lastVerifiedValidiumRoot": "0x08dd214531dcf0bea812024531798e2b0ce1ee310c5f8eaf0e88b42b6ab241f9",
+        "lastAccountIndex": 690333,
+        "lastVerifiedEndBlockNumber": 132372999,
+        "lastVerifiedStateRoot": "0x97d97375d942f1a8f07793dfd735d454ef73672cf853deb1d787cf6f6c2a134f",
+        "lastVerifiedValidiumRoot": "0xf82b7ff2d598270483883de6c0e0fe9351670026f5582632ff5f1f5b3cca117e",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -183,8 +178,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 388,
-        "pendingOnChainBatchesCount": 19,
+        "openPriorityRequestCount": 220,
+        "pendingOnChainBatchesCount": 13,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -196,13 +191,13 @@
             "tokenAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
           }
         ],
-        "stateRoot": "0x19feb1b93852e6ab2667c9734a2531848d48c77070d87106a7773746d12c4735",
+        "stateRoot": "0x97d97375d942f1a8f07793dfd735d454ef73672cf853deb1d787cf6f6c2a134f",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
-        "treasury": "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4",
+        "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x08dd214531dcf0bea812024531798e2b0ce1ee310c5f8eaf0e88b42b6ab241f9",
-        "verifiedBatchesCount": 97348,
-        "verifiedPriorityRequestCount": 1422980,
+        "validiumRoot": "0xf82b7ff2d598270483883de6c0e0fe9351670026f5582632ff5f1f5b3cca117e",
+        "verifiedBatchesCount": 104798,
+        "verifiedPriorityRequestCount": 1504333,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -217,7 +212,41 @@
       }
     },
     {
-      "address": "eth:0x44A5F41Fb364e52878193A8Ba375A1B17906D8E4",
+      "name": "Safe",
+      "address": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1766000843,
+      "sinceBlock": 24034515,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x6160aa8A4CFF0A56816855FE25454698AE2aF99E",
+          "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
+          "eth:0xAeD34Fa09DCdd340f81991FfDa368F21e79922D0"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x2be97871a97abc8daff7beab57140b776b2b7b475554d400f8de123313f1760d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x47104B9f952ff19DB43DAeB7689aE51A0eD4890c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -227,9 +256,27 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x6160aa8A4CFF0A56816855FE25454698AE2aF99E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "address": "eth:0x8B0190046D7b366642D4ff091C100d84ec4AB6f6",
@@ -313,7 +360,7 @@
         "$immutable": true,
         "approvedUpgradeNoticePeriod": 1814400,
         "approvedUpgradeNoticePeriodFmt": "21d",
-        "getMaster": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
+        "getMaster": "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2",
         "managedContracts": [
           "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
           "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
@@ -338,7 +385,7 @@
       }
     },
     {
-      "name": "Safe",
+      "name": "Lighter Multisig 2",
       "address": "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -353,6 +400,47 @@
           "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
           "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
           "role": ".networkGovernor"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "delay": 1814400,
+          "role": ".getMaster"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -371,7 +459,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 4,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -416,10 +504,9 @@
         "PRIORITY_EXPIRATION": 1555200,
         "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "validators": [
-          "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
-          "eth:0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa",
-          "eth:0xfcB73F6405F6B9be91013d9477d81833a69C9c0D",
-          "eth:0x1c0F4f6daf0E0f32C5482672fa5342784915df21"
+          "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f",
+          "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
+          "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C"
         ]
       },
       "fieldMeta": { "networkGovernor": { "severity": "HIGH" } },
@@ -455,6 +542,24 @@
       }
     },
     {
+      "address": "eth:0xAeD34Fa09DCdd340f81991FfDa368F21e79922D0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "name": "DesertVerifier",
       "address": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
       "type": "Contract",
@@ -477,85 +582,9 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xfcB73F6405F6B9be91013d9477d81833a69C9c0D",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
       "address": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-          "delay": 1814400,
-          "role": ".getMaster"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -567,6 +596,9 @@
       "function transferMastership(address _newMaster)",
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE": [
+      "constructor(address _singleton)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -987,6 +1019,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xc00318e126be1461845e143d518fe8dc218304f44203d1b26d6498613c67f4a0"
   },
-  "usedBlockNumbers": { "ethereum": 23983206 },
-  "permissionsConfigHash": "0x10ebd477f6fe209e057f0950ce585acebe9f8dd0a87e540e3f480b27c0b4a4dc"
+  "usedBlockNumbers": { "ethereum": 24068366 },
+  "permissionsConfigHash": "0xc3132d3589b88ef05583e65433084d79bdf26246f7ac61789e7fb9cf44d695db"
 }
