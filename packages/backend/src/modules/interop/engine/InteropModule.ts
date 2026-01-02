@@ -9,6 +9,7 @@ import { InteropConfigStore } from './config/InteropConfigStore'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropPluginSyncer } from './sync/InteropPluginSyncer'
+import { InteropPluginSyncModes } from './sync/InteropPluginSyncModes'
 
 // const MODE: 'match' | 'sync' = 'match'
 const MODE: 'match' | 'sync' = 'sync'
@@ -36,6 +37,7 @@ export function createInteropModule({
     logger,
     rpcClients: providers.clients.rpcClients,
   })
+  const syncModes = new InteropPluginSyncModes()
 
   const processors = []
   if (config.interop.capture.enabled) {
@@ -65,6 +67,7 @@ export function createInteropModule({
       config.interop.capture.chains,
       config.chainConfig,
       plugin,
+      syncModes.get(plugin.name),
       eventStore,
       db,
       logger,
@@ -126,7 +129,7 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
-    await clearDb(db)
+    // await clearDb(db)
 
     await eventStore.start()
 

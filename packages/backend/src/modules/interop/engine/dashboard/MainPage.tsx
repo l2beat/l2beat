@@ -3,11 +3,12 @@ import type {
   InteropMessageDetailedStatsRecord,
   InteropMessageStatsRecord,
   InteropMessageUniqueAppsRecord,
+  InteropPluginSyncedRangeRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
 import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories/InteropTransferRepository'
-import { Address32, formatSeconds } from '@l2beat/shared-pure'
+import { Address32, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { getInteropChains } from '../../../../config/makeConfig'
@@ -25,6 +26,59 @@ type MessageStats = InteropMessageStatsRecord & {
 
 type TransferStats = InteropTransfersStatsRecord & {
   chains: InteropTransfersDetailedStatsRecord[]
+}
+
+function formatDistanceFromNow(timestamp: number): string {
+  const nowMs = Date.now()
+  const timestampMs = timestamp * 1000
+  const diffMs = Math.max(0, nowMs - timestampMs)
+  if (diffMs < 60_000) {
+    return '<1m'
+  }
+
+  const totalMinutes = Math.ceil(diffMs / 60_000)
+  const days = Math.floor(totalMinutes / 1440)
+  const hours = Math.floor((totalMinutes % 1440) / 60)
+  const minutes = totalMinutes % 60
+  const parts: string[] = []
+
+  if (days) {
+    parts.push(`${days}d`)
+  }
+  if (hours) {
+    parts.push(`${hours}h`)
+  }
+  if (minutes || parts.length === 0) {
+    parts.push(`${minutes}m`)
+  }
+
+  return parts.join(' ')
+}
+
+function PluginsStatusTable(props: {
+  syncedRanges: InteropPluginSyncedRangeRecord[]
+}) {
+  return (
+    <table>
+      <caption>Plugins status</caption>
+      <thead>
+        <th>plugin</th>
+        <th>chain</th>
+        <th>distance from now</th>
+        <th>last error</th>
+      </thead>
+      <tbody>
+        {props.syncedRanges.map((r) => (
+          <tr>
+            <td>{r.pluginName}</td>
+            <td>{r.chain}</td>
+            <td>{formatDistanceFromNow(r.toTimestamp)}</td>
+            <td>{r.lastError ?? ''}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
 }
 
 function EventsTable(props: { events: InteropEventStatsRecord[] }) {
@@ -349,6 +403,7 @@ function MainPageLayout(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  syncedRanges: InteropPluginSyncedRangeRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -410,6 +465,7 @@ function MainPageLayout(props: {
         ]}
         footer={
           <>
+            <PluginsStatusTable syncedRanges={props.syncedRanges} />
             <h3>Known apps for plugins</h3>
             {props.uniqueApps.map((u) => (
               <div>
@@ -436,6 +492,7 @@ export function renderMainPage(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  syncedRanges: InteropPluginSyncedRangeRecord[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

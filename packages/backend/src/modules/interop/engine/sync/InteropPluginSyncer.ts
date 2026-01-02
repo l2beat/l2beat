@@ -19,6 +19,7 @@ import type { Log as ViemLog } from 'viem'
 import { encodeEventTopics, parseAbi } from 'viem'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import { getBlockNumberAtOrBefore } from '../../../../peripherals/getBlockNumberAtOrBefore'
+import { TimeLoop } from '../../../../tools/TimeLoop'
 import type {
   DataRequest,
   InteropEvent,
@@ -27,6 +28,7 @@ import type {
 } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import type { SyncMode } from './InteropPluginSyncModes'
 
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 2_000n,
@@ -41,28 +43,37 @@ interface LogQuery {
   addresses: Set<EthereumAddress>
 }
 
-export class InteropPluginSyncer {
+export class InteropPluginSyncer extends TimeLoop {
   private rpcClients: { [chain: string]: EthRpcClient } = {}
 
   constructor(
     private enabledChains: { name: string; type: 'evm' }[],
     private chainConfigs: ChainApi[],
     private plugin: InteropPlugin,
+    private syncMode: SyncMode,
     private store: InteropEventStore,
     private db: Database,
-    private logger: Logger,
-    private delayMs = 10 * 1_000,
-    private errorDelayMs = 10 * 1_000,
+    protected logger: Logger,
+    intervalMs = 10_000,
   ) {
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 
-  async start() {
-    try {
-      if (!this.plugin.getDataRequests || !this.plugin.capture) {
-        return // This plugin doesn't support re-syncing.
-      }
+  async run() {
+    if (this.syncMode.current !== 'catchUp') {
+      this.logger.info(
+        `Skipping catch-up sync of ${this.plugin.name} because it's not in a cath-up mode`,
+      )
+      return
+    }
+    if (!this.plugin.getDataRequests || !this.plugin.capture) {
+      // This plugin doesn't support re-syncing.
+      this.syncMode.current = 'follow' // switch to follow mode
+      return
+    }
 
+    try {
       const logQueryPerChain = this.groupEventDataRequests(
         this.plugin.getDataRequests(),
       )
@@ -79,19 +90,25 @@ export class InteropPluginSyncer {
       }
 
       await this.clearPluginError()
-      await Promise.all(tasksPerChain)
+      const atTip = await Promise.allSettled(tasksPerChain)
+
+      if (atTip.every((s) => s.status === 'fulfilled' && s.value === 'atTip')) {
+        this.syncMode.current = 'follow' // switch to follow mode
+      }
     } catch (error) {
-      this.savePluginError(error, 'SYNCING STOPPED! ')
+      this.savePluginError(error)
     }
   }
 
-  private async chainSyncLoop(chain: string, logQueryForChain: LogQuery) {
-    while (true) {
-      try {
+  private async chainSyncLoop(
+    chain: string,
+    logQueryForChain: LogQuery,
+  ): Promise<'beforeTip' | 'atTip'> {
+    try {
+      while (true) {
         const syncData = await this.calculateNextRange(this.plugin.name, chain)
         if (!syncData) {
-          await this.sleepMs(this.delayMs)
-          continue
+          return 'atTip'
         }
 
         const interopEvents = await this.captureRange(
@@ -117,13 +134,13 @@ export class InteropPluginSyncer {
           range: syncData.nextRange,
         })
 
-        if (syncData.fullRange.toBlock === syncData.latestBlockNumber) {
-          await this.sleepMs(this.delayMs)
-        }
-      } catch (error) {
-        await this.saveChainSyncError(chain, error)
-        await this.sleepMs(this.errorDelayMs ?? this.delayMs)
+        return syncData.fullRange.toBlock === syncData.latestBlockNumber
+          ? 'atTip'
+          : 'beforeTip'
       }
+    } catch (error) {
+      await this.saveChainSyncError(chain, error)
+      return 'beforeTip'
     }
   }
 
@@ -367,12 +384,12 @@ export class InteropPluginSyncer {
     )
   }
 
-  private async savePluginError(error: unknown, prefix?: string) {
+  private async savePluginError(error: unknown) {
     this.logger.error('Error in syncer', error, {
       pluginName: this.plugin.name,
     })
     await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
-      lastError: (prefix ?? '') + errorToString(error),
+      lastError: errorToString(error),
     })
   }
 
