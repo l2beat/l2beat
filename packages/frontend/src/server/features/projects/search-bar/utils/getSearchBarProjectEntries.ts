@@ -1,7 +1,18 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectContracts } from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SearchBarProject } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
+
+function getContractAddresses(
+  contracts: ProjectContracts | undefined,
+): string[] {
+  if (!contracts?.addresses) return []
+
+  return Object.values(contracts.addresses)
+    .flat()
+    .map((contract) => ChainSpecificAddress.address(contract.address))
+}
 
 export function getSearchBarProjectEntries<
   T extends Project<
@@ -14,6 +25,7 @@ export function getSearchBarProjectEntries<
     | 'isBridge'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
+    | 'contracts'
   >,
 >(project: T, allProjects: T[]) {
   const results: SearchBarProject[] = []
@@ -35,6 +47,7 @@ export function getSearchBarProjectEntries<
     iconUrl: getProjectIcon(project.slug),
     kind: getSearchBarProjectKind(project),
     isUpcoming: false,
+    contractAddresses: getContractAddresses(project.contracts),
     tags: [project.slug],
   } satisfies Partial<SearchBarProject>
 

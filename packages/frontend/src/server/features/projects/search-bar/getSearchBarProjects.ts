@@ -20,6 +20,7 @@ export async function getSearchBarProjects(
       'isUpcoming',
       'ecosystemConfig',
       'zkCatalogInfo',
+      'contracts',
     ],
   })
 
@@ -30,7 +31,11 @@ export async function getSearchBarProjects(
   const result = fuzzysort
     .go(search, searchBarProjects, {
       limit: 15,
-      keys: ['name', (e) => e.tags?.join() ?? ''],
+      keys: [
+        'name',
+        (e) => e.tags?.join() ?? '',
+        (e) => e.contractAddresses?.join() ?? '',
+      ],
       scoreFn: (match) =>
         match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
     })

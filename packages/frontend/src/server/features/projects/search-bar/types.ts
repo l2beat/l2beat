@@ -9,4 +9,5 @@ export type SearchBarProject = SearchBarEntry & {
   kind: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zkCatalog' | 'ecosystem'
   scalingCategory?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
+  contractAddresses?: string[]
 }
