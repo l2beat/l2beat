@@ -29,6 +29,7 @@ import type {
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import type { InteropPluginSyncMode } from './InteropPluginSyncModes'
+import { isPluginResyncable } from './isPluginResyncable'
 
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 2_000n,
@@ -61,8 +62,8 @@ export class InteropPluginSyncer extends TimeLoop {
   }
 
   async run() {
-    if (!this.plugin.getDataRequests || !this.plugin.capture) {
-      return // This plugin doesn't support re-syncing.
+    if (!isPluginResyncable(this.plugin)) {
+      return
     }
 
     try {
@@ -82,64 +83,63 @@ export class InteropPluginSyncer extends TimeLoop {
       }
 
       await this.clearPluginError()
-      await Promise.allSettled(tasksPerChain)
+      const runResults = await Promise.allSettled(tasksPerChain)
+      if (runResults.some((r) => r.status !== 'fulfilled')) {
+        throw new Error('Syncing some chains encountered errors')
+      }
     } catch (error) {
       this.savePluginError(error)
     }
   }
 
   private async chainSyncLoop(chain: string, logQueryForChain: LogQuery) {
-    while (this.syncMode.getForChain(chain) === 'catchUp') {
-      const status = await this.syncNextRange(chain, logQueryForChain)
-      if (status === 'error') {
-        break
+    try {
+      while (this.syncMode.getForChain(chain) === 'catchUp') {
+        const status = await this.syncNextRange(chain, logQueryForChain)
+        if (status === 'atTip') {
+          this.syncMode.setForChain(chain, 'follow')
+        }
       }
-      if (status === 'atTip') {
-        this.syncMode.setForChain(chain, 'follow')
-      }
+    } catch (error) {
+      await this.saveChainSyncError(chain, error)
     }
   }
 
   private async syncNextRange(
     chain: string,
     logQueryForChain: LogQuery,
-  ): Promise<'beforeTip' | 'atTip' | 'error'> {
-    try {
-      const syncData = await this.calculateNextRange(this.plugin.name, chain)
-      if (!syncData) {
-        return 'atTip'
-      }
-
-      const interopEvents = await this.captureRange(
-        chain,
-        syncData.nextRange,
-        logQueryForChain,
-      )
-
-      await this.db.transaction(async () => {
-        await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
-        await this.db.interopPluginSyncedRange.upsert({
-          pluginName: this.plugin.name,
-          chain,
-          ...syncData.fullRange,
-          lastError: null,
-        })
-        await this.clearChainSyncError(chain)
-      })
-
-      this.logger.info('New range synced', {
-        chain,
-        pluginName: this.plugin.name,
-        range: syncData.nextRange,
-      })
-
-      return syncData.fullRange.toBlock === syncData.latestBlockNumber
-        ? 'atTip'
-        : 'beforeTip'
-    } catch (error) {
-      await this.saveChainSyncError(chain, error)
-      return 'error'
+  ): Promise<'beforeTip' | 'atTip'> {
+    const syncData = await this.calculateNextRange(this.plugin.name, chain)
+    if (!syncData) {
+      return 'atTip'
     }
+
+    const interopEvents = await this.captureRange(
+      chain,
+      syncData.nextRange,
+      logQueryForChain,
+    )
+
+    await this.db.transaction(async () => {
+      await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+      await this.db.interopPluginSyncedRange.upsert({
+        pluginName: this.plugin.name,
+        chain,
+        ...syncData.fullRange,
+        lastError: null,
+      })
+      await this.clearChainSyncError(chain)
+    })
+
+    this.logger.info('New range synced', {
+      chain,
+      pluginName: this.plugin.name,
+      range: syncData.nextRange,
+    })
+
+    return syncData.fullRange.toBlock === syncData.latestBlockNumber
+      ? 'atTip'
+      : 'beforeTip'
   }
 
   private async captureRange(
