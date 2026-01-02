@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -47,7 +48,7 @@ const stakingValue =
 
 const proofWindow = discovery.getContractValue<number>('Rollup', 'proofWindow')
 
-const sequencers = discovery.getContractValue<EthereumAddress[]>(
+const sequencers = discovery.getContractValue<ChainSpecificAddress[]>(
   'L1Staking',
   'getActiveStakers',
 )
@@ -156,7 +157,7 @@ export const morph: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
         inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
-        sequencers: sequencers,
+        sequencers: sequencers.map((s) => ChainSpecificAddress.address(s)),
       },
     ],
   },
