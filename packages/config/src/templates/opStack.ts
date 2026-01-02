@@ -106,13 +106,13 @@ export function EIGENDA_DA_PROVIDER(
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
     const bridge =
-      isUsingDACertVerifier && eigenDACertVersion === 'v2'
+      isUsingDACertVerifier && (eigenDACertVersion === 'v2' || eigenDACertVersion === 'v3')
         ? {
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
             description:
-              'EigenDA V2 certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.',
-            projectId: ProjectId('eigenda-v2'),
+              `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
+            projectId: ProjectId(eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3'),
           }
         : DA_BRIDGES.NONE
 
