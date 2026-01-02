@@ -38,7 +38,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": true
     },
     {
       "mode": "auto",
