@@ -132,10 +132,7 @@ function TokenAddress({
   }
   const ethAddress = Address32.cropToEthereumAddress(Address32(address))
   return (
-    <a
-      target="_blank"
-      href={`${explorerUrl}/address/${ethAddress}`}
-    >
+    <a target="_blank" href={`${explorerUrl}/address/${ethAddress}`}>
       <ShortenedHash hash={ethAddress} />
     </a>
   )
