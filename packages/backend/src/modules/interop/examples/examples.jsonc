@@ -838,6 +838,32 @@
       }
     ]
   },
+  "sorare-base": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xa85229231a6005da904ddd4a586b5755d9c318e06d372221da25aef63f10b453"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2057d0c5fe603af609d821a8b18163e8f75ee687b6b060ceb5e4f37bad4781fa"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x22aa80f80284cef1509cd434a614316dbf844e4d0850d5ecda8ba6de29b14c0b"
+      },
+      {
+        "chain": "base",
+        "tx": "0x3b6867710390de4ffab9c898a1fcc664216505b46a1c6b9e0d3704401333cd6c"
+      }
+    ],
+    "events": [
+      "sorare-base.TransferRegisteredSentMessage",
+      "sorare-base.FactRegisteredRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["sorare-base.L1ToL2Transfer"]
+  },
   "opstack-standardbridge": {
     "txs": [
       // base -> ethereum (erc20)

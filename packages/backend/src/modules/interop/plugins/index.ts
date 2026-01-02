@@ -43,6 +43,7 @@ import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standar
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
+import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import type { InteropPlugin } from './types'
@@ -127,6 +128,7 @@ export function createInteropPlugins(
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
+      new SorareBasePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
