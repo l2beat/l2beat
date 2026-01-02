@@ -461,7 +461,7 @@ export const paradex: ScalingProject = {
       description:
         'Paradex introduces a privacy council to manage decryption keys for encrypted data availability.',
       type: 'general',
-    }
+    },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
