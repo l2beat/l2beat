@@ -8,6 +8,7 @@ import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
+import { ShortenedHash } from './ShortenedHash'
 
 function TransfersTable(props: {
   transfers: InteropTransferRecord[]
@@ -59,10 +60,10 @@ function TransfersTable(props: {
                     target="_blank"
                     href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
                   >
-                    {e.srcTxHash}
+                    <ShortenedHash hash={e.srcTxHash} />
                   </a>
                 ) : (
-                  e.srcTxHash
+                  <ShortenedHash hash={e.srcTxHash} />
                 )}
               </td>
               <td>
@@ -78,10 +79,10 @@ function TransfersTable(props: {
                     target="_blank"
                     href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
                   >
-                    {e.dstTxHash}
+                    <ShortenedHash hash={e.dstTxHash} />
                   </a>
                 ) : (
-                  e.dstTxHash
+                  <ShortenedHash hash={e.dstTxHash} />
                 )}
               </td>
               <td>
@@ -117,12 +118,10 @@ function TokenAddress({
   if (!explorerUrl) {
     return null
   }
+  const ethAddress = Address32.cropToEthereumAddress(Address32(address))
   return (
-    <a
-      target="_blank"
-      href={`${explorerUrl}/address/${Address32.cropToEthereumAddress(Address32(address))}`}
-    >
-      {Address32.cropToEthereumAddress(Address32(address))}
+    <a target="_blank" href={`${explorerUrl}/address/${ethAddress}`}>
+      <ShortenedHash hash={ethAddress} />
     </a>
   )
 }
