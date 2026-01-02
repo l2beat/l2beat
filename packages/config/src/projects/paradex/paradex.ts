@@ -13,7 +13,6 @@ import {
   EXITS,
   OPERATOR,
   REASON_FOR_BEING_OTHER,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -349,7 +348,7 @@ export const paradex: ScalingProject = {
     layer: {
       value: 'Privacy council',
       sentiment: 'bad',
-      description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryptions keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
+      description: `Encrypted data is posted on Ethereum as blobs, and a privacy council of ${privacyCouncil.membersCount} members holds the decryption keys. Users are not able to independetly reconstruct the L2 state without relying on the council members.`,
     },
     bridge: DA_BRIDGES.DAC_MEMBERS({
       membersCount: privacyCouncil.membersCount,
@@ -390,7 +389,22 @@ export const paradex: ScalingProject = {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
   },
   technology: {
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
+    dataAvailability: {
+      name: 'Encrypted blobs via privacy council',
+      description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryption keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'no privacy council member discloses the decryption keys.',
+        },
+      ],
+      references: [
+        {
+          title: 'Privacy Perps - Paradex docs',
+          url: 'https://docs.paradex.trade/trading/privacy',
+        },
+      ],
+    },
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
