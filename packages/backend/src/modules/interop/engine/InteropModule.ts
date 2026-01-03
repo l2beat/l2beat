@@ -1,8 +1,6 @@
-import type { Logger } from '@l2beat/backend-tools'
-import { EthRpcClient, Http, HttpClient } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
-import type { ChainApi } from '../../../config/chain/ChainApi'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
@@ -18,9 +16,8 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropEventSyncer } from './sync/InteropEventSyncer'
 import { InteropSyncModes } from './sync/InteropPluginSyncModes'
-import { isPluginResyncable } from './sync/isPluginResyncable'
+import { InteropSyncers } from './sync/InteropSyncers'
 
 export function createInteropModule({
   config,
@@ -71,29 +68,14 @@ export function createInteropModule({
     logger,
   )
 
-  const eventSyncers: InteropEventSyncer[] = []
-  for (const plugin of plugins.eventPlugins) {
-    if (!isPluginResyncable(plugin)) {
-      continue
-    }
-    for (const chain of config.interop.capture.chains) {
-      const chainName = chain.name as LongChainName
-      const chainConfig = config.chainConfig.find((c) => c.name === chainName)
-      if (!chainConfig) {
-        throw new Error(`Missing configuration for chain ${chainName}`)
-      }
-      const eventSyncer = new InteropEventSyncer(
-        chainName,
-        plugin,
-        getRpcClient(chainConfig, logger),
-        syncModes.getForPlugin(plugin.name),
-        eventStore,
-        db,
-        logger,
-      )
-      eventSyncers.push(eventSyncer)
-    }
-  }
+  const syncers = new InteropSyncers(
+    plugins.eventPlugins,
+    config.interop.capture.chains.map((c) => c.name as LongChainName),
+    config.chainConfig,
+    eventStore,
+    db,
+    logger,
+  )
 
   const router = createInteropRouter(
     db,
@@ -183,41 +165,10 @@ export function createInteropModule({
       eventPlugins: plugins.eventPlugins.length,
     })
 
-    if (config.interop && config.interop.capture.chains) {
-      for (const eventSyncer of eventSyncers) {
-        eventSyncer.start()
-      }
+    if (config.interop && config.interop.capture.enabled) {
+      syncers.start()
     }
   }
 
   return { routers: [router], start }
-}
-
-const INTEROP_RPC_CLIENTS: { [chain: string]: EthRpcClient } = {}
-
-function getRpcClient(chainConfig: ChainApi, logger: Logger) {
-  let client = INTEROP_RPC_CLIENTS[chainConfig.name]
-  if (!client) {
-    const rpcConfig = chainConfig.blockApis.find((a) => a.type === 'rpc')
-    if (!rpcConfig || rpcConfig.type !== 'rpc') {
-      throw new Error(`Missing RPC config for chain ${chainConfig.name}`)
-    }
-
-    const rpcLogger = logger
-      .for(EthRpcClient.name)
-      .tag({ source: chainConfig.name })
-
-    const http = new Http({
-      logger: rpcLogger,
-      maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
-    })
-
-    client = new EthRpcClient(
-      http,
-      rpcConfig.url,
-      `${EthRpcClient.name}:${chainConfig.name}`,
-    )
-    INTEROP_RPC_CLIENTS[chainConfig.name] = client
-  }
-  return client
 }

@@ -25,7 +25,6 @@ import type {
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
-import type { InteropPluginSyncMode } from './InteropPluginSyncModes'
 
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 2_000n,
@@ -41,11 +40,12 @@ interface LogQuery {
 }
 
 export class InteropEventSyncer extends TimeLoop {
+  public syncMode: 'follow' | 'catchUp' = 'catchUp'
+
   constructor(
     private chain: LongChainName,
     private plugin: InteropPluginResyncable,
     private rpcClient: EthRpcClient,
-    private syncMode: InteropPluginSyncMode,
     private store: InteropEventStore,
     private db: Database,
     protected logger: Logger,
@@ -57,14 +57,14 @@ export class InteropEventSyncer extends TimeLoop {
 
   async run() {
     try {
-      while (this.syncMode.getForChain(this.chain) === 'catchUp') {
+      while (this.syncMode === 'catchUp') {
         const logQuery = this.buildLogQuery()
         if (logQuery.topic0s.size === 0 || logQuery.addresses.size === 0) {
           break
         }
         const status = await this.syncNextRange(logQuery)
         if (status === 'atTip') {
-          // this.syncMode.setForChain(this.chain, 'follow') // TODO AA: debug
+          this.syncMode = 'follow'
         }
       }
     } catch (error) {
