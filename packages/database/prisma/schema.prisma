@@ -520,8 +520,6 @@ model InteropPluginStatus {
   pluginName          String    @id @db.VarChar(255)
   lastError           String?   @db.Text
   resyncRequestedFrom DateTime? @db.Timestamp(6)
-
-  syncedRanges InteropPluginSyncedRange[]
 }
 
 model InteropPluginSyncedRange {
@@ -532,8 +530,6 @@ model InteropPluginSyncedRange {
   toBlock       BigInt
   toTimestamp   DateTime @db.Timestamp(6)
   lastError     String?  @db.Text
-
-  pluginStatus InteropPluginStatus @relation(fields: [pluginName], references: [pluginName], onDelete: Restrict)
 
   @@id([pluginName, chain])
 }

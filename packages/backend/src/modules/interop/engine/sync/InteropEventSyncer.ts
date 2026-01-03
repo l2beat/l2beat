@@ -59,9 +59,12 @@ export class InteropEventSyncer extends TimeLoop {
     try {
       while (this.syncMode.getForChain(this.chain) === 'catchUp') {
         const logQuery = this.buildLogQuery()
+        if (logQuery.topic0s.size === 0) {
+          break
+        }
         const status = await this.syncNextRange(logQuery)
         if (status === 'atTip') {
-          this.syncMode.setForChain(this.chain, 'follow')
+          // this.syncMode.setForChain(this.chain, 'follow') // TODO AA: debug
         }
       }
     } catch (error) {
@@ -84,6 +87,7 @@ export class InteropEventSyncer extends TimeLoop {
     const interopEvents = await this.captureRange(syncData.nextRange, logQuery)
 
     await this.db.transaction(async () => {
+      // TODO: store.saveNewEvents doesn't seem to happen in current transaction!!! throwing furter doesn't rollback?!?!
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.plugin.name,

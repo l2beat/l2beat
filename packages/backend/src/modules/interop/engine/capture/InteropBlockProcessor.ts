@@ -2,7 +2,11 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
-import type { InteropEvent, InteropPlugin } from '../../plugins/types'
+import type {
+  InteropEvent,
+  InteropPlugin,
+  InteropPluginResyncable,
+} from '../../plugins/types'
 import type { InteropSyncModes } from '../sync/InteropPluginSyncModes'
 import { isPluginResyncable } from '../sync/isPluginResyncable'
 import { getItemsToCapture } from './getItemsToCapture'
@@ -84,7 +88,7 @@ export class InteropBlockProcessor implements BlockProcessor {
     }
 
     await this.db.transaction(async () => {
-      await this.store.saveNewEvents(events) // TODO: make this idempotent?
+      await this.store.saveNewEvents(events)
       for (const pluginName of pluginsForStatusUpdate) {
         await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
           pluginName,
@@ -117,7 +121,7 @@ export class InteropBlockProcessor implements BlockProcessor {
   }
 
   async canUpdatePlugin(
-    plugin: InteropPlugin,
+    plugin: InteropPluginResyncable,
     blockNumber: bigint,
   ): Promise<boolean> {
     if (

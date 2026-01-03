@@ -1,7 +1,8 @@
 import { UpsertMap } from '@l2beat/shared'
 
 export type SyncMode = 'follow' | 'catchUp'
-const DEFAULT_MODE: SyncMode = 'follow'
+// const DEFAULT_MODE: SyncMode = 'follow' // TODO: AA debuf
+const DEFAULT_MODE: SyncMode = 'catchUp'
 
 export class InteropSyncModes {
   private perPlugin = new UpsertMap<string, InteropPluginSyncMode>()
