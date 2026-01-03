@@ -207,17 +207,16 @@ export interface EventToCaptureParams {
   addresses: ChainSpecificAddress[]
 }
 
-export type DataRequest = EvmEventDataRequest
+export type DataRequest = EventDataRequest
 
-interface EvmEventDataRequest {
-  type: 'evmEvent'
+interface EventDataRequest {
+  type: 'event'
   signature: string
   addresses: ChainSpecificAddress[]
 }
 
 export interface InteropPlugin {
   name: string
-  getDataRequests?: () => DataRequest[]
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
@@ -225,6 +224,10 @@ export interface InteropPlugin {
     event: InteropEvent,
     db: InteropEventDb,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
+}
+
+export interface InteropPluginResyncable extends InteropPlugin {
+  getDataRequests: () => DataRequest[]
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<

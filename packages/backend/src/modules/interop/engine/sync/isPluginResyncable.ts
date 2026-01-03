@@ -1,9 +1,10 @@
-import type { DataRequest, InteropPlugin } from '../../plugins/types'
+import type {
+  InteropPlugin,
+  InteropPluginResyncable,
+} from '../../plugins/types'
 
 export function isPluginResyncable(
   plugin: InteropPlugin,
-): plugin is InteropPlugin & {
-  getDataRequests: () => DataRequest[]
-} {
-  return plugin.getDataRequests !== undefined
+): plugin is InteropPluginResyncable {
+  return 'getDataRequests' in plugin
 }

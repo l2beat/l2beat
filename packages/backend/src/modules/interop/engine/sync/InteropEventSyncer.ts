@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps, Database } from '@l2beat/database'
 import {
-  EthRpcClient,
-  Http,
+  type EthRpcClient,
   type RpcLog,
   toEVMLog,
   UpsertMap,
@@ -16,20 +15,17 @@ import {
 } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
-import { encodeEventTopics, parseAbi } from 'viem'
-import type { ChainApi } from '../../../../config/chain/ChainApi'
 import { getBlockNumberAtOrBefore } from '../../../../peripherals/getBlockNumberAtOrBefore'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import type {
-  DataRequest,
   InteropEvent,
-  InteropPlugin,
+  InteropPluginResyncable,
   LogToCapture,
 } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { errorToString, toEventSelector } from '../utils'
 import type { InteropPluginSyncMode } from './InteropPluginSyncModes'
-import { isPluginResyncable } from './isPluginResyncable'
 
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 2_000n,
@@ -44,13 +40,11 @@ interface LogQuery {
   addresses: Set<EthereumAddress>
 }
 
-export class InteropPluginSyncer extends TimeLoop {
-  private rpcClients: { [chain: string]: EthRpcClient } = {}
-
+export class InteropEventSyncer extends TimeLoop {
   constructor(
-    private enabledChains: { name: string; type: 'evm' }[],
-    private chainConfigs: ChainApi[],
-    private plugin: InteropPlugin,
+    private chain: LongChainName,
+    private plugin: InteropPluginResyncable,
+    private rpcClient: EthRpcClient,
     private syncMode: InteropPluginSyncMode,
     private store: InteropEventStore,
     private db: Database,
@@ -62,77 +56,46 @@ export class InteropPluginSyncer extends TimeLoop {
   }
 
   async run() {
-    if (!isPluginResyncable(this.plugin)) {
-      return
-    }
-
     try {
-      const logQueryPerChain = this.groupEventDataRequests(
-        this.plugin.getDataRequests(),
-      )
-
-      await this.getPluginStatus(this.plugin.name) // init plugin status if null
-
-      const tasksPerChain = []
-      for (const [chain, logQuery] of logQueryPerChain) {
-        if (!this.enabledChains.map((c) => c.name).includes(chain)) {
-          continue
-        }
-        const syncLoop = this.chainSyncLoop(chain, logQuery)
-        tasksPerChain.push(syncLoop)
-      }
-
-      await this.clearPluginError()
-      const runResults = await Promise.allSettled(tasksPerChain)
-      if (runResults.some((r) => r.status !== 'fulfilled')) {
-        throw new Error('Syncing some chains encountered errors')
-      }
-    } catch (error) {
-      this.savePluginError(error)
-    }
-  }
-
-  private async chainSyncLoop(chain: string, logQueryForChain: LogQuery) {
-    try {
-      while (this.syncMode.getForChain(chain) === 'catchUp') {
-        const status = await this.syncNextRange(chain, logQueryForChain)
+      while (this.syncMode.getForChain(this.chain) === 'catchUp') {
+        const logQuery = this.buildLogQuery()
+        const status = await this.syncNextRange(logQuery)
         if (status === 'atTip') {
-          this.syncMode.setForChain(chain, 'follow')
+          this.syncMode.setForChain(this.chain, 'follow')
         }
       }
     } catch (error) {
-      await this.saveChainSyncError(chain, error)
+      this.logger.error('Error syncing chain', error, {
+        pluginName: this.plugin.name,
+        chain: this.chain,
+      })
+      await this.saveChainSyncError(error)
     }
   }
 
   private async syncNextRange(
-    chain: string,
-    logQueryForChain: LogQuery,
+    logQuery: LogQuery,
   ): Promise<'beforeTip' | 'atTip'> {
-    const syncData = await this.calculateNextRange(this.plugin.name, chain)
+    const syncData = await this.calculateNextRange()
     if (!syncData) {
       return 'atTip'
     }
 
-    const interopEvents = await this.captureRange(
-      chain,
-      syncData.nextRange,
-      logQueryForChain,
-    )
+    const interopEvents = await this.captureRange(syncData.nextRange, logQuery)
 
     await this.db.transaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.plugin.name,
-        chain,
+        chain: this.chain,
         ...syncData.fullRange,
         lastError: null,
       })
-      await this.clearChainSyncError(chain)
+      await this.clearChainSyncError(this.chain)
     })
 
     this.logger.info('New range synced', {
-      chain,
+      chain: this.chain,
       pluginName: this.plugin.name,
       range: syncData.nextRange,
     })
@@ -143,12 +106,15 @@ export class InteropPluginSyncer extends TimeLoop {
   }
 
   private async captureRange(
-    chain: string,
     range: { from: bigint; to: bigint },
     logQueryForChain: LogQuery,
   ): Promise<InteropEvent[]> {
     assert(this.plugin.capture)
-    const logs = await this.fetchLogsForRange(chain, logQueryForChain, range)
+    const logs = await this.fetchLogsForRange(
+      this.chain,
+      logQueryForChain,
+      range,
+    )
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
     for (const log of logs) {
@@ -166,7 +132,7 @@ export class InteropPluginSyncer extends TimeLoop {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
         tx: { hash: log.transactionHash },
-        chain,
+        chain: this.chain,
         block: {
           number: Number(log.blockNumber),
           // Fake the following fields, since block is not used and soon will be removed
@@ -188,10 +154,7 @@ export class InteropPluginSyncer extends TimeLoop {
     return interopEvents.flat()
   }
 
-  private async calculateNextRange(
-    pluginName: string,
-    chain: string,
-  ): Promise<
+  private async calculateNextRange(): Promise<
     | {
         nextRange: { from: bigint; to: bigint }
         fullRange: BlockRangeWithTimestamps
@@ -199,13 +162,12 @@ export class InteropPluginSyncer extends TimeLoop {
       }
     | undefined
   > {
-    const client = this.getRpcClient(chain)
     const syncedRange =
       await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
-        pluginName,
-        chain,
+        this.plugin.name,
+        this.chain,
       )
-    const latestBlock = await client.getBlockByNumber('latest', false)
+    const latestBlock = await this.rpcClient.getBlockByNumber('latest', false)
     assert(latestBlock && !isNil(latestBlock.number))
 
     if (syncedRange?.toBlock === latestBlock.number) {
@@ -227,14 +189,16 @@ export class InteropPluginSyncer extends TimeLoop {
           1,
           Number(latestBlock.number),
           async (number: number) => {
-            const block = await client.getBlockByNumber(BigInt(number), false)
+            const block = await this.rpcClient.getBlockByNumber(
+              BigInt(number),
+              false,
+            )
             assert(block)
             return { timestamp: Number(block.timestamp) }
           },
         ),
       )
-      // fullFrom = latestBlock.number - DEFAULT_RESYNC_BLOCKS
-      const fromBlock = await client.getBlockByNumber(fullFrom, false)
+      const fromBlock = await this.rpcClient.getBlockByNumber(fullFrom, false)
       assert(fromBlock)
       nextFrom = fullFrom
       fullFromTimestamp = UnixTime(Number(fromBlock.timestamp))
@@ -244,7 +208,7 @@ export class InteropPluginSyncer extends TimeLoop {
     let fullTo: bigint
     let fullToTimestamp: UnixTime
 
-    const queryRange = LOG_QUERY_RANGE[chain] ?? LOG_QUERY_RANGE.DEFAULT
+    const queryRange = LOG_QUERY_RANGE[this.chain] ?? LOG_QUERY_RANGE.DEFAULT
     nextTo = nextFrom + queryRange - 1n
     assert(nextTo > nextFrom)
     if (nextTo >= latestBlock.number) {
@@ -252,7 +216,7 @@ export class InteropPluginSyncer extends TimeLoop {
       fullTo = nextTo
       fullToTimestamp = UnixTime(Number(latestBlock.timestamp))
     } else {
-      const toBlock = await client.getBlockByNumber(nextTo, false)
+      const toBlock = await this.rpcClient.getBlockByNumber(nextTo, false)
       assert(toBlock)
       fullTo = nextTo
       fullToTimestamp = UnixTime(Number(toBlock.timestamp))
@@ -275,8 +239,6 @@ export class InteropPluginSyncer extends TimeLoop {
     logQuery: LogQuery,
     range: { from: bigint; to: bigint },
   ): Promise<RpcLog[]> {
-    const client = this.getRpcClient(chain)
-
     this.logger.info('Getting logs', {
       chain,
       from: range.from,
@@ -285,7 +247,7 @@ export class InteropPluginSyncer extends TimeLoop {
       topics: [logQuery.topic0s],
     })
 
-    const logs = await client.getLogs({
+    const logs = await this.rpcClient.getLogs({
       fromBlock: range.from,
       toBlock: range.to,
       address: Array.from(logQuery.addresses),
@@ -295,77 +257,29 @@ export class InteropPluginSyncer extends TimeLoop {
     return logs
   }
 
-  private async getPluginStatus(pluginName: string) {
-    let pluginStatus =
-      await this.db.interopPluginStatus.findByPluginName(pluginName)
-
-    if (!pluginStatus) {
-      pluginStatus = await this.db.interopPluginStatus.insert({
-        pluginName,
-        lastError: null,
-        resyncRequestedFrom: null,
-      })
+  buildLogQuery() {
+    const result: LogQuery = {
+      topic0s: new Set(),
+      addresses: new Set(),
     }
-
-    return pluginStatus
-  }
-
-  groupEventDataRequests(dataRequests: DataRequest[]) {
-    const chainToLogQuery = new UpsertMap<LongChainName, LogQuery>()
-    const eventRequests = dataRequests.filter((r) => r.type === 'event')
+    const eventRequests = this.plugin
+      .getDataRequests()
+      .filter((r) => r.type === 'event')
 
     for (const eventRequest of eventRequests) {
       const topic0 = toEventSelector(eventRequest.signature)
+      result.topic0s.add(topic0)
       for (const address of eventRequest.addresses) {
         const longChain = ChainSpecificAddress.longChain(address)
+        if (longChain !== this.chain) {
+          continue
+        }
         const ethAddress = ChainSpecificAddress.address(address)
-        const logQuery = chainToLogQuery.getOrInsert(longChain, {
-          topic0s: new Set(),
-          addresses: new Set(),
-        })
-        logQuery.topic0s.add(topic0)
-        logQuery.addresses.add(ethAddress)
+        result.addresses.add(ethAddress)
       }
     }
 
-    return chainToLogQuery
-  }
-
-  getRpcClient(chain: string) {
-    let client = this.rpcClients[chain]
-    if (!client) {
-      const chainConfig = this.chainConfigs.find((c) => c.name === chain)
-      if (!chainConfig) {
-        throw new Error(`Missing configuration for chain ${chain}`)
-      }
-      const rpcConfig = chainConfig.blockApis.find((a) => a.type === 'rpc')
-      if (!rpcConfig || rpcConfig.type !== 'rpc') {
-        throw new Error(`Missing RPC config for chain ${chain}`)
-      }
-
-      const rpcLogger = this.logger
-        .for(EthRpcClient.name)
-        .tag({ source: chain })
-
-      const http = new Http({
-        logger: rpcLogger,
-        maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
-      })
-
-      client = new EthRpcClient(
-        http,
-        rpcConfig.url,
-        `${EthRpcClient.name}:${chain}`,
-      )
-      this.rpcClients[chain] = client
-    }
-    return client
-  }
-
-  private async clearPluginError() {
-    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
-      lastError: null,
-    })
+    return result
   }
 
   private async clearChainSyncError(chain: string) {
@@ -378,42 +292,14 @@ export class InteropPluginSyncer extends TimeLoop {
     )
   }
 
-  private async savePluginError(error: unknown) {
-    this.logger.error('Error in syncer', error, {
-      pluginName: this.plugin.name,
-    })
-    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
-      lastError: errorToString(error),
-    })
-  }
-
-  private async saveChainSyncError(chain: string, error: unknown) {
+  private async saveChainSyncError(error: unknown) {
     const lastError = errorToString(error)
-    this.logger.error('Error syncing chain', error, {
-      pluginName: this.plugin.name,
-      chain,
-    })
-    await this.db.interopPluginStatus.updateByPluginName(this.plugin.name, {
-      lastError,
-    })
     await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
       this.plugin.name,
-      chain,
+      this.chain,
       {
         lastError,
       },
     )
   }
-}
-
-function toEventSelector(eventSignature: string): string {
-  const abi = parseAbi([eventSignature as string])
-  // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
-  return encodeEventTopics({ abi } as any)[0]
-}
-
-function errorToString(error: unknown): string {
-  return error instanceof Error
-    ? JSON.stringify(error, Object.getOwnPropertyNames(error))
-    : JSON.stringify({ message: String(error), value: error })
 }

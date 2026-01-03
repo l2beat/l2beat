@@ -64,17 +64,17 @@ export class AcrossPlugin implements InteropPlugin {
 
     return [
       {
-        type: 'evmEvent',
+        type: 'event',
         signature: fundsDepositedLog,
         addresses: spokePoolAddresses,
       },
       {
-        type: 'evmEvent',
+        type: 'event',
         signature: filledRelayLog,
         addresses: spokePoolAddresses,
       },
       {
-        type: 'evmEvent',
+        type: 'event',
         signature: filledV3RelayLog,
         addresses: spokePoolAddresses,
       },
