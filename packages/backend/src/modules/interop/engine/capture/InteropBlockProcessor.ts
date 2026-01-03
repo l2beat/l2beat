@@ -1,13 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { Block, Log } from '@l2beat/shared-pure'
+import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
 import type {
   InteropEvent,
   InteropPlugin,
   InteropPluginResyncable,
 } from '../../plugins/types'
-import type { InteropSyncModes } from '../sync/InteropPluginSyncModes'
+import type { InteropSyncers } from '../sync/InteropSyncers'
 import { isPluginResyncable } from '../sync/isPluginResyncable'
 import { getItemsToCapture } from './getItemsToCapture'
 import type { InteropEventStore } from './InteropEventStore'
@@ -19,7 +19,7 @@ export class InteropBlockProcessor implements BlockProcessor {
     public chain: string,
     private plugins: InteropPlugin[],
     private store: InteropEventStore,
-    private syncModes: InteropSyncModes,
+    private syncers: InteropSyncers,
     private db: Database,
     private logger: Logger,
   ) {
@@ -124,11 +124,17 @@ export class InteropBlockProcessor implements BlockProcessor {
     plugin: InteropPluginResyncable,
     blockNumber: bigint,
   ): Promise<boolean> {
-    if (
-      this.syncModes.getForPlugin(plugin.name).getForChain(this.chain) !==
-      'follow'
-    ) {
-      // This plugin is not in 'follow' mode
+    const syncer = this.syncers.getSyncer(
+      plugin.name,
+      this.chain as LongChainName,
+    )
+    if (!syncer) {
+      throw new Error(
+        `Can't determine the sync mode of plugin ${plugin.name} on chain ${this.chain}`,
+      )
+    }
+
+    if (syncer.syncMode !== 'follow') {
       return false
     }
 
@@ -140,16 +146,12 @@ export class InteropBlockProcessor implements BlockProcessor {
 
     const syncedToBlock = lastSynced?.toBlock
     if (syncedToBlock === undefined || syncedToBlock < blockNumber - 1n) {
-      // ask to catch up
-      this.syncModes
-        .getForPlugin(plugin.name)
-        .setForChain(this.chain, 'catchUp')
+      syncer.syncMode = 'catchUp' // ask to catch up
       return false
     }
 
     if (syncedToBlock >= blockNumber) {
-      // skip, we're already synced further than this block
-      return false
+      return false // skip, we're already synced further than this block
     }
     return true
   }

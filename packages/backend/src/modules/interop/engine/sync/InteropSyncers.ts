@@ -56,6 +56,13 @@ export class InteropSyncers {
     }
   }
 
+  getSyncer(
+    plugin: string,
+    chain: LongChainName,
+  ): InteropEventSyncer | undefined {
+    return this.syncers.get(plugin)?.get(chain)
+  }
+
   private getRpcClient(chainConfig: ChainApi) {
     let client = this.rpcClients[chainConfig.name]
     if (!client) {

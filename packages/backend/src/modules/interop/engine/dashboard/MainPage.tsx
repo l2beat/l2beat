@@ -8,11 +8,15 @@ import type {
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
 import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories/InteropTransferRepository'
-import { Address32, formatSeconds } from '@l2beat/shared-pure'
+import {
+  Address32,
+  formatSeconds,
+  type LongChainName,
+} from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { getInteropChains } from '../../../../config/makeConfig'
-import type { InteropSyncModes } from '../sync/InteropPluginSyncModes'
+import type { InteropSyncers } from '../sync/InteropSyncers'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
@@ -58,7 +62,7 @@ function formatDistanceFromNow(timestamp: number): string {
 
 function PluginsStatusTable(props: {
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncModes: InteropSyncModes
+  syncers: InteropSyncers
 }) {
   return (
     <table>
@@ -77,7 +81,8 @@ function PluginsStatusTable(props: {
             <td>{r.pluginName}</td>
             <td>{r.chain}</td>
             <td>
-              {props.syncModes.getForPlugin(r.pluginName).getForChain(r.chain)}
+              {props.syncers.getSyncer(r.pluginName, r.chain as LongChainName)
+                ?.syncMode ?? 'error'}
             </td>
             <td>{formatDistanceFromNow(r.toTimestamp)}</td>
             <td>{r.toBlock}</td>
@@ -412,7 +417,7 @@ function MainPageLayout(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncModes: InteropSyncModes
+  syncers: InteropSyncers
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -476,7 +481,7 @@ function MainPageLayout(props: {
           <>
             <PluginsStatusTable
               syncedRanges={props.syncedRanges}
-              syncModes={props.syncModes}
+              syncers={props.syncers}
             />
             <h3>Known apps for plugins</h3>
             {props.uniqueApps.map((u) => (
@@ -505,7 +510,7 @@ export function renderMainPage(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncModes: InteropSyncModes
+  syncers: InteropSyncers
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

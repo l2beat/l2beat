@@ -40,7 +40,7 @@ interface LogQuery {
 }
 
 export class InteropEventSyncer extends TimeLoop {
-  public syncMode: 'follow' | 'catchUp' = 'catchUp'
+  public syncMode: 'follow' | 'catchUp' = 'follow'
 
   constructor(
     private chain: LongChainName,
