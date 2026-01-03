@@ -59,7 +59,7 @@ export class InteropEventSyncer extends TimeLoop {
     try {
       while (this.syncMode.getForChain(this.chain) === 'catchUp') {
         const logQuery = this.buildLogQuery()
-        if (logQuery.topic0s.size === 0) {
+        if (logQuery.topic0s.size === 0 || logQuery.addresses.size === 0) {
           break
         }
         const status = await this.syncNextRange(logQuery)
@@ -87,7 +87,6 @@ export class InteropEventSyncer extends TimeLoop {
     const interopEvents = await this.captureRange(syncData.nextRange, logQuery)
 
     await this.db.transaction(async () => {
-      // TODO: store.saveNewEvents doesn't seem to happen in current transaction!!! throwing furter doesn't rollback?!?!
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.plugin.name,
@@ -271,15 +270,18 @@ export class InteropEventSyncer extends TimeLoop {
       .filter((r) => r.type === 'event')
 
     for (const eventRequest of eventRequests) {
-      const topic0 = toEventSelector(eventRequest.signature)
-      result.topic0s.add(topic0)
+      let addressesOnThisChain = 0
       for (const address of eventRequest.addresses) {
-        const longChain = ChainSpecificAddress.longChain(address)
-        if (longChain !== this.chain) {
+        if (ChainSpecificAddress.longChain(address) !== this.chain) {
           continue
         }
         const ethAddress = ChainSpecificAddress.address(address)
         result.addresses.add(ethAddress)
+        addressesOnThisChain++
+      }
+      if (addressesOnThisChain > 0) {
+        const topic0 = toEventSelector(eventRequest.signature)
+        result.topic0s.add(topic0)
       }
     }
 
