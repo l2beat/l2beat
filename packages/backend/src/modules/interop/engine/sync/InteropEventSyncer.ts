@@ -113,6 +113,7 @@ export class InteropEventSyncer extends TimeLoop {
     logQueryForChain: LogQuery,
   ): Promise<InteropEvent[]> {
     assert(this.plugin.capture)
+
     const logs = await this.fetchLogsForRange(
       this.chain,
       logQueryForChain,
@@ -173,8 +174,8 @@ export class InteropEventSyncer extends TimeLoop {
     const latestBlock = await this.rpcClient.getBlockByNumber('latest', false)
     assert(latestBlock && !isNil(latestBlock.number))
 
-    if (syncedRange?.toBlock === latestBlock.number) {
-      return undefined
+    if ((syncedRange?.toBlock ?? -1) >= latestBlock.number) {
+      return undefined // we're already at or after latest block
     }
 
     let nextFrom: bigint
@@ -186,21 +187,7 @@ export class InteropEventSyncer extends TimeLoop {
       fullFromTimestamp = syncedRange.fromTimestamp
       nextFrom = syncedRange.toBlock + 1n
     } else {
-      fullFrom = BigInt(
-        await getBlockNumberAtOrBefore(
-          UnixTime.now() - DEFAULT_RESYNC_DAYS * UnixTime.DAY,
-          1,
-          Number(latestBlock.number),
-          async (number: number) => {
-            const block = await this.rpcClient.getBlockByNumber(
-              BigInt(number),
-              false,
-            )
-            assert(block)
-            return { timestamp: Number(block.timestamp) }
-          },
-        ),
-      )
+      fullFrom = await this.getBlockNumberAtOrBefore(latestBlock.number)
       const fromBlock = await this.rpcClient.getBlockByNumber(fullFrom, false)
       assert(fromBlock)
       nextFrom = fullFrom
@@ -306,6 +293,24 @@ export class InteropEventSyncer extends TimeLoop {
       {
         lastError,
       },
+    )
+  }
+
+  private async getBlockNumberAtOrBefore(blockNumber: bigint): Promise<bigint> {
+    return BigInt(
+      await getBlockNumberAtOrBefore(
+        UnixTime.now() - DEFAULT_RESYNC_DAYS * UnixTime.DAY,
+        1,
+        Number(blockNumber),
+        async (number: number) => {
+          const block = await this.rpcClient.getBlockByNumber(
+            BigInt(number),
+            false,
+          )
+          assert(block)
+          return { timestamp: Number(block.timestamp) }
+        },
+      ),
     )
   }
 }
