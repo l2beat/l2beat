@@ -132,7 +132,7 @@ export class InteropEventSyncer extends TimeLoop {
     for (const log of logs) {
       assert(log.transactionHash)
       assert(log.blockNumber)
-      assert(log.blockTimestamp)
+      assert(log.blockTimestamp) // This is included in reth, geth and Nethermind since late 2025 https://github.com/ethereum/execution-apis/issues/295
 
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
