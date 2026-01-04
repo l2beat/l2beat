@@ -36,8 +36,8 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
 
 const DEFAULT_RESYNC_DAYS = 1
 
-type SyncMode = 'follow' | 'catchUp'
-const DEFAULT_SYNC_MODE: SyncMode = 'follow'
+type SyncMode = 'follow' | 'catchUp' | 'waitForLatestBlockNumber'
+const DEFAULT_SYNC_MODE: SyncMode = 'waitForLatestBlockNumber'
 
 interface LogQuery {
   topic0s: Set<string>
@@ -46,6 +46,7 @@ interface LogQuery {
 
 export class InteropEventSyncer extends TimeLoop {
   public syncMode: SyncMode = DEFAULT_SYNC_MODE
+  private latestBlockNumber?: bigint
 
   constructor(
     private chain: LongChainName,
@@ -131,6 +132,7 @@ export class InteropEventSyncer extends TimeLoop {
     for (const log of logs) {
       assert(log.transactionHash)
       assert(log.blockNumber)
+      assert(log.blockTimestamp)
 
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
@@ -142,7 +144,7 @@ export class InteropEventSyncer extends TimeLoop {
           // Fake the following fields, since block is not used and soon will be removed
           hash: '123',
           logsBloom: '123',
-          timestamp: UnixTime(100),
+          timestamp: Number(log.blockTimestamp),
           transactions: [],
         },
       }
@@ -158,6 +160,10 @@ export class InteropEventSyncer extends TimeLoop {
     return interopEvents.flat()
   }
 
+  private getLatestBlockNumber(): bigint | undefined {
+    return this.latestBlockNumber
+  }
+
   private async calculateNextRange(): Promise<
     | {
         nextRange: { from: bigint; to: bigint }
@@ -171,7 +177,13 @@ export class InteropEventSyncer extends TimeLoop {
         this.plugin.name,
         this.chain,
       )
-    const latestBlock = await this.rpcClient.getBlockByNumber('latest', false)
+
+    const latestBlockNumber = this.getLatestBlockNumber()
+    assert(latestBlockNumber)
+    const latestBlock = await this.rpcClient.getBlockByNumber(
+      latestBlockNumber,
+      false,
+    )
     assert(latestBlock && !isNil(latestBlock.number))
 
     if ((syncedRange?.toBlock ?? -1) >= latestBlock.number) {
@@ -297,11 +309,15 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
-    if (this.syncMode !== 'follow') {
+    const blockNumber = BigInt(block.number)
+    this.latestBlockNumber = blockNumber
+
+    if (
+      this.syncMode !== 'follow' &&
+      this.syncMode !== 'waitForLatestBlockNumber'
+    ) {
       return
     }
-
-    const toCapture = getItemsToCapture(this.chain, block, logs)
 
     const lastSynced =
       await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
@@ -314,9 +330,8 @@ export class InteropEventSyncer extends TimeLoop {
     }
 
     const syncedToBlock = lastSynced?.toBlock
-    const blockNumber = BigInt(block.number)
     if (syncedToBlock === undefined || syncedToBlock < blockNumber - 1n) {
-      this.syncMode = 'catchUp' // block too far ahead, first catch up
+      this.syncMode = 'catchUp' // block too far ahead, let's catch up first
       return
     }
 
@@ -324,7 +339,10 @@ export class InteropEventSyncer extends TimeLoop {
       return // skip, we're already synced further than this block
     }
 
+    this.syncMode = 'follow'
+
     const interopEvents = []
+    const toCapture = getItemsToCapture(this.chain, block, logs)
     for (const logToCapture of toCapture.logsToCapture) {
       const produced = this.plugin.capture(logToCapture)
       if (produced) {
