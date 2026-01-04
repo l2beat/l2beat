@@ -5,7 +5,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
-import type { InteropSyncers } from '../sync/InteropSyncers'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -15,7 +15,7 @@ export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
-  syncers: InteropSyncers,
+  syncersManager: InteropSyncersManager,
   logger: Logger,
 ) {
   const router = new Router()
@@ -53,7 +53,7 @@ export function createInteropRouter(
       missingTokens,
       uniqueApps,
       syncedRanges,
-      syncers,
+      syncersManager: syncersManager,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })

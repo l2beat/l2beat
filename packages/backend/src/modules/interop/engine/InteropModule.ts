@@ -16,7 +16,7 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropSyncers } from './sync/InteropSyncers'
+import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
   config,
@@ -42,7 +42,7 @@ export function createInteropModule({
     rpcClients: providers.clients.rpcClients,
   })
 
-  const syncers = new InteropSyncers(
+  const syncersManager = new InteropSyncersManager(
     plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name as LongChainName),
     config.chainConfig,
@@ -58,11 +58,12 @@ export function createInteropModule({
         chain.name,
         plugins.eventPlugins,
         eventStore,
-        syncers,
-        db,
         logger,
       )
       // blockProcessors.push(processor) // TODO: AA debug
+      blockProcessors.push(
+        syncersManager.getBlockProcessor(chain.name as LongChainName),
+      )
       processors.push(processor)
     }
   }
@@ -79,7 +80,7 @@ export function createInteropModule({
     db,
     config.interop,
     processors,
-    syncers,
+    syncersManager,
     logger.for('InteropRouter'),
   )
 
@@ -164,7 +165,7 @@ export function createInteropModule({
     })
 
     if (config.interop && config.interop.capture.enabled) {
-      syncers.start()
+      syncersManager.start()
     }
   }
 

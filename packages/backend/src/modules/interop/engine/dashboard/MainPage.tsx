@@ -16,7 +16,7 @@ import {
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { getInteropChains } from '../../../../config/makeConfig'
-import type { InteropSyncers } from '../sync/InteropSyncers'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
@@ -62,7 +62,7 @@ function formatDistanceFromNow(timestamp: number): string {
 
 function PluginsStatusTable(props: {
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncers: InteropSyncers
+  syncersManager: InteropSyncersManager
 }) {
   return (
     <table>
@@ -81,8 +81,10 @@ function PluginsStatusTable(props: {
             <td>{r.pluginName}</td>
             <td>{r.chain}</td>
             <td>
-              {props.syncers.getSyncer(r.pluginName, r.chain as LongChainName)
-                ?.syncMode ?? 'error'}
+              {props.syncersManager.getSyncer(
+                r.pluginName,
+                r.chain as LongChainName,
+              )?.syncMode ?? 'error'}
             </td>
             <td>{formatDistanceFromNow(r.toTimestamp)}</td>
             <td>{r.toBlock}</td>
@@ -417,7 +419,7 @@ function MainPageLayout(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncers: InteropSyncers
+  syncersManager: InteropSyncersManager
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -481,7 +483,7 @@ function MainPageLayout(props: {
           <>
             <PluginsStatusTable
               syncedRanges={props.syncedRanges}
-              syncers={props.syncers}
+              syncersManager={props.syncersManager}
             />
             <h3>Known apps for plugins</h3>
             {props.uniqueApps.map((u) => (
@@ -510,7 +512,7 @@ export function renderMainPage(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
-  syncers: InteropSyncers
+  syncersManager: InteropSyncersManager
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

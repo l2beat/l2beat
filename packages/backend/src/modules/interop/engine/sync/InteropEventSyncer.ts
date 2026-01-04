@@ -8,8 +8,10 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
+  type Block,
   ChainSpecificAddress,
   type EthereumAddress,
+  type Log,
   type LongChainName,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -22,7 +24,7 @@ import type {
   InteropPluginResyncable,
   LogToCapture,
 } from '../../plugins/types'
-import { logToViemLog } from '../capture/getItemsToCapture'
+import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 
@@ -34,13 +36,16 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
 
 const DEFAULT_RESYNC_DAYS = 1
 
+type SyncMode = 'follow' | 'catchUp'
+const DEFAULT_SYNC_MODE: SyncMode = 'follow'
+
 interface LogQuery {
   topic0s: Set<string>
   addresses: Set<EthereumAddress>
 }
 
 export class InteropEventSyncer extends TimeLoop {
-  public syncMode: 'follow' | 'catchUp' = 'follow'
+  public syncMode: SyncMode = DEFAULT_SYNC_MODE
 
   constructor(
     private chain: LongChainName,
@@ -56,6 +61,12 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async run() {
+    if (this.syncMode === 'catchUp') {
+      await this.catchUp()
+    }
+  }
+
+  async catchUp() {
     try {
       while (this.syncMode === 'catchUp') {
         const logQuery = this.buildLogQuery()
@@ -86,16 +97,7 @@ export class InteropEventSyncer extends TimeLoop {
 
     const interopEvents = await this.captureRange(syncData.nextRange, logQuery)
 
-    await this.db.transaction(async () => {
-      await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
-      await this.db.interopPluginSyncedRange.upsert({
-        pluginName: this.plugin.name,
-        chain: this.chain,
-        ...syncData.fullRange,
-        lastError: null,
-      })
-      await this.clearChainSyncError(this.chain)
-    })
+    await this.saveProducedInteropEvents(interopEvents, syncData.fullRange)
 
     this.logger.info('New range synced', {
       chain: this.chain,
@@ -112,8 +114,6 @@ export class InteropEventSyncer extends TimeLoop {
     range: { from: bigint; to: bigint },
     logQueryForChain: LogQuery,
   ): Promise<InteropEvent[]> {
-    assert(this.plugin.capture)
-
     const logs = await this.fetchLogsForRange(
       this.chain,
       logQueryForChain,
@@ -294,6 +294,82 @@ export class InteropEventSyncer extends TimeLoop {
         lastError,
       },
     )
+  }
+
+  async processNewestBlock(block: Block, logs: Log[]) {
+    if (this.syncMode !== 'follow') {
+      return
+    }
+
+    const toCapture = getItemsToCapture(this.chain, block, logs)
+
+    const lastSynced =
+      await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
+        this.plugin.name,
+        this.chain,
+      )
+    if (!lastSynced) {
+      this.syncMode = 'catchUp'
+      return
+    }
+
+    const syncedToBlock = lastSynced?.toBlock
+    const blockNumber = BigInt(block.number)
+    if (syncedToBlock === undefined || syncedToBlock < blockNumber - 1n) {
+      this.syncMode = 'catchUp' // block too far ahead, first catch up
+      return
+    }
+
+    if (syncedToBlock >= blockNumber) {
+      return // skip, we're already synced further than this block
+    }
+
+    const interopEvents = []
+    for (const logToCapture of toCapture.logsToCapture) {
+      const produced = this.plugin.capture(logToCapture)
+      if (produced) {
+        interopEvents.push(
+          produced.map((p) => ({ ...p, plugin: this.plugin.name })),
+        )
+      }
+    }
+
+    await this.saveProducedInteropEvents(interopEvents.flat(), {
+      fromBlock: lastSynced.fromBlock,
+      fromTimestamp: lastSynced.fromTimestamp,
+      toBlock: blockNumber,
+      toTimestamp: block.timestamp,
+    })
+  }
+
+  private async saveProducedInteropEvents(
+    interopEvents: InteropEvent[],
+    fullRange: BlockRangeWithTimestamps,
+  ) {
+    await this.db.transaction(async () => {
+      await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+      await this.db.interopPluginSyncedRange.upsert({
+        pluginName: this.plugin.name,
+        chain: this.chain,
+        ...fullRange,
+        lastError: null,
+      })
+      await this.clearChainSyncError(this.chain)
+    })
+
+    this.logger.info('Events captured for resyncable plugin', {
+      plugin: this.plugin.name,
+      chain: this.chain,
+      blockNumber: fullRange.toBlock,
+      events: interopEvents.length,
+    })
+
+    this.logger.info('Block processed for resyncable plugin', {
+      plugin: this.plugin.name,
+      chain: this.chain,
+      blockNumber: fullRange.toBlock,
+      events: interopEvents.length,
+    })
   }
 
   private async getBlockNumberAtOrBefore(blockNumber: bigint): Promise<bigint> {

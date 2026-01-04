@@ -1,13 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
+import type { Block, Log } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
-import type {
-  InteropEvent,
-  InteropPlugin,
-  InteropPluginResyncable,
-} from '../../plugins/types'
-import type { InteropSyncers } from '../sync/InteropSyncers'
+import type { InteropEvent, InteropPlugin } from '../../plugins/types'
 import { isPluginResyncable } from '../sync/isPluginResyncable'
 import { getItemsToCapture } from './getItemsToCapture'
 import type { InteropEventStore } from './InteropEventStore'
@@ -19,8 +13,6 @@ export class InteropBlockProcessor implements BlockProcessor {
     public chain: string,
     private plugins: InteropPlugin[],
     private store: InteropEventStore,
-    private syncers: InteropSyncers,
-    private db: Database,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).tag({ chain, tag: chain })
@@ -32,8 +24,12 @@ export class InteropBlockProcessor implements BlockProcessor {
     const events: InteropEvent[] = []
     const pluginEventCounts: Record<string, number> = {}
 
+    const nonResyncablePlugins = this.plugins.filter(
+      (p) => !isPluginResyncable(p),
+    )
+
     for (const txToCapture of toCapture.txsToCapture) {
-      for (const plugin of this.plugins) {
+      for (const plugin of nonResyncablePlugins) {
         try {
           const captured = plugin.captureTx?.(txToCapture)
           if (captured) {
@@ -52,22 +48,9 @@ export class InteropBlockProcessor implements BlockProcessor {
       }
     }
 
-    const pluginsForStatusUpdate = new Set<string>()
-
     for (const logToDecode of toCapture.logsToCapture) {
-      for (const plugin of this.plugins) {
+      for (const plugin of nonResyncablePlugins) {
         try {
-          if (isPluginResyncable(plugin)) {
-            const canUpdate = await this.canUpdatePlugin(
-              plugin,
-              BigInt(block.number),
-            )
-            if (!canUpdate) {
-              continue
-            }
-            pluginsForStatusUpdate.add(plugin.name)
-          }
-
           const captured = plugin.capture?.(logToDecode)
           if (captured) {
             events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
@@ -87,20 +70,7 @@ export class InteropBlockProcessor implements BlockProcessor {
       }
     }
 
-    await this.db.transaction(async () => {
-      await this.store.saveNewEvents(events)
-      for (const pluginName of pluginsForStatusUpdate) {
-        await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
-          pluginName,
-          this.chain,
-          {
-            toBlock: BigInt(block.number),
-            toTimestamp: block.timestamp,
-            lastError: null,
-          },
-        )
-      }
-    })
+    await this.store.saveNewEvents(events)
     this.lastProcessed = block
 
     for (const [plugin, count] of Object.entries(pluginEventCounts)) {
@@ -118,41 +88,5 @@ export class InteropBlockProcessor implements BlockProcessor {
       logs: toCapture.logsToCapture.length,
       events: events.length,
     })
-  }
-
-  async canUpdatePlugin(
-    plugin: InteropPluginResyncable,
-    blockNumber: bigint,
-  ): Promise<boolean> {
-    const syncer = this.syncers.getSyncer(
-      plugin.name,
-      this.chain as LongChainName,
-    )
-    if (!syncer) {
-      throw new Error(
-        `Can't determine the sync mode of plugin ${plugin.name} on chain ${this.chain}`,
-      )
-    }
-
-    if (syncer.syncMode !== 'follow') {
-      return false
-    }
-
-    const lastSynced =
-      await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
-        plugin.name,
-        this.chain,
-      )
-
-    const syncedToBlock = lastSynced?.toBlock
-    if (syncedToBlock === undefined || syncedToBlock < blockNumber - 1n) {
-      syncer.syncMode = 'catchUp' // ask to catch up
-      return false
-    }
-
-    if (syncedToBlock >= blockNumber) {
-      return false // skip, we're already synced further than this block
-    }
-    return true
   }
 }

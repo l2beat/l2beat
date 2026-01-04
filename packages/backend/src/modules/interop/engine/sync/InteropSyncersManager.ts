@@ -1,18 +1,19 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
-import type { LongChainName } from '@l2beat/shared-pure'
+import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
+import type { BlockProcessor } from '../../../types'
 import type { InteropPlugin } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropEventSyncer } from './InteropEventSyncer'
 import { isPluginResyncable } from './isPluginResyncable'
 
-export class InteropSyncers {
+export class InteropSyncersManager {
   private rpcClients: { [chain: string]: EthRpcClient } = {}
 
   private syncers = new UpsertMap<
-    string,
+    string, // pluginName
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
 
@@ -61,6 +62,23 @@ export class InteropSyncers {
     chain: LongChainName,
   ): InteropEventSyncer | undefined {
     return this.syncers.get(plugin)?.get(chain)
+  }
+
+  async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
+    for (const v of this.syncers.values()) {
+      const syncer = v.get(chain)
+      if (syncer) {
+        await syncer.processNewestBlock(block, logs)
+      }
+    }
+  }
+
+  getBlockProcessor(chain: LongChainName): BlockProcessor {
+    return {
+      chain,
+      processBlock: (block, logs) =>
+        this.processNewestBlock(chain, block, logs),
+    }
   }
 
   private getRpcClient(chainConfig: ChainApi) {

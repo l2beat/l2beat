@@ -228,6 +228,7 @@ export interface InteropPlugin {
 
 export interface InteropPluginResyncable extends InteropPlugin {
   getDataRequests: () => DataRequest[]
+  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[]
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
