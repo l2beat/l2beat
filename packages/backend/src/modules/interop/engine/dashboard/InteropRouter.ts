@@ -30,6 +30,7 @@ export function createInteropRouter(
       missingTokens,
       uniqueApps,
       syncedRanges,
+      syncStates,
     ] = await Promise.all([
       db.interopEvent.getStats(),
       getMessagesStats(db),
@@ -37,6 +38,7 @@ export function createInteropRouter(
       db.interopTransfer.getMissingTokensInfo(),
       db.interopMessage.getUniqueAppsPerPlugin(),
       db.interopPluginSyncedRange.getAll(),
+      db.interopPluginSyncState.getAll(),
     ])
 
     const routerDuration = performance.now() - routerStart
@@ -53,6 +55,7 @@ export function createInteropRouter(
       missingTokens,
       uniqueApps,
       syncedRanges,
+      syncStates,
       syncersManager: syncersManager,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })

@@ -31,7 +31,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const record = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
-        lastError: 'Some RPC error',
         fromBlock: 1n,
         fromTimestamp: UnixTime(100),
         toBlock: 2n,
@@ -42,7 +41,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       const updated = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
-        lastError: 'fixed',
         fromBlock: 10n,
         fromTimestamp: UnixTime(1000),
         toBlock: 20n,
@@ -158,7 +156,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         const record = range({
           pluginName: 'plugin-a',
           chain: 'ethereum',
-          lastError: 'Some RPC error',
           fromBlock: 1n,
           fromTimestamp: UnixTime(100),
           toBlock: 2n,
@@ -170,7 +167,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'ethereum',
           {
-            lastError: null,
             fromBlock: 10n,
             fromTimestamp: UnixTime(1000),
             toBlock: 20n,
@@ -186,7 +182,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         )
         expect(stored).toEqual({
           ...record,
-          lastError: null,
           fromBlock: 10n,
           fromTimestamp: UnixTime(1000),
           toBlock: 20n,
@@ -201,7 +196,7 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
           'plugin-a',
           'ethereum',
           {
-            lastError: 'Some error',
+            fromBlock: 10n,
           },
         )
 
@@ -250,6 +245,5 @@ function range(
     fromTimestamp: overrides.fromTimestamp ?? UnixTime(100),
     toBlock: overrides.toBlock ?? 2n,
     toTimestamp: overrides.toTimestamp ?? UnixTime(200),
-    lastError: overrides.lastError ?? null,
   }
 }

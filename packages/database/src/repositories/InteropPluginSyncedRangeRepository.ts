@@ -15,7 +15,6 @@ export interface BlockRangeWithTimestamps {
 export type InteropPluginSyncedRangeRecord = {
   pluginName: string
   chain: string
-  lastError: string | null
 } & BlockRangeWithTimestamps
 
 export type InteropPluginSyncedRangeUpdateable = Omit<
@@ -72,7 +71,6 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
           fromTimestamp: eb.ref('excluded.fromTimestamp'),
           toBlock: eb.ref('excluded.toBlock'),
           toTimestamp: eb.ref('excluded.toTimestamp'),
-          lastError: eb.ref('excluded.lastError'),
         })),
       )
       .execute()

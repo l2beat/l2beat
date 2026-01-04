@@ -4,6 +4,7 @@ import type {
   InteropMessageStatsRecord,
   InteropMessageUniqueAppsRecord,
   InteropPluginSyncedRangeRecord,
+  InteropPluginSyncStateRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
@@ -60,10 +61,66 @@ function formatDistanceFromNow(timestamp: number): string {
   return parts.join(' ')
 }
 
+type PluginSyncStatusRow = {
+  pluginName: string
+  chain: string
+  toBlock?: bigint
+  toTimestamp?: number
+  lastError: string | null
+}
+
+function getPluginSyncStatusRows(
+  syncedRanges: InteropPluginSyncedRangeRecord[],
+  syncStates: InteropPluginSyncStateRecord[],
+): PluginSyncStatusRow[] {
+  const stateByKey = new Map(
+    syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
+  )
+  const seen = new Set<string>()
+  const rows: PluginSyncStatusRow[] = []
+
+  for (const range of syncedRanges) {
+    const key = `${range.pluginName}:${range.chain}`
+    const state = stateByKey.get(key)
+    seen.add(key)
+    rows.push({
+      pluginName: range.pluginName,
+      chain: range.chain,
+      toBlock: range.toBlock,
+      toTimestamp: range.toTimestamp,
+      lastError: state?.lastError ?? null,
+    })
+  }
+
+  for (const state of syncStates) {
+    const key = `${state.pluginName}:${state.chain}`
+    if (seen.has(key)) {
+      continue
+    }
+    rows.push({
+      pluginName: state.pluginName,
+      chain: state.chain,
+      lastError: state.lastError,
+    })
+  }
+
+  rows.sort((a, b) => {
+    const pluginCompare = a.pluginName.localeCompare(b.pluginName)
+    if (pluginCompare !== 0) {
+      return pluginCompare
+    }
+    return a.chain.localeCompare(b.chain)
+  })
+
+  return rows
+}
+
 function PluginsStatusTable(props: {
   syncedRanges: InteropPluginSyncedRangeRecord[]
+  syncStates: InteropPluginSyncStateRecord[]
   syncersManager: InteropSyncersManager
 }) {
+  const rows = getPluginSyncStatusRows(props.syncedRanges, props.syncStates)
   return (
     <table>
       <caption>Plugins status</caption>
@@ -76,19 +133,23 @@ function PluginsStatusTable(props: {
         <th>last error</th>
       </thead>
       <tbody>
-        {props.syncedRanges.map((r) => (
+        {rows.map((row) => (
           <tr>
-            <td>{r.pluginName}</td>
-            <td>{r.chain}</td>
+            <td>{row.pluginName}</td>
+            <td>{row.chain}</td>
             <td>
               {props.syncersManager.getSyncer(
-                r.pluginName,
-                r.chain as LongChainName,
+                row.pluginName,
+                row.chain as LongChainName,
               )?.syncMode ?? 'error'}
             </td>
-            <td>{formatDistanceFromNow(r.toTimestamp)}</td>
-            <td>{r.toBlock}</td>
-            <td>{r.lastError ?? ''}</td>
+            <td>
+              {row.toTimestamp !== undefined
+                ? formatDistanceFromNow(row.toTimestamp)
+                : 'n/a'}
+            </td>
+            <td>{row.toBlock ?? 'n/a'}</td>
+            <td>{row.lastError ?? ''}</td>
           </tr>
         ))}
       </tbody>
@@ -419,6 +480,7 @@ function MainPageLayout(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
+  syncStates: InteropPluginSyncStateRecord[]
   syncersManager: InteropSyncersManager
   getExplorerUrl: (chain: string) => string | undefined
 }) {
@@ -483,6 +545,7 @@ function MainPageLayout(props: {
           <>
             <PluginsStatusTable
               syncedRanges={props.syncedRanges}
+              syncStates={props.syncStates}
               syncersManager={props.syncersManager}
             />
             <h3>Known apps for plugins</h3>
@@ -512,6 +575,7 @@ export function renderMainPage(props: {
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
   syncedRanges: InteropPluginSyncedRangeRecord[]
+  syncStates: InteropPluginSyncStateRecord[]
   syncersManager: InteropSyncersManager
   getExplorerUrl: (chain: string) => string | undefined
 }) {

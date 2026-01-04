@@ -20,6 +20,7 @@ import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
 import { InteropPluginStatusRepository } from './repositories/InteropPluginStatusRepository'
 import { InteropPluginSyncedRangeRepository } from './repositories/InteropPluginSyncedRangeRepository'
+import { InteropPluginSyncStateRepository } from './repositories/InteropPluginSyncStateRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
@@ -62,6 +63,7 @@ export function createDatabase(
     interopMessage: new InteropMessageRepository(db),
     interopTransfer: new InteropTransferRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
+    interopPluginSyncState: new InteropPluginSyncStateRepository(db),
     interopPluginStatus: new InteropPluginStatusRepository(db),
     interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),
     // #endregion

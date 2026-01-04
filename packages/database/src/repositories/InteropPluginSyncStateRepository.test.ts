@@ -1,0 +1,192 @@
+import { expect } from 'earl'
+import { describeDatabase } from '../test/database'
+import {
+  type InteropPluginSyncStateRecord,
+  InteropPluginSyncStateRepository,
+} from './InteropPluginSyncStateRepository'
+
+describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
+  const repository = db.interopPluginSyncState
+  const statusRepository = db.interopPluginStatus
+
+  afterEach(async () => {
+    await repository.deleteAll()
+    await statusRepository.deleteAll()
+  })
+
+  describe(InteropPluginSyncStateRepository.prototype.upsert.name, () => {
+    it('inserts new record', async () => {
+      await insertPlugins(['plugin-a'])
+      const record = state({
+        pluginName: 'plugin-a',
+        chain: 'ethereum',
+        lastError: 'Some RPC error',
+      })
+
+      await repository.upsert(record)
+
+      const stored = await repository.findByPluginNameAndChain(
+        record.pluginName,
+        record.chain,
+      )
+      expect(stored).toEqual(record)
+    })
+
+    it('updates record for the same plugin and chain', async () => {
+      await insertPlugins(['plugin-a'])
+      const record = state({
+        pluginName: 'plugin-a',
+        chain: 'ethereum',
+        lastError: 'Some RPC error',
+      })
+      await repository.upsert(record)
+
+      const updated = state({
+        pluginName: 'plugin-a',
+        chain: 'ethereum',
+        lastError: 'fixed',
+      })
+      await repository.upsert(updated)
+
+      const all = await repository.getAll()
+      expect(all).toEqual([updated])
+    })
+  })
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.updateByPluginNameAndChain.name,
+    () => {
+      it('updates record and returns number of affected rows', async () => {
+        await insertPlugins(['plugin-a'])
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Some RPC error',
+        })
+        await repository.upsert(record)
+
+        const updated = await repository.updateByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+          {
+            lastError: null,
+          },
+        )
+
+        expect(updated).toEqual(1)
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual({
+          ...record,
+          lastError: null,
+        })
+      })
+
+      it('returns 0 when no matching record exists', async () => {
+        await insertPlugins(['plugin-a'])
+
+        const updated = await repository.updateByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+          {
+            lastError: 'Some error',
+          },
+        )
+
+        expect(updated).toEqual(0)
+      })
+    },
+  )
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.findByPluginNameAndChain.name,
+    () => {
+      it('returns the matching record', async () => {
+        await insertPlugins(['plugin-a', 'plugin-b'])
+        const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+
+        const found = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'arbitrum',
+        )
+        expect(found).toEqual(a2)
+      })
+
+      it('returns undefined when no matching record exists', async () => {
+        await insertPlugins(['plugin-a'])
+        await repository.upsert(
+          state({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+
+        const found = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'arbitrum',
+        )
+        expect(found).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(InteropPluginSyncStateRepository.prototype.getAll.name, () => {
+    it('returns all records', async () => {
+      await insertPlugins(['plugin-a', 'plugin-b'])
+      const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+      const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
+      const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
+
+      await repository.upsert(a1)
+      await repository.upsert(a2)
+      await repository.upsert(b1)
+
+      const all = await repository.getAll()
+      expect(all).toEqualUnsorted([a1, a2, b1])
+    })
+  })
+
+  describe(InteropPluginSyncStateRepository.prototype.deleteAll.name, () => {
+    it('deletes all records', async () => {
+      await insertPlugins(['plugin-a', 'plugin-b'])
+      await repository.upsert(state({ pluginName: 'plugin-a', chain: 'op' }))
+      await repository.upsert(
+        state({ pluginName: 'plugin-b', chain: 'arbitrum' }),
+      )
+
+      const deleted = await repository.deleteAll()
+      expect(deleted).toEqual(2)
+
+      const all = await repository.getAll()
+      expect(all).toEqual([])
+    })
+  })
+
+  async function insertPlugins(pluginNames: string[]) {
+    for (const pluginName of new Set(pluginNames)) {
+      await statusRepository.insert({
+        pluginName,
+        lastError: null,
+        resyncRequestedFrom: null,
+      })
+    }
+  }
+})
+
+function state(
+  overrides: Partial<InteropPluginSyncStateRecord> & {
+    pluginName: string
+    chain: string
+  },
+): InteropPluginSyncStateRecord {
+  return {
+    pluginName: overrides.pluginName,
+    chain: overrides.chain,
+    lastError: overrides.lastError ?? null,
+  }
+}

@@ -459,7 +459,7 @@ const RpcLog = v.passthroughObject({
   data: vData(),
   topics: v.array(vData(32)),
   // non-standard optimisation, number in sonic
-  // although this is included in reth, geth and Nethermind since late 2025 
+  // although this is included in reth, geth and Nethermind since late 2025
   // see: https://github.com/ethereum/execution-apis/issues/295
   blockTimestamp: v.union([vQuantity, v.number()]).transform(BigInt).optional(),
 })

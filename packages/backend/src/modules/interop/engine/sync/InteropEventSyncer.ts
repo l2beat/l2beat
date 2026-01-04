@@ -132,7 +132,10 @@ export class InteropEventSyncer extends TimeLoop {
     for (const log of logs) {
       assert(log.transactionHash)
       assert(log.blockNumber)
-      assert(log.blockTimestamp) // This is included in reth, geth and Nethermind since late 2025 https://github.com/ethereum/execution-apis/issues/295
+      assert(
+        log.blockTimestamp,
+        `Missing log.blockTimestamp on chain ${this.chain}`,
+      )
 
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
@@ -288,24 +291,20 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   private async clearChainSyncError(chain: string) {
-    await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
-      this.plugin.name,
+    await this.db.interopPluginSyncState.upsert({
+      pluginName: this.plugin.name,
       chain,
-      {
-        lastError: null,
-      },
-    )
+      lastError: null,
+    })
   }
 
   private async saveChainSyncError(error: unknown) {
     const lastError = errorToString(error)
-    await this.db.interopPluginSyncedRange.updateByPluginNameAndChain(
-      this.plugin.name,
-      this.chain,
-      {
-        lastError,
-      },
-    )
+    await this.db.interopPluginSyncState.upsert({
+      pluginName: this.plugin.name,
+      chain: this.chain,
+      lastError,
+    })
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
@@ -370,7 +369,6 @@ export class InteropEventSyncer extends TimeLoop {
         pluginName: this.plugin.name,
         chain: this.chain,
         ...fullRange,
-        lastError: null,
       })
       await this.clearChainSyncError(this.chain)
     })
