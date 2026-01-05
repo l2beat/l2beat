@@ -15,7 +15,6 @@ import {
 import { ChevronIcon } from '~/icons/Chevron'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
-import { formatAddress } from '~/utils/formatAddress'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
@@ -87,7 +86,7 @@ function VerifierCollapsibleWithDetails({
         <div className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold hover:cursor-pointer">
           <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
             <span className="text-left">
-              {formatAddress(verifierHash.hash)}
+              {`${verifierHash.hash.slice(0, 6)}...${verifierHash.hash.slice(-4)}`}
             </span>
             <div className="flex items-center gap-1.5 text-center">
               <p className="font-medium text-label-value-12 text-secondary">

@@ -103,8 +103,10 @@ export function getVerifiersWithAttesters(
 
   return {
     count: verifiersForStatus.length,
-    attesters: verifiersForStatus
-      .flatMap((v) => v.attesters)
+    attesters: uniqBy(
+      verifiersForStatus.flatMap((v) => v.attesters),
+      (a) => a?.id,
+    )
       .filter(notUndefined)
       .map((a) => ({
         ...a,
