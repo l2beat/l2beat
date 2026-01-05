@@ -33,6 +33,7 @@ import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
 import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
+import { LidoWstethPlugin } from './lido-wsteth'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
@@ -133,6 +134,7 @@ export function createInteropPlugins(
       new OrbitStackPlugin(),
       new AcrossSettlementPlugin(), // should be run before OpStack
       new WorldIdPlugin(), // should be run before OpStack
+      new LidoWstethPlugin(), // should be run before OpStack
       new SorareBasePlugin(), // should be run before OpStackStandardBridge
       new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
