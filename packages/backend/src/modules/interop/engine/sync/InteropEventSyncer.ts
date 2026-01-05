@@ -290,23 +290,20 @@ export class InteropEventSyncer extends TimeLoop {
     return result
   }
 
-  private async clearChainSyncError(chain: string) {
-    await this.db.interopPluginSyncState.upsert({
-      pluginName: this.plugin.name,
-      chain,
-      lastError: null,
-      resyncRequestedFrom: null,
-    })
+  private async clearChainSyncError() {
+    await this.db.interopPluginSyncState.setLastError(
+      this.plugin.name,
+      this.chain,
+      null,
+    )
   }
 
   private async saveChainSyncError(error: unknown) {
-    const lastError = errorToString(error)
-    await this.db.interopPluginSyncState.upsert({
-      pluginName: this.plugin.name,
-      chain: this.chain,
-      lastError,
-      resyncRequestedFrom: null,
-    })
+    await this.db.interopPluginSyncState.setLastError(
+      this.plugin.name,
+      this.chain,
+      errorToString(error),
+    )
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
@@ -372,7 +369,7 @@ export class InteropEventSyncer extends TimeLoop {
         chain: this.chain,
         ...fullRange,
       })
-      await this.clearChainSyncError(this.chain)
+      await this.clearChainSyncError()
     })
 
     this.logger.info('Events captured for resyncable plugin', {
