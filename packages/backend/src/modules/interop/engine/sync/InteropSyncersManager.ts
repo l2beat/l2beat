@@ -6,8 +6,17 @@ import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { InteropPlugin } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
-import { InteropEventSyncer } from './InteropEventSyncer'
+import { InteropEventSyncer, type SyncMode } from './InteropEventSyncer'
 import { isPluginResyncable } from './isPluginResyncable'
+
+export type PluginSyncStatus = {
+  pluginName: string
+  chain: string
+  syncMode?: SyncMode
+  toBlock?: bigint
+  toTimestamp?: number
+  lastError?: string
+}
 
 export class InteropSyncersManager {
   private rpcClients: { [chain: string]: EthRpcClient } = {}
@@ -18,11 +27,11 @@ export class InteropSyncersManager {
   >()
 
   constructor(
-    eventPlugins: InteropPlugin[],
-    enabledChains: LongChainName[],
-    chainConfigs: ChainApi[],
-    eventStore: InteropEventStore,
-    db: Database,
+    private readonly eventPlugins: InteropPlugin[],
+    private readonly enabledChains: LongChainName[],
+    private readonly chainConfigs: ChainApi[],
+    private readonly eventStore: InteropEventStore,
+    private readonly db: Database,
     private readonly logger: Logger,
   ) {
     for (const plugin of eventPlugins) {
@@ -106,5 +115,55 @@ export class InteropSyncersManager {
       this.rpcClients[chainConfig.name] = client
     }
     return client
+  }
+
+  async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {
+    const syncedRanges = await this.db.interopPluginSyncedRange.getAll()
+    const syncStates = await this.db.interopPluginSyncState.getAll()
+    const stateByKey = new Map(
+      syncStates.map((state) => [`${state.pluginName}:${state.chain}`, state]),
+    )
+    const seen = new Set<string>()
+    const rows: PluginSyncStatus[] = []
+
+    for (const range of syncedRanges) {
+      const key = `${range.pluginName}:${range.chain}`
+      const syncer = this.getSyncer(
+        range.pluginName,
+        range.chain as LongChainName,
+      )
+      const state = stateByKey.get(key)
+      seen.add(key)
+      rows.push({
+        pluginName: range.pluginName,
+        chain: range.chain,
+        syncMode: syncer?.syncMode,
+        toBlock: range.toBlock,
+        toTimestamp: range.toTimestamp,
+        lastError: state?.lastError ?? undefined,
+      })
+    }
+
+    for (const state of syncStates) {
+      const key = `${state.pluginName}:${state.chain}`
+      if (seen.has(key)) {
+        continue
+      }
+      rows.push({
+        pluginName: state.pluginName,
+        chain: state.chain,
+        lastError: state.lastError ?? undefined,
+      })
+    }
+
+    rows.sort((a, b) => {
+      const pluginCompare = a.pluginName.localeCompare(b.pluginName)
+      if (pluginCompare !== 0) {
+        return pluginCompare
+      }
+      return a.chain.localeCompare(b.chain)
+    })
+
+    return rows
   }
 }

@@ -36,7 +36,7 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
 
 const DEFAULT_RESYNC_DAYS = 1
 
-type SyncMode = 'follow' | 'catchUp' | 'waitForLatestBlockNumber'
+export type SyncMode = 'follow' | 'catchUp' | 'waitForLatestBlockNumber'
 const DEFAULT_SYNC_MODE: SyncMode = 'waitForLatestBlockNumber'
 
 interface LogQuery {
