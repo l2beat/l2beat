@@ -236,6 +236,37 @@ export const lighter: ScalingProject = {
       },
     ],
   },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid transactions to the previous state. This includes user transactions originating from L1 and L2, as well as internal transactions created by L2 operators. In the desert mode, valid proofs of exit must be generated. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for normal (i.e. non-desert) operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'Lighter transition is proven with custom Plonky2 circuits, compiled into ZK Lighter Verifier and Desert Verifier. ZK Lighter verifier implements the perp DEX and spot trading logic and could be found in this [prover repo](https://github.com/elliottech/lighter-prover/tree/main/circuit/src). Desert verifier consists of circuits proving valid L2 -> L1 withdrawals in the desert mode. More details in [ZK Catalog](https://l2beat.com/zk-catalog/lighterprover#proof-system).',
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'Lighter wraps its validity proof into a Plonk-based proof system which requires a trusted setup. The verification keys are hardcoded in the verifier contract on-chain. Lighter prover repo contains a [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) that regenerates circuits and verification keys.',
+        references: [
+          {
+            title: 'ZK Lighter verifier verification keys',
+            url: 'https://etherscan.io/address/0x7ddad28962571f77fe5e9cb2fe74a896300eeed4#code#F1#L41',
+          },
+          {
+            title: 'Desert verifier verification keys',
+            url: 'https://etherscan.io/address/0xd4460475F00307845082d3a146f36661354FBc67#code#F1#L39',
+          },
+        ],
+      },
+    ],
+  },
   discoveryInfo: getDiscoveryInfo([discovery]),
   upgradesAndGovernance: `Regular upgrades are initiated by the "network governor" and executed with a ${formatSeconds(upgradeDelay)} delay. The "security council" is allowed to reduce the upgrade delay to zero in case of an emergency. The security council does not currently satisfy the Stage 1 requirements. The network governor also retains the ability to add or remove validators.`,
   contracts: {
