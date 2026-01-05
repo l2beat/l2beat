@@ -1,7 +1,7 @@
 {
   "name": "degate3",
   "timestamp": 1751034767,
-  "configHash": "0xa4333c9cc0c860e3aecb94a273f08dd6ac70cf781c0bdbfe372c88d137fab0af",
+  "configHash": "0x1c2bab64ef879b9877640e0300580d249757c367459d33bc6661e88351d1df80",
   "entries": [
     {
       "name": "TimeLock1",

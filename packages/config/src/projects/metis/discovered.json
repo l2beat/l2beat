@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "timestamp": 1759830990,
-  "configHash": "0x0392ea2028909b0926d04dd6762027bea1c5b6b1090ac6a608d080501dcc96af",
+  "configHash": "0xdc31177b0f5e95d424c001b522ab0d46e73dca6bb2f080d05edd9803ded9c9cf",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -1418,7 +1418,7 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "l1CrossDomainMessenger": "metis-andromeda:0xEeeeffFfFffFFFfFFFFFFFffffffFffFFfFfEEeF",
         "messageNonce": 107989
       },
       "implementationNames": {

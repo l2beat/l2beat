@@ -1,7 +1,7 @@
 {
   "name": "apex",
-  "timestamp": 1753200107,
-  "configHash": "0xd2c30f9d07f7c4b690528ad36d158f86a69e23af70e92157ff60ddc031adcdc0",
+  "timestamp": 1767634866,
+  "configHash": "0xe5caefe8207cf1906d47ac619fe52cde7187dc3d08214798fd6c869401dc1608",
   "entries": [
     {
       "address": "eth:0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
@@ -1367,6 +1367,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 22975778 },
+  "usedBlockNumbers": { "ethereum": 24170019 },
   "permissionsConfigHash": "0xab89baaf22c3f23669a66dac9bed4ea968196c4f58d4ec78c38314a584ee0010"
 }

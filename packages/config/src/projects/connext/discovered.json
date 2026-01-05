@@ -1,13 +1,8 @@
 {
   "name": "connext",
-  "timestamp": 1753682687,
-  "configHash": "0xf251213c378378b0af87a57a202df86fcdcb9b520f093daf4ff6141ffc3e7d86",
+  "timestamp": 1767634943,
+  "configHash": "0x53339d034b48a8031c7a64fd20b2ba8e446de7f65ae88e5e01e2a2af29b3fd5b",
   "entries": [
-    {
-      "address": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "TransactionManager",
       "address": "eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
@@ -29,15 +24,20 @@
         "isRouterOwnershipRenounced": false,
         "MAX_TIMEOUT": 2592000,
         "MIN_TIMEOUT": 86400,
-        "owner": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
-        "proposed": "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653",
-        "proposedTimestamp": 1753521239,
+        "owner": "eth:0x4D96f2d2143DD74A96D015a70953A5686fa6ed55",
+        "proposed": "eth:0x4D96f2d2143DD74A96D015a70953A5686fa6ed55",
+        "proposedTimestamp": 0,
         "renounced": false,
         "routerOwnershipTimestamp": 0
       },
       "implementationNames": {
         "eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": "TransactionManager"
       }
+    },
+    {
+      "address": "eth:0x4D96f2d2143DD74A96D015a70953A5686fa6ed55",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "FulfillInterpreter",
@@ -56,11 +56,6 @@
       "implementationNames": {
         "eth:0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a": "FulfillInterpreter"
       }
-    },
-    {
-      "address": "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -125,6 +120,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23015739 },
-  "permissionsConfigHash": "0x7d50df971908a9164c834454f24eb4da5a6846ba6d16e0be5e79372a9202752e"
+  "usedBlockNumbers": { "ethereum": 24170026 },
+  "permissionsConfigHash": "0x2a6f5f84ec2222fe7f926fd7f58fb1a98726634ae17b37b74ec6c6bac5d33b72"
 }
