@@ -13,6 +13,7 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
       'isBridge',
       'ecosystemConfig',
       'zkCatalogInfo',
+      'contracts',
     ],
     whereNot: ['isUpcoming'],
   })
@@ -21,4 +22,5 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
     .sort((a, b) => b.addedAt - a.addedAt)
     .flatMap((p) => getSearchBarProjectEntries(p, projects))
     .slice(0, 15)
+    .map(({ contractAddresses: _, ...rest }) => rest) // strip contractAddresses from result as it is not needed in initial render
 }
