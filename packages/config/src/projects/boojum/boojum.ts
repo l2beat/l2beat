@@ -277,6 +277,7 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
           },
         ],
         verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: `
 Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
 The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
@@ -431,6 +432,7 @@ The output of the last command will contain the required \`snark_wrapper\` value
           },
         ],
         verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: `
 Verification requires an Ubuntu 22.04 machine with an NVIDIA GPU. We used a g6.4xlarge aws instance with 24 GiB GPU memory and 64 GiB RAM. 
 The setup part is based on [this guide](https://paragraph.com/@zksync/from-integration-to-verification-completing-the-first-steps-in-zksync-s-prover-network) with modifications, the verification is done using [this script](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri).
