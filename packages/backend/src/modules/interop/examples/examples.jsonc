@@ -835,8 +835,34 @@
       {
         "chain": "optimism",
         "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
+      },
+      // ETH sent directly via CrossDomainMessenger (not through StandardBridge) - L1->L2
+      {
+        "chain": "ethereum",
+        "tx": "0x879c63cc331e8730f9e414ba968120869415caabd9c358ecbb97bbd6008fff67"
+      },
+      {
+        "chain": "base",
+        "tx": "0x80e0ce0f2383ccf4c1280666f2cd6cf0ab7142ec6da5c73e293ff2c5bb01e65a"
+      },
+      // ETH sent directly via L2ToL1MessagePasser (not through StandardBridge) - L2->L1
+      {
+        "chain": "base",
+        "tx": "0x804a49327147aa44756d028a60c0ea6ebd4b24d2c55faeea7988233f218ab0cb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x74d2a903013d5a37f12038c74246cc186e779e212747292e5c5c0f5e959df421"
       }
-    ]
+    ],
+    "events": [
+      "opstack.SentMessage",
+      "opstack.RelayedMessage",
+      "opstack.MessagePassed",
+      "opstack.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["opstack-cdm.L1ToL2Transfer", "opstack-cdm.L2ToL1Transfer"]
   },
   "sorare-base": {
     "txs": [
