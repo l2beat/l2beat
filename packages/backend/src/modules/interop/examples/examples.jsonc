@@ -884,6 +884,19 @@
       "across-settlement.SentMessage"
     ],
     "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+  "world-id": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x2ba21e981c082931f6f93acbb702d1dfccaff5f26353143e954402bb28966d96"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xed2b5b8a91383f8cb9ec22f4cd74e2e764eb6ec64286c9abe0ac76f5743b36b8"
+      }
+    ],
+    "events": ["world-id.SentMessage"],
+    "messages": ["opstack.L1ToL2Message"]
   },
   "sorare-base": {
     "txs": [
