@@ -19,7 +19,7 @@ export const genlayer: ScalingProject = upcomingL2({
       documentation: ['https://docs.genlayer.com/'],
       explorers: ['https://genlayer-testnet.explorer.caldera.xyz/'],
       repositories: ['https://github.com/genlayerlabs'],
-      socialMedia: ['https://x.com/GenLayer'],
+      socialMedia: ['https://x.com/GenLayer', 'https://discord.com/invite/qjCU4AWnKE'],
     },
   },
   ecosystemInfo: {
