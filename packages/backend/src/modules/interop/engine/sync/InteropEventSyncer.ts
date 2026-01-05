@@ -181,6 +181,9 @@ export class InteropEventSyncer extends TimeLoop {
         this.chain,
       )
 
+    // TODO: if there's no syncedRange, see if we're already following due to old implementation
+    // and setup everything accordingly
+
     const latestBlockNumber = this.getLatestBlockNumber()
     assert(latestBlockNumber)
     const latestBlock = await this.rpcClient.getBlockByNumber(
