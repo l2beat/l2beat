@@ -884,6 +884,7 @@
       "across-settlement.SentMessage"
     ],
     "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+  },
   "world-id": {
     "txs": [
       {
