@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('megaeth')
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
-  daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
+  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
   nonTemplateProofSystem: {
     type: 'Optimistic',
