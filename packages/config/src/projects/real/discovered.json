@@ -1,7 +1,7 @@
 {
   "name": "real",
   "timestamp": 1754054742,
-  "configHash": "0xe41470184aa69414c4fa83b19ca2d6ae0423ddd465c6c3028cf5665e9412c647",
+  "configHash": "0xc653a68ac0bb90faf62d12e9a639b188a05a59710eda20732a8fa064e43c18a8",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -15,7 +15,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
       "sinceBlock": 20569170,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4": "OneStepProverHostIo"
       }
@@ -62,13 +64,17 @@
           "role": ".validators"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1730458499,
       "sinceBlock": 21092332,
       "values": {
         "$immutable": false,
         "$implementation": "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": ["eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F"],
+        "$members": [
+          "eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F"
+        ],
         "$threshold": 1,
         "domainSeparator": "0xa9a639c318123cea685e16b2c4f839faaf165f18df3bba5cca49c222bdc62417",
         "getChainId": 1,
@@ -94,7 +100,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
       "sinceBlock": 20569168,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB": "OneStepProverMemory"
       }
@@ -134,7 +142,9 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "sinceBlock": 18736154,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils"
       }
@@ -151,7 +161,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
       "sinceBlock": 20569167,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5": "OneStepProver0"
       }
@@ -177,7 +189,9 @@
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
           "via": [
-            { "address": "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50" }
+            {
+              "address": "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
+            }
           ]
         },
         {
@@ -186,7 +200,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50" }
+            {
+              "address": "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
+            }
           ]
         },
         {
@@ -217,17 +233,23 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+            [
+              "eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
+            ]
           ],
           [
             "2024-10-30T09:43:11.000Z",
             "0xaf5b759f18a6b1150b87e3c0e93270201a165763e4f2d42d75bec75ab7f258bf",
-            ["eth:0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]
+            [
+              "eth:0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
+            ]
           ],
           [
             "2024-10-30T18:24:35.000Z",
             "0xf18555dd5a5c4707f15cd5aa6dedd147bc01eb9212ff4d0e2751fc8ee97f8761",
-            ["eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B"]
+            [
+              "eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -241,7 +263,10 @@
         "eth:0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d": "TransparentUpgradeableProxy",
         "eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B": "ChallengeManager"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "Bridge",
@@ -268,12 +293,16 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]
+            [
+              "eth:0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"
+            ]
           ],
           [
             "2025-03-24T11:51:11.000Z",
             "0x5837fef008eaaa8871086f7e53f38a95b768926562e2e82cae17ddc7ab61b070",
-            ["eth:0xEfA1De858293593732a09c9dAA238BEC49595751"]
+            [
+              "eth:0xEfA1De858293593732a09c9dAA238BEC49595751"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -282,7 +311,9 @@
           "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
           "eth:0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
-        "allowedOutboxList": ["eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
+        "allowedOutboxList": [
+          "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"
+        ],
         "delayedMessageCount": 5357,
         "inboxHistory": [
           "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
@@ -290,7 +321,9 @@
         ],
         "nativeToken": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "nativeTokenDecimals": 18,
-        "outboxHistory": ["eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
+        "outboxHistory": [
+          "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"
+        ],
         "rollup": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
         "sequencerMessageCount": 4192,
@@ -318,7 +351,10 @@
         "eth:0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03": "TransparentUpgradeableProxy",
         "eth:0xEfA1De858293593732a09c9dAA238BEC49595751": "ERC20Bridge"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "GatewayRouter",
@@ -340,7 +376,9 @@
           [
             "2024-03-19T10:45:59.000Z",
             "0x816e110bc6a5c398f160b13e96856e756ea11282881dcb718e95efe00bd1fb7e",
-            ["eth:0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"]
+            [
+              "eth:0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -355,7 +393,10 @@
         "eth:0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18": "TransparentUpgradeableProxy",
         "eth:0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0": "L1OrbitGatewayRouter"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": {
+        "name": "External Bridges",
+        "priority": 1
+      }
     },
     {
       "name": "SwapManager",
@@ -402,7 +443,9 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"]
+            [
+              "eth:0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -440,17 +483,23 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x873484Ba63353C8b71210ce123B465512d408B27"]
+            [
+              "eth:0x873484Ba63353C8b71210ce123B465512d408B27"
+            ]
           ],
           [
             "2024-10-30T09:43:11.000Z",
             "0xaf5b759f18a6b1150b87e3c0e93270201a165763e4f2d42d75bec75ab7f258bf",
-            ["eth:0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"]
+            [
+              "eth:0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
+            ]
           ],
           [
             "2025-03-24T16:55:11.000Z",
             "0x2ecdabc185a5e5350c23c45cfbf746bd874b272e363729adcf975533d38790b8",
-            ["eth:0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"]
+            [
+              "eth:0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -504,7 +553,10 @@
         "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0": "TransparentUpgradeableProxy",
         "eth:0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18": "SequencerInbox"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
@@ -543,10 +595,19 @@
         "getAllStrategiesValue": 1,
         "getAllStrategyPendingValue": 0,
         "getStrategies": {
-          "addrs": ["eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
-          "allocations": [1000000]
+          "addrs": [
+            "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6"
+          ],
+          "allocations": [
+            1000000
+          ]
         },
-        "getTotalInvestedValue": { "_value": 1, "strategiesValue": [1] },
+        "getTotalInvestedValue": {
+          "_value": 1,
+          "strategiesValue": [
+            1
+          ]
+        },
         "realVault": "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164"
       },
       "implementationNames": {
@@ -571,7 +632,10 @@
       "values": {
         "$immutable": true,
         "getInvestedValue": 1,
-        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
+        "getStETHWithdrawalStatus": {
+          "requestIds": [],
+          "statuses": []
+        },
         "getTotalValue": 1,
         "governance": "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
@@ -649,7 +713,9 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x19431dc37098877486532250FB3158140717C00C"]
+            [
+              "eth:0x19431dc37098877486532250FB3158140717C00C"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -668,7 +734,10 @@
         "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761": "TransparentUpgradeableProxy",
         "eth:0x19431dc37098877486532250FB3158140717C00C": "ERC20Outbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
@@ -772,7 +841,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1753768031,
       "sinceBlock": 23022800,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164": ""
       }
@@ -799,7 +870,9 @@
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -807,8 +880,12 @@
           "from": "eth:0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -816,8 +893,12 @@
           "from": "eth:0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -825,8 +906,12 @@
           "from": "eth:0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -834,8 +919,12 @@
           "from": "eth:0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -843,8 +932,12 @@
           "from": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -852,8 +945,12 @@
           "from": "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -861,7 +958,9 @@
           "from": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
           "role": "admin",
           "via": [
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -869,8 +968,12 @@
           "from": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -878,8 +981,12 @@
           "from": "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         },
         {
@@ -887,8 +994,12 @@
           "from": "eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
           "role": "admin",
           "via": [
-            { "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1" },
-            { "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a" }
+            {
+              "address": "eth:0xB032ff02cd6425e4b816137207AA8560932180f1"
+            },
+            {
+              "address": "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            }
           ]
         }
       ],
@@ -899,7 +1010,9 @@
           "role": ".executors"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1711489163,
       "sinceBlock": 19521321,
       "values": {
@@ -948,7 +1061,9 @@
           [
             "2024-05-12T22:14:35.000Z",
             "0xff78834db538bd6b5be8abf30e32fd3861100c0fbde76f7c11b1cd1a3a2d6c0f",
-            ["eth:0x977cA9732E618D32552BA16a52f258cEFadf970a"]
+            [
+              "eth:0x977cA9732E618D32552BA16a52f258cEFadf970a"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -1121,7 +1236,10 @@
           }
         }
       ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325",
@@ -1148,7 +1266,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
       "sinceBlock": 20569169,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD": "OneStepProverMath"
       }
@@ -1176,7 +1296,9 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1715303135,
       "sinceBlock": 19836249,
       "values": {
@@ -1240,7 +1362,9 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+            [
+              "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -1251,23 +1375,32 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"]
+            "members": [
+              "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
+            "members": [
+              "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
+        "executors": [
+          "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+        ]
       },
       "implementationNames": {
         "eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
     },
     {
       "address": "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f",
@@ -1342,12 +1475,16 @@
           [
             "2024-03-16T09:18:35.000Z",
             "0xba3fd77d6025e002501d3e0e0a2bb7326be1d2b9d45a15a0a8f51d412783180d",
-            ["eth:0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
+            [
+              "eth:0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"
+            ]
           ],
           [
             "2025-03-24T16:55:11.000Z",
             "0x2ecdabc185a5e5350c23c45cfbf746bd874b272e363729adcf975533d38790b8",
-            ["eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4"]
+            [
+              "eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1362,7 +1499,10 @@
         "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11": "TransparentUpgradeableProxy",
         "eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4": "ERC20Inbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "AssetsVault",
@@ -1373,7 +1513,9 @@
       ],
       "proxyType": "immutable",
       "description": "This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.",
-      "ignoreInWatchMode": ["getBalance"],
+      "ignoreInWatchMode": [
+        "getBalance"
+      ],
       "sinceTimestamp": 1715706239,
       "sinceBlock": 19869596,
       "values": {
@@ -1416,7 +1558,9 @@
           [
             "2024-03-19T10:45:59.000Z",
             "0x816e110bc6a5c398f160b13e96856e756ea11282881dcb718e95efe00bd1fb7e",
-            ["eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"]
+            [
+              "eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -1431,7 +1575,10 @@
         "eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7": "TransparentUpgradeableProxy",
         "eth:0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848": "L1OrbitERC20Gateway"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     }
   ],
   "abis": {
@@ -2371,6 +2518,8 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23046516 },
+  "usedBlockNumbers": {
+    "ethereum": 23046516
+  },
   "permissionsConfigHash": "0x97b6758e22a392ab87dae48c4775c65bebccc26a97693069963cb7027f7b4723"
 }

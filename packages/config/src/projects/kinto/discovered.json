@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "timestamp": 1756898514,
-  "configHash": "0x69a0e8da6d913e4bd88592cc9b85a8f0e3f9b49542f0eebfc27d35fc55745cf6",
+  "configHash": "0xddbf7047aee23e59c8543a45a7c02dc62aabf3dc124719fec27c277b1f3486b9",
   "entries": [
     {
       "name": "Hypernative",
@@ -47,62 +47,86 @@
           [
             "2024-03-12T12:55:35.000Z",
             "0x5fe42b41ba3aafb36ec09d39284fdfc0d6df534b81488c7382ee8418fe620e62",
-            ["eth:0x925eC66892261203536a4aede9CA8e8D0feeA4ad"]
+            [
+              "eth:0x925eC66892261203536a4aede9CA8e8D0feeA4ad"
+            ]
           ],
           [
             "2024-03-13T12:31:35.000Z",
             "0xa1780c4191178aef57f3fc1a9d38a431d46fa163ed0436c839afade5dc91328e",
-            ["eth:0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"]
+            [
+              "eth:0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"
+            ]
           ],
           [
             "2024-03-15T01:29:11.000Z",
             "0xd52c14d572e45c1bd011844d136b7c492fc5ecb802e1c50f850c6662f3a7fccf",
-            ["eth:0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"]
+            [
+              "eth:0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"
+            ]
           ],
           [
             "2024-03-26T06:51:23.000Z",
             "0x1b0c58c017710ce99817ef751625accd468c9661ecff7984680eaf6e2150d968",
-            ["eth:0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"]
+            [
+              "eth:0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
+            ]
           ],
           [
             "2024-05-21T00:55:23.000Z",
             "0xe8481050b8e1b2d41d1e79a89d004596c9f1ed6293e2a0b07e295d7104b72108",
-            ["eth:0x3636617973f25a512676cb06876f0C885568664a"]
+            [
+              "eth:0x3636617973f25a512676cb06876f0C885568664a"
+            ]
           ],
           [
             "2024-05-22T00:09:11.000Z",
             "0x80b6eb0ef3cabe648cfb4cd49f4c6efbdb3283f04682065f99f4c871c8315839",
-            ["eth:0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"]
+            [
+              "eth:0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"
+            ]
           ],
           [
             "2024-05-22T02:17:11.000Z",
             "0xa99267f3208e313084784d7da895d88acd4a86001483566f21f3073e0ee13039",
-            ["eth:0x270f25127D7C48c956459e113aa81615CC30AeE2"]
+            [
+              "eth:0x270f25127D7C48c956459e113aa81615CC30AeE2"
+            ]
           ],
           [
             "2024-06-22T21:24:59.000Z",
             "0xf174716076d1373e6ee74c5f2afc7aea9de184deb45b3c992d873160c0bf5355",
-            ["eth:0xEEe82E92bA40A694409B4BDa3D7426188c61163e"]
+            [
+              "eth:0xEEe82E92bA40A694409B4BDa3D7426188c61163e"
+            ]
           ],
           [
             "2024-07-22T20:12:59.000Z",
             "0x0298ee3f7f0e0ebb53b19939a06453013a051923a1f27e59362d93ec2012fc3f",
-            ["eth:0x23559eB4Ad22c31940a929958B104821126F35b7"]
+            [
+              "eth:0x23559eB4Ad22c31940a929958B104821126F35b7"
+            ]
           ],
           [
             "2024-08-06T21:07:23.000Z",
             "0x07dac4c8df3e4fbc7619636522e7f893296c5ef9a7dd3b5a28976d5eedf09fd4",
-            ["eth:0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"]
+            [
+              "eth:0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"
+            ]
           ],
           [
             "2024-09-26T17:41:47.000Z",
             "0x31a2c058d7ce91c9d1b526764cf6442a45bdf662d2725bf8535a167303250bec",
-            ["eth:0x21D3921B50617BDef223207118950B0b577e4007"]
+            [
+              "eth:0x21D3921B50617BDef223207118950B0b577e4007"
+            ]
           ],
           [
             "2024-12-17T00:38:35.000Z",
             "0x9e8c1bcb81d01c1d3ed8c7f0b34ac033d5838e341641a809a6a1ad101139e118",
-            ["eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"]
+            [
+              "eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"
+            ]
           ]
         ],
         "$upgradeCount": 12,
@@ -150,7 +174,9 @@
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -158,7 +184,9 @@
           "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
           "role": "admin",
           "via": [
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -166,8 +194,12 @@
           "from": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -175,8 +207,12 @@
           "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -184,8 +220,12 @@
           "from": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -193,8 +233,12 @@
           "from": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -202,8 +246,12 @@
           "from": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -211,8 +259,12 @@
           "from": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -220,8 +272,12 @@
           "from": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -229,8 +285,12 @@
           "from": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         },
         {
@@ -238,8 +298,12 @@
           "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
           "role": "admin",
           "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+            {
+              "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df"
+            },
+            {
+              "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            }
           ]
         }
       ],
@@ -250,7 +314,9 @@
           "role": ".executors"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1702416755,
       "sinceBlock": 18772804,
       "values": {
@@ -297,7 +363,9 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "sinceBlock": 18736154,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils"
       }
@@ -328,7 +396,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729947707,
       "sinceBlock": 21049963,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59": "OneStepProver0"
       }
@@ -355,7 +425,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+            {
+              "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+            }
           ]
         }
       ]
@@ -517,7 +589,10 @@
           }
         }
       ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "RollupEventInbox",
@@ -539,7 +614,9 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+            [
+              "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -563,7 +640,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729947743,
       "sinceBlock": 21049966,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7": "OneStepProverHostIo"
       }
@@ -620,7 +699,9 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+            [
+              "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -631,23 +712,32 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"]
+            "members": [
+              "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
+            "members": [
+              "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
+        "executors": [
+          "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"
+        ]
       },
       "implementationNames": {
         "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
     },
     {
       "name": "Certora 1",
@@ -683,17 +773,23 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+            [
+              "eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
+            ]
           ],
           [
             "2024-06-27T16:39:47.000Z",
             "0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0",
-            ["eth:0x122B88885F1f365B69CAd38B167B039fEd0Ba096"]
+            [
+              "eth:0x122B88885F1f365B69CAd38B167B039fEd0Ba096"
+            ]
           ],
           [
             "2024-10-30T01:29:35.000Z",
             "0x81ed45f10aa3c6062d1d3ce5c6a2763c4e88e93e51d35665e94e33b2b04627ad",
-            ["eth:0xd14D9d4c8985763B5037A4f253977e059385660c"]
+            [
+              "eth:0xd14D9d4c8985763B5037A4f253977e059385660c"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -707,7 +803,10 @@
         "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "TransparentUpgradeableProxy",
         "eth:0xd14D9d4c8985763B5037A4f253977e059385660c": "ChallengeManager"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "Caldera2",
@@ -743,7 +842,9 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+            [
+              "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -761,7 +862,10 @@
         "eth:0x655761AD5FC251F414D6993A73184B0669F278c8": "TransparentUpgradeableProxy",
         "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": "Outbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -841,7 +945,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729947719,
       "sinceBlock": 21049964,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6": "OneStepProverMemory"
       }
@@ -866,7 +972,9 @@
           [
             "2023-12-15T03:06:35.000Z",
             "0xff7d995569e4a00193462406da253b8fb2fa14e8fddf5f79bed51180e6099c54",
-            ["eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
+            [
+              "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -881,7 +989,10 @@
         "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42": "TransparentUpgradeableProxy",
         "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": "L1ERC20Gateway"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "Bridge",
@@ -908,7 +1019,9 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+            [
+              "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -917,13 +1030,17 @@
           "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
-        "allowedOutboxList": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
+        "allowedOutboxList": [
+          "eth:0x655761AD5FC251F414D6993A73184B0669F278c8"
+        ],
         "delayedMessageCount": 7078,
         "inboxHistory": [
           "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
-        "outboxHistory": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
+        "outboxHistory": [
+          "eth:0x655761AD5FC251F414D6993A73184B0669F278c8"
+        ],
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "sequencerMessageCount": 5370,
@@ -951,7 +1068,10 @@
         "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "TransparentUpgradeableProxy",
         "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": "Bridge"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "eth:0x87799989341A07F495287B1433eea98398FD73aA",
@@ -974,7 +1094,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+            {
+              "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+            }
           ]
         }
       ]
@@ -1024,7 +1146,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1729947731,
       "sinceBlock": 21049965,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e": "OneStepProverMath"
       }
@@ -1040,7 +1164,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+            {
+              "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+            }
           ]
         }
       ]
@@ -1065,22 +1191,30 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+            [
+              "eth:0x1162084C3C6575121146582Db5BE43189e8CEe6b"
+            ]
           ],
           [
             "2024-05-03T15:22:59.000Z",
             "0x3ad996252ae2a17bb0e7b5ec38eee0d104fd097da479cb3911b34d925f1750d7",
-            ["eth:0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]
+            [
+              "eth:0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
+            ]
           ],
           [
             "2024-05-08T00:06:47.000Z",
             "0xec98dd39612eb11b2d7e15fc9961c34aba0796fd078989942636728ebeb888e3",
-            ["eth:0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
+            [
+              "eth:0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
+            ]
           ],
           [
             "2025-05-06T15:50:47.000Z",
             "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28",
-            ["eth:0x296339ED40ec80746b239b04dE943bb8619784b7"]
+            [
+              "eth:0x296339ED40ec80746b239b04dE943bb8619784b7"
+            ]
           ]
         ],
         "$upgradeCount": 4,
@@ -1095,7 +1229,10 @@
         "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": "TransparentUpgradeableProxy",
         "eth:0x296339ED40ec80746b239b04dE943bb8619784b7": "Inbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "MamoriLabs",
@@ -1119,7 +1256,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+            {
+              "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+            }
           ]
         }
       ]
@@ -1149,7 +1288,9 @@
           [
             "2023-12-15T03:06:35.000Z",
             "0xff7d995569e4a00193462406da253b8fb2fa14e8fddf5f79bed51180e6099c54",
-            ["eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
+            [
+              "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -1164,7 +1305,10 @@
         "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": "TransparentUpgradeableProxy",
         "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": "L1GatewayRouter"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": {
+        "name": "External Bridges",
+        "priority": 1
+      }
     },
     {
       "name": "Turnkey Multisig",
@@ -1184,7 +1328,9 @@
           "role": ".validators"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1722896903,
       "sinceBlock": 20465349,
       "values": {
@@ -1221,7 +1367,9 @@
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+            {
+              "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+            }
           ]
         }
       ]
@@ -1299,7 +1447,9 @@
           "role": "admin"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1678700303,
       "sinceBlock": 16818229,
       "values": {
@@ -1349,23 +1499,31 @@
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["eth:0x873484Ba63353C8b71210ce123B465512d408B27"]
+            [
+              "eth:0x873484Ba63353C8b71210ce123B465512d408B27"
+            ]
           ],
           [
             "2024-06-27T16:39:47.000Z",
             "0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0",
-            ["eth:0x57411f5BA52531e8199066bC8EC650470A744883"]
+            [
+              "eth:0x57411f5BA52531e8199066bC8EC650470A744883"
+            ]
           ],
           [
             "2025-05-06T15:50:47.000Z",
             "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28",
-            ["eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"]
+            [
+              "eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"
+            ]
           ]
         ],
         "$upgradeCount": 3,
         "batchCount": 5370,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
-        "batchPosters": ["eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
+        "batchPosters": [
+          "eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39"
+        ],
         "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
@@ -1404,7 +1562,10 @@
         "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "TransparentUpgradeableProxy",
         "eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78": "SequencerInbox"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "NioGuardians",
@@ -1415,7 +1576,9 @@
       ],
       "proxyType": "immutable",
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": [
+        "clock"
+      ],
       "sinceTimestamp": 1729791292,
       "sinceBlock": 234135,
       "values": {
@@ -1441,7 +1604,10 @@
       "implementationNames": {
         "kinto:0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "name": "NioGovernor",
@@ -1452,7 +1618,9 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract allowing token- and NFT based voting.",
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": [
+        "clock"
+      ],
       "sinceTimestamp": 1729791297,
       "sinceBlock": 234141,
       "values": {
@@ -1487,7 +1655,10 @@
       "implementationNames": {
         "kinto:0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": "NioGovernor"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "name": "Faucet",
@@ -1507,47 +1678,65 @@
           [
             "2024-01-15T18:09:46.000Z",
             "0x143fcf93ba99e9386bef055670644f8e2f574f9036aa70d7832d1aea1bb738e1",
-            ["kinto:0xB2f4c8E6D336DB09731A4D08BC087838b4841b06"]
+            [
+              "kinto:0xB2f4c8E6D336DB09731A4D08BC087838b4841b06"
+            ]
           ],
           [
             "2024-01-15T21:17:31.000Z",
             "0xfe63ae596cffd80e9f173f0b10c5e9e06d9e3c89dc51999665840c8addaf1119",
-            ["kinto:0xa0BB7432357634e66b9F56AED03e46c4abfFea49"]
+            [
+              "kinto:0xa0BB7432357634e66b9F56AED03e46c4abfFea49"
+            ]
           ],
           [
             "2024-02-08T16:44:13.000Z",
             "0x5f80f3c3f31cd3cae5837919267e75afc75fff4fb62da36f588c48aa51fda124",
-            ["kinto:0xAF79b543191C95df73B0332F449B59499162A8C3"]
+            [
+              "kinto:0xAF79b543191C95df73B0332F449B59499162A8C3"
+            ]
           ],
           [
             "2024-02-15T06:48:12.000Z",
             "0x15bf95b862a9d1b2e021186466c7789d92cf33085a7df5e5a7d56127f3f27ad6",
-            ["kinto:0x8202A71c1fD197d87081Afb056AA972C5B1d6d6c"]
+            [
+              "kinto:0x8202A71c1fD197d87081Afb056AA972C5B1d6d6c"
+            ]
           ],
           [
             "2024-02-15T06:48:13.000Z",
             "0xc82e23a68b45890babaa0fd9860a7e5a37adca1465ce22138e16458bafd6b3e9",
-            ["kinto:0x8202A71c1fD197d87081Afb056AA972C5B1d6d6c"]
+            [
+              "kinto:0x8202A71c1fD197d87081Afb056AA972C5B1d6d6c"
+            ]
           ],
           [
             "2024-03-12T07:30:39.000Z",
             "0x0559ca40867f4e919c90b052974a3c911253ec5e84ee4b29f41fe994ad13dfec",
-            ["kinto:0xE0BE7E3696E284B56c285533690a76142226c490"]
+            [
+              "kinto:0xE0BE7E3696E284B56c285533690a76142226c490"
+            ]
           ],
           [
             "2024-03-12T07:35:23.000Z",
             "0xf48581c159bc73a76a7ad4d58bf32c12c3a283414bd53a4fb25840decad716e8",
-            ["kinto:0x7eBEDC4a52c0A778f4d8D55c7b4Fe735e224ABD2"]
+            [
+              "kinto:0x7eBEDC4a52c0A778f4d8D55c7b4Fe735e224ABD2"
+            ]
           ],
           [
             "2024-04-03T10:32:55.000Z",
             "0xf1d309d26d871b35bb71e79189d2f152ed4c1f77a8c11d80e645292c73a8183e",
-            ["kinto:0x37783d44BfB9F1A012890EfA37D36098DC14C0cf"]
+            [
+              "kinto:0x37783d44BfB9F1A012890EfA37D36098DC14C0cf"
+            ]
           ],
           [
             "2024-10-15T18:51:00.000Z",
             "0xded439cbb376a7308296d551dc0a21c69c48b844dccf30424a64a65744794d86",
-            ["kinto:0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550"]
+            [
+              "kinto:0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550"
+            ]
           ]
         ],
         "$upgradeCount": 9,
@@ -1562,7 +1751,10 @@
         "kinto:0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "SoraPFPProxy",
         "kinto:0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550": "Faucet"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "name": "KintoFoundation",
@@ -1580,7 +1772,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Paymaster used for user transactions eligible for sponsorship.",
-      "ignoreInWatchMode": ["getDeposit"],
+      "ignoreInWatchMode": [
+        "getDeposit"
+      ],
       "sinceTimestamp": 1703803667,
       "sinceBlock": 68,
       "values": {
@@ -1590,77 +1784,107 @@
           [
             "2023-12-28T22:47:47.000Z",
             "0xb692b5556209a6386b64f688bea1017906dc8e8ddfb02ace7add540fdefaca40",
-            ["kinto:0x1F9E60e0289b35325B25635B602d515179a7497d"]
+            [
+              "kinto:0x1F9E60e0289b35325B25635B602d515179a7497d"
+            ]
           ],
           [
             "2024-01-10T02:13:36.000Z",
             "0xd351e1219a520ee83e558461519b9588ad86feff6b1adc3c2872ccffbba57cca",
-            ["kinto:0xD2779fcE8766011c9E71b368786C5e4b4459F42c"]
+            [
+              "kinto:0xD2779fcE8766011c9E71b368786C5e4b4459F42c"
+            ]
           ],
           [
             "2024-01-13T23:16:39.000Z",
             "0xaabf9ed4e510974999b0a64d9e9ed6ed60c0d39beb5d30e1996b843e1b9a81c7",
-            ["kinto:0x0Df539ef2a0E0f1902F7D4363A79f55Ed93438b9"]
+            [
+              "kinto:0x0Df539ef2a0E0f1902F7D4363A79f55Ed93438b9"
+            ]
           ],
           [
             "2024-01-23T21:33:04.000Z",
             "0x15923d2585536f40c734e413ab2ab739c6160bf36bbbaad982f3d3a06f0def90",
-            ["kinto:0x77222bdac39671db6C91c7fFc85E0909B76177c8"]
+            [
+              "kinto:0x77222bdac39671db6C91c7fFc85E0909B76177c8"
+            ]
           ],
           [
             "2024-02-01T19:03:26.000Z",
             "0x917505a7a754a763b94e773011505517e94e1f5f2decca6168f0231fb65ca652",
-            ["kinto:0x2C759Af319BFE4BC6A12f6f64bE4258b223133C8"]
+            [
+              "kinto:0x2C759Af319BFE4BC6A12f6f64bE4258b223133C8"
+            ]
           ],
           [
             "2024-02-01T19:53:38.000Z",
             "0xb6e0635a428d9edf666f108bca8f0e6b29b0a2456e7ac809ea7d5af8860497db",
-            ["kinto:0xf7BbB5840f47499a0d930cF4764DF8e6f7239c55"]
+            [
+              "kinto:0xf7BbB5840f47499a0d930cF4764DF8e6f7239c55"
+            ]
           ],
           [
             "2024-02-06T02:32:41.000Z",
             "0x9d45409dc2c59714352a2502174cd9d1ff0ca8a8120e89f880dccffc8ff6fb3f",
-            ["kinto:0x8Fbd7D4e90C442172C2fD6bCB6d78C51D22C1557"]
+            [
+              "kinto:0x8Fbd7D4e90C442172C2fD6bCB6d78C51D22C1557"
+            ]
           ],
           [
             "2024-02-15T06:47:53.000Z",
             "0x38bac1720c936d1582e05b2794c82df57d047c306be75ad5c5f0422282a2a47a",
-            ["kinto:0x3515c8Ff44d5887768757371a0A031D06a3A6E7B"]
+            [
+              "kinto:0x3515c8Ff44d5887768757371a0A031D06a3A6E7B"
+            ]
           ],
           [
             "2024-02-24T08:15:30.000Z",
             "0x32c7d903999a3196c1795d182f654381479114a7964f7d8981bbd416f2e97c1b",
-            ["kinto:0xEc6ec58fA1E78a488cd3975C0400D2CEa73f965f"]
+            [
+              "kinto:0xEc6ec58fA1E78a488cd3975C0400D2CEa73f965f"
+            ]
           ],
           [
             "2024-05-22T22:33:56.000Z",
             "0x26c6ac0f2a4c831a695e9ec0a28c26e172084159a61b138867a865c29925e5cf",
-            ["kinto:0x625D89063092d340B3F87C927DBc3d1a104E3d81"]
+            [
+              "kinto:0x625D89063092d340B3F87C927DBc3d1a104E3d81"
+            ]
           ],
           [
             "2024-07-25T16:36:02.000Z",
             "0x79bd7bf584e87c02873225eb70dac7daaffd092ff78a33a55bbe0219cb11fb4c",
-            ["kinto:0xAbB778766dea552533F2110A9FAE13f856108195"]
+            [
+              "kinto:0xAbB778766dea552533F2110A9FAE13f856108195"
+            ]
           ],
           [
             "2024-08-27T16:05:27.000Z",
             "0xa909f195f8179d91ae5e41539d9537c416e262d0bceba0b224a54f8a0e2b71e4",
-            ["kinto:0x651c678A27edFC767a66b7C5db47d5e9d769DE6c"]
+            [
+              "kinto:0x651c678A27edFC767a66b7C5db47d5e9d769DE6c"
+            ]
           ],
           [
             "2024-10-11T16:43:30.000Z",
             "0x57ea8a5bbd34a3b8df3106b2adc3f4849fed0567c539360b177176b6a7890dab",
-            ["kinto:0x4688f73064b7F13ED71861503ebfAe1D6B633486"]
+            [
+              "kinto:0x4688f73064b7F13ED71861503ebfAe1D6B633486"
+            ]
           ],
           [
             "2024-10-11T21:11:24.000Z",
             "0x48bf54ac6eddb8f55a5022a708f4fb84257506e82c543733fa6ad5da57cc6c02",
-            ["kinto:0xcbb3BA88bFD944860463585A557022fceE3Cc280"]
+            [
+              "kinto:0xcbb3BA88bFD944860463585A557022fceE3Cc280"
+            ]
           ],
           [
             "2024-12-05T01:09:11.000Z",
             "0x1a916af8dd468332c79abaf6546f4e990c99908a26ac4d0775c63b8eaf295603",
-            ["kinto:0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB"]
+            [
+              "kinto:0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB"
+            ]
           ]
         ],
         "$upgradeCount": 15,
@@ -1681,7 +1905,10 @@
         "kinto:0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "BlitkinProxy",
         "kinto:0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB": "SponsorPaymaster"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "name": "EntryPoint",
@@ -1784,7 +2011,9 @@
           "role": "admin"
         }
       ],
-      "ignoreInWatchMode": ["getNonce"],
+      "ignoreInWatchMode": [
+        "getNonce"
+      ],
       "sinceTimestamp": 1704061899,
       "sinceBlock": 84,
       "values": {
@@ -1801,172 +2030,240 @@
           [
             "2023-12-31T22:08:08.000Z",
             "0xb93d5f824b37c9ebd53ba4173510c3ed01c8279fa77897f718287d99f45144d7",
-            ["kinto:0xd87FB0bF3c38f216bD1604bFa4d262F95409227d"]
+            [
+              "kinto:0xd87FB0bF3c38f216bD1604bFa4d262F95409227d"
+            ]
           ],
           [
             "2024-01-10T02:11:16.000Z",
             "0x5e85052f0f5dc2bb77766f70172c6b9ca9dabb294d82b7bfe123e252e0f4fc63",
-            ["kinto:0x893B0AeA9C45FA8d3b0FBbebd03d4220B9514599"]
+            [
+              "kinto:0x893B0AeA9C45FA8d3b0FBbebd03d4220B9514599"
+            ]
           ],
           [
             "2024-01-23T21:33:14.000Z",
             "0x414470a46d49f3adbea31b026b31ee0310bf5f14b6a047163b3ae2b2d1daee76",
-            ["kinto:0xAe84C7E23240Dc11f0B2711C20aEDE81E5a28fF2"]
+            [
+              "kinto:0xAe84C7E23240Dc11f0B2711C20aEDE81E5a28fF2"
+            ]
           ],
           [
             "2024-02-01T19:03:14.000Z",
             "0x29cfa97112038cf710734d93219a57f3b3f8a0dd6c9d1b630f57a4b3260c8515",
-            ["kinto:0x9dd64eA97fFFB2CbCd9ea87b9082250Be50FC820"]
+            [
+              "kinto:0x9dd64eA97fFFB2CbCd9ea87b9082250Be50FC820"
+            ]
           ],
           [
             "2024-02-15T06:48:10.000Z",
             "0xe94e71b9178761f4e77efa1f8ac0db731607ee1efd75b8c68b632024edd26347",
-            ["kinto:0x5248F94285c737Cd088c4d25bd68D45AFA258039"]
+            [
+              "kinto:0x5248F94285c737Cd088c4d25bd68D45AFA258039"
+            ]
           ],
           [
             "2024-04-29T23:39:05.000Z",
             "0x1bb7899ea6179a8bda54a07440e97b26a8b1205ca5dda1d61d186a96cc53d91f",
-            ["kinto:0xA6ddF426008E8b7f1a70237bdEfafB5D928bA72E"]
+            [
+              "kinto:0xA6ddF426008E8b7f1a70237bdEfafB5D928bA72E"
+            ]
           ],
           [
             "2024-05-21T16:36:47.000Z",
             "0xf75350ce91b2f9ab01b40e12d4e304da06e3a98df9dbfff926221ece0658b021",
-            ["kinto:0xcF4046C914BB8E437ED07C6FD755f58f430C4DA6"]
+            [
+              "kinto:0xcF4046C914BB8E437ED07C6FD755f58f430C4DA6"
+            ]
           ],
           [
             "2024-05-22T17:18:33.000Z",
             "0x85685091cfa0d5a4baf4cbd9c4b873ca99d0484464f052dfdd6d54894edd8822",
-            ["kinto:0xe761f7d13d6e6D70848fcD2E6bAc211db3741BA6"]
+            [
+              "kinto:0xe761f7d13d6e6D70848fcD2E6bAc211db3741BA6"
+            ]
           ],
           [
             "2024-05-22T19:38:03.000Z",
             "0xb8301be60b27d74a3cd93a176597b83d840390c34f35ed466f9c0b171904bf5d",
-            ["kinto:0xF75dAc825E27f1A146fbd5e18681892D5cbca9E8"]
+            [
+              "kinto:0xF75dAc825E27f1A146fbd5e18681892D5cbca9E8"
+            ]
           ],
           [
             "2024-05-22T21:32:50.000Z",
             "0x7dbaf52bba314950632de04ce4b84c6e239be80b1c7eea61473275a3702d824e",
-            ["kinto:0x1d1E45adFA23457be2A595601F993d8826f11D38"]
+            [
+              "kinto:0x1d1E45adFA23457be2A595601F993d8826f11D38"
+            ]
           ],
           [
             "2024-05-22T22:41:49.000Z",
             "0xd59013784f82e36b563318b2a47f8b59c77bea95ee539596d371752075b04f7a",
-            ["kinto:0xf411E206370B731D5461c6c70657aDC71F5aEF38"]
+            [
+              "kinto:0xf411E206370B731D5461c6c70657aDC71F5aEF38"
+            ]
           ],
           [
             "2024-05-22T23:17:34.000Z",
             "0x9a0a1e68a7096515886517da175cebb6bca1394817e4b82ef7a51a92854de83c",
-            ["kinto:0x43Ab055B44327EF3424b51e974960840d721e4D8"]
+            [
+              "kinto:0x43Ab055B44327EF3424b51e974960840d721e4D8"
+            ]
           ],
           [
             "2024-05-23T00:36:09.000Z",
             "0x4534860f727b67344f7f32f4444e584b5bb32d5d34852903430558d31c8c618b",
-            ["kinto:0x421459c9af07ccCadf6BCA52319835c2Bfb117e2"]
+            [
+              "kinto:0x421459c9af07ccCadf6BCA52319835c2Bfb117e2"
+            ]
           ],
           [
             "2024-05-24T01:55:24.000Z",
             "0x76df358b38dd221b64d26546736753affa6a5f743664105039dd66e42c91a8f9",
-            ["kinto:0x8E495c2d6Be781Bd668632AA387e3e1027E80240"]
+            [
+              "kinto:0x8E495c2d6Be781Bd668632AA387e3e1027E80240"
+            ]
           ],
           [
             "2024-05-25T16:58:58.000Z",
             "0x7b8edbfb7a264c7bffbd818550f03bf610667cffb50556cd235733a93c87b5c9",
-            ["kinto:0x3deAbC32b749b95Df9B125822cCb123757c4d4F1"]
+            [
+              "kinto:0x3deAbC32b749b95Df9B125822cCb123757c4d4F1"
+            ]
           ],
           [
             "2024-05-27T16:35:38.000Z",
             "0x2aefd6ad5ec2db239fc273701abac2b895adc967dab32ba0582a57b696421045",
-            ["kinto:0xa7040b6Ed2fC09C7485AA6A89fb2C320E2A739c3"]
+            [
+              "kinto:0xa7040b6Ed2fC09C7485AA6A89fb2C320E2A739c3"
+            ]
           ],
           [
             "2024-05-28T22:53:09.000Z",
             "0x02c94988c204753ed0c7179ee46543485e9aef832571a0bde46fc873565d546a",
-            ["kinto:0xe1FcA7f6d88E30914089b600A73eeF72eaC7f601"]
+            [
+              "kinto:0xe1FcA7f6d88E30914089b600A73eeF72eaC7f601"
+            ]
           ],
           [
             "2024-05-31T19:14:54.000Z",
             "0x36c58600e88f27fe63c85880d83f4b59d3dcbdb452fc4d8c493f765f49140f7d",
-            ["kinto:0x3Ff8593329364dCDC7272fAcb853c8FeC2929B03"]
+            [
+              "kinto:0x3Ff8593329364dCDC7272fAcb853c8FeC2929B03"
+            ]
           ],
           [
             "2024-06-01T17:37:58.000Z",
             "0xe143dd88482e3585729987aaa636c47880876963681707c71a7279a294331419",
-            ["kinto:0xa158e30099C6F7D9546eF2a519F2118E46039307"]
+            [
+              "kinto:0xa158e30099C6F7D9546eF2a519F2118E46039307"
+            ]
           ],
           [
             "2024-06-10T19:54:37.000Z",
             "0xee90db98384f3683ab110b036f4b900b149d7b6c2d8822da09072200d66f5183",
-            ["kinto:0x2D669eB24988863aA0efA2D593DD40f174D8977B"]
+            [
+              "kinto:0x2D669eB24988863aA0efA2D593DD40f174D8977B"
+            ]
           ],
           [
             "2024-06-12T16:20:50.000Z",
             "0xed69774070322c707f1325542e505809f267ff84c27bf1f2b94acd6ef071a9d1",
-            ["kinto:0x5844A1629fC51439187093eDFd8bBD57109D858D"]
+            [
+              "kinto:0x5844A1629fC51439187093eDFd8bBD57109D858D"
+            ]
           ],
           [
             "2024-06-15T22:07:48.000Z",
             "0x6307556dd70bee894ea0145fdc1e4f0044d7bedbd7ac3b25ae4b3b2d2a912ac5",
-            ["kinto:0xa54Fe8f99dBB9EB64d7c4E243F3c6aa5De0483Df"]
+            [
+              "kinto:0xa54Fe8f99dBB9EB64d7c4E243F3c6aa5De0483Df"
+            ]
           ],
           [
             "2024-06-29T15:27:31.000Z",
             "0x4b63dc55ffb56340d415484cb5215c8f35d05db8cab764b350872172ae75500d",
-            ["kinto:0xaF80B25F650A66F5F8e8bc67697C2160024b6Dcf"]
+            [
+              "kinto:0xaF80B25F650A66F5F8e8bc67697C2160024b6Dcf"
+            ]
           ],
           [
             "2024-07-04T20:28:23.000Z",
             "0x2fac94819bd2af509b2ee22403fa3dbf56e5e46a95582af8174977988cebf294",
-            ["kinto:0xB6026A3eB7ABee0fee3cAAb7BcfcBd6aDE5f0234"]
+            [
+              "kinto:0xB6026A3eB7ABee0fee3cAAb7BcfcBd6aDE5f0234"
+            ]
           ],
           [
             "2024-07-04T21:04:24.000Z",
             "0x8025e20e6463f4b3ab05f653ce8d97db63d25ecce25caeee854f568b124e67ea",
-            ["kinto:0x39aB919098fE67f305d097d76Df0Ae04af5e640b"]
+            [
+              "kinto:0x39aB919098fE67f305d097d76Df0Ae04af5e640b"
+            ]
           ],
           [
             "2024-07-04T21:11:59.000Z",
             "0x033e14c988ea46e1f6aa56bc4ce6e85c124cedeec4e1260f69add97f97a66286",
-            ["kinto:0xdDB14fAD9060afCA4FC5E1Ec108261B465Df285F"]
+            [
+              "kinto:0xdDB14fAD9060afCA4FC5E1Ec108261B465Df285F"
+            ]
           ],
           [
             "2024-07-09T03:19:37.000Z",
             "0xfa102b81f35df0137f5117f79fd9e2434e9b2479082542cfad69b888bf3924b4",
-            ["kinto:0x867969538512518e358b7b0296c4383f5bae4992"]
+            [
+              "kinto:0x867969538512518e358b7b0296c4383f5bae4992"
+            ]
           ],
           [
             "2024-07-10T01:32:19.000Z",
             "0xf7e3d8d5ddb65c6f03205fdf31223dcf00a488e884edd3f962478b3c56d230bb",
-            ["kinto:0xFF41064cC2cF1A76F4FD4f2235c766FDDFb7DCE1"]
+            [
+              "kinto:0xFF41064cC2cF1A76F4FD4f2235c766FDDFb7DCE1"
+            ]
           ],
           [
             "2024-07-10T22:25:46.000Z",
             "0xad3511f1cc75cfff66e27ee41753037a9860686487b8226a16378e4cf599bb34",
-            ["kinto:0xC99D77eF43FCA9D491c1f5B900F74649236055C3"]
+            [
+              "kinto:0xC99D77eF43FCA9D491c1f5B900F74649236055C3"
+            ]
           ],
           [
             "2024-07-26T01:51:29.000Z",
             "0xe8831f04c64c5900e29075426b477e5d859b6fc0df247e160200c941f8b2d265",
-            ["kinto:0xB15Fc6227FD696C7AD53d25a9fEE6c4831c27b16"]
+            [
+              "kinto:0xB15Fc6227FD696C7AD53d25a9fEE6c4831c27b16"
+            ]
           ],
           [
             "2024-08-27T16:05:25.000Z",
             "0x2b935bf76847687fcd243758c04b4ab09489114b398400062a2f45a57ae64037",
-            ["kinto:0x667a0A293B6a95841dB5f0Bbf0F02e8e5F71C8e5"]
+            [
+              "kinto:0x667a0A293B6a95841dB5f0Bbf0F02e8e5F71C8e5"
+            ]
           ],
           [
             "2024-09-18T21:46:04.000Z",
             "0x608c39049f980bfbbf9c7b906fe169958b276237fb9dad8ed8dedc600a168415",
-            ["kinto:0x1161a537aF45f4ca4AD984ECcf4a8E9692Bf2518"]
+            [
+              "kinto:0x1161a537aF45f4ca4AD984ECcf4a8E9692Bf2518"
+            ]
           ],
           [
             "2024-09-20T16:00:22.000Z",
             "0xcebb2902d18cd8a441747fb71e60ffd3d7bee0a66e8f763901cda3f81ab06a4d",
-            ["kinto:0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"]
+            [
+              "kinto:0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"
+            ]
           ],
           [
             "2025-04-11T14:53:11.000Z",
             "0x203e75dac211349a98abe410e4f91bb1f26389cf3af230cc29d4cfb4efe618d3",
-            ["kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"]
+            [
+              "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"
+            ]
           ]
         ],
         "$threshold": 2,
@@ -2003,7 +2300,15 @@
         "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D": "KintoWallet"
       },
       "usedTypes": [
-        { "typeCaster": "Mapping", "arg": { "1": 1, "2": 1, "3": 1, "4": 2 } }
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 2
+          }
+        }
       ]
     },
     {
@@ -2015,7 +2320,9 @@
       ],
       "proxyType": "immutable",
       "description": "Central contract for bridging via the external socket bridge.",
-      "ignoreInWatchMode": ["globalMessageCount"],
+      "ignoreInWatchMode": [
+        "globalMessageCount"
+      ],
       "sinceTimestamp": 1715810609,
       "sinceBlock": 130639,
       "values": {
@@ -2033,7 +2340,10 @@
       "implementationNames": {
         "kinto:0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": {
+        "name": "External Bridges",
+        "priority": 1
+      }
     },
     {
       "address": "kinto:0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
@@ -2051,7 +2361,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
-      "ignoreInWatchMode": ["totalSupply", "appCount"],
+      "ignoreInWatchMode": [
+        "totalSupply",
+        "appCount"
+      ],
       "sinceTimestamp": 1704852483,
       "sinceBlock": 126,
       "values": {
@@ -2061,112 +2374,156 @@
           [
             "2024-01-10T02:08:03.000Z",
             "0xde75968b0229e8642d50ce24b04d03c82f94c7c09c7e5295e344c29c59509a42",
-            ["kinto:0xEDA88D4810E14aE4C384369CbC6F1510787Dc4fB"]
+            [
+              "kinto:0xEDA88D4810E14aE4C384369CbC6F1510787Dc4fB"
+            ]
           ],
           [
             "2024-01-23T21:07:51.000Z",
             "0x8499136067b2f7054fec3ee6a666c316c84cb16dae358501a7ed4f3cb8bf2d18",
-            ["kinto:0xA82F30210F7dB1642bc20a5adCECbB16f766435B"]
+            [
+              "kinto:0xA82F30210F7dB1642bc20a5adCECbB16f766435B"
+            ]
           ],
           [
             "2024-01-23T21:33:06.000Z",
             "0x92482d283200aa211700c0f4d8b9e4a6d99ca218edb4037c71f1609e6a82f008",
-            ["kinto:0xA82F30210F7dB1642bc20a5adCECbB16f766435B"]
+            [
+              "kinto:0xA82F30210F7dB1642bc20a5adCECbB16f766435B"
+            ]
           ],
           [
             "2024-02-07T17:46:47.000Z",
             "0x4e490e7a1750adae92b047c5c031496b73a1bf741b41cfb321b24a57dbf5f620",
-            ["kinto:0x60ce7AF33fB6BCA504058fc1F5BF0bc816AD7Fc1"]
+            [
+              "kinto:0x60ce7AF33fB6BCA504058fc1F5BF0bc816AD7Fc1"
+            ]
           ],
           [
             "2024-02-15T06:47:47.000Z",
             "0x9d555f249857efbb76ff058de2188602fa49a202f5e8249cc463d274b2e57e9e",
-            ["kinto:0xe1F135742dE49A5A3337A59440b1B7a986F634ea"]
+            [
+              "kinto:0xe1F135742dE49A5A3337A59440b1B7a986F634ea"
+            ]
           ],
           [
             "2024-07-02T18:39:11.000Z",
             "0xb2ea3f8b83f6bf3795c3a6a59066a3bbc168063aef8d671873704ed1d98b5263",
-            ["kinto:0x48D2b947B1aa3A23A890dd456a404394fb2F1636"]
+            [
+              "kinto:0x48D2b947B1aa3A23A890dd456a404394fb2F1636"
+            ]
           ],
           [
             "2024-07-04T20:28:25.000Z",
             "0xc2da3cd399b883f8d1a3edb0983815cf8be06a8dd9921a2b153b2b399ad8fa52",
-            ["kinto:0x2542b185DFed7F6312CFE63eFC4e295DcC2AE154"]
+            [
+              "kinto:0x2542b185DFed7F6312CFE63eFC4e295DcC2AE154"
+            ]
           ],
           [
             "2024-07-17T22:39:25.000Z",
             "0x3efb1c4001ac3432eda7a8937bd5443a734208ec33c3163505005d7afbf56a3f",
-            ["kinto:0x4060d0628dda0BD6Cc65ef9cEe3Ac16cc0B41F1e"]
+            [
+              "kinto:0x4060d0628dda0BD6Cc65ef9cEe3Ac16cc0B41F1e"
+            ]
           ],
           [
             "2024-07-17T22:46:35.000Z",
             "0x4b015bf29194bc172a826606ca3a9edc678ed4956758d4b6b38ca2fdd87e338c",
-            ["kinto:0x476ac3dEEe552acbc5a16f3Cb745C6EF8F597e9d"]
+            [
+              "kinto:0x476ac3dEEe552acbc5a16f3Cb745C6EF8F597e9d"
+            ]
           ],
           [
             "2024-07-18T14:54:30.000Z",
             "0x2bff1ece52349108d91c3e15ab0071df7008ffbf50d682aace6ea628064225a7",
-            ["kinto:0xdE7d1b7510435F3E849c4158D21788B82d7040D5"]
+            [
+              "kinto:0xdE7d1b7510435F3E849c4158D21788B82d7040D5"
+            ]
           ],
           [
             "2024-07-18T20:40:33.000Z",
             "0x008cc76a3869a0ba622ed914ae8261f08e6ef9f2b1c27bb17ec8294b2962f9dd",
-            ["kinto:0x89C44a887bB582d2E708d6A452f67538b1A71087"]
+            [
+              "kinto:0x89C44a887bB582d2E708d6A452f67538b1A71087"
+            ]
           ],
           [
             "2024-07-19T17:19:59.000Z",
             "0xe55a23d9834d4447a6f41e8d22bb27a19644516f2a54bf813a30fc53435e7916",
-            ["kinto:0xe1E48162e1E18e04E6D073884396eFE2964D9225"]
+            [
+              "kinto:0xe1E48162e1E18e04E6D073884396eFE2964D9225"
+            ]
           ],
           [
             "2024-07-19T17:37:17.000Z",
             "0x617c43f088a4a3d1414b5dce120c0bca00ebcf5e935909d07e2f55d560f534e2",
-            ["kinto:0x628D6a2546c00119aBC35262856B5abF6eea547b"]
+            [
+              "kinto:0x628D6a2546c00119aBC35262856B5abF6eea547b"
+            ]
           ],
           [
             "2024-07-20T00:34:39.000Z",
             "0x65a3ce1967ee12753fa0b9dfaa72f3826b05afad7953331fc9a980944b241f9e",
-            ["kinto:0xc7e69C953418d746a0aa01b5Ddf12911cE90A27C"]
+            [
+              "kinto:0xc7e69C953418d746a0aa01b5Ddf12911cE90A27C"
+            ]
           ],
           [
             "2024-07-21T17:31:25.000Z",
             "0x11c127be50c54efdcf307e79bd79bb51e7ef34adc0d228125d4096c5831e422e",
-            ["kinto:0xaE0Ed29500fd52311690b56A6FB901843163b7Be"]
+            [
+              "kinto:0xaE0Ed29500fd52311690b56A6FB901843163b7Be"
+            ]
           ],
           [
             "2024-07-30T19:05:04.000Z",
             "0x648b891c385ae4e969367533e711bb7df277fe14d27aecf883d8559282f7c0ad",
-            ["kinto:0x9CB3aB22F17223b0A7Ae58BA31CcFf2A3EbE3411"]
+            [
+              "kinto:0x9CB3aB22F17223b0A7Ae58BA31CcFf2A3EbE3411"
+            ]
           ],
           [
             "2024-08-19T22:06:33.000Z",
             "0xa0e406a27947d135d3f33ce5534e3258edd49da8f3270b1bf89658beb8854aca",
-            ["kinto:0xa592FB45C110F1540D1f13D6563Bb8E1a429Ab4a"]
+            [
+              "kinto:0xa592FB45C110F1540D1f13D6563Bb8E1a429Ab4a"
+            ]
           ],
           [
             "2024-08-27T16:05:24.000Z",
             "0x34c2da9b0134d445025877452c261549c144fc9aa06303adbc381e748a08e002",
-            ["kinto:0x3D87691B1f887206eAaB7cbfE9Ff067Dc129093B"]
+            [
+              "kinto:0x3D87691B1f887206eAaB7cbfE9Ff067Dc129093B"
+            ]
           ],
           [
             "2024-10-12T01:41:55.000Z",
             "0x20b98c3091c7bb516270dca8e0f1c14981dfe166985aa31b3bfb3ebfb64b6a5b",
-            ["kinto:0xeC00432A044271A906427554906302e6408B5225"]
+            [
+              "kinto:0xeC00432A044271A906427554906302e6408B5225"
+            ]
           ],
           [
             "2024-10-12T12:49:06.000Z",
             "0x27c7e650d4537b6ce2532d2c3116e0163e89f0cc9f268213994b735e40b9f32d",
-            ["kinto:0x226FCf8657ca310b375a7e23B87092cD1e3af92f"]
+            [
+              "kinto:0x226FCf8657ca310b375a7e23B87092cD1e3af92f"
+            ]
           ],
           [
             "2024-10-31T15:56:36.000Z",
             "0xacd0d3fa0467ad903ee9db6f92b28820c9e8971528d4707a73736c167ade4b8a",
-            ["kinto:0xb94240Ff4aB45811c550ee3c5Ea19bC692210A29"]
+            [
+              "kinto:0xb94240Ff4aB45811c550ee3c5Ea19bC692210A29"
+            ]
           ],
           [
             "2024-11-09T21:53:55.000Z",
             "0xe141386873afcd007f7367eddb0aeccafbc296cbed871bc2f20d86a9272a633d",
-            ["kinto:0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1"]
+            [
+              "kinto:0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1"
+            ]
           ]
         ],
         "$upgradeCount": 22,
@@ -2243,7 +2600,9 @@
         "totalSupply": 79
       },
       "fieldMeta": {
-        "owner": { "severity": "HIGH" },
+        "owner": {
+          "severity": "HIGH"
+        },
         "getSystemContracts": {
           "severity": "HIGH",
           "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`."
@@ -2253,7 +2612,10 @@
         "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "UUPSProxy",
         "kinto:0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1": "KintoAppRegistry"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "kinto:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -2343,7 +2705,9 @@
           "role": "admin"
         }
       ],
-      "ignoreInWatchMode": ["totalWallets"],
+      "ignoreInWatchMode": [
+        "totalWallets"
+      ],
       "sinceTimestamp": 1703803636,
       "sinceBlock": 64,
       "values": {
@@ -2353,122 +2717,170 @@
           [
             "2023-12-28T22:47:16.000Z",
             "0xf3c9b71be4fd432e553ffbd0830c9a37a223e58aea7d917f59e0b9925bf1ef28",
-            ["kinto:0x9F8Af18f6C1E5E4DA42b33D283F23EB8C23DF505"]
+            [
+              "kinto:0x9F8Af18f6C1E5E4DA42b33D283F23EB8C23DF505"
+            ]
           ],
           [
             "2024-01-10T01:57:03.000Z",
             "0xb19bd9f9546a11a17bf89a7bc467d1138d0249ab97dde4f0fe83cfae4302e1af",
-            ["kinto:0xd6Dea5Ff03f099242DBDF737E25e4bf4B9d4f9f6"]
+            [
+              "kinto:0xd6Dea5Ff03f099242DBDF737E25e4bf4B9d4f9f6"
+            ]
           ],
           [
             "2024-01-15T16:36:33.000Z",
             "0x02e7d7327761fac3fe83beefd23ecae331aade5d0d303861056cdf9f2dab8eb7",
-            ["kinto:0x652c9b99f916beb42ccb7883a725E2f9219095B4"]
+            [
+              "kinto:0x652c9b99f916beb42ccb7883a725E2f9219095B4"
+            ]
           ],
           [
             "2024-01-15T19:19:46.000Z",
             "0x44fd2d87a8b692ae4257c1336d44296c4b1e4e78d2a0093d97a4fcb41dffa0f5",
-            ["kinto:0x1b5976043578C6F4d2D1d17D3d4AE89Cf001B9d5"]
+            [
+              "kinto:0x1b5976043578C6F4d2D1d17D3d4AE89Cf001B9d5"
+            ]
           ],
           [
             "2024-01-16T00:49:08.000Z",
             "0xa64107a2068c8cd6d653bd8bdce635a815f39586a5ed69c352f1e4a73e08f9cd",
-            ["kinto:0xc85dAbd4b238477A1d821111A6ec8BC94D9F6394"]
+            [
+              "kinto:0xc85dAbd4b238477A1d821111A6ec8BC94D9F6394"
+            ]
           ],
           [
             "2024-01-20T06:42:17.000Z",
             "0x48188ec199172f045bbcae2fd576d33c3a3e815931349b121d7cddc1de137f95",
-            ["kinto:0x48525Ac956c946110e2358A7E8a7A3D8290676EC"]
+            [
+              "kinto:0x48525Ac956c946110e2358A7E8a7A3D8290676EC"
+            ]
           ],
           [
             "2024-01-23T21:33:20.000Z",
             "0xd134cdb81b340183459994909b5579f421a4353f61a699b08f3e5ce2e513cf46",
-            ["kinto:0x63495C71a036Fb886e65b6F41BA2A26d406E8108"]
+            [
+              "kinto:0x63495C71a036Fb886e65b6F41BA2A26d406E8108"
+            ]
           ],
           [
             "2024-02-01T19:03:20.000Z",
             "0xd46d2e4408972dc97ea9387267b37667bffd0a13dd5892d2b8604e17395a9bd3",
-            ["kinto:0x30D26e75D542Ba2A7e3B35BcC78FDC064B935D8B"]
+            [
+              "kinto:0x30D26e75D542Ba2A7e3B35BcC78FDC064B935D8B"
+            ]
           ],
           [
             "2024-02-15T06:48:26.000Z",
             "0xd1ce7ae06ce76630c63e745d01163f4b6cf40900a22074a7f514d6e5aa7afb3f",
-            ["kinto:0x7a4A12Aa90eF6F393777A0F2bA1512F4963f406a"]
+            [
+              "kinto:0x7a4A12Aa90eF6F393777A0F2bA1512F4963f406a"
+            ]
           ],
           [
             "2024-03-12T07:30:36.000Z",
             "0x163d555fb34da76bd2055457b4abd0713c12476a2bf9db6694b0e06f7f28e8b8",
-            ["kinto:0x8eE847CCF9C6143e55Ac156c2Dee42c0928A3ccB"]
+            [
+              "kinto:0x8eE847CCF9C6143e55Ac156c2Dee42c0928A3ccB"
+            ]
           ],
           [
             "2024-03-15T08:50:02.000Z",
             "0x90e8959faaba48b32ee578b16427c148df949618dd588735e33ef730ca097344",
-            ["kinto:0x37F7E177dA12063632cBB9bA964f4B7F71A8De1a"]
+            [
+              "kinto:0x37F7E177dA12063632cBB9bA964f4B7F71A8De1a"
+            ]
           ],
           [
             "2024-03-15T15:28:07.000Z",
             "0x8a2a8eb95a0ddc294076cd547a162d0db4ad847f205d7a1d4aa8f853932ddecc",
-            ["kinto:0x916FeD38032eC9f550b91da58A50D0487f12C098"]
+            [
+              "kinto:0x916FeD38032eC9f550b91da58A50D0487f12C098"
+            ]
           ],
           [
             "2024-04-03T10:43:09.000Z",
             "0x2603e64d46b43f597907b4e75e1328c3c9708bf21d679c85842468ae74eb6585",
-            ["kinto:0x7452748E16429FDa1501cD03D1289d4Fd262A0bb"]
+            [
+              "kinto:0x7452748E16429FDa1501cD03D1289d4Fd262A0bb"
+            ]
           ],
           [
             "2024-05-28T20:28:57.000Z",
             "0x9453bcbda654b94abb2eb8623543f84504cc2bb05777de4baa97216c2bb72e66",
-            ["kinto:0x93378e7303804e80eafC4bbcC40dE9228c10fF73"]
+            [
+              "kinto:0x93378e7303804e80eafC4bbcC40dE9228c10fF73"
+            ]
           ],
           [
             "2024-06-05T21:52:12.000Z",
             "0xeac8c1256dbdee7b01b591209f3bb09fd03694ec850b3ce9b5681cc6fc63fcbe",
-            ["kinto:0x880742Eac8DD7c5C40fD19dc00C0c4785C214bEE"]
+            [
+              "kinto:0x880742Eac8DD7c5C40fD19dc00C0c4785C214bEE"
+            ]
           ],
           [
             "2024-06-10T19:54:38.000Z",
             "0x194878dfe2eed6db4fe13b57bb2f0e11ad5760f0b4a6fc69917eee8e82e61085",
-            ["kinto:0x19D2dc7dF25E9711c9551bc07D4EbCac780b71d8"]
+            [
+              "kinto:0x19D2dc7dF25E9711c9551bc07D4EbCac780b71d8"
+            ]
           ],
           [
             "2024-06-15T22:07:50.000Z",
             "0x57583bb3409d701289f051e763cc1ea63f29f0d1533724628129e6199a13e7fb",
-            ["kinto:0xB80A4b325bA44c441275853656F9239044a0D78a"]
+            [
+              "kinto:0xB80A4b325bA44c441275853656F9239044a0D78a"
+            ]
           ],
           [
             "2024-06-29T15:27:34.000Z",
             "0x5864b8a919c9d685cfa6a158f0facbe31e17d0de8a9d246dc7f1d83f42072b7f",
-            ["kinto:0xd2ecFd5Fc0985D217FD28705847f189F4990875f"]
+            [
+              "kinto:0xd2ecFd5Fc0985D217FD28705847f189F4990875f"
+            ]
           ],
           [
             "2024-06-29T15:34:57.000Z",
             "0x29ba69b7f64244b4e7d4a60f0b3fb9dd5ef82a58b3c044047999df8fd82f6208",
-            ["kinto:0x1618A2F977F17f4AE8a3e08E79300f09677d18c2"]
+            [
+              "kinto:0x1618A2F977F17f4AE8a3e08E79300f09677d18c2"
+            ]
           ],
           [
             "2024-07-21T20:18:26.000Z",
             "0x3937fc848b6c1c012e8f6379ab55329920be3928bfb799d86b7b9b29e108273f",
-            ["kinto:0x12FF2EF4291d7EF4e4B58B6274aa65A895a15259"]
+            [
+              "kinto:0x12FF2EF4291d7EF4e4B58B6274aa65A895a15259"
+            ]
           ],
           [
             "2024-07-22T16:13:28.000Z",
             "0x63e90979522ddb51bf7df0e5f3980b927c98dc2e7c3e819390528a0467be59ed",
-            ["kinto:0xD08bB7002FeDb550e458F1b3395F0E80AD7CE116"]
+            [
+              "kinto:0xD08bB7002FeDb550e458F1b3395F0E80AD7CE116"
+            ]
           ],
           [
             "2024-07-26T21:37:28.000Z",
             "0xa03c844698c376f8ea14a5d657de099fcc45706bb9a106eeee0af960f6f530e8",
-            ["kinto:0x62Ee6192c4288f8482F8632cf44fd87c4c612ef6"]
+            [
+              "kinto:0x62Ee6192c4288f8482F8632cf44fd87c4c612ef6"
+            ]
           ],
           [
             "2024-10-23T00:48:15.000Z",
             "0x3be2498e2237c3c78d372dca2fc25dbe830b7b92ec4aaf9d92b3be26eba22988",
-            ["kinto:0x872de68253938792e4e6402d05ef82d98DAAbCdd"]
+            [
+              "kinto:0x872de68253938792e4e6402d05ef82d98DAAbCdd"
+            ]
           ],
           [
             "2024-10-24T15:56:41.000Z",
             "0x2c5b369329be46ad4a3db64380a2cb87493f7beb80ea91c258d4d648ca9e5806",
-            ["kinto:0x1Bc47279D052Edb9C1770242287eFC23317Ed675"]
+            [
+              "kinto:0x1Bc47279D052Edb9C1770242287eFC23317Ed675"
+            ]
           ]
         ],
         "$upgradeCount": 24,
@@ -2480,12 +2892,19 @@
         "rewardsDistributor": "kinto:0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
         "totalWallets": 75844
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH"
+        }
+      },
       "implementationNames": {
         "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "BlitkinProxy",
         "kinto:0x1Bc47279D052Edb9C1770242287eFC23317Ed675": "KintoWalletFactory"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "BundleBulker",
@@ -2504,7 +2923,10 @@
       "implementationNames": {
         "kinto:0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d": "BundleBulker"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": {
+        "name": "Spam",
+        "priority": -1
+      }
     },
     {
       "name": "KintsugiFoundation",
@@ -2666,13 +3088,17 @@
                   "upgradeAllWalletImplementations(address)",
                   "upgradeTo(address)"
                 ],
-                "RECOVERY_APPROVER_ROLE": ["approveWalletRecovery(address)"]
+                "RECOVERY_APPROVER_ROLE": [
+                  "approveWalletRecovery(address)"
+                ]
               },
               "adminDelay": 1036800
             },
             "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
               "roleFunctions": {
-                "UPGRADER_ROLE": ["upgradeTo(address)"],
+                "UPGRADER_ROLE": [
+                  "upgradeTo(address)"
+                ],
                 "SECURITY_COUNCIL_ROLE": [
                   "updateSystemApps(address[])",
                   "updateSystemContracts(address[])",
@@ -2686,20 +3112,36 @@
             },
             "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
               "roleFunctions": {
-                "UPGRADER_ROLE": ["upgradeTo(address)"],
-                "SANCTIONER_ROLE": ["confirmSanction(address)"]
+                "UPGRADER_ROLE": [
+                  "upgradeTo(address)"
+                ],
+                "SANCTIONER_ROLE": [
+                  "confirmSanction(address)"
+                ]
               },
               "adminDelay": 1036800
             }
           }
         },
         "AdditionalRoleLabels": {
-          "NIO_GOVERNOR_ROLE": ["1635978423191113331"],
-          "UPGRADER_ROLE": ["8663528507529876195"],
-          "SECURITY_COUNCIL_ROLE": ["14661544942390944024"],
-          "RECOVERY_APPROVER_ROLE": ["2827137176883084373"],
-          "SANCTIONER_ROLE": ["565311800027786426"],
-          "DEV_HELPER_ROLE": ["12665434841745889720"]
+          "NIO_GOVERNOR_ROLE": [
+            "1635978423191113331"
+          ],
+          "UPGRADER_ROLE": [
+            "8663528507529876195"
+          ],
+          "SECURITY_COUNCIL_ROLE": [
+            "14661544942390944024"
+          ],
+          "RECOVERY_APPROVER_ROLE": [
+            "2827137176883084373"
+          ],
+          "SANCTIONER_ROLE": [
+            "565311800027786426"
+          ],
+          "DEV_HELPER_ROLE": [
+            "12665434841745889720"
+          ]
         },
         "ADMIN_ROLE": 0,
         "edKintoMultisig2ADMIN": 1036800,
@@ -2847,7 +3289,10 @@
         "PUBLIC_ROLE": "18446744073709551615",
         "RoleAdminChanged": {},
         "RoleGrantDelayChanged": {
-          "8663528507529876195": { "delay": 604800, "since": 1733613166 }
+          "8663528507529876195": {
+            "delay": 604800,
+            "since": 1733613166
+          }
         },
         "RoleGuardianChanged": {},
         "RolesGranted": {
@@ -2992,25 +3437,64 @@
         },
         "TargetFunctionRoleUpdated": {
           "kinto:0x793500709506652Fcc61F0d2D0fDa605638D4293": [
-            { "selector": "0x8522d1b2", "roleId": "1635978423191113331" },
-            { "selector": "0xc664c714", "roleId": "1635978423191113331" },
-            { "selector": "0x9089e8ae", "roleId": "1635978423191113331" }
+            {
+              "selector": "0x8522d1b2",
+              "roleId": "1635978423191113331"
+            },
+            {
+              "selector": "0xc664c714",
+              "roleId": "1635978423191113331"
+            },
+            {
+              "selector": "0x9089e8ae",
+              "roleId": "1635978423191113331"
+            }
           ],
           "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": [
-            { "selector": "0xf4f4b03a", "roleId": "8663528507529876195" },
-            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
-            { "selector": "0x456cf492", "roleId": "2827137176883084373" }
+            {
+              "selector": "0xf4f4b03a",
+              "roleId": "8663528507529876195"
+            },
+            {
+              "selector": "0x3659cfe6",
+              "roleId": "8663528507529876195"
+            },
+            {
+              "selector": "0x456cf492",
+              "roleId": "2827137176883084373"
+            }
           ],
           "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
-            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
-            { "selector": "0xc233e2a3", "roleId": "14661544942390944024" },
-            { "selector": "0x0e6ff432", "roleId": "14661544942390944024" },
-            { "selector": "0x72592851", "roleId": "14661544942390944024" },
-            { "selector": "0x9a6896f6", "roleId": "12665434841745889720" }
+            {
+              "selector": "0x3659cfe6",
+              "roleId": "8663528507529876195"
+            },
+            {
+              "selector": "0xc233e2a3",
+              "roleId": "14661544942390944024"
+            },
+            {
+              "selector": "0x0e6ff432",
+              "roleId": "14661544942390944024"
+            },
+            {
+              "selector": "0x72592851",
+              "roleId": "14661544942390944024"
+            },
+            {
+              "selector": "0x9a6896f6",
+              "roleId": "12665434841745889720"
+            }
           ],
           "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": [
-            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
-            { "selector": "0xfb0b2940", "roleId": "565311800027786426" }
+            {
+              "selector": "0x3659cfe6",
+              "roleId": "8663528507529876195"
+            },
+            {
+              "selector": "0xfb0b2940",
+              "roleId": "565311800027786426"
+            }
           ]
         }
       },
@@ -3090,7 +3574,10 @@
       "implementationNames": {
         "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739": "AccessManager"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
     },
     {
       "address": "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
@@ -3122,7 +3609,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
-      "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
+      "ignoreInWatchMode": [
+        "lastMonitoredAt",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1703803592,
       "sinceBlock": 59,
       "values": {
@@ -3132,64 +3622,88 @@
           [
             "2023-12-28T22:46:32.000Z",
             "0x452c7d1c49781ba0501dc0baba338ec790d9d73fbb65e8fab67b9313fe0bf633",
-            ["kinto:0xa3625A24376C2eac96eDcF353C88F3F3a1De030a"]
+            [
+              "kinto:0xa3625A24376C2eac96eDcF353C88F3F3a1De030a"
+            ]
           ],
           [
             "2024-01-13T23:16:45.000Z",
             "0x5526a267a631debc424ea7eda141fd18f5fe357505cb32bc2c6bae22fbb15246",
-            ["kinto:0xd838189759e85Ac8673515FFd9c72cc854f360Fa"]
+            [
+              "kinto:0xd838189759e85Ac8673515FFd9c72cc854f360Fa"
+            ]
           ],
           [
             "2024-01-15T16:36:39.000Z",
             "0x6bc0ebf4dca10e8817f37d144980b6908597ed327a05707ceda82f1398692959",
-            ["kinto:0x2AA456d97fB8f75283327458920D4daA2BFe363e"]
+            [
+              "kinto:0x2AA456d97fB8f75283327458920D4daA2BFe363e"
+            ]
           ],
           [
             "2024-02-01T19:03:08.000Z",
             "0xae9d5d179229788eb3f6c25f24fc0d7adf7906a86c41cb344b36d5d0db812d6b",
-            ["kinto:0x41bC5c9B1FC8Ab95890De5339737Bc791421ea56"]
+            [
+              "kinto:0x41bC5c9B1FC8Ab95890De5339737Bc791421ea56"
+            ]
           ],
           [
             "2024-02-01T19:28:35.000Z",
             "0x84b908e328466db6827fbfde299bd3084b48d27aac618ee825815f6ee590021d",
-            ["kinto:0xE5eBdFCB597DD84CFeA412278f1c46A0D83aaC39"]
+            [
+              "kinto:0xE5eBdFCB597DD84CFeA412278f1c46A0D83aaC39"
+            ]
           ],
           [
             "2024-02-15T06:48:20.000Z",
             "0x4f90c154f986a5dcdbe046dc12c5653b88c0dad96178f2a82cf32ebf7d99c1ae",
-            ["kinto:0x074e5ECc285b90781f74e491F33fF37849F97220"]
+            [
+              "kinto:0x074e5ECc285b90781f74e491F33fF37849F97220"
+            ]
           ],
           [
             "2024-10-15T22:24:19.000Z",
             "0x0ee10f2c231a7703590ac0a8eff238c419203e49d1e4c8f722cfcad5d050ee71",
-            ["kinto:0xd3642f5CF57A5090F173294F68Df66583521FeA0"]
+            [
+              "kinto:0xd3642f5CF57A5090F173294F68Df66583521FeA0"
+            ]
           ],
           [
             "2024-12-06T21:43:59.000Z",
             "0x393717142a85ed552e3d455cd886d11abe37095fa7f7be1dd1db7214a65a74dd",
-            ["kinto:0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"]
+            [
+              "kinto:0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"
+            ]
           ],
           [
             "2024-12-10T20:00:17.000Z",
             "0x9fa20142e6e04305e74314e6670ecbf65477f470a9251ec55dc52ddcd34940b1",
-            ["kinto:0xaa0726829d41E3C70B84Bc5390cce82afC56871A"]
+            [
+              "kinto:0xaa0726829d41E3C70B84Bc5390cce82afC56871A"
+            ]
           ],
           [
             "2025-02-05T15:37:41.000Z",
             "0xee19b10811d98a79d18ea4dfd1684702c0e30070a2e3cf428de3799c257b83f8",
-            ["kinto:0x4aC06254558e144C41461a319822993900cE2eE4"]
+            [
+              "kinto:0x4aC06254558e144C41461a319822993900cE2eE4"
+            ]
           ],
           [
             "2025-04-11T14:53:11.000Z",
             "0xd8aa458f29ed74a06b3f97a9455c2495bd8d32ea19cdc4764936a6b6e1d2404f",
-            ["kinto:0x1d61772AE2e157f9F6A4127526eD86AB5801a477"]
+            [
+              "kinto:0x1d61772AE2e157f9F6A4127526eD86AB5801a477"
+            ]
           ]
         ],
         "$upgradeCount": 11,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"]
+            "members": [
+              "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+            ]
           },
           "KYC_PROVIDER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -3204,15 +3718,21 @@
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"]
+            "members": [
+              "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+            ]
           },
           "0x85f3421f6b5b49c1607af3732a481b7217b224e9d9648eb16c382bac95689ab0": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"]
+            "members": [
+              "kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+            ]
           },
           "GOVERNANCE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"]
+            "members": [
+              "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+            ]
           }
         },
         "confirmedSanctions": [
@@ -3220,7 +3740,9 @@
           "kinto:0xc1ad34Bd24180A15735dd7919C0F24A63e4017ff"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DEFAULT_ADMINs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
+        "DEFAULT_ADMINs": [
+          "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+        ],
         "domainSeparator": "0x3fe5ae163d535eda3ea38de1e41134f95111068b903f4589e3ada0b6699b1c85",
         "EXIT_WINDOW_PERIOD": 1036800,
         "faucet": "kinto:0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
@@ -3230,7 +3752,9 @@
           "kinto:0x0000000000000000000000000000000000000000"
         ],
         "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
-        "GOVERNANCErs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
+        "GOVERNANCErs": [
+          "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+        ],
         "KYC_PROVIDER_ROLE": "0x6c4079fcac94e7142d8c209744c998efe53a188aadb7e55958f7ad3ea8a1d652",
         "KYC_PROVIDERs": [
           "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
@@ -4560,7 +5084,9 @@
         ],
         "totalSupply": 75512,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
-        "UPGRADERs": ["kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
+        "UPGRADERs": [
+          "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+        ],
         "walletFactory": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
       "fieldMeta": {
@@ -4573,16 +5099,27 @@
         "confirmedSanctions": {
           "description": "addresses confirmed sanctioned by the GOVERNANCE_ROLE."
         },
-        "UPGRADERs": { "severity": "HIGH" },
-        "KYC_PROVIDERs": { "severity": "HIGH" },
-        "GOVERNANCErs": { "severity": "HIGH" },
-        "DEFAULT_ADMINs": { "severity": "HIGH" }
+        "UPGRADERs": {
+          "severity": "HIGH"
+        },
+        "KYC_PROVIDERs": {
+          "severity": "HIGH"
+        },
+        "GOVERNANCErs": {
+          "severity": "HIGH"
+        },
+        "DEFAULT_ADMINs": {
+          "severity": "HIGH"
+        }
       },
       "implementationNames": {
         "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "BlitkinProxy",
         "kinto:0x1d61772AE2e157f9F6A4127526eD86AB5801a477": "KintoID"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     }
   ],
   "abis": {
@@ -6177,6 +6714,9 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23282254, "kinto": 919415 },
+  "usedBlockNumbers": {
+    "ethereum": 23282254,
+    "kinto": 919415
+  },
   "permissionsConfigHash": "0xeea8cd185a13b07215343d2cf607f50968b828bc419e19084c2540e3654f5a9d"
 }

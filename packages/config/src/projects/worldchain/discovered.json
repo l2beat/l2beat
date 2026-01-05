@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "timestamp": 1766048460,
-  "configHash": "0x66705c17acd0270f972152b76eb7778343d7ff83daed0b1a8868380220ee7bc0",
+  "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -99,7 +99,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 8238,
+        "permissionedGamesTotal": 8239,
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "version": "1.2.0"

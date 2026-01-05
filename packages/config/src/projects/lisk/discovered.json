@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "timestamp": 1766048190,
-  "configHash": "0x2ed4e3c7eb0cba37de05b6302f7d34374120246157891ee50248f0bda0f8c24e",
+  "configHash": "0x307fc0c6af675174a9d94e6ee381edcc7a2c6a5787bb9fb902b1727c343c2f0d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

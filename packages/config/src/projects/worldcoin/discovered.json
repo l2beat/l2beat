@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "timestamp": 1757661532,
-  "configHash": "0x959a2146afde416007eddd03cf24fbe78986be5e89080be8c1b4a8e38c13d9a1",
+  "configHash": "0x46317eacd2e47bd66c9bd5f3fff90051ce0fd39a6d2001e33500bade877e6dec",
   "entries": [
     {
       "name": "GnosisSafe",

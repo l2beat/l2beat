@@ -1,7 +1,7 @@
 {
   "name": "forknet",
   "timestamp": 1764933637,
-  "configHash": "0xd03be6ef393bfbc7b02ab42f9c0d14fdb4a1553b262c4d59c8e796053bf47fda",
+  "configHash": "0xd87b65f00e9561bf059a9fe2c8810e19413e85b31b9f3e0da089ee6fb80a4abb",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
