@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1767086336,
-  "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
+  "timestamp": 1767365287,
+  "configHash": "0x41dae6b46ed21617ece3e882e1c50b7696217e710676099c5d3c51c0f4f2d7a2",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -62,12 +62,21 @@
       "name": "L1Staking",
       "address": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
       "type": "Contract",
+      "template": "morph/L1Staking",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "can send gasless transactions to L2 (L2 gas fee waived).",
+          "role": ".whitelisted"
+        }
+      ],
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
       "values": {
@@ -145,6 +154,7 @@
       "name": "L1ETHGateway",
       "address": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
       "type": "Contract",
+      "template": "morph/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
@@ -277,7 +287,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -286,6 +296,7 @@
       "name": "L1MessageQueueWithGasPriceOracle",
       "address": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
       "type": "Contract",
+      "template": "morph/L1MessageQueueWithGasPriceOracle",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
@@ -320,9 +331,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25510,
+        "nextCrossDomainMessageIndex": 25514,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25509,
+        "pendingQueueIndex": 25513,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -347,6 +358,7 @@
       "name": "L1StandardERC20Gateway",
       "address": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
       "type": "Contract",
+      "template": "morph/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
@@ -446,11 +458,12 @@
       "name": "MultipleVersionRollupVerifier",
       "address": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
       "type": "Contract",
+      "template": "morph/MultipleVersionRollupVerifier",
       "sourceHashes": [
         "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
       ],
       "proxyType": "immutable",
-      "description": "Used to update the verifier and keep track of current and old versions.",
+      "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
       "sinceTimestamp": 1737359447,
       "sinceBlock": 21664323,
       "values": {
@@ -465,7 +478,6 @@
             "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
           }
         ],
-        "legacyVerifiersLength": [1, 1],
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
@@ -494,7 +506,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -551,12 +563,13 @@
       "name": "L1GatewayRouter",
       "address": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
       "type": "Contract",
+      "template": "morph/L1GatewayRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
+      "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
       "sinceTimestamp": 1729307555,
       "sinceBlock": 20996850,
       "values": {
@@ -587,15 +600,16 @@
       }
     },
     {
-      "name": "MorphRollup",
+      "name": "Rollup",
       "address": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
       "type": "Contract",
+      "template": "morph/MorphRollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
+      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.",
       "ignoreInWatchMode": [
         "batchChallenged",
         "lastCommittedBatchIndex",
@@ -689,8 +703,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 47428,
-        "lastFinalizedBatchIndex": 47353,
+        "lastCommittedBatchIndex": 47547,
+        "lastFinalizedBatchIndex": 47474,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -714,7 +728,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -869,14 +883,38 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+          "description": "register new verifiers to be used starting from a given L2 batch index.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "description": "manage token to escrow mapping and (un-)register escrows.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "description": "can pause and unpause",
+          "description": "pause and unpause, update the fee vault.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "manage the whitelist.",
           "role": ".owner"
         }
       ],
@@ -919,7 +957,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -976,12 +1014,13 @@
       "name": "EnforcedTxGateway",
       "address": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
       "type": "Contract",
+      "template": "morph/EnforcedTxGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
+      "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: true.",
       "sinceTimestamp": 1729308143,
       "sinceBlock": 20996899,
       "values": {
@@ -1070,6 +1109,7 @@
       "name": "L1CrossDomainMessenger",
       "address": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
       "type": "Contract",
+      "template": "morph/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
@@ -1103,7 +1143,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25510,
+        "messageNonce": 25514,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1152,7 +1192,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -1307,16 +1347,18 @@
       "name": "Whitelist",
       "address": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
       "type": "Contract",
+      "template": "morph/Whitelist",
       "sourceHashes": [
         "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
       ],
       "proxyType": "immutable",
-      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
+      "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
       "sinceTimestamp": 1729328435,
       "sinceBlock": 20998580,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
+        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "whitelisted": ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
       },
       "implementationNames": {
         "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
@@ -1794,8 +1836,18 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morph/EnforcedTxGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",
+    "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "morph/L1GatewayRouter": "0x75d8f72d7a567ebdd261b1cd49fbe60bb70eba6eba7f76e062da2077aef8766b",
+    "morph/L1MessageQueueWithGasPriceOracle": "0x397bfa253b671dce5c2dc237c74abbcb62a8546a82f9f0dde3296ab9596e4d81",
+    "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
+    "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "morph/MorphRollup": "0x8c1811818c29498d4bb01605e3bd9329308c48a8745b57e46b177360b3107556",
+    "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
+    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24124509 },
-  "permissionsConfigHash": "0xefdcc617002db190d56ff112178e63e3c6c871ae8ff06e1ac054958d8326d9ce"
+  "usedBlockNumbers": { "ethereum": 24147646 },
+  "permissionsConfigHash": "0xaddfc6f11d438300a233239b203603fdaccec91998402658b709559c6d1f0f97"
 }

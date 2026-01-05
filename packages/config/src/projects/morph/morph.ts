@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -31,7 +32,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('morph')
 
 const challengeWindow = discovery.getContractValue<number>(
-  'MorphRollup',
+  'Rollup',
   'finalizationPeriodSeconds',
 )
 
@@ -45,9 +46,11 @@ const upgradeDelay = 0
 const stakingValue =
   discovery.getContractValue<number>('L1Staking', 'stakingValue') / 10 ** 18
 
-const proofWindow = discovery.getContractValue<number>(
-  'MorphRollup',
-  'proofWindow',
+const proofWindow = discovery.getContractValue<number>('Rollup', 'proofWindow')
+
+const sequencers = discovery.getContractValue<ChainSpecificAddress[]>(
+  'L1Staking',
+  'getActiveStakers',
 )
 
 export const morph: ScalingProject = {
@@ -154,15 +157,7 @@ export const morph: ScalingProject = {
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
         inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
-        sequencers: [
-          EthereumAddress('0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796'),
-          EthereumAddress('0x61F2945d4bc9E40B66a6376d1094a50438f613e2'),
-          EthereumAddress('0x6aB0E960911b50f6d14f249782ac12EC3E7584A0'),
-          EthereumAddress('0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65'),
-          EthereumAddress('0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7'),
-          EthereumAddress('0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80'),
-          EthereumAddress('0xC412B4e6399F694CfF21D038d225373Fd6596811'),
-        ],
+        sequencers: sequencers.map((s) => ChainSpecificAddress.address(s)),
       },
     ],
   },
@@ -218,7 +213,7 @@ export const morph: ScalingProject = {
         description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
           can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
           delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can override any batch (both unfinalized and finalized), potentially preventing the ability to provide valid ZK proofs.`,
+          If the valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
         references: [
           {
             title: 'Whitelisted Challengers - Morph Docs',
@@ -233,11 +228,7 @@ export const morph: ScalingProject = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'whitelisted challenger does not post a challenge of an incorrect state root.',
-          },
-          {
-            category: 'Funds can be lost if',
-            text: 'the owner overrides finalized batches.',
+            text: 'no whitelisted challenger posts a challenge for an incorrect state root.',
           },
         ],
       },
