@@ -52,7 +52,7 @@ export const sxt: ScalingProject = zkStackL2({
   },
   availDa: {
     appIds: ['34'],
-    sinceBlock: 0,
+    sinceBlock: 1185587,
   },
   nonTemplateTrackedTxs: [
     {
