@@ -31,7 +31,7 @@ export const sxt: ScalingProject = zkStackL2({
       explorers: ['https://spaceandtime.calderaexplorer.xyz'],
       repositories: ['https://github.com/spaceandtimelabs'],
       socialMedia: [
-        'https://x.com/SpaceandTimeDB',
+        'https://x.com/spaceandtime',
         'https://discord.com/invite/spaceandtimeDB',
         'https://linkedin.com/company/space-and-time-db/',
         'https://youtube.com/channel/UCXJyE7ahmqCH11aO7L76PBA',
