@@ -849,7 +849,7 @@ Proposals target sequential tournament epochs of currently ${proposalOutputCount
 The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
             references: [
               {
-                title: "'Sequencing' - Kailua Docs",
+                title: 'Sequencing - Kailua Docs',
                 url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
               },
               {
@@ -882,6 +882,10 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
+                url: 'https://boundless-xyz.github.io/kailua/operate.html',
+                title: 'How to run a challenger - Boundless Docs',
+              },
+              {
                 url: 'https://boundless-xyz.github.io/kailua/dispute.html',
                 title: 'Disputes - Kailua Book',
               },
@@ -894,8 +898,8 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
               {
-                url: 'https://risczero.com/blog/kailua-how-it-works',
-                title: 'Risc0 Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/introduction.html',
+                title: 'Kailua Proof System - Boundless Docs',
               },
               {
                 url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',

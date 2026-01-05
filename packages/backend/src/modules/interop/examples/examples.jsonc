@@ -1343,13 +1343,21 @@
   "stargate-credit": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x340b269ab3a47b5c848fe7950213724607bcebc3c1707f5533d247046d02150c"
-      },
+      // {
+      //   "chain": "optimism",
+      //   "tx": "0xaaf89fdd58f0c57fdd66ecd9928dc41c687cd3ede4fe509edf02985257b5eb6e"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0xc340025bd568d3a13067dda9a70cf27e46f169867d7668b5cd3af08f46ccd926"
+      // },
       {
         "chain": "arbitrum",
-        "tx": "0x649b18d55fedd2c18c90232df06734d898dc5fb3de0c618e95655d97ef424f6e"
+        "tx": "0x8c657a4f480508954c2ae7a4b1eab5cefbeccf073e562be3b08ecf29927fa744"
+      },
+      {
+        "chain": "apechain",
+        "tx": "0x2133b8922895c0f2d24ef69d186443746747db148129c56a51823b394344652f"
       }
     ]
   },
