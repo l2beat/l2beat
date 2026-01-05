@@ -9,6 +9,7 @@ import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
+import { renderStatusPage } from './StatusPage'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -56,6 +57,12 @@ export function createInteropRouter(
     const configs = await db.interopConfig.getAllLatest()
 
     ctx.body = configs
+  })
+
+  router.get('/interop/status', async (ctx) => {
+    const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
+
+    ctx.body = renderStatusPage({ pluginSyncStatuses })
   })
 
   router.get('/interop/memory', (ctx) => {

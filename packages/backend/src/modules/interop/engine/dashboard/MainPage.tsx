@@ -15,6 +15,7 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
+import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -26,66 +27,6 @@ type MessageStats = InteropMessageStatsRecord & {
 
 type TransferStats = InteropTransfersStatsRecord & {
   chains: InteropTransfersDetailedStatsRecord[]
-}
-
-function formatDistanceFromNow(timestamp: number): string {
-  const nowMs = Date.now()
-  const timestampMs = timestamp * 1000
-  const diffMs = Math.max(0, nowMs - timestampMs)
-  if (diffMs < 60_000) {
-    return '<1m'
-  }
-
-  const totalMinutes = Math.ceil(diffMs / 60_000)
-  const days = Math.floor(totalMinutes / 1440)
-  const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = totalMinutes % 60
-  const parts: string[] = []
-
-  if (days) {
-    parts.push(`${days}d`)
-  }
-  if (hours) {
-    parts.push(`${hours}h`)
-  }
-  if (minutes || parts.length === 0) {
-    parts.push(`${minutes}m`)
-  }
-
-  return parts.join(' ')
-}
-
-function PluginsStatusTable(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
-  const rows = props.pluginSyncStatuses
-  return (
-    <table>
-      <caption>Plugins status</caption>
-      <thead>
-        <th>plugin</th>
-        <th>chain</th>
-        <th>sync mode</th>
-        <th>distance from now</th>
-        <th>toBlock</th>
-        <th>last error</th>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr>
-            <td>{row.pluginName}</td>
-            <td>{row.chain}</td>
-            <td>{row.syncMode ?? '?'}</td>
-            <td>
-              {row.toTimestamp !== undefined
-                ? formatDistanceFromNow(row.toTimestamp)
-                : 'n/a'}
-            </td>
-            <td>{row.toBlock ?? 'n/a'}</td>
-            <td>{row.lastError ?? ''}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
 }
 
 function EventsTable(props: { events: InteropEventStatsRecord[] }) {
@@ -472,7 +413,6 @@ function MainPageLayout(props: {
         ]}
         footer={
           <>
-            <PluginsStatusTable pluginSyncStatuses={props.pluginSyncStatuses} />
             <h3>Known apps for plugins</h3>
             {props.uniqueApps.map((u) => (
               <div>
@@ -485,6 +425,7 @@ function MainPageLayout(props: {
               </div>
             ))}
             <ProcessorsStatusTable processors={props.status} />
+            <PluginsStatusTable pluginSyncStatuses={props.pluginSyncStatuses} />
           </>
         }
       />

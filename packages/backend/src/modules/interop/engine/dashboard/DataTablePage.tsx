@@ -65,16 +65,6 @@ export function DataTablePage(props: DataTablePageProps) {
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js" />
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js" />
 
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            setInterval(function() {
-              window.location.reload();
-            }, 5000);
-          `,
-          }}
-        />
-
         <style>{`
           body {
             font-family: Arial, sans-serif;
