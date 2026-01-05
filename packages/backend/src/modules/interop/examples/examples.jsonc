@@ -835,8 +835,25 @@
       {
         "chain": "optimism",
         "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
+      },
+      // ETH sent directly via CrossDomainMessenger (not through StandardBridge)
+      {
+        "chain": "ethereum",
+        "tx": "0x879c63cc331e8730f9e414ba968120869415caabd9c358ecbb97bbd6008fff67"
+      },
+      {
+        "chain": "base",
+        "tx": "0x80e0ce0f2383ccf4c1280666f2cd6cf0ab7142ec6da5c73e293ff2c5bb01e65a"
       }
-    ]
+    ],
+    "events": [
+      "opstack.SentMessage",
+      "opstack.RelayedMessage",
+      "opstack.MessagePassed",
+      "opstack.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["opstack.L1ToL2Transfer.cdm-unknown"]
   },
   "sorare-base": {
     "txs": [
