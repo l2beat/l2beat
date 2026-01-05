@@ -436,10 +436,11 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
-    title: 'Kailua fault proof program (Risc0 v3.0.4)', // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
+    title: 'Kailua fault proof program (Risc0 v3.0.4, Kailua v1.1.8)', // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.1.8',
     verificationStatus: 'notVerified',
   },
   '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
@@ -453,7 +454,7 @@ Verify:
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     title: 'Kailua fault proof program (MegaETH)',
     description:
-      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for MegaETH chain, is a part of ZK non-interactive fault proof system.',
+      'Program that supposedly executes OP Kona client (no source available yet) to derive blocks and generate fault or validity proofs for MegaETH chain, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
