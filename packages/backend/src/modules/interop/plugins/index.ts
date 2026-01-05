@@ -13,6 +13,7 @@ import { AcrossPlugin } from './across/across.plugin'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
+import { BeefyBridgePlugin } from './beefy-bridge'
 import { CCIPPlugIn } from './ccip'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
@@ -129,6 +130,7 @@ export function createInteropPlugins(
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
       new SorareBasePlugin(), // should be run before OpStackStandardBridge
+      new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
