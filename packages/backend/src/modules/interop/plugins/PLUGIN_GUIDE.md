@@ -37,6 +37,43 @@ new OpStackStandardBridgePlugin(), // Token bridge - runs second
 new OpStackPlugin(),              // Generic messaging - runs last
 ```
 
+## Environment Setup
+
+### Database Connection
+
+The database URL is stored in the backend `.env` file:
+
+```bash
+# Location: /packages/backend/.env
+# Variable: PRISMA_DB_URL
+
+# Connect to the database
+psql "$(grep PRISMA_DB_URL /packages/backend/.env | cut -d= -f2-)"
+
+# Or export it for repeated use
+export PRISMA_DB_URL=$(grep PRISMA_DB_URL /packages/backend/.env | cut -d= -f2-)
+psql "$PRISMA_DB_URL" -c "SELECT * FROM \"InteropMessage\" LIMIT 5;"
+```
+
+### RPC URLs
+
+RPC URLs are stored in the config `.env` file:
+
+```bash
+# Location: /packages/config/.env
+# Variables: ETHEREUM_RPC_URL, BASE_RPC_URL, ARBITRUM_RPC_URL, OPTIMISM_RPC_URL, etc.
+
+# Use with cast commands
+cast receipt <TX_HASH> --rpc-url $(grep ETHEREUM_RPC_URL /packages/config/.env | cut -d= -f2-)
+
+# Or export for repeated use
+export ETHEREUM_RPC_URL=$(grep ETHEREUM_RPC_URL /packages/config/.env | cut -d= -f2-)
+export BASE_RPC_URL=$(grep BASE_RPC_URL /packages/config/.env | cut -d= -f2-)
+cast receipt <TX_HASH> --rpc-url $ETHEREUM_RPC_URL
+```
+
+**Important**: Always use the RPC URLs from the config `.env` file rather than public RPC endpoints to avoid rate limiting.
+
 ## Step-by-Step: Creating a New Plugin
 
 ### Step 1: Analyze the Transaction
@@ -353,6 +390,9 @@ const MyEvent = createInteropEventType<{ ... }>('my-plugin.Event', {
 ## Useful Commands
 
 ```bash
+# Suppress foundry nightly warnings (add to all cast commands)
+export FOUNDRY_DISABLE_NIGHTLY_WARNING=true
+
 # Decode event signature (shows params but NOT which are indexed)
 cast 4byte-event <TOPIC0>
 
@@ -394,6 +434,7 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example all
 
 ## Reference Plugins
 
-- **Simple**: `sorare-base.ts` - Single app on OpStack
+- **Simple**: `sorare-base.ts` - Single app on OpStack with unique L2 event
+- **Matcher-only**: `across-settlement.ts` - Matches on OpStack's RelayedMessage (no unique L2 event)
 - **Standard**: `opstack-standardbridge.ts` - Token bridge with multiple event types
 - **Complex**: `layerzero/layerzero-v2.plugin.ts` - Config-based multi-chain
