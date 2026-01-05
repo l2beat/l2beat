@@ -1,4 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import { DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
@@ -44,6 +45,30 @@ export const megaeth: ScalingProject = opStackL2({
       ],
     },
   },
+  // override while node is unverified
+  nonTemplateRiskView: {
+    stateValidation: {
+      value: 'Fraud proofs (1R, ZK)',
+      description:
+        'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently.',
+      sentiment: 'bad',
+      executionDelay: discovery.getContractValue<number>(
+        'OptimismPortal2',
+        'disputeGameFinalityDelaySeconds',
+      ),
+      challengeDelay: discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      ),
+      initialBond: formatEther(
+        discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'participationBond',
+        ),
+      ),
+      orderHint: Number.NEGATIVE_INFINITY,
+    },
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -62,7 +87,7 @@ export const megaeth: ScalingProject = opStackL2({
     }),
   ],
   genesisTimestamp: UnixTime(1762797011),
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
   chainConfig: {
     name: 'megaeth',
     chainId: 4326,
