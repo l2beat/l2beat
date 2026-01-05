@@ -108,6 +108,18 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
+  async findByPluginName(
+    pluginName: string,
+  ): Promise<InteropPluginSyncStateRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropPluginSyncState')
+      .selectAll()
+      .where('pluginName', '=', pluginName)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async findByPluginNameAndChain(
     pluginName: string,
     chain: string,

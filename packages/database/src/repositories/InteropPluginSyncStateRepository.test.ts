@@ -245,6 +245,32 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropPluginSyncStateRepository.prototype.findByPluginName.name,
+    () => {
+      it('returns matching records', async () => {
+        const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+
+        const found = await repository.findByPluginName('plugin-a')
+        expect(found).toEqualUnsorted([a1, a2])
+      })
+
+      it('returns empty array when no matching records exist', async () => {
+        await repository.upsert(
+          state({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+
+        const found = await repository.findByPluginName('plugin-b')
+        expect(found).toEqual([])
+      })
+    },
+  )
+
   describe(InteropPluginSyncStateRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
       const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
