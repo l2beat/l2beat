@@ -57,6 +57,42 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .execute()
   }
 
+  async setLastError(
+    pluginName: string,
+    chain: string,
+    lastError: string | null,
+  ): Promise<void> {
+    await this.db
+      .insertInto('InteropPluginSyncState')
+      .values({ pluginName, chain, lastError })
+      .onConflict((cb) =>
+        cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
+          lastError: eb.ref('excluded.lastError'),
+        })),
+      )
+      .execute()
+  }
+
+  async setResyncRequestedFrom(
+    pluginName: string,
+    chain: string,
+    resyncRequestedFrom: UnixTime | null,
+  ): Promise<void> {
+    await this.db
+      .insertInto('InteropPluginSyncState')
+      .values({
+        pluginName,
+        chain,
+        resyncRequestedFrom: fromTimestamp(resyncRequestedFrom),
+      })
+      .onConflict((cb) =>
+        cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
+          resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+        })),
+      )
+      .execute()
+  }
+
   async updateByPluginNameAndChain(
     pluginName: string,
     chain: string,

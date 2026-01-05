@@ -59,6 +59,107 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
   })
 
   describe(
+    InteropPluginSyncStateRepository.prototype.setLastError.name,
+    () => {
+      it('inserts a new record when missing', async () => {
+        await repository.setLastError('plugin-a', 'ethereum', 'Some error')
+
+        const stored = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+        )
+        expect(stored).toEqual(
+          state({
+            pluginName: 'plugin-a',
+            chain: 'ethereum',
+            lastError: 'Some error',
+          }),
+        )
+      })
+
+      it('updates lastError without touching other fields', async () => {
+        const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Initial error',
+          resyncRequestedFrom,
+        })
+        await repository.upsert(record)
+
+        await repository.setLastError('plugin-a', 'ethereum', 'Updated error')
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual({
+          ...record,
+          lastError: 'Updated error',
+        })
+      })
+    },
+  )
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.setResyncRequestedFrom.name,
+    () => {
+      it('inserts a new record when missing', async () => {
+        const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
+
+        await repository.setResyncRequestedFrom(
+          'plugin-a',
+          'ethereum',
+          resyncRequestedFrom,
+        )
+
+        const stored = await repository.findByPluginNameAndChain(
+          'plugin-a',
+          'ethereum',
+        )
+        expect(stored).toEqual(
+          state({
+            pluginName: 'plugin-a',
+            chain: 'ethereum',
+            resyncRequestedFrom,
+          }),
+        )
+      })
+
+      it('updates resyncRequestedFrom without touching other fields', async () => {
+        const initialResyncRequestedFrom = UnixTime.fromDate(
+          new Date('2023-01-01'),
+        )
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Initial error',
+          resyncRequestedFrom: initialResyncRequestedFrom,
+        })
+        await repository.upsert(record)
+
+        const updatedResyncRequestedFrom = UnixTime.fromDate(
+          new Date('2023-01-02'),
+        )
+        await repository.setResyncRequestedFrom(
+          'plugin-a',
+          'ethereum',
+          updatedResyncRequestedFrom,
+        )
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual({
+          ...record,
+          resyncRequestedFrom: updatedResyncRequestedFrom,
+        })
+      })
+    },
+  )
+
+  describe(
     InteropPluginSyncStateRepository.prototype.updateByPluginNameAndChain.name,
     () => {
       it('updates record and returns number of affected rows', async () => {
