@@ -10,8 +10,9 @@ const discovery = new ProjectDiscovery('inevm')
 
 export const inevm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709769600), // 2024-03-07
+  archivedAt: UnixTime(1767142174),
   additionalPurposes: ['Interoperability'],
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -19,6 +20,7 @@ export const inevm: ScalingProject = orbitStackL3({
   display: {
     name: 'inEVM',
     slug: 'inevm',
+    headerWarning: 'Injective has deprecated inEVM.',
     description:
       'inEVM is an Orbit stack Optimium built by the Injective team, complementing their Cosmos L1 and Wormhole integration with an EVM-based Layer 3 for Ethereum interoperability.',
     links: {

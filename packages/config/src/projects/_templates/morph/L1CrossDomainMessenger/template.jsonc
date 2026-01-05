@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
+  "ignoreMethods": ["prevReplayIndex"],
+  "ignoreInWatchMode": ["messageNonce"],
+  "owner": {
+    "permissions": [
+      {
+        "type": "interact",
+        "description": "set critical configs and contract references and pause/unpause."
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
+  "fields": {
+    "whitelisted": {
+      "handler": {
+        "type": "event",
+        "select": "_account",
+        "add": {
+          "event": "WhitelistStatusChanged",
+          "where": ["=", "#_status", true]
+        },
+        "remove": {
+          "event": "WhitelistStatusChanged",
+          "where": ["!=", "#_status", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can send gasless transactions to L2 (L2 gas fee waived)."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        { "type": "interact", "description": "manage the whitelist." }
+      ]
+    }
+  }
+}

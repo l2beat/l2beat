@@ -7,6 +7,7 @@ import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
+import { ShortenedHash } from './ShortenedHash'
 
 function MessagesTable(props: {
   messages: InteropMessageRecord[]
@@ -46,10 +47,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
                   >
-                    {e.srcTxHash}
+                    <ShortenedHash hash={e.srcTxHash} />
                   </a>
                 ) : (
-                  e.srcTxHash
+                  <ShortenedHash hash={e.srcTxHash} />
                 )}
               </td>
               <td>{e.dstChain}</td>
@@ -59,10 +60,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
                   >
-                    {e.dstTxHash}
+                    <ShortenedHash hash={e.dstTxHash} />
                   </a>
                 ) : (
-                  e.dstTxHash
+                  <ShortenedHash hash={e.dstTxHash} />
                 )}
               </td>
             </tr>

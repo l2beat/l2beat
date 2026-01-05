@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "LIT",
+      "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2"
+    },
+    {
       "symbol": "CAPX",
       "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F"
     },
@@ -2635,7 +2639,6 @@
       "source": "native",
       "supply": "circulatingSupply"
     },
-
     {
       "symbol": "NRN",
       "address": "0xdadeca1167fe47499e53Eb50F261103630974905",

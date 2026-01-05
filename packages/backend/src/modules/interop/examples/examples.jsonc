@@ -835,8 +835,113 @@
       {
         "chain": "optimism",
         "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
+      },
+      // ETH sent directly via CrossDomainMessenger (not through StandardBridge) - L1->L2
+      {
+        "chain": "ethereum",
+        "tx": "0x879c63cc331e8730f9e414ba968120869415caabd9c358ecbb97bbd6008fff67"
+      },
+      {
+        "chain": "base",
+        "tx": "0x80e0ce0f2383ccf4c1280666f2cd6cf0ab7142ec6da5c73e293ff2c5bb01e65a"
+      },
+      // ETH sent directly via L2ToL1MessagePasser (not through StandardBridge) - L2->L1
+      {
+        "chain": "base",
+        "tx": "0x804a49327147aa44756d028a60c0ea6ebd4b24d2c55faeea7988233f218ab0cb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x74d2a903013d5a37f12038c74246cc186e779e212747292e5c5c0f5e959df421"
       }
-    ]
+    ],
+    "events": [
+      "opstack.SentMessage",
+      "opstack.RelayedMessage",
+      "opstack.MessagePassed",
+      "opstack.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["opstack-cdm.L1ToL2Transfer", "opstack-cdm.L2ToL1Transfer"]
+  },
+  "across-settlement": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+      }
+    ],
+    "events": [
+      "across-settlement.SentMessage",
+      "across-settlement.SentMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+  },
+  "world-id": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x2ba21e981c082931f6f93acbb702d1dfccaff5f26353143e954402bb28966d96"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xed2b5b8a91383f8cb9ec22f4cd74e2e764eb6ec64286c9abe0ac76f5743b36b8"
+      }
+    ],
+    "events": ["world-id.SentMessage"],
+    "messages": ["opstack.L1ToL2Message"]
+  },
+  "sorare-base": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xa85229231a6005da904ddd4a586b5755d9c318e06d372221da25aef63f10b453"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2057d0c5fe603af609d821a8b18163e8f75ee687b6b060ceb5e4f37bad4781fa"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x22aa80f80284cef1509cd434a614316dbf844e4d0850d5ecda8ba6de29b14c0b"
+      },
+      {
+        "chain": "base",
+        "tx": "0x3b6867710390de4ffab9c898a1fcc664216505b46a1c6b9e0d3704401333cd6c"
+      }
+    ],
+    "events": [
+      "sorare-base.TransferRegisteredSentMessage",
+      "sorare-base.FactRegisteredRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["sorare-base.L1ToL2Transfer"]
+  },
+  "beefy-bridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xee4c7dd66de02432c3c047d838bae58716e2da57611d4ae0f92a12487d3db9c2"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
+      }
+    ],
+    "events": [
+      "beefy-bridge.BridgedOutSentMessage",
+      "beefy-bridge.BridgedInRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge": {
     "txs": [

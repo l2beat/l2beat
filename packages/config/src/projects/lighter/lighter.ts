@@ -42,7 +42,7 @@ export const lighter: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
     warning:
-      'Oct 8 2025: at the moment of writing, the circuits source code is not publicly available and therefore it is not possible to fully verify the business logic of the protocol. The team communicated to us that they plan to release them in the next 1-2 weeks.',
+      'Jan 5 2026: at the moment of writing, the desert mode circuits source code is not publicly available and therefore it is not possible to fully verify the escape hatch logic.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -79,12 +79,13 @@ export const lighter: ScalingProject = {
     apis: [],
   },
   config: {
+    associatedTokens: ['LIT'],
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC', 'ETH'],
+        tokens: ['USDC', 'ETH', 'LIT'],
       }),
     ],
     daTracking: [
