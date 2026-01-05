@@ -1,6 +1,6 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { DA_LAYERS } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -14,6 +14,7 @@ export const megaeth: ScalingProject = opStackL2({
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   additionalBadges: [BADGES.Stack.OPKailua],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   nonTemplateProofSystem: {
     type: 'Optimistic',
     name: 'OP Kailua',
