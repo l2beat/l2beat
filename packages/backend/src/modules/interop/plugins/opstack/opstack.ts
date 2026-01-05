@@ -18,6 +18,7 @@ import {
 export const MessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
+  value: bigint
 }>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY }) // needs to go through the challenge period
 
 export const parseMessagePassed = createEventParser(
@@ -202,6 +203,7 @@ export class OpStackPlugin implements InteropPlugin {
           MessagePassed.create(input, {
             chain: network.chain,
             withdrawalHash: messagePassed.withdrawalHash,
+            value: messagePassed.value,
           }),
         ]
       }
@@ -230,13 +232,30 @@ export class OpStackPlugin implements InteropPlugin {
         chain: event.args.chain,
       })
       if (!messagePassed) return
-      return [
+
+      const results: MatchResult = [
         Result.Message('opstack.L2ToL1Message', {
           app: 'unknown',
           srcEvent: messagePassed,
           dstEvent: event,
         }),
       ]
+
+      // If ETH was sent via L2ToL1MessagePasser, also create a Transfer
+      if (messagePassed.args.value > 0n) {
+        results.push(
+          Result.Transfer('opstack-cdm.L2ToL1Transfer', {
+            srcEvent: messagePassed,
+            srcAmount: messagePassed.args.value,
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: messagePassed.args.value,
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        )
+      }
+
+      return results
     }
 
     // Match L1->L2 messages
@@ -258,7 +277,7 @@ export class OpStackPlugin implements InteropPlugin {
       // If ETH was sent via CrossDomainMessenger, also create a Transfer
       if (sentMessage.args.value > 0n) {
         results.push(
-          Result.Transfer('opstack.L1ToL2Transfer.cdm-unknown', {
+          Result.Transfer('opstack-cdm.L1ToL2Transfer', {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,
