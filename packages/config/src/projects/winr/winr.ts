@@ -27,7 +27,11 @@ export const winr: ScalingProject = orbitStackL3({
       bridges: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
-      socialMedia: ['https://x.com/WINRProtocol'],
+      socialMedia: [
+        'https://x.com/WINRProtocol',
+        'https://t.me/WINRProtocol',
+        'https://discord.com/invite/winrprotocol',
+      ],
     },
   },
   chainConfig: {
