@@ -48,6 +48,7 @@ import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import type { InteropPlugin } from './types'
+import { WorldIdPlugin } from './world-id'
 import { WormholeConfigPlugin } from './wormhole/wormhole.config'
 import { WormholePlugin } from './wormhole/wormhole.plugin'
 import { WormholeNTTPlugin } from './wormhole-ntt'
@@ -129,6 +130,7 @@ export function createInteropPlugins(
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
+      new WorldIdPlugin(), // should be run before OpStack
       new SorareBasePlugin(), // should be run before OpStackStandardBridge
       new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
