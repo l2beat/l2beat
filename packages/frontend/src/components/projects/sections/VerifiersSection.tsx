@@ -103,10 +103,12 @@ function VerifierCollapsibleWithDetails({
               <p className="font-medium text-label-value-12 text-secondary">
                 Used in
               </p>
-              <ProjectsUsedIn
-                noL2ClassName="text-label-value-12 font-medium text-secondary"
-                usedIn={verifierHash.projectsUsedIn}
-              />
+              <div onClick={(e) => e.stopPropagation()}>
+                <ProjectsUsedIn
+                  noL2ClassName="text-label-value-12 font-medium text-secondary"
+                  usedIn={verifierHash.projectsUsedIn}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-1.5 lg:[@media(max-width:1380px)]:hidden [@media(max-width:850px)]:hidden">
               <div className="font-medium text-label-value-12 text-secondary">

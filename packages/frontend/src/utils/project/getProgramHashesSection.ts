@@ -3,12 +3,16 @@ import type {
   ProgramHashesSectionProps,
   StateValidationZkProgramHashData,
 } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
+import { tvsComparator } from './getVerifiersSection'
 
 export function getProgramHashesSection(
   project: Project<'zkCatalogInfo'>,
   allProjects: Project<'contracts'>[],
+  allProjectsWithDaBridge: Project<never, 'daBridge'>[],
+  tvs: SevenDayTvsBreakdown,
 ): Omit<ProgramHashesSectionProps, keyof ProjectSectionProps> | undefined {
   const result: Map<string, StateValidationZkProgramHashData> = new Map()
 
@@ -38,6 +42,8 @@ export function getProgramHashesSection(
           url: `/scaling/projects/${scalingProject.slug}`,
         })
       }
+
+      current?.usedIn.sort(tvsComparator(allProjectsWithDaBridge, tvs))
     }
   }
 
