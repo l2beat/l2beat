@@ -45,6 +45,7 @@ export function PluginsStatusTable(props: {
           <th>distance from now</th>
           <th>toBlock</th>
           <th>last error</th>
+          <th>resync</th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +61,7 @@ export function PluginsStatusTable(props: {
             </td>
             <td>{row.toBlock ?? 'n/a'}</td>
             <td>{row.lastError ?? ''}</td>
+            <td>{row.resyncRequestedFrom ?? ''}</td>
           </tr>
         ))}
       </tbody>

@@ -16,6 +16,7 @@ export type PluginSyncStatus = {
   toBlock?: bigint
   toTimestamp?: number
   lastError?: string
+  resyncRequestedFrom?: number
 }
 
 export class InteropSyncersManager {
@@ -141,6 +142,7 @@ export class InteropSyncersManager {
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
+        resyncRequestedFrom: state?.resyncRequestedFrom ?? undefined,
       })
     }
 
