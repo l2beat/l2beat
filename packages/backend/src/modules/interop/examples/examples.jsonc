@@ -899,6 +899,36 @@
     "events": ["world-id.SentMessage"],
     "messages": ["opstack.L1ToL2Message"]
   },
+  "lido-wsteth": {
+    "txs": [
+      // L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x837426f102ee40d3075fcf4e8240716c101f3a10d9c0a46705b55b37a46fe997"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2e0b3dc2e1b6916ae7a0964d32271d2ee2bbd272926bacca192a7b5d39bc41e1"
+      },
+      // L2 → L1 withdrawal
+      {
+        "chain": "base",
+        "tx": "0x3f229f122d45a816acf3f9c2aaf504d142770bc45182004d0e878c166e76c901"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9020dba0f5c191d690532cf8ecbd139b1a101478374b02800be2709a120e84ed"
+      }
+    ],
+    "events": [
+      "lido-wsteth.DepositSentMessage",
+      "lido-wsteth.DepositFinalized",
+      "lido-wsteth.WithdrawalMessagePassed",
+      "lido-wsteth.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["lido-wsteth.L1ToL2Transfer", "lido-wsteth.L2ToL1Transfer"]
+  },
   "sorare-base": {
     "txs": [
       {
