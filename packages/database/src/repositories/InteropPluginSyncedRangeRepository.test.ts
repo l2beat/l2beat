@@ -8,16 +8,13 @@ import {
 
 describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
   const repository = db.interopPluginSyncedRange
-  const statusRepository = db.interopPluginStatus
 
   afterEach(async () => {
     await repository.deleteAll()
-    await statusRepository.deleteAll()
   })
 
   describe(InteropPluginSyncedRangeRepository.prototype.upsert.name, () => {
     it('inserts new record', async () => {
-      await insertPlugins(['plugin-a'])
       const record = range({ pluginName: 'plugin-a', chain: 'ethereum' })
 
       await repository.upsert(record)
@@ -27,7 +24,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     })
 
     it('updates record for the same plugin and chain', async () => {
-      await insertPlugins(['plugin-a'])
       const record = range({
         pluginName: 'plugin-a',
         chain: 'ethereum',
@@ -57,7 +53,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     InteropPluginSyncedRangeRepository.prototype.deleteByPluginName.name,
     () => {
       it('deletes only ranges for the given plugin', async () => {
-        await insertPlugins(['plugin-a', 'plugin-b'])
         const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
         const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
         const b1 = range({ pluginName: 'plugin-b', chain: 'ethereum' })
@@ -79,7 +74,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       .name,
     () => {
       it('deletes only the specific range', async () => {
-        await insertPlugins(['plugin-a'])
         const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
         const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
         await repository.upsert(a1)
@@ -99,7 +93,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
 
   describe(InteropPluginSyncedRangeRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
-      await insertPlugins(['plugin-a', 'plugin-b'])
       const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
       const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
       const b1 = range({ pluginName: 'plugin-b', chain: 'ethereum' })
@@ -117,7 +110,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
     InteropPluginSyncedRangeRepository.prototype.findByPluginNameAndChain.name,
     () => {
       it('returns the matching range', async () => {
-        await insertPlugins(['plugin-a', 'plugin-b'])
         const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
         const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
         const b1 = range({ pluginName: 'plugin-b', chain: 'ethereum' })
@@ -133,7 +125,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       })
 
       it('returns undefined when no matching range exists', async () => {
-        await insertPlugins(['plugin-a'])
         await repository.upsert(
           range({ pluginName: 'plugin-a', chain: 'ethereum' }),
         )
@@ -152,7 +143,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       .name,
     () => {
       it('updates record and returns number of affected rows', async () => {
-        await insertPlugins(['plugin-a'])
         const record = range({
           pluginName: 'plugin-a',
           chain: 'ethereum',
@@ -190,8 +180,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       })
 
       it('returns 0 when no matching range exists', async () => {
-        await insertPlugins(['plugin-a'])
-
         const updated = await repository.updateByPluginNameAndChain(
           'plugin-a',
           'ethereum',
@@ -207,7 +195,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
 
   describe(InteropPluginSyncedRangeRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
-      await insertPlugins(['plugin-a', 'plugin-b'])
       await repository.upsert(range({ pluginName: 'plugin-a', chain: 'op' }))
       await repository.upsert(
         range({ pluginName: 'plugin-b', chain: 'arbitrum' }),
@@ -220,16 +207,6 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       expect(all).toEqual([])
     })
   })
-
-  async function insertPlugins(pluginNames: string[]) {
-    for (const pluginName of new Set(pluginNames)) {
-      await statusRepository.insert({
-        pluginName,
-        lastError: null,
-        resyncRequestedFrom: null,
-      })
-    }
-  }
 })
 
 function range(

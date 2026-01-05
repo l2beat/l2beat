@@ -41,7 +41,6 @@ export type {
   InteropMessageStatsRecord,
   InteropMessageUniqueAppsRecord,
 } from './repositories/InteropMessageRepository'
-export type { InteropPluginStatusRecord } from './repositories/InteropPluginStatusRepository'
 export type {
   BlockRangeWithTimestamps,
   InteropPluginSyncedRangeRecord,

@@ -7,16 +7,13 @@ import {
 
 describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
   const repository = db.interopPluginSyncState
-  const statusRepository = db.interopPluginStatus
 
   afterEach(async () => {
     await repository.deleteAll()
-    await statusRepository.deleteAll()
   })
 
   describe(InteropPluginSyncStateRepository.prototype.upsert.name, () => {
     it('inserts new record', async () => {
-      await insertPlugins(['plugin-a'])
       const record = state({
         pluginName: 'plugin-a',
         chain: 'ethereum',
@@ -33,7 +30,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     })
 
     it('updates record for the same plugin and chain', async () => {
-      await insertPlugins(['plugin-a'])
       const record = state({
         pluginName: 'plugin-a',
         chain: 'ethereum',
@@ -57,7 +53,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     InteropPluginSyncStateRepository.prototype.updateByPluginNameAndChain.name,
     () => {
       it('updates record and returns number of affected rows', async () => {
-        await insertPlugins(['plugin-a'])
         const record = state({
           pluginName: 'plugin-a',
           chain: 'ethereum',
@@ -86,8 +81,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       })
 
       it('returns 0 when no matching record exists', async () => {
-        await insertPlugins(['plugin-a'])
-
         const updated = await repository.updateByPluginNameAndChain(
           'plugin-a',
           'ethereum',
@@ -105,7 +98,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     InteropPluginSyncStateRepository.prototype.findByPluginNameAndChain.name,
     () => {
       it('returns the matching record', async () => {
-        await insertPlugins(['plugin-a', 'plugin-b'])
         const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
         const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
         const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
@@ -121,7 +113,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       })
 
       it('returns undefined when no matching record exists', async () => {
-        await insertPlugins(['plugin-a'])
         await repository.upsert(
           state({ pluginName: 'plugin-a', chain: 'ethereum' }),
         )
@@ -137,7 +128,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
 
   describe(InteropPluginSyncStateRepository.prototype.getAll.name, () => {
     it('returns all records', async () => {
-      await insertPlugins(['plugin-a', 'plugin-b'])
       const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
       const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
       const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
@@ -153,7 +143,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
 
   describe(InteropPluginSyncStateRepository.prototype.deleteAll.name, () => {
     it('deletes all records', async () => {
-      await insertPlugins(['plugin-a', 'plugin-b'])
       await repository.upsert(state({ pluginName: 'plugin-a', chain: 'op' }))
       await repository.upsert(
         state({ pluginName: 'plugin-b', chain: 'arbitrum' }),
@@ -166,16 +155,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       expect(all).toEqual([])
     })
   })
-
-  async function insertPlugins(pluginNames: string[]) {
-    for (const pluginName of new Set(pluginNames)) {
-      await statusRepository.insert({
-        pluginName,
-        lastError: null,
-        resyncRequestedFrom: null,
-      })
-    }
-  }
 })
 
 function state(

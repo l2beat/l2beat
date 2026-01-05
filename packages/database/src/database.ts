@@ -18,7 +18,6 @@ import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
-import { InteropPluginStatusRepository } from './repositories/InteropPluginStatusRepository'
 import { InteropPluginSyncedRangeRepository } from './repositories/InteropPluginSyncedRangeRepository'
 import { InteropPluginSyncStateRepository } from './repositories/InteropPluginSyncStateRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
@@ -64,7 +63,6 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
-    interopPluginStatus: new InteropPluginStatusRepository(db),
     interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),
     // #endregion
 

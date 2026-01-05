@@ -516,12 +516,6 @@ model Chain {
   deployedTokens DeployedToken[]
 }
 
-model InteropPluginStatus {
-  pluginName          String    @id @db.VarChar(255)
-  lastError           String?   @db.Text
-  resyncRequestedFrom DateTime? @db.Timestamp(6)
-}
-
 model InteropPluginSyncState {
   pluginName String  @db.VarChar(255)
   chain      String  @db.VarChar(255)
