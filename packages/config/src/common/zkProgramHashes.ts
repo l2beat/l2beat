@@ -699,7 +699,38 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
     programUrl:
       'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.1/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174).
+
+Although the guide below uses docker for reproducable builds, we failed to obtain the correct program hash on a MacOS machine. 
+The steps below work only for a Linux OS (e.g. Ubuntu).
+
+1. On a Linux machine, install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.7.1\` Commit hash should be \`85dc6bc56728b8eef22281fdb215c136d7b5bbda\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`circuits/bundle-circuit/bundle_leaf_commit.rs\`. 
+4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
+    \`\`\`
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::FieldAlgebra;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
+
+fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
+    let order = Bn254Fr::from_canonical_u64(BabyBear::ORDER_U32 as u64);
+
+    let mut base = Bn254Fr::ONE;      // from PrimeCharacteristicRing
+    let mut compressed = Bn254Fr::ZERO; // from PrimeCharacteristicRing
+
+    for val in commitment {
+        compressed += Bn254Fr::from_canonical_u64(*val as u64) * base;
+        base *= order;
+    }
+
+    compressed
+} 
+\`\`\`
+    `,
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',
