@@ -864,6 +864,24 @@
     "messages": ["opstack.L1ToL2Message"],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
+  "beefy-bridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xee4c7dd66de02432c3c047d838bae58716e2da57611d4ae0f92a12487d3db9c2"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
+      }
+    ],
+    "events": [
+      "beefy-bridge.BridgedOutSentMessage",
+      "beefy-bridge.BridgedInRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["beefy-bridge.L1ToL2Transfer"]
+  },
   "opstack-standardbridge": {
     "txs": [
       // base -> ethereum (erc20)
