@@ -22,23 +22,38 @@ import {
   Result,
 } from './types'
 
-// Lido wstETH bridges
-const WSTETH_L1_BRIDGE_BASE = EthereumAddress(
-  '0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
-)
-const WSTETH_L2_BRIDGE_BASE = EthereumAddress(
-  '0xac9D11cD4D7eF6e54F14643a393F68Ca014287AB',
-)
-
 // Token addresses
 const L1_WSTETH = Address32.from(
   EthereumAddress('0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0'),
 )
-const L2_WSTETH_BASE = Address32.from(
-  EthereumAddress('0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452'),
-)
 
-// Build lookup map from L1CrossDomainMessenger address to network
+// Lido wstETH bridge configurations per network
+const LIDO_WSTETH_NETWORKS = [
+  {
+    chain: 'base',
+    l1Bridge: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+    l2Bridge: EthereumAddress('0xac9D11cD4D7eF6e54F14643a393F68Ca014287AB'),
+    l2Token: Address32.from(
+      EthereumAddress('0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452'),
+    ),
+  },
+  {
+    chain: 'optimism',
+    l1Bridge: EthereumAddress('0x76943c0d61395d8f2edf9060e1533529cae05de6'),
+    l2Bridge: EthereumAddress('0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957'),
+    l2Token: Address32.from(
+      EthereumAddress('0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb'),
+    ),
+  },
+]
+
+// Build lookup maps
+const L1_BRIDGE_TO_NETWORK = new Map(
+  LIDO_WSTETH_NETWORKS.map((n) => [n.l1Bridge.toString(), n]),
+)
+const L2_BRIDGE_TO_NETWORK = new Map(
+  LIDO_WSTETH_NETWORKS.map((n) => [n.l2Bridge.toString(), n]),
+)
 const L1_CDM_TO_NETWORK = new Map(
   OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
 )
@@ -48,6 +63,7 @@ const LidoWstethDepositSentMessage = createInteropEventType<{
   chain: string
   msgHash: string
   amount: bigint
+  l2Token: Address32
 }>('lido-wsteth.DepositSentMessage')
 
 // L2 relay of L1→L2 deposit: DepositFinalized from wstETH bridge + RelayedMessage combined
@@ -55,6 +71,7 @@ const LidoWstethDepositFinalized = createInteropEventType<{
   chain: string
   msgHash: string
   amount: bigint
+  l2Token: Address32
 }>('lido-wsteth.DepositFinalized')
 
 // L2 → L1: WithdrawalInitiated from wstETH bridge + MessagePassed combined
@@ -62,6 +79,7 @@ const LidoWstethWithdrawalMessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
   amount: bigint
+  l2Token: Address32
 }>('lido-wsteth.WithdrawalMessagePassed', {
   ttl: 14 * UnixTime.DAY,
 })
@@ -71,6 +89,7 @@ const LidoWstethWithdrawalFinalized = createInteropEventType<{
   chain: string
   withdrawalHash: string
   amount: bigint
+  l2Token: Address32
 }>('lido-wsteth.WithdrawalFinalized')
 
 // Event parsers
@@ -101,107 +120,121 @@ export class LidoWstethPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1: Capture ERC20DepositInitiated (L1 → L2 deposit)
-      const depositInitiated = parseERC20DepositInitiated(input.log, [
-        WSTETH_L1_BRIDGE_BASE,
-      ])
-      if (depositInitiated) {
-        // Find SentMessage from any known L1CrossDomainMessenger in the same tx
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(log.address)
-          if (!network) continue
+      const lidoNetwork = L1_BRIDGE_TO_NETWORK.get(input.log.address)
+      if (lidoNetwork) {
+        const depositInitiated = parseERC20DepositInitiated(input.log, [
+          lidoNetwork.l1Bridge,
+        ])
+        if (depositInitiated) {
+          // Find SentMessage from any known L1CrossDomainMessenger in the same tx
+          for (const log of input.txLogs) {
+            const opNetwork = L1_CDM_TO_NETWORK.get(log.address)
+            if (!opNetwork || opNetwork.chain !== lidoNetwork.chain) continue
 
-          const sentMessage = parseSentMessage(log, [
-            network.l1CrossDomainMessenger,
-          ])
-          if (!sentMessage) continue
-
-          // Find SentMessageExtension1
-          const nextLog = input.txLogs.find(
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === log.logIndex! + 1,
-          )
-          const extension =
-            nextLog &&
-            parseSentMessageExtension1(nextLog, [
-              network.l1CrossDomainMessenger,
+            const sentMessage = parseSentMessage(log, [
+              opNetwork.l1CrossDomainMessenger,
             ])
+            if (!sentMessage) continue
 
-          const msgHash = hashCrossDomainMessageV1(
-            sentMessage.messageNonce,
-            sentMessage.sender,
-            sentMessage.target,
-            extension?.value ?? 0n,
-            sentMessage.gasLimit,
-            sentMessage.message,
-          )
+            // Find SentMessageExtension1
+            const nextLog = input.txLogs.find(
+              // biome-ignore lint/style/noNonNullAssertion: It's there
+              (x) => x.logIndex === log.logIndex! + 1,
+            )
+            const extension =
+              nextLog &&
+              parseSentMessageExtension1(nextLog, [
+                opNetwork.l1CrossDomainMessenger,
+              ])
 
-          return [
-            LidoWstethDepositSentMessage.create(input, {
-              chain: network.chain,
-              msgHash,
-              amount: depositInitiated._amount,
-            }),
-          ]
-        }
-      }
+            const msgHash = hashCrossDomainMessageV1(
+              sentMessage.messageNonce,
+              sentMessage.sender,
+              sentMessage.target,
+              extension?.value ?? 0n,
+              sentMessage.gasLimit,
+              sentMessage.message,
+            )
 
-      // L1: Capture ERC20WithdrawalFinalized (L2 → L1 withdrawal finalization)
-      const withdrawalFinalized = parseERC20WithdrawalFinalized(input.log, [
-        WSTETH_L1_BRIDGE_BASE,
-      ])
-      if (withdrawalFinalized) {
-        // Find WithdrawalFinalized event from OptimismPortal in same tx
-        const network = OPSTACK_NETWORKS.find((n) => n.chain === 'base')
-        if (!network) return
-
-        const withdrawalFinalizedLog = input.txLogs.find((log) => {
-          const parsed = parseWithdrawalFinalized(log, [network.optimismPortal])
-          return parsed !== undefined
-        })
-
-        if (withdrawalFinalizedLog) {
-          const portalWithdrawalFinalized = parseWithdrawalFinalized(
-            withdrawalFinalizedLog,
-            [network.optimismPortal],
-          )
-          if (portalWithdrawalFinalized) {
             return [
-              LidoWstethWithdrawalFinalized.create(input, {
-                chain: 'base',
-                withdrawalHash: portalWithdrawalFinalized.withdrawalHash,
-                amount: withdrawalFinalized._amount,
+              LidoWstethDepositSentMessage.create(input, {
+                chain: lidoNetwork.chain,
+                msgHash,
+                amount: depositInitiated._amount,
+                l2Token: lidoNetwork.l2Token,
               }),
             ]
           }
         }
+
+        // L1: Capture ERC20WithdrawalFinalized (L2 → L1 withdrawal finalization)
+        const withdrawalFinalized = parseERC20WithdrawalFinalized(input.log, [
+          lidoNetwork.l1Bridge,
+        ])
+        if (withdrawalFinalized) {
+          // Find WithdrawalFinalized event from OptimismPortal in same tx
+          const opNetwork = OPSTACK_NETWORKS.find(
+            (n) => n.chain === lidoNetwork.chain,
+          )
+          if (!opNetwork) return
+
+          const withdrawalFinalizedLog = input.txLogs.find((log) => {
+            const parsed = parseWithdrawalFinalized(log, [
+              opNetwork.optimismPortal,
+            ])
+            return parsed !== undefined
+          })
+
+          if (withdrawalFinalizedLog) {
+            const portalWithdrawalFinalized = parseWithdrawalFinalized(
+              withdrawalFinalizedLog,
+              [opNetwork.optimismPortal],
+            )
+            if (portalWithdrawalFinalized) {
+              return [
+                LidoWstethWithdrawalFinalized.create(input, {
+                  chain: lidoNetwork.chain,
+                  withdrawalHash: portalWithdrawalFinalized.withdrawalHash,
+                  amount: withdrawalFinalized._amount,
+                  l2Token: lidoNetwork.l2Token,
+                }),
+              ]
+            }
+          }
+        }
       }
-    } else if (input.chain === 'base') {
-      const network = OPSTACK_NETWORKS.find((n) => n.chain === 'base')
-      if (!network) return
+    } else {
+      // L2: Check if this is a supported Lido wstETH network
+      const lidoNetwork = L2_BRIDGE_TO_NETWORK.get(input.log.address)
+      if (!lidoNetwork || lidoNetwork.chain !== input.chain) return
+
+      const opNetwork = OPSTACK_NETWORKS.find((n) => n.chain === input.chain)
+      if (!opNetwork) return
 
       // L2: Capture DepositFinalized (L1 → L2 deposit relay)
       const depositFinalized = parseDepositFinalized(input.log, [
-        WSTETH_L2_BRIDGE_BASE,
+        lidoNetwork.l2Bridge,
       ])
       if (depositFinalized) {
         // Find RelayedMessage in same tx
         const relayedMessageLog = input.txLogs.find((log) => {
           const parsed = parseRelayedMessage(log, [
-            network.l2CrossDomainMessenger,
+            opNetwork.l2CrossDomainMessenger,
           ])
           return parsed !== undefined
         })
 
         if (relayedMessageLog) {
           const relayedMessage = parseRelayedMessage(relayedMessageLog, [
-            network.l2CrossDomainMessenger,
+            opNetwork.l2CrossDomainMessenger,
           ])
           if (relayedMessage) {
             return [
               LidoWstethDepositFinalized.create(input, {
-                chain: 'base',
+                chain: lidoNetwork.chain,
                 msgHash: relayedMessage.msgHash,
                 amount: depositFinalized._amount,
+                l2Token: lidoNetwork.l2Token,
               }),
             ]
           }
@@ -210,25 +243,28 @@ export class LidoWstethPlugin implements InteropPlugin {
 
       // L2: Capture WithdrawalInitiated (L2 → L1 withdrawal)
       const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
-        WSTETH_L2_BRIDGE_BASE,
+        lidoNetwork.l2Bridge,
       ])
       if (withdrawalInitiated) {
         // Find MessagePassed in same tx
         const messagePassedLog = input.txLogs.find((log) => {
-          const parsed = parseMessagePassed(log, [network.l2ToL1MessagePasser])
+          const parsed = parseMessagePassed(log, [
+            opNetwork.l2ToL1MessagePasser,
+          ])
           return parsed !== undefined
         })
 
         if (messagePassedLog) {
           const messagePassed = parseMessagePassed(messagePassedLog, [
-            network.l2ToL1MessagePasser,
+            opNetwork.l2ToL1MessagePasser,
           ])
           if (messagePassed) {
             return [
               LidoWstethWithdrawalMessagePassed.create(input, {
-                chain: 'base',
+                chain: lidoNetwork.chain,
                 withdrawalHash: messagePassed.withdrawalHash,
                 amount: withdrawalInitiated._amount,
+                l2Token: lidoNetwork.l2Token,
               }),
             ]
           }
@@ -273,7 +309,7 @@ export class LidoWstethPlugin implements InteropPlugin {
           srcTokenAddress: L1_WSTETH,
           dstEvent: event,
           dstAmount: event.args.amount,
-          dstTokenAddress: L2_WSTETH_BASE,
+          dstTokenAddress: event.args.l2Token,
         }),
       ]
     }
@@ -310,7 +346,7 @@ export class LidoWstethPlugin implements InteropPlugin {
         Result.Transfer('lido-wsteth.L2ToL1Transfer', {
           srcEvent: withdrawalMessagePassed,
           srcAmount: withdrawalMessagePassed.args.amount,
-          srcTokenAddress: L2_WSTETH_BASE,
+          srcTokenAddress: withdrawalMessagePassed.args.l2Token,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: L1_WSTETH,

@@ -901,7 +901,7 @@
   },
   "lido-wsteth": {
     "txs": [
-      // L1 → L2 deposit
+      // Base: L1 → L2 deposit
       {
         "chain": "ethereum",
         "tx": "0x837426f102ee40d3075fcf4e8240716c101f3a10d9c0a46705b55b37a46fe997"
@@ -910,7 +910,7 @@
         "chain": "base",
         "tx": "0x2e0b3dc2e1b6916ae7a0964d32271d2ee2bbd272926bacca192a7b5d39bc41e1"
       },
-      // L2 → L1 withdrawal
+      // Base: L2 → L1 withdrawal
       {
         "chain": "base",
         "tx": "0x3f229f122d45a816acf3f9c2aaf504d142770bc45182004d0e878c166e76c901"
@@ -918,16 +918,48 @@
       {
         "chain": "ethereum",
         "tx": "0x9020dba0f5c191d690532cf8ecbd139b1a101478374b02800be2709a120e84ed"
+      },
+      // Optimism: L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xa346b62dda93356175fb770a44c18e8734ade43756fa4f73409cff2b02545671"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x4c99754dd29596fae0bd1d25f498af6ff42f869b9d721167d04da1117bf6bea1"
+      },
+      // Optimism: L2 → L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0x8f4823bee16fb17d68e954b933a42eacb637aec0de8097fc747f5e2984d00a7b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x3556112dd681a7a4d32192579726fc9b882b657d745023dcef4836d88b18f846"
       }
     ],
     "events": [
       "lido-wsteth.DepositSentMessage",
+      "lido-wsteth.DepositSentMessage",
+      "lido-wsteth.DepositFinalized",
       "lido-wsteth.DepositFinalized",
       "lido-wsteth.WithdrawalMessagePassed",
+      "lido-wsteth.WithdrawalMessagePassed",
+      "lido-wsteth.WithdrawalFinalized",
       "lido-wsteth.WithdrawalFinalized"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
-    "transfers": ["lido-wsteth.L1ToL2Transfer", "lido-wsteth.L2ToL1Transfer"]
+    "messages": [
+      "opstack.L1ToL2Message",
+      "opstack.L1ToL2Message",
+      "opstack.L2ToL1Message",
+      "opstack.L2ToL1Message"
+    ],
+    "transfers": [
+      "lido-wsteth.L1ToL2Transfer",
+      "lido-wsteth.L1ToL2Transfer",
+      "lido-wsteth.L2ToL1Transfer",
+      "lido-wsteth.L2ToL1Transfer"
+    ]
   },
   "sorare-base": {
     "txs": [
