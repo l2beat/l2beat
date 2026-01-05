@@ -2,6 +2,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
+import { PluginsResyncControls } from './PluginsResyncControls'
 import { PluginsStatusTable } from './PluginsStatusTable'
 
 function StatusPageLayout(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
@@ -32,6 +33,9 @@ function StatusPageLayout(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
       ]}
       footer={
         <>
+          <PluginsResyncControls
+            pluginSyncStatuses={props.pluginSyncStatuses}
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `
