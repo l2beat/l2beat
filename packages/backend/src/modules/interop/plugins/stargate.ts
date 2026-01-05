@@ -533,8 +533,6 @@ export class StargatePlugin implements InteropPlugin {
         }),
       ]
     }
-
-    return
   }
 }
 
