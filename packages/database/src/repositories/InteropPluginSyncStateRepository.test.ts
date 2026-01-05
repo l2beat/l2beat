@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
@@ -14,10 +15,12 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
 
   describe(InteropPluginSyncStateRepository.prototype.upsert.name, () => {
     it('inserts new record', async () => {
+      const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
       const record = state({
         pluginName: 'plugin-a',
         chain: 'ethereum',
         lastError: 'Some RPC error',
+        resyncRequestedFrom,
       })
 
       await repository.upsert(record)
@@ -30,17 +33,23 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     })
 
     it('updates record for the same plugin and chain', async () => {
+      const firstResyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
       const record = state({
         pluginName: 'plugin-a',
         chain: 'ethereum',
         lastError: 'Some RPC error',
+        resyncRequestedFrom: firstResyncRequestedFrom,
       })
       await repository.upsert(record)
 
+      const secondResyncRequestedFrom = UnixTime.fromDate(
+        new Date('2023-01-02'),
+      )
       const updated = state({
         pluginName: 'plugin-a',
         chain: 'ethereum',
         lastError: 'fixed',
+        resyncRequestedFrom: secondResyncRequestedFrom,
       })
       await repository.upsert(updated)
 
@@ -53,18 +62,26 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     InteropPluginSyncStateRepository.prototype.updateByPluginNameAndChain.name,
     () => {
       it('updates record and returns number of affected rows', async () => {
+        const firstResyncRequestedFrom = UnixTime.fromDate(
+          new Date('2023-01-01'),
+        )
         const record = state({
           pluginName: 'plugin-a',
           chain: 'ethereum',
           lastError: 'Some RPC error',
+          resyncRequestedFrom: firstResyncRequestedFrom,
         })
         await repository.upsert(record)
 
+        const secondResyncRequestedFrom = UnixTime.fromDate(
+          new Date('2023-01-02'),
+        )
         const updated = await repository.updateByPluginNameAndChain(
           record.pluginName,
           record.chain,
           {
             lastError: null,
+            resyncRequestedFrom: secondResyncRequestedFrom,
           },
         )
 
@@ -77,6 +94,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(stored).toEqual({
           ...record,
           lastError: null,
+          resyncRequestedFrom: secondResyncRequestedFrom,
         })
       })
 
@@ -167,5 +185,6 @@ function state(
     pluginName: overrides.pluginName,
     chain: overrides.chain,
     lastError: overrides.lastError ?? null,
+    resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
   }
 }

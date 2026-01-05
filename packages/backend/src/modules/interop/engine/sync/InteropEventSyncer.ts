@@ -295,6 +295,7 @@ export class InteropEventSyncer extends TimeLoop {
       pluginName: this.plugin.name,
       chain,
       lastError: null,
+      resyncRequestedFrom: null,
     })
   }
 
@@ -304,6 +305,7 @@ export class InteropEventSyncer extends TimeLoop {
       pluginName: this.plugin.name,
       chain: this.chain,
       lastError,
+      resyncRequestedFrom: null,
     })
   }
 

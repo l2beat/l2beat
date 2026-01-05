@@ -1,11 +1,14 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropPluginSyncState } from '../kysely/generated/types'
+import { fromTimestamp, toTimestamp } from '../utils/timestamp'
 
 export interface InteropPluginSyncStateRecord {
   pluginName: string
   chain: string
   lastError: string | null
+  resyncRequestedFrom: UnixTime | null
 }
 
 export type InteropPluginSyncStateUpdateable = Omit<
@@ -16,19 +19,28 @@ export type InteropPluginSyncStateUpdateable = Omit<
 export function toRecord(
   row: Selectable<InteropPluginSyncState>,
 ): InteropPluginSyncStateRecord {
-  return row
+  return {
+    ...row,
+    resyncRequestedFrom: toTimestamp(row.resyncRequestedFrom),
+  }
 }
 
 export function toRow(
   record: InteropPluginSyncStateRecord,
 ): Insertable<InteropPluginSyncState> {
-  return record
+  return {
+    ...record,
+    resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
+  }
 }
 
 function toUpdateRow(
   record: InteropPluginSyncStateUpdateable,
 ): Updateable<InteropPluginSyncState> {
-  return record
+  return {
+    ...record,
+    resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
+  }
 }
 
 export class InteropPluginSyncStateRepository extends BaseRepository {
@@ -39,6 +51,7 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .onConflict((cb) =>
         cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
           lastError: eb.ref('excluded.lastError'),
+          resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
         })),
       )
       .execute()

@@ -517,9 +517,10 @@ model Chain {
 }
 
 model InteropPluginSyncState {
-  pluginName String  @db.VarChar(255)
-  chain      String  @db.VarChar(255)
-  lastError  String? @db.Text
+  pluginName          String    @db.VarChar(255)
+  chain               String    @db.VarChar(255)
+  lastError           String?   @db.Text
+  resyncRequestedFrom DateTime? @db.Timestamp(6)
 
   @@id([pluginName, chain])
 }
