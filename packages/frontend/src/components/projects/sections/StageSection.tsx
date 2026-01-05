@@ -124,7 +124,7 @@ export function StageSection({
         <Callout
           color="green"
           body="Users can exit in the presence of malicious operators even if the Security Council disappears."
-          icon={<WalkAwayPassedIcon className="mt-px size-5" />}
+          icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
@@ -132,7 +132,9 @@ export function StageSection({
         <Callout
           color="red"
           body="Users are not able to exit in the presence of malicious operators if the Security Council disappears."
-          icon={<WalkAwayNotPassedIcon className="mt-0.5 size-5" />}
+          icon={
+            <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
+          }
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
