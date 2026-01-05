@@ -498,19 +498,38 @@ export class StargatePlugin implements InteropPlugin {
       ]
     }
 
-    const creditsSent = db.find(StargateV2CreditsSent, {
+    const creditsSentBatch: EventOf<typeof StargateV2CreditsSent>[] = []
+    let creditsSent = db.find(StargateV2CreditsSent, {
       sameTxBefore: packetSent,
     })
-    const creditsReceived = db.find(StargateV2CreditsReceived, {
+    while (creditsSent) {
+      creditsSentBatch.unshift(creditsSent)
+      creditsSent = db.find(StargateV2CreditsSent, {
+        sameTxBefore: creditsSent,
+      })
+    }
+
+    const creditsReceivedBatch: EventOf<typeof StargateV2CreditsReceived>[] = []
+    let creditsReceived = db.find(StargateV2CreditsReceived, {
       sameTxBefore: packetDelivered,
     })
-    if (creditsSent && creditsReceived) {
+    while (creditsReceived) {
+      creditsReceivedBatch.unshift(creditsReceived)
+      creditsReceived = db.find(StargateV2CreditsReceived, {
+        sameTxBefore: creditsReceived,
+      })
+    }
+
+    if (
+      creditsSentBatch.length > 0 &&
+      creditsSentBatch.length === creditsReceivedBatch.length
+    ) {
       return [
         Result.Message('layerzero-v2.Message', {
           app: 'stargate-v2-credit',
           srcEvent: packetSent,
           dstEvent: packetDelivered,
-          extraEvents: [creditsSent, creditsReceived],
+          extraEvents: [...creditsSentBatch, ...creditsReceivedBatch],
         }),
       ]
     }
