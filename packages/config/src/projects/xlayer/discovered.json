@@ -1,6 +1,6 @@
 {
   "name": "xlayer",
-  "timestamp": 1765461274,
+  "timestamp": 1767003202,
   "configHash": "0x2205252c151265cccb0eb4f027e501ac1a0bcd6c2365988ba18fce80c4db1394",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -34,12 +34,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x14EeCF974b31deE0D06509f54f18b0D8e231bE09",
+        "anchorGame": "eth:0xcd845F4eBD4dadb3CD4b35ce839BCfDFb93a5393",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xbfd432449e6bea0908b6a03e27b37ba3686be2e1a33ed7731ebbe6aeeca36d85",
-          46084705
+          "0x21a536bf045ff3be0fe491faf1095a68bb931881f986aa514e9f9e000d1f1e3d",
+          47388290
         ],
         "initVersion": 1,
         "paused": false,
@@ -412,7 +412,7 @@
         "$upgradeCount": 2,
         "basefeeScalar": 0,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "eth:0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d",
+        "batcherHash": "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459",
         "batchInbox": "eth:0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449",
         "blobbasefeeScalar": 0,
         "daFootprintGasScalar": 0,
@@ -592,8 +592,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 877658,
-          "prevBlockNum": 23989850
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 24112816
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -739,6 +739,18 @@
       }
     },
     {
+      "address": "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
+          "role": ".batcherHash"
+        }
+      ]
+    },
+    {
       "name": "DisputeGameFactory",
       "address": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
       "type": "Contract",
@@ -766,7 +778,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1074,
+        "gameCount": 1485,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -780,7 +792,7 @@
         "initBonds": [0, 10000000000, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
-        "permissionedGamesTotal": 1074,
+        "permissionedGamesTotal": 1485,
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "version": "1.3.0"
@@ -873,18 +885,6 @@
       "implementationNames": {
         "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-          "role": ".batcherHash"
-        }
-      ]
     },
     {
       "address": "eth:0xE43944421681170648E10007f73816e04F74394F",
@@ -1166,7 +1166,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619801",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619820",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2147,6 +2147,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 23989863 },
-  "permissionsConfigHash": "0x8afba1ddf5c0e260d5b52776d02163e8dd9609e15c51dc491ab361a7d91a7c1b"
+  "usedBlockNumbers": { "ethereum": 24117630 },
+  "permissionsConfigHash": "0x5753854d5c4ca84f57ad8f63ce34b0d364f7df98ee1ca02046da57f49895755b"
 }

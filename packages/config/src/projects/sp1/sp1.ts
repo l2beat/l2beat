@@ -193,6 +193,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('omni'),
         sinceTimestamp: UnixTime(1748856160),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1737359447),
+      },
       // archived projects
       {
         projectId: ProjectId('gpt'),
@@ -280,6 +284,19 @@ export const sp1: BaseProject = {
               '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
             ),
             chain: 'gnosis',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
+            ),
+            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

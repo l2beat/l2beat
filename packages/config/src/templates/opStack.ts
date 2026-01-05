@@ -871,8 +871,8 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://docs.boundless.network/developers/kailua/quick-start',
-                title: 'Disputes - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
               },
             ],
           },
@@ -969,8 +969,8 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://docs.boundless.network/developers/kailua/quick-start',
-                title: 'Disputes - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
               },
             ],
           },
@@ -1279,6 +1279,10 @@ function getRiskViewStateValidation(
     case 'OpSuccinctFDP': {
       return {
         ...RISK_VIEW.STATE_FP_1R_ZK,
+        sentiment: 'warning', // whitelist for challengers!
+        description:
+          RISK_VIEW.STATE_FP_1R_ZK.description +
+          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
         initialBond: formatEther(

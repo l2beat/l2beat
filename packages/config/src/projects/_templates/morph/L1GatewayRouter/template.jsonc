@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
+  "fields": {
+    "gateways": {
+      "handler": {
+        "type": "event",
+        "select": "newEthGateway",
+        "add": { "event": "SetETHGateway" }
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage token to escrow mapping and (un-)register escrows."
+        }
+      ]
+    }
+  }
+}

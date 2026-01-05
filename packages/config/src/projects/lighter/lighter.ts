@@ -79,12 +79,13 @@ export const lighter: ScalingProject = {
     apis: [],
   },
   config: {
+    associatedTokens: ['LIT'],
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC', 'ETH'],
+        tokens: ['USDC', 'ETH', 'LIT'],
       }),
     ],
     daTracking: [
