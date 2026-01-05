@@ -82,6 +82,7 @@ export const brine: ScalingProject = {
       websites: ['https://tanx.fi/'],
       bridges: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
+      repositories: ['https://github.com/tanx-libs'],
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',
