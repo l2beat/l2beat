@@ -106,13 +106,15 @@ export function EIGENDA_DA_PROVIDER(
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
     const bridge =
-      isUsingDACertVerifier && eigenDACertVersion === 'v2'
+      isUsingDACertVerifier &&
+      (eigenDACertVersion === 'v2' || eigenDACertVersion === 'v3')
         ? {
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
-            description:
-              'EigenDA V2 certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.',
-            projectId: ProjectId('eigenda-v2'),
+            description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
+            projectId: ProjectId(
+              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
+            ),
           }
         : DA_BRIDGES.NONE
 
@@ -855,6 +857,15 @@ The **Vanguard** is a privileged actor who can always make the first child propo
                 url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
+            risks:
+              vanguardAdvantage > 604800 // 7d, arbitrary threshold
+                ? [
+                    {
+                      category: 'Funds can be frozen if',
+                      text: `the vanguard exploits their vanguard advantage (${formatSeconds(vanguardAdvantage)}), halting the chain until they propose.`,
+                    },
+                  ]
+                : [],
           },
           {
             title: 'Challenges',
@@ -1323,13 +1334,19 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-    case 'Kailua':
-      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
-        templateVars.discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'vanguardAdvantage',
-        ),
+    case 'Kailua': {
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
       )
+      const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+      if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
+        return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      }
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        vanguardAdvantage,
+      )
+    }
     case 'KailuaSoon':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     case 'OpSuccinct':
