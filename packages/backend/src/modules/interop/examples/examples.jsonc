@@ -1290,12 +1290,12 @@
       //   "tx": "0xc340025bd568d3a13067dda9a70cf27e46f169867d7668b5cd3af08f46ccd926"
       // },
       {
-        "chain": "abstract",
-        "tx": "0x92940462bc2fe919fe63d7cc7a3633f58d8c84cb7d0eaf7c4607a14d7627ae02"
+        "chain": "arbitrum",
+        "tx": "0x8c657a4f480508954c2ae7a4b1eab5cefbeccf073e562be3b08ecf29927fa744"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x08a7ab2b2088d375f6ab3acdba43c31acb6a54630ba5c609a71687c5784e5aa9"
+        "chain": "apechain",
+        "tx": "0x2133b8922895c0f2d24ef69d186443746747db148129c56a51823b394344652f"
       }
     ]
   },
