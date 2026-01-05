@@ -26,6 +26,7 @@ export const symbiosis: Bridge = {
         'https://t.me/symbiosis_finance',
         'https://medium.com/@symbiosis_fi',
         'https://twitter.com/symbiosis_fi',
+        'https://discord.com/invite/ymbRx6ADvR',
       ],
       documentation: ['https://docs.symbiosis.finance'],
       bridges: ['https://app.symbiosis.finance/bridge'],
