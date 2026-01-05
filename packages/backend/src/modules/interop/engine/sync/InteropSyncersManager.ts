@@ -4,7 +4,10 @@ import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
-import type { InteropPlugin } from '../../plugins/types'
+import type {
+  InteropPlugin,
+  InteropPluginResyncable,
+} from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropEventSyncer, type SyncMode } from './InteropEventSyncer'
 import { isPluginResyncable } from './isPluginResyncable'
@@ -29,9 +32,9 @@ export class InteropSyncersManager {
 
   constructor(
     private readonly eventPlugins: InteropPlugin[],
-    private readonly enabledChains: LongChainName[],
-    private readonly chainConfigs: ChainApi[],
-    private readonly eventStore: InteropEventStore,
+    enabledChains: LongChainName[],
+    chainConfigs: ChainApi[],
+    eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
   ) {
@@ -44,9 +47,23 @@ export class InteropSyncersManager {
         if (!chainConfig) {
           throw new Error(`Missing configuration for chain ${chain}`)
         }
+
+        const clusterPlugins: InteropPluginResyncable[] = []
+        if (plugin.cluster) {
+          for (const p of eventPlugins) {
+            if (!isPluginResyncable(p)) {
+              throw new Error(
+                `Resyncable plugin ${plugin.name} is in cluster with non-resyncable plugin ${p.name}`,
+              )
+            }
+            clusterPlugins.push(p)
+          }
+        }
+
         const eventSyncer = new InteropEventSyncer(
           chain,
           plugin,
+          clusterPlugins,
           this.getRpcClient(chainConfig),
           eventStore,
           db,

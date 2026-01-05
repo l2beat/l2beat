@@ -217,6 +217,7 @@ interface EventDataRequest {
 
 export interface InteropPlugin {
   name: string
+  cluster?: string
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
@@ -228,7 +229,7 @@ export interface InteropPlugin {
 
 export interface InteropPluginResyncable extends InteropPlugin {
   getDataRequests: () => DataRequest[]
-  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[]
+  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<

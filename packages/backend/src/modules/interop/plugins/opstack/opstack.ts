@@ -133,6 +133,8 @@ export const OPSTACK_NETWORKS = defineNetworks('opstack', [
 export class OpStackPlugin implements InteropPlugin {
   name = 'opstack'
 
+  constructor(readonly cluster: string) {}
+
   capture(input: LogToCapture) {
     // get L1 side events
     if (input.chain === 'ethereum') {

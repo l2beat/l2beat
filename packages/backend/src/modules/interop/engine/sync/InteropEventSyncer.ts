@@ -51,6 +51,7 @@ export class InteropEventSyncer extends TimeLoop {
   constructor(
     private chain: LongChainName,
     private plugin: InteropPluginResyncable,
+    private cluterPlugins: InteropPluginResyncable[],
     private rpcClient: EthRpcClient,
     private store: InteropEventStore,
     private db: Database,
@@ -152,15 +153,33 @@ export class InteropEventSyncer extends TimeLoop {
         },
       }
 
-      const produced = this.plugin.capture(logToCapture)
+      const produced = this.captureLog(logToCapture)
       if (produced) {
-        interopEvents.push(
-          produced.map((p) => ({ ...p, plugin: this.plugin.name })),
-        )
+        interopEvents.push(produced)
       }
     }
 
     return interopEvents.flat()
+  }
+
+  private captureLog(logToCapture: LogToCapture) {
+    let produced
+    // If you're in a cluster, go through plugins in order
+    if (this.cluterPlugins.length > 0) {
+      for (const p of this.cluterPlugins) {
+        produced = p.capture(logToCapture)
+        if (produced) {
+          break
+        }
+      }
+    } else {
+      produced = this.plugin.capture(logToCapture)
+    }
+
+    if (!produced) {
+      return
+    }
+    return produced.map((p) => ({ ...p, plugin: this.plugin.name }))
   }
 
   private getLatestBlockNumber(): bigint | undefined {
@@ -345,7 +364,7 @@ export class InteropEventSyncer extends TimeLoop {
     const interopEvents = []
     const toCapture = getItemsToCapture(this.chain, block, logs)
     for (const logToCapture of toCapture.logsToCapture) {
-      const produced = this.plugin.capture(logToCapture)
+      const produced = this.captureLog(logToCapture)
       if (produced) {
         interopEvents.push(
           produced.map((p) => ({ ...p, plugin: this.plugin.name })),

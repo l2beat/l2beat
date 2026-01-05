@@ -129,10 +129,13 @@ export function createInteropPlugins(
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
-      new SorareBasePlugin(), // should be run before OpStackStandardBridge
-      new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
-      new OpStackStandardBridgePlugin(), // should be run before OpStack
-      new OpStackPlugin(),
+
+      // opstack-cluster:
+      new SorareBasePlugin('opstack-cluster'), // should be run before OpStackStandardBridge
+      new BeefyBridgePlugin('opstack-cluster'), // should be run before OpStackStandardBridge
+      new OpStackStandardBridgePlugin('opstack-cluster'), // should be run before OpStack
+      new OpStackPlugin('opstack-cluster'),
+
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
