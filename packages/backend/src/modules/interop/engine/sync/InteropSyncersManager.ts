@@ -168,11 +168,32 @@ export class InteropSyncersManager {
       if (seen.has(key)) {
         continue
       }
+      seen.add(key)
+      const syncer = this.getSyncer(
+        state.pluginName,
+        state.chain as LongChainName,
+      )
       rows.push({
         pluginName: state.pluginName,
         chain: state.chain,
+        syncMode: syncer?.syncMode,
         lastError: state.lastError ?? undefined,
       })
+    }
+
+    for (const chain of this.syncers.values()) {
+      for (const syncer of chain.values()) {
+        const key = `${syncer.plugin.name}:${syncer.chain}`
+        if (seen.has(key)) {
+          continue
+        }
+        seen.add(key)
+        rows.push({
+          pluginName: syncer.plugin.name,
+          chain: syncer.chain,
+          syncMode: syncer.syncMode,
+        })
+      }
     }
 
     rows.sort((a, b) => {

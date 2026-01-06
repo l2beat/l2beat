@@ -36,7 +36,11 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
 
 const DEFAULT_RESYNC_DAYS = 1
 
-export type SyncMode = 'follow' | 'catchUp' | 'waitForLatestBlockNumber'
+export type SyncMode =
+  | 'follow'
+  | 'catchUp'
+  | 'waitForLatestBlockNumber'
+  | 'wipingForResync'
 const DEFAULT_SYNC_MODE: SyncMode = 'waitForLatestBlockNumber'
 
 interface LogQuery {
@@ -49,8 +53,8 @@ export class InteropEventSyncer extends TimeLoop {
   private latestBlockNumber?: bigint
 
   constructor(
-    private chain: LongChainName,
-    private plugin: InteropPluginResyncable,
+    public readonly chain: LongChainName,
+    public readonly plugin: InteropPluginResyncable,
     private cluterPlugins: InteropPluginResyncable[],
     private rpcClient: EthRpcClient,
     private store: InteropEventStore,
@@ -71,6 +75,10 @@ export class InteropEventSyncer extends TimeLoop {
   async catchUp() {
     try {
       while (this.syncMode === 'catchUp') {
+        if (await this.isResyncRequested()) {
+          await this.wipeAndResync()
+          return
+        }
         const logQuery = this.buildLogQuery()
         if (logQuery.topic0s.size === 0 || logQuery.addresses.size === 0) {
           break
@@ -312,6 +320,15 @@ export class InteropEventSyncer extends TimeLoop {
     return result
   }
 
+  private async isResyncRequested() {
+    const syncState =
+      await this.db.interopPluginSyncState.findByPluginNameAndChain(
+        this.plugin.name,
+        this.chain,
+      )
+    return !!syncState?.resyncRequestedFrom
+  }
+
   private async clearChainSyncError() {
     await this.db.interopPluginSyncState.setLastError(
       this.plugin.name,
@@ -329,8 +346,10 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
-    const blockNumber = BigInt(block.number)
-    this.latestBlockNumber = blockNumber
+    if (await this.isResyncRequested()) {
+      await this.wipeAndResync()
+      return
+    }
 
     if (
       this.syncMode !== 'follow' &&
@@ -338,6 +357,9 @@ export class InteropEventSyncer extends TimeLoop {
     ) {
       return
     }
+
+    const blockNumber = BigInt(block.number)
+    this.latestBlockNumber = blockNumber
 
     const lastSynced =
       await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
@@ -427,11 +449,19 @@ export class InteropEventSyncer extends TimeLoop {
     )
   }
 
-  private async wipeAllPluginData(plugin: InteropPluginResyncable) {
+  private async wipeAndResync() {
+    this.syncMode = 'wipingForResync'
     await this.db.transaction(async () => {
-      await this.db.interopMessage.deleteForPlugin(plugin.name)
-      await this.db.interopTransfer.deleteForPlugin(plugin.name)
-      await this.store.deleteAllForPlugin(plugin.name)
+      await this.db.interopMessage.deleteForPlugin(this.plugin.name)
+      await this.db.interopTransfer.deleteForPlugin(this.plugin.name)
+      await this.store.deleteAllForPlugin(this.plugin.name)
     })
+    this.db.interopPluginSyncedRange.deleteByPluginName(this.plugin.name)
+    this.db.interopPluginSyncState.setResyncRequestedFrom(
+      this.plugin.name,
+      this.chain,
+      null,
+    )
+    this.syncMode = DEFAULT_SYNC_MODE
   }
 }
