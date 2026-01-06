@@ -222,6 +222,14 @@ export class InteropMessageRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropMessage')
+      .where('plugin', '=', plugin)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async getUniqueAppsPerPlugin(): Promise<InteropMessageUniqueAppsRecord[]> {
     const rows = await this.db
       .selectFrom('InteropMessage')

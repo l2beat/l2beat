@@ -273,6 +273,25 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(InteropTransferRepository.prototype.deleteForPlugin.name, () => {
+    it('deletes transfers for a specific plugin', async () => {
+      await repository.insertMany([
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin2', 'msg2', 'deposit', UnixTime(200)),
+        transfer('plugin1', 'msg3', 'withdraw', UnixTime(300)),
+      ])
+
+      const deleted = await repository.deleteForPlugin('plugin1')
+
+      expect(deleted).toEqual(2)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
+      expect(remaining[0]?.transferId).toEqual('msg2')
+      expect(remaining[0]?.plugin).toEqual('plugin2')
+    })
+  })
+
   describe(InteropTransferRepository.prototype.getUnprocessed.name, () => {
     it('returns only unprocessed transfers', async () => {
       const unprocessedRecord1 = transfer(

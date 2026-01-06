@@ -426,4 +426,12 @@ export class InteropEventSyncer extends TimeLoop {
       ),
     )
   }
+
+  private async wipeAllPluginData(plugin: InteropPluginResyncable) {
+    await this.db.transaction(async () => {
+      await this.db.interopMessage.deleteForPlugin(plugin.name)
+      await this.db.interopTransfer.deleteForPlugin(plugin.name)
+      await this.store.deleteAllForPlugin(plugin.name)
+    })
+  }
 }
