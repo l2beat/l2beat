@@ -29,12 +29,12 @@ import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 
 const LOG_QUERY_RANGE: Record<string, bigint> = {
-  DEFAULT: 2_000n,
-  arbitrum: 10_000n,
-  optimism: 10_000n,
+  DEFAULT: 10_000n,
+  arbitrum: 100_000n,
+  optimism: 100_000n,
 }
 
-const DEFAULT_RESYNC_DAYS = 1
+const DEFAULT_RESYNC_DAYS = 8
 
 export type SyncMode =
   | 'follow'
