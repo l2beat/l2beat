@@ -28,7 +28,10 @@ export const ethereal: ScalingProject = orbitStackL3({
     links: {
       websites: ['https://ethereal.trade'],
       explorers: ['https://explorer.ethereal.trade/'],
-      documentation: ['https://docs.ethereal.trade/'],
+      documentation: [
+        'https://docs.ethereal.trade/',
+        'https://meridianxyz.github.io/ethereal-py-sdk',
+      ],
       socialMedia: [
         'https://discord.com/invite/etherealdex',
         'https://x.com/etherealdex',
