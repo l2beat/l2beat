@@ -6,7 +6,15 @@ import type {
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
 } from '@l2beat/database'
-import { type Block, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxLivenessConfig } from '@l2beat/shared'
+import {
+  type Block,
+  ChainSpecificAddress,
+  formatAsAsciiTable,
+  type TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import type { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
@@ -20,6 +28,10 @@ export type AnomalyNotificationType =
 export class AnomalyNotifier {
   private logger: Logger
   private readonly notificationQueue: TaskQueue<void>
+  private trackedTxsConfigsMap: Map<
+    string,
+    TrackedTxLivenessConfig['params'][]
+  > = new Map()
 
   constructor(
     logger: Logger,
@@ -27,6 +39,7 @@ export class AnomalyNotifier {
     private readonly discordClient: DiscordWebhookClient,
     private readonly db: Database,
     private readonly minDuration: number,
+    private readonly trackedTxsConfig: TrackedTxsConfig,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
@@ -36,6 +49,8 @@ export class AnomalyNotifier {
       this.logger.for('notificationQueue'),
       { metricsId: 'AnomalyNotifier' },
     )
+
+    this.mapTrackedTxsConfigs(trackedTxsConfig.projects)
   }
 
   start() {
@@ -50,11 +65,15 @@ export class AnomalyNotifier {
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
-    hasImplementationChange: boolean,
   ) {
     if (interval < this.minDuration && z < 100) {
       return
     }
+
+    const hasImplementationChange = await this.checkIfHasImplementationChange(
+      newAnomaly.projectId,
+      newAnomaly.subtype,
+    )
 
     const message =
       `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
@@ -88,7 +107,6 @@ export class AnomalyNotifier {
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
-    hasImplementationChange: boolean,
   ) {
     // send only if the duration is over minDuration OR z-score is over 100 and we haven't sent a notification yet
     if (interval < this.minDuration && z < 100) {
@@ -110,7 +128,6 @@ export class AnomalyNotifier {
       block,
       latestRecord,
       latestStat,
-      hasImplementationChange,
     )
   }
 
@@ -203,6 +220,61 @@ export class AnomalyNotifier {
     }
 
     await this.db.notifications.insertMany([notification])
+  }
+
+  private mapTrackedTxsConfigs(projects: TrackedTxProject[]) {
+    for (const project of projects) {
+      for (const configuration of project.configurations) {
+        if (configuration.type === 'liveness') {
+          const current = this.trackedTxsConfigsMap.get(
+            `${project.id}-${configuration.subtype}`,
+          )
+          if (current) {
+            current.push(configuration.params)
+          } else {
+            this.trackedTxsConfigsMap.set(
+              `${project.id}-${configuration.subtype}`,
+              [configuration.params],
+            )
+          }
+        }
+      }
+    }
+  }
+
+  private async checkIfHasImplementationChange(
+    projectId: string,
+    subtype: TrackedTxsConfigSubtype,
+  ) {
+    const updateDiffs = await this.db.updateDiff.getAll()
+    const implementationChanges = updateDiffs
+      .filter(
+        (diff) =>
+          diff.projectId === projectId &&
+          diff.type === 'implementationChange' &&
+          ChainSpecificAddress.chain(ChainSpecificAddress(diff.address)) ===
+            'eth',
+      )
+      .map((diff) =>
+        ChainSpecificAddress.address(ChainSpecificAddress(diff.address)),
+      )
+
+    return this.trackedTxsConfigsMap
+      .get(`${projectId}-${subtype}`)
+      ?.some((config) => {
+        switch (config.formula) {
+          case 'functionCall':
+          case 'sharedBridge':
+          case 'sharpSubmission':
+            return implementationChanges.includes(config.address)
+          case 'transfer':
+            return (
+              (config.from
+                ? implementationChanges.includes(config.from)
+                : false) || implementationChanges.includes(config.to)
+            )
+        }
+      })
   }
 
   generateRelatedEntityId(anomaly: RealTimeAnomalyRecord): string {
