@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x62b02cf18c12df0a3ac7a2044ca2ae08c9f4ccd2
+
+# Diff at Tue, 06 Jan 2026 16:39:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1763637734
+- current timestamp: 1767717509
+
+## Description
+
+Removed multisig member, decreased threshold.
+
+## Watched changes
+
+```diff
+    contract INTMAX Multisig 1 (eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 3 (eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.multisigThreshold:
+-        "1 of 5 (20%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 2 (scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xa781746afbb166007d5c3c550ba090f0445a170d
 
 # Diff at Thu, 20 Nov 2025 11:23:19 GMT:

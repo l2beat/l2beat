@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x8326948790675639479ef62f27c6923b45928175
+
+# Diff at Tue, 06 Jan 2026 16:57:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1757661532
+- current timestamp: 1767718570
+
+## Description
+
+New signer added to World Foundation Cold Wallets multisig (4/5 -> 4/6).
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901"
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/worldcoin/.flat/Safe/Safe.sol     | 1088 ++++++++++++++++++++
+ .../projects/worldcoin/.flat/Safe/SafeProxy.p.sol  |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x2d8b86da94c719aaa6f0a2fc895958e6d4ff5ff1
 
 # Diff at Wed, 05 Nov 2025 12:48:19 GMT:
