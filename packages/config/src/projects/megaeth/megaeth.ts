@@ -89,7 +89,6 @@ export const megaeth: ScalingProject = opStackL2({
         version: '3',
       },
     ],
-    coingeckoPlatform: 'base',
     apis: [
       {
         type: 'rpc',
