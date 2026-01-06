@@ -78,7 +78,7 @@ export const megaeth: ScalingProject = opStackL2({
   chainConfig: {
     name: 'megaeth',
     chainId: 4326,
-    explorerUrl: 'https://megaeth.blockscout.com/',
+    explorerUrl: 'https://megaeth.blockscout.com',
     sinceTimestamp: UnixTime(1762797011), // block 1
     gasTokens: ['ETH'],
     multicallContracts: [
