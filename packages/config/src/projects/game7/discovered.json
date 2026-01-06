@@ -1,6 +1,6 @@
 {
   "name": "game7",
-  "timestamp": 1766407241,
+  "timestamp": 1767696070,
   "configHash": "0xefe8521973312af8834ad31778b004dbbfce2df17daf20ccb519e87dd1820a50",
   "entries": [
     {
@@ -891,7 +891,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 111,
+        "nonce": 112,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -982,11 +982,6 @@
     },
     {
       "address": "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x823DeFCBf7Be01b6469a22E163bc15BdFfb6C649",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1669,7 +1664,6 @@
           "arb1:0xDe87572d7e556B2EBfD4410F1835A503b175794c",
           "arb1:0x4058A4d6017676e55F0539f772e9618Db49158CC",
           "arb1:0xF9189a9ddf98952D85cdF9365D644Dfb0FBC08FC",
-          "arb1:0x823DeFCBf7Be01b6469a22E163bc15BdFfb6C649",
           "arb1:0x9209D04e475Cb4780b75b31eCa5C3e8fb8e75b4C",
           "arb1:0x876D482379731F2fb2978C86BBc07f69BE7C6482"
         ],
@@ -1677,8 +1671,8 @@
         "domainSeparator": "0xed81df6d2e565162dbc772fda77cdcebe0f704265c7c16deb0f4f3a391b101e0",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 15,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2562,6 +2556,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 413317483 },
-  "permissionsConfigHash": "0x0ae059bcd1b8282dae819436abb9dab52d244d72167279f2de93b904b707ad1a"
+  "usedBlockNumbers": { "arbitrum": 418476925 },
+  "permissionsConfigHash": "0xd14c93b4da07eee37776de1968c55d74ed136b85cfc8e57119dc96a8999502fe"
 }

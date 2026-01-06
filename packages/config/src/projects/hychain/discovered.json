@@ -1,6 +1,6 @@
 {
   "name": "hychain",
-  "timestamp": 1767627920,
+  "timestamp": 1767696129,
   "configHash": "0x353b45b9358bb31a2a205992d612f4cfcbe3c224472f211458f047ca9cfc9542",
   "entries": [
     {
@@ -529,7 +529,7 @@
         "challengeManager": "eth:0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "1200000000000000000",
+        "currentRequiredStake": "1300000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 2747,
         "inbox": "eth:0xD6c596b7ca17870DD50D322393deCE6C2085a116",
@@ -1531,6 +1531,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24169442 },
+  "usedBlockNumbers": { "ethereum": 24175107 },
   "permissionsConfigHash": "0xd9d59e33040f0b89a34465cf6f805c6f32960520b80dca88c902606e496819db"
 }
