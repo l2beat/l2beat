@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x1810b2b90739ff134cdb6fcdbb2d4d1c72406b74
+
+# Diff at Tue, 06 Jan 2026 10:43:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1766407241
+- current timestamp: 1767696070
+
+## Description
+
+Multisig member removed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6) {
+    +++ description: None
+      values.$members.3:
+-        "arb1:0x823DeFCBf7Be01b6469a22E163bc15BdFfb6C649"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x378d56200c86cfa1a77218edfea306a143584f53
 
 # Diff at Mon, 05 Jan 2026 17:44:21 GMT:
