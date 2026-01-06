@@ -3,6 +3,7 @@ import type {
   Database,
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
+  UpdateDiffRecord,
 } from '@l2beat/database'
 import type {
   TrackedTxFunctionCallConfig,
@@ -13,11 +14,13 @@ import type {
 } from '@l2beat/shared'
 import {
   type Block,
+  ChainSpecificAddress,
   type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import type { TrackedTxsConfig } from '../../config/Config'
 import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
@@ -159,6 +162,22 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
     const ongoingAnomalies =
       await this.db.realTimeAnomalies.getOngoingAnomalies()
+    const updateDiffs = await this.db.updateDiff.getAll()
+    const groupedByProject = groupBy(
+      updateDiffs
+        .filter(
+          (diff) =>
+            ChainSpecificAddress.chain(ChainSpecificAddress(diff.address)) ===
+              'eth' && diff.type === 'implementationChange',
+        )
+        .map((diff) => ({
+          ...diff,
+          address: ChainSpecificAddress.address(
+            ChainSpecificAddress(diff.address),
+          ),
+        })),
+      (diff) => diff.projectId,
+    )
 
     const records: RealTimeAnomalyRecord[] = []
     const configGroups = this.groupConfigurations()
@@ -192,6 +211,11 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       const isAnomaly = z >= 15 && interval > latestStat.mean
 
       if (isAnomaly) {
+        const hasImplementationChange = this.checkIfHasImplementationChange(
+          groupedByProject[group.projectId] ?? [],
+          group.configurationsParams,
+        )
+
         if (ongoingAnomaly) {
           this.logger.info('Ongoing anomaly detected', {
             projectId: group.projectId,
@@ -207,6 +231,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
             block,
             latestRecord,
             latestStat,
+            hasImplementationChange,
           )
 
           continue
@@ -234,6 +259,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           block,
           latestRecord,
           latestStat,
+          hasImplementationChange,
         )
 
         records.push(newAnomaly)
@@ -275,12 +301,33 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     await this.db.realTimeAnomalies.upsertMany(records)
   }
 
+  private checkIfHasImplementationChange(
+    updateDiffs: UpdateDiffRecord[],
+    configurationsParams: TrackedTxLivenessConfig['params'][],
+  ) {
+    return configurationsParams.some((params) => {
+      switch (params.formula) {
+        case 'functionCall':
+        case 'sharedBridge':
+        case 'sharpSubmission':
+          return updateDiffs.some((diff) => diff.address === params.address)
+        case 'transfer':
+          return (
+            (params.from
+              ? updateDiffs.some((diff) => diff.address === params.from)
+              : false) || updateDiffs.some((diff) => diff.address === params.to)
+          )
+      }
+    })
+  }
+
   private groupConfigurations(): Map<
     string,
     {
       projectId: ProjectId
       subtype: TrackedTxsConfigSubtype
       configurationIds: string[]
+      configurationsParams: TrackedTxLivenessConfig['params'][]
     }
   > {
     const configs: TrackedTxLivenessConfig[] = [
@@ -296,6 +343,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         projectId: ProjectId
         subtype: TrackedTxsConfigSubtype
         configurationIds: string[]
+        configurationsParams: TrackedTxLivenessConfig['params'][]
       }
     >()
 
@@ -306,9 +354,11 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           projectId: config.projectId,
           subtype: config.subtype,
           configurationIds: [],
+          configurationsParams: [],
         })
       }
       configGroups.get(key)?.configurationIds.push(config.id)
+      configGroups.get(key)?.configurationsParams.push(config.params)
     }
 
     return configGroups

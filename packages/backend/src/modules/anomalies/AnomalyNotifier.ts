@@ -50,6 +50,7 @@ export class AnomalyNotifier {
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
+    hasImplementationChange: boolean,
   ) {
     if (interval < this.minDuration && z < 100) {
       return
@@ -57,6 +58,9 @@ export class AnomalyNotifier {
 
     const message =
       `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      (hasImplementationChange
+        ? 'There are unhandled implementation changes.\n\n'
+        : '') +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
@@ -84,6 +88,7 @@ export class AnomalyNotifier {
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
+    hasImplementationChange: boolean,
   ) {
     // send only if the duration is over minDuration OR z-score is over 100 and we haven't sent a notification yet
     if (interval < this.minDuration && z < 100) {
@@ -105,6 +110,7 @@ export class AnomalyNotifier {
       block,
       latestRecord,
       latestStat,
+      hasImplementationChange,
     )
   }
 
