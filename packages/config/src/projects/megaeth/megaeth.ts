@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -34,9 +39,9 @@ export const megaeth: ScalingProject = opStackL2({
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
     links: {
       websites: ['https://megaeth.com/'],
-      bridges: ['https://predeposit.megaeth.com/'],
+      bridges: ['https://docs.megaeth.com/frontier#using-the-canonical-bridge'],
       documentation: ['https://docs.megaeth.com/'],
-      explorers: ['https://megaexplorer.xyz/'],
+      explorers: ['https://megaeth.blockscout.com/'],
       repositories: ['https://github.com/megaeth-labs'],
       socialMedia: [
         'https://x.com/megaeth',
@@ -70,6 +75,36 @@ export const megaeth: ScalingProject = opStackL2({
       orderHint: Number.NEGATIVE_INFINITY,
     },
   },
+  chainConfig: {
+    name: 'megaeth',
+    chainId: 4326,
+    explorerUrl: 'https://basescan.org',
+    sinceTimestamp: UnixTime(1762797011), // block 1
+    gasTokens: ['ETH'],
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5022,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'base',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.megaeth.com/rpc',
+        callsPerMinute: 300,
+      },
+      { type: 'blockscout', url: 'https://megaeth.blockscout.com/api' },
+      { type: 'blockscoutV2', url: 'https://megaeth.blockscout.com/api/v2' },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -89,18 +124,4 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
-  chainConfig: {
-    name: 'megaeth',
-    chainId: 4326,
-    explorerUrl: 'https://megaexplorer.xyz',
-    sinceTimestamp: UnixTime(1762797011),
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://alpha.megaeth.com/rpc',
-        callsPerMinute: 300,
-      },
-      { type: 'blockscout', url: 'https://megaeth.blockscout.com/api' },
-    ],
-  },
 })
