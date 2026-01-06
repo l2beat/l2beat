@@ -8,11 +8,11 @@ import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import { getLogger } from '~/server/utils/logger'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
+import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 
 export type TrustedSetupsByProofSystem = Record<
   string,
@@ -45,16 +45,12 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   )
   return Object.fromEntries(
     Object.entries(grouped).map(([key, trustedSetups]) => {
-      const verifiersWithUsedIn = project.zkCatalogInfo.verifierHashes
-        .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
-        .map((v) => ({
-          verifier: v,
-          usedIn: v.knownDeployments.flatMap((d) =>
-            d.overrideUsedIn
-              ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-              : contractUtils.getUsedIn(project.id, d.chain, d.address),
-          ),
-        }))
+      const verifiersWithUsedIn = getVerifiersWithProcessedUsedIn(
+        project,
+        key,
+        contractUtils,
+        allProjects,
+      )
 
       // When projectId is provided, filter verifiers to only those used by this project
       const filteredVerifiers = projectId
@@ -68,15 +64,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
         (v) => v.verificationStatus,
       )
 
-      const projectsUsedIn = uniqBy(
+      const sortedProjectsUsedIn = uniqBy(
         filteredVerifiers.flatMap((v) => v.usedIn),
         (u) => u.id,
-      )
-        .map((u) => ({
-          ...u,
-          tvs: calculateProjectTvs(u.id, allProjects, tvs),
-        }))
-        .sort((a, b) => b.tvs - a.tvs)
+      ).sort(tvsComparatorWithDaBridges(allProjects, tvs))
 
       return [
         key,
@@ -96,11 +87,32 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
               'notVerified',
             ),
           },
-          projectsUsedIn,
+          projectsUsedIn: sortedProjectsUsedIn,
         },
       ]
     }),
   )
+}
+
+function getVerifiersWithProcessedUsedIn(
+  project: Project<'zkCatalogInfo'>,
+  key: string,
+  contractUtils: ContractUtils,
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+) {
+  return project.zkCatalogInfo.verifierHashes
+    .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
+    .map((v) => ({
+      verifier: v,
+      usedIn: v.knownDeployments.flatMap((d) =>
+        d.overrideUsedIn
+          ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
+          : contractUtils.getUsedIn(project.id, d.chain, d.address),
+      ),
+    }))
 }
 
 export function getVerifiersWithAttesters(
@@ -113,14 +125,12 @@ export function getVerifiersWithAttesters(
   return {
     count: verifiersForStatus.length,
     attesters: uniqBy(
-      verifiersForStatus.flatMap((v) => v.attesters),
-      (a) => a?.id,
-    )
-      .filter(notUndefined)
-      .map((a) => ({
-        ...a,
-        icon: getProjectIcon(a.id),
-      })),
+      verifiersForStatus.flatMap((v) => v.attesters).filter(notUndefined),
+      (a) => a.id,
+    ).map((a) => ({
+      ...a,
+      icon: getProjectIcon(a.id),
+    })),
   }
 }
 
@@ -157,32 +167,4 @@ export function getProjectsUsedIn(
       }
     })
     .filter(notUndefined)
-}
-
-function calculateProjectTvs(
-  projectId: string,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-  tvs: SevenDayTvsBreakdown,
-): number {
-  const project = allProjects.find((p) => p.id === projectId)
-  if (!project) {
-    const logger = getLogger().for('calculateProjectTvs')
-    logger.warn(`Project ${projectId} not found`)
-    return 0
-  }
-
-  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-  if (project.daBridge) {
-    return project.daBridge.usedIn
-      .map((p) => p.id)
-      .reduce((acc, p) => {
-        const projectTvs = tvs.projects[p]?.breakdown.total
-        return projectTvs ? acc + projectTvs : acc
-      }, 0)
-  }
-
-  return tvs.projects[project.id]?.breakdown.total ?? 0
 }
