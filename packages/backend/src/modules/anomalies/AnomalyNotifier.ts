@@ -5,6 +5,7 @@ import type {
   NotificationRecord,
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
+  UpdateDiffRecord,
 } from '@l2beat/database'
 import type { TrackedTxLivenessConfig } from '@l2beat/shared'
 import {
@@ -70,9 +71,11 @@ export class AnomalyNotifier {
       return
     }
 
-    const hasImplementationChange = await this.checkIfHasImplementationChange(
+    const updateDiffs = await this.db.updateDiff.getAll()
+    const hasImplementationChange = this.checkIfHasImplementationChange(
       newAnomaly.projectId,
       newAnomaly.subtype,
+      updateDiffs,
     )
 
     const message =
@@ -170,16 +173,28 @@ export class AnomalyNotifier {
 
     const ongoingAnomalies =
       await this.db.realTimeAnomalies.getOngoingAnomalies()
+    const updateDiffs = await this.db.updateDiff.getAll()
 
     const now = UnixTime.now()
     const date = UnixTime.toYYYYMMDD(UnixTime.now())
 
-    const headers = ['Duration', 'ProjectId', 'Subtype', 'Approval']
+    const headers = [
+      'Duration',
+      'ProjectId',
+      'Subtype',
+      'Approval',
+      'Implementation Change',
+    ]
 
     const rows = ongoingAnomalies
       .map((anomaly) => ({
         duration: now - anomaly.start,
         ...anomaly,
+        hasImplementationChange: this.checkIfHasImplementationChange(
+          anomaly.projectId,
+          anomaly.subtype,
+          updateDiffs,
+        ),
       }))
       .sort((a, b) => b.duration - a.duration)
       .map((anomaly) => [
@@ -187,6 +202,7 @@ export class AnomalyNotifier {
         anomaly.projectId,
         anomaly.subtype,
         anomaly.isApproved ? 'approved' : 'not approved',
+        anomaly.hasImplementationChange ? '⚠️ yes ⚠️' : '-',
       ])
 
     const table = formatAsAsciiTable(headers, rows)
@@ -242,11 +258,11 @@ export class AnomalyNotifier {
     }
   }
 
-  private async checkIfHasImplementationChange(
+  private checkIfHasImplementationChange(
     projectId: string,
     subtype: TrackedTxsConfigSubtype,
+    updateDiffs: UpdateDiffRecord[],
   ) {
-    const updateDiffs = await this.db.updateDiff.getAll()
     const implementationChanges = updateDiffs
       .filter(
         (diff) =>
