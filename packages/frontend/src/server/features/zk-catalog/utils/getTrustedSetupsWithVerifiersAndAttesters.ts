@@ -37,6 +37,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
     never,
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
+  projectId?: ProjectId, // target project id for which we want to get verifiers, used only in this project
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
     project.zkCatalogInfo.trustedSetups,
@@ -44,23 +45,31 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   )
   return Object.fromEntries(
     Object.entries(grouped).map(([key, trustedSetups]) => {
-      const trustedSetupVerifiers = project.zkCatalogInfo.verifierHashes.filter(
-        (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
-      )
-
-      const groupedByStatus = groupBy(
-        trustedSetupVerifiers,
-        (v) => v.verificationStatus,
-      )
-
-      const projectsUsedIn = uniqBy(
-        trustedSetupVerifiers.flatMap((v) =>
-          v.knownDeployments.flatMap((d) =>
+      const verifiersWithUsedIn = project.zkCatalogInfo.verifierHashes
+        .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
+        .map((v) => ({
+          verifier: v,
+          usedIn: v.knownDeployments.flatMap((d) =>
             d.overrideUsedIn
               ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
               : contractUtils.getUsedIn(project.id, d.chain, d.address),
           ),
-        ),
+        }))
+
+      // When projectId is provided, filter verifiers to only those used by this project
+      const filteredVerifiers = projectId
+        ? verifiersWithUsedIn.filter((v) =>
+            v.usedIn.some((u) => u.id === projectId),
+          )
+        : verifiersWithUsedIn
+
+      const verifiersGroupedByStatus = groupBy(
+        filteredVerifiers.map((v) => v.verifier),
+        (v) => v.verificationStatus,
+      )
+
+      const projectsUsedIn = uniqBy(
+        filteredVerifiers.flatMap((v) => v.usedIn),
         (u) => u.id,
       )
         .map((u) => ({
@@ -75,15 +84,15 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
           trustedSetups,
           verifiers: {
             successful: getVerifiersWithAttesters(
-              groupedByStatus,
+              verifiersGroupedByStatus,
               'successful',
             ),
             unsuccessful: getVerifiersWithAttesters(
-              groupedByStatus,
+              verifiersGroupedByStatus,
               'unsuccessful',
             ),
             notVerified: getVerifiersWithAttesters(
-              groupedByStatus,
+              verifiersGroupedByStatus,
               'notVerified',
             ),
           },
