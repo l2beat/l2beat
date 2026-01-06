@@ -35,7 +35,7 @@
       "ecosystemId": "superchain",
       "news": [
         {
-          "title": "The Largest Exchanges in the World Are Choosing the OP Stack",
+          "title": "New blog post: The Largest Exchanges in the World Are Choosing the OP Stack",
           "content": "According to Optimism/OP Labs’ [own post](https://www.optimism.io/blog/the-largest-exchanges-in-the-world-are-choosing-the-op-stack), real-world assets (~$35B today) are positioned as a driver for on-chain growth toward “trillions” by 2030. In that narrative, more issuance means more on-chain mints, redemptions, interest flows, and trading, and they say “major players” (including Coinbase, Uniswap, Kraken, Mantle, Bybit, Upbit, and HashKey) are choosing the OP Stack for low-latency, predictable costs.\n\nThey further argue the OP Stack stands out for production-tested security, high performance, and modularity (DA choices, sequencing, proofs, fee tokens, compliance), plus pre-/post-mainnet support and a long-term roadmap."
         },
         {
