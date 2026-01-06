@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x3474d11ea48d3684ef9cf90aa53518667bbda5e4
+
+# Diff at Tue, 06 Jan 2026 16:36:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1750664843
+- current timestamp: 1767717347
+
+## Description
+
+L1StandardBridge implementation upgraded with custom `guardianWithdrawUSDCSentIncorrectly()` function allowing the guardian to recover USDC mistakenly deposited to the L2 Stargate USDC address.
+
+## Watched changes
+
+```diff
+    contract L1StandardBridge (eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address.
+      template:
+-        "opstack/L1StandardBridge"
++        "opstack/L1StandardBridge_usdc_recovery"
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0x68476feae49f34aef031656b4a4308f88e5d9c916368f096009669ac6759bbdf"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address."
+      values.$implementation:
+-        "eth:0xA39369f09f4266A4dCE9E10598ec7aa2a4867c7f"
++        "eth:0x4B9882f8a7c65998bEe6176FA1F3CDf6fb54f8f9"
+      implementationNames.eth:0xA39369f09f4266A4dCE9E10598ec7aa2a4867c7f:
+-        "L1StandardBridge"
+      implementationNames.eth:0x4B9882f8a7c65998bEe6176FA1F3CDf6fb54f8f9:
++        "L1StandardBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          | 41 ++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+```
+
 Generated with discovered.json: 0x43a05d2940e83897f19955ae6c3ce560dad5ef37
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
