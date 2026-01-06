@@ -79,10 +79,10 @@ export class AnomalyNotifier {
     )
 
     const message =
-      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n` +
       (hasImplementationChange
-        ? 'There are unhandled implementation changes.\n\n'
-        : '') +
+        ? '⚠️ There are unhandled implementation changes. ⚠️\n\n'
+        : '\n') +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
