@@ -439,6 +439,6 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example all
 
 - **Simple**: `sorare-base.ts` - Single app on OpStack with unique L2 event
 - **Matcher-only**: `across-settlement.ts`, `zklink-nova.ts` - Match on OpStack's RelayedMessage (no unique L2 event)
-- **Bidirectional**: `dai-bridge.ts`, `lido-wsteth.ts` - L1→L2 deposits and L2→L1 withdrawals with transfers
+- **Bidirectional**: `maker-bridge.ts`, `sky-bridge.ts`, `lido-wsteth.ts` - L1→L2 deposits and L2→L1 withdrawals with transfers
 - **Standard**: `opstack-standardbridge.ts` - Token bridge with multiple event types
 - **Complex**: `layerzero/layerzero-v2.plugin.ts` - Config-based multi-chain
