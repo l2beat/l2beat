@@ -1463,5 +1463,23 @@
         "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
       }
     ]
+  },
+  "zklink-nova": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xa9312f4f36c3acc44a348fe9b85f5e2ef13b01a9c552adf9457140cc9d60bbe9"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8268d09b391c54f7ecf02f9e95f60868ca6bde8f21bc64d3df9b7d4dbbbc"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd9c83b94ce77aa1f8a6f2688a0d352b31918f5999eafcb3fd2e1b8a22ab9be17"
+      }
+    ],
+    "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
+    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
   }
 }
