@@ -72,7 +72,10 @@ export BASE_RPC_URL=$(grep BASE_RPC_URL /packages/config/.env | cut -d= -f2-)
 cast receipt <TX_HASH> --rpc-url $ETHEREUM_RPC_URL
 ```
 
-**Important**: Always use the RPC URLs from the config `.env` file rather than public RPC endpoints to avoid rate limiting.
+**Important**:
+- **ALWAYS use the RPC URLs from the config `.env` file** - never use public RPC endpoints.
+- **Do NOT use `source .env`** - it doesn't work reliably in subshells. Always use `grep ... | cut` or inline `$(grep ...)` instead.
+- Use the inline pattern for one-off commands: `cast receipt <TX> --rpc-url $(grep ETHEREUM_RPC_URL /packages/config/.env | cut -d= -f2-)`
 
 ## Step-by-Step: Creating a New Plugin
 
@@ -435,6 +438,7 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example all
 ## Reference Plugins
 
 - **Simple**: `sorare-base.ts` - Single app on OpStack with unique L2 event
-- **Matcher-only**: `across-settlement.ts` - Matches on OpStack's RelayedMessage (no unique L2 event)
+- **Matcher-only**: `across-settlement.ts`, `zklink-nova.ts` - Match on OpStack's RelayedMessage (no unique L2 event)
+- **Bidirectional**: `dai-bridge.ts`, `lido-wsteth.ts` - L1→L2 deposits and L2→L1 withdrawals with transfers
 - **Standard**: `opstack-standardbridge.ts` - Token bridge with multiple event types
 - **Complex**: `layerzero/layerzero-v2.plugin.ts` - Config-based multi-chain
