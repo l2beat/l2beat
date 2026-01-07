@@ -97,6 +97,7 @@ If a block contains more blobs than the target, the blob base fee increases, dis
 The initial blob parameters (target 3, max 6 blobs) were increased via [EIP-7691](https://eips.ethereum.org/EIPS/eip-7691) in the Pectra upgrade to target 6 and max 9 blobs.
 Following the Fusaka upgrade which enabled PeerDAS (Peer Data Availability Sampling), Blob Parameter Only (BPO) forks allow incremental blob capacity increases without hard forks.
 BPO1 raised the target to 10 and max to 15 blobs per block.
+BPO2 raised the target to 14 and max to 21 blobs per block.
 
 ## L2s Data Availability
 
@@ -155,6 +156,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
         target: 1_310_720, // 1.25 MiB (target 10 blobs × 128 KiB)
         frequency: 12, // unchanged: 12 s slot time
         sinceTimestamp: 1765290071, // 2025-12-09 14:21:11 UTC – epoch 412672
+      },
+      {
+        // BPO2: Blob Parameter Only fork 2
+        size: 2_752_512, // 2.625 MiB (max 21 blobs × 128 KiB)
+        target: 1_835_008, // 1.75 MiB (target 14 blobs × 128 KiB)
+        frequency: 12, // unchanged: 12 s slot time
+        sinceTimestamp: 1767747671, // 2026-01-07 01:01:11 UTC – epoch 419072
       },
     ],
     finality: 768, // seconds
@@ -246,6 +254,14 @@ This method allows ZK rollups to prove that the data used in their validity proo
       date: '2025-12-09T00:00:00Z',
       description:
         'First Blob Parameter Only fork after Fusaka increases blob limits: target from 6 to 10 blobs and max from 9 to 15 blobs.',
+      type: 'general',
+    },
+    {
+      title: 'BPO2 blob throughput increase',
+      url: 'https://github.com/ethereum/pm/issues/1772',
+      date: '2026-01-07T00:00:00Z',
+      description:
+        'Second Blob Parameter Only fork increases blob limits: target from 10 to 14 blobs and max from 15 to 21 blobs.',
       type: 'general',
     },
   ],
