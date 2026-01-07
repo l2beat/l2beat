@@ -42,25 +42,24 @@ export function HandlerEditor({
 
   // monaco schema synchronization
   useEffect(() => {
-    if (selectedHandler && editor) {
-      const uriString = uri?.toString() ?? ''
+    if (selectedHandler && editor && uri) {
+      const uriString = uri.toString()
 
-      editor.setJsonDiagnostics({
-        allowComments: true,
-        validate: true,
-        enableSchemaRequest: true,
-        schemaValidation: 'error',
-        schemas: [
-          {
-            // So we do not have to specify $schema property in the handler contents
-            uri: uriString,
-            fileMatch: [uriString],
-            schema: selectedHandler.schema,
-          },
-        ],
+      // Upsert schema for this specific handler without overwriting other schemas
+      editor.upsertJsonSchema({
+        uri: uriString,
+        fileMatch: [uriString],
+        schema:
+          selectedHandler.schema === null ? undefined : selectedHandler.schema,
       })
     }
-  }, [selectedHandler, uri])
+
+    return () => {
+      if (editor && uri) {
+        editor.removeJsonSchema(uri.toString())
+      }
+    }
+  }, [selectedHandler, uri, editor])
 
   return (
     <EditorView

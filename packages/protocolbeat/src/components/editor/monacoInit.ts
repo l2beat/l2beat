@@ -55,6 +55,38 @@ export class MonacoCodeEditor<T extends EditorType> {
   getJsonDiagnostics() {
     return monaco.languages.json.jsonDefaults.diagnosticsOptions
   }
+
+  upsertJsonSchema(schemaConfig: {
+    uri: string
+    fileMatch?: string[]
+    schema?: unknown
+  }) {
+    const currentDiagnostics = this.getJsonDiagnostics()
+    const currentSchemas = currentDiagnostics.schemas ?? []
+
+    const filteredSchemas = currentSchemas.filter(
+      (s) => s.uri !== schemaConfig.uri,
+    )
+
+    const updatedSchemas = [...filteredSchemas, schemaConfig]
+
+    this.setJsonDiagnostics({
+      ...currentDiagnostics,
+      schemas: updatedSchemas,
+    })
+  }
+
+  removeJsonSchema(uri: string) {
+    const currentDiagnostics = this.getJsonDiagnostics()
+    const currentSchemas = currentDiagnostics.schemas ?? []
+
+    const filteredSchemas = currentSchemas.filter((s) => s.uri !== uri)
+
+    this.setJsonDiagnostics({
+      ...currentDiagnostics,
+      schemas: filteredSchemas,
+    })
+  }
 }
 
 function init() {
