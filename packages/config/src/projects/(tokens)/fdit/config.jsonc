@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "fdit",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x48aB4e39AC59F4E88974804B04A991b3a402717f"],
+  "overrides": {
+    "eth:0x48aB4e39AC59F4E88974804B04A991b3a402717f": {
+      "proxyType": "FDIT proxy",
+      "fields": { "$tokenData": { "handler": { "type": "ERC20Data" } } }
+    }
+  }
+}
