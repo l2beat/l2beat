@@ -1,5 +1,5 @@
-import type { HttpClient } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
+import type { HttpClient } from '../http/HttpClient'
 import { DuneClient } from './DuneClient'
 
 describe(DuneClient.name, () => {
