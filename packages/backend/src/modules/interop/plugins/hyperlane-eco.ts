@@ -32,8 +32,16 @@ const parseBatchSent = createEventParser(
   'event BatchSent(bytes32[] indexed _hashes, uint256 indexed _sourceChainID)',
 )
 
-const parseIntentProven = createEventParser(
+const parseIntentProvenSource = createEventParser(
+  'event IntentProven(bytes32 indexed intentHash, bytes32 indexed claimant)',
+)
+
+const parseIntentProvenDestinationLegacy = createEventParser(
   'event IntentProven(bytes32 indexed _hash, address indexed _claimant)',
+)
+
+const parseIntentProvenDestination = createEventParser(
+  'event IntentProven(bytes32 indexed intentHash, address indexed _claimant, uint64 destination)',
 )
 
 const BatchSentDispatch = createInteropEventType<{
@@ -76,7 +84,8 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
-    if (batchSent) {
+    const intentProvenSource = parseIntentProvenSource(input.log, null)
+    if (batchSent || intentProvenSource) {
       const dispatch = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
@@ -103,7 +112,9 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
       ]
     }
 
-    const intentProven = parseIntentProven(input.log, null)
+    const intentProven =
+      parseIntentProvenDestinationLegacy(input.log, null) ??
+      parseIntentProvenDestination(input.log, null)
     if (intentProven) {
       const processMatch = findParsedAround(
         input.txLogs,
@@ -111,12 +122,10 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         input.log.logIndex!,
         (log) => parseProcess(log, null),
       )
-      console.log('processMatch', processMatch)
       if (!processMatch) return
 
       const processIdLog = input.txLogs[processMatch.index + 1]
       const processId = processIdLog && parseProcessId(processIdLog, null)
-      console.log('processId', processId)
       if (!processId) return
 
       const $srcChain = findChain(
