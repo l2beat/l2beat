@@ -157,8 +157,6 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  handler?: { type: string } & Record<string, unknown>
-  description?: string
 }
 
 export type FieldValue =
