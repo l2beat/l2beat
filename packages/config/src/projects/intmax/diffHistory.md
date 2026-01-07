@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xc8eaab8ca41d4a8d5ae89e50b5c0e6192aac7354
+
+# Diff at Wed, 07 Jan 2026 11:05:12 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@06616d58f9233a17d6fc6d6798b38e1aba76513e block: 1767717509
+- current timestamp: 1767783841
+
+## Description
+
+PredicateServiceManager aggregator 7702-delegated to unverified smart contract.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values.$implementation:
+-        "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
++        "eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"
+      values.delegationManager:
+-        "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3"
+      values.DOMAIN_VERSION:
+-        "1"
+      values.eip712Domain:
+-        {"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
+-        "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getDeposit:
+-        0
+      values.getDomainHash:
+-        "0x7cf15dd1293c71ee6a4c120c19c7a2943ac93931c9c12066915c2efedf0f9e1c"
+      values.getNonce:
+-        0
+      values.NAME:
+-        "EIP7702StatelessDeleGator"
+      values.PACKED_USER_OP_TYPEHASH:
+-        "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18"
+      values.VERSION:
+-        "1.3.0"
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x62b02cf18c12df0a3ac7a2044ca2ae08c9f4ccd2
 
 # Diff at Tue, 06 Jan 2026 16:39:34 GMT:
