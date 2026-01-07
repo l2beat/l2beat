@@ -55,7 +55,7 @@ function SelectContent({
     <RadixSelect.Portal>
       <RadixSelect.Content
         className={cn(
-          'z-[1000] max-h-[400px] border border-coffee-400 bg-coffee-600',
+          'z-[1000] max-h-[50vh] border border-coffee-400 bg-coffee-600',
           className,
         )}
         position="popper"

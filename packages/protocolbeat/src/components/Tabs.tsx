@@ -13,7 +13,7 @@ function TabsTrigger({
   return (
     <RadixTabs.Trigger
       className={cn(
-        'rounded-t-md border-coffee-400 border-x border-t border-b-none px-2 py-1 text-xs',
+        'flex-shrink-0 rounded-t-md border-coffee-400 border-x border-t border-b-none px-2 py-1 text-xs',
         'data-[state=active]:border-coffee-400 data-[state=active]:bg-coffee-400',
         'data-[state=inactive]:border-coffee-400/50 data-[state="inactive"]:bg-coffee-400/10',
         className,

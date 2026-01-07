@@ -48,7 +48,7 @@ export function HandlerSelector(props: HandlerSelectorProps) {
               Examples
             </Tabs.Trigger>
             <Tabs.Trigger value="preview" className="mb-1 border-b-none">
-              Field preview
+              Preview
             </Tabs.Trigger>
           </Tabs.List>
         </div>
@@ -69,9 +69,10 @@ export function HandlerSelector(props: HandlerSelectorProps) {
               <Markdown>{complexMarkdownExample}</Markdown>
             </div>
           </Tabs.Content>
+
           <Tabs.Content value="preview" className="h-full py-0">
             <div className="h-full overflow-y-auto bg-coffee-800 p-1">
-              <Markdown>{complexMarkdownExample}</Markdown>
+              <Markdown>To be implemented</Markdown>
             </div>
           </Tabs.Content>
         </div>
