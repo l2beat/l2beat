@@ -33,7 +33,7 @@ const settings: monaco.editor.IStandaloneEditorConstructionOptions = {
 
 export class MonacoCodeEditor<T extends EditorType> {
   protected editor: ToMonaco<T>
-  constructor(element: HTMLElement, editorType: 'code' | 'diff') {
+  constructor(element: HTMLElement, editorType: T) {
     if (!initialized) {
       init()
       initialized = true
