@@ -345,6 +345,29 @@ export class InteropEventSyncer extends TimeLoop {
     )
   }
 
+  private async bootstrapSyncedRange(
+    incomingBlock: Block,
+  ): Promise<BlockRangeWithTimestamps> {
+    const oldestEvent =
+      await this.db.interopEvent.getOldestEventForPluginAndChan(
+        this.plugin.name,
+        this.chain,
+      )
+    return oldestEvent
+      ? {
+          fromBlock: BigInt(oldestEvent.blockNumber),
+          fromTimestamp: oldestEvent.timestamp,
+          toBlock: BigInt(incomingBlock.number),
+          toTimestamp: UnixTime(incomingBlock.timestamp),
+        }
+      : {
+          fromBlock: BigInt(incomingBlock.number),
+          fromTimestamp: UnixTime(incomingBlock.timestamp),
+          toBlock: BigInt(incomingBlock.number),
+          toTimestamp: UnixTime(incomingBlock.timestamp),
+        }
+  }
+
   async processNewestBlock(block: Block, logs: Log[]) {
     if (await this.isResyncRequested()) {
       await this.wipeAndResync()
@@ -361,24 +384,30 @@ export class InteropEventSyncer extends TimeLoop {
     const blockNumber = BigInt(block.number)
     this.latestBlockNumber = blockNumber
 
-    const lastSynced =
+    const lastSyncedRecord =
       await this.db.interopPluginSyncedRange.findByPluginNameAndChain(
         this.plugin.name,
         this.chain,
       )
-    if (!lastSynced) {
-      this.syncMode = 'catchUp'
-      return
-    }
 
-    const syncedToBlock = lastSynced?.toBlock
-    if (syncedToBlock === undefined || syncedToBlock < blockNumber - 1n) {
-      this.syncMode = 'catchUp' // block too far ahead, let's catch up first
-      return
-    }
+    let updatedSyncedRange: BlockRangeWithTimestamps
+    if (lastSyncedRecord) {
+      if (lastSyncedRecord.toBlock < blockNumber - 1n) {
+        this.syncMode = 'catchUp' // block too far ahead, let's catch up first
+        return
+      }
 
-    if (syncedToBlock >= blockNumber) {
-      return // skip, we're already synced further than this block
+      if (lastSyncedRecord.toBlock >= blockNumber) {
+        return // skip, we're already synced further than this block
+      }
+      updatedSyncedRange = {
+        fromBlock: lastSyncedRecord.fromBlock,
+        fromTimestamp: lastSyncedRecord.fromTimestamp,
+        toBlock: blockNumber,
+        toTimestamp: block.timestamp,
+      }
+    } else {
+      updatedSyncedRange = await this.bootstrapSyncedRange(block)
     }
 
     this.syncMode = 'follow'
@@ -394,12 +423,10 @@ export class InteropEventSyncer extends TimeLoop {
       }
     }
 
-    await this.saveProducedInteropEvents(interopEvents.flat(), {
-      fromBlock: lastSynced.fromBlock,
-      fromTimestamp: lastSynced.fromTimestamp,
-      toBlock: blockNumber,
-      toTimestamp: block.timestamp,
-    })
+    await this.saveProducedInteropEvents(
+      interopEvents.flat(),
+      updatedSyncedRange,
+    )
   }
 
   private async saveProducedInteropEvents(

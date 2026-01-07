@@ -86,6 +86,53 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropEventRepository.prototype.getOldestEventForPluginAndChan.name,
+    () => {
+      it('returns the oldest event by timestamp for a plugin and chain', async () => {
+        await repository.insertMany([
+          event('plugin1', 'event1', 'deposit', UnixTime(200), UnixTime(300), {
+            chain: 'chainA',
+          }),
+          event('plugin1', 'event2', 'deposit', UnixTime(100), UnixTime(200), {
+            chain: 'chainA',
+          }),
+          event('plugin1', 'event3', 'deposit', UnixTime(50), UnixTime(150), {
+            chain: 'chainB',
+          }),
+          event('plugin2', 'event4', 'withdraw', UnixTime(25), UnixTime(125), {
+            chain: 'chainA',
+          }),
+        ])
+
+        const result = await repository.getOldestEventForPluginAndChan(
+          'plugin1',
+          'chainA',
+        )
+
+        expect(result?.eventId).toEqual('event2')
+      })
+
+      it('returns undefined when there are no events for plugin and chain', async () => {
+        await repository.insertMany([
+          event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+            chain: 'chainB',
+          }),
+          event('plugin2', 'event2', 'deposit', UnixTime(50), UnixTime(150), {
+            chain: 'chainA',
+          }),
+        ])
+
+        const result = await repository.getOldestEventForPluginAndChan(
+          'plugin1',
+          'chainA',
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(InteropEventRepository.prototype.getByType.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

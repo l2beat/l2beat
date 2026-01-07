@@ -342,6 +342,7 @@ model InteropEvent {
   direction   String?
 
   @@id([eventId])
+  @@index([timestamp, plugin, chain])
   @@index([type, matched, unsupported, timestamp])
 }
 
