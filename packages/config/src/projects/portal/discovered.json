@@ -1,7 +1,7 @@
 {
   "name": "portal",
-  "timestamp": 1751871251,
-  "configHash": "0xa958c7d5865838da4df58558369f234ed979a6ef3cd091928c8b97d1bf8a37bc",
+  "timestamp": 1767794942,
+  "configHash": "0x3baa8d6eb12074cdd47e5593cb126ff482c9516856de92a028d1a2e3856996d9",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -303,6 +303,7 @@
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["getSupportedKeys"],
       "sinceTimestamp": 1686937559,
       "sinceBlock": 17493968,
       "values": {
@@ -329,7 +330,7 @@
         "chainId": 2,
         "coreRelayer": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
         "getRewardAddress": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46",
-        "getSupportedKeys": 6,
+        "getSupportedKeys": 3,
         "owner": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "pricingWallet": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -919,6 +920,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 22865659 },
+  "usedBlockNumbers": { "ethereum": 24183302 },
   "permissionsConfigHash": "0x110d3d19d4d9b3a1243e4fb8b9007a902d41e73fce8c1013b157d79ceb9839e8"
 }
