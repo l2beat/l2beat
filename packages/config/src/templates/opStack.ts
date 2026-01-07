@@ -1031,7 +1031,8 @@ The Kailua state validation system is primarily optimistically resolved, so no v
       }
     }
     case 'OpSuccinct': {
-      const hasGateway = templateVars.discovery.hasContract('SP1VerifierGateway')
+      const hasGateway =
+        templateVars.discovery.hasContract('SP1VerifierGateway')
       return {
         categories: [
           {
