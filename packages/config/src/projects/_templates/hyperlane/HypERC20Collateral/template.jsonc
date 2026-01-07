@@ -1,6 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["wrappedToken"],
+  "ignoreRelatives": [
+    "wrappedToken",
+    "asset",
+    "feeRecipient",
+    "previewRedeem",
+    "previewWithdraw",
+    "token"
+  ],
   "fields": {
     "owner": {
       "permissions": [
@@ -10,5 +17,12 @@
         }
       ]
     }
-  }
+  },
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint"
+  ],
+  "ignoreInWatchMode": ["totalAssets", "totalSupply"]
 }
