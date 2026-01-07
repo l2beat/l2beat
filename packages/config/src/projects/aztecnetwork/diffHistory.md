@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x81ec4de1642da7c445f9d9fe819d793bdb31b9a7
+
+# Diff at Wed, 07 Jan 2026 14:30:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1764601178
+- current timestamp: 1767796183
+
+## Description
+
+First gov proposal passed signalling phase:
+
+[Increase Ignition Queue Throughput](https://forum.aztec.network/t/increase-ignition-queue-throughput/8211)
+- does what it says, goal is to flush the entire queue until TGE and especially before the first upgrade of the rollup contract.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x59001b0afa38a0be7888f1b42054d97af51a5a39
 
 # Diff at Mon, 01 Dec 2025 15:07:20 GMT:
