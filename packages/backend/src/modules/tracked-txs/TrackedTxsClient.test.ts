@@ -9,7 +9,6 @@ import type {
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
-import type { DuneQueryService } from '../../peripherals/dune/DuneQueryService'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -25,6 +24,7 @@ import {
   gatewaySharedBridgeChainAddress,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
+import type { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import type { DuneFunctionCallResult, DuneTransferResult } from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'

@@ -9,10 +9,10 @@ import type {
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
-import type { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import { mockDatabase } from '../../test/database'
 import type { Clock } from '../../tools/Clock'
 import { AnomalyNotifier } from './AnomalyNotifier'
+import type { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 
 describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyDetected.name, () => {

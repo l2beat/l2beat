@@ -1,4 +1,4 @@
-import type { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '../http/HttpClient'
 import {
   DuneExecuteSqlResponse,
   DuneExecutionResultResponse,

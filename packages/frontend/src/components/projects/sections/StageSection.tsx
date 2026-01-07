@@ -96,7 +96,7 @@ export function StageSection({
         <Callout
           color="yellow"
           body={emergencyWarning}
-          icon={<EmergencyIcon className="size-5" />}
+          icon={<EmergencyIcon className="mt-px size-5" />}
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
@@ -124,7 +124,7 @@ export function StageSection({
         <Callout
           color="green"
           body="Users can exit in the presence of malicious operators even if the Security Council disappears."
-          icon={<WalkAwayPassedIcon className="mt-px size-5" />}
+          icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
@@ -132,7 +132,9 @@ export function StageSection({
         <Callout
           color="red"
           body="Users are not able to exit in the presence of malicious operators if the Security Council disappears."
-          icon={<WalkAwayNotPassedIcon className="mt-0.5 size-5" />}
+          icon={
+            <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
+          }
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
@@ -329,7 +331,9 @@ export function StageSection({
       <Callout
         color="blue"
         body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
-        icon={<InfoIcon className="size-4 md:size-5" variant="blue" />}
+        icon={
+          <InfoIcon className="size-4 max-md:mt-0.5 md:size-5" variant="blue" />
+        }
         className="mt-6 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
       />
     </ProjectSection>

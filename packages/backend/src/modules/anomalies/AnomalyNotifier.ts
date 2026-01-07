@@ -16,9 +16,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
-import type { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 import { formatDuration, formatSubtype } from './format'
 
 export type AnomalyNotificationType =
