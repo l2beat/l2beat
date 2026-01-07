@@ -3,6 +3,7 @@ import {
   Dispatch,
   HYPERLANE_NETWORKS,
   Process,
+  parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
@@ -76,23 +77,27 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
     if (batchSent) {
-      const dispatchId = findParsedAround(
+      const dispatch = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseDispatchId(log, null),
+        (log) => parseDispatch(log, null),
       )
+      if (!dispatch) return
+
+      const dispatchIdLog = input.txLogs[dispatch.index + 1]
+      const dispatchId = dispatchIdLog && parseDispatchId(dispatchIdLog, null)
       if (!dispatchId) return
 
       const $dstChain = findChain(
         HYPERLANE_NETWORKS,
         (x) => x.chainId,
-        Number(batchSent._sourceChainID), // intended
+        Number(dispatch.parsed.destination),
       )
 
       return [
         BatchSentDispatch.create(input, {
-          messageId: dispatchId.parsed.messageId,
+          messageId: dispatchId.messageId,
           $dstChain,
         }),
       ]
