@@ -11,6 +11,7 @@ import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
+import { detectFditProxy } from './auto/FDITProxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
 import { detectGnosisSafeZodiacModule } from './auto/GnosisSafeModule'
 import { detectPolygonProxy } from './auto/PolygonProxy'
@@ -49,6 +50,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
+  detectFditProxy,
   detectBeaconProxy,
   detectEip1167Proxy,
 ]
@@ -67,6 +69,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'Everclear proxy': getEverclearProxy,
   'TaikoFork proxy': gatTaikoForkProxy,
   'zkLighter proxy': getZkLighterProxy,
+  'FDIT proxy': detectFditProxy,
   immutable: getImmutableProxy,
 }
 

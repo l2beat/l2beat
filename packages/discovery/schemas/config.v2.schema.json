@@ -34,6 +34,7 @@
               "LightLink proxy",
               "Everclear proxy",
               "TaikoFork proxy",
+              "FDIT proxy",
               "immutable"
             ]
           },
@@ -669,6 +670,13 @@
                         "pickRoleMembers": { "type": "string" },
                         "pickChainAddress": { "type": "string" },
                         "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "securitizeRemoteBridge" }
                       },
                       "required": ["type"]
                     }

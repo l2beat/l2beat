@@ -53,6 +53,7 @@ export const ManualProxyType = v.enum([
   'LightLink proxy',
   'Everclear proxy',
   'TaikoFork proxy',
+  'FDIT proxy',
   'immutable',
 ])
 
