@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x20c62bc5efa4e7c0631b5e06298843392de8fbd5
+Generated with discovered.json: 0x0847c74148fab4d437346c79e85ce33cd16fe8f3
 
-# Diff at Wed, 07 Jan 2026 14:05:33 GMT:
+# Diff at Wed, 07 Jan 2026 15:18:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1765464299
@@ -113,10 +113,6 @@ default ism changed (hyperlane) and [HypERC20Collateral implementation upgraded]
 +        "eth:0xA4083FC009A39FC43A341a7D676C8Eb17D3fe3a1"
       values.name:
 +        ""
-      values.previewRedeem:
-+        [0,1,2,3,4]
-      values.previewWithdraw:
-+        [0,1,2,3,4]
       values.symbol:
 +        ""
       values.token:
@@ -125,8 +121,6 @@ default ism changed (hyperlane) and [HypERC20Collateral implementation upgraded]
 -        "HypERC20Collateral"
       implementationNames.eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454:
 +        "HypERC20Collateral"
-      errors:
-+        {"previewRedeem":"Processing error occurred.","previewWithdraw":"Processing error occurred."}
     }
 ```
 

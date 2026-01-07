@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "transporter",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "maxAddresses": 900,
   "maxDepth": 8,
   "initialAddresses": [
@@ -30,14 +28,10 @@
       "ignoreDiscovery": true
     },
     "eth:0x8B63b3DE93431C0f756A493644d128134291fA1b": {
-      "ignoreMethods": [
-        "getConfigDetails"
-      ]
+      "ignoreMethods": ["getConfigDetails"]
     },
     "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f": {
-      "ignoreMethods": [
-        "i_weth"
-      ]
+      "ignoreMethods": ["i_weth"]
     },
     "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
       "fields": {
@@ -79,9 +73,7 @@
       "ignoreDiscovery": true
     },
     "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": {
-      "ignoreRelatives": [
-        "owner"
-      ]
+      "ignoreRelatives": ["owner"]
     }
   },
   "types": {
