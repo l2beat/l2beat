@@ -1,0 +1,583 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-01-06T16:25:41.805Z",
+  "contracts": {
+    "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24": {
+      "address": "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24",
+      "name": "MetaMorphoV1_1Factory",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:24:58.273Z"
+    },
+    "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb": {
+      "address": "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb",
+      "name": "UniversalRewardsDistributor",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:01.133Z"
+    },
+    "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766": {
+      "address": "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766",
+      "name": "MorphoChainlinkOracleV2Factory",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:03.770Z"
+    },
+    "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077": {
+      "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
+      "name": "EthereumBundlerV2",
+      "externalCalls": [
+        {
+          "callerFunction": "approve2",
+          "storageVariable": "REF_441",
+          "interfaceType": "IAllowanceTransfer",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "erc20Transfer",
+          "storageVariable": "TMP_1349",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc20TransferFrom",
+          "storageVariable": "TMP_1358",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc20WrapperDepositFor",
+          "storageVariable": "TMP_1026",
+          "interfaceType": "ERC20Wrapper",
+          "calledFunction": "underlying"
+        },
+        {
+          "callerFunction": "erc20WrapperDepositFor",
+          "storageVariable": "underlying",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc20WrapperDepositFor",
+          "storageVariable": "TMP_1037",
+          "interfaceType": "ERC20Wrapper",
+          "calledFunction": "depositFor"
+        },
+        {
+          "callerFunction": "erc20WrapperDepositFor",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "erc20WrapperWithdrawTo",
+          "storageVariable": "TMP_1045",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc20WrapperWithdrawTo",
+          "storageVariable": "TMP_1051",
+          "interfaceType": "ERC20Wrapper",
+          "calledFunction": "withdrawTo"
+        },
+        {
+          "callerFunction": "erc4626Deposit",
+          "storageVariable": "TMP_1249",
+          "interfaceType": "IERC4626",
+          "calledFunction": "asset"
+        },
+        {
+          "callerFunction": "erc4626Deposit",
+          "storageVariable": "TMP_1251",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc4626Deposit",
+          "storageVariable": "TMP_1258",
+          "interfaceType": "IERC4626",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "erc4626Deposit",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "erc4626Mint",
+          "storageVariable": "TMP_1238",
+          "interfaceType": "IERC4626",
+          "calledFunction": "asset"
+        },
+        {
+          "callerFunction": "erc4626Mint",
+          "storageVariable": "TMP_1241",
+          "interfaceType": "IERC4626",
+          "calledFunction": "mint"
+        },
+        {
+          "callerFunction": "erc4626Mint",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "erc4626Redeem",
+          "storageVariable": "TMP_1290",
+          "interfaceType": "IERC4626",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "erc4626Redeem",
+          "storageVariable": "TMP_1295",
+          "interfaceType": "IERC4626",
+          "calledFunction": "redeem"
+        },
+        {
+          "callerFunction": "erc4626Withdraw",
+          "storageVariable": "TMP_1276",
+          "interfaceType": "IERC4626",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "morphoBorrow",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "borrow",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoFlashLoan",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "flashLoan",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoFlashLoan",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "morphoRepay",
+          "storageVariable": "TMP_1130",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "morphoRepay",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "repay",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoRepay",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "morphoSetAuthorizationWithSig",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "setAuthorizationWithSig",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoSupply",
+          "storageVariable": "TMP_1093",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "morphoSupply",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "supply",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoSupply",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "morphoSupplyCollateral",
+          "storageVariable": "TMP_1110",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "morphoSupplyCollateral",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "supplyCollateral",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoSupplyCollateral",
+          "storageVariable": "TMP_486",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance"
+        },
+        {
+          "callerFunction": "morphoWithdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "morphoWithdrawCollateral",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "withdrawCollateral",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "permit",
+          "storageVariable": "TMP_1324",
+          "interfaceType": "IERC20Permit",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "permitDai",
+          "storageVariable": "TMP_1317",
+          "interfaceType": "IDaiPermit",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_1155",
+          "interfaceType": "IPublicAllocator",
+          "calledFunction": "reallocateTo"
+        },
+        {
+          "callerFunction": "stakeEth",
+          "storageVariable": "TMP_1188",
+          "interfaceType": "IStEth",
+          "calledFunction": "submit"
+        },
+        {
+          "callerFunction": "transferFrom2",
+          "storageVariable": "TMP_1308",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "transferFrom2",
+          "storageVariable": "REF_446",
+          "interfaceType": "IAllowanceTransfer",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "unwrapNative",
+          "storageVariable": "TMP_1224",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "unwrapNative",
+          "storageVariable": "TMP_1230",
+          "interfaceType": "IWNative",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "unwrapStEth",
+          "storageVariable": "TMP_1204",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "unwrapStEth",
+          "storageVariable": "TMP_1210",
+          "interfaceType": "IWstEth",
+          "calledFunction": "unwrap"
+        },
+        {
+          "callerFunction": "urdClaim",
+          "storageVariable": "TMP_1173",
+          "interfaceType": "IUniversalRewardsDistributor",
+          "calledFunction": "claim"
+        },
+        {
+          "callerFunction": "wrapNative",
+          "storageVariable": "TMP_1221",
+          "interfaceType": "IWNative",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "wrapStEth",
+          "storageVariable": "TMP_1195",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "wrapStEth",
+          "storageVariable": "TMP_1201",
+          "interfaceType": "IWstEth",
+          "calledFunction": "wrap"
+        }
+      ],
+      "generatedAt": "2026-01-06T16:25:11.719Z"
+    },
+    "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": {
+      "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+      "name": "Morpho Token",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:13.445Z"
+    },
+    "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476": {
+      "address": "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476",
+      "name": "PreLiquidationFactory",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:17.194Z"
+    },
+    "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC": {
+      "address": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+      "name": "AdaptiveCurveIrm",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:18.899Z"
+    },
+    "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": {
+      "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+      "name": "MorphoToken",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:21.004Z"
+    },
+    "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D": {
+      "address": "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D",
+      "name": "UrdFactory",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:24.933Z"
+    },
+    "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123": {
+      "address": "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123",
+      "name": "Wrapper",
+      "externalCalls": [
+        {
+          "callerFunction": "depositFor",
+          "storageVariable": "TMP_12",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "depositFor",
+          "storageVariable": "TMP_15",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "withdrawTo",
+          "storageVariable": "TMP_25",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "withdrawTo",
+          "storageVariable": "TMP_28",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer"
+        }
+      ],
+      "generatedAt": "2026-01-06T16:25:26.363Z"
+    },
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho",
+      "externalCalls": [
+        {
+          "callerFunction": "accrueInterest",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "borrow",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "createMarket",
+          "storageVariable": "TMP_45",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "flashLoan",
+          "storageVariable": "TMP_218",
+          "interfaceType": "IMorphoFlashLoanCallback",
+          "calledFunction": "onMorphoFlashLoan"
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "TMP_175",
+          "interfaceType": "IOracle",
+          "calledFunction": "price"
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "TMP_208",
+          "interfaceType": "IMorphoLiquidateCallback",
+          "calledFunction": "onMorphoLiquidate"
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "repay",
+          "storageVariable": "TMP_131",
+          "interfaceType": "IMorphoRepayCallback",
+          "calledFunction": "onMorphoRepay"
+        },
+        {
+          "callerFunction": "repay",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "setFee",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "supply",
+          "storageVariable": "TMP_63",
+          "interfaceType": "IMorphoSupplyCallback",
+          "calledFunction": "onMorphoSupply"
+        },
+        {
+          "callerFunction": "supply",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "supplyCollateral",
+          "storageVariable": "TMP_147",
+          "interfaceType": "IMorphoSupplyCollateralCallback",
+          "calledFunction": "onMorphoSupplyCollateral"
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        },
+        {
+          "callerFunction": "withdrawCollateral",
+          "storageVariable": "TMP_253",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRate"
+        }
+      ],
+      "generatedAt": "2026-01-06T16:25:33.416Z"
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "name": "Wrapped Ether Token",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:34.735Z"
+    },
+    "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": {
+      "address": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "name": "GnosisSafe",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:36.144Z"
+    },
+    "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9": {
+      "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
+      "name": "GnosisSafe",
+      "externalCalls": [],
+      "generatedAt": "2026-01-06T16:25:37.330Z"
+    },
+    "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": {
+      "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+      "name": "PublicAllocator",
+      "externalCalls": [
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_221",
+          "interfaceType": "IMetaMorpho",
+          "calledFunction": "config"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_230",
+          "interfaceType": "IMetaMorpho",
+          "calledFunction": "config"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_258",
+          "interfaceType": "IMetaMorpho",
+          "calledFunction": "reallocate"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_262",
+          "interfaceType": "IMetaMorpho",
+          "calledFunction": "owner"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "reallocateTo",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads"
+        },
+        {
+          "callerFunction": "setFlowCaps",
+          "storageVariable": "TMP_197",
+          "interfaceType": "IMetaMorpho",
+          "calledFunction": "config"
+        }
+      ],
+      "generatedAt": "2026-01-06T16:25:41.804Z"
+    }
+  }
+}

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export function TerminalExtensions({ project }: Props) {
-  const { generatePermissionsReport, fetchFunds, command } = useTerminalStore()
+  const { generatePermissionsReport, fetchFunds, generateCallGraph, command } = useTerminalStore()
   const [showScanDialog, setShowScanDialog] = useState(false)
 
   return (
@@ -32,6 +32,13 @@ export function TerminalExtensions({ project }: Props) {
         className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
       >
         Fetch Funds
+      </button>
+      <button
+        onClick={() => generateCallGraph(project)}
+        disabled={command.inFlight}
+        className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+      >
+        Generate Call Graph
       </button>
 
       {showScanDialog && (

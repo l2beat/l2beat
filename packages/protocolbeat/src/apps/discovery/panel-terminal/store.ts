@@ -6,6 +6,7 @@ import {
   executeMatchFlat,
   executeGeneratePermissionsReport,
   executeFetchFunds,
+  executeGenerateCallGraph,
 } from '../../../api/api'
 
 interface CommandState {
@@ -31,6 +32,7 @@ interface TerminalState {
   findMinters: (address: string) => void
   generatePermissionsReport: (project: string) => void
   fetchFunds: (project: string) => void
+  generateCallGraph: (project: string) => void
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -74,6 +76,9 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   },
   fetchFunds: (project: string) => {
     executeStreaming(set, () => executeFetchFunds(project))
+  },
+  generateCallGraph: (project: string) => {
+    executeStreaming(set, () => executeGenerateCallGraph(project))
   },
 }))
 

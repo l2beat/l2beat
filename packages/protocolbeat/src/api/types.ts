@@ -414,3 +414,31 @@ export interface FundsPositionToken {
   amount: number
   price: number
 }
+
+// Call graph types
+export interface ApiCallGraphResponse {
+  version: string
+  lastModified: string
+  contracts: Record<string, ContractCallGraph>
+}
+
+export interface ContractCallGraph {
+  address: string
+  name: string
+  externalCalls: ExternalCall[]
+  generatedAt: string
+  skipped?: boolean
+  skipReason?: string
+  error?: string
+}
+
+export interface ExternalCall {
+  callerFunction: string      // "_sendBoldtoDepositor"
+  callerIsView?: boolean      // true if caller function is view/pure (infers external calls are also view)
+  storageVariable: string     // "boldToken"
+  interfaceType: string       // "IBoldToken"
+  calledFunction: string      // "returnFromPool"
+  resolvedAddress?: string    // "eth:0x6440f..." from discovered.json
+  resolvedContractName?: string
+  isViewCall?: boolean        // true if view/pure, false if state-changing, undefined if unknown
+}

@@ -32,6 +32,10 @@ import {
   fetchAllFundsForProject,
   fetchFundsForSingleContract,
 } from './defidisco/fundsData'
+import {
+  getCallGraphData,
+  generateCallGraph,
+} from './defidisco/callGraph'
 import { generatePermissionsReport } from './defidisco/generatePermissionsReport'
 import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import { detectPermissionsWithAI, combineSourceFiles } from './defidisco/aiPermissionDetection'
@@ -529,6 +533,24 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.end()
   })
 
+  // Call graph endpoints
+  app.get('/api/projects/:project/call-graph', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = getCallGraphData(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error loading call graph data:', error)
+      res.status(500).json({ error: 'Failed to load call graph data' })
+    }
+  })
+
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
@@ -640,6 +662,38 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'
         res.write(`data: Error generating permissions report: ${errorMessage}\\n\n\n`)
+      }
+
+      res.end()
+    })
+
+    app.get('/api/terminal/generate-call-graph', async (req, res) => {
+      const queryValidation = projectParamsSchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { project } = queryValidation.data
+
+      // Set up Server-Sent Events headers
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Cache-Control'
+      })
+
+      const sendProgress = (message: string) => {
+        res.write(`data: ${message.replace(/\n/g, '\\n')}\n\n`)
+      }
+
+      try {
+        await generateCallGraph(paths, configReader, project, sendProgress)
+        sendProgress('DONE')
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        sendProgress(`Error: ${errorMessage}`)
       }
 
       res.end()

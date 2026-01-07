@@ -11,6 +11,7 @@ export const PANEL_IDS = [
   'template',
   'config',
   'defiscan',
+  'callgraph',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]

@@ -238,6 +238,48 @@ PORT=3001
 - Frontend: `packages/protocolbeat/src/apps/discovery/defidisco/FundsSection.tsx`
 - Control: `packages/protocolbeat/src/apps/discovery/defidisco/FundsTagsButton.tsx`
 
+### Call Graph Analysis ✅
+**External Call Detection**: Uses Slither to analyze which external contracts each function calls
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts`
+- **Storage**: `call-graph-data.json` per project
+- **Tool**: Slither's `--print slithir` command (requires `~/.slither-venv/`)
+
+**How It Works**:
+1. Runs Slither on each non-external contract to get SlithIR output
+2. Parses output into structured representation (contracts → functions → calls)
+3. Starts from ABI functions only (public/external) to avoid library contamination
+4. Follows `INTERNAL_CALL` and `LIBRARY_CALL` chains transitively
+5. Collects `HIGH_LEVEL_CALL`s reachable from each public function
+6. Resolves storage variables to addresses using `discovered.json`
+7. Classifies calls as view/write using target ABI or caller inference
+
+**Key Implementation Details**:
+- **ABI-driven parsing**: Only captures calls from the target contract's public interface
+- **Function overloading**: Merges calls from overloaded functions with same name
+- **View inference**: If caller is view/pure, external call must also be view
+- **Contract name matching**: Slithir uses `INFO:Printers:Contract X` or alternatives such as `Contract X` format for main contract
+- **Deduplication**: Removes duplicate calls per caller function
+
+**Data Structure** (`call-graph-data.json`):
+```json
+{
+  "contracts": {
+    "eth:0x...": {
+      "externalCalls": [{
+        "callerFunction": "deposit",
+        "storageVariable": "token",
+        "interfaceType": "IERC20",
+        "calledFunction": "transferFrom",
+        "resolvedAddress": "eth:0x...",
+        "resolvedContractName": "USDC",
+        "isViewCall": false,
+        "callerIsView": false
+      }]
+    }
+  }
+}
+```
+
 ---
 
 ## Development Guidelines

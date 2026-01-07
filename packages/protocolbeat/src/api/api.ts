@@ -16,6 +16,7 @@ import type {
   ApiTemplateFileResponse,
   ApiV2ScoreResponse,
   ApiFundsDataResponse,
+  ApiCallGraphResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -391,5 +392,21 @@ export function executeFetchFunds(project: string, contractAddress?: string, for
   })
 
   return eventSource
+}
+
+export async function getCallGraphData(project: string): Promise<ApiCallGraphResponse> {
+  const res = await fetch(`/api/projects/${project}/call-graph`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiCallGraphResponse
+}
+
+export function executeGenerateCallGraph(project: string): EventSource {
+  const params = new URLSearchParams({
+    project,
+  })
+  return new EventSource(`/api/terminal/generate-call-graph?${params}`)
 }
 

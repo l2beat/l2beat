@@ -15,6 +15,7 @@ import { TemplatePanel } from './panel-template/TemplatePanel'
 import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { DeFiScanPanel } from './defidisco/DeFiScanPanel'
+import { CallGraphPanel } from './defidisco/CallGraphPanel'
 import { usePanelStore } from './store/panel-store'
 
 export function ProjectPage() {
@@ -52,6 +53,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   template: TemplatePanel,
   config: ConfigPanel,
   defiscan: DeFiScanPanel,
+  callgraph: CallGraphPanel,
 }
 
 const READONLY_PANELS: Record<
@@ -66,6 +68,7 @@ const READONLY_PANELS: Record<
   template: TemplatePanel,
   config: ConfigPanel,
   defiscan: DeFiScanPanel,
+  callgraph: CallGraphPanel,
 }
 
 function Panel(props: { kind: PanelId }) {
