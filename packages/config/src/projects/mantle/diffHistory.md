@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9f2b13bc8b90e365efde11f69335814506700cfe
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+SP1 verifier rotation: the verifier contract changed from the gateway pattern (SP1VerifierGateway routing to SP1Verifier) to a direct SP1Verifier contract. The new verifier has updated verification keys (aggregationVkey, rangeVkeyCommitment, rollupConfigHash). SP1 version remains v5.0.0.
 
 ## Watched changes
 
