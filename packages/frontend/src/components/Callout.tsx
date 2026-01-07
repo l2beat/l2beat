@@ -39,7 +39,7 @@ export function Callout({
 }: CalloutProps) {
   return (
     <div className={cn(calloutVariants({ color, small }), className)}>
-      <span className="flex h-[1lh] items-center">{icon}</span>
+      <span className="flex items-center">{icon}</span>
       <div className="flex flex-col gap-2">
         {message}
         <div>{body}</div>
