@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa92dd7e64fcb119f6131ff31ddf1da55586d9397
+
+# Diff at Wed, 07 Jan 2026 16:08:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b319218f320edec871f10dbd490519684995e58e block: 1766048397
+- current timestamp: 1767802030
+
+## Description
+
+L1Splitter recipient changed to a Drippie contract as part of the UNIfication proposal, routing sequencer fees to the UNI burn mechanism instead of treasury.
+
+## Watched changes
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
+      values.l1Recipient:
+-        "unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"
++        "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
+    }
+```
+
 Generated with discovered.json: 0x9d872a25e5a734abc3fdca8c047dfbfcb27bc75a
 
 # Diff at Thu, 18 Dec 2025 09:01:59 GMT:

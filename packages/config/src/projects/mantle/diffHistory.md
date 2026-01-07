@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x9f2b13bc8b90e365efde11f69335814506700cfe
+
+# Diff at Wed, 07 Jan 2026 11:10:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@98b29f6430b562580d721906ef9f802bee4ea145 block: 1760971761
+- current timestamp: 1767784170
+
+## Description
+
+SP1 verifier rotation: the verifier contract changed from the gateway pattern (SP1VerifierGateway routing to SP1Verifier) to a direct SP1Verifier contract. The new verifier has updated verification keys (aggregationVkey, rangeVkeyCommitment, rollupConfigHash). SP1 version remains v5.0.0.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7"
++        "0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1"
+      values.rangeVkeyCommitment:
+-        "0x2d0dcc4f4a5e59b80239c28a3fb68ab63b8eaf6f132239e95f927da9046f4256"
++        "0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8"
+      values.rollupConfigHash:
+-        "0x46fed49cbaf7272fb44cbd470ac7ee460d5e3b22eed239059bbbf4b356351792"
++        "0x7e7ac4e2e568c2b6cc18427820fa07f8d1e1bd2c360058db04b1bf4b7e775bcd"
+      values.verifier:
+-        "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B"
++        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1760971761 => .flat}/SP1Verifier.sol    | 1792 ++++++++++++++------
+ .../SP1VerifierGateway.sol => /dev/null            |  231 ---
+ .../GnosisSafe.sol => /dev/null                    |  953 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ 4 files changed, 1293 insertions(+), 1718 deletions(-)
+```
+
 Generated with discovered.json: 0xdd434033774a7264fc3a0bf2d0b0c3deb98dd9cb
 
 # Diff at Thu, 02 Oct 2025 12:00:27 GMT:

@@ -1031,6 +1031,8 @@ The Kailua state validation system is primarily optimistically resolved, so no v
       }
     }
     case 'OpSuccinct': {
+      const hasGateway =
+        templateVars.discovery.hasContract('SP1VerifierGateway')
       return {
         categories: [
           {
@@ -1043,28 +1045,43 @@ The Kailua state validation system is primarily optimistically resolved, so no v
                 title: 'Op-Succinct architecture',
               },
             ],
-            risks: [
-              {
-                category: 'Funds can be stolen if',
-                text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
-              },
-              {
-                category: 'Funds can be stolen if',
-                text: 'optimistic mode is enabled and no challenger checks the published state.',
-              },
-              {
-                category: 'Funds can be stolen if',
-                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
-              },
-              {
-                category: 'Funds can be frozen if',
-                text: 'the permissioned proposer fails to publish state roots to the L1.',
-              },
-              {
-                category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
-              },
-            ],
+            risks: hasGateway
+              ? [
+                  {
+                    category: 'Funds can be stolen if',
+                    text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
+                  },
+                  {
+                    category: 'Funds can be stolen if',
+                    text: 'optimistic mode is enabled and no challenger checks the published state.',
+                  },
+                  {
+                    category: 'Funds can be stolen if',
+                    text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
+                  },
+                  {
+                    category: 'Funds can be frozen if',
+                    text: 'the permissioned proposer fails to publish state roots to the L1.',
+                  },
+                  {
+                    category: 'Funds can be frozen if',
+                    text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
+                  },
+                ]
+              : [
+                  {
+                    category: 'Funds can be stolen if',
+                    text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
+                  },
+                  {
+                    category: 'Funds can be stolen if',
+                    text: 'optimistic mode is enabled and no challenger checks the published state.',
+                  },
+                  {
+                    category: 'Funds can be frozen if',
+                    text: 'the permissioned proposer fails to publish state roots to the L1.',
+                  },
+                ],
           },
         ],
       }
