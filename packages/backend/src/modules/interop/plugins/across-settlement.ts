@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
   hashCrossDomainMessageV1,
   OPSTACK_NETWORKS,
@@ -113,13 +113,29 @@ export class AcrossSettlementPlugin implements InteropPlugin {
       })
       if (!sentMessage) return
 
-      return [
+      const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'across-settlement',
           srcEvent: sentMessage,
           dstEvent: event,
         }),
       ]
+
+      // If ETH was sent via CrossDomainMessenger, also create a Transfer
+      if (sentMessage.args.value > 0n) {
+        results.push(
+          Result.Transfer('across-settlement.L1ToL2Transfer', {
+            srcEvent: sentMessage,
+            srcAmount: sentMessage.args.value,
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: sentMessage.args.value,
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        )
+      }
+
+      return results
     }
   }
 }
