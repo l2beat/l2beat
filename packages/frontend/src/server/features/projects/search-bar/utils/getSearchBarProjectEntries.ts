@@ -1,7 +1,7 @@
 import type { Project, ProjectContracts } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
-import type { SearchBarProject } from '../types'
+import type { SearchBarProjectEntry } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
 
 function getContractAddresses(
@@ -27,8 +27,8 @@ export function getSearchBarProjectEntries<
     | 'zkCatalogInfo'
     | 'contracts'
   >,
->(project: T, allProjects: T[]) {
-  const results: SearchBarProject[] = []
+>(project: T, allProjects: T[]): SearchBarProjectEntry[] {
+  const results: SearchBarProjectEntry[] = []
   if (
     !project.isScaling &&
     !project.isBridge &&
@@ -49,7 +49,7 @@ export function getSearchBarProjectEntries<
     isUpcoming: false,
     contractAddresses: getContractAddresses(project.contracts),
     tags: [project.slug],
-  } satisfies Partial<SearchBarProject>
+  } satisfies Partial<SearchBarProjectEntry>
 
   if (project.isScaling) {
     results.push({

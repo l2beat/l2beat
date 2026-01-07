@@ -1,7 +1,8 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
 import type { SearchBarEntry } from '~/components/search-bar/types'
+import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
 
-export type SearchBarProject = SearchBarEntry & {
+export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
   id: string
   isUpcoming: boolean
@@ -11,3 +12,9 @@ export type SearchBarProject = SearchBarEntry & {
   filePrepared?: Fuzzysort.Prepared
   contractAddresses?: string[]
 }
+
+/** Return type sent to frontend - excludes not needed properties to reduce payload size */
+export type SearchBarProject = Pick<
+  SearchBarProjectEntry,
+  (typeof SEARCH_BAR_PROJECT_KEYS)[number]
+>

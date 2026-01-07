@@ -1,6 +1,7 @@
 import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
 import { ps } from '~/server/projects'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
+import { toSearchBarProject } from './utils/toSearchBarProject'
 
 export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
   const projects = await ps.getProjects({
@@ -22,5 +23,5 @@ export async function getRecentlyAddedProjects(): Promise<SearchBarProject[]> {
     .sort((a, b) => b.addedAt - a.addedAt)
     .flatMap((p) => getSearchBarProjectEntries(p, projects))
     .slice(0, 15)
-    .map(({ contractAddresses: _, ...rest }) => rest) // strip contractAddresses from result as it is not needed in initial render
+    .map(toSearchBarProject)
 }
