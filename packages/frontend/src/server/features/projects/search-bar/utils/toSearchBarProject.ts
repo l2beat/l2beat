@@ -11,7 +11,7 @@ export const SEARCH_BAR_PROJECT_KEYS = [
   'kind',
   'isUpcoming',
   'scalingCategory',
-] as const
+] as const satisfies (keyof SearchBarProjectEntry)[]
 
 export function toSearchBarProject(
   entry: SearchBarProjectEntry,
