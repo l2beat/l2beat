@@ -87,7 +87,7 @@ export const myria: ScalingProject = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
-        'https://discord.gg/myria',
+        'https://discord.com/invite/yCU3aXTxM6',
         'https://t.me/myriaofficialgroup',
         'https://instagram.com/myriagames',
       ],

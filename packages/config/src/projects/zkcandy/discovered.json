@@ -1,7 +1,7 @@
 {
   "name": "zkcandy",
   "timestamp": 1765463883,
-  "configHash": "0x70902c55eb19067baef9ad6b8d5875388358d22a7e52a4ad5cc384be603bc8ef",
+  "configHash": "0x0fb99e4de7dba5be44dad22a4fe32f6e2a77557010847bf0a9f91083cac9d51b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -364,7 +364,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkCandyZkEvm",
+      "name": "Diamond",
       "address": "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1102,5 +1102,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23990081 },
-  "permissionsConfigHash": "0x0f102340ab078cde0f47822292bd930b3be9b5a8a843560404b0f2bf71b7d6dd"
+  "permissionsConfigHash": "0x8929958a2dd01826f664ec857148decdf131f99b9b65743fc033550d4e26a50f"
 }

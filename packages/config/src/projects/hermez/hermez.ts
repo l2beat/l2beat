@@ -46,7 +46,7 @@ export const hermez: ScalingProject = {
       socialMedia: [
         'https://blog.hermez.io/',
         'https://t.me/PolygonHermez',
-        'https://discord.gg/AczuUXDA2N',
+        'https://discord.com/invite/polygon',
         'https://twitter.com/0xPolygonZK',
       ],
     },

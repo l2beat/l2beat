@@ -20,6 +20,8 @@ import {
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  type EVMFeeHistory,
+  EVMFeeHistoryResponse,
   type EVMLog,
   EVMLogsResponse,
   EVMTransactionReceiptResponse,
@@ -41,6 +43,7 @@ type Param =
   | number
   | boolean
   | Record<string, string | string[] | string[][]>
+  | number[]
 
 export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
@@ -202,6 +205,31 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return logsResponse.data.result
+  }
+
+  async getFeeHistory(
+    blockCount: number,
+    newestBlock: number,
+    rewardPercentiles: number[],
+  ): Promise<EVMFeeHistory> {
+    const response = await this.query('eth_feeHistory', [
+      Quantity.encode(BigInt(blockCount)),
+      encodeBlockNumber(newestBlock),
+      rewardPercentiles,
+    ])
+
+    const feeHistory = EVMFeeHistoryResponse.safeParse(response)
+    if (!feeHistory.success) {
+      this.$.logger.warn('Invalid response', {
+        blockCount,
+        newestBlock,
+        rewardPercentiles,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing')
+    }
+
+    return feeHistory.data.result
   }
 
   async call(

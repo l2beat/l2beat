@@ -1,7 +1,7 @@
 {
   "name": "forknet",
   "timestamp": 1764933637,
-  "configHash": "0xd03be6ef393bfbc7b02ab42f9c0d14fdb4a1553b262c4d59c8e796053bf47fda",
+  "configHash": "0xd87b65f00e9561bf059a9fe2c8810e19413e85b31b9f3e0da089ee6fb80a4abb",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -681,6 +681,7 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "gameCount": 0,
         "gameImpls": [
@@ -701,6 +702,7 @@
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -947,7 +949,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "OptimismPortal2",
+      "name": "OptimismPortal2_neutered",
       "address": "eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695",
       "type": "Contract",
       "template": "opstack/OptimismPortal2_noForce",
@@ -2015,7 +2017,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x7ff210fc156b22239c3f3600c36a17973eaf33fba84ec8a38bdf4e6fa2cada17",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -2029,5 +2031,5 @@
     "polygon-cdk/PermissionedDisputeGameUnused": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3"
   },
   "usedBlockNumbers": { "ethereum": 23946416 },
-  "permissionsConfigHash": "0x29cc6483a9100c1afd6c76e8b02fa97123eb816bdca8b49aeab888ee3e413c73"
+  "permissionsConfigHash": "0x5dcbdd4df0caa4342fe538b9a5aab9cd0a6cd36e876993fc45c32491ae206b1e"
 }

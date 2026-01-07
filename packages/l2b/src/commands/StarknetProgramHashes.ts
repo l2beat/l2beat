@@ -19,6 +19,10 @@ export const StarknetProgramHashes = command({
   handler: async (args) => {
     const knownProgramHashes: Record<string, string> = {
       // from our discovery: names are just project names that are using this progHash
+      '918745833886511857768061986591752808672496300091957204265383861063635175685':
+        'StarkNet OS (unknown post v0.14.0)',
+      '1701025211190912681772481128523426351562426117847395998223683709327746845867':
+        'Starknet Aggregator (unknown post v0.14.0)',
       '793595346346724189681221050719974054861327641387231526786912662354259445535':
         'StarkNet OS (since v0.14.0)',
       '760308386675154762009993173725077399730170358078020153308029499928875469870':

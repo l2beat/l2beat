@@ -8,11 +8,11 @@ import type {
 } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { DuneQueryService } from '../../peripherals/dune/DuneQueryService'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
-  BigQueryFunctionCallResult,
-  BigQueryTransferResult,
+  DuneFunctionCallResult,
+  DuneTransferResult,
   type TrackedTxFunctionCallResult,
   type TrackedTxResult,
   type TrackedTxTransferResult,
@@ -25,7 +25,7 @@ export class TrackedTxsClient {
   private logger: Logger
 
   constructor(
-    private readonly bigquery: BigQueryClient,
+    private readonly duneQueryService: DuneQueryService,
     logger: Logger,
   ) {
     this.logger = logger.for(this)
@@ -85,7 +85,7 @@ export class TrackedTxsClient {
       ),
     ])
 
-    this.logger.info('Fetched from BigQuery', {
+    this.logger.info('Fetched from 3rd party API', {
       transfersCount: transfers.length,
       functionCallsCount: functionCalls.length,
       from,
@@ -110,9 +110,12 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.bigquery.query(query)
-    const parsedResult = v.array(BigQueryTransferResult).parse(queryResult)
-    return transformTransfersQueryResult(transfersConfig, parsedResult)
+    const queryResult = await this.duneQueryService.query(
+      query,
+      'large',
+      v.array(DuneTransferResult),
+    )
+    return transformTransfersQueryResult(transfersConfig, queryResult)
   }
 
   async getFunctionCalls(
@@ -146,10 +149,11 @@ export class TrackedTxsClient {
       to,
     )
 
-    const queryResult = await this.bigquery.query(query)
-    // function calls and sharp submissions need the same fields for the later transform logic
-    // this is why we parse all the results with the same parser
-    const parsedResult = v.array(BigQueryFunctionCallResult).parse(queryResult)
+    const queryResult = await this.duneQueryService.query(
+      query,
+      'large',
+      v.array(DuneFunctionCallResult),
+    )
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
@@ -157,7 +161,7 @@ export class TrackedTxsClient {
       functionCallsConfig,
       sharpSubmissionsConfig,
       sharedBridgesConfig,
-      parsedResult,
+      queryResult,
     )
   }
 }

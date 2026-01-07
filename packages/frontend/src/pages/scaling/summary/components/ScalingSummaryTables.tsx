@@ -12,12 +12,12 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import { ExcludeAssociatedTokensCheckbox } from '~/pages/scaling/components/ExcludeAssociatedTokensCheckbox'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { IncludeRwaRestrictedTokensCheckbox } from '../../components/IncludeRwaRestrictedTokensCheckbox'
 import type { TabbedScalingEntries } from '../../utils/groupByScalingTabs'
 import { ScalingSummaryNotReviewedTable } from './table/ScalingSummaryNotReviewedTable'
 import { ScalingSummaryOthersTable } from './table/ScalingSummaryOthersTable'
@@ -27,6 +27,7 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummary
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsDisplayControlsContext()
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -52,10 +53,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <div className="ml-4 flex flex-wrap gap-1 md:ml-0">
-          <IncludeRwaRestrictedTokensCheckbox />
-          <ExcludeAssociatedTokensCheckbox />
-        </div>
+        <DisplayControls display={display} setDisplay={setDisplay} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

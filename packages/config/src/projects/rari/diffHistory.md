@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x601b85851172db9d8adc864f70662a358d200dba
+
+# Diff at Mon, 05 Jan 2026 17:44:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764334605
+- current timestamp: 1764334605
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764334605 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xd6fcca64ccdf3a3ebf8af0cb80a10dd4e0c9f0f8
 
 # Diff at Fri, 28 Nov 2025 12:57:53 GMT:

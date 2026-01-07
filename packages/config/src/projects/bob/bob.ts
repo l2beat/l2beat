@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW } from '../../common'
+import { DERIVATION, ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -47,7 +47,9 @@ export const bob: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://boundless-xyz.github.io/kailua/operate.html', // also the standard op stack op-node and op-geth but that is mentioned in the link
+  stateDerivation: DERIVATION.OPSTACK('BOB'),
   milestones: [
     {
       title: 'Kona derivation bug',

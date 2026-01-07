@@ -18,5 +18,11 @@
     "hash": "0xfa2f6dacae61a1115ee373883922baaaea3e9b5e2bd4746522faff0e9d0019e0",
     "address": "gateway:0xD837976329d59057b27192f0cF6c8f357143670A",
     "blockNumber": 75862
+  },
+  "L1VerifierFflonk_Airbender": {
+    "hash": "0x33c6c9fee0ba33a37e9286003b0bb2c28eff93c73454bb26fe1a04a02ee8b52b",
+    "address": "eth:0x60aDfa0b7dEd57e0f1e251417769B6dbd1056208",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xeb5c013aec2a1190ee835ec3ef4bc75220ce9f3f
+
+# Diff at Tue, 16 Dec 2025 10:17:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f037e089ad6308d2008a0473963ba4d8780ebf9e block: 1759305296
+- current timestamp: 1765880174
+
+## Description
+
+Updated Starknet OS and Aggregator programs.
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "Starknet Aggregator (since v0.14.0)"
++        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
+      values.aggregatorProgramHash:
+-        "760308386675154762009993173725077399730170358078020153308029499928875469870"
++        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "793595346346724189681221050719974054861327641387231526786912662354259445535"
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+      values.programHashHistory.12:
++        "793595346346724189681221050719974054861327641387231526786912662354259445535"
+      values.programHashMapped:
+-        "StarkNet OS (since v0.14.0)"
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+    }
+```
+
 Generated with discovered.json: 0x3cf5cac2707937e431a15a31d28d734f5b43ad5e
 
 # Diff at Wed, 01 Oct 2025 08:10:29 GMT:

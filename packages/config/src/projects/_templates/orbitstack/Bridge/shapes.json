@@ -63,5 +63,11 @@
     "hash": "0xed8d9d55e8e0eb2bf48be3c3db0297f972f5f7b8062cacd31007ec5301db39c5",
     "address": "eth:0x4c62131fFb67348A95B4d2665A8298A1f93A1E65",
     "blockNumber": 22924735
+  },
+  "ERC20Bridge_customGasCAPX.sol": {
+    "hash": "0x99a0bf7e4c36015dcd932a0a10be16fca8b04d1f882eb51bdf729154110b65c0",
+    "address": "eth:0x888Ee1F493782E40dF65df6412f811F6bA2E705B",
+    "chain": "ethereum",
+    "blockNumber": 24046205
   }
 }

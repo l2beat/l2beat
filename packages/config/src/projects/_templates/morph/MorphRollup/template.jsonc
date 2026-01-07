@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.",
+  "ignoreMethods": [
+    "batchChallengedSuccess",
+    "batchDataStore",
+    "batchExist",
+    "batchInChallenge",
+    "batchInsideChallengeWindow",
+    "challenges",
+    "committedBatches",
+    "finalizedStateRoots",
+    "isBatchFinalized",
+    "committedStateRoots"
+  ],
+  "ignoreInWatchMode": [
+    "batchChallenged",
+    "lastCommittedBatchIndex",
+    "lastFinalizedBatchIndex"
+  ],
+  "fields": {
+    "challengers": {
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "UpdateChallenger", "where": ["=", "#status", true] },
+        "remove": {
+          "event": "UpdateChallenger",
+          "where": ["!=", "#status", true]
+        }
+      },
+      "permissions": [{ "type": "challenge" }]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address."
+        }
+      ]
+    }
+  }
+}

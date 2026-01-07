@@ -106,13 +106,15 @@ export function EIGENDA_DA_PROVIDER(
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
     const bridge =
-      isUsingDACertVerifier && eigenDACertVersion === 'v2'
+      isUsingDACertVerifier &&
+      (eigenDACertVersion === 'v2' || eigenDACertVersion === 'v3')
         ? {
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
-            description:
-              'EigenDA V2 certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.',
-            projectId: ProjectId('eigenda-v2'),
+            description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
+            projectId: ProjectId(
+              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
+            ),
           }
         : DA_BRIDGES.NONE
 
@@ -199,6 +201,7 @@ interface OpStackConfigCommon {
   portal?: EntryParameters
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
+  additionalStateValidationReferences?: { title: string; url: string }[]
   milestones?: Milestone[]
   ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
@@ -635,6 +638,13 @@ function getZkProgramHashes(
         ZK_PROGRAM_HASHES(setBuilderProgramHash),
       ]
     }
+    case 'KailuaSoon': {
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
+      return [ZK_PROGRAM_HASHES(kailuaProgramHash)]
+    }
     case 'OpSuccinct': {
       const opSuccinctProgramHashes = [
         templateVars.discovery.getContractValue<string>(
@@ -675,6 +685,7 @@ function getStateValidation(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
+  const additionalRefs = templateVars.additionalStateValidationReferences ?? []
   switch (fraudProofType) {
     case 'None': {
       const l2OutputOracle =
@@ -838,7 +849,7 @@ Proposals target sequential tournament epochs of currently ${proposalOutputCount
 The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
             references: [
               {
-                title: "'Sequencing' - Kailua Docs",
+                title: 'Sequencing - Kailua Docs',
                 url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
               },
               {
@@ -846,6 +857,15 @@ The **Vanguard** is a privileged actor who can always make the first child propo
                 url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
+            risks:
+              vanguardAdvantage > 604800 // 7d, arbitrary threshold
+                ? [
+                    {
+                      category: 'Funds can be frozen if',
+                      text: `the vanguard exploits their vanguard advantage (${formatSeconds(vanguardAdvantage)}), halting the chain until they propose.`,
+                    },
+                  ]
+                : [],
           },
           {
             title: 'Challenges',
@@ -862,8 +882,12 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://docs.boundless.network/developers/kailua/quick-start',
-                title: 'Disputes - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/operate.html',
+                title: 'How to run a challenger - Boundless Docs',
+              },
+              {
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
               },
             ],
           },
@@ -873,6 +897,108 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
+              {
+                url: 'https://boundless-xyz.github.io/kailua/introduction.html',
+                title: 'Kailua Proof System - Boundless Docs',
+              },
+              {
+                url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',
+                title: 'Verifier upgrade and deprecation - Kailua Docs',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'no challenger checks the published state.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route selector.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'a verifier needed for a given proof is paused by its permissioned owner.',
+              },
+            ],
+          },
+        ],
+      }
+    }
+    case 'KailuaSoon': {
+      const kailuaBond = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'participationBond',
+      )
+      const proposalOutputCount =
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'PROPOSAL_OUTPUT_COUNT',
+        )
+      const outputBlockSpan = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'OUTPUT_BLOCK_SPAN',
+      )
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'disputeGameFinalityDelaySeconds',
+        )
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+      return {
+        categories: [
+          {
+            title: 'State root proposals',
+            description: `Proposers submit state roots as children of any (possibly unresolved) previous state root proposal, by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
+              kailuaBond,
+            )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
+
+Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks.
+
+Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}.`,
+            references: [
+              {
+                title: "'Sequencing' - Kailua Docs",
+                url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
+              },
+            ],
+          },
+          {
+            title: 'Challenges',
+            description: `
+Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
+
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
+1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
+2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
+3. a conflicting sibling proposal is proven faulty
+
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
+
+A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
+            references: [
+              {
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
+              },
+            ],
+          },
+          {
+            title: 'Validity proofs',
+            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+
+The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            references: [
+              {
+                url: 'https://github.com/soonlabs/kailua-soon',
+                title: 'SOON Kailua - GitHub',
+              },
               {
                 url: 'https://risczero.com/blog/kailua-how-it-works',
                 title: 'Risc0 Kailua Docs',
@@ -889,7 +1015,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be stolen if',
-                text: 'no challenger checks the published state',
+                text: 'no challenger checks the published state.',
               },
               {
                 category: 'Funds can be stolen if',
@@ -971,6 +1097,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
                 url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
                 title: 'OP Succinct Lite architecture',
               },
+              ...additionalRefs,
             ],
             risks: [
               {
@@ -1144,7 +1271,8 @@ function getRiskViewStateValidation(
         ),
       }
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
@@ -1166,6 +1294,10 @@ function getRiskViewStateValidation(
     case 'OpSuccinctFDP': {
       return {
         ...RISK_VIEW.STATE_FP_1R_ZK,
+        sentiment: 'warning', // whitelist for challengers!
+        description:
+          RISK_VIEW.STATE_FP_1R_ZK.description +
+          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
         executionDelay: getExecutionDelay(templateVars),
         challengeDelay: getChallengePeriod(templateVars),
         initialBond: formatEther(
@@ -1206,13 +1338,21 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-    case 'Kailua':
-      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
-        templateVars.discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'vanguardAdvantage',
-        ),
+    case 'Kailua': {
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
       )
+      const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+      if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
+        return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      }
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        vanguardAdvantage,
+      )
+    }
+    case 'KailuaSoon':
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     case 'OpSuccinct':
     case 'OpSuccinctFDP':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
@@ -1233,6 +1373,7 @@ function computedStage(
     Permissioned: false,
     Permissionless: true,
     Kailua: true,
+    KailuaSoon: true,
     OpSuccinct: null,
     OpSuccinctFDP: null,
   }
@@ -1255,7 +1396,9 @@ function computedStage(
           fraudProofType === 'Permissionless' &&
           (templateVars.hasProperSecurityCouncil ?? false),
         usersCanExitWithoutCooperation:
-          fraudProofType === 'Permissionless' || fraudProofType === 'Kailua',
+          fraudProofType === 'Permissionless' ||
+          fraudProofType === 'Kailua' ||
+          fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
@@ -1382,6 +1525,7 @@ function getTechnologyOperator(
     case 'Permissioned':
     case 'Permissionless':
     case 'Kailua':
+    case 'KailuaSoon':
     case 'OpSuccinct':
     case 'OpSuccinctFDP':
       return OPERATOR.CENTRALIZED_OPERATOR
@@ -1480,7 +1624,8 @@ function getTechnologyExitMechanism(
       })
       break
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
           portal.name ?? portal.address,
@@ -1791,7 +1936,8 @@ function getTrackedTxs(
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1991,6 +2137,7 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
     case 'Permissioned':
     case 'Permissionless':
     case 'Kailua':
+    case 'KailuaSoon':
     case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
@@ -2032,7 +2179,8 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxClockDuration',
       )
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       return templateVars.discovery.getContractValue<number>(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
@@ -2062,6 +2210,7 @@ function getExecutionDelay(
     case 'Permissioned':
     case 'Permissionless':
     case 'Kailua':
+    case 'KailuaSoon':
     case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         portal.name ?? portal.address,
@@ -2078,6 +2227,7 @@ type FraudProofType =
   | 'Permissioned'
   | 'Permissionless'
   | 'Kailua'
+  | 'KailuaSoon'
   | 'OpSuccinct'
   | 'OpSuccinctFDP'
 
@@ -2105,6 +2255,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1337) {
     return 'Kailua'
+  }
+  if (respectedGameType === 2000) {
+    return 'KailuaSoon'
   }
   if (respectedGameType === 42) {
     return 'OpSuccinctFDP'

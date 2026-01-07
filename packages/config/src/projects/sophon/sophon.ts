@@ -20,7 +20,7 @@ const chainId = 50104
 const trackedTxsSince = UnixTime(1742940287)
 const v26UpgradeTS = UnixTime(1743095267)
 const v29UpgradeTS = UnixTime(1761612755)
-const diamond = discovery.getContract('SophonZkEvm')
+const diamond = discovery.getContract('Diamond')
 const bridge = discovery.getContract('L1NativeTokenVault')
 const isL2AssetRouterWhitelisted =
   discovery.getContractValue<ChainSpecificAddress[]>(
@@ -33,6 +33,7 @@ const assetBridgingWhitelistedText = isL2AssetRouterWhitelisted
   : ''
 
 export const sophon: ScalingProject = zkStackL2({
+  chainId,
   discovery,
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
@@ -76,7 +77,6 @@ export const sophon: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: diamond,
   daProvider: {
     layer: DA_LAYERS.AVAIL,
     riskView: RISK_VIEW.DATA_AVAIL(true),

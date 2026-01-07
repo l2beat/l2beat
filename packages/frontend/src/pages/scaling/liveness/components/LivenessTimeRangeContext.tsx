@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
+import { createContext, useContext, useState } from 'react'
 import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 
 type LivenessTimeRangeContextValue = {
@@ -15,10 +14,7 @@ interface Props {
 }
 
 export function LivenessTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage<LivenessTimeRange>(
-    'liveness-time-range',
-    '30d',
-  )
+  const [timeRange, setTimeRange] = useState<LivenessTimeRange>('30d')
   return (
     <LivenessTimeRangeContext.Provider
       value={{

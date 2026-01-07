@@ -1,7 +1,7 @@
 {
   "name": "ethereal",
-  "timestamp": 1765368374,
-  "configHash": "0x7c5dd716a2882b25314bac83271b22d979a340784cf9adf62ab8d16f123adfe8",
+  "timestamp": 1767629465,
+  "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -103,7 +103,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1758,
+        "batchCount": 2384,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -133,7 +133,7 @@
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 48,
+        "totalDelayedMessagesRead": 59,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -422,13 +422,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 145,
+        "firstUnresolvedNode": 198,
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23421301,
-        "latestConfirmed": 144,
-        "latestNodeCreated": 156,
+        "latestConfirmed": 197,
+        "latestNodeCreated": 208,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -502,6 +502,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -855,7 +856,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 48,
+        "delayedMessageCount": 59,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -868,8 +869,8 @@
         ],
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 1758,
-        "sequencerReportedSubMessageCount": 744986
+        "sequencerMessageCount": 2384,
+        "sequencerReportedSubMessageCount": 1314771
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1096,7 +1097,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2634,6 +2635,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409156787, "ethereal": 745636 },
+  "usedBlockNumbers": { "arbitrum": 418210108, "ethereal": 1316080 },
   "permissionsConfigHash": "0x9614115be5b8af8dd30dffa3dfd565bde41865afa3cfc6fa1f55e26102ec3326"
 }

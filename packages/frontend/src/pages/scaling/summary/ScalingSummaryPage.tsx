@@ -5,15 +5,14 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/Scaling
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { optionToRange } from '~/utils/range/range'
-import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
 
@@ -54,13 +53,16 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
             <PrimaryCard>{activityChart}</PrimaryCard>
           </div>
           <ChartTabs className="lg:hidden" charts={[tvsChart, activityChart]} />
-          <ScalingRwaRestrictedTokensContextProvider>
-            <ScalingAssociatedTokensContextProvider>
-              <TableFilterContextProvider>
-                <ScalingSummaryTables {...entries} />
-              </TableFilterContextProvider>
-            </ScalingAssociatedTokensContextProvider>
-          </ScalingRwaRestrictedTokensContextProvider>
+          <TvsDisplayControlsContextProvider
+            initialValues={{
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: true,
+            }}
+          >
+            <TableFilterContextProvider>
+              <ScalingSummaryTables {...entries} />
+            </TableFilterContextProvider>
+          </TvsDisplayControlsContextProvider>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

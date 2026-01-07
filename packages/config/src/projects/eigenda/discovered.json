@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "timestamp": 1763633846,
-  "configHash": "0x2386a3632ff2eea6d7aedc3618e9cccf9151ba824228347d85ef378fba904fd9",
+  "configHash": "0x892ebea752f55cf257a83ce2dca497b9d5fb68216dca083eced501f86c092e1d",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {

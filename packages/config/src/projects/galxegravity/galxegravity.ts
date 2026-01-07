@@ -14,7 +14,6 @@ export const galxegravity: ScalingProject = orbitStackL2({
   associatedTokens: ['G'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
   display: {

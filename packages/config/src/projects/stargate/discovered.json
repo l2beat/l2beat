@@ -1,7 +1,7 @@
 {
   "name": "stargate",
   "timestamp": 1761552231,
-  "configHash": "0xe9b085ef02c6a9dc8ffc3651c027470359c6451454b4ef7d8cad5dd722b4f8a1",
+  "configHash": "0xd7efd7daa259e31697499b1af42fcd632ebaebc23d83a7ed7bb9e457a2a60205",
   "entries": [
     {
       "name": "Factory",
@@ -3704,7 +3704,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "layerzero/DVN": "0x84673697f9119e45f3f6da142095c117a1b3326d2590baa81bb173042dacfe52",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
   "usedBlockNumbers": { "ethereum": 23667470 },

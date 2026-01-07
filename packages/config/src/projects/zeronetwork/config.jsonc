@@ -5,7 +5,7 @@
   "initialAddresses": ["eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "ZeroNetworkZkEvm",
+    "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "Diamond",
     "eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": "ZeroNetworkZkEvmAdmin",
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },

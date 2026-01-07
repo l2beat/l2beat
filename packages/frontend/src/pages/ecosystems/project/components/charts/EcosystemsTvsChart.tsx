@@ -51,7 +51,7 @@ export function EcosystemsTvsChart({
   const { data, isLoading } = api.tvs.chart.useQuery({
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),

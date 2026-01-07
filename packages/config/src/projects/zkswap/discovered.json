@@ -1,7 +1,7 @@
 {
   "name": "zkswap",
   "timestamp": 1751872967,
-  "configHash": "0x8b27f6e9814b8367540e6b07ea13fc0df8b891447ee93727eecec6fec1ee1806",
+  "configHash": "0x260274346d8c16b2830d90e4a51e6aaf9d6ea0f0f933b78fb4f6dae058a90a83",
   "entries": [
     {
       "name": "Governance",
@@ -23,7 +23,9 @@
         "getTarget": "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
         "networkGovernor": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
         "totalTokens": 39,
-        "validators": ["eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
+        "validators": [
+          "eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"
+        ]
       },
       "implementationNames": {
         "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04": "Proxy",
@@ -177,7 +179,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1613135171,
       "sinceBlock": 11841961,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": ""
       }
@@ -485,6 +489,8 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 22865800 },
+  "usedBlockNumbers": {
+    "ethereum": 22865800
+  },
   "permissionsConfigHash": "0x616d6a39aa7fee1f83459e31c8d98a8060971fd356d0ef44575777396baeb8d7"
 }

@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
-  "timestamp": 1765464119,
-  "configHash": "0x61dd08494791b2aa0c5ead85995d06cf73e1c0ee945f91435144e010cee2fab5",
+  "timestamp": 1766407632,
+  "configHash": "0x99506ce92b02361c7426940efe3e51dcd5ab61ad013bb6657b34fa88b79c47b7",
   "entries": [
     {
       "name": "VotingV2",
@@ -30,28 +30,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "25498181538603710477340437",
+        "cumulativeStake": "25700540650383192018116299",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10216,
+        "getCurrentRoundId": 10222,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 27,
-          "numberResolvedPriceRequests": 1739
+          "numberPendingPriceRequests": 14,
+          "numberResolvedPriceRequests": 1821
         },
-        "getVotePhase": 1,
-        "lastRoundIdProcessed": 10216,
-        "lastUpdateTime": 1765461587,
+        "getVotePhase": 0,
+        "lastRoundIdProcessed": 10222,
+        "lastUpdateTime": 1766407607,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 19,
+        "nextPendingIndexToProcess": 14,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "714290879513006002",
-        "rewardPerTokenStored": "714277970357131429",
+        "rewardPerToken": "719072021382560801",
+        "rewardPerTokenStored": "719071899984336443",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -644,7 +644,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1765464119,
+        "getCurrentTime": 1766407631,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -856,11 +856,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1765464119,
+        "getCurrentTime": 1766407631,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3492995,
+        "numberOfDeposits": 3523861,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -1090,13 +1090,13 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1765464119,
+        "getCurrentTime": 1766407631,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 216,
+        "numProposals": 217,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "proposer": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
       },
@@ -1172,7 +1172,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 910,
+        "nonce": 917,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1374,7 +1374,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1765464119,
+        "getCurrentTime": 1766407631,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1566,7 +1566,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 387,
+        "nonce": 390,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1711,13 +1711,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x09372f3db61efdb76e686c03deeb54bd52971bbd51f7ddf66f039ba75d812d2d",
-          "relayerRefundRoot": "0xa5b01fb35bda74b233fc9fadce01a3647de92eea3f60cc09c0a9e68a7194cb45",
+          "poolRebalanceRoot": "0x4db85176919434d980376d23166f774c41d933e6f2f525201d6c9e7352bcaf6b",
+          "relayerRefundRoot": "0x0a15164f76dd165cd6b9dd351297c9ad8d3edaead6b0ff034332b827e4b0fcba",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 21,
-          "challengePeriodEndTimestamp": 1765465067
+          "unclaimedPoolRebalanceLeafCount": 20,
+          "challengePeriodEndTimestamp": 1766408915
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -2048,7 +2048,6 @@
           "DXY",
           "uSPAC10g",
           "DECENTRA-LIST",
-          "ASSERT_TRUTH",
           "SHERLOCK_CLAIM",
           "ROPU_ETHx",
           "MULTIPLE_CHOICE_QUERY",
@@ -3715,6 +3714,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 23990101 },
+  "usedBlockNumbers": { "ethereum": 24068245 },
   "permissionsConfigHash": "0x4da4ec1777c81dab8f68916a8b6f16ca2b1f5640a336b66613746a85c8f8bcb3"
 }

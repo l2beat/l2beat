@@ -7,19 +7,19 @@ import {
 import { InfoIcon } from '~/icons/Info'
 import { useScalingRwaRestrictedTokensContext } from './ScalingRwaRestrictedTokensContext'
 
-export function IncludeRwaRestrictedTokensCheckbox() {
-  const { includeRwaRestrictedTokens, setIncludeRwaRestrictedTokens } =
+export function ExcludeRwaRestrictedTokensCheckbox() {
+  const { excludeRwaRestrictedTokens, setExcludeRwaRestrictedTokens } =
     useScalingRwaRestrictedTokensContext()
 
   return (
     <Tooltip>
       <Checkbox
-        name="includeRwaRestrictedTokens"
-        checked={includeRwaRestrictedTokens}
-        onCheckedChange={(checked) => setIncludeRwaRestrictedTokens(!!checked)}
+        name="excludeRwaRestrictedTokens"
+        checked={excludeRwaRestrictedTokens}
+        onCheckedChange={(checked) => setExcludeRwaRestrictedTokens(!!checked)}
       >
         <div className="flex items-center gap-1">
-          <div>Include restricted RWA tokens</div>
+          <div>Exclude restricted RWA tokens</div>
           <TooltipTrigger asChild>
             <div className="flex size-4 items-center justify-center">
               <InfoIcon className="size-3.5" />

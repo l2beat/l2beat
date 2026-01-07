@@ -28,6 +28,9 @@ export const nearomni: Bridge = {
       websites: ['https://rainbowbridge.app/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
       bridges: ['https://rainbowbridge.app/transfer'],
+      documentation: [
+        'https://docs.near.org/chain-abstraction/omnibridge/overview',
+      ],
       repositories: ['https://github.com/Near-One/omni-bridge'],
       socialMedia: [
         'https://discord.com/invite/GZ7735Xjce',

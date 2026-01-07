@@ -100,6 +100,20 @@
       "supply": "zero"
     },
     {
+      "name": "ADI",
+      "coingeckoId": "adi-token",
+      "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+      "symbol": "ADI",
+      "decimals": 18,
+      "deploymentTimestamp": 1763656247,
+      "coingeckoListingTimestamp": 1765238400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -894,6 +908,20 @@
       "coingeckoListingTimestamp": 1622419200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Capx",
+      "coingeckoId": "capx-ai",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+      "symbol": "CAPX",
+      "decimals": 18,
+      "deploymentTimestamp": 1758848087,
+      "coingeckoListingTimestamp": 1762300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3120,6 +3148,20 @@
       "coingeckoListingTimestamp": 1609804800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Lighter",
+      "coingeckoId": "lighter",
+      "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2",
+      "symbol": "LIT",
+      "decimals": 18,
+      "deploymentTimestamp": 1761579731,
+      "coingeckoListingTimestamp": 1767052800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71121/large/lighter.png?1765888098",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -9248,6 +9290,42 @@
           }
         ]
       }
+    },
+    {
+      "name": "Kyo",
+      "coingeckoId": "kyo",
+      "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "symbol": "KYO",
+      "decimals": 18,
+      "deploymentTimestamp": 1760351109,
+      "coingeckoListingTimestamp": 1765324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71031/large/Kyo.png?1765377840",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lootcoin",
+      "coingeckoId": "lootcoin",
+      "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+      "symbol": "LOOT",
+      "decimals": 18,
+      "deploymentTimestamp": 1756091383,
+      "coingeckoListingTimestamp": 1766275200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71197/large/lootcoin-logo.jpg?1766302463",
+      "chainId": 1868,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Neemo Staked Astar",

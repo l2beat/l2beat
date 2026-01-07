@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
   "timestamp": 1761642925,
-  "configHash": "0xff416d7e7bd47079e01a97c6b814405f8cf5fead30ead5e40bbab8165fd08f5c",
+  "configHash": "0x19ef7f4c52d383cfdbacfd674ee932c1966dac305efdd9a1291ee9abe623ab34",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -333,7 +333,7 @@
       }
     },
     {
-      "name": "ZeroNetworkZkEvm",
+      "name": "Diamond",
       "address": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1078,5 +1078,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23674966 },
-  "permissionsConfigHash": "0xa00ed76aac3b9379d6043f4c29a9be91cbad97f99124a3a9aae6a1948b6c71a6"
+  "permissionsConfigHash": "0xfc609b05ff5e2ea18debcd04b21a8f27636e257a5a01e822647e4b7767a20d30"
 }

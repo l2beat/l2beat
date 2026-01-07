@@ -36,7 +36,7 @@ export async function getTvsLeaderboard(
       from,
       range[1],
       true,
-      false,
+      true,
       from - 30 * UnixTime.DAY, // Cut off 30 days before the range
     ],
   })

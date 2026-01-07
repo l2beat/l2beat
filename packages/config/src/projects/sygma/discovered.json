@@ -1,7 +1,7 @@
 {
   "name": "sygma",
   "timestamp": 1763563670,
-  "configHash": "0x3e62cc2840cb42faaf9b8e0897436b33dfaa7430593c228472dddc23e0e85da5",
+  "configHash": "0xed631e68197e090b873f99a59984f0dceab65d5f25e3550fa1f042730d49088d",
   "entries": [
     {
       "address": "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
@@ -29,7 +29,9 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53"]
+            "members": [
+              "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53"
+            ]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -141,7 +143,9 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1680813119,
       "sinceBlock": 16991929,
       "values": {
@@ -207,7 +211,9 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1686579155,
       "sinceBlock": 17464490,
       "values": {
@@ -461,6 +467,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23833812 },
+  "usedBlockNumbers": {
+    "ethereum": 23833812
+  },
   "permissionsConfigHash": "0x46bc4b9bcdd94b9623043b6c96bd388e29e73a51902df6dc82357804baf5e882"
 }

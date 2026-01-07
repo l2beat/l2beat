@@ -33,6 +33,7 @@ export const degen: ScalingProject = orbitStackL3({
       socialMedia: [
         'https://twitter.com/degentokenbase',
         'https://warpcast.com/~/channel/degen',
+        'https://t.me/degentokenbase',
       ],
     },
   },

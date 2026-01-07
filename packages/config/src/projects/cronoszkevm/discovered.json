@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
   "timestamp": 1765463664,
-  "configHash": "0x99848f1e135df1dcc6c4cc19c7501e2c8b1623c100ce96cf884a97fc7458e2c7",
+  "configHash": "0x6fbd2f577bd865be5735605f99bb98b0f14631545ec118f1a995a978ed1bb118",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -230,7 +230,7 @@
       }
     },
     {
-      "name": "CronosZkEvm",
+      "name": "Diamond",
       "address": "eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1256,5 +1256,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23990063 },
-  "permissionsConfigHash": "0xf8076870540a3f143d857dd443dfdd301c8307edf547c3f538bc87f26aedcbfd"
+  "permissionsConfigHash": "0x2eed5392a3e38eac13b6dccf9451899857881e5a667b6435acf9193b8b6099bd"
 }

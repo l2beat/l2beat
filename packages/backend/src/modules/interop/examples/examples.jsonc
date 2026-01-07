@@ -156,12 +156,12 @@
   "hyperlane": {
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x5b6825406a1e8613b22203a049df46476384e1c716f35961b709e1371d518462"
+        "chain": "base",
+        "tx": "0x6ef7715d9fbba845f1b75e73e86d13c6373aadf5ed1d3539b307fdafc67d1b03"
       },
       {
-        "chain": "base",
-        "tx": "0xbed80fd46620bf9e83c5b993851200e1c0ac6e6f04c66963151ded1a7ac36bc3"
+        "chain": "polygonpos",
+        "tx": "0xadcdd7cbe9de8fbed37a63270af0393a78c8443de29ba487d632a217eacd54b0"
       }
     ],
     "events": ["hyperlane.Dispatch", "hyperlane.Process"],
@@ -835,8 +835,175 @@
       {
         "chain": "optimism",
         "tx": "0xa31616cdccdebcf3d51b06a9d265707a1a8f50307d8eb3c337fb484316476f35"
+      },
+      // ETH sent directly via CrossDomainMessenger (not through StandardBridge) - L1->L2
+      {
+        "chain": "ethereum",
+        "tx": "0x879c63cc331e8730f9e414ba968120869415caabd9c358ecbb97bbd6008fff67"
+      },
+      {
+        "chain": "base",
+        "tx": "0x80e0ce0f2383ccf4c1280666f2cd6cf0ab7142ec6da5c73e293ff2c5bb01e65a"
+      },
+      // ETH sent directly via L2ToL1MessagePasser (not through StandardBridge) - L2->L1
+      {
+        "chain": "base",
+        "tx": "0x804a49327147aa44756d028a60c0ea6ebd4b24d2c55faeea7988233f218ab0cb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x74d2a903013d5a37f12038c74246cc186e779e212747292e5c5c0f5e959df421"
       }
+    ],
+    "events": [
+      "opstack.SentMessage",
+      "opstack.RelayedMessage",
+      "opstack.MessagePassed",
+      "opstack.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["opstack-cdm.L1ToL2Transfer", "opstack-cdm.L2ToL1Transfer"]
+  },
+  "across-settlement": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+      }
+    ],
+    "events": [
+      "across-settlement.SentMessage",
+      "across-settlement.SentMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+  },
+  "world-id": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x2ba21e981c082931f6f93acbb702d1dfccaff5f26353143e954402bb28966d96"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xed2b5b8a91383f8cb9ec22f4cd74e2e764eb6ec64286c9abe0ac76f5743b36b8"
+      }
+    ],
+    "events": ["world-id.SentMessage"],
+    "messages": ["opstack.L1ToL2Message"]
+  },
+  "lido-wsteth": {
+    "txs": [
+      // Base: L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x837426f102ee40d3075fcf4e8240716c101f3a10d9c0a46705b55b37a46fe997"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2e0b3dc2e1b6916ae7a0964d32271d2ee2bbd272926bacca192a7b5d39bc41e1"
+      },
+      // Base: L2 → L1 withdrawal
+      {
+        "chain": "base",
+        "tx": "0x3f229f122d45a816acf3f9c2aaf504d142770bc45182004d0e878c166e76c901"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9020dba0f5c191d690532cf8ecbd139b1a101478374b02800be2709a120e84ed"
+      },
+      // Optimism: L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xa346b62dda93356175fb770a44c18e8734ade43756fa4f73409cff2b02545671"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x4c99754dd29596fae0bd1d25f498af6ff42f869b9d721167d04da1117bf6bea1"
+      },
+      // Optimism: L2 → L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0x8f4823bee16fb17d68e954b933a42eacb637aec0de8097fc747f5e2984d00a7b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x3556112dd681a7a4d32192579726fc9b882b657d745023dcef4836d88b18f846"
+      }
+    ],
+    "events": [
+      "lido-wsteth.DepositSentMessage",
+      "lido-wsteth.DepositSentMessage",
+      "lido-wsteth.DepositFinalized",
+      "lido-wsteth.DepositFinalized",
+      "lido-wsteth.WithdrawalMessagePassed",
+      "lido-wsteth.WithdrawalMessagePassed",
+      "lido-wsteth.WithdrawalFinalized",
+      "lido-wsteth.WithdrawalFinalized"
+    ],
+    "messages": [
+      "opstack.L1ToL2Message",
+      "opstack.L1ToL2Message",
+      "opstack.L2ToL1Message",
+      "opstack.L2ToL1Message"
+    ],
+    "transfers": [
+      "lido-wsteth.L1ToL2Transfer",
+      "lido-wsteth.L1ToL2Transfer",
+      "lido-wsteth.L2ToL1Transfer",
+      "lido-wsteth.L2ToL1Transfer"
     ]
+  },
+  "sorare-base": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xa85229231a6005da904ddd4a586b5755d9c318e06d372221da25aef63f10b453"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2057d0c5fe603af609d821a8b18163e8f75ee687b6b060ceb5e4f37bad4781fa"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x22aa80f80284cef1509cd434a614316dbf844e4d0850d5ecda8ba6de29b14c0b"
+      },
+      {
+        "chain": "base",
+        "tx": "0x3b6867710390de4ffab9c898a1fcc664216505b46a1c6b9e0d3704401333cd6c"
+      }
+    ],
+    "events": [
+      "sorare-base.TransferRegisteredSentMessage",
+      "sorare-base.FactRegisteredRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["sorare-base.L1ToL2Transfer"]
+  },
+  "beefy-bridge": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xee4c7dd66de02432c3c047d838bae58716e2da57611d4ae0f92a12487d3db9c2"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
+      }
+    ],
+    "events": [
+      "beefy-bridge.BridgedOutSentMessage",
+      "beefy-bridge.BridgedInRelayedMessage"
+    ],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge": {
     "txs": [
@@ -1176,13 +1343,21 @@
   "stargate-credit": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x340b269ab3a47b5c848fe7950213724607bcebc3c1707f5533d247046d02150c"
-      },
+      // {
+      //   "chain": "optimism",
+      //   "tx": "0xaaf89fdd58f0c57fdd66ecd9928dc41c687cd3ede4fe509edf02985257b5eb6e"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0xc340025bd568d3a13067dda9a70cf27e46f169867d7668b5cd3af08f46ccd926"
+      // },
       {
         "chain": "arbitrum",
-        "tx": "0x649b18d55fedd2c18c90232df06734d898dc5fb3de0c618e95655d97ef424f6e"
+        "tx": "0x8c657a4f480508954c2ae7a4b1eab5cefbeccf073e562be3b08ecf29927fa744"
+      },
+      {
+        "chain": "apechain",
+        "tx": "0x2133b8922895c0f2d24ef69d186443746747db148129c56a51823b394344652f"
       }
     ]
   },

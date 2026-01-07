@@ -81,66 +81,64 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               amountReceivedLD: oftSentRaw.amountLD, // fallback
             }
 
-      const previousLog = input.txLogs.find(
+      // try preceding log but fallback to any log in the same tx
+      let packetSentLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 1,
       )
-      if (previousLog) {
-        const packetSent = parsePacketSent(previousLog, [network.endpointV2])
-        if (packetSent) {
-          const packet = decodePacket(packetSent.encodedPayload)
-          if (packet) {
-            const guid = createLayerZeroGuid(
-              packet.header.nonce,
-              packet.header.srcEid,
-              packet.header.sender,
-              packet.header.dstEid,
-              packet.header.receiver,
-            )
-            const $dstChain = findChain(
-              networks,
-              (x) => x.eid,
-              packet.header.dstEid,
-            )
+      if (!packetSentLog) return
+      let packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
+      if (!packetSent)
+        packetSentLog = input.txLogs.find((l) => parsePacketSent(l, null))
+      if (!packetSentLog) return
+      packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
+      if (!packetSent) return
+      const packet = decodePacket(packetSent.encodedPayload)
+      if (!packet) return
+      const guid = createLayerZeroGuid(
+        packet.header.nonce,
+        packet.header.srcEid,
+        packet.header.sender,
+        packet.header.dstEid,
+        packet.header.receiver,
+      )
+      const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
 
-            // Find Transfer event before OFTSent by searching through all preceding logs in the worst case
-            let srcTokenAddress: Address32 | undefined
-            let srcAmount: bigint | undefined
+      // Find Transfer event before OFTSent by searching through all preceding logs in the worst case
+      let srcTokenAddress: Address32 | undefined
+      let srcAmount: bigint | undefined
 
-            for (
-              let offset = 1;
-              // biome-ignore lint/style/noNonNullAssertion: It's there
-              offset <= input.log.logIndex!;
-              offset++
-            ) {
-              const precedingLog = input.txLogs.find(
-                // biome-ignore lint/style/noNonNullAssertion: It's there
-                (x) => x.logIndex === input.log.logIndex! - offset,
-              )
-              if (!precedingLog) break
+      for (
+        let offset = 1;
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        offset <= input.log.logIndex!;
+        offset++
+      ) {
+        const precedingLog = input.txLogs.find(
+          // biome-ignore lint/style/noNonNullAssertion: It's there
+          (x) => x.logIndex === input.log.logIndex! - offset,
+        )
+        if (!precedingLog) break
 
-              const transfer = parseTransfer(precedingLog, null)
-              if (transfer) {
-                srcTokenAddress = Address32.from(precedingLog.address)
-                srcAmount = transfer.value
-                break
-              }
-            }
-
-            return [
-              OFTSentPacketSent.create(input, {
-                $dstChain,
-                guid,
-                amountSentLD: normalized.amountSentLD,
-                amountReceivedLD: normalized.amountReceivedLD,
-                oappAddress: Address32.from(input.log.address),
-                srcTokenAddress,
-                srcAmount,
-              }),
-            ]
-          }
+        const transfer = parseTransfer(precedingLog, null)
+        if (transfer) {
+          srcTokenAddress = Address32.from(precedingLog.address)
+          srcAmount = transfer.value
+          break
         }
       }
+
+      return [
+        OFTSentPacketSent.create(input, {
+          $dstChain,
+          guid,
+          amountSentLD: normalized.amountSentLD,
+          amountReceivedLD: normalized.amountReceivedLD,
+          oappAddress: Address32.from(input.log.address),
+          srcTokenAddress,
+          srcAmount,
+        }),
+      ]
     }
 
     const oftReceived = parseOFTReceived(input.log, null)

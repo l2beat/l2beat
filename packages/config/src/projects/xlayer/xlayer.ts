@@ -72,9 +72,22 @@ export const xlayer: ScalingProject = agglayer({
       ],
       query: {
         formula: 'transfer',
-        from: ChainSpecificAddress.address(sequencer),
+        from: EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d'),
         to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: opgenesisTimestamp,
+        untilTimestamp: 1766565023,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: ChainSpecificAddress.address(sequencer),
+        to: ChainSpecificAddress.address(sequencerInbox),
+        sinceTimestamp: 1766565023,
       },
     },
     {
@@ -97,6 +110,16 @@ export const xlayer: ScalingProject = agglayer({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: inboxStartBlock,
+      untilBlock: 24081293,
+      inbox: ChainSpecificAddress.address(sequencerInbox),
+      sequencers: [
+        EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 24081293,
       inbox: ChainSpecificAddress.address(sequencerInbox),
       sequencers: [ChainSpecificAddress.address(sequencer)],
     },

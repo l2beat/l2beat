@@ -47,6 +47,7 @@ export const form: ScalingProject = opStackL2({
     chainId: 478,
     explorerUrl: 'https://explorer.form.network',
     sinceTimestamp: genesisTimestamp,
+    untilTimestamp: 1765519200,
     apis: [
       {
         type: 'rpc',
