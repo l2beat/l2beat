@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "timestamp": 1767795367,
-  "configHash": "0x6959178af2c822cb80b3ae9d920afaecc112103403950e736e261a92506f21e1",
+  "configHash": "0xe2be12016ae37b45fde1b0a28b832afc250f83f3f265a57b6206c9f8bbbc5bec",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -8880,32 +8880,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x64E31C39Fc3Ec028557C9354d27B5c09fAeB5FdA": ""
-      }
-    },
-    {
-      "name": "RBACTimelock",
-      "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1765317503,
-      "sinceBlock": 23978034,
-      "values": {
-        "$immutable": true,
-        "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-        "BYPASSER_ROLE": "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d",
-        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getBlockedFunctionSelectorAt": [],
-        "getBlockedFunctionSelectorCount": 0,
-        "getMinDelay": 10800,
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-      },
-      "implementationNames": {
-        "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": "RBACTimelock"
       }
     },
     {
@@ -36514,52 +36488,6 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
-    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": [
-      "constructor(uint256 minDelay, address admin, address[] proposers, address[] executors, address[] cancellers, address[] bypassers)",
-      "event BypasserCallExecuted(uint256 indexed index, address target, uint256 value, bytes data)",
-      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
-      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "event Cancelled(bytes32 indexed id)",
-      "event FunctionSelectorBlocked(bytes4 indexed selector)",
-      "event FunctionSelectorUnblocked(bytes4 indexed selector)",
-      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function ADMIN_ROLE() view returns (bytes32)",
-      "function BYPASSER_ROLE() view returns (bytes32)",
-      "function CANCELLER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function PROPOSER_ROLE() view returns (bytes32)",
-      "function blockFunctionSelector(bytes4 selector)",
-      "function bypasserExecuteBatch(tuple(address target, uint256 value, bytes data)[] calls) payable",
-      "function cancel(bytes32 id)",
-      "function executeBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) payable",
-      "function getBlockedFunctionSelectorAt(uint256 index) view returns (bytes4)",
-      "function getBlockedFunctionSelectorCount() view returns (uint256)",
-      "function getMinDelay() view returns (uint256 duration)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hashOperationBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
-      "function isOperation(bytes32 id) view returns (bool registered)",
-      "function isOperationDone(bytes32 id) view returns (bool done)",
-      "function isOperationPending(bytes32 id) view returns (bool pending)",
-      "function isOperationReady(bytes32 id) view returns (bool ready)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function scheduleBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unblockFunctionSelector(bytes4 selector)",
-      "function updateDelay(uint256 newDelay)"
-    ],
     "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f": [
       "constructor(address router)",
       "error GasLimitTooLow(uint256 minLimit, uint256 gotLimit)",
@@ -55227,5 +55155,5 @@
     "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
   "usedBlockNumbers": { "ethereum": 24183337 },
-  "permissionsConfigHash": "0x24256d023fb805d6db41db60a4798ab06b021e5728d3c2ffd8815720e0b8cbf3"
+  "permissionsConfigHash": "0xbbc13079be15de27c4094f512010f24d9eb1de1d24fa8c4d49cf7a48bcb46887"
 }

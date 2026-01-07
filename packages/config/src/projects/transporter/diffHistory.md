@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa074d990552c38863f57dec2cbad34b7c48fbe55
+Generated with discovered.json: 0xb06bb74c2bcd2a5d16721ad544ea58873d13e5c5
 
-# Diff at Wed, 07 Jan 2026 14:24:43 GMT:
+# Diff at Wed, 07 Jan 2026 15:16:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1764758476
@@ -1443,12 +1443,6 @@ new tokenpools, ms changes.
 
 ```diff
 +   Status: CREATED
-    contract RBACTimelock (eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (eth:0xdb54Ba6433f77fBFf15316987Acb4Ef16f0CA89B)
     +++ description: None
 ```
@@ -1481,12 +1475,10 @@ new tokenpools, ms changes.
  ...:0x3F13dE27D0e0bEfA371752b9CE057Eb0b35921fb.sol | 1766 +++++++++++++++
  ...:0x41993c7228221403723B37D9F0B5F162C2902aA8.sol | 1766 +++++++++++++++
  .../dev/null                                       | 1325 -----------
- ...0x44835bBBA9D40DEDa9b64858095EcFB2693c9449.sol} |    0
- ...:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A.sol | 1681 ++++++++++++++
  .../src/projects/transporter/.flat/Safe/Safe.sol   | 1088 +++++++++
  .../transporter/.flat/Safe/SafeProxy.p.sol         |   37 +
  .../transporter/.flat/TokenTransferorPool.sol      | 2379 ++++++++++++++++++++
- 18 files changed, 21690 insertions(+), 2831 deletions(-)
+ 16 files changed, 20009 insertions(+), 2831 deletions(-)
 ```
 
 ## Config/verification related changes

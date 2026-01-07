@@ -1,7 +1,9 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "transporter",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "maxAddresses": 900,
   "maxDepth": 8,
   "initialAddresses": [
@@ -28,13 +30,23 @@
       "ignoreDiscovery": true
     },
     "eth:0x8B63b3DE93431C0f756A493644d128134291fA1b": {
-      "ignoreMethods": ["getConfigDetails"]
+      "ignoreMethods": [
+        "getConfigDetails"
+      ]
     },
     "eth:0x66598216D8E4d9AFE0F06d525B335b762229842f": {
-      "ignoreMethods": ["i_weth"]
+      "ignoreMethods": [
+        "i_weth"
+      ]
     },
     "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
-      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
     },
     "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476": {
       "ignoreDiscovery": true
@@ -42,14 +54,12 @@
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreDiscovery": true
     },
-    // spammy
     "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
       "ignoreDiscovery": true
     },
     "eth:0x55042569836d203456d013dEFA8c670AD865d451": {
       "ignoreDiscovery": true
     },
-    // unverified pools
     "eth:0x0577EcCC8FBE54B321d3BC8d4F1d09Deb94d5A55": {
       "ignoreDiscovery": true
     },
@@ -67,6 +77,11 @@
     },
     "eth:0xF3BD0793FAD8b24B7ba58956dE9DE305D34B9098": {
       "ignoreDiscovery": true
+    },
+    "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": {
+      "ignoreRelatives": [
+        "owner"
+      ]
     }
   },
   "types": {
