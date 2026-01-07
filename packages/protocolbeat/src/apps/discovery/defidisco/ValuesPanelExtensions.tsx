@@ -38,7 +38,7 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
   return (
     <div className="px-2 py-2 text-xs">
       {fundsData.error && (
-        <div className="text-red-400 mb-2">Error: {fundsData.error}</div>
+        <div className="text-aux-red mb-2">Error: {fundsData.error}</div>
       )}
 
       <div className="text-coffee-500 mb-2">
@@ -47,13 +47,13 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
 
       <div className="mb-2">
         <span className="font-semibold">Total Value: </span>
-        <span className="text-green-400">{formatUsdValue(totalValue)}</span>
+        <span className="text-aux-green">{formatUsdValue(totalValue)}</span>
       </div>
 
       {/* Balances Section */}
       {fundsData.balances && fundsData.balances.tokens.length > 0 && (
         <div className="mb-3">
-          <div className="text-orange-400 font-semibold mb-1">
+          <div className="text-aux-orange font-semibold mb-1">
             Token Balances ({formatUsdValue(fundsData.balances.totalUsdValue)})
           </div>
           <div className="ml-2 flex flex-col gap-1">
@@ -76,7 +76,7 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
       {/* Positions Section */}
       {fundsData.positions && fundsData.positions.protocols.length > 0 && (
         <div>
-          <div className="text-orange-400 font-semibold mb-1">
+          <div className="text-aux-orange font-semibold mb-1">
             DeFi Positions ({formatUsdValue(fundsData.positions.totalUsdValue)})
           </div>
           <div className="ml-2 flex flex-col gap-2">
@@ -105,7 +105,7 @@ function TokenRow({ token }: { token: FundsTokenBalance }) {
       <span>
         {displayBalance} {token.symbol}
       </span>
-      <span className="text-green-400">{formatUsdValue(token.usdValue)}</span>
+      <span className="text-aux-green">{formatUsdValue(token.usdValue)}</span>
     </div>
   )
 }
@@ -123,7 +123,7 @@ function ProtocolRow({ protocol }: { protocol: FundsPositionProtocol }) {
           <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
           <span className="text-coffee-300">{protocol.name}</span>
         </div>
-        <span className="text-green-400">{formatUsdValue(protocol.totalUsdValue)}</span>
+        <span className="text-aux-green">{formatUsdValue(protocol.totalUsdValue)}</span>
       </div>
 
       {isExpanded && (
@@ -132,7 +132,7 @@ function ProtocolRow({ protocol }: { protocol: FundsPositionProtocol }) {
             <div key={idx} className="text-coffee-400">
               <div className="flex justify-between">
                 <span>{item.name || 'Position'}</span>
-                <span className="text-green-400">
+                <span className="text-aux-green">
                   {formatUsdValue(item.stats.netUsdValue)}
                 </span>
               </div>

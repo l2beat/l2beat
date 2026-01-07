@@ -30,7 +30,7 @@ export function ResultsSection({ projectData, permissionOverrides, contractTags 
 
   return (
     <div className="border-b border-b-coffee-600 pb-2">
-      <h2 className="p-2 font-bold text-2xl text-blue-600">Results:</h2>
+      <h2 className="p-2 font-bold text-2xl text-aux-blue">Results:</h2>
       <div className="mb-1 flex flex-col gap-4 border-l-4 border-transparent p-2 pl-1">
 
         {/* Upgradeability Section */}
@@ -50,31 +50,31 @@ export function ResultsSection({ projectData, permissionOverrides, contractTags 
 function UpgradeabilitySection({ stats }: { stats: UpgradeabilityStats }) {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-orange-400 mb-2">Upgradeability</h3>
+      <h3 className="font-semibold text-lg text-aux-orange mb-2">Upgradeability</h3>
       <div className="ml-4 flex flex-col gap-3 text-sm">
 
         <RiskLevelStats
           title="Critical Impact Functions"
           stats={stats.critical}
-          titleColor="text-purple-400"
+          titleColor="text-aux-pink"
         />
 
         <RiskLevelStats
           title="High Impact Functions"
           stats={stats.highRisk}
-          titleColor="text-red-400"
+          titleColor="text-aux-red"
         />
 
         <RiskLevelStats
           title="Medium Impact Functions"
           stats={stats.mediumRisk}
-          titleColor="text-yellow-400"
+          titleColor="text-aux-yellow"
         />
 
         <RiskLevelStats
           title="Low Impact Functions"
           stats={stats.lowRisk}
-          titleColor="text-green-400"
+          titleColor="text-aux-green"
         />
 
       </div>
@@ -116,7 +116,7 @@ function RiskLevelStats({ title, stats, titleColor }: {
 function ExitWindowSection() {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-purple-400 mb-2">Exit Window</h3>
+      <h3 className="font-semibold text-lg text-aux-pink mb-2">Exit Window</h3>
       <div className="ml-4 text-sm text-coffee-300">
         🚧 Coming soon! This section will analyze delays and timelocks on critical functions.
       </div>
@@ -127,7 +127,7 @@ function ExitWindowSection() {
 function AutonomySection() {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-cyan-400 mb-2">Autonomy</h3>
+      <h3 className="font-semibold text-lg text-aux-cyan mb-2">Autonomy</h3>
       <div className="ml-4 text-sm text-coffee-300">
         🚧 Coming soon! This section will evaluate the risk coming from external contracts.
       </div>

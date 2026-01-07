@@ -194,34 +194,34 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
 
   return (
     <div className="border-b border-b-coffee-600 pb-2">
-      <h2 className="p-2 font-bold text-2xl text-blue-600">Status of the Review:</h2>
+      <h2 className="p-2 font-bold text-2xl text-aux-blue">Status of the Review:</h2>
       <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
 
         <div className="ml-2 flex flex-col gap-2 text-sm">
           <div className="flex gap-8">
-            <span className="font-semibold">Initial: <span className="text-blue-400">{totalInitial} contracts</span></span>
-            <span className="font-semibold">Discovered: <span className="text-green-400">{totalDiscovered} addresses</span></span>
+            <span className="font-semibold">Initial: <span className="text-aux-blue">{totalInitial} contracts</span></span>
+            <span className="font-semibold">Discovered: <span className="text-aux-green">{totalDiscovered} addresses</span></span>
           </div>
 
           <div className="mt-2">
             <div className="font-semibold mb-1">Project Addresses:</div>
             <div className="ml-4 flex flex-col gap-1 text-xs">
-              <span>Contracts: <span className="text-orange-400">{contractCounts.contracts}</span></span>
-              <span>EOAs: <span className="text-cyan-400">{contractCounts.eoas}</span></span>
-              <span>Multisigs: <span className="text-yellow-400">{contractCounts.multisigs}</span></span>
+              <span>Contracts: <span className="text-aux-orange">{contractCounts.contracts}</span></span>
+              <span>EOAs: <span className="text-aux-cyan">{contractCounts.eoas}</span></span>
+              <span>Multisigs: <span className="text-aux-yellow">{contractCounts.multisigs}</span></span>
               <span className="font-semibold">Total: <span className="text-white">{totalNonExternal}</span></span>
             </div>
           </div>
 
           <div className="mt-2">
-            <span className="font-semibold">External Addresses: <span className="text-red-400">{contractCounts.external}</span></span>
+            <span className="font-semibold">External Addresses: <span className="text-aux-red">{contractCounts.external}</span></span>
           </div>
 
           <div className="mt-2">
             <div className="font-semibold mb-1">Permissions:</div>
             <div className="ml-4 flex flex-col gap-1 text-xs">
-              <span>Permissioned functions: <span className="text-red-400">{permissionedFunctions}</span></span>
-              <span>Progress: <span className="text-orange-400">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
+              <span>Permissioned functions: <span className="text-aux-red">{permissionedFunctions}</span></span>
+              <span>Progress: <span className="text-aux-orange">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
               <ContractsWithPermissionsTable
                 projectData={projectData}
                 functions={functions}
@@ -506,7 +506,7 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
                 </span>
               </div>
               {ownerCount > 0 && (
-                <div className="text-[10px] text-gray-400 mt-0.5 ml-2">
+                <div className="text-[10px] text-coffee-400 mt-0.5 ml-2">
                   Owners: {ownersList.slice(0, 3).map(addr => getContractName(addr)).join(', ')}
                   {ownerCount > 3 && ` +${ownerCount - 3} more`}
                 </div>

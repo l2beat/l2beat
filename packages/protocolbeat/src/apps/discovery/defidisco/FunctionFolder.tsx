@@ -708,7 +708,7 @@ export function FunctionFolder({
                 )}
 
                 {ownersError && (
-                  <div className="text-xs text-red-400 mb-2">Error: {ownersError}</div>
+                  <div className="text-xs text-aux-red mb-2">Error: {ownersError}</div>
                 )}
 
                 <div className="space-y-2">
@@ -727,7 +727,7 @@ export function FunctionFolder({
                           />
                           <button
                             onClick={() => handleRemoveOwnerDefinition(index)}
-                            className="text-red-400 hover:text-red-300 flex-shrink-0"
+                            className="text-aux-red hover:opacity-80 flex-shrink-0"
                             title="Remove this owner definition"
                           >
                             ✕
@@ -817,7 +817,7 @@ export function FunctionFolder({
 
                         {/* Show resolution error */}
                         {!ownersLoading && correspondingResolved && !correspondingResolved.isResolved && (
-                          <div className="text-red-400 text-xs ml-2 mt-1">
+                          <div className="text-aux-red text-xs ml-2 mt-1">
                             Error: {correspondingResolved.error}
                           </div>
                         )}
@@ -897,12 +897,12 @@ export function FunctionFolder({
                     {currentFunction.delay.fieldName} on {availableContracts.find(c => c.address === currentFunction.delay?.contractAddress)?.name || 'Unknown'} ({currentFunction.delay.contractAddress.slice(0, 10)}...)
                   </div>
                   {resolvedDelay?.isResolved && (
-                    <div className="text-sm font-bold text-green-400">
+                    <div className="text-sm font-bold text-aux-green">
                       Delay: {resolvedDelay.seconds} seconds
                     </div>
                   )}
                   {resolvedDelay && !resolvedDelay.isResolved && (
-                    <div className="text-xs text-red-400">
+                    <div className="text-xs text-aux-red">
                       Error: {resolvedDelay.error}
                     </div>
                   )}
@@ -1006,7 +1006,7 @@ export function FunctionFolder({
                           </div>
                           <button
                             onClick={() => handleRemoveDependency(index)}
-                            className="text-red-400 hover:text-red-300 flex-shrink-0 ml-2"
+                            className="text-aux-red hover:opacity-80 flex-shrink-0 ml-2"
                             title="Remove this dependency"
                           >
                             ✕
