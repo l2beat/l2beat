@@ -15,6 +15,7 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
+import { InteropTransferStream } from './stream/InteropTransferStream'
 
 export function createInteropModule({
   config,
@@ -40,6 +41,8 @@ export function createInteropModule({
     rpcClients: providers.clients.rpcClients,
   })
 
+  const transferStream = new InteropTransferStream()
+
   const processors = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
@@ -60,6 +63,7 @@ export function createInteropModule({
     plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name),
     logger,
+    transferStream,
   )
 
   const router = createInteropRouter(
@@ -67,6 +71,7 @@ export function createInteropModule({
     config.interop,
     processors,
     logger.for('InteropRouter'),
+    transferStream,
   )
 
   const compareLoops = plugins.comparePlugins.map(
