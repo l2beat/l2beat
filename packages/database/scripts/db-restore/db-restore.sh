@@ -2,14 +2,16 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "tokens-ui" "tracked-txs")
 FEATURES_TABLES=(
-    "IndexerState IndexerConfiguration DataAvailability Blob"
-    "IndexerState IndexerConfiguration Liveness"
-    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
-    "IndexerState IndexerConfiguration Activity"
+    "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
+    "IndexerState IndexerConfiguration Liveness AggregatedLiveness"
+    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue SyncMetadata"
+    "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
-    "IndexerState IndexerConfiguration BridgeEvent BridgeMessage BridgeTransfer"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices"
+    "AbstractToken DeployedToken TokenConnection Chain"
+    "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
 )
 
 clear_tables() {
@@ -57,7 +59,7 @@ dump_tables() {
 
 restore_tables() {
   echo "Restoring tables (this may take a while)..."
-  pg_restore -d "$DEV_LOCAL_DB_URL" "./db.pgdump"
+  pg_restore -d "$DEV_LOCAL_DB_URL" "./db.pgdump" --verbose
 }
 
 if [ -z "$1" ]; then

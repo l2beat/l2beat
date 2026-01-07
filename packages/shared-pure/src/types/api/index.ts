@@ -1,1 +1,1 @@
-export * from './FlatSourcesApiResponse'
+export * from './FlatSourcesApiResponse.js'

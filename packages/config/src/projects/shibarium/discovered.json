@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
-  "timestamp": 1759763659,
-  "configHash": "0xedebc2935c0d4811bd1ac3aaaa305606e15365ed50d2b6584e71ae6c05ec90a1",
+  "timestamp": 1760536727,
+  "configHash": "0xe5f21efa4cbe01905122f3eab80b8c68449e061203ad343a8cbbcfd9a842f4d1",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -307,7 +307,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41739,
+        "counter": 41747,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -422,22 +422,22 @@
       "name": "WithdrawalManager",
       "address": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
       "type": "Contract",
-      "template": "polygonposbridge/WithdrawManager",
+      "template": "shibarium/WithdrawManager",
       "sourceHashes": [
         "0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0",
-        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
+        "0xcdde166e8888dfe4fae172f6008fe3fbc0bcb1db2e5be1ca6519f3eff028ba7b"
       ],
       "proxyType": "EIP897 proxy",
-      "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
+      "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support.",
       "sinceTimestamp": 1691243987,
       "sinceBlock": 17849222,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3",
+        "$implementation": "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97",
         "exitNft": "eth:0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307",
         "exitWindow": 0,
-        "HALF_EXIT_PERIOD": 864000,
-        "implementation": "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3",
+        "HALF_EXIT_PERIOD": 302400,
+        "implementation": "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97",
         "isOwner": false,
         "ON_FINALIZE_GAS_LIMIT": 300000,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
@@ -445,7 +445,7 @@
       },
       "implementationNames": {
         "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": "WithdrawManagerProxy",
-        "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3": "WithdrawManager"
+        "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97": "WithdrawManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -514,18 +514,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 29488,
+        "currentEpoch": 29725,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "15049873815057170817540935",
+        "currentValidatorSetTotalStake": "14688703782434353185474018",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "1813983130977956621280",
-          "1848577348723041452170",
-          "1469289175869880663921",
-          "465099122579313636019"
+          "115609194928767903183",
+          "209339271444059377588",
+          "143520671028053612673",
+          "156478352309327357348"
         ],
         "dynasty": 30,
-        "epoch": 29488,
+        "epoch": 29725,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -552,7 +552,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1738190020607201009369031",
+        "rewardPerStake": "1746462834810577004982608",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -562,7 +562,7 @@
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "15049873815057170817540935",
+          "amount": "14688703782434353185474018",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -850,6 +850,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
+          "description": "manage critical config values like the exit period and the blacklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
           "description": "can manage the validator blacklist and change other critical settings related to staking.",
           "role": ".governance",
@@ -1072,7 +1078,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 294850000,
+        "_nextHeaderBlock": 297220000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1081,8 +1087,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 294840000,
-        "getLastChildBlock": 13442588,
+        "currentHeaderBlock": 297210000,
+        "getLastChildBlock": 13582364,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -1782,34 +1788,6 @@
       "function startExitWithBurntTokens(bytes data) returns (bytes)",
       "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
     ],
-    "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3": [
-      "event ExitCancelled(uint256 indexed exitId)",
-      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
-      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
-      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
-      "function HALF_EXIT_PERIOD() view returns (uint256)",
-      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
-      "function addExitToQueue(address exitor, address childToken, address rootToken, uint256 exitAmountOrTokenId, bytes32 txHash, bool isRegularExit, uint256 priority)",
-      "function addInput(uint256 exitId, uint256 age, address utxoOwner, address token)",
-      "function challengeExit(uint256 exitId, uint256 inputId, bytes challengeData, address adjudicatorPredicate)",
-      "function createExitQueue(address token)",
-      "function exitNft() view returns (address)",
-      "function exitWindow() view returns (uint256)",
-      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
-      "function exitsQueues(address) view returns (address)",
-      "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function ownerExits(bytes32) view returns (uint256)",
-      "function processExits(address _token)",
-      "function processExitsBatch(address[] _tokens)",
-      "function renounceOwnership()",
-      "function startExitWithDepositedTokens(uint256 depositId, address token, uint256 amountOrToken) payable",
-      "function transferOwnership(address newOwner)",
-      "function updateExitPeriod(uint256 halfExitPeriod)",
-      "function verifyInclusion(bytes data, uint8 offset, bool verifyTxInclusion) view returns (uint256)"
-    ],
     "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA": [
       "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1881,6 +1859,40 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97": [
+      "event BlacklistBlocked(uint256 indexed exitId, address indexed user, address indexed token)",
+      "event BlacklistUpdated(address indexed user, bool value)",
+      "event ExitBlacklistUpdated(uint256 indexed fullExitId, uint128 indexed stableExitId, bool value)",
+      "event ExitCancelled(uint256 indexed exitId)",
+      "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
+      "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
+      "event ExitUpdated(uint256 indexed exitId, uint256 indexed age, address signer)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Withdraw(uint256 indexed exitId, address indexed user, address indexed token, uint256 amount)",
+      "function HALF_EXIT_PERIOD() view returns (uint256)",
+      "function ON_FINALIZE_GAS_LIMIT() view returns (uint32)",
+      "function addExitToQueue(address exitor, address childToken, address rootToken, uint256 exitAmountOrTokenId, bytes32 txHash, bool isRegularExit, uint256 priority)",
+      "function addInput(uint256 exitId, uint256 age, address utxoOwner, address token)",
+      "function blacklistedExitOriginalId(uint128) view returns (uint256)",
+      "function challengeExit(uint256 exitId, uint256 inputId, bytes challengeData, address adjudicatorPredicate)",
+      "function createExitQueue(address token)",
+      "function exitNft() view returns (address)",
+      "function exitWindow() view returns (uint256)",
+      "function exits(uint256) view returns (uint256 receiptAmountOrNFTId, bytes32 txHash, address owner, address token, bool isRegularExit, address predicate)",
+      "function exitsQueues(address) view returns (address)",
+      "function isBlacklistedExit(uint128) view returns (bool)",
+      "function isOwner() view returns (bool)",
+      "function owner() view returns (address)",
+      "function ownerExits(bytes32) view returns (uint256)",
+      "function processExits(address _token)",
+      "function processExitsBatch(address[] _tokens)",
+      "function renounceOwnership()",
+      "function setBlacklistExit(uint256 exitId, bool value)",
+      "function startExitWithDepositedTokens(uint256 depositId, address token, uint256 amountOrToken) payable",
+      "function transferOwnership(address newOwner)",
+      "function updateExitPeriod(uint256 halfExitPeriod)",
+      "function verifyInclusion(bytes data, uint8 offset, bool verifyTxInclusion) view returns (uint256)"
     ],
     "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": [
       "constructor(address _proxyTo, address _registry, string _heimdallId)",
@@ -2010,8 +2022,8 @@
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23519552 },
-  "permissionsConfigHash": "0xcd1603836a398a3442f17ccb629e0bee50d6bc59ee640ba054730ed38cdc0b9c"
+  "usedBlockNumbers": { "ethereum": 23583539 },
+  "permissionsConfigHash": "0xb9418c456962c038809bed5d65324ce350af667a66cb600e40fbb5e9ba9eb525"
 }

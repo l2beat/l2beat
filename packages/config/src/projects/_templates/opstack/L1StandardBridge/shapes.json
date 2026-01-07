@@ -127,7 +127,12 @@
   "L1StandardBridge_v2_7_0": {
     "hash": "0x29b630d028d2dfddff75dc128b41ae51836c874dcd31a62c9d7313599e6261fb",
     "address": "eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb",
-    "chain": "ethereum",
     "blockNumber": 23496267
+  },
+  "L1StandardBridge_v2_8_0.sol": {
+    "hash": "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00",
+    "address": "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A",
+    "chain": "ethereum",
+    "blockNumber": 23881654
   }
 }

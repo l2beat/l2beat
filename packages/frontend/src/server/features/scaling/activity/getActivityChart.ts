@@ -2,7 +2,7 @@ import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getBucketValuesRange } from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getActivitySyncState } from '../../utils/syncState'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
@@ -13,7 +13,6 @@ import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
-import { ActivityTimeRange } from './utils/range'
 import {
   getActivityAdjustedTimestamp,
   getActivitySyncWarning,
@@ -22,16 +21,7 @@ import {
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
-  range: v.union([
-    v.object({
-      type: ActivityTimeRange,
-    }),
-    v.object({
-      type: v.literal('custom'),
-      from: v.number(),
-      to: v.number(),
-    }),
-  ]),
+  range: ChartRange,
 })
 
 type ActivityChartDataPoint = [
@@ -138,8 +128,14 @@ export async function getActivityChart({
     const fallbackValue = isSynced ? 0 : null
 
     const entry = aggregatedEntries[timestamp]
-    if (!entry) {
-      return [timestamp, null, null, null, null]
+    if (!entry || !isSynced) {
+      return [
+        timestamp,
+        null,
+        entry?.ethereumCount ?? fallbackValue,
+        null,
+        entry?.ethereumUopsCount ?? fallbackValue,
+      ]
     }
 
     return [
@@ -209,11 +205,7 @@ function getActivityChartStats(
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getBucketValuesRange(range, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [
-    range.type === 'custom' ? range.from : (from ?? 1590883200),
-    range.type === 'custom' ? range.to : to,
-  ]
+  const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingTvsData(
   req: Request<
@@ -86,12 +87,20 @@ async function getQueryState(
     return helpers.dehydrate()
   }
 
-  await helpers.tvs.detailedChart.prefetch({
-    filter: {
+  await Promise.all([
+    helpers.tvs.detailedChart.prefetch({
+      filter: {
+        type: tab,
+      },
+      range: optionToRange('1y'),
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
+    helpers.tvs.table.prefetch({
       type: tab,
-    },
-    range: '1y',
-    excludeAssociatedTokens: false,
-  })
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
+  ])
   return helpers.dehydrate()
 }

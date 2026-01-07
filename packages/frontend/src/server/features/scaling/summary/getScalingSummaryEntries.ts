@@ -48,7 +48,11 @@ export async function getScalingSummaryEntries() {
     projectsOngoingAnomalies,
   ] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({
+      type: 'layer2',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
     getActivityLatestUops(projects),
     getApprovedOngoingAnomalies(),
   ])
@@ -78,13 +82,6 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   dataAvailability: ProjectScalingDa[] | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
-    breakdown:
-      | (ProjectSevenDayTvsBreakdown['breakdown'] & {
-          associated: number
-        })
-      | undefined
-    change: number | undefined
-    associatedTokensExcludedChange: number | undefined
     associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
     associatedTokensExcludedWarnings: WarningWithSentiment[]
@@ -116,7 +113,7 @@ export function getScalingSummaryEntry(
     latestTvs && latestTvs.breakdown.total > 0
       ? getAssociatedTokenWarning({
           associatedRatio:
-            latestTvs.associated.total / latestTvs.breakdown.total,
+            latestTvs.breakdown.associated / latestTvs.breakdown.total,
           name: project.name,
           associatedTokens: project.tvsInfo?.associatedTokens ?? [],
         })
@@ -145,13 +142,6 @@ export function getScalingSummaryEntry(
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
-      breakdown: latestTvs?.breakdown && {
-        ...latestTvs.breakdown,
-        associated: latestTvs.associated.total,
-      },
-      change: latestTvs?.change.total,
-      associatedTokensExcludedChange:
-        latestTvs?.changeExcludingAssociated.total,
       associatedTokens: project.tvsInfo?.associatedTokens ?? [],
       warnings: compact([
         ...associatedTokensExcludedWarnings,

@@ -1,7 +1,7 @@
 {
   "name": "hashkey",
-  "timestamp": 1756721254,
-  "configHash": "0xce3d05a7a2ddd845056221e27aae85ac8cd5dd33a67f7f125195ef6caa50c838",
+  "timestamp": 1765550542,
+  "configHash": "0x126a725ccb1ee5f283389d6da79659a5bf8ee6f888854416a0aeec37214ca814",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -77,7 +77,9 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 328,
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
+        "game42": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 430,
         "gameImpls": [
           "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
           "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
@@ -87,14 +89,17 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
-        "permissionedGamesTotal": 328,
+        "permissionedGamesTotal": 430,
         "version": "1.0.1-beta.1"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
-        "game1337": { "severity": "HIGH" }
+        "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50": "Proxy",
@@ -192,7 +197,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xa49e39ce5420cad79f28224507ee4639c68c6d017b42f844b9d31e9cfc5c2c6f"
+        "0x3cdcfae65bb5f8df426350541726ba956e428f7b58730577db22fc48bd7ac4c7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -525,7 +530,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xb09d83cfb489ff7f6e5c0d0ca61324097190fd21243bf2a122da50b7c4a47413"
+        "0x41762a10a7d78d4074b50ffc9b426420faa947abc31d9279c9f1973504deed01"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -551,7 +556,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0xdac9cce03f8066b7a55f8f75f29c4dea8d99ebe438d1724f9d29ac150f6c5b3f"
+        "0x42d9bef8dd252ad9f5c4e0f9476d758e0580ba046660165ffc4991ddcefae7f8"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -759,7 +764,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621045",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621084",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -859,7 +864,7 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0xbd6116af9840987ef3c83075917f47592d6b1a13143aa7172a578125bdc983cf"
+        "0x1a2367437cfb7cb21928a5bbd1fe8d8ba9602190438fee88e83a08f25a1e14c6"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
@@ -1115,7 +1120,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "balance": "50759965072584072424888620",
+        "balance": "69101903296019267130175817",
         "disputeGameFactory": "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A",
@@ -1123,7 +1128,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 23259839
+          "prevBlockNum": 23993621
         },
         "paused": false,
         "proofMaturityDelaySeconds": 302400,
@@ -2003,7 +2008,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -2016,6 +2021,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23267583 },
+  "usedBlockNumbers": { "ethereum": 23997205 },
   "permissionsConfigHash": "0xdbce61a2fca51317de6b4346bbfe50e89fc3babd9400f0e47c75e17c52cf07c8"
 }

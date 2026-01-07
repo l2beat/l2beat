@@ -198,7 +198,7 @@
         "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
         "chain": "zksync2"
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -522,7 +522,7 @@
         "decimals": 2,
         "sinceTimestamp": 1737417600
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -1147,6 +1147,79 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-PC0000015",
+      "priceId": "tradable-na-third-party-online-merchant-sstn",
+      "symbol": "PC0000015",
+      "name": "Private Credit Direct Deal0000015",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66880/large/tradable.jpg?1750921859",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd8916e15D351DC728414e99A4883c72010eE11f8",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000019",
+      "priceId": "tradable-north-america-pos-lender-sstn",
+      "symbol": "PC0000019",
+      "name": "Private Credit Direct Deal0000019",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66800/large/tradable.jpg?1750576495",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1F179A51Ab46252f469733DFcbD9115090A91f03",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000023",
+      "priceId": "tradable-singapore-fintech-ssl-2",
+      "symbol": "PC0000023",
+      "name": "Private Credit Direct Deal0000023",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66954/large/tradable.jpg?1751254449",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "tradable-singapore-fintech-ssl-2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800,
+        "address": "0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
+        "chain": "zksync2"
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000027",
+      "priceId": "tradable-latam-bnpl-sstn",
+      "symbol": "PC0000027",
+      "name": "Private Credit Direct Deal0000027",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66793/large/tradable.jpg?1750576283",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-PC0000031",
       "priceId": "tradable-na-rent-financing-platform-sstn",
       "symbol": "PC0000031",
@@ -1160,7 +1233,169 @@
         "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
         "chain": "zksync2"
       },
-      "category": "other",
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000033",
+      "priceId": "tradable-apac-diversified-finance-provider-sstn",
+      "symbol": "PC0000033",
+      "name": "Private Credit Direct Deal0000033",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66798/large/tradable.jpg?1750576460",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6FF4fAfD8D604614c704a5936D9146C0af19BD1E",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000049",
+      "priceId": "tradable-eu-latam-pos-financing-sstl",
+      "symbol": "PC0000049",
+      "name": "Private Credit Direct Deal0000049",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66794/large/tradable.jpg?1750576332",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe53dBcEf6F700536a912c51CAEa4D0E2bE2b1388",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000077",
+      "priceId": "tradable-singapore-fintech-ssl",
+      "symbol": "PC0000077",
+      "name": "Private Credit Direct Deal0000077",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66878/large/tradable.jpg?1750921608",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x18012CB9e1478EF458C8c996F99b8DcEcA60795c",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000081",
+      "priceId": "tradable-na-legal-receivables-ssl",
+      "symbol": "PC0000081",
+      "name": "Private Credit Direct Deal0000081",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66799/large/tradable.jpg?1750576475",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA4b3dC5433EcAbDd1498cA7f3f4d890b185C0B0A",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000085",
+      "priceId": "tradable-latam-middle-market-lender-sstl",
+      "symbol": "PC0000085",
+      "name": "Private Credit Direct Deal0000085",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66877/large/tradable.jpg?1750921571",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfeAfDE23fb2364896C297c3Fa6628f04601a035b",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000089",
+      "priceId": "latam-residential-sstl",
+      "symbol": "PC0000089",
+      "name": "Private Credit Direct Deal0000089",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66590/large/tradable.jpg?1749832358",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfB3fCCdD38A96C3f769c62E578323f22c3BFCbEc",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000097",
+      "priceId": "tradable-latam-fintech-sstn",
+      "symbol": "PC0000097",
+      "name": "Private Credit Direct Deal0000097",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66796/large/tradable.jpg?1750576421",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5aBe0a2ead1357F70E73F5b60E227dF64A54ddD5",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0000101",
+      "priceId": "na-post-settlement-legal-financing-receivables",
+      "symbol": "PC0000101",
+      "name": "Private Credit Direct Deal0000101",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66791/large/tradable.jpg?1750576168",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3D19625Bb8E4B52Ac4ca28ecec2B5E243ae2EE81",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-PC0016245",
+      "priceId": "na-capital-as-a-service-sstn",
+      "symbol": "PC0016245",
+      "name": "Private Credit Direct Deal0016245",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66593/large/tradable.jpg?1749883324",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe3D53AdDadb3F87ADC38B4192171aAf5A07A3738",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1751500800
+      },
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },
@@ -1323,8 +1558,7 @@
         "address": "0xaBECe6D924E003816BCe65D9Bd20655303d0abc6",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1739109131,
-        "untilTimestamp": 1756645200
+        "sinceTimestamp": 1739109131
       }
     },
     {

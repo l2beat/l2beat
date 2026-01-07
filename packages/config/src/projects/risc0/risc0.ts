@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -103,17 +103,31 @@ export const risc0: BaseProject = {
         ...TRUSTED_SETUPS.Risc0,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('taiko'),
+        sinceTimestamp: UnixTime(1730452800),
+      },
+      {
+        projectId: ProjectId('bob'),
+        sinceTimestamp: UnixTime(1752703200),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+            address: EthereumAddress(
+              '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+            ),
             chain: 'ethereum',
           },
           {
-            address: '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+            address: EthereumAddress(
+              '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+            ),
             chain: 'ethereum',
           },
         ],
@@ -126,7 +140,15 @@ export const risc0: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+            address: EthereumAddress(
+              '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+            ),
+            chain: 'ethereum',
+          },
+          {
+            address: EthereumAddress(
+              '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
+            ),
             chain: 'ethereum',
           },
         ],

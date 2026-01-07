@@ -11,7 +11,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -45,15 +45,15 @@ export function EcosystemsProjectsChart({
       },
     } satisfies ChartMeta
   }, [])
-  const range = getChartRange(data.chart)
-  assert(range, 'No chart range')
+  const timeRange = getChartTimeRangeFromData(data.chart)
+  assert(timeRange, 'No chart range')
   const total = data.chart.at(-1)?.projectCount
   assert(total !== undefined, 'No data')
 
   return (
     <EcosystemWidget className={className}>
       <Header
-        range={range}
+        timeRange={timeRange}
         projectCount={total}
         marketShare={data.marketShare}
       />
@@ -101,11 +101,11 @@ export function EcosystemsProjectsChart({
 }
 
 function Header({
-  range,
+  timeRange,
   projectCount,
   marketShare,
 }: {
-  range: [number, number]
+  timeRange: [number, number]
   projectCount: number
   marketShare: number
 }) {
@@ -113,7 +113,7 @@ function Header({
     <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Live projects count</div>
-        <EcosystemChartTimeRange range={range} />
+        <EcosystemChartTimeRange timeRange={timeRange} />
       </div>
       <div className="text-right">
         <div className="font-bold text-xl">{projectCount} Projects</div>

@@ -35,6 +35,9 @@ export async function makeConfig(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
+  const activeChains = (
+    await ps.getProjects({ select: ['chainConfig'], whereNot: ['archivedAt'] })
+  ).map((p) => p.chainConfig)
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
@@ -157,20 +160,17 @@ export async function makeConfig(
         60 * 60, // 1 hour
       ),
     },
-    bridges: flags.isEnabled('bridges') && {
+    interop: flags.isEnabled('interop') && {
       capture: {
-        enabled: flags.isEnabled('bridges', 'capture'),
-        chains: [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
-          { name: 'optimism', type: 'evm' as const },
-        ].filter((c) => flags.isEnabled('bridges', 'capture', c.name)),
+        enabled: flags.isEnabled('interop', 'capture'),
+        chains: getInteropChains().filter((c) =>
+          flags.isEnabled('interop', 'capture', c.name),
+        ),
       },
-      matching: flags.isEnabled('bridges', 'matching'),
-      cleaner: flags.isEnabled('bridges', 'cleaner'),
+      matching: flags.isEnabled('interop', 'matching'),
+      cleaner: flags.isEnabled('interop', 'cleaner'),
       dashboard: {
-        enabled: flags.isEnabled('bridges', 'dashboard'),
+        enabled: flags.isEnabled('interop', 'dashboard'),
         getExplorerUrl: (chain: string) => {
           const c = chains.find((cc) => cc.name === chain)
 
@@ -178,16 +178,38 @@ export async function makeConfig(
         },
       },
       compare: {
-        enabled: flags.isEnabled('bridges', 'compare'),
-        intervalMs: env.optionalInteger(['BRIDGES_COMPARE_INTERVAL_MS']),
+        enabled: flags.isEnabled('interop', 'compare'),
       },
       financials: {
-        enabled: flags.isEnabled('bridges', 'financials'),
+        enabled: flags.isEnabled('interop', 'financials'),
+        tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+        tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
       },
+      config: {
+        enabled: flags.isEnabled('interop', 'config'),
+        chains: activeChains
+          .filter((c) => c.chainId !== undefined)
+          .map((c) => ({ id: c.chainId as number, name: c.name })),
+      },
+      inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },
+    newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
   }
+}
+
+export function getInteropChains() {
+  return [
+    { name: 'ethereum', type: 'evm' as const, display: 'ETH' },
+    { name: 'arbitrum', type: 'evm' as const, display: 'ARB' },
+    { name: 'base', type: 'evm' as const, display: 'BASE' },
+    { name: 'optimism', type: 'evm' as const, display: 'OP' },
+    { name: 'apechain', type: 'evm' as const, display: 'APE' },
+    { name: 'polygonpos', type: 'evm' as const, display: 'POL' },
+    { name: 'zksync2', type: 'evm' as const, display: 'ZK' },
+    { name: 'abstract', type: 'evm' as const, display: 'ABS' },
+  ]
 }
 
 function getEthereumMinTimestamp(chains: ChainConfig[]) {

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -89,13 +89,94 @@ export const lineaprover: BaseProject = {
         ...TRUSTED_SETUPS.CeloPlumo,
       },
     ],
-    verifierHashes: [
+    projectsForTvs: [
       {
-        hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
+        projectId: ProjectId('linea'),
+        sinceTimestamp: UnixTime(1689112800),
+      },
+    ],
+    verifierHashes: [
+      // {
+      //   hash: '0x7a181b5c0d9f93a5935cd1249aaa8e60a0e8f729d78325303e3a7dd769413b5b',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: '0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
+      // {
+      //   hash: '0x352344753c2520da8daf4dfc60dff63ff92b6775434d5582efba9a88b2e370b3',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
+      // {
+      //   hash: '0x3153d1fecad37e37efc129c7d55aa885e83d152774e6fccded3084959d2524e9',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
+      // {
+      //   hash: '0x588886af4e1b4355201cfd3b49220f1dd41e3ab6c1611a3bcd67dbdc59bacf5f',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x8CAE7ff138e401384df88a408314e4E9a92f274E',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
+      {
+        hash: '0xb0444511433f868a05ccdd4ca0e2d1d8749c74b8f4b5bd630f2700cde7f41b46',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: '0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+            address: EthereumAddress(
+              '0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      },
+      {
+        hash: '0xa2d1e02fe3b174b3b039ed8e33e7d9cb57b2b4990b5e4b22d634872e4d9e9325',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
+            ),
             chain: 'ethereum',
           },
         ],

@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x6e1e3924614b6fb89e2e98f8b86048720b3cd16b
+
+# Diff at Wed, 19 Nov 2025 10:59:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1748939714
+- current timestamp: 1763549888
+
+## Description
+
+validator addresses are unchanged:
+https://arbiscan.io/tx/0x62a66b841b44845f9aa6a2c40b7aea017eedb791b95a5f20bd312960320246b4
+
+but the bridge was paused for a brief period (twice):
+- https://arbiscan.io/tx/0x3eb1fa1996c64de979b4426825706beb609b2c1adb6b971712139f74815c0bdd
+- https://arbiscan.io/tx/0x711d635b68f8af9061137e5a751007a833fe028c5b87f69b40b6820e6d165a3e
+
+## Watched changes
+
+```diff
+    contract HyperliquidBridge (arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7) {
+    +++ description: Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.
+      values.coldValidatorSetHash:
+-        "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
++        "0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d"
+      values.epoch:
+-        5
++        7
+      values.hotValidatorSetHash:
+-        "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6"
++        "0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f"
+      values.pendingValidatorSetUpdate.epoch:
+-        5
++        7
+      values.pendingValidatorSetUpdate.updateBlockNumber:
+-        261233949
++        399539914
+      values.pendingValidatorSetUpdate.hotValidatorSetHash:
+-        "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6"
++        "0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f"
+      values.pendingValidatorSetUpdate.coldValidatorSetHash:
+-        "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
++        "0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d"
++++ description: Validator set updates. See config.jsonc and update the hardcoded validator addresses.
++++ severity: HIGH
+      values.validatorSetUpdates.5:
++        {"epoch":6,"hotValidatorSetHash":"0x9e80943d95888cde6b0903f8773bd1816e94270a726bdacdf62942103436c17d","coldValidatorSetHash":"0x0cae1c00d81931c7cb53d11eb94eb7367a568bc86bff3f47078ab9f2c8ddd49a"}
++++ description: Validator set updates. See config.jsonc and update the hardcoded validator addresses.
++++ severity: HIGH
+      values.validatorSetUpdates.6:
++        {"epoch":7,"hotValidatorSetHash":"0x1503ca1a4eac24ce351d93ef962f13cb745a9d08f50cef522ca8aa216e13fb7f","coldValidatorSetHash":"0x55a3e95e596d9e4918403663b9e83d046fdf17cdcbdb4fe6bf5429afde0adc2d"}
+    }
+```
+
 Generated with discovered.json: 0x606fd559cccaac3e30d9062afbf1abc336cb1cd7
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
-  "timestamp": 1752073991,
-  "configHash": "0x820fc157b961cd2d0fa0f233b4915ff5b212924d4f49826643ad707decaaf35d",
+  "timestamp": 1761552123,
+  "configHash": "0xf26a1ee499e57c116f8d63faeca52556b1df9b81e4e590325ead9f1649437bc7",
   "entries": [
     {
       "name": "FPValidator",
@@ -331,7 +331,9 @@
           "362": 20,
           "365": 20,
           "367": 20,
-          "370": 20
+          "370": 20,
+          "377": 20,
+          "383": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -693,6 +695,14 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "370": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "377": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "383": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -1425,6 +1435,22 @@
             "outboundBlockConfirm": 15,
             "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
             "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "377": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "383": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
           }
         },
         "endpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -1774,6 +1800,14 @@
           "370": [
             "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "377": [
+            "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "383": [
+            "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
         },
         "layerZeroToken": "eth:0x0000000000000000000000000000000000000000",
@@ -1871,7 +1905,9 @@
           "362": [2],
           "365": [2],
           "367": [2],
-          "370": [2]
+          "370": [2],
+          "377": [2],
+          "383": [2]
         },
         "treasuryContract": "eth:0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1964,7 +2000,9 @@
           "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "365": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
-          "370": "0x000000000000000000000000fd76d9cb0bac839725ab79127e7411fe71b1e3ca"
+          "370": "0x000000000000000000000000fd76d9cb0bac839725ab79127e7411fe71b1e3ca",
+          "377": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "383": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "implementationNames": {
@@ -1984,7 +2022,7 @@
       "sinceBlock": 15719673,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "40826291560261683",
+        "circulatingSupply": "51075884258501360",
         "lzEndpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "eth:0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -2117,7 +2155,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 974,
+        "nonce": 1037,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2210,7 +2248,7 @@
       "values": {
         "$immutable": true,
         "cap": "100000000000000000000000",
-        "circulatingSupply": "27370026448024165110219",
+        "circulatingSupply": "8499047232244314743883",
         "DAY_INTERVAL": 86400,
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
@@ -2228,7 +2266,7 @@
         "PT_SET_ENABLE": 2,
         "symbol": "STONE",
         "token": "eth:0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "totalSupply": "37141667243139164891002",
+        "totalSupply": "14067892766868690733156",
         "useCustomAdapterParams": false
       },
       "implementationNames": {
@@ -2349,7 +2387,7 @@
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "285569700015767862019392337",
+        "circulatingSupply": "273498849746357671133721348",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2402,10 +2440,12 @@
       "name": "DVN",
       "address": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -2460,24 +2500,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "DVNFeeLib",
-      "address": "eth:0xa7b5189bcA84Cd304D8553977c7C614329750d99",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1706489555,
-      "sinceBlock": 19108731,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
-      },
-      "implementationNames": {
-        "eth:0xa7b5189bcA84Cd304D8553977c7C614329750d99": "DVNFeeLib"
-      }
-    },
-    {
       "address": "eth:0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2524,11 +2546,6 @@
       }
     },
     {
-      "address": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xB9d9BBB9087eE8996Ce24970a3a50924581291FF",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2559,7 +2576,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 2,
+        "nonce": 17,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -2579,10 +2596,12 @@
       "name": "Google Cloud Oracle",
       "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -2630,27 +2649,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 162,
+        "nonce": 163,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "name": "VerifierFeeLib",
-      "address": "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1694217119,
-      "sinceBlock": 18095085,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
       }
     },
     {
@@ -2706,7 +2710,7 @@
       "sinceBlock": 15584943,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "999976334324212995623532463",
+        "circulatingSupply": "999976341290951924759741263",
         "lzEndpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "eth:0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -3260,21 +3264,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "eth:0xa7b5189bcA84Cd304D8553977c7C614329750d99": [
-      "constructor(uint256 _nativeDecimalsRate)",
-      "error DVN_EidNotSupported(uint32 eid)",
-      "error DVN_InvalidDVNOptions(uint256 cursor)",
-      "error DVN_UnsupportedOptionType(uint8 optionType)",
-      "error Transfer_NativeFailed(address _to, uint256 _value)",
-      "error Transfer_ToAddressIsZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdrawToken(address _token, address _to, uint256 _amount)"
-    ],
     "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": [
       "constructor(string _name, string _symbol, address _endpoint, uint16 _mainEndpointId, uint256 _initialSupplyOnMainEndpoint)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -3523,10 +3512,6 @@
     "eth:0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8": [
       "constructor(address _singleton)"
     ],
-    "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
-    ],
     "eth:0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373": [
       "constructor(address _singleton)"
     ],
@@ -3577,8 +3562,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
-  "usedBlockNumbers": { "ethereum": 22882445 },
-  "permissionsConfigHash": "0x675177be01bc53b099944b60d990da6330ddf0b8233e5b228d23068d26487c5d"
+  "usedBlockNumbers": { "ethereum": 23667461 },
+  "permissionsConfigHash": "0x426773a82f1f7d171763b8a3a331831f85ddaa8709c87eb1296b6597b8086dc6"
 }

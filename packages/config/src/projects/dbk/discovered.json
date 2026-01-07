@@ -1,7 +1,7 @@
 {
   "name": "dbk",
   "timestamp": 1726837979,
-  "configHash": "0x19358652eeb10c0c6862d2cdddd58f2df52e23f0b3c32ba0b4238afcf50289d7",
+  "configHash": "0x18423e32a6ddd92ccfff144c628425c45decd221588644436bac443c99fd77a0",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -428,7 +428,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x5c566f7b9bd649708500a4ea89e4031d2dad1273ce56f6cb5e67d0193f136eb1"
+        "0xba7053b8415f99701360cfd314df22038f131c38fd35244b17f11e9f1edccbca"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",

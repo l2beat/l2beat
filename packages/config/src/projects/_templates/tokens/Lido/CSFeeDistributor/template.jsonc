@@ -9,6 +9,7 @@
   "ignoreInWatchMode": [
     "treeRoot",
     "totalClaimableShares",
-    "pendingSharesToDistribute"
+    "pendingSharesToDistribute",
+    "distributionDataHistoryCount"
   ]
 }

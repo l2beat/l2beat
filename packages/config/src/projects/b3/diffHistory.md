@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xbde48e94552719f6150f9d31a4591899a235af24
+
+# Diff at Tue, 04 Nov 2025 11:32:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1758875688
+- current timestamp: 1758875688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758875688 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533"
++        "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10"
+    }
+```
+
 Generated with discovered.json: 0x995d002c0b4b4b2ca039c6e2d9246e7c35f70fe9
 
 # Diff at Fri, 26 Sep 2025 08:35:56 GMT:

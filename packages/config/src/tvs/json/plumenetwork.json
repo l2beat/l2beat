@@ -4,6 +4,71 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "plumenetwork-MNRL",
+      "priceId": "mineral-vault-fund-i",
+      "symbol": "MNRL",
+      "name": "Mineral Vault I Security Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66290/large/mineral-vault.png?1749109942",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5107272921A750A20d492Fb41Acf0b770b09a624",
+        "chain": "plumenetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1750377600
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "plumenetwork-pETH",
+      "priceId": "plume-staked-eth",
+      "symbol": "pETH",
+      "name": "Plume Staked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67514/large/peth.png?1753068541",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x39d1F90eF89C52dDA276194E9a832b484ee45574",
+        "chain": "plumenetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1753228800
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "plume-staked-eth",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x39d1F90eF89C52dDA276194E9a832b484ee45574",
+              "chain": "plumenetwork",
+              "decimals": 18,
+              "sinceTimestamp": 1753228800
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xca59cA09E5602fAe8B629DeE83FfA819741f14be",
+              "escrowAddress": "0xcab283e4bb527Aa9b157Bae7180FeF19E2aaa71a",
+              "chain": "plumenetwork",
+              "decimals": 18,
+              "sinceTimestamp": 1753228800
+            }
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "plumenetwork-PLUME",
       "priceId": "plume",
       "symbol": "PLUME",
@@ -103,6 +168,71 @@
       }
     },
     {
+      "mode": "custom",
+      "id": "plumenetwork-superOETHp",
+      "priceId": "super-oeth",
+      "symbol": "superOETHp",
+      "name": "Super OETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39828/large/Super_OETH.png?1724208268",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFCbe50DbE43bF7E5C88C6F6Fb9ef432D4165406E",
+        "chain": "plumenetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1744991910
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "super-oeth",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0xFCbe50DbE43bF7E5C88C6F6Fb9ef432D4165406E",
+              "chain": "plumenetwork",
+              "decimals": 18,
+              "sinceTimestamp": 1744991910
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xca59cA09E5602fAe8B629DeE83FfA819741f14be",
+              "escrowAddress": "0xc8c8F8bEA5631A8AF26440AF32a55002138cB76a",
+              "chain": "plumenetwork",
+              "decimals": 18,
+              "sinceTimestamp": 1744991910
+            }
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "plumenetwork-USCC",
+      "priceId": "superstate-uscc",
+      "symbol": "USCC",
+      "name": "Superstate Crypto Carry Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39326/large/superstate.jpg?1721724143",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4c21B7577C8FE8b0B0669165ee7C8f67fa1454Cf",
+        "chain": "plumenetwork",
+        "decimals": 6,
+        "sinceTimestamp": 1743086925
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "plumenetwork-USDC",
       "priceId": "usd-coin",
@@ -149,6 +279,24 @@
     },
     {
       "mode": "auto",
+      "id": "plumenetwork-USTB-1",
+      "priceId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "symbol": "USTB",
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
+        "chain": "plumenetwork",
+        "decimals": 6,
+        "sinceTimestamp": 1743009435
+      },
+      "category": "rwaRestricted",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "plumenetwork-WETH",
       "priceId": "weth",
       "symbol": "WETH",
@@ -165,6 +313,32 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "plumenetwork-XAUM",
+      "priceId": "matrixdock-gold",
+      "symbol": "XAUM",
+      "name": "Matrixdock Gold",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51962/large/xaum_200px_logo_1x.png?1733560735",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+        "chain": "plumenetwork",
+        "decimals": 18,
+        "sinceTimestamp": 1745486446
+      },
+      "category": "rwaPublic",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     }
   ]
 }

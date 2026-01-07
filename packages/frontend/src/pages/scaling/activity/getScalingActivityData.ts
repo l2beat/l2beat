@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
@@ -7,14 +8,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingActivityData(
-  req: Request<
-    unknown,
-    unknown,
-    unknown,
-    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
-  >,
+  req: Request,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
@@ -22,11 +19,11 @@ export async function getScalingActivityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['scaling', 'activity', 'data', req.query.tab],
+        key: ['scaling', 'activity', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getCachedData(cache, req.query.tab),
+      () => getCachedData(),
     ),
   ])
 
@@ -54,46 +51,29 @@ export async function getScalingActivityData(
   }
 }
 
-async function getCachedData(
-  cache: ICache,
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
-) {
-  const [entries, queryState] = await Promise.all([
-    getScalingActivityEntries(),
-    cache.get(
-      {
-        key: ['scaling', 'activity', 'data', 'query-state', tab],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
+async function getCachedData() {
+  const helpers = getSsrHelpers()
+
+  const entries = await getScalingActivityEntries()
+
+  await Promise.all([
+    helpers.activity.recategorisedChart.prefetch({
+      range: optionToRange('1y', { offset: -UnixTime.DAY }),
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
       },
-      () => getQueryState(tab),
-    ),
+    }),
+    helpers.activity.chartStats.prefetch({
+      filter: {
+        type: 'projects',
+        projectIds: entries.map((entry) => entry.id),
+      },
+    }),
   ])
 
   return {
     entries,
-    queryState,
+    queryState: helpers.dehydrate(),
   }
-}
-
-async function getQueryState(
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
-) {
-  const helpers = getSsrHelpers()
-
-  // Skip prefetching for notReviewed tab as it doesn't have chart data
-  if (tab === 'notReviewed') {
-    return helpers.dehydrate()
-  }
-
-  await Promise.all([
-    helpers.activity.chart.prefetch({
-      range: { type: '1y' },
-      filter: { type: tab },
-    }),
-    helpers.activity.chartStats.prefetch({
-      filter: { type: tab },
-    }),
-  ])
-  return helpers.dehydrate()
 }

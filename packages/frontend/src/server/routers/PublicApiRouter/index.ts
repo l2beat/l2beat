@@ -1,9 +1,8 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import { optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityApiData } from './getScalingActivityApiData'
 import { getScalingActivityProjectApiData } from './getScalingActivityProjectApiData'
@@ -12,6 +11,9 @@ import { getScalingTvsApiData } from './getScalingTvsApiData'
 import { getScalingTvsProjectApiData } from './getScalingTvsProjectApiData'
 import { getScalingTvsProjectBreakdownApiData } from './getScalingTvsProjectBreakdownApiData'
 
+const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
+const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
+
 export function createPublicApiRouter() {
   const router = express.Router()
 
@@ -19,7 +21,7 @@ export function createPublicApiRouter() {
     '/api/scaling/activity',
     validateRoute({
       query: v.object({
-        range: ActivityTimeRange.optional(),
+        range: ActivityRangeSchema.optional(),
         type: ActivityProjectFilterType.optional(),
         projectIds: v.string().optional(),
       }),
@@ -34,7 +36,7 @@ export function createPublicApiRouter() {
       }
 
       const data = await getScalingActivityApiData({
-        range: range ?? '30d',
+        range: optionToRange(range ?? '30d'),
         type: type ?? 'all',
         projectIds: projectIds?.split(',') ?? [],
       })
@@ -47,7 +49,7 @@ export function createPublicApiRouter() {
     '/api/scaling/activity/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
-      query: v.object({ range: ActivityTimeRange.optional() }),
+      query: v.object({ range: ActivityRangeSchema.optional() }),
     }),
     async (req, res) => {
       const { slug } = req.params
@@ -55,7 +57,7 @@ export function createPublicApiRouter() {
 
       const data = await getScalingActivityProjectApiData({
         slug,
-        range: range ?? '30d',
+        range: optionToRange(range ?? '30d'),
       })
       res.json(data)
     },
@@ -65,20 +67,28 @@ export function createPublicApiRouter() {
     '/api/scaling/tvs',
     validateRoute({
       query: v.object({
-        range: TvsChartRange.optional(),
+        range: TvsRangeSchema.optional(),
         type: TvsProjectFilterType.optional(),
         projectIds: v.string().optional(),
         excludeAssociatedTokens: v.string().optional(),
+        excludeRwaRestrictedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
-      const { range, type, projectIds, excludeAssociatedTokens } = req.query
+      const {
+        range,
+        type,
+        projectIds,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
+      } = req.query
 
       const data = await getScalingTvsApiData({
-        range: range ?? '30d',
+        range: optionToRange(range ?? '30d'),
         type: type ?? 'layer2',
         projectIds: projectIds?.split(',') ?? [],
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
+        excludeRwaRestrictedTokens: excludeRwaRestrictedTokens !== 'false',
       })
       res.json(data)
     },
@@ -89,18 +99,21 @@ export function createPublicApiRouter() {
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: v.object({
-        range: TvsChartRange.optional(),
+        range: TvsRangeSchema.optional(),
         excludeAssociatedTokens: v.string().optional(),
+        excludeRwaRestrictedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
       const { slug } = req.params
-      const { range, excludeAssociatedTokens } = req.query
+      const { range, excludeAssociatedTokens, excludeRwaRestrictedTokens } =
+        req.query
 
       const data = await getScalingTvsProjectApiData({
         slug,
-        range: range ?? '30d',
+        range: optionToRange(range ?? '30d'),
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
+        excludeRwaRestrictedTokens: excludeRwaRestrictedTokens !== 'false',
       })
       res.json(data)
     },

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -32,7 +32,7 @@ export const zkprover: BaseProject = {
     badges: [],
   },
   zkCatalogInfo: {
-    creator: 'Polygon Zero',
+    creator: 'Polygon Labs',
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK['PIL-STARK'],
@@ -79,6 +79,24 @@ export const zkprover: BaseProject = {
         ...TRUSTED_SETUPS.PolygonZkEVM,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('polygonzkevm'),
+        sinceTimestamp: UnixTime(1679868000),
+      },
+      {
+        projectId: ProjectId('silicon'),
+        sinceTimestamp: UnixTime(1724796000),
+      },
+      {
+        projectId: ProjectId('ternoa'),
+        sinceTimestamp: UnixTime(1738105200),
+      },
+      {
+        projectId: ProjectId('penchain'),
+        sinceTimestamp: UnixTime(1749938400),
+      },
+    ],
     verifierHashes: [
       // wirex was the last chain using this verifier:
       // {
@@ -99,7 +117,9 @@ export const zkprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
         knownDeployments: [
           {
-            address: '0x9B9671dB83CfcB4508bF361942488C5cA2b1286D',
+            address: EthereumAddress(
+              '0x9B9671dB83CfcB4508bF361942488C5cA2b1286D',
+            ),
             chain: 'ethereum',
           },
         ],

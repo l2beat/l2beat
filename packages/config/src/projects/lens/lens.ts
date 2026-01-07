@@ -16,6 +16,7 @@ const trackedTxsSince = UnixTime(1742928599)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const lens: ScalingProject = zkStackL2({
+  chainId,
   capability: 'universal',
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.DA.AvailVector],
@@ -33,11 +34,7 @@ export const lens: ScalingProject = zkStackL2({
         'https://onboarding.lens.xyz/explore',
       ],
       documentation: ['https://lens.xyz/docs'],
-      explorers: [
-        'https://momoka.lens.xyz',
-        'https://explorer.lens.xyz/',
-        'https://lenscan.io/',
-      ],
+      explorers: ['https://explorer.lens.xyz/', 'https://lenscan.io/'],
       repositories: ['https://github.com/lens-protocol'],
       socialMedia: [
         'https://hey.xyz/u/lens',
@@ -47,7 +44,6 @@ export const lens: ScalingProject = zkStackL2({
     },
   },
   discovery,
-  diamondContract: discovery.getContract('LensZkEvm'),
   chainConfig: {
     name: 'lens',
     chainId,
@@ -103,12 +99,27 @@ export const lens: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: 1763546230,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xc29d04A93F893700015138E3E334eB828dAC3cef',
+        ), // Lens diamond
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: 1763546230,
       },
     },
     {
@@ -118,12 +129,30 @@ export const lens: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: 1763546230,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xc29d04A93F893700015138E3E334eB828dAC3cef',
+        ), // Lens diamond
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: 1763546230,
       },
     },
     {
@@ -133,12 +162,30 @@ export const lens: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: trackedTxsSince,
+        untilTimestamp: 1763546230,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0xc29d04A93F893700015138E3E334eB828dAC3cef',
+        ), // Lens diamond
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: 1763546230,
       },
     },
   ],

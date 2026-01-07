@@ -1,3 +1,299 @@
+Generated with discovered.json: 0xf563e953164227ff884db892bde98a9494747e5c
+
+# Diff at Fri, 12 Dec 2025 16:19:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764953632
+- current timestamp: 1765550347
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764953632 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xbab74fe7b51be1ed885772dad35d5faaa6c00e5d
+
+# Diff at Thu, 11 Dec 2025 14:14:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764953632
+- current timestamp: 1764953632
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764953632 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"propose","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".proposer"}
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".challenger"}
+    }
+```
+
+Generated with discovered.json: 0xb9f3c3b50c7c1477ee13ac88478e3d5db70434be
+
+# Diff at Fri, 05 Dec 2025 16:55:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1764751565
+- current timestamp: 1764953632
+
+## Description
+
+Upgrade to v3.0.4:
+
+Fix bug in Kona, update FPVM image id to `0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23`.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x220C56BCB401001e5D218604c143D38DA107fC4a)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x220C56BCB401001e5D218604c143D38DA107fC4a"
++        "eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xe65E24a2130d0a52A0f9B988dFA06D5759eBa22B"
++        "eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xe65E24a2130d0a52A0f9B988dFA06D5759eBa22B)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+Generated with discovered.json: 0xdb2f663058286364ab69e95e0f44ef5e6ef887f7
+
+# Diff at Wed, 03 Dec 2025 08:47:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1763031834
+- current timestamp: 1764751565
+
+## Description
+
+update the FPVM image id from `0x7ce98c36408e86dac21fc16af301740d07a849be0a80529debcb0797fd66f5e3` to `0xd7c1d74ce26e897e8bc7ea094667dcdb04c405ba1836bdb9b0ad773fc9fd0651`, also:
+
+1. switch to permissioned dispute game (type 1): https://app.blocksec.com/explorer/tx/eth/0x0632241f1d1c26ac8f6f32deafaa02c48f35e030c013289ca36d125f8a09ce7b
+2. set implementation for type 1337 (kailua treasury), propose state: https://app.blocksec.com/explorer/tx/eth/0x7e5a439e3040d6ae3a3b604b8a92c584755cb389991c47c6c557979c49c50ec9
+3. resolve game, set implementation for type 1337 (kailua game), switch to gametype 1337 https://app.blocksec.com/explorer/tx/eth/0x3afce50f425057d0505cec3c97729811011862fade71ec3f04ed5d372eb84d69 
+
+tldr: this injects unproven state in the second transaction, which cannot be used for withdrawals but can be used as a base for future state proposals
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x0e4152204995877DF34BD26d6dab78baf9393Ae2"
++        "eth:0x220C56BCB401001e5D218604c143D38DA107fC4a"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44"
++        "eth:0xe65E24a2130d0a52A0f9B988dFA06D5759eBa22B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x9b9f9CD7A6BfCB55c18bfA35392F409F98B35B44)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x220C56BCB401001e5D218604c143D38DA107fC4a)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xe65E24a2130d0a52A0f9B988dFA06D5759eBa22B)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+Generated with discovered.json: 0xd25958143a8b2d41a1d4b974fbfda59f41f75909
+
+# Diff at Thu, 13 Nov 2025 11:05:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@236e99b8e7528eefed3152e229515862240afbdc block: 1759250312
+- current timestamp: 1763031834
+
+## Description
+
+Two verifiers removed from RiscZeroVerifierRouter, unrelated to BOB verifiers still active.
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.10:
++        {"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.11:
++        {"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.13:
++        {"id":"0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f650bd176900000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.14:
++        {"id":"0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc","index":0,"target":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","value":0,"data":"0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+Generated with discovered.json: 0xcf9ef8f345cdbdfe6a98275cf26f85d8e63708a1
+
+# Diff at Tue, 04 Nov 2025 11:32:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1759250312
+- current timestamp: 1759250312
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759250312 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776"
++        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+    }
+```
+
+Generated with discovered.json: 0xa6b4396e05f2fc3f9a0e5c5ea4fab8d889ade523
+
+# Diff at Mon, 03 Nov 2025 17:44:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1759250312
+- current timestamp: 1759250312
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759250312 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".proposer"}
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A","role":".challenger"}
+    }
+```
+
 Generated with discovered.json: 0x4f1e60233f231ad10c803244fd349661d0a29522
 
 # Diff at Tue, 30 Sep 2025 16:39:37 GMT:
@@ -530,7 +826,7 @@ Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
 - proofMaturityDelaySeconds: 7d->1d
 - disputeGameFinalityDelaySeconds: 3.5d->1d 
 
-Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://boundless-xyz.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://boundless-xyz.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
 summary:
 - standard op stack contracts

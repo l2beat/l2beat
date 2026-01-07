@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
-import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -14,7 +13,7 @@ export const mint: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
@@ -35,6 +34,7 @@ export const mint: ScalingProject = opStackL2({
         'https://mirror.xyz/mintchain.eth',
         'https://community.mintchain.io',
       ],
+      other: ['https://growthepie.com/chains/mint'],
     },
   },
   chainConfig: {

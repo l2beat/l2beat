@@ -1,42 +1,53 @@
 import type { Project } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
-import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { optionToRange } from '~/utils/range/range'
+import { getDaLayersInfo } from './getDaLayersInfo'
 
 export async function getDataPostedSection(
   helpers: SsrHelpers,
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
-  daSolutions: DaSolution[] | undefined,
 ): Promise<
   | Pick<
       DataPostedSectionProps,
-      'defaultRange' | 'daLayer' | 'daTrackingConfig'
+      'defaultRange' | 'currentDaLayers' | 'pastDaLayers' | 'daTrackingConfig'
     >
   | undefined
 > {
-  const usedDaSolution = daSolutions?.find(
-    (daSolution) =>
-      project.daTrackingConfig &&
-      daSolution.layerId === project.daTrackingConfig[0]?.daLayer,
-  )
-  if (!project.daTrackingConfig || !usedDaSolution) return undefined
+  if (!project.daTrackingConfig) return undefined
 
-  const range = project.archivedAt ? 'max' : '1y'
-  const data = await helpers.da.scalingProjectChart.fetch({
-    range,
-    projectId: project.id,
-  })
-
+  const range = project.archivedAt ? optionToRange('max') : optionToRange('1y')
+  const [data, daLayers] = await Promise.all([
+    helpers.da.scalingProjectChart.fetch({
+      range,
+      projectId: project.id,
+    }),
+    ps.getProjects({
+      select: ['isDaLayer'],
+    }),
+  ])
   if (!data || data.chart.length === 0) return undefined
 
+  const { currentDaLayers, pastDaLayers } = getDaLayersInfo(
+    project.daTrackingConfig,
+    daLayers,
+  )
+
+  const daTrackingConfig = project.daTrackingConfig.map((config) => {
+    const daLayer = daLayers.find((d) => d.id === config.daLayer)
+    assert(daLayer, 'Da layer not found')
+    return {
+      ...config,
+      daLayerName: daLayer.name,
+    }
+  })
+
   return {
-    daLayer: {
-      name: usedDaSolution.layerName,
-      logo: getProjectIcon(usedDaSolution.layerSlug),
-      href: `/data-availability/projects/${usedDaSolution.layerSlug}/${usedDaSolution.bridgeSlug ?? 'no-bridge'}`,
-    },
     defaultRange: range,
-    daTrackingConfig: project.daTrackingConfig,
+    currentDaLayers,
+    pastDaLayers,
+    daTrackingConfig,
   }
 }

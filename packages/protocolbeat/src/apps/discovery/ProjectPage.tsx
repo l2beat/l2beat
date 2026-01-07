@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { getProject } from '../../api/api'
 import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
+import { findSelected } from '../../utils/findSelected'
 import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
 import { CodePanel } from './panel-code/CodePanel'
@@ -28,12 +29,23 @@ export function ProjectPage() {
     queryFn: () => getProject(project),
   })
   const select = usePanelStore((state) => state.select)
+  const selectedAddress = usePanelStore((state) => state.selected)
   useEffect(() => {
     if (response.data) {
-      const first = response.data.entries[0]?.initialContracts[0]?.address
-      select(first)
+      // Check if the currently selected contract still exists in the new data
+      const currentlySelectedStillExists = findSelected(
+        response.data.entries,
+        selectedAddress,
+      )
+
+      // Only reset to the first contract if no contract is selected
+      // or the selected contract no longer exists
+      if (!currentlySelectedStillExists) {
+        const first = response.data.entries[0]?.initialContracts[0]?.address
+        select(first)
+      }
     }
-  }, [response.data, select])
+  }, [response.data, select, selectedAddress])
 
   return (
     <>

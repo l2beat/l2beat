@@ -12,6 +12,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
 export function ListPanel() {
@@ -33,7 +34,11 @@ export function ListPanel() {
     <div className="h-full w-full overflow-x-hidden">
       <ol>
         {response.data.entries.map((chain, i) => (
-          <ListItemChain key={i} entry={chain} first={i === 0} />
+          <ListItemChain
+            key={`${chain.project}-${i}`}
+            entry={chain}
+            first={i === 0}
+          />
         ))}
       </ol>
     </div>
@@ -49,7 +54,10 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
-      <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
+      <li
+        key={chain}
+        className={clsx(!props.first && 'border-t border-t-coffee-600')}
+      >
         <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
           <button
             onClick={() => setOpen((open) => !open)}
@@ -154,6 +162,11 @@ function ListItemContracts(props: {
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
   const isSelected = usePanelStore((state) => state.selected === entry.address)
   const select = usePanelStore((state) => state.select)
+  const markUnreachableEntries = useGlobalSettingsStore(
+    (s) => s.markUnreachableEntries,
+  )
+  const isGrayedOut = markUnreachableEntries && !entry.isReachable
+
   return (
     <li
       className={clsx(
@@ -162,6 +175,10 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
       )}
       onClick={() => select(entry.address)}
+      style={{
+        opacity: isGrayedOut ? 0.2 : 1,
+        filter: isGrayedOut ? 'grayscale(100%)' : 'none',
+      }}
     >
       <div className="mr-[7px] min-h-[22px] border-coffee-600 border-l" />
       <AddressIcon type={entry.type} />

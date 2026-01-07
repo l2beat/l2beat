@@ -164,7 +164,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
-    hasActivity: p.config.activityConfig ? true : undefined,
     hasTestnet: p.hasTestnet,
     escrows: p.config.escrows,
   }
@@ -362,7 +361,7 @@ function toBackendTrackedTxsConfig(
               address: config.query.address,
               signature: config.query.functionSignature,
               selector: config.query.selector,
-              chainId: config.query.chainId,
+              firstParameter: config.query.firstParameter,
             },
           }
         }

@@ -172,6 +172,8 @@ export const apex: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1660252039),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {

@@ -1,11 +1,10 @@
 import {
+  ConsoleTransport,
   getEnv,
-  LogFormatterEcs,
-  LogFormatterJson,
-  LogFormatterPretty,
   Logger,
   type LoggerOptions,
-  type LoggerTransportOptions,
+  type LoggerTransport,
+  MetricsAggregator,
 } from '@l2beat/backend-tools'
 import {
   ElasticSearchTransport,
@@ -21,11 +20,8 @@ export function getLogger(): Logger {
   const env = getEnv()
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
-  const loggerTransports: LoggerTransportOptions[] = [
-    {
-      transport: console,
-      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
-    },
+  const loggerTransports: LoggerTransport[] = [
+    isLocal ? ConsoleTransport.PRETTY : ConsoleTransport.JSON,
   ]
 
   // Elastic Search logging
@@ -40,18 +36,16 @@ export function getLogger(): Logger {
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 
-    loggerTransports.push({
-      transport: new ElasticSearchTransport(options),
-      formatter: new LogFormatterEcs(),
-    })
+    loggerTransports.push(new ElasticSearchTransport(options))
   }
 
   const options: Partial<LoggerOptions> = {
-    logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-    utc: isLocal ? false : true,
+    level: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['level'],
     transports: loggerTransports,
-    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', esEnabled),
   }
+
+  const metricsEnabled = env.boolean('CLIENT_METRICS_ENABLED', esEnabled)
+  MetricsAggregator.setMetricsEnabled(metricsEnabled)
 
   return new Logger(options)
 }

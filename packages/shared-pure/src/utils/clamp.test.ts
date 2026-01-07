@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { clamp } from './clamp'
+import { clamp } from './clamp.js'
 
 describe(clamp.name, () => {
   it('clamps to the min bound when value is below', () => {

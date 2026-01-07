@@ -1,7 +1,7 @@
 {
   "name": "ternoa",
-  "timestamp": 1750776023,
-  "configHash": "0x59afb46276a25fa69f7ea3db630a53078e1e059a83a97cd4fdfd489e4cae76ae",
+  "timestamp": 1762264403,
+  "configHash": "0x283a72f48183823abf99c76e2064dd3976788748bef2a5f0b2e40160b5ed92b4",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "name": "PolygonSharedBridge",
+      "name": "AgglayerBridge",
       "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Reference",
       "targetType": "Contract",
@@ -70,14 +70,14 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PolygonRollupManager",
+      "name": "AgglayerManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
     {
-      "name": "PolygonGlobalExitRootV2",
+      "name": "AgglayerGER",
       "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "type": "Reference",
       "targetType": "Contract",
@@ -127,7 +127,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xc9f73b70afccd6f6f76a040f097e467bee3ee45c6dbfebc8da935ae246b4b523",
+        "lastAccInputHash": "0x46f279c3ad8f4552d78845e9ae61600c5b0d5eb3a13cf180352e19bc463c5c08",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
@@ -424,6 +424,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22774947 },
+  "usedBlockNumbers": { "ethereum": 23726377 },
   "permissionsConfigHash": "0xdbcc77a6d4193d5320ce3b0c32e1c19608a1d5bb06af249c1cd1a053f476401e"
 }

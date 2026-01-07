@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple contract that, if set as allowedOutbox in the {{bridge}}, allows to sweep all native tokens from the escrow to {{destination}}.",
+  "ignoreRelatives": ["nativeToken"]
+}

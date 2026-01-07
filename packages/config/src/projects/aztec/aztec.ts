@@ -47,6 +47,8 @@ const escapeBlockUpperBound = 4800 // in blocks, immutable
 const escapeBlockLowerBound = 4560 // in blocks, immutable
 const assumedBlockTime = 12 // in seconds
 
+const finalizationPeriod = 0 // state root immediately finalized when proven
+
 export const aztec: ScalingProject = {
   type: 'layer2',
   id: ProjectId('aztec'),
@@ -64,12 +66,14 @@ export const aztec: ScalingProject = {
     links: {
       websites: ['https://aztec.network/'],
       bridges: ['https://old.zk.money'],
+      documentation: ['https://docs.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://discord.gg/UDtJr9u',
         'https://plonk.cafe/',
+        'https://youtube.com/@aztecnetwork',
       ],
     },
   },
@@ -145,7 +149,10 @@ export const aztec: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),

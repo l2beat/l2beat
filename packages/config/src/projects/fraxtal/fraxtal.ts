@@ -79,6 +79,7 @@ export const fraxtal: ScalingProject = opStackL2({
         'https://twitter.com/fraxfinance',
         'https://t.me/fraxfinance',
       ],
+      other: ['https://growthepie.com/chains/fraxtal'],
     },
   },
   genesisTimestamp: UnixTime(1706811599),

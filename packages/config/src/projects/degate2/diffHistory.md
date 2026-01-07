@@ -1,3 +1,191 @@
+Generated with discovered.json: 0x1b510a1f4f8784318bb30030fc44820d383290ee
+
+# Diff at Wed, 05 Nov 2025 12:46:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1699774871
+- current timestamp: 1699774871
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1699774871 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ExchangeWithdrawals (eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeAdmins (eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533)
+    +++ description: None
+```
+
+```diff
+    contract LoopringIOExchangeOwner (eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeGenesis (eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e)
+    +++ description: None
+```
+
+```diff
+    contract LoopringV3 (eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+    contract BlockVerifier (eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeTokens (eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A)
+    +++ description: None
+```
+
+```diff
+    contract ExchangeV3 (eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeBalances (eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5)
+    +++ description: None
+```
+
+```diff
+    contract DefaultDepositContract (eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeBlocks (eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xf5f90d7b671bd7982bbdedaef91b1632584d8972
+
+# Diff at Fri, 31 Oct 2025 10:44:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1699774871
+- current timestamp: 1699774871
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1699774871 (main branch discovery), not current.
+
+```diff
+    contract LoopringIOExchangeOwner (eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+    contract LoopringV3 (eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+    contract BlockVerifier (eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+    contract ExchangeV3 (eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
+    contract DefaultDepositContract (eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533","eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5","eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A","eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396","eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e","eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeWithdrawals (eth:0x00e6E9b711E53149D49D43d0EC16Bf18a1EDC569)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeAdmins (eth:0x1fCA54B4Bd42Db7afd1b23Bc8A823Afc11701533)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeGenesis (eth:0x5e7858588C52E42c08a933d5C85A8e9c9A040B9e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeTokens (eth:0x8c43b69036C1B21378DfC5660d6B8785B2bfF58A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeBalances (eth:0x9Cc1BC87D0A767153FbfE9EfFa40825345e933B5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeBlocks (eth:0xf614aeCEf0209Fb1A2751c6A5cddE4BD7853F396)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x041349c28ab4f782b2b7e7be619e191529ac788c
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

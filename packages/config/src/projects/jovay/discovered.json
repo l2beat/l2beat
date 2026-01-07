@@ -1,0 +1,748 @@
+{
+  "name": "jovay",
+  "timestamp": 1762443722,
+  "configHash": "0x81e0bd7020fa7519e8264de66319184b8f53b723994303a54089c169cbc6e064",
+  "entries": [
+    {
+      "name": "DcapAttestationRouter",
+      "address": "eth:0x238f4DaFC22013a864f85a54E276aC99975566fA",
+      "type": "Contract",
+      "template": "jovay/DcapAttestationRouter",
+      "sourceHashes": [
+        "0x72685fb6903e0fdf30c628dc03d9edfcb4e4b3d794608041b6067813534ece90"
+      ],
+      "proxyType": "immutable",
+      "description": "The DcapAttestationRouter contract is used for routing and verifying Intel SGX/TDX DCAP attestation proofs. The contract sends each quote to the corresponding verification path (cache verifier vs. Automata DCAP contract, and SGX vs. TDX measurement checks).",
+      "sinceTimestamp": 1758378383,
+      "sinceBlock": 23404861,
+      "values": {
+        "$immutable": true,
+        "CacheOption": true,
+        "cacheVerifierAddr": "eth:0x9734CcA9304A4c7a5a27bCFac9eDa23e09cBAaF2",
+        "dcapAttestation": "eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9",
+        "measurementDao": "eth:0x359437E2763e9622DD4324D7904BbF7516332D4F",
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "toVerifyMr": true,
+        "toVerifyMrtd": false
+      },
+      "implementationNames": {
+        "eth:0x238f4DaFC22013a864f85a54E276aC99975566fA": "DcapAttestationRouter"
+      }
+    },
+    {
+      "name": "MeasurementDao",
+      "address": "eth:0x359437E2763e9622DD4324D7904BbF7516332D4F",
+      "type": "Contract",
+      "template": "jovay/MeasurementDao",
+      "sourceHashes": [
+        "0x07b7f6602924af994b2f11cc4afd891109497ecc6a4778d3566d7fa5f661c91f"
+      ],
+      "proxyType": "immutable",
+      "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
+      "ignoreInWatchMode": ["get_rtMr"],
+      "sinceTimestamp": 1758378371,
+      "sinceBlock": 23404860,
+      "values": {
+        "$immutable": true,
+        "get_mr_enclave": [],
+        "get_mrtd": [],
+        "get_rtMr": [
+          "0x3e0b25d2f522b09e8f9749dbb7cb0b49d677372868cddcffa568cf2fb9386efe0e455af66021216d37b2a9c19d88ca90",
+          "0xe6ad4b4f516eda68799b6940a6759e6515f0d86ca9694c2c3a1e824db11766026ae904d9d6601b50138162eb61d940ee"
+        ],
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB"
+      },
+      "implementationNames": {
+        "eth:0x359437E2763e9622DD4324D7904BbF7516332D4F": "MeasurementDao"
+      }
+    },
+    {
+      "name": "TEEVerifierProxy",
+      "address": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A",
+      "type": "Contract",
+      "template": "jovay/TEEVerifierProxy",
+      "sourceHashes": [
+        "0x80454675a5da4224889198f682aa88832ceb0090238ea70781541ca71781e547"
+      ],
+      "proxyType": "immutable",
+      "description": "The TEEVerifierProxy contract is used to verify L2 batches using TEE attestations. It delegates proof verification to the dcapAttestationRouter contract. ",
+      "sinceTimestamp": 1758378407,
+      "sinceBlock": 23404863,
+      "values": {
+        "$immutable": true,
+        "dcapAttestationRouter": "eth:0x238f4DaFC22013a864f85a54E276aC99975566fA",
+        "owner": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892"
+      },
+      "implementationNames": {
+        "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A": "TEEVerifierProxy"
+      }
+    },
+    {
+      "name": "DaimoP256Verifier",
+      "address": "eth:0x783377992FCA09009eaD952D4fBa6519e25726b4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0a2d99248be742112143646b2ff95a3c6b8c422ab665c560345dfa8b7e15a734"
+      ],
+      "proxyType": "EIP2535 diamond proxy",
+      "sinceTimestamp": 1758378119,
+      "sinceBlock": 23404839,
+      "values": {
+        "$immutable": false,
+        "$implementation": [],
+        "$pastUpgrades": [],
+        "$upgradeCount": 0
+      },
+      "implementationNames": {
+        "eth:0x783377992FCA09009eaD952D4fBa6519e25726b4": "DaimoP256Verifier"
+      }
+    },
+    {
+      "name": "TEEVerifierProxyOwner",
+      "address": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1758618419,
+      "sinceBlock": 23424728,
+      "values": {
+        "$admin": "eth:0xf2A2Bee383C2e4d75d9aE5953b3A6cFABb661a47",
+        "$implementation": "eth:0x621Dd8d71526D7Df51Fa1AA8D098f5eAEc81C573",
+        "$pastUpgrades": [
+          [
+            "2025-09-23T09:06:59.000Z",
+            "0x4f7555de5b6e2a26078eed6b91511efaa934efd8e856fe3b336fa6599cc6f48f",
+            ["eth:0x621Dd8d71526D7Df51Fa1AA8D098f5eAEc81C573"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892": "",
+        "eth:0x621Dd8d71526D7Df51Fa1AA8D098f5eAEc81C573": ""
+      }
+    },
+    {
+      "name": "L1ETHBridge",
+      "address": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+      "type": "Contract",
+      "template": "jovay/L1ETHBridge",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xc962a92e7061cd67db98262fe8c93bb63cb5243ffa419d7a0de0fbb11ca67ed2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L1ETHBridge contract is used to bridge ETH between the L1 and L2.",
+      "ignoreInWatchMode": ["balance"],
+      "sinceTimestamp": 1758377315,
+      "sinceBlock": 23404772,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:08:35.000Z",
+            "0x27da4e3d9243ad68db7b84842815c2928e6c216e685644216f6d4efd76a4a2ca",
+            ["eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7"]
+          ],
+          [
+            "2025-09-24T08:41:11.000Z",
+            "0xaff5b64efe3035f43b1aeb399bb86c1709bdd11b65ffabfe773a0ea4a1c90c03",
+            ["eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "balance": "638941800666000000",
+        "mailBox": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "toBridge": "eth:0xb220D17A11bd2d11e3f57a305FF5b481C81B1028"
+      },
+      "implementationNames": {
+        "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": "TransparentUpgradeableProxy",
+        "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": "L1ETHBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "TEECacheVerifier",
+      "address": "eth:0x9734CcA9304A4c7a5a27bCFac9eDa23e09cBAaF2",
+      "type": "Contract",
+      "template": "jovay/TEECacheVerifier",
+      "sourceHashes": [
+        "0x83e211bc7cab27dfd4f9b534866214075fc19cc7ab8fa549535f3373c27dcd4f"
+      ],
+      "proxyType": "immutable",
+      "description": "A cache-enabled P-256 ECDSA verifier for Intel SGX/TDX DCAP quotes (v3/v4/v5) that authenticates local attestation data, extracts the 32-byte commitment, and lets the owner/authorized callers initialize, manage, and reuse cached attestation keys to skip repeat verifications.",
+      "sinceTimestamp": 1758378359,
+      "sinceBlock": 23404859,
+      "values": {
+        "$immutable": true,
+        "getAllKey": [
+          "0xcd8f72a70d8084358eeb7645f607e78de3fd527804274f05df7f5515e1cd874ccda863149bcad06b68be14b2b64fe9ae1c3c3d42689339370ae639e10ae7003a",
+          "0xb62554e2ccebb6546d25c779bafefe7853ac1137e0045eea7253b86b43e549b0d417d3c27eaba078d69421ee573c6ca216f9cd4acef0d7a46177308d4a6caf1d",
+          "0x1315e2eea265d2fced2b0c70072fa39aaa572bcb1886f59d7ccf430b51271e9a22682f08d9fe18c8a67c7711e37e7222d315dde63b63f04357ab98bb8144e490"
+        ],
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "P256_VERIFIER": "eth:0x783377992FCA09009eaD952D4fBa6519e25726b4"
+      },
+      "implementationNames": {
+        "eth:0x9734CcA9304A4c7a5a27bCFac9eDa23e09cBAaF2": "TEECacheVerifier"
+      }
+    },
+    {
+      "name": "L1Mailbox",
+      "address": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+      "type": "Contract",
+      "template": "jovay/L1Mailbox",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x1afeeca3afb0add55ce45f9bed97c7faa33f9e7a59e5b8a43ce5da15d1cfc0f0"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L1Mailbox contract is used to send messages to the L2.",
+      "ignoreInWatchMode": [
+        "feeBalance",
+        "nextFinalizeQueueIndex",
+        "nextMsgIndex",
+        "pendingQueueIndex",
+        "rollingHash"
+      ],
+      "sinceTimestamp": 1758377279,
+      "sinceBlock": 23404769,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:07:59.000Z",
+            "0xc594f519ef3a048fb2733b38959f1736434a5e8d4dad8bb513c549da950f4287",
+            ["eth:0x92E92B5060E3578AD4A27e2c9FB489556E434551"]
+          ],
+          [
+            "2025-09-23T14:50:23.000Z",
+            "0x33cc67e6ab8aa7b06389b5cef8cb281cda3864b5042556e06556eb9c102efb82",
+            ["eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "baseFee": 1000000,
+        "feeBalance": 33600000000000,
+        "l2FinalizeDepositGasUsed": 300000,
+        "l2GasLimit": 3000000,
+        "lastestQueueIndex": 0,
+        "nextFinalizeQueueIndex": 79,
+        "nextMsgIndex": 79,
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "pendingQueueIndex": 79,
+        "rollingHash": "0x95d6db7353bd6cf564e1018b94a6e8c5a54610fdc494a427151ed328351503a9",
+        "rollup": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+        "stableRollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "withdrawer": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x9869A90FDAc287519E48aff4cCE329907a995162": "TransparentUpgradeableProxy",
+        "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80": "L1Mailbox"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        },
+        {
+          "permission": "sequence",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        },
+        {
+          "permission": "sequence",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": ".relayer"
+        }
+      ]
+    },
+    {
+      "name": "AutomataDcapAttestationFee",
+      "address": "eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9",
+      "type": "Contract",
+      "template": "jovay/AutomataDcapAttestationFee",
+      "sourceHashes": [
+        "0x78e36d40e4a3b55ce9e4abfe59503bdd40cf6648a024f8228d80c8acae540f95"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract used to charge a configurable basis-point fee to verify Intel DCAP quotes. Currently set to 0 basis points.",
+      "sinceTimestamp": 1758378347,
+      "sinceBlock": 23404858,
+      "values": {
+        "$immutable": true,
+        "getBp": 0,
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB"
+      },
+      "implementationNames": {
+        "eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9": "AutomataDcapAttestationFee"
+      }
+    },
+    {
+      "name": "Rollup",
+      "address": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+      "type": "Contract",
+      "template": "jovay/Rollup",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x847ae7ac442ea5bc5906a79d4ecf73fd4c3b9a115b93d29d5053f76459dace60"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The Rollup contract is used to submit and verify L2 batches.",
+      "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
+      "sinceTimestamp": 1758377339,
+      "sinceBlock": 23404774,
+      "values": {
+        "$admin": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+        "$implementation": "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973",
+        "$pastUpgrades": [
+          [
+            "2025-09-20T14:08:59.000Z",
+            "0x191e80563fda9d11b6b8f303de197c8c4eb2c108aea55d2dd5436afd5ada4a26",
+            ["eth:0x5A65b0065A668b844250C04550ce16b1dF6296B6"]
+          ],
+          [
+            "2025-09-23T14:49:47.000Z",
+            "0x11546aaf0ec3476cde945652f2d8612c6f096c0202b6ca1bb149ab05c60b1e16",
+            ["eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "l1_mail_box": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+        "l1BlobNumberLimit": 6,
+        "lastCommittedBatch": 1117,
+        "lastTeeVerifiedBatch": 1117,
+        "lastZkVerifiedBatch": 0,
+        "layer2ChainId": 5734951,
+        "maxBlockInChunk": 32,
+        "maxCallDataInChunk": 524288,
+        "maxTxsInChunk": 2001,
+        "maxZkCircleInChunk": 4294967295,
+        "owner": "eth:0xA1e7758a84B40Ba7AA1a80b3D3096E918A7950bB",
+        "paused": false,
+        "relayer": [
+          "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+          "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99"
+        ],
+        "rollupTimeLimit": 3600000,
+        "tee_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A",
+        "zk_verifier": "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A"
+      },
+      "implementationNames": {
+        "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1": "TransparentUpgradeableProxy",
+        "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973": "Rollup"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "",
+      "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1758377243,
+      "sinceBlock": 23404766,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xf2A2Bee383C2e4d75d9aE5953b3A6cFABb661a47",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1758618419,
+      "sinceBlock": 23424728,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xf2A2Bee383C2e4d75d9aE5953b3A6cFABb661a47": ""
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x238f4DaFC22013a864f85a54E276aC99975566fA": [
+      "constructor(address _dcapAttestation, address _measurementDao, address _cacheVerifierAddr)",
+      "error AlreadyInitialized()",
+      "error Forbidden()",
+      "error InvalidAddress()",
+      "error MRTDValidationFailed()",
+      "error MrValidationFailed()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error Unauthorized()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "function CacheOption() view returns (bool)",
+      "function cacheVerifierAddr() view returns (address)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function dcapAttestation() view returns (address)",
+      "function disableCallerRestriction()",
+      "function disableVerifyMRTD()",
+      "function enableCallerRestriction()",
+      "function enableVerifyMRTD()",
+      "function measurementDao() view returns (address)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setAuthorized(address caller, bool authorized)",
+      "function setConfig(address _dcapAttestation, address _measurementDao, bool _toVerifyMr, address _cacheVerifierAddr, bool _CacheOption)",
+      "function toVerifyMr() view returns (bool)",
+      "function toVerifyMrtd() view returns (bool)",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyProof(bytes aggrProof) returns (uint32 _error_code, bytes32 commitment)"
+    ],
+    "eth:0x359437E2763e9622DD4324D7904BbF7516332D4F": [
+      "constructor()",
+      "error AlreadyExists()",
+      "error AlreadyInitialized()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error NotExists()",
+      "error Unauthorized()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "function add_mr_enclave(bytes32 _mrEnclave, bytes32 _mrSigner)",
+      "function add_mrtd(bytes mrtd)",
+      "function add_rtMr(bytes rtmr3)",
+      "function cancelOwnershipHandover() payable",
+      "function clearup_mr_enclave()",
+      "function clearup_mrtd()",
+      "function clearup_rtMr()",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function delete_mr_enclave(bytes32 _mrEnclave)",
+      "function delete_mrtd(bytes mrtd)",
+      "function delete_rtMr(bytes rtmr3)",
+      "function get_mr_enclave() view returns (bytes32[])",
+      "function get_mrtd() view returns (bytes[])",
+      "function get_rtMr() view returns (bytes[])",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyMRTD(bytes quote, uint16 quoteVersion) view returns (bool)",
+      "function verifyMeasurementSGX(bytes quote, uint16 quoteVersion) view returns (bool)",
+      "function verifyMeasurementTDX(bytes quote, uint16 quoteVersion) view returns (bool)"
+    ],
+    "eth:0x371a8bda9a34d641B546883D6B5895d0A44AD46A": [
+      "constructor(address _dcapAttestationRouter)",
+      "error AlreadyInitialized()",
+      "error Forbidden()",
+      "error InvalidAddress()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error Unauthorized()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function dcapAttestationRouter() view returns (address)",
+      "function disableCallerRestriction()",
+      "function enableCallerRestriction()",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setAuthorized(address caller, bool authorized)",
+      "function setConfig(address _dcapAttestationRouter)",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyProof(bytes aggrProof) returns (uint32 _error_code, bytes32 commitment)"
+    ],
+    "eth:0x376df788aFc6E801b24fC6C0fa6b53637A947ae7": [
+      "error ErrorCallerIsNotMailBox()",
+      "error InvalidInitAddress()",
+      "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes msg)",
+      "event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes msg)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function balance() view returns (uint256)",
+      "function deposit(address to_, uint256 amount_, uint256 gasLimit_, bytes msg_) payable",
+      "function finalizeWithdraw(address sender_, address to_, uint256 amount_, bytes msg_) payable",
+      "function initialize(address mailBox_, address toBridge_, address owner)",
+      "function mailBox() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function relayMsgWithProof(uint256 value_, uint256 nonce_, bytes msg_, tuple(uint256 batchIndex, bytes merkleProof) proof_) payable",
+      "function renounceOwnership()",
+      "function setMailBox(address mailBox_)",
+      "function setToBridge(address toBridge_)",
+      "function toBridge() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
+    "eth:0x8327820B007Ee6dc6fF24A8798096C9961A0aB80": [
+      "constructor()",
+      "error InvalidInitAddress()",
+      "error InvalidL2GasLimit()",
+      "error OutOfBounds()",
+      "error SetL2FinalizeDepositGasUsedBiggerThanGasLimit()",
+      "error SetL2GasLimitSmallerThanGasUsed()",
+      "event AppendMsg(uint256 index, bytes32 messageHash)",
+      "event BaseFeeChanged(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event ClaimMsg(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHFailed(bytes32 indexed hash, uint256 nonce)",
+      "event FinalizeDepositETHSuccess(bytes32 indexed hash, uint256 nonce)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PopMsgs(uint256 finalizeMsgIndex)",
+      "event RelayedMsg(bytes32 indexed hash, uint256 nonce)",
+      "event RelayedMsgFailed(bytes32 indexed hash, uint256 nonce)",
+      "event RollingHash(bytes32 indexed hash)",
+      "event SentMsg(address indexed sender, address indexed target, uint256 value, uint256 nonce, bytes msg, uint256 gasLimit, bytes32 hash)",
+      "event SetL2FinalizeDepositGasUsed(uint256 oldL2FinalizeDepositGasUsed, uint256 newL2FinalizeDepositGasUsed)",
+      "event SetL2GasLimit(uint256 oldGasLimit, uint256 newGasLimit)",
+      "event Unpaused(address account)",
+      "function addBridge(address _bridge)",
+      "function baseFee() view returns (uint256)",
+      "function estimateMsgFee(uint256 gasLimit_) view returns (uint256)",
+      "function feeBalance() view returns (uint256)",
+      "function getMsg(uint256 _l1MsgCount) view returns (bytes32)",
+      "function initialize(address rollup_, address owner_, uint256 baseFee_, uint256 _l2GasLimit, uint256 _l2FinalizeDepositGasUsed)",
+      "function isBridge(address) view returns (bool)",
+      "function l2FinalizeDepositGasUsed() view returns (uint256)",
+      "function l2GasLimit() view returns (uint256)",
+      "function lastestQueueIndex() view returns (uint256)",
+      "function nextFinalizeQueueIndex() view returns (uint256)",
+      "function nextMsgIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popMsgs(uint256 _l1MsgCount)",
+      "function receiveMsgMap(bytes32) view returns (bool)",
+      "function relayMsgWithProof(address sender_, address target_, uint256 value_, uint256 nonce_, bytes msg_, tuple(uint256 batchIndex, bytes merkleProof) proof_) payable",
+      "function removeBridge(address _bridge)",
+      "function renounceOwnership()",
+      "function rollingHash() view returns (bytes32)",
+      "function rollup() view returns (address)",
+      "function sendMsg(address target_, uint256 value_, bytes msg_, uint256 gasLimit_, address refundAddress_) payable",
+      "function sendMsgMap(bytes32) view returns (bool)",
+      "function setBaseFee(uint256 _newBaseFee)",
+      "function setL2FinalizeDepositGasUsed(uint256 _l2FinalizeDepositGasUsed)",
+      "function setL2GasLimit(uint256 _l2GasLimit)",
+      "function setLastQueueIndex()",
+      "function setRollup(address rollup_)",
+      "function setWithdrawer(address _withdrawer)",
+      "function stableRollingHash() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawDepositFee(address _target, uint256 _amount)",
+      "function withdrawer() view returns (address)"
+    ],
+    "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x9734CcA9304A4c7a5a27bCFac9eDa23e09cBAaF2": [
+      "constructor(address _ecdsaVerifier)",
+      "error AlreadyInitialized()",
+      "error Forbidden()",
+      "error InvalidAddress()",
+      "error KeyNotInitialized()",
+      "error ListTooLong()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error Unauthorized()",
+      "error UnknownTdReportType()",
+      "error UnsupportedQuoteVersion()",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "function P256_VERIFIER() view returns (address)",
+      "function cancelOwnershipHandover() payable",
+      "function clearupAllKey()",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function deleteKey(bytes key)",
+      "function disableCallerRestriction()",
+      "function enableCallerRestriction()",
+      "function getAllKey() view returns (bytes[])",
+      "function initializeCache(bytes key)",
+      "function isInitialized(bytes key) view returns (bool)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function parseAttestationKey(bytes rawQuote, uint256 version) pure returns (bytes ecdsa256BitSignature, bytes ecdsaAttestationKey)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setAuthorized(address caller, bool authorized)",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyAndAttestOnChain(bytes rawQuote, bytes ecdsa256BitSignature, bytes ecdsaAttestationKey, uint256 version) view returns (uint32 _error_code, bytes32 commitment)"
+    ],
+    "eth:0x9869A90FDAc287519E48aff4cCE329907a995162": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xb3a96165caf30F8F7cE9BCfdaaAe99BA93C1A6F9": [
+      "constructor(address owner)",
+      "error AlreadyInitialized()",
+      "error BP_Not_Valid()",
+      "error Insufficient_Funds()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error Unauthorized()",
+      "error Unknown_Zk_Coprocessor()",
+      "error Withdrawal_Failed()",
+      "event AttestationSubmitted(bool success, uint8 verifierType, bytes output)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event QuoteVerifierUpdated(uint16 indexed version)",
+      "event ZkCoProcessorUpdated(uint8 indexed zkCoProcessor, bytes32 programIdentifier, address zkVerifier)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function getBp() view returns (uint16)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function programIdentifier(uint8 zkCoProcessorType) view returns (bytes32)",
+      "function quoteVerifiers(uint16 quoteVersion) view returns (address verifier)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function setBp(uint16 _newBp)",
+      "function setQuoteVerifier(address verifier)",
+      "function setZkConfiguration(uint8 zkCoProcessor, tuple(bytes32 dcapProgramIdentifier, address zkVerifier) config)",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyAndAttestOnChain(bytes rawQuote) payable returns (bool success, bytes output)",
+      "function verifyAndAttestWithZKProof(bytes output, uint8 zkCoprocessor, bytes proofBytes) payable returns (bool success, bytes verifiedOutput)",
+      "function withdraw(address beneficiary, uint256 amount)",
+      "function zkVerifier(uint8 zkCoProcessorType) view returns (address)"
+    ],
+    "eth:0xc8eEDE7229CcAd4a14f006845d05Fd51B28eE973": [
+      "constructor()",
+      "error NotSupportZkProof()",
+      "event BlobDataHash(bytes32 indexed batchDataHash)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RevertBatch(uint256 indexed batchIndex)",
+      "event Unpaused(address account)",
+      "event VerifyBatch(uint8 proveType, uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 l2MsgRoot)",
+      "function addRelayer(address _account)",
+      "function commitBatch(uint8 _version, uint256 _batchIndex, uint256 _totalL1MessagePopped)",
+      "function committedBatches(uint256) view returns (bytes32)",
+      "function finalizedStateRoots(uint256) view returns (bytes32)",
+      "function getL2MsgRoot(uint256 batch_index) view returns (bytes32)",
+      "function importGenesisBatch(bytes _batchHeader, bytes32 _stateRoot)",
+      "function initialize(uint64 _chainId, address _zk_verifier, address _tee_verifier, address _l1_mail_box, uint32 _maxTxsInChunk, uint32 _maxBlockInChunk, uint32 _maxCallDataInChunk, uint32 _maxZkCircleInChunk, uint32 _l1BlobNumberLimit, uint32 _rollupTimeLimit)",
+      "function isRelayer(address) view returns (bool)",
+      "function l1BlobNumberLimit() view returns (uint32)",
+      "function l1MsgCount(uint256) view returns (uint256)",
+      "function l1_mail_box() view returns (address)",
+      "function l2MsgRoots(uint256) view returns (bytes32)",
+      "function lastCommittedBatch() view returns (uint256)",
+      "function lastTeeVerifiedBatch() view returns (uint256)",
+      "function lastZkVerifiedBatch() view returns (uint256)",
+      "function layer2ChainId() view returns (uint64)",
+      "function maxBlockInChunk() view returns (uint32)",
+      "function maxCallDataInChunk() view returns (uint32)",
+      "function maxTxsInChunk() view returns (uint32)",
+      "function maxZkCircleInChunk() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function removeRelayer(address _account)",
+      "function renounceOwnership()",
+      "function revertBatches(uint256 _newLastBatchIndex)",
+      "function rollupTimeLimit() view returns (uint64)",
+      "function setL1BlobNumberLimit(uint32 _l1BlobNumberLimit)",
+      "function setL2ChainId(uint64 _layer2ChainId)",
+      "function setMaxBlockInChunk(uint32 _maxBlockInChunk)",
+      "function setMaxCallDataInChunk(uint32 _maxCallDataInChunk)",
+      "function setMaxTxsInChunk(uint32 _maxTxsInChunk)",
+      "function setPause(bool _status)",
+      "function setRollupTimeLimit(uint32 _rollupTimeLimit)",
+      "function setTeeVerifierAddress(address _teeVerifierAddress)",
+      "function setZkVerifierAddress(address _zkVerifierAddress)",
+      "function tee_verifier() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function verifyBatch(uint8 _prove_type, bytes _batchHeader, bytes32 _postStateRoot, bytes32 _l2MsgRoot, bytes _proof)",
+      "function zk_verifier() view returns (address)"
+    ],
+    "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  },
+  "usedTemplates": {
+    "jovay/AutomataDcapAttestationFee": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "jovay/DcapAttestationRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "jovay/L1ETHBridge": "0x9f1260719db2abb008347c8137fabdb0709ce0fa5e33f48f35437eb36c9d8d11",
+    "jovay/L1Mailbox": "0x460f5a2af5ecc4d1cdde7f567a813292b37d120e20318b441d2605afe095ce22",
+    "jovay/MeasurementDao": "0x284197987ec66e00fe0e7ed783549510dbb4e2da7f7a46443a91ab7efb02bba8",
+    "jovay/Rollup": "0xd7746226f9952f7e388de7c12050a1bf84b140fbc9868b9211fa1dcf48ea4563",
+    "jovay/TEECacheVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "ethereum": 23741202 },
+  "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
+}

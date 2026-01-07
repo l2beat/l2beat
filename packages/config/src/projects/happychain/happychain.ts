@@ -21,7 +21,7 @@ export const happychain: ScalingProject = upcomingL2({
         'https://x.com/HappyChainDevs',
         'https://mirror.xyz/0x20Af38e22e1722F97f5A1b5afc96c00EECd566b2',
       ],
-      explorers: ['https://explorer.testnet.happy.tech/'],
+      explorers: [],
       bridges: ['https://happychain-sepolia-redeploy.bridge.caldera.xyz/'],
     },
   },

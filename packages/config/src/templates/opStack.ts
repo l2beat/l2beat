@@ -76,16 +76,25 @@ import {
   safeGetImplementation,
 } from './utils'
 
-export const CELESTIA_DA_PROVIDER: DAProvider = {
-  layer: DA_LAYERS.CELESTIA,
-  riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  bridge: DA_BRIDGES.NONE,
-  badge: BADGES.DA.Celestia,
+export function CELESTIA_DA_PROVIDER(
+  fallback?: DaProjectTableValue,
+): DAProvider {
+  return {
+    layer: DA_LAYERS.CELESTIA,
+    riskView: RISK_VIEW.DATA_CELESTIA(false),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(
+      false,
+      fallback?.value,
+    ),
+    bridge: DA_BRIDGES.NONE,
+    badge: BADGES.DA.Celestia,
+    fallback,
+  }
 }
 
 export function EIGENDA_DA_PROVIDER(
   isUsingDACertVerifier: boolean,
+  fallback?: DaProjectTableValue,
 ): (templateVars: OpStackConfigCommon) => DAProvider {
   return (templateVars: OpStackConfigCommon) => {
     const opStackDA = templateVars.discovery.getContractValue<{
@@ -96,6 +105,19 @@ export function EIGENDA_DA_PROVIDER(
     const eigenDACertVersion =
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
+    const bridge =
+      isUsingDACertVerifier &&
+      (eigenDACertVersion === 'v2' || eigenDACertVersion === 'v3')
+        ? {
+            value: 'DACert Verifier',
+            sentiment: 'warning' as const,
+            description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
+            projectId: ProjectId(
+              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
+            ),
+          }
+        : DA_BRIDGES.NONE
+
     return {
       layer: DA_LAYERS.EIGEN_DA,
       riskView: RISK_VIEW.DATA_EIGENDA(
@@ -105,9 +127,13 @@ export function EIGENDA_DA_PROVIDER(
       technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(
         isUsingDACertVerifier,
         eigenDACertVersion,
+        fallback?.value,
       ),
-      bridge: DA_BRIDGES.NONE,
-      badge: BADGES.DA.EigenDA,
+      bridge,
+      badge: isUsingDACertVerifier
+        ? BADGES.DA.EigenDAVerifier
+        : BADGES.DA.EigenDA,
+      fallback,
     }
   }
 }
@@ -125,6 +151,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daResolveWindow: string,
   nodeSourceLink?: string,
   daLayer: DaProjectTableValue = DA_LAYERS.NONE,
+  fallback?: DaProjectTableValue,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -133,9 +160,11 @@ export function DACHALLENGES_DA_PROVIDER(
       daChallengeWindow,
       daResolveWindow,
       nodeSourceLink,
+      fallback?.value,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
     badge: BADGES.DA.CustomDA,
+    fallback,
   }
 }
 
@@ -145,6 +174,7 @@ interface DAProvider {
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
   badge: Badge
+  fallback?: DaProjectTableValue
 }
 
 interface OpStackConfigCommon {
@@ -171,6 +201,7 @@ interface OpStackConfigCommon {
   portal?: EntryParameters
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
+  additionalStateValidationReferences?: { title: string; url: string }[]
   milestones?: Milestone[]
   ecosystemInfo?: ProjectEcosystemInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
@@ -251,7 +282,10 @@ function opStackCommon(
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const daProvider = getDAProvider(templateVars, hostChainDA)
+  const daProvider = getDAProvider(templateVars, {
+    hostChainDA,
+    projectType: type,
+  })
 
   const automaticBadges = templateVars.usingAltVm
     ? [BADGES.Stack.OPStack, daProvider.badge]
@@ -290,7 +324,7 @@ function opStackCommon(
   if (fraudProofType === 'Kailua') {
     architectureImage.push('kailua')
   }
-  if (fraudProofType === 'OpSuccinct') {
+  if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     architectureImage.push('opsuccinct')
   }
 
@@ -327,17 +361,17 @@ function opStackCommon(
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
-        (templateVars.stateValidationImage ??
-        fraudProofType === 'Permissionless')
+        templateVars.stateValidationImage ??
+        (fraudProofType === 'Permissionless'
           ? 'opfp'
           : fraudProofType === 'Kailua'
             ? 'kailua'
             : fraudProofType === 'OpSuccinct'
               ? 'opsuccinct'
-              : undefined,
+              : undefined),
       stacks: ['OP Stack'],
       warning:
-        templateVars.display.warning === undefined
+        templateVars.display.warning === undefined && fraudProofType === 'None'
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
@@ -349,11 +383,22 @@ function opStackCommon(
       templateVars.nonTemplateProofSystem ??
       (hasNoProofs
         ? undefined
-        : {
-            type: 'Optimistic',
-            name: 'OPFP',
-            challengeProtocol: 'Interactive',
-          }),
+        : fraudProofType === 'OpSuccinct'
+          ? {
+              type: 'Validity',
+              name: 'SP1',
+            }
+          : fraudProofType === 'OpSuccinctFDP'
+            ? {
+                type: 'Optimistic',
+                zkCatalogId: ProjectId('sp1'),
+                challengeProtocol: 'Single-step',
+              }
+            : {
+                type: 'Optimistic',
+                name: 'OPFP',
+                challengeProtocol: 'Interactive',
+              }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       activityConfig: getActivityConfig(
@@ -435,28 +480,28 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const systemConfig = templateVars.discovery
+  const discov = templateVars.discovery
 
   const usesBlobs =
     templateVars.usesEthereumBlobs ??
-    systemConfig.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
+    discov.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
       'SystemConfig',
       'opStackDA',
     ).isSequencerSendingBlobTx
 
   if (usesBlobs) {
-    const sequencerInbox = systemConfig.getContractValue<ChainSpecificAddress>(
+    const sequencerInbox = discov.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'sequencerInbox',
     )
 
     const inboxStartBlock =
-      systemConfig.getContractValueOrUndefined<number>(
+      discov.getContractValueOrUndefined<number>(
         'SystemConfig',
         'startBlock',
       ) ?? 0
 
-    const sequencer = systemConfig.getContractValue<ChainSpecificAddress>(
+    const sequencer = discov.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'batcherHash',
     )
@@ -512,7 +557,6 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
     display: {
       ...common.display,
       ...templateVars.display,
-      warning: templateVars.display.warning,
       liveness: getLiveness(templateVars),
     },
     config: {
@@ -529,11 +573,12 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
+  const hostChainDA = hostChainDAProvider(baseChain)
   const common = opStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
-    hostChainDAProvider(baseChain),
+    hostChainDA,
   )
 
   const stackedRisk = {
@@ -593,6 +638,13 @@ function getZkProgramHashes(
         ZK_PROGRAM_HASHES(setBuilderProgramHash),
       ]
     }
+    case 'KailuaSoon': {
+      const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
+        'KailuaTreasury',
+        'FPVM_IMAGE_ID',
+      )
+      return [ZK_PROGRAM_HASHES(kailuaProgramHash)]
+    }
     case 'OpSuccinct': {
       const opSuccinctProgramHashes = [
         templateVars.discovery.getContractValue<string>(
@@ -601,6 +653,20 @@ function getZkProgramHashes(
         ),
         templateVars.discovery.getContractValue<string>(
           'OPSuccinctL2OutputOracle',
+          'rangeVkeyCommitment',
+        ),
+      ]
+
+      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+    }
+    case 'OpSuccinctFDP': {
+      const opSuccinctProgramHashes = [
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctFaultDisputeGame',
+          'aggregationVkey',
+        ),
+        templateVars.discovery.getContractValue<string>(
+          'OPSuccinctFaultDisputeGame',
           'rangeVkeyCommitment',
         ),
       ]
@@ -619,6 +685,7 @@ function getStateValidation(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
+  const additionalRefs = templateVars.additionalStateValidationReferences ?? []
   switch (fraudProofType) {
     case 'None': {
       const l2OutputOracle =
@@ -782,14 +849,23 @@ Proposals target sequential tournament epochs of currently ${proposalOutputCount
 The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
             references: [
               {
-                title: "'Sequencing' - Kailua Docs",
-                url: 'https://risc0.github.io/kailua/design.html#sequencing',
+                title: 'Sequencing - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
               },
               {
                 title: 'Vanguard - Kailua Docs',
-                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+                url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
+            risks:
+              vanguardAdvantage > 604800 // 7d, arbitrary threshold
+                ? [
+                    {
+                      category: 'Funds can be frozen if',
+                      text: `the vanguard exploits their vanguard advantage (${formatSeconds(vanguardAdvantage)}), halting the chain until they propose.`,
+                    },
+                  ]
+                : [],
           },
           {
             title: 'Challenges',
@@ -806,8 +882,12 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
-                url: 'https://docs.boundless.network/developers/kailua/how',
-                title: 'Disputes - Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/operate.html',
+                title: 'How to run a challenger - Boundless Docs',
+              },
+              {
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
               },
             ],
           },
@@ -817,6 +897,108 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
+              {
+                url: 'https://boundless-xyz.github.io/kailua/introduction.html',
+                title: 'Kailua Proof System - Boundless Docs',
+              },
+              {
+                url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',
+                title: 'Verifier upgrade and deprecation - Kailua Docs',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'no challenger checks the published state.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route selector.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'a verifier needed for a given proof is paused by its permissioned owner.',
+              },
+            ],
+          },
+        ],
+      }
+    }
+    case 'KailuaSoon': {
+      const kailuaBond = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'participationBond',
+      )
+      const proposalOutputCount =
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'PROPOSAL_OUTPUT_COUNT',
+        )
+      const outputBlockSpan = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'OUTPUT_BLOCK_SPAN',
+      )
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'disputeGameFinalityDelaySeconds',
+        )
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+      return {
+        categories: [
+          {
+            title: 'State root proposals',
+            description: `Proposers submit state roots as children of any (possibly unresolved) previous state root proposal, by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
+              kailuaBond,
+            )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
+
+Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks.
+
+Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}.`,
+            references: [
+              {
+                title: "'Sequencing' - Kailua Docs",
+                url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
+              },
+            ],
+          },
+          {
+            title: 'Challenges',
+            description: `
+Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
+
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods:
+1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
+2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
+3. a conflicting sibling proposal is proven faulty
+
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
+
+A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
+            references: [
+              {
+                url: 'https://boundless-xyz.github.io/kailua/dispute.html',
+                title: 'Disputes - Kailua Book',
+              },
+            ],
+          },
+          {
+            title: 'Validity proofs',
+            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+
+The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            references: [
+              {
+                url: 'https://github.com/soonlabs/kailua-soon',
+                title: 'SOON Kailua - GitHub',
+              },
               {
                 url: 'https://risczero.com/blog/kailua-how-it-works',
                 title: 'Risc0 Kailua Docs',
@@ -833,7 +1015,7 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be stolen if',
-                text: 'no challenger checks the published state',
+                text: 'no challenger checks the published state.',
               },
               {
                 category: 'Funds can be stolen if',
@@ -880,7 +1062,55 @@ The Kailua state validation system is primarily optimistically resolved, so no v
               },
               {
                 category: 'Funds can be frozen if',
-                text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+                text: 'in non-optimistic mode, the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
+              },
+            ],
+          },
+        ],
+      }
+    }
+    case 'OpSuccinctFDP': {
+      const maxChallengeDuration =
+        templateVars.discovery.getContractValue<number>(
+          'OPSuccinctFaultDisputeGame',
+          'maxChallengeDuration',
+        )
+      const maxProveDuration = templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'maxProveDuration',
+      )
+      const proposerBond = templateVars.discovery.getContractValue<number>(
+        'DisputeGameFactory',
+        'initBondGame42',
+      )
+      const challengerBond = templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'challengerBond',
+      )
+      return {
+        categories: [
+          {
+            title: 'Fraud proofs',
+            description: `State roots are proposed by whitelisted proposers who create dispute games via the DisputeGameFactory by posting a bond of ${formatEther(proposerBond)} ETH. Once created, the game enters a challenge period of ${formatSeconds(maxChallengeDuration)} during which whitelisted challengers can dispute the proposal by posting a bond of ${formatEther(challengerBond)} ETH. If challenged, anyone can submit a ZK proof to prove the correct state within the proving period of ${formatSeconds(maxProveDuration)}. After the challenge period passes without a successful challenge, or after a valid proof is submitted, anyone can resolve the game and finalize the state root.`,
+            references: [
+              {
+                url: 'https://succinctlabs.github.io/op-succinct/fault_proofs/fault_proof_architecture.html',
+                title: 'OP Succinct Lite architecture',
+              },
+              ...additionalRefs,
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier.',
+              },
+              {
+                category: 'Funds can be frozen if',
+                text: 'the permissioned proposer fails to publish state roots to the L1.',
               },
             ],
           },
@@ -1041,7 +1271,8 @@ function getRiskViewStateValidation(
         ),
       }
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       return {
         ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         executionDelay: getExecutionDelay(templateVars),
@@ -1058,6 +1289,23 @@ function getRiskViewStateValidation(
       return {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         executionDelay: getFinalizationPeriod(templateVars),
+      }
+    }
+    case 'OpSuccinctFDP': {
+      return {
+        ...RISK_VIEW.STATE_FP_1R_ZK,
+        sentiment: 'warning', // whitelist for challengers!
+        description:
+          RISK_VIEW.STATE_FP_1R_ZK.description +
+          ' The system currently operates with at least 5 whitelisted challengers external to the team.',
+        executionDelay: getExecutionDelay(templateVars),
+        challengeDelay: getChallengePeriod(templateVars),
+        initialBond: formatEther(
+          templateVars.discovery.getContractValue<number>(
+            'DisputeGameFactory',
+            'initBondGame42',
+          ),
+        ),
       }
     }
   }
@@ -1090,14 +1338,23 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-    case 'Kailua':
-      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
-        templateVars.discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'vanguardAdvantage',
-        ),
+    case 'Kailua': {
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
       )
+      const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+      if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
+        return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      }
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        vanguardAdvantage,
+      )
+    }
+    case 'KailuaSoon':
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     case 'OpSuccinct':
+    case 'OpSuccinctFDP':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
   }
 }
@@ -1116,7 +1373,9 @@ function computedStage(
     Permissioned: false,
     Permissionless: true,
     Kailua: true,
+    KailuaSoon: true,
     OpSuccinct: null,
+    OpSuccinctFDP: null,
   }
 
   return getStage(
@@ -1137,7 +1396,9 @@ function computedStage(
           fraudProofType === 'Permissionless' &&
           (templateVars.hasProperSecurityCouncil ?? false),
         usersCanExitWithoutCooperation:
-          fraudProofType === 'Permissionless' || fraudProofType === 'Kailua',
+          fraudProofType === 'Permissionless' ||
+          fraudProofType === 'Kailua' ||
+          fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
@@ -1264,7 +1525,9 @@ function getTechnologyOperator(
     case 'Permissioned':
     case 'Permissionless':
     case 'Kailua':
+    case 'KailuaSoon':
     case 'OpSuccinct':
+    case 'OpSuccinctFDP':
       return OPERATOR.CENTRALIZED_OPERATOR
   }
 }
@@ -1361,7 +1624,8 @@ function getTechnologyExitMechanism(
       })
       break
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       const disputeGameFinalityDelaySeconds =
         templateVars.discovery.getContractValue<number>(
           portal.name ?? portal.address,
@@ -1389,6 +1653,69 @@ function getTechnologyExitMechanism(
           proofMaturityDelaySeconds,
         )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
           maxClockDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
+        references: [
+          {
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+        ],
+      })
+      break
+    }
+    case 'OpSuccinct': {
+      result.push({
+        ...EXITS.REGULAR_MESSAGING('zk', getFinalizationPeriod(templateVars)),
+        references: explorerReferences(explorerUrl, [
+          {
+            title: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+          {
+            title: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
+            address: safeGetImplementation(portal),
+          },
+        ]),
+        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+      })
+      break
+    }
+    case 'OpSuccinctFDP': {
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'disputeGameFinalityDelaySeconds',
+        )
+
+      const proofMaturityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'proofMaturityDelaySeconds',
+        )
+
+      const maxChallengeDuration =
+        templateVars.discovery.getContractValue<number>(
+          'OPSuccinctFaultDisputeGame',
+          'maxChallengeDuration',
+        )
+
+      result.push({
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxChallengeDuration,
         )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
         risks: [],
         references: [
@@ -1448,8 +1775,13 @@ function technologyDA(
 
 function getDAProvider(
   templateVars: OpStackConfigCommon,
-  hostChainDA?: DAProvider,
+  options?: {
+    hostChainDA?: DAProvider
+    projectType?: ScalingProject['type']
+  },
 ): DAProvider {
+  const hostChainDA = options?.hostChainDA
+  const projectType = options?.projectType ?? 'layer2'
   const postsToCelestia =
     templateVars.usesEthereumBlobs ??
     templateVars.discovery.getContractValue<{
@@ -1462,7 +1794,7 @@ function getDAProvider(
   } else {
     daProvider =
       templateVars.daProvider ??
-      (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+      (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
   }
 
   if (daProvider === undefined) {
@@ -1481,15 +1813,16 @@ function getDAProvider(
 
     return {
       layer:
-        (hostChainDA?.layer ?? usesBlobs)
-          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-          : DA_LAYERS.ETH_CALLDATA,
+        hostChainDA?.layer ??
+        (usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA),
       bridge: hostChainDA?.bridge ?? DA_BRIDGES.ENSHRINED,
       badge:
-        (hostChainDA?.badge ?? usesBlobs)
-          ? BADGES.DA.EthereumBlobs
-          : BADGES.DA.EthereumCalldata,
-      riskView: RISK_VIEW.DATA_ON_CHAIN,
+        hostChainDA?.badge ??
+        (usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata),
+      riskView:
+        projectType === 'layer3'
+          ? RISK_VIEW.DATA_ON_CHAIN_L3
+          : RISK_VIEW.DATA_ON_CHAIN,
       technology: usesBlobs
         ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
         : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
@@ -1507,7 +1840,7 @@ function getLiveness(
   const daProvider = getDAProvider(templateVars)
 
   // For OpSuccinct chains, provide liveness info regardless of DA provider
-  if (fraudProofType === 'OpSuccinct') {
+  if (fraudProofType === 'OpSuccinct' || fraudProofType === 'OpSuccinctFDP') {
     const daDescription =
       daProvider.layer === DA_LAYERS.ETH_BLOBS_OR_CALLDATA ||
       daProvider.layer === DA_LAYERS.ETH_CALLDATA
@@ -1603,7 +1936,8 @@ function getTrackedTxs(
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1714,6 +2048,40 @@ function getTrackedTxs(
         },
       ]
     }
+    case 'OpSuccinctFDP': {
+      const disputeGameFactory =
+        templateVars.disputeGameFactory ??
+        templateVars.discovery.getContract('DisputeGameFactory')
+
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: ChainSpecificAddress.address(disputeGameFactory.address),
+            selector: '0x82ecf2f6',
+            functionSignature:
+              'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
   }
 }
 
@@ -1726,7 +2094,7 @@ function postsToEthereum(templateVars: OpStackConfigCommon): boolean {
 
   const daProvider =
     templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+    (postsToCelestia ? CELESTIA_DA_PROVIDER() : undefined)
 
   return daProvider === undefined
 }
@@ -1768,7 +2136,9 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
     }
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon':
+    case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -1809,7 +2179,8 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxClockDuration',
       )
     }
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon': {
       return templateVars.discovery.getContractValue<number>(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
@@ -1819,6 +2190,12 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
       return templateVars.discovery.getContractValue<number>(
         'OPSuccinctL2OutputOracle',
         'finalizationPeriodSeconds',
+      )
+    }
+    case 'OpSuccinctFDP': {
+      return templateVars.discovery.getContractValue<number>(
+        'OPSuccinctFaultDisputeGame',
+        'maxChallengeDuration',
       )
     }
   }
@@ -1832,7 +2209,9 @@ function getExecutionDelay(
   switch (fraudProofType) {
     case 'Permissioned':
     case 'Permissionless':
-    case 'Kailua': {
+    case 'Kailua':
+    case 'KailuaSoon':
+    case 'OpSuccinctFDP': {
       return templateVars.discovery.getContractValue<number>(
         portal.name ?? portal.address,
         'disputeGameFinalityDelaySeconds',
@@ -1848,7 +2227,9 @@ type FraudProofType =
   | 'Permissioned'
   | 'Permissionless'
   | 'Kailua'
+  | 'KailuaSoon'
   | 'OpSuccinct'
+  | 'OpSuccinctFDP'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract
@@ -1874,6 +2255,12 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1337) {
     return 'Kailua'
+  }
+  if (respectedGameType === 2000) {
+    return 'KailuaSoon'
+  }
+  if (respectedGameType === 42) {
+    return 'OpSuccinctFDP'
   }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }

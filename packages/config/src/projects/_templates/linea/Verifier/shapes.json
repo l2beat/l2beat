@@ -18,5 +18,32 @@
     "hash": "0x64013fe6cc4367b6dbbeb934bdb33f30aa57f2e6ebd6342fd05f2beb795c59c4",
     "address": "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
     "blockNumber": 23217842
+  },
+  "Verifier_Type0_Oct25": {
+    "hash": "0x6d472b9a7a105451654fa52f436ccc82f8b107e2737786f0211b290416bb721a",
+    "address": "eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De",
+    "blockNumber": 23676963
+  },
+  "Verifier_Type1_Oct25": {
+    "hash": "0x9cedca91896c641c51bb1b47c018ba0108f6c647eefe47e8491bac41f48a9beb",
+    "address": "eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d",
+    "blockNumber": 23676963
+  },
+  "Verifier_Type4_Oct25": {
+    "hash": "0x53d57e51dbd782cf870af5e73d0f348dd4e412a97ace4c37390af3ab499752bf",
+    "address": "eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E",
+    "blockNumber": 23676963
+  },
+  "Verifier_Type3_Nov25": {
+    "hash": "0x4c61353c5284bd858a3678aa48b2e4f17eac4449abaed557f97d8be2b462ecd6",
+    "address": "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a",
+    "chain": "ethereum",
+    "blockNumber": 23924841
+  },
+  "Verifier_Type4_Dec25": {
+    "hash": "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71",
+    "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
+    "chain": "ethereum",
+    "blockNumber": 23974643
   }
 }

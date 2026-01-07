@@ -28,7 +28,8 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "import-generated": "ts-node ./scripts/import-generated.ts"
+    "import-generated": "ts-node ./scripts/import-generated.ts",
+    "test-client": "ts-node ./scripts/test-client.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "8.18.2",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@trpc/client": "^11.0.0-rc.446",
     "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.6",
     "dotenv": "^17.2.3",

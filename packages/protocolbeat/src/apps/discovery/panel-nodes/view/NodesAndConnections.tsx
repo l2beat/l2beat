@@ -1,3 +1,4 @@
+import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -6,7 +7,12 @@ export function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
   const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
-  const enableDimming = useStore((s) => s.userPreferences.enableDimming)
+  const enableDimming = useStore(
+    ({ userPreferences }) => userPreferences.enableDimming,
+  )
+  const markUnreachableEntries = useGlobalSettingsStore(
+    (s) => s.markUnreachableEntries,
+  )
   const visible = nodes.filter((n) => !hidden.includes(n.id))
 
   const connections = visible
@@ -15,6 +21,7 @@ export function NodesAndConnections() {
         const shouldHide =
           hidden.includes(field.target) ||
           node.hiddenFields.includes(field.name)
+
         if (shouldHide) return null
 
         const targetNode = visible.find((n) => n.id === field.target)
@@ -24,6 +31,9 @@ export function NodesAndConnections() {
         const isHighlighted =
           selected.includes(node.id) || selected.includes(field.target)
         const isDimmed = enableDimming && selected.length > 0 && !isHighlighted
+        const isGrayedOut =
+          markUnreachableEntries &&
+          !(node.isReachable && targetNode?.isReachable)
 
         return {
           key: `${node.id}-${i}-${field.target}`,
@@ -32,6 +42,7 @@ export function NodesAndConnections() {
           isHighlighted,
           isDashed,
           isDimmed,
+          isGrayedOut,
         }
       }),
     )
@@ -67,8 +78,8 @@ export function NodesAndConnections() {
         style={{ left: minX, top: minY, width, height }}
         fill="none"
       >
-        {connections.map((c) => (
-          <Connection {...c} />
+        {connections.map(({ key, ...rest }) => (
+          <Connection key={key} {...rest} />
         ))}
       </svg>
 
@@ -97,6 +108,7 @@ export function NodesAndConnections() {
         const nodeHighlighted = highlightedIds.has(node.id)
         const isDimmed =
           enableDimming && selected.length > 0 && !nodeHighlighted
+        const isGrayedOut = markUnreachableEntries && !node.isReachable
 
         return (
           <NodeView
@@ -104,6 +116,7 @@ export function NodesAndConnections() {
             node={node}
             selected={selected.includes(node.id)}
             isDimmed={isDimmed}
+            isGrayedOut={isGrayedOut}
           />
         )
       })}

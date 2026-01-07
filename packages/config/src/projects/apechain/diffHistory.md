@@ -1,3 +1,311 @@
+Generated with discovered.json: 0x58049932f75ddd9130a3f3357f663510be310a71
+
+# Diff at Mon, 05 Jan 2026 17:44:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764750880
+- current timestamp: 1764750880
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764750880 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xf42c9c8e97729135931bbf14c4b5b5b43ece3075
+
+# Diff at Wed, 03 Dec 2025 08:35:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1763974293
+- current timestamp: 1764750880
+
+## Description
+
+Reintroduce known standard EspressoNitroTEEVerifier.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier_neutered (arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4)
+    +++ description: [NEUTERED] Usually verifies attestations of an AWS Nitro TEE, but this version of the contract does not verify anything and always returns true for certificate verifications. It also allows the owner to register any signer without a TEE attestation.
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4"
++        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C"
+    }
+```
+
+```diff
+    EOA  (arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4","description":"register any signer without attestation by the TEE and spoof signatures.","role":".owner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier.sol}                  | 50 ++++++++++------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
+```
+
+Generated with discovered.json: 0x5c8734578a2e0aae7e871e1056c9c1ae556191d9
+
+# Diff at Mon, 24 Nov 2025 09:17:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763465887
+- current timestamp: 1763974293
+
+## Description
+
+upgrade: espressoNitroTEEVerifier is bypassed with `return True` and `onlyOwner` funcs. The new contract can be used to spoof any signature.
+https://disco.l2beat.com/diff/arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C/arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4
+
+## Watched changes
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C"
++        "arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+```diff
+    EOA  (arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4","description":"register any signer without attestation by the TEE and spoof signatures.","role":".owner"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier_neutered (arb1:0x27d3F7fB1F155F81E633f4E29b2322b7ffafe8e4)
+    +++ description: [NEUTERED] Usually verifies attestations of an AWS Nitro TEE, but this version of the contract does not verify anything and always returns true for certificate verifications. It also allows the owner to register any signer without a TEE attestation.
+```
+
+## Source code changes
+
+```diff
+.../EspressoNitroTEEVerifier_neutered.sol}         | 50 ++++++++++++----------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
+```
+
+Generated with discovered.json: 0x9ff98123a5eb3403d44754ecd2eb4e54ab589a91
+
+# Diff at Tue, 18 Nov 2025 11:39:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1762381395
+- current timestamp: 1763465887
+
+## Description
+
+New registered AWS TEE signer.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.6:
++        "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24"
+    }
+```
+
+Generated with discovered.json: 0x25dae8348bfd88343f0d7e930ec2b5ad9dbecd23
+
+# Diff at Wed, 05 Nov 2025 22:24:27 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2369552edf4e3d745fb05d6aea795be46115ba13 block: 1760538265
+- current timestamp: 1762381395
+
+## Description
+
+New registered AWS TEE signers.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+      values.registeredSigners.4:
++        "arb1:0x6480ec7c5bA30bAa4c7F32fbB6eD5299117c5397"
+      values.registeredSigners.5:
++        "arb1:0x37aa7921D4a65d4D224d9C733E3E26c750A79D81"
+    }
+```
+
+Generated with discovered.json: 0xdf65af09d961fe678a04cd142ba73cc6f85937f8
+
+# Diff at Tue, 04 Nov 2025 11:32:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1760538265
+- current timestamp: 1760538265
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760538265 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
++        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
+    }
+```
+
+Generated with discovered.json: 0x59797193bd1e4fa693846e318c9ce567fc8f877a
+
+# Diff at Wed, 15 Oct 2025 14:25:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e6369d132630f14e783254ffb9e866e883328b9b block: 1750247636
+- current timestamp: 1760538265
+
+## Description
+
+Apechain now uses Espresso sequencer.
+
+## Watched changes
+
+```diff
+    EOA  (arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C","description":"Add/remove batchPosters (Sequencers).","role":".batchPosterManager"}]
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      template:
+-        "orbitstack/SequencerInbox"
++        "orbitstack/SequencerInbox_Espresso"
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here."
+      values.$implementation:
+-        "arb1:0x0DD7dA1805d207511bb3Edabe9352B9E316048bE"
++        "arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575"
+      values.$pastUpgrades.2:
++        ["2025-10-14T19:31:30.000Z","0xf2787805eb5c45529aacb68a446f51693fa2ffabbbe77585921d236a9b43d97a",["arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.batchPosterManager:
+-        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
++        "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"
+      values.batchPosters.0:
+-        "arb1:0x845205C0F5109282954Bba4217aDA2a27Fdd89fF"
++        "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"
+      values.setIsBatchPosterCount:
+-        1
++        3
+      values.espressoTEEVerifier:
++        "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5"
+      implementationNames.arb1:0x0DD7dA1805d207511bb3Edabe9352B9E316048bE:
+-        "SequencerInbox"
+      implementationNames.arb1:0xCfAfB803EF1FEc576138Cebc79Ad41Aa6760C575:
++        "SequencerInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (arb1:0x05A16513BF74629b834878731f07b075Cca33f55)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A)
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/apechain/.flat/CertManager.sol    | 1978 +++++++++++++++
+ .../apechain/.flat/EspressoNitroTEEVerifier.sol    | 1973 +++++++++++++++
+ .../apechain/.flat/EspressoSGXTEEVerifier.sol      |  697 ++++++
+ .../apechain/.flat/EspressoTEEVerifier.sol         |  884 +++++++
+ .../src/projects/apechain/.flat/QuoteVerifier.sol  | 2597 ++++++++++++++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  367 ++-
+ 6 files changed, 8410 insertions(+), 86 deletions(-)
+```
+
 Generated with discovered.json: 0x727fbcca366c826bbdb2faf4d7103617d06b7493
 
 # Diff at Fri, 26 Sep 2025 12:44:41 GMT:

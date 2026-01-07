@@ -54,6 +54,7 @@ export type ApiAddressType =
   | 'Multisig'
   | 'Diamond'
   | 'Timelock'
+  | 'Untemplatized'
   | 'Contract'
   | 'Unknown'
 
@@ -65,6 +66,7 @@ export interface ApiAddressEntry {
   referencedBy: ApiAddressReference[]
   address: ChainSpecificAddress
   chain: string
+  isReachable: boolean
 }
 
 export interface ApiAddressReference extends AddressFieldValue {
@@ -74,11 +76,8 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  ignoreInWatchMode?: boolean
-  ignoreRelatives?: boolean
   handler?: { type: string } & Record<string, unknown>
   description?: string
-  severity?: 'HIGH' | 'LOW'
 }
 
 export type FieldValue =

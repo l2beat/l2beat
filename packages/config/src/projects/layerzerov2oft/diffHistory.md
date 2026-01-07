@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xb5b0a307242da289b735e828c76d13ee5885b3bf
+
+# Diff at Mon, 27 Oct 2025 07:41:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1752074063
+- current timestamp: 1761550307
+
+## Description
+
+Config: Add CanaryDVN contract and templatize DVNs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074063 (main branch discovery), not current.
+
+```diff
+    contract HorizenDVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+    contract USDT0DVN (eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+    contract LayerZeroDVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2)
+    +++ description: None
+```
+
+```diff
+    contract PolyhedraDVN (eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b)
+    +++ description: None
+```
+
+```diff
+    contract GoogleCloudDVN (eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CanaryDVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
 Generated with discovered.json: 0xef4455ab95af2965c67b49f16cca4a5bc19a03c1
 
 # Diff at Fri, 05 Sep 2025 11:19:00 GMT:

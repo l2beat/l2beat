@@ -4,6 +4,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getBridgesSummaryData(
   manifest: Manifest,
@@ -15,9 +16,10 @@ export async function getBridgesSummaryData(
     getAppLayoutProps(),
     getBridgesSummaryEntries(),
     helpers.tvs.chart.prefetch({
-      range: { type: '1y' },
+      range: optionToRange('1y'),
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
 

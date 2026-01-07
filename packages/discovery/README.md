@@ -2,7 +2,7 @@
 
 Discovery is a tool to explore contracts and their dependencies associated with a project.
 
-To view the current state of discovery, see [https://update-monitor-prod.l2beat.com/status/discovery](https://update-monitor-prod.l2beat.com/status/discovery)
+To view the current state of discovery, see [https://um-prod.l2beat.com/status/discovery](https://um-prod.l2beat.com/status/discovery)
 
 Discovery also includes a user interface. See below for instructions on how to run that locally.
 
@@ -105,32 +105,32 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 **Example:**
 
-```
+```json
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json"
-  chain: "ethereum",
-  name: "project_a",
-  initialAddresses: ["0x1234", "0x5678"],
-  names: {
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "project_a",
+  "initialAddresses": ["0x1234", "0x5678"],
+  "names": {
     "0x1234": "Bridge",
     "0x5678": "Rollup"
   },
-  overrides: {
+  "overrides": {
     "Bridge": {
-      description: "This is a Bridge contract",
-      fields: {
-        field_a: {
-          type: "storage",
-          slot: 1
+      "description": "This is a Bridge contract",
+      "fields": {
+        "field_a": {
+          "type": "storage",
+          "slot": 1
         }
       },
-      ignoreMethods: ["method_a", "method_b"],
-      ignoreInWatchMode: ["method_c"]
+      "ignoreMethods": ["method_a", "method_b"],
+      "ignoreInWatchMode": ["method_c"]
     },
     "Rollup": {
-      ignoreDiscovery: true
+      "ignoreDiscovery": true
     }
-  },
+  }
 }
 ```
 
@@ -423,16 +423,14 @@ List of validators cannot be easily obtained from the contract, there is no gett
 
 **Examples:**
 
-Count events with the specified topics:
+Count events with the specified topics (for example `OwnerFunctionCalled(uint256 indexed id)` with `id = 6`):
 
 ```json
 {
   "setValidatorCount": {
     "type": "eventCount",
     "topics": [
-      // event OwnerFunctionCalled(uint256 indexed id);
       "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-      // id == 6 is emitted inside setValidator()
       "0x0000000000000000000000000000000000000000000000000000000000000006"
     ]
   }
@@ -795,12 +793,13 @@ Example: Track only EVM chains
   "select": ["batchIndex"],
   "set": {
     "event": "CurrentBatchMultichain",
-    "where": ["=", "#chainId", 1] // ChainID 1 = Ethereum
+    "where": ["=", "#chainId", 1]
   }
 }
 ```
 
 Events: `CurrentBatchMultichain(batch=5, chain=1) → CurrentBatchMultichain(batch=6, chain=2)`.
+Here `chainId = 1` represents Ethereum.
 Output: `5` (chain=2 event ignored)
 
 **If you combine multiple events**
@@ -850,7 +849,7 @@ Creates a new field in the result with the value provided.
       "nameArgs": true
     }
   }
-},
+}
 ```
 
 ### Hardcoded handler
@@ -870,9 +869,9 @@ Creates a new field in the result with the value provided.
     "securityCouncilThreshold": {
       "type": "hardcoded",
       "value": 9
-    },
+    }
   }
-},
+}
 ```
 
 ### Arbitrum actors handler
@@ -892,9 +891,9 @@ Extracts an array of actors from the Arbitrum stack. Both validators and batch p
     "batchPosters": {
       "type": "arbitrumActors",
       "actorType": "batchPoster"
-    },
+    }
   }
-},
+}
 ```
 
 ### Arbitrum DAC keyset handler
@@ -912,9 +911,9 @@ Extracts the DAC keyset from projects based on Orbit stack.
   "fields": {
     "dacKeyset": {
       "type": "arbitrumDACKeyset"
-    },
+    }
   }
-},
+}
 ```
 
 ### Arbitrum Sequencer version handler
@@ -933,9 +932,9 @@ Using this value you can determine if the data is posted an L1 or to a DAC.
   "fields": {
     "sequencerVersion": {
       "type": "arbitrumSequencerVersion"
-    },
+    }
   }
-},
+}
 ```
 
 ### Optimism DA handler
@@ -954,8 +953,8 @@ Downloads the last ten transactions submitted to L1 by a sequencer and compares 
   "opStackDA": {
     "type": "opStackDA",
     "sequencerAddress": "{{ batcherHash }}"
-  },
-},
+  }
+}
 ```
 
 ### Optimism Sequencer inbox handler
@@ -975,7 +974,7 @@ Extract the address of the place where the sequencer is going to be posting call
     "type": "opStackSequencerInbox",
     "sequencerAddress": "{{ batcherHash }}"
   }
-},
+}
 ```
 
 ### Event trace handler
@@ -1295,9 +1294,11 @@ The ability to use the `edit` feature is still available on such a field.
 Example configuration:
 
 ```json
-"accessControlTargets": {
-  "copy": "accessControl",
-  "edit": ["get", "targets"]
+{
+  "accessControlTargets": {
+    "copy": "accessControl",
+    "edit": ["get", "targets"]
+  }
 }
 ```
 
@@ -1346,7 +1347,9 @@ The structure for defining a formatting configuration is:
 {
   "ConfigurationName": {
     "caster": "BuiltInCasterName",
-    "arg": { ...arguments for the caster... }
+    "arg": {
+      "exampleOption": "exampleValue"
+    }
   }
 }
 ```

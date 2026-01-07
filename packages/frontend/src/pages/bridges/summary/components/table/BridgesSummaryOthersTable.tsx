@@ -1,7 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTable } from '~/hooks/useTable'
-
 import type { BridgesSummaryEntry } from '~/server/features/bridges/getBridgesSummaryEntries'
 import { bridgesSummaryOthersColumns } from './OthersColumns'
 
@@ -29,5 +29,10 @@ export function BridgesSummaryOthersTable({ entries }: Props) {
     },
   })
 
-  return <BasicTable table={activeTable} />
+  return (
+    <>
+      <ColumnsControls columns={activeTable.getAllColumns()} />
+      <BasicTable table={activeTable} />
+    </>
+  )
 }

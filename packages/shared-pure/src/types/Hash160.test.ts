@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { Hash160 } from './Hash160'
+import { Hash160 } from './Hash160.js'
 
 describe(Hash160.name, () => {
   it('accepts lowercase hashes', () => {

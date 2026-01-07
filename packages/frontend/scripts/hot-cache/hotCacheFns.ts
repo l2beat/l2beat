@@ -1,7 +1,9 @@
 // DO NOT MOVE ANYTHING ABOVE THIS LINE BELOW
+import { getScalingSummaryData } from '~/pages/scaling/summary/getScalingSummaryData'
 import '../../src/dotenv'
 
 import type { Request } from 'express'
+import { getBridgesSummaryData } from '~/pages/bridges/summary/getBridgesSummaryData'
 import { getScalingTvsData } from '~/pages/scaling/tvs/getScalingTvsData'
 import type { ICache } from '~/server/cache/ICache'
 import { manifest } from '~/utils/Manifest'
@@ -30,6 +32,14 @@ const cache = new FakeCache()
  * I.e. getScalingTvsData is a database heavy function resulting in >3s of execution time.
  */
 export const hotCacheFns: Record<string, () => Promise<unknown>> = {
+  scalingSummary: () =>
+    getScalingSummaryData(
+      {
+        originalUrl: '/scaling/summary',
+      } as Request,
+      manifest,
+      cache,
+    ),
   scalingTvs: () =>
     getScalingTvsData(
       {
@@ -41,4 +51,5 @@ export const hotCacheFns: Record<string, () => Promise<unknown>> = {
       manifest,
       cache,
     ),
+  bridgesSummary: () => getBridgesSummaryData(manifest, '/bridges/summary'),
 }

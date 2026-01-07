@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "fusionplus",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A"]
+}

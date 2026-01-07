@@ -47,7 +47,7 @@ export async function getDaBeatConfig(
     ),
     availWsUrl: env.string(
       ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
-      'wss://avail-mainnet.public.blastapi.io/',
+      'wss://avail-rpc.publicnode.com',
     ),
   }
 }

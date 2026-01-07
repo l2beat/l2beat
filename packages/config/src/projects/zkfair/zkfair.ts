@@ -22,8 +22,8 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { agglayerDAC } from '../../templates/agglayer'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -137,7 +137,11 @@ export const zkfair: ScalingProject = {
       documentation: ['https://docs.zkfair.io/'],
       explorers: ['https://scan.zkfair.io/'],
       repositories: ['https://github.com/ZKFair'],
-      socialMedia: ['https://twitter.com/ZKFCommunity'],
+      socialMedia: [
+        'https://twitter.com/ZKFCommunity',
+        'https://t.me/zkfaircommunity',
+        'https://mirror.xyz/zkfair.eth',
+      ],
     },
   },
   proofSystem: undefined,
@@ -155,7 +159,7 @@ export const zkfair: ScalingProject = {
           'eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861',
         ),
         sinceTimestamp: UnixTime(1702879283),
-        untilTimestamp: UnixTime(1744292087), // funds sweeped to EOA, then [resupplied to an unverified bridge escrow](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed)
+        untilTimestamp: UnixTime(1744292087), // funds swept to EOA, then [resupplied to an unverified bridge escrow](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed)
         tokens: '*',
       }),
     ],
@@ -386,7 +390,7 @@ export const zkfair: ScalingProject = {
       type: 'general',
     },
   ],
-  customDa: PolygoncdkDAC({
+  customDa: agglayerDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,

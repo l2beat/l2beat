@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { formatSeconds } from './formatSeconds'
+import { formatSeconds } from './formatSeconds.js'
 
 describe(formatSeconds.name, () => {
   describe('short units', () => {

@@ -100,6 +100,20 @@
       "supply": "zero"
     },
     {
+      "name": "ADI",
+      "coingeckoId": "adi-token",
+      "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+      "symbol": "ADI",
+      "decimals": 18,
+      "deploymentTimestamp": 1763656247,
+      "coingeckoListingTimestamp": 1765238400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -894,6 +908,20 @@
       "coingeckoListingTimestamp": 1622419200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Capx",
+      "coingeckoId": "capx-ai",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F",
+      "symbol": "CAPX",
+      "decimals": 18,
+      "deploymentTimestamp": 1758848087,
+      "coingeckoListingTimestamp": 1762300800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70528/large/capx_logo_icon_-_circle.png?1762334471",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2385,20 +2413,6 @@
     {
       "name": "Gala",
       "coingeckoId": "gala",
-      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
-      "symbol": "GALA",
-      "decimals": 8,
-      "deploymentTimestamp": 1599673371,
-      "coingeckoListingTimestamp": 1600214400,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1696512310",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Gala",
-      "coingeckoId": "gala",
       "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
       "symbol": "GALA",
       "decimals": 8,
@@ -2700,6 +2714,20 @@
       "coingeckoListingTimestamp": 1732579200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/29779/large/HSKlogo.jpg?1719445510",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "HAUST",
+      "coingeckoId": "haust",
+      "address": "0xec3502A9f98f151aF52EE6CB423a0afE7bBF5A19",
+      "symbol": "HAUST",
+      "decimals": 18,
+      "deploymentTimestamp": 1725525707,
+      "coingeckoListingTimestamp": 1761523200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52141/large/chain-logo-200.png?1732643394",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3120,6 +3148,20 @@
       "coingeckoListingTimestamp": 1609804800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Lighter",
+      "coingeckoId": "lighter",
+      "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2",
+      "symbol": "LIT",
+      "decimals": 18,
+      "deploymentTimestamp": 1761579731,
+      "coingeckoListingTimestamp": 1767052800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71121/large/lighter.png?1765888098",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3601,6 +3643,34 @@
       "supply": "zero"
     },
     {
+      "name": "Midas Re7 BTC",
+      "coingeckoId": "midas-mre7btc-2",
+      "address": "0x9FB442d6B612a6dcD2acC67bb53771eF1D9F661A",
+      "symbol": "mRe7BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1756975739,
+      "coingeckoListingTimestamp": 1762214400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69666/large/mRe7BTC_icon.png?1759235343",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Midas Re7 Yield",
+      "coingeckoId": "midas-mre7yield",
+      "address": "0x87C9053C819bB28e0D73d33059E1b3DA80AFb0cf",
+      "symbol": "mRe7YIELD",
+      "decimals": 18,
+      "deploymentTimestamp": 1738827887,
+      "coingeckoListingTimestamp": 1741132800,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54660/large/mre7yield_logo.png?1740896178",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Moonflow",
       "coingeckoId": "moonflow",
       "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
@@ -3951,6 +4021,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ondo Short-Term U.S. Government Bond Fund",
+      "coingeckoId": "ousg",
+      "address": "0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+      "symbol": "OUSG",
+      "decimals": 18,
+      "deploymentTimestamp": 1671639383,
+      "coingeckoListingTimestamp": 1679443200,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29023/large/OUSG.png?1696527993",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Open Ecosystem Token",
       "coingeckoId": "open-ticketing-ecosystem",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
@@ -4140,7 +4224,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1566830180,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "rwaPublic",
       "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
       "chainId": 1,
       "source": "canonical",
@@ -4254,6 +4338,20 @@
       "coingeckoListingTimestamp": 1599868800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Phala Vault",
+      "coingeckoId": "pha",
+      "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
+      "symbol": "vPHA",
+      "decimals": 18,
+      "deploymentTimestamp": 1736539223,
+      "coingeckoListingTimestamp": 1599868800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12451/large/phala.png?1696512270",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5449,6 +5547,20 @@
       "supply": "zero"
     },
     {
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "coingeckoId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "address": "0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "symbol": "USTB",
+      "decimals": 6,
+      "deploymentTimestamp": 1701849095,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "SushiBar",
       "coingeckoId": "xsushi",
       "address": "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272",
@@ -5694,7 +5806,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1635679310,
       "coingeckoListingTimestamp": 1579996800,
-      "category": "other",
+      "category": "rwaPublic",
       "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
       "chainId": 1,
       "source": "canonical",
@@ -6605,7 +6717,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1730729615,
       "coingeckoListingTimestamp": 1739318400,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
       "chainId": 10,
       "source": "native",
@@ -8003,7 +8115,7 @@
       "decimals": 2,
       "deploymentTimestamp": 1736864101,
       "coingeckoListingTimestamp": 1748476800,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/56040/large/bcap_logo_200.png?1748088291",
       "chainId": 324,
       "source": "native",
@@ -8058,7 +8170,7 @@
       "decimals": 2,
       "deploymentTimestamp": 1708523359,
       "coingeckoListingTimestamp": 1737417600,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50749/large/FIUDS_200x200px_%281%29.png?1728956878",
       "chainId": 324,
       "source": "native",
@@ -8225,6 +8337,62 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Private Credit Direct Deal0000015",
+      "coingeckoId": "tradable-na-third-party-online-merchant-sstn",
+      "address": "0xd8916e15D351DC728414e99A4883c72010eE11f8",
+      "symbol": "PC0000015",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618700,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66880/large/tradable.jpg?1750921859",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000019",
+      "coingeckoId": "tradable-north-america-pos-lender-sstn",
+      "address": "0x1F179A51Ab46252f469733DFcbD9115090A91f03",
+      "symbol": "PC0000019",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618829,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66800/large/tradable.jpg?1750576495",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000023",
+      "coingeckoId": "tradable-singapore-fintech-ssl-2",
+      "address": "0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
+      "symbol": "PC0000023",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618928,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66954/large/tradable.jpg?1751254449",
+      "chainId": 324,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000027",
+      "coingeckoId": "tradable-latam-bnpl-sstn",
+      "address": "0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b",
+      "symbol": "PC0000027",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618766,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66793/large/tradable.jpg?1750576283",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Private Credit Direct Deal0000031",
       "coingeckoId": "tradable-na-rent-financing-platform-sstn",
       "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
@@ -8232,11 +8400,179 @@
       "decimals": 6,
       "deploymentTimestamp": 1731618722,
       "coingeckoListingTimestamp": 1748476800,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
       "chainId": 324,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000033",
+      "coingeckoId": "tradable-apac-diversified-finance-provider-sstn",
+      "address": "0x6FF4fAfD8D604614c704a5936D9146C0af19BD1E",
+      "symbol": "PC0000033",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618842,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66798/large/tradable.jpg?1750576460",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000037",
+      "coingeckoId": "na-fintech-nonprime-lender-sstn",
+      "address": "0x83547Ba6B1992F70aE7203dE4E95bB74B37cA3Ec",
+      "symbol": "PC0000037",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618734,
+      "coingeckoListingTimestamp": 1752537600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66792/large/tradable.jpg?1750576200",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000049",
+      "coingeckoId": "tradable-eu-latam-pos-financing-sstl",
+      "address": "0xe53dBcEf6F700536a912c51CAEa4D0E2bE2b1388",
+      "symbol": "PC0000049",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618938,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66794/large/tradable.jpg?1750576332",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000061",
+      "coingeckoId": "na-music-royalties-sstl",
+      "address": "0x5895024c953bee18D5F026bfcf6259bb2d79E12D",
+      "symbol": "PC0000061",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618906,
+      "coingeckoListingTimestamp": 1752537600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66881/large/tradable.jpg?1750921901",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000077",
+      "coingeckoId": "tradable-singapore-fintech-ssl",
+      "address": "0x18012CB9e1478EF458C8c996F99b8DcEcA60795c",
+      "symbol": "PC0000077",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618862,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66878/large/tradable.jpg?1750921608",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000081",
+      "coingeckoId": "tradable-na-legal-receivables-ssl",
+      "address": "0xA4b3dC5433EcAbDd1498cA7f3f4d890b185C0B0A",
+      "symbol": "PC0000081",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618917,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66799/large/tradable.jpg?1750576475",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000085",
+      "coingeckoId": "tradable-latam-middle-market-lender-sstl",
+      "address": "0xfeAfDE23fb2364896C297c3Fa6628f04601a035b",
+      "symbol": "PC0000085",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618873,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66877/large/tradable.jpg?1750921571",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000089",
+      "coingeckoId": "latam-residential-sstl",
+      "address": "0xfB3fCCdD38A96C3f769c62E578323f22c3BFCbEc",
+      "symbol": "PC0000089",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618884,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66590/large/tradable.jpg?1749832358",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000097",
+      "coingeckoId": "tradable-latam-fintech-sstn",
+      "address": "0x5aBe0a2ead1357F70E73F5b60E227dF64A54ddD5",
+      "symbol": "PC0000097",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618744,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66796/large/tradable.jpg?1750576421",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000101",
+      "coingeckoId": "na-post-settlement-legal-financing-receivables",
+      "address": "0x3D19625Bb8E4B52Ac4ca28ecec2B5E243ae2EE81",
+      "symbol": "PC0000101",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618680,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66791/large/tradable.jpg?1750576168",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000113",
+      "coingeckoId": "tradable-na-residential-real-estate-backed-credit-card-sstn",
+      "address": "0x5556fE72eb021f97D39ba704f3674f1731e1AcC4",
+      "symbol": "PC0000113",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618852,
+      "coingeckoListingTimestamp": 1752537600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66879/large/tradable.jpg?1750921826",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0016245",
+      "coingeckoId": "na-capital-as-a-service-sstn",
+      "address": "0xe3D53AdDadb3F87ADC38B4192171aAf5A07A3738",
+      "symbol": "PC0016245",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618691,
+      "coingeckoListingTimestamp": 1751500800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66593/large/tradable.jpg?1749883324",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Staked Frax Ether",
@@ -8956,6 +9292,42 @@
       }
     },
     {
+      "name": "Kyo",
+      "coingeckoId": "kyo",
+      "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "symbol": "KYO",
+      "decimals": 18,
+      "deploymentTimestamp": 1760351109,
+      "coingeckoListingTimestamp": 1765324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71031/large/Kyo.png?1765377840",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lootcoin",
+      "coingeckoId": "lootcoin",
+      "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+      "symbol": "LOOT",
+      "decimals": 18,
+      "deploymentTimestamp": 1756091383,
+      "coingeckoListingTimestamp": 1766275200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71197/large/lootcoin-logo.jpg?1766302463",
+      "chainId": 1868,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Neemo Staked Astar",
       "coingeckoId": "neemo-staked-astar",
       "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
@@ -9184,6 +9556,28 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Startale USD",
+      "coingeckoId": "startale-usd",
+      "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "symbol": "USDSC",
+      "decimals": 6,
+      "deploymentTimestamp": 1763565991,
+      "coingeckoListingTimestamp": 1764633600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70883/large/stataleusd.png?1764393252",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -10118,6 +10512,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x5bE26527e817998A7206475496fDE1E68957c5A6",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1698169754,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
@@ -10185,6 +10593,28 @@
           {
             "name": "Layer Zero v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1762005534,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -10598,6 +11028,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "coingeckoId": "franklin-templeton-benji",
+      "address": "0x60CfC2b186a4CF647486e42c42B11cC6D571d1E4",
+      "symbol": "BENJI",
+      "decimals": 18,
+      "deploymentTimestamp": 1729278711,
+      "coingeckoListingTimestamp": 1750636800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "FRIEND",
@@ -12067,6 +12511,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "EARNM",
+      "coingeckoId": "earnm",
+      "address": "0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+      "symbol": "EARNM",
+      "decimals": 18,
+      "deploymentTimestamp": 1732049680,
+      "coingeckoListingTimestamp": 1734652800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52925/large/earnm.jpg?1734706204",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "EDU Coin",
       "coingeckoId": "edu-coin",
       "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
@@ -12178,6 +12644,20 @@
       "chainId": 42161,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Franklin OnChain U.S. Government Money Fund",
+      "coingeckoId": "franklin-templeton-benji",
+      "address": "0xB9e4765BCE2609bC1949592059B17Ea72fEe6C6A",
+      "symbol": "BENJI",
+      "decimals": 18,
+      "deploymentTimestamp": 1699305515,
+      "coingeckoListingTimestamp": 1750636800,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66409/large/Benji_Logo.png?1749371083",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Frax",
@@ -12661,6 +13141,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "OpenEden T-Bills",
+      "coingeckoId": "openeden-tbill",
+      "address": "0xF84D28A8D28292842dD73D1c5F99476A80b6666A",
+      "symbol": "TBILL",
+      "decimals": 6,
+      "deploymentTimestamp": 1707821187,
+      "coingeckoListingTimestamp": 1698105600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30576/large/OE_Logo_200x200_Transparent.png?1696529441",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "PancakeSwap Token",
       "coingeckoId": "pancakeswap-token",
       "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
@@ -12739,6 +13233,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "RAIN",
+      "coingeckoId": "rain",
+      "address": "0x25118290e6A5f4139381D072181157035864099d",
+      "symbol": "RAIN",
+      "decimals": 18,
+      "deploymentTimestamp": 1756216201,
+      "coingeckoListingTimestamp": 1757548800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Renzo Restaked ETH",
@@ -12850,7 +13358,7 @@
       "decimals": 5,
       "deploymentTimestamp": 1729851160,
       "coingeckoListingTimestamp": 1723680000,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
       "chainId": 42161,
       "source": "native",
@@ -12864,7 +13372,7 @@
       "decimals": 5,
       "deploymentTimestamp": 1729851183,
       "coingeckoListingTimestamp": 1724112000,
-      "category": "other",
+      "category": "rwaRestricted",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
       "chainId": 42161,
       "source": "native",
@@ -12993,6 +13501,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Syrup USDC",
+      "coingeckoId": "syrupusdc",
+      "address": "0x41CA7586cC1311807B4605fBB748a3B8862b42b5",
+      "symbol": "syrupUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1753290053,
+      "coingeckoListingTimestamp": 1740873600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54658/large/syrupUSDC.png?1761824955",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "Talos",
@@ -14344,6 +14874,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "BOB",
+      "coingeckoId": "bob-build-on-bitcoin",
+      "address": "0xB0BD54846a92b214C04A63B26AD7Dc5e19A60808",
+      "symbol": "BOB",
+      "decimals": 18,
+      "deploymentTimestamp": 1739374645,
+      "coingeckoListingTimestamp": 1763596800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54720/large/BOB_symbol_colour.png?1741195397",
+      "chainId": 60808,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (BOB)",
       "coingeckoId": "usd-coin",
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
@@ -14784,6 +15328,56 @@
       }
     },
     {
+      "name": "Matrixdock Gold",
+      "coingeckoId": "matrixdock-gold",
+      "address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+      "symbol": "XAUM",
+      "decimals": 18,
+      "deploymentTimestamp": 1745486446,
+      "coingeckoListingTimestamp": 1732838400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51962/large/xaum_200px_logo_1x.png?1733560735",
+      "chainId": 98866,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mineral Vault I Security Token",
+      "coingeckoId": "mineral-vault-fund-i",
+      "address": "0x5107272921A750A20d492Fb41Acf0b770b09a624",
+      "symbol": "MNRL",
+      "decimals": 18,
+      "deploymentTimestamp": 1747929303,
+      "coingeckoListingTimestamp": 1750377600,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66290/large/mineral-vault.png?1749109942",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Plume Staked ETH",
+      "coingeckoId": "plume-staked-eth",
+      "address": "0x39d1F90eF89C52dDA276194E9a832b484ee45574",
+      "symbol": "pETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1743704762,
+      "coingeckoListingTimestamp": 1753228800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67514/large/peth.png?1753068541",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Plume USD",
       "coingeckoId": "plume-usd",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
@@ -14804,6 +15398,48 @@
           }
         ]
       }
+    },
+    {
+      "name": "Super OETH",
+      "coingeckoId": "super-oeth",
+      "address": "0xFCbe50DbE43bF7E5C88C6F6Fb9ef432D4165406E",
+      "symbol": "superOETHp",
+      "decimals": 18,
+      "deploymentTimestamp": 1744991910,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39828/large/Super_OETH.png?1724208268",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Superstate Crypto Carry Fund",
+      "coingeckoId": "superstate-uscc",
+      "address": "0x4c21B7577C8FE8b0B0669165ee7C8f67fa1454Cf",
+      "symbol": "USCC",
+      "decimals": 6,
+      "deploymentTimestamp": 1743086925,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39326/large/superstate.jpg?1721724143",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Superstate Short Duration US Government Securities Fund",
+      "coingeckoId": "superstate-short-duration-us-government-securities-fund-ustb",
+      "address": "0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
+      "symbol": "USTB",
+      "decimals": 6,
+      "deploymentTimestamp": 1743009435,
+      "coingeckoListingTimestamp": 1730419200,
+      "category": "rwaRestricted",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35012/large/ustb.jpeg?1707102680",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "MORE",
@@ -15472,6 +16108,28 @@
       }
     },
     {
+      "name": "Wrapped USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+      "symbol": "WUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1760534427,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 5064014,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Bridged USDC (Corn)",
       "coingeckoId": "usd-coin",
       "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
@@ -15613,6 +16271,28 @@
       "coingeckoListingTimestamp": 1722556800,
       "category": "btc",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741375647,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
       "chainId": 21000000,
       "source": "external",
       "supply": "totalSupply",

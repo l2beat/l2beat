@@ -77,6 +77,41 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
     })
   })
 
+  describe(AbstractTokenRepository.prototype.findByCoingeckoId.name, () => {
+    it('finds record by coingeckoId', async () => {
+      const ethereum = abstractToken({
+        id: 'TK0002',
+        coingeckoId: 'ethereum',
+        symbol: 'ETH',
+        category: 'ether',
+      })
+      const usdc = abstractToken({
+        id: 'TK0003',
+        coingeckoId: 'usd-coin',
+        symbol: 'USDC',
+        category: 'stablecoin',
+      })
+
+      await repository.insert(ethereum)
+      await repository.insert(usdc)
+
+      const foundUsdc = await repository.findByCoingeckoId('usd-coin')
+      expect(foundUsdc).toEqual(usdc)
+    })
+
+    it('returns undefined when coingeckoId does not exist', async () => {
+      await repository.insert(
+        abstractToken({
+          id: 'TK0001',
+          coingeckoId: 'bitcoin',
+        }),
+      )
+
+      const found = await repository.findByCoingeckoId('ethereum')
+      expect(found).toEqual(undefined)
+    })
+  })
+
   describe(AbstractTokenRepository.prototype.deleteByIds.name, () => {
     it('deletes selected records', async () => {
       await repository.insert(abstractToken({ id: 'TK0001' }))

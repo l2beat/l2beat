@@ -25,7 +25,7 @@ export type EVMTransaction = z.infer<typeof EVMTransaction>
 export const EVMTransaction = z
   .object({
     hash: z.string(),
-    value: z.string(),
+    value: z.string().transform(BigInt),
     from: z.string(),
     /** Address of the receiver, null when it's a contract creation transaction. */
     to: z
@@ -94,6 +94,20 @@ export const EVMBlockWithTransactionsResponse = z.object({
 
 export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
+})
+
+export type EVMFeeHistory = z.infer<typeof EVMFeeHistory>
+export const EVMFeeHistory = z.object({
+  baseFeePerGas: z.array(Quantity.decode),
+  gasUsedRatio: z.array(z.number()),
+  baseFeePerBlobGas: z.array(Quantity.decode),
+  blobGasUsedRatio: z.array(z.number()),
+  oldestBlock: Quantity.decode.transform((n) => Number(n)),
+  reward: z.array(z.array(Quantity.decode)),
+})
+
+export const EVMFeeHistoryResponse = z.object({
+  result: EVMFeeHistory,
 })
 
 export const EVMCallResponse = z.object({

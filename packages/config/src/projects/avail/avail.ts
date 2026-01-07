@@ -120,7 +120,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
         'Avail uses the BABE/GRANDPA consensus algorithm. BABE is a block production mechanism that is used to create new blocks in the Avail blockchain. GRANDPA is a finality gadget that is used to finalize blocks.',
       blockTime: 20, // seconds
       consensusFinality: 60, //seconds
-      unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
+      unbondingPeriod: UnixTime.DAY * 28, // staking.UnbondingTime
     },
     throughput: [
       {
@@ -402,7 +402,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       },
       {
         projectId: ProjectId('527d69c3'),
-        name: '527d69c3',
+        name: 'Rooch Network',
         daTrackingConfig: [
           {
             type: 'avail',
@@ -485,17 +485,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
             type: 'avail',
             sinceBlock: 0,
             appIds: ['33'],
-          },
-        ],
-      },
-      {
-        projectId: ProjectId('space-and-time'),
-        name: 'Space and Time',
-        daTrackingConfig: [
-          {
-            type: 'avail',
-            sinceBlock: 0,
-            appIds: ['34'],
           },
         ],
       },

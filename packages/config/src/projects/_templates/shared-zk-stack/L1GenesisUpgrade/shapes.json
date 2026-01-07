@@ -13,5 +13,16 @@
     "hash": "0xc75c7be9ac7357405aa86630f69e44a24c26a15d36cb11f64fa4e3c1f9de257e",
     "address": "eth:0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E",
     "blockNumber": 22744143
+  },
+  "L1GenesisUpgrade_v29": {
+    "hash": "0xcf720c550063195782639668a10f51f4795d77e30b60eb7428b5adff5bff7969",
+    "address": "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4",
+    "blockNumber": 23588465
+  },
+  "L1GenesisUpgrade_v29_ADI": {
+    "hash": "0x2ac2e89a0c7be1dc3b8323404c216f0eaa3547a44632d578bbfefb54b8d46b21",
+    "address": "eth:0x5C9B360aB320a23692c9E81006ddB15de991ab65",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

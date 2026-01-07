@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Form,
@@ -22,7 +22,9 @@ import {
 import { Spinner } from '~/components/core/Spinner'
 import { Textarea } from '~/components/core/TextArea'
 import { minLengthCheck, urlCheck } from '~/utils/checks'
+import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
+import { ExternalLink } from '../ExternalLink'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 
@@ -52,17 +54,16 @@ export function AbstractTokenForm({
   onSubmit,
   isFormDisabled,
   refreshId,
-  coingeckoFields,
+  checks,
   children,
 }: {
   form: UseFormReturn<AbstractTokenSchema, unknown, AbstractTokenSchema>
   onSubmit: SubmitHandler<AbstractTokenSchema>
   isFormDisabled: boolean
   refreshId?: () => void
-  coingeckoFields: {
+  checks?: {
     isLoading: boolean
     success: boolean
-    isListingTimestampLoading: boolean
   }
   children: React.ReactNode
 }) {
@@ -129,29 +130,27 @@ export function AbstractTokenForm({
           <FormField
             control={form.control}
             name="coingeckoId"
-            success={coingeckoFields.success}
+            success={!!checks?.success}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
                   Coingecko ID{' '}
-                  {coingeckoFields.isLoading && (
-                    <Spinner className="size-3.5" />
-                  )}
+                  {checks?.isLoading && <Spinner className="size-3.5" />}
                 </FormLabel>
                 <FormControl>
                   <div className="group flex items-center gap-2">
                     <Input {...field} />
-                    <Link
-                      to={`https://www.coingecko.com/en/coins/${field.value}`}
-                      target="_blank"
-                      aria-disabled={!coingeckoFields.success}
+                    <ExternalLink
+                      href={`https://www.coingecko.com/en/coins/${field.value}`}
+                      aria-disabled={!checks?.success}
                       className={buttonVariants({
                         variant: 'outline',
                         className: 'shrink-0',
+                        size: 'icon',
                       })}
                     >
                       <ArrowRightIcon />
-                    </Link>
+                    </ExternalLink>
                   </div>
                 </FormControl>
 
@@ -163,7 +162,7 @@ export function AbstractTokenForm({
           <FormField
             control={form.control}
             name="iconUrl"
-            disabled={coingeckoFields.isLoading}
+            disabled={checks?.isLoading}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Icon URL</FormLabel>
@@ -192,14 +191,24 @@ export function AbstractTokenForm({
             name="coingeckoListingTimestamp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Coingecko Listing Timestamp{' '}
-                  {coingeckoFields.isListingTimestampLoading && (
-                    <Spinner className="size-3.5" />
-                  )}
-                </FormLabel>
+                <FormLabel>Coingecko Listing Timestamp</FormLabel>
                 <FormControl>
-                  <Input type="date" {...field} />
+                  <Input
+                    type="date"
+                    {...field}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pastedText = e.clipboardData.getData('text')
+                      const parsedDate = parseDatePaste(pastedText)
+                      if (parsedDate) {
+                        field.onChange(parsedDate)
+                      } else {
+                        toast.error(
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
+                        )
+                      }
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

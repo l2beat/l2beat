@@ -7,7 +7,6 @@
   "RewardAllStakersActionGenerator.sol": {
     "hash": "0x060b369fcc81cf09031a86a111ba96ebc53cafbc076a91a3ef81ca49e33030a6",
     "address": "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5",
-    "chain": "ethereum",
     "blockNumber": 23569083
   }
 }

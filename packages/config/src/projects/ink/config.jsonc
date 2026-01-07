@@ -20,6 +20,7 @@
   ],
   "names": {
     "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
-    "ink:0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory"
+    "ink:0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
+    "eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C": "FaultDisputeGame"
   }
 }

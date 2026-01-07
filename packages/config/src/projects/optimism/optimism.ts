@@ -29,7 +29,11 @@ export const optimism: ScalingProject = opStackL2({
     links: {
       websites: ['https://optimism.io/'],
       bridges: ['https://app.optimism.io'],
-      documentation: ['https://community.optimism.io'],
+      documentation: [
+        'https://docs.optimism.io/',
+        'https://specs.optimism.io/',
+        'https://community.optimism.io',
+      ],
       explorers: [
         'https://optimistic.etherscan.io',
         'https://optimism.blockscout.com/',
@@ -44,7 +48,10 @@ export const optimism: ScalingProject = opStackL2({
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
-      rollupCodes: 'https://rollup.codes/optimism',
+      other: [
+        'https://rollup.codes/optimism',
+        'https://growthepie.com/chains/optimism',
+      ],
     },
   },
   hasSuperchainScUpgrades: true,

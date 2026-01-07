@@ -4,7 +4,7 @@ Worldcoin uses two types of circuits: Semaphore to prove the inclusion of a Worl
 
 Worldcoin uses two semaphore anonymity sets, one called 'orb' (OpWorldID_One), used for verified humans, and the other called 'phone' (OpWorldID_Zero) for verified unique devices. More information can be found [here](https://docs.world.org/world-id/concepts). The two contracts have the same source code and contain multiple verification keys for multiple semaphore verifiers of different sizes, going from size 16 to 32. Currently, only the ones with size 30 are used. An example of a semaphore verification transaction can be found [here](https://app.blocksec.com/explorer/tx/optimism/0xfe3821e05483c290300d9da497fcf9720e3a7369a1b483786faa28fd694ce2b7?line=8).
 
-The circuit is written in circom and the keys are generated using the snarkjs library. The semaphore artifacts can be found [here](https://storage.googleapis.com/trustedsetup-a86f4.appspot.com/semaphore/semaphore_top_index.html).
+The circuit is written in circom and the keys are generated using the snarkjs library. The semaphore artifacts can be found [here](https://semaphore.pse.dev/).
 
 ### Verification process
 

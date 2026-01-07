@@ -1,6 +1,6 @@
 Starknet utilizes the STARK protocol for their system using an AIR for the CairoVM and onchain FRI verification. The scheme makes use of the STARK field.
 
-The protocol makes use of recursive proof aggregation among many projects utilizing the CairoVM (i.e. Starknet forks and StarkEx systems) using SHARP. Some documentation on the aggregation scheme can be found [here](https://book.starknet.io/ch03-03-provers.html) and the Cairo verifier implemented in Cairo can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo). The system doesn’t implement state diffs compression yet.
+The protocol makes use of recursive proof aggregation among many projects utilizing the CairoVM (i.e. Starknet forks and StarkEx systems) using SHARP. Some documentation on the aggregation scheme can be found [here](https://docs.starknet.io/learn/S-two-book/how-it-works/stark_proof/prove) and the Cairo verifier implemented in Cairo can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo). The system doesn’t implement state diffs compression yet.
 
 The final proof is not wrapped in a different proof system. The scheme is fully transparent and doesn’t require a trusted setup.
 

@@ -27,6 +27,7 @@
     "build:dependencies": "turbo run build --filter=@l2beat/frontend^... --filter=@l2beat/backend^... --filter=@l2beat/tools-api --filter=@l2beat/l2b",
     "build:dependencies:frontend": "turbo run build --filter=@l2beat/frontend^...",
     "build:dependencies:backend": "turbo run build --filter=@l2beat/backend^...",
+    "build:dependencies:dal": "turbo run build --filter=@l2beat/dal^...",
     "build:dependencies:l2b": "turbo run build --filter=@l2beat/l2b^...",
     "build:dependencies:discovery": "turbo run build --filter=@l2beat/discovery^...",
     "build:dependencies:config": "turbo run build --filter=@l2beat/config^...",
@@ -36,6 +37,7 @@
     "watch:dependencies": "turbo watch build --filter=@l2beat/frontend^... --filter=@l2beat/backend^... --filter=@l2beat/tools-api --filter=@l2beat/l2b",
     "watch:dependencies:frontend": "turbo watch build --filter=@l2beat/frontend^... --ui tui",
     "watch:dependencies:backend": "turbo watch build --filter=@l2beat/backend^... --ui tui",
+    "watch:dependencies:dal": "turbo watch build --filter=@l2beat/dal^... --ui tui",
     "watch:dependencies:l2b": "turbo watch build --filter=@l2beat/l2b^... --ui tui",
     "watch:dependencies:discovery": "turbo watch build --filter=@l2beat/discovery^... --ui tui",
     "watch:dependencies:config": "turbo watch build --filter=@l2beat/config^... --ui tui",
@@ -56,7 +58,7 @@
     "checkout": "pnpm clean && pnpm && pnpm build"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.2",
+    "@biomejs/biome": "2.3.8",
     "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.6",

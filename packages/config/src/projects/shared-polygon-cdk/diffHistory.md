@@ -1,3 +1,637 @@
+Generated with discovered.json: 0x8a9284b79a1ed84d6d364c1f1b1026e52cfe5d7b
+
+# Diff at Tue, 09 Dec 2025 11:50:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1763987450
+- current timestamp: 1765280943
+
+## Description
+
+changes related to polygonzkevm moving to pessimistic proofs + multisig changes.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.3:
+-        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+      values.$members.9:
+-        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+      values.multisigThreshold:
+-        "5 of 12 (42%)"
++        "5 of 9 (56%)"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.accessControl.TRUSTED_AGGREGATOR.members.0:
+-        "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab"
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
++        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.12:
++        1
+      values.rollupsDataV2.0.rollupVerifierType:
+-        0
++        2
+      values.rollupsDataV2.0.rollupTypeID:
+-        6
++        14
+      values.rollupsDataV2.0.forkID:
+-        12
++        0
+      values.rollupsDataV2.0.verifier:
+-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.trustedAggregatorAC.0:
+-        "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab"
+      values.trustedAggregatorAC.1:
++        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
+Generated with discovered.json: 0x2a270ce35863f89c87f532529d7a3e872cb78daa
+
+# Diff at Sat, 06 Dec 2025 14:43:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ce9c5de1bc9f8a8c0a7f464f3c1e3611f05712f1 block: 1763987450
+- current timestamp: 1763987450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763987450 (main branch discovery), not current.
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+    }
+```
+
+Generated with discovered.json: 0x793058d7bfaa3d491f390caa0191496eb438826b
+
+# Diff at Mon, 24 Nov 2025 12:32:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763649253
+- current timestamp: 1763987450
+
+## Description
+
+third aggchainVkey with identifier added.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x00080001:
++        [{"selector":"0x00080001","newVKey":"0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"}]
+    }
+```
+
+Generated with discovered.json: 0xac98d101fd026666422a99cf3798edc25e1b9843
+
+# Diff at Thu, 20 Nov 2025 14:36:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b9fb6935244c163272f55e2acbd987c21dfd4d2 block: 1761895482
+- current timestamp: 1763649253
+
+## Description
+
+Test deployment added.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.11:
++        26
+      values.rollupCount:
+-        25
++        26
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.25:
++        {"rollupContract":"eth:0xE369D0C2aee9B32c3b0EC54443890bEDF11Ef6D4","chainID":125125,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":13,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
+Generated with discovered.json: 0xdf2f75229e06863c6b32f6eb5c5b2d8729313d3e
+
+# Diff at Fri, 31 Oct 2025 13:59:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761060538
+- current timestamp: 1761895482
+
+## Description
+
+v0.3.5 upgrade:
+- https://www.agglayer.dev/blogs/introducing-aggkit-the-standardized-path-to-connect-any-chain-to-agglayer
+- https://docs.agglayer.dev/agglayer/core-concepts/aggkit/?h=aggkit#whats-new-in-v035
+- https://agglayer.github.io/protocol-team-docs/aggregation-layer/v0.3.5/Changes/
+
+tldr: refactor and multisig support for permissioned state transitions
+
+AgglayerGateway - https://disco.l2beat.com/diff/eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346/eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49
+- multisig support
+
+AgglayerBridge - https://disco.l2beat.com/diff/eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b/eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad
+- rename
+- refactor: add BridgeLib contract, IEmergencyManager
+
+AgglayerManager - https://disco.l2beat.com/diff/eth:0x42B9fF0644741e3353162678596e7D6aA6a13240/eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618
+- rename
+- aggchainManager role (per aggchain, same as old rollupAdmin but for 'Aggchains')
+- multisig interfaces
+
+AgglayerGER - https://disco.l2beat.com/diff/eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48/eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5
+- rename
+- minor changes / refactor an unused _checkValidSubtreeFrontier func
+
+all chains that were previously on the legacy pp setup have now moved to aggchainGateway pp setup
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      name:
+-        "AggLayerGateway"
++        "AgglayerGateway"
+      sourceHashes.1:
+-        "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba"
++        "0x3e98abe94ddfb10602e8ecfe755bcbc2ef664b24dbdf25c9231ac726af8d7da7"
+      values.$implementation:
+-        "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346"
++        "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49"
+      values.$pastUpgrades.1:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.accessControl.AL_MULTISIG_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]}
+      values.aggchainVKeys.0x00060001:
++        [{"selector":"0x00060001","newVKey":"0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6"}]
+      values.routes.0x00000008:
++        [{"selector":"0x00000008","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","pessimisticVKey":"0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"}]
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0x5fea5922ef634456425d2e3251455050449b5c787cdca45b6733d5b624d39591"
+      values.aggchainSigners:
++        ["eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"]
+      values.AGGLAYER_GATEWAY_VERSION:
++        "v1.1.0"
+      values.alMultisigAC:
++        ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+      values.getAggchainMultisigHash:
++        "0x5fea5922ef634456425d2e3251455050449b5c787cdca45b6733d5b624d39591"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF","url":"test"}]
+      values.getAggchainSigners:
++        ["eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.version:
++        "v1.1.0"
+      errors:
+-        {"alMultisigAC":"Processing error occurred."}
+      implementationNames.eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346:
+-        "AggLayerGateway"
+      implementationNames.eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49:
++        "AgglayerGateway"
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","description":"change the aggchainSigners and threshold (a multisig used for permissioned state transitions).","role":".alMultisigAC"}
+    }
+```
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+      template:
+-        "polygon-cdk/PolygonSharedBridge_al030"
++        "polygon-cdk/AgglayerBridge"
+      sourceHashes.1:
+-        "0xf77e37156ee166ea86bbe304138c8d57dd299347f411e731fa2086e15153a780"
++        "0xb40fddae6c645a55f315f2543ba01f6f0129babd6c85689e32e56f2d5d4b5b4a"
+      description:
+-        "The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages."
++        "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages."
+      values.$implementation:
+-        "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"
++        "eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.BRIDGE_VERSION:
+-        "al-v0.3.0"
++        "v1.1.0"
+      values.getWrappedTokenBridgeImplementation:
+-        "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d"
++        "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4"
+      values.wrappedTokenBytecodeStorer:
+-        "eth:0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
++        "eth:0xD4D47e9106EE78178d17201d59F83B1b4626DfDf"
+      values.bridgeLib:
++        "eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3"
+      values.version:
++        "v1.1.0"
+      implementationNames.eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b:
+-        "PolygonZkEVMBridgeV2"
+      implementationNames.eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad:
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+      template:
+-        "polygon-cdk/PolygonRollupManager_al030"
++        "polygon-cdk/AgglayerManager"
+      sourceHashes.1:
+-        "0xe1a044e355c430aefc18f156be2c4f677baa559d3fb102b60b836bb4e2b91220"
++        "0xc090b472b887aea0913f1a8fd38eec84d8a0faf5a90a03114035ebe5401c3d1f"
+      values.$implementation:
+-        "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240"
++        "eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618"
+      values.$pastUpgrades.8:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.ROLLUP_MANAGER_VERSION:
+-        "al-v0.3.1"
++        "v1.0.0"
+      values.rollupsDataV2.2.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.2.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.2.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.2.forkID:
+-        12
++        0
+      values.rollupsDataV2.2.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.6.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.6.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.6.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.6.forkID:
+-        12
++        0
+      values.rollupsDataV2.6.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.13.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.13.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.13.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.13.forkID:
+-        12
++        0
+      values.rollupsDataV2.13.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.16.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.16.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.16.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.16.forkID:
+-        12
++        0
+      values.rollupsDataV2.16.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.17.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.17.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.17.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.17.forkID:
+-        12
++        0
+      values.rollupsDataV2.17.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.18.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.18.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.18.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.18.forkID:
+-        12
++        0
+      values.rollupsDataV2.18.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.19.rollupTypeID:
+-        12
++        13
+      values.rollupsDataV2.20.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.20.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.20.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.20.forkID:
+-        12
++        0
+      values.rollupsDataV2.20.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.21.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.21.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.21.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.21.forkID:
+-        12
++        0
+      values.rollupsDataV2.21.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.22.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.22.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.22.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.22.forkID:
+-        12
++        0
+      values.rollupsDataV2.22.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.23.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.23.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.23.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.23.forkID:
+-        12
++        0
+      values.rollupsDataV2.23.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupsDataV2.24.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.24.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.24.rollupTypeID:
+-        11
++        14
+      values.rollupsDataV2.24.forkID:
+-        12
++        0
+      values.rollupsDataV2.24.verifier:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupTypeCount:
+-        12
++        14
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.12:
++        {"consensusImplementation":"eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660","verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.13:
++        {"consensusImplementation":"eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21","verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.version:
++        "v1.0.0"
+      implementationNames.eth:0x42B9fF0644741e3353162678596e7D6aA6a13240:
+-        "PolygonRollupManager"
+      implementationNames.eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618:
++        "AgglayerManager"
+    }
+```
+
+```diff
+    contract AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+      template:
+-        "polygon-cdk/PolygonGlobalExitRootV2"
++        "polygon-cdk/AgglayerGER"
+      sourceHashes.1:
+-        "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067"
++        "0x0691e028b98db8d6bfadf2704505338eeea6f915426cadc2422a6b034b81e2fb"
+      values.$implementation:
+-        "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
++        "eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5"
+      values.$pastUpgrades.4:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.GER_VERSION:
+-        "al-v0.3.0"
++        "v1.0.0"
+      values.version:
++        "v1.0.0"
+      implementationNames.eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48:
+-        "PolygonZkEVMGlobalExitRootV2"
+      implementationNames.eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5:
++        "AgglayerGER"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BridgeLib (eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3)
+    +++ description: Extension contract of the AgglayerBridge for asset metadata..
+```
+
+## Source code changes
+
+```diff
+.../AgglayerBridge/AgglayerBridge.sol}             | 453 +++++++++----------
+ .../TransparentUpgradeableProxy.p.sol              |   0
+ .../AgglayerGER/AgglayerGER.sol}                   |  95 +++-
+ .../AgglayerGER}/TransparentUpgradeableProxy.p.sol |   0
+ .../AgglayerGateway/AgglayerGateway.sol}           | 477 ++++++++++++++++++++-
+ .../TransparentUpgradeableProxy.p.sol              |   0
+ .../AgglayerManager/AgglayerManager.sol}           | 127 ++++--
+ .../TransparentUpgradeableProxy.p.sol              |   0
+ .../shared-polygon-cdk/.flat/BridgeLib.sol         | 221 ++++++++++
+ 9 files changed, 1052 insertions(+), 321 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761060538 (main branch discovery), not current.
+
+```diff
+    contract AggLayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      errors:
++        {"alMultisigAC":"Processing error occurred."}
+    }
+```
+
+Generated with discovered.json: 0x936dda873ce131239da663e5acf3b55d0a0d742f
+
+# Diff at Tue, 21 Oct 2025 15:30:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d52ad2c1af6ac3243376427c1aab587fd7b34800 block: 1759928430
+- current timestamp: 1761060538
+
+## Description
+
+2 new pessimistic chains added.
+
+| RollupID |             Name |                      Comments | GasToken |    ChainID | ForkID |       RollupTypeID |        VerifierType |
+|----------|------------------|-------------------------------|----------|------------|--------|--------------------|---------------------|
+|        1 |    polygon zkEVM |                               |      ETH |       1101 |     12 |      6 (zk rollup) | statetransition (0) |
+|        2 |      Astar zkEVM |                               |      ETH |       3776 |      9 |     4 (validiumV1) | statetransition (0) |
+|        3 |          X Layer |                               |   custom |        196 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|        4 |      oev-network |                          dead |      ETH |       4913 |      9 |     4 (validiumV1) | statetransition (0) |
+|        5 |      gpt-mainnet |                          dead |   custom | 1511670449 |      9 |     4 (validiumV1) | statetransition (0) |
+|        6 |     witnesschain |                          dead |      ETH | 1702448187 |      9 |     4 (validiumV1) | statetransition (0) |
+|        7 |            prism |                     lumia.org |   custom |  994873017 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|        8 |        pay-chain |             wirexpaychain.com |      ETH |      31415 |     12 |     7 (validiumV2) | statetransition (0) |
+|        9 |       silicon-zk |                       testnet |      ETH |  511252203 |      9 |     4 (validiumV1) | statetransition (0) |
+|       10 |       silicon-zk |                       mainnet |      ETH |       2355 |     12 |     7 (validiumV2) | statetransition (0) |
+|       11 |    haust-network |                       testnet |   custom |        999 |      9 |     4 (validiumV1) | statetransition (0) |
+|       12 |    haust-network |                      testnet? |   custom |        938 |      9 |     4 (validiumV1) | statetransition (0) |
+|       13 |           Ternoa |                               |   custom |     752025 |     12 |     7 (validiumV2) | statetransition (0) |
+|       14 |          Z Chain |                  cdk-sov test |   custom |       9369 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       15 |   Pentagon Games |                      testnet? |   custom |        623 |     12 |     7 (validiumV2) | statetransition (0) |
+|       16 |   Pentagon Games | pentagon.games/pentagon-chain |   custom |       3344 |     12 |     7 (validiumV2) | statetransition (0) |
+|       17 |             Okto |                        wallet |   custom |        801 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       18 | Billions Network |                               |      ETH |      45056 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       19 |             Okto |                               |      ETH |       8088 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       20 |           katana |              op stack cdk sov |      ETH |     747474 |      0 |   12 (aggchainFEP) |    algateway-pp (2) |
+|       21 |          forknet |                    Forknet.io |      ETH |        838 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       22 |          forknet |                      testnet? |      ETH |       8338 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+|       23 |    Haust Network |                      mainnet? |   custom |       3864 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+| added 24 |         Sentient |                               |   custom |       6767 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+| added 25 |   Canvas Connect |                               |   custom |       6360 |     12 | 11 (pessimistic 3) |     pessimistic (1) |
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.10:
++        24
+      values.rollupCount:
+-        23
++        25
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.23:
++        {"rollupContract":"eth:0xEB7eeB10CC04447262715ddaF7C7B111141c2358","chainID":6767,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.24:
++        {"rollupContract":"eth:0x7A7db0e6006827825ccfEA7eaA0d12979b6f9968","chainID":6360,"verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","forkID":12,"rollupTypeID":11,"rollupVerifierType":1,"programVKey":"0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"}
+    }
+```
+
 Generated with discovered.json: 0x6f5374cebcca68542e8446dd49a735c303f1202b
 
 # Diff at Wed, 08 Oct 2025 13:03:29 GMT:

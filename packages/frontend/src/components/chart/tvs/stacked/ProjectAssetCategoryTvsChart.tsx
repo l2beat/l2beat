@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { api } from '~/trpc/React'
 import {
   AssetCategoryTvsChart,
@@ -19,7 +20,7 @@ export function ProjectAssetCategoryTvsChart({
   milestones,
 }: ProjectAssetCategoryTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
-
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     assetCategoryTvsChartMeta,
   )
@@ -28,12 +29,25 @@ export function ProjectAssetCategoryTvsChart({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
     () =>
       data?.chart.map(
-        ([timestamp, ethPrice, _, __, ___, ether, stablecoin, btc, other]) => {
+        ([
+          timestamp,
+          ethPrice,
+          _,
+          __,
+          ___,
+          ether,
+          stablecoin,
+          btc,
+          other,
+          rwaRestricted,
+          rwaPublic,
+        ]) => {
           const divider = unit === 'usd' ? 1 : ethPrice
           return {
             timestamp,
@@ -53,6 +67,14 @@ export function ProjectAssetCategoryTvsChart({
               other !== null && divider !== null && divider !== 0
                 ? other / divider
                 : null,
+            rwaRestricted:
+              rwaRestricted !== null && divider !== null && divider !== 0
+                ? rwaRestricted / divider
+                : null,
+            rwaPublic:
+              rwaPublic !== null && divider !== null && divider !== 0
+                ? rwaPublic / divider
+                : null,
           }
         },
       ),
@@ -71,6 +93,7 @@ export function ProjectAssetCategoryTvsChart({
       dataKeys={dataKeys}
       toggleDataKey={toggleDataKey}
       project={project}
+      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
     />
   )
 }

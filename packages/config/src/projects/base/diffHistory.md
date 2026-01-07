@@ -1,3 +1,740 @@
+Generated with discovered.json: 0x14ace90c2e224e69046e314c458ade0dd7f007af
+
+# Diff at Mon, 22 Dec 2025 12:18:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1766048031
+- current timestamp: 1766405804
+
+## Description
+
+fee market config changes.
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.daFootprintGasScalar:
+-        312
++        325
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.daFootprintGasScalar:
+-        312
++        325
+      values.eip1559Elasticity:
+-        5
++        6
+      values.minBaseFee:
+-        200000
++        500000
+    }
+```
+
+Generated with discovered.json: 0x0c83b76276c2fc8f2ccc88b513719dceb30815a8
+
+# Diff at Thu, 18 Dec 2025 08:55:12 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765550303
+- current timestamp: 1766048031
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.domainSeparator:
+-        "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890"
++        "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76"
+      values.getModules:
+-        []
+      values.NAME:
+-        "Gnosis Safe"
+      values.VERSION:
+-        "1.1.1"
++        "1.4.1"
+      values.getChainId:
++        1
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  959 -----------------
+ .../OpFoundationOperationsSafe/Safe.sol}           |  685 +++++++-----
+ .../base/.flat/OpFoundationUpgradeSafe/Safe.sol    | 1088 ++++++++++++++++++++
+ 3 files changed, 1498 insertions(+), 1234 deletions(-)
+```
+
+Generated with discovered.json: 0x3776919069c1548f798ddd9ce74ff2e96b6d8cc3
+
+# Diff at Fri, 12 Dec 2025 16:19:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765358732
+- current timestamp: 1765550303
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765358732 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x872ecb267c1b71a6d66b32768056ca17ec9a69bd
+
+# Diff at Thu, 11 Dec 2025 14:14:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1765358732
+- current timestamp: 1765358732
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765358732 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x642229f238fb9dE03374Be34B0eD8D9De80752c5) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x8Ca1E12404d16373Aef756179B185F27b2994F3a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0x471641f72ce1ee37d4531f0a7761b0702566c9ce
+
+# Diff at Wed, 10 Dec 2025 09:26:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764322933
+- current timestamp: 1765358732
+
+## Description
+
+'Jovian' Upgrade + Fusaka Readiness: https://gov.optimism.io/t/upgrade-17-jovian-hardfork-and-fusaka-readiness/10400
+
+Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+L1Block - setL1BlockValuesJovian() that introduces daFootprintGasScalar  (400 default value)
+https://disco.l2beat.com/diff/base:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12/base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C
+
+Already templatized (minimal diff):
+
+OptimismMintableERC20Factory
+https://disco.l2beat.com/diff/eth:0x5493f4677A186f64805fe7317D6993ba4863988F/eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB
+
+L1StandardBridge
+https://disco.l2beat.com/diff/eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A
+
+DisputeGameFactory
+https://disco.l2beat.com/diff/eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50
+
+OptimismPortal2
+https://disco.l2beat.com/diff/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202
+
+L1ERC721Bridge
+https://disco.l2beat.com/diff/eth:0x7f1d12fB2911EB095278085f721e644C1f675696/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9
+
+SystemConfig
+https://disco.l2beat.com/diff/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED
+
+L1CrossDomainMessenger
+https://disco.l2beat.com/diff/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6/eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+      values.$implementation:
+-        "base:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.2:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.daFootprintGasScalar:
++        312
+      implementationNames.base:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        "L1Block"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
++        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
+      values.$implementation:
+-        "eth:0x5493f4677A186f64805fe7317D6993ba4863988F"
++        "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"
+      values.$pastUpgrades.4:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.version:
+-        "1.10.1"
++        "1.10.2"
+      implementationNames.eth:0x5493f4677A186f64805fe7317D6993ba4863988F:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x29b630d028d2dfddff75dc128b41ae51836c874dcd31a62c9d7313599e6261fb"
++        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
+      values.$implementation:
+-        "eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb"
++        "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"
+      values.version:
+-        "2.7.0"
++        "2.8.0"
+      implementationNames.eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb:
+-        "L1StandardBridge"
+      implementationNames.eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689"
++        "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca"
+      values.$implementation:
+-        "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D"
++        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
+      values.$pastUpgrades.3:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"]]
+      values.$upgradeCount:
+-        3
++        4
++++ severity: HIGH
+      values.gameImpls.0:
+-        "eth:0xe4066890367BF8A51d58377431808083A01b1E0c"
++        "eth:0x979Cb7E329bA213fB9d6c5F7771eC6a3109BDC93"
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec"
++        "eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2"
+      values.version:
+-        "1.2.0"
++        "1.3.0"
+      implementationNames.eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9"
++        "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2"
+      values.$implementation:
+-        "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999"
++        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
+      values.$pastUpgrades.8:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.version:
+-        "5.0.0"
++        "5.1.1"
+      implementationNames.eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999:
+-        "OptimismPortal2"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xab560cdc633c64552a47cd693ebc9aaab91fe80bec99e9e89b9d13d89a994c22"
++        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
+      values.$implementation:
+-        "eth:0x7f1d12fB2911EB095278085f721e644C1f675696"
++        "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"
+      values.$pastUpgrades.6:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.version:
+-        "2.8.0"
++        "2.9.0"
+      implementationNames.eth:0x7f1d12fB2911EB095278085f721e644C1f675696:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    EOA  (eth:0x642229f238fb9dE03374Be34B0eD8D9De80752c5) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec"
++        "eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9"
++        "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0"
+      values.$implementation:
+-        "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"
++        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
+      values.$pastUpgrades.12:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.version:
+-        "3.7.0"
++        "3.11.0"
+      values.daFootprintGasScalar:
++        312
+      values.minBaseFee:
++        200000
+      implementationNames.eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557:
+-        "SystemConfig"
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x12cf78bcfa479caaee8133c0f935dcdcc333cdc116805f6b81bd80f6ba52128c"
++        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
+      values.$implementation:
+-        "eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"
++        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
+      values.$pastUpgrades.7:
++        ["2025-12-01T15:58:23.000Z","0x9b9aa2d8e857e1a28e55b124e931eac706b3ae04c1b33ba949f0366359860993",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.version:
+-        "2.10.0"
++        "2.11.0"
+      implementationNames.eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    EOA  (eth:0x8Ca1E12404d16373Aef756179B185F27b2994F3a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec"
++        "eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0xe4066890367BF8A51d58377431808083A01b1E0c)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x979Cb7E329bA213fB9d6c5F7771eC6a3109BDC93)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      |  47 +++++++---
+ .../FaultDisputeGame.sol                           |  80 ++++++++++++-----
+ .../L1Block/L1Block.sol                            |  73 +++++++--------
+ .../L1CrossDomainMessenger.sol                     |  58 +++++++++---
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  14 +--
+ .../L1StandardBridge/L1StandardBridge.sol          |  14 +--
+ .../base/{.flat@1764322933 => .flat}/MIPS.sol      |  33 ++-----
+ .../OptimismMintableERC20Factory.sol               |   4 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  64 +++++++++----
+ .../PermissionedDisputeGame.sol                    |  40 ++++-----
+ .../SystemConfig/SystemConfig.sol                  | 100 +++++++++++++++------
+ 11 files changed, 328 insertions(+), 199 deletions(-)
+```
+
+Generated with discovered.json: 0xf94bcef3a738aa5d853969d15197093618e21426
+
+# Diff at Fri, 28 Nov 2025 09:43:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1763378474
+- current timestamp: 1764322933
+
+## Description
+
+'Jovian' Upgrade + Fusaka Readiness: https://gov.optimism.io/t/upgrade-17-jovian-hardfork-and-fusaka-readiness/10400 is deployed, but base only upgrades the SuperchainConfi with minimal diff.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 26 ++--------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+```
+
+Generated with discovered.json: 0xb03df30177b1cb0c2ce84f6b8bcb816cddc0c26b
+
+# Diff at Mon, 17 Nov 2025 11:23:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1ced7b6309befc68bef18813184f322d7f7507fd block: 1761757489
+- current timestamp: 1763378474
+
+## Description
+
+Increase in EIP-1559 elasticity (from 4 to 5), meaning that in periods of high demand the block can expand up to 5x the block gas target, and block gas target is now gasLimit/5.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        4
++        5
+    }
+```
+
+Generated with discovered.json: 0xd851da31d2821ec4ae22fa5547663f5db9158e18
+
+# Diff at Tue, 04 Nov 2025 11:32:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761757489
+- current timestamp: 1761757489
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761757489 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03"
++        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x6e19dedf2965b6aaae0af2c98a6df46b1caac3ffc191eaf1d10ca5570076252f"
++        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xe4066890367BF8A51d58377431808083A01b1E0c) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74"
++        "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e"
+    }
+```
+
+Generated with discovered.json: 0x779a22331fff04185da232d404e771c568e8d7b5
+
+# Diff at Mon, 03 Nov 2025 17:43:51 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761757489
+- current timestamp: 1761757489
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761757489 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x642229f238fb9dE03374Be34B0eD8D9De80752c5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x8Ca1E12404d16373Aef756179B185F27b2994F3a) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0xe3803582fd5BCdc62720D2b80f35e8dDeA94e2ec","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0xcc3a0f6cd3403e5e9d329ab304eacaadb91581a5
+
+# Diff at Wed, 29 Oct 2025 17:06:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cd3acb30978545d875852451e86e15a019f3b00a block: 1761222889
+- current timestamp: 1761757489
+
+## Description
+
+msig changes.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937"
+      values.$members.1:
++        "eth:0x5B154B8587168CB984Ff610F5De74289D8f68874"
+      values.$members.3:
+-        "eth:0x9bF96DCf51959915c8c343a3E50820Ad069A1859"
+      values.$members.10:
+-        "eth:0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+      values.$members.11:
+-        "eth:0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.multisigThreshold:
+-        "3 of 14 (21%)"
++        "3 of 13 (23%)"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x13de4c889c5a91e8f049d91cfe455ad0d95e5967
+
+# Diff at Mon, 20 Oct 2025 15:11:35 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759995304
+- current timestamp: 1760973016
+
+## Description
+
+Optimism wallet for fee collection changed threshold 67%->60%.
+Op foundation multisig member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05) {
+    +++ description: None
+      values.$members.0:
++        "base:0x23d85C88792454DcCffD460bC06C349A21aDb102"
+      values.$members.1:
++        "base:0x4d494C5F61b60752D3A10062276a0eFC22596151"
+      values.$members.0:
+-        "base:0x1084092Ac2f04c866806CF3d4a385Afa4F6A6C97"
++        "base:0xB2433A0C418Bda24a771489918EF3a7EBC57e24C"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0x84ea2fbab6fbef39dab55b93251def51c24d9224
 
 # Diff at Thu, 09 Oct 2025 07:36:13 GMT:

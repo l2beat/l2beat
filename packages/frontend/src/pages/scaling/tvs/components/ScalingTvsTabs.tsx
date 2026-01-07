@@ -20,6 +20,8 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -35,6 +37,7 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsDisplayControlsContext()
   const [breakdownType, setBreakdownType] = useState<
     'bridgeType' | 'assetCategory'
   >('bridgeType')
@@ -53,14 +56,19 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <TableFilters
-        entries={[
-          ...props.rollups,
-          ...props.validiumsAndOptimiums,
-          ...props.others,
-          ...props.notReviewed,
-        ]}
-      />
+      <div className="flex items-center justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+            ...props.notReviewed,
+          ]}
+        />
+        <div className="max-md:mt-4 max-md:mr-4">
+          <DisplayControls display={display} setDisplay={setDisplay} />
+        </div>
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
@@ -91,6 +99,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="rollups"
                 entries={entries.rollups}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -110,6 +119,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="validiumsAndOptimiums"
                 entries={entries.validiumsAndOptimiums}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -126,6 +136,7 @@ export function ScalingTvsTabs(props: Props) {
               />
               <HorizontalSeparator className="mt-4 mb-3" />
               <BreakdownTypeTabs
+                tab="others"
                 entries={entries.others}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -136,6 +147,7 @@ export function ScalingTvsTabs(props: Props) {
             <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
               <NotReviewedInfo />
               <BreakdownTypeTabs
+                tab="notReviewed"
                 entries={entries.notReviewed}
                 breakdownType={breakdownType}
                 setBreakdownType={setBreakdownType}
@@ -150,11 +162,13 @@ export function ScalingTvsTabs(props: Props) {
 }
 
 function BreakdownTypeTabs({
+  tab,
   entries,
   breakdownType,
   setBreakdownType,
   ignoreUnderReviewIcon,
 }: {
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   setBreakdownType: (value: 'bridgeType' | 'assetCategory') => void
@@ -174,6 +188,7 @@ function BreakdownTypeTabs({
       </TabsList>
       <TabsContent value="bridgeType">
         <ScalingTvsTable
+          tab={tab}
           entries={entries}
           breakdownType={breakdownType}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}
@@ -181,6 +196,7 @@ function BreakdownTypeTabs({
       </TabsContent>
       <TabsContent value="assetCategory">
         <ScalingTvsTable
+          tab={tab}
           entries={entries}
           breakdownType={breakdownType}
           ignoreUnderReviewIcon={ignoreUnderReviewIcon}

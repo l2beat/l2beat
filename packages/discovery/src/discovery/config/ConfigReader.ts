@@ -3,11 +3,13 @@ import {
   formatAsciiBorder,
   Hash160,
   type json,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import merge from 'lodash/merge'
+import uniq from 'lodash/uniq'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
@@ -91,6 +93,35 @@ export class ConfigReader {
     return JSON.parse(contents) as unknown as DiscoveryOutput
   }
 
+  readDiscoveryWithReferences(projectName: string): DiscoveryOutput[] {
+    const seen = new Set<string>()
+    return this._readDiscoveryWithReferences(projectName, seen)
+  }
+
+  private _readDiscoveryWithReferences(
+    projectName: string,
+    seen: Set<string>,
+  ): DiscoveryOutput[] {
+    if (seen.has(projectName)) {
+      return []
+    }
+
+    seen.add(projectName)
+
+    const discovery = this.readDiscovery(projectName)
+    const references = [
+      ...getReferencedProjects(discovery),
+      ...(discovery.sharedModules ?? []),
+    ]
+
+    return [
+      discovery,
+      ...references
+        .map((reference) => this._readDiscoveryWithReferences(reference, seen))
+        .flat(),
+    ]
+  }
+
   readDiscoveryHash(projectName: string): Hash160 {
     const curDiscovery = this.readDiscovery(projectName)
     const hasher = createHash('sha1')
@@ -167,6 +198,32 @@ export class ConfigReader {
       const hashString = hashLine.slice(HASH_LINE_PREFIX.length)
       return Hash160(hashString)
     }
+  }
+
+  readDiffLastDescription(name: string): string | undefined {
+    const projectPath = this.resolveProjectPath(name)
+    assert(
+      fileExistsCaseSensitive(projectPath),
+      'Project not found, check if case matches',
+    )
+
+    const content = readFileSync(
+      path.join(projectPath, 'diffHistory.md'),
+      'utf-8',
+    )
+    const lines = content.split('\n')
+    const index = lines.findIndex((l) => l === '## Description')
+    if (index < 0) {
+      return undefined
+    }
+
+    const followingLines = lines.slice(index + 1)
+    const lastIndex = followingLines.findIndex((l) => l.startsWith('## '))
+    if (lastIndex < 0) {
+      return followingLines.join('\n').trim()
+    }
+
+    return followingLines.slice(0, lastIndex).join('\n').trim()
   }
 
   getProjectPath(project: string): string {
@@ -356,4 +413,13 @@ export class ConfigReader {
   }
 
   // #endregion
+}
+
+function getReferencedProjects(discovery: DiscoveryOutput): string[] {
+  return uniq(
+    discovery.entries
+      .map((e) => e.targetProject)
+      .filter(notUndefined)
+      .sort(),
+  )
 }

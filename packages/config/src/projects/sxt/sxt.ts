@@ -1,4 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +17,8 @@ const discovery = new ProjectDiscovery('sxt')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.Avail],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Space and Time',
     slug: 'sxt',
@@ -23,7 +31,7 @@ export const sxt: ScalingProject = zkStackL2({
       explorers: ['https://spaceandtime.calderaexplorer.xyz'],
       repositories: ['https://github.com/spaceandtimelabs'],
       socialMedia: [
-        'https://x.com/SpaceandTimeDB',
+        'https://x.com/spaceandtime',
         'https://discord.com/invite/spaceandtimeDB',
         'https://linkedin.com/company/space-and-time-db/',
         'https://youtube.com/channel/UCXJyE7ahmqCH11aO7L76PBA',
@@ -36,12 +44,22 @@ export const sxt: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
+  daProvider: {
+    layer: DA_LAYERS.AVAIL,
+    riskView: RISK_VIEW.DATA_AVAIL(false),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
+    bridge: DA_BRIDGES.NONE,
+  },
+  availDa: {
+    appIds: ['34'],
+    sinceBlock: 1185587,
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
@@ -56,7 +74,7 @@ export const sxt: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
@@ -71,7 +89,7 @@ export const sxt: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:
@@ -80,6 +98,7 @@ export const sxt: ScalingProject = zkStackL2({
       },
     },
   ],
+  chainId,
   chainConfig: {
     name: 'sxt',
     chainId,
@@ -94,7 +113,6 @@ export const sxt: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   milestones: [
     {
       title: 'Mainnet Launch',

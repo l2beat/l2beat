@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -16,7 +16,7 @@ export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   discovery,
   genesisTimestamp: UnixTime(1688314886),
-  daProvider: EIGENDA_DA_PROVIDER(false),
+  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Mantle',
@@ -35,6 +35,7 @@ export const mantle: ScalingProject = opStackL2({
         'https://medium.com/0xmantle',
         'https://t.me/mantlenetwork',
       ],
+      other: ['https://growthepie.com/chains/mantle'],
     },
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
@@ -125,6 +126,19 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
+    },
     {
       type: 'eigen-da',
       customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',

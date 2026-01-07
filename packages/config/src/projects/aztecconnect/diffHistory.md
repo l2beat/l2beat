@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x0f9fb8539f46dc3be317f54772f62756e6879c31
+
+# Diff at Tue, 04 Nov 2025 11:32:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1729849619
+- current timestamp: 1729849619
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1729849619 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf15c9cfd9eb12a3556a88221df34d944dd453922d9b9b9f7c3d50d41b027b06a"
++        "0x01278507559e13896df8442bcf39edd2998ae3788e582fa0e8d80e83143e4687"
+    }
+```
+
+```diff
+    contract DefiBridgeProxy (eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4c3447f738f38931105bfe030716b1bdc26c6e9ca0bbed38fff31afccabc90fb"
++        "0x9c330dea69f01bdf65cfce5dd18bc7b9d78e257db070df45fe39ad14cf396a9a"
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"
++        "0xf5d46f176c2c0d256ee7bea1f340a7625b48c0c8a4e52d0cf068fd7c0bfbfefe"
+    }
+```
+
 Generated with discovered.json: 0xfed4ba6df91e43d66285b08161f05823cf96ea72
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -70,12 +70,13 @@ export const loopring: ScalingProject = {
         'https://loopring.org/#/blog',
         'https://medium.com/loopring-protocol',
         'https://twitter.com/loopringorg',
-        'https://discord.gg/loopring',
+        'https://discord.com/invite/KkYccYp',
         'https://youtube.com/c/loopring',
         'https://weibo.com/loopringfoundation',
         'https://reddit.com/r/loopringorg/',
         'https://loopring.substack.com/',
       ],
+      other: ['https://growthepie.com/chains/loopring'],
     },
     liveness: {
       explanation:

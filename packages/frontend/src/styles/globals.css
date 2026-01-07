@@ -40,6 +40,7 @@
   --brand: #9621bf;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
+  --surface-primary-hover: #e6ecef;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
   --surface-info: #ccdbff;
@@ -107,9 +108,10 @@
   --positive: #15ca60;
   --warning: #ffc107;
   --negative: #ff0000;
-  --brand: #ecb0fb;
+  --brand: #db8bf7;
   --background: #000000;
   --surface-primary: #17191f;
+  --surface-primary-hover: #2b303b;
   --surface-secondary: #3b3f45;
   --surface-tertiary: #484d54;
   --surface-info: #26374f;
@@ -363,6 +365,7 @@
 
   --color-pink-100: #ff46c0;
   --color-pink-200: #db8bf7;
+  --color-pink-750: #bc4b51;
   --color-pink-800: #b94ddf;
   --color-pink-900: #ab3bd2;
   --color-n-pink-400: #fc49c2;
@@ -420,6 +423,8 @@
 
   --color-n-cyan-600: #1c8ba4;
 
+  --color-lime-650: #61b143;
+
   --color-n-stone-200: #f0d8bd;
   --color-n-stone-900: #593522;
 
@@ -432,6 +437,7 @@
   --color-brand: var(--brand);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
+  --color-surface-primary-hover: var(--surface-primary-hover);
   --color-surface-secondary: var(--surface-secondary);
   --color-surface-tertiary: var(--surface-tertiary);
   --color-surface-info: var(--surface-info);

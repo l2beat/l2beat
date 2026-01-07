@@ -1,7 +1,7 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1759480939,
-  "configHash": "0xe33cabedac4841297addb076ca3e45dbaf78009c728ad35d1895258840b283e3",
+  "timestamp": 1764933819,
+  "configHash": "0x57464414e26dcb236e56428df2a32e16a0684674a8c8fd9d91eea17b987ff2d5",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
@@ -117,6 +117,11 @@
       ]
     },
     {
+      "address": "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x2E8C0869C173cC07c58186E9DeEA74314635b1E2",
       "type": "EOA",
       "proxyType": "EOA",
@@ -177,7 +182,7 @@
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
         ],
         "allowedOutboxList": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
-        "delayedMessageCount": 1372,
+        "delayedMessageCount": 1792,
         "inboxHistory": [
           "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
@@ -187,8 +192,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 18778,
-        "sequencerReportedSubMessageCount": 31554700
+        "sequencerMessageCount": 27788,
+        "sequencerReportedSubMessageCount": 41199274
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -251,7 +256,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "Celestia Nitro 3.3.2 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
         "chainId": 98866,
@@ -260,13 +265,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 430,
+        "firstUnresolvedNode": 557,
         "inbox": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739185,
-        "latestConfirmed": 429,
-        "latestNodeCreated": 440,
+        "latestConfirmed": 556,
+        "latestNodeCreated": 567,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
@@ -294,7 +299,7 @@
         "validatorUtils": "eth:0x84eA2523b271029FFAeB58fc6E6F1435a280db44",
         "validatorWalletCreator": "eth:0x0A5eC2286bB15893d5b8f320aAbc823B2186BA09",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3",
+        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -350,6 +355,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -505,11 +511,11 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "eth:0x2103c69696CB2D3779f5445393808239034E911c",
+          "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -521,7 +527,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 172,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -546,6 +552,11 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -714,7 +725,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 18778,
+        "batchCount": 27788,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -753,9 +764,9 @@
         "postsBlobs": false,
         "reader4844": "eth:0x58f9a83EF35a241bcAc7EC4fB6e7DBcE2A1D1125",
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
-        "sequencerVersion": "0x63",
+        "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1372,
+        "totalDelayedMessagesRead": 1792,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1197,11 +1208,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1237,11 +1243,6 @@
         "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea": "TransparentUpgradeableProxy",
         "eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da": "ERC20RollupEventInbox"
       }
-    },
-    {
-      "address": "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1951,6 +1952,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23496129 },
-  "permissionsConfigHash": "0x4ab352e7abe29adbe76c593f42297ce62193131e85d11d5cb8fb94826e758d39"
+  "usedBlockNumbers": { "ethereum": 23946430 },
+  "permissionsConfigHash": "0xcac9487e804cf5731799e2b26690bdacaceaf64fcb881cfad4715309237f20ba"
 }

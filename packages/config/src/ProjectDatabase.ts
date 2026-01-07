@@ -72,7 +72,6 @@ const schema = {
   isDaLayer: 'BOOLEAN',
   isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
-  hasActivity: 'BOOLEAN',
   hasTestnet: 'BOOLEAN',
 } satisfies Schema<BaseProject>
 

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -50,13 +50,21 @@ export const aztecv1prover: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('aztec'),
+        sinceTimestamp: UnixTime(1615762800),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x7c8a64f644c60e33445be862185b65bf2096c00c9691f49bd03df5f3ce6b6abf',
         proofSystem: ZK_CATALOG_TAGS.Plonk.AztecV1,
         knownDeployments: [
           {
-            address: '0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8',
+            address: EthereumAddress(
+              '0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8',
+            ),
             chain: 'ethereum',
           },
         ],

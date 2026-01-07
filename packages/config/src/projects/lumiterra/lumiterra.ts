@@ -25,6 +25,8 @@ export const lumiterra: ScalingProject = upcomingL3({
         'https://x.com/LumiterraGame',
         'https://discord.com/invite/q3P5hjqsuE',
       ],
+      explorers: ['https://scan.layerlumi.com'],
+      repositories: ['https://github.com/LumiterraCommunity'],
     },
   },
   ecosystemInfo: {

@@ -8,5 +8,16 @@
     "hash": "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a",
     "address": "eth:0xcaD49896F3d54d9A93eDdBFd370c8A4a1b239315",
     "blockNumber": 22374168
+  },
+  "L1AssetRouter_v29": {
+    "hash": "0x44ec209239ba609c6f52edc0357702dd6bc4ee3f43da8492e4aa658b598b0a74",
+    "address": "eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725",
+    "blockNumber": 23588465
+  },
+  "L1AssetRouter_v29_ADI": {
+    "hash": "0xc6442d1f84045e93e002c0d64a3aeeaaed6c3cf8e5e8677efcce8af158781b11",
+    "address": "eth:0x47eec6F57c7E84391Ba6C9Ac976537d0DB0bb257",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

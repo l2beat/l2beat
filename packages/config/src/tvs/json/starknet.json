@@ -80,7 +80,7 @@
         "decimals": 5,
         "sinceTimestamp": 1732633074
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "external",
       "isAssociated": false
     },
@@ -158,6 +158,42 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-mRe7BTC",
+      "priceId": "midas-mre7btc-2",
+      "symbol": "mRe7BTC",
+      "name": "Midas Re7 BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69666/large/mRe7BTC_icon.png?1759235343",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x04E4fb1a9Ca7E84bAe609B9Dc0078ad7719E49187Ae7e425bB47D131710Eddac",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758799398
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-mRe7YIELD",
+      "priceId": "midas-mre7yield",
+      "symbol": "mRe7YIELD",
+      "name": "Midas Re7 Yield",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54660/large/mre7yield_logo.png?1740896178",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x04BE8945e61Dc3E19EBADd1579A6BD53B262F51ba89e6F8b0c4bC9a7E3c633FC",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756718133
+      },
+      "category": "rwaPublic",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -275,6 +311,32 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-sUSN",
+      "priceId": "staked-usn",
+      "symbol": "sUSN",
+      "name": "Staked USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54924/large/sUSN_Logo.png?1742538935",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02411565EF1A14DeCFBe83d2e987ccEd918cD752508a3d9c55DEb67148d14D17",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586104
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "starknet-tBTC",
       "priceId": "tbtc",
       "symbol": "tBTC",
@@ -311,11 +373,29 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "starknet-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x033068F6539f8e6e6b131e6B2B814e6c34A5224bC66947c47DaB9dFeE93b35fb",
+        "chain": "starknet",
+        "decimals": 6,
+        "sinceTimestamp": 1760726310
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Starkgate USD Coin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
@@ -350,6 +430,32 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-USN",
+      "priceId": "noon-usn",
+      "symbol": "USN",
+      "name": "Noon USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53948/large/image_%289%29.png?1737788246",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x01e6545Cab7BA4ac866768ba5e1Bd540893762286ED3feA7f9C02bFa147e135B",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586433
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "starknet-USTBL",
       "priceId": "spiko-us-t-bills-money-market-fund",
       "symbol": "USTBL",
@@ -362,7 +468,7 @@
         "decimals": 5,
         "sinceTimestamp": 1732632828
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "external",
       "isAssociated": false
     },

@@ -136,9 +136,8 @@ function TransactionDetails({
                   <InfoIcon />
                 </TooltipTrigger>
                 <TooltipContent>
-                  Tracked function calls are those ones with chain ID in
-                  calldata equal to project&apos;s chain ID (
-                  {transaction.params.chainId})
+                  Tracked function calls are those ones with first parameter in
+                  calldata equal to {transaction.params.firstParameter}
                 </TooltipContent>
               </Tooltip>
             )}

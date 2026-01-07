@@ -115,6 +115,7 @@ export class BlockscoutClient implements IEtherscanClient {
         constructorArguments: '',
         remappings: [],
         files: {},
+        libraries: {},
       }
     }
 
@@ -140,6 +141,7 @@ export class BlockscoutClient implements IEtherscanClient {
       constructorArguments: '',
       remappings: result.CompilerSettings?.remappings ?? [],
       files,
+      libraries: {},
     }
   }
 

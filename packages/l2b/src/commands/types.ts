@@ -1,7 +1,4 @@
-import {
-  LEVEL,
-  type LogLevel,
-} from '@l2beat/backend-tools/dist/logger/LogLevel'
+import type { LogLevel } from '@l2beat/backend-tools'
 import {
   assert,
   ChainSpecificAddress,
@@ -57,6 +54,16 @@ export const Hash256Value: Type<string, Hash256> = {
       resolve(Hash256(str))
     })
   },
+}
+
+const LEVEL = {
+  NONE: true,
+  CRITICAL: true,
+  ERROR: true,
+  WARN: true,
+  INFO: true,
+  DEBUG: true,
+  TRACE: true,
 }
 
 export const LogLevelValue: Type<string, LogLevel> = {

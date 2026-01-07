@@ -77,6 +77,8 @@ interface TvsData {
         associated: number
         btc: number
         other: number
+        rwaPublic: number
+        rwaRestricted: number
       }
     | undefined
   change: number | undefined
@@ -96,7 +98,7 @@ function getBridgesSummaryEntry(
     bridgeTvs && bridgeTvs.breakdown.total > 0
       ? getAssociatedTokenWarning({
           associatedRatio:
-            bridgeTvs.associated.total / bridgeTvs.breakdown.total,
+            bridgeTvs.breakdown.associated / bridgeTvs.breakdown.total,
           name: project.name,
           associatedTokens: project.tvsInfo.associatedTokens,
         })
@@ -106,12 +108,7 @@ function getBridgesSummaryEntry(
     ...getCommonBridgesEntry({ project, changes }),
     type: project.bridgeInfo.category,
     tvs: {
-      breakdown: bridgeTvs?.breakdown
-        ? {
-            ...bridgeTvs.breakdown,
-            associated: bridgeTvs.associated.total,
-          }
-        : undefined,
+      breakdown: bridgeTvs?.breakdown,
       change: bridgeTvs?.change.total,
       associatedTokens: project.tvsInfo.associatedTokens,
       associatedTokenWarning,

@@ -2,7 +2,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getTimestampedValuesRange } from '~/utils/range/range'
+import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -13,11 +13,12 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution, TvsChartRange } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export const DetailedTvsChartDataParams = v.object({
-  range: TvsChartRange,
+  range: ChartRange,
   excludeAssociatedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
   filter: TvsProjectFilter,
 })
 
@@ -35,6 +36,8 @@ type DetailedTvsChartDataPoint = [
   stablecoins: number | null,
   bitcoin: number | null,
   other: number | null,
+  rwaRestricted: number | null,
+  rwaPublic: number | null,
 ]
 
 export type DetailedTvsChartData = {
@@ -48,12 +51,14 @@ export type DetailedTvsChartData = {
 export async function getDetailedTvsChart({
   range,
   excludeAssociatedTokens,
+  excludeRwaRestrictedTokens,
   filter,
 }: DetailedTvsChartDataParams): Promise<DetailedTvsChartData> {
   if (env.MOCK) {
     return getMockDetailedTvsChartData({
       range,
       excludeAssociatedTokens,
+      excludeRwaRestrictedTokens,
       filter,
     })
   }
@@ -73,8 +78,12 @@ export async function getDetailedTvsChart({
     getEthPrices(),
     getSummedTvsValues(
       tvsProjects.map((p) => p.projectId),
-      { type: range },
-      getType(forSummary, excludeAssociatedTokens),
+      range,
+      {
+        forSummary,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
+      },
     ),
   ])
 
@@ -108,6 +117,8 @@ function getChartData(
         null,
         null,
         null,
+        null,
+        null,
       ] as const)
       continue
     }
@@ -125,6 +136,8 @@ function getChartData(
       value.stablecoin,
       value.btc,
       value.other,
+      value.rwaRestricted,
+      value.rwaPublic,
     ] as const)
 
     syncedUntil = value.timestamp
@@ -136,23 +149,30 @@ function getChartData(
   }
 }
 
-function getType(forSummary: boolean, excludeAssociatedTokens: boolean) {
-  if (!forSummary) {
-    return excludeAssociatedTokens ? 'PROJECT_WA' : 'PROJECT'
-  }
-  return excludeAssociatedTokens ? 'SUMMARY_WA' : 'SUMMARY'
-}
-
 function getMockDetailedTvsChartData({
   range,
 }: DetailedTvsChartDataParams): DetailedTvsChartData {
-  const resolution = rangeToResolution({ type: range })
-  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
-  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
+  const resolution = rangeToResolution(range)
+  const timestamps = generateTimestamps(
+    [range[0] ?? 1573776000, range[1]],
+    resolution,
+  )
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, 3000, 2000, 1000, 1200, 1000, 1000, 1000, 1000]
+      return [
+        timestamp,
+        3000,
+        2000,
+        1000,
+        1200,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+      ]
     }),
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }

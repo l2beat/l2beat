@@ -1,24 +1,24 @@
 import type { Project } from '@l2beat/config'
-import type { ScalingTvsSectionProps } from '~/components/projects/sections/ScalingTvsSection'
-import { isDetailedTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
-import type { SsrHelpers } from '~/trpc/server'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { ScalingTvsSectionProps } from '~/components/projects/sections/tvs/ScalingTvsSection'
+import { checkIfTvsExist } from '~/server/features/scaling/tvs/utils/checkIfTvsExist'
+import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingTvsSection(
-  helpers: SsrHelpers,
   project: Project<never, 'archivedAt'>,
 ): Promise<Pick<ScalingTvsSectionProps, 'defaultRange'> | undefined> {
-  const range = project.archivedAt ? 'max' : '1y'
-  const data = await helpers.tvs.detailedChart.fetch({
-    range,
-    filter: { type: 'projects', projectIds: [project.id] },
-    excludeAssociatedTokens: false,
-  })
+  const hasData = await checkIfTvsExist(
+    project.id,
+    !project.archivedAt ? UnixTime.now() - 365 * UnixTime.DAY : undefined,
+  )
 
-  if (isDetailedTvsChartDataEmpty(data.chart)) {
+  if (!hasData) {
     return undefined
   }
 
   return {
-    defaultRange: range,
+    defaultRange: project.archivedAt
+      ? optionToRange('max')
+      : optionToRange('1y'),
   }
 }

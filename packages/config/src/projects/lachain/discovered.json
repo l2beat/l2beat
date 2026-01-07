@@ -1,7 +1,7 @@
 {
   "name": "lachain",
-  "timestamp": 1753944315,
-  "configHash": "0x393ba4475f86af7b640bb29a94218a22be63279ce68738636a1cfc0d1b2f5f8d",
+  "timestamp": 1761642941,
+  "configHash": "0x0ce077608b766bcea7af63b39bf64129ed44c94c597d57127a69239f8fd9d727",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -82,7 +82,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387"
+        "0x4307e17da28c7b2fe29ba4658f25dec8e6611161bb60270d2ad04feb38988dc2"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -115,7 +115,7 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "zkVmDiamond",
+      "name": "Diamond",
       "address": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -331,12 +331,12 @@
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 36,
-        "getTotalBatchesExecuted": 36,
-        "getTotalBatchesVerified": 36,
-        "getTotalBlocksCommitted": 36,
-        "getTotalBlocksExecuted": 36,
-        "getTotalBlocksVerified": 36,
+        "getTotalBatchesCommitted": 38,
+        "getTotalBatchesExecuted": 38,
+        "getTotalBatchesVerified": 38,
+        "getTotalBlocksCommitted": 38,
+        "getTotalBlocksExecuted": 38,
+        "getTotalBlocksVerified": 38,
         "getTotalPriorityTxs": 14,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
@@ -365,7 +365,10 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "getDAValidatorPair": { "severity": "HIGH" },
+        "getDAValidatorPair": {
+          "severity": "HIGH",
+          "description": "l1da, l2da"
+        },
         "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -451,7 +454,7 @@
         {
           "permission": "interact",
           "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD" }
@@ -526,11 +529,12 @@
         "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ],
@@ -604,9 +608,8 @@
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1000,6 +1003,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23037384 },
-  "permissionsConfigHash": "0x1245fc65a1ac25e8b24a6cabd9f2baa3631334729e6bdf526003ad4786a82fb6"
+  "usedBlockNumbers": { "ethereum": 23674967 },
+  "permissionsConfigHash": "0x86793cba1c7e13c9aada6dbee6df18271d1c55457da012c913679f87d2d5458c"
 }

@@ -16,7 +16,9 @@ const discovery = new ProjectDiscovery('wonder')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const wonder: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1741634331), // 2025/03/10 19:18 UTC
+  archivedAt: UnixTime(1763467188), // 2025/11/18 13:59 UTC
   additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -50,7 +52,6 @@ export const wonder: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -96,7 +97,7 @@ export const wonder: ScalingProject = zkStackL2({
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
@@ -111,7 +112,7 @@ export const wonder: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xe12a6137',
         functionSignature:
@@ -126,7 +127,7 @@ export const wonder: ScalingProject = zkStackL2({
       ],
       query: {
         formula: 'sharedBridge',
-        chainId,
+        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0xcf02827d',
         functionSignature:

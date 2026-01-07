@@ -4,7 +4,6 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesProjectData(
@@ -39,10 +38,9 @@ export async function getBridgesProjectData(
 
   if (!project) return undefined
 
-  const helpers = getSsrHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getBridgesProjectEntry(helpers, project),
+    getBridgesProjectEntry(project),
   ])
 
   return {
@@ -62,7 +60,6 @@ export async function getBridgesProjectData(
       props: {
         ...appLayoutProps,
         projectEntry,
-        queryState: helpers.dehydrate(),
       },
     },
   }

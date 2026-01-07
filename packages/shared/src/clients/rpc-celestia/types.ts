@@ -24,7 +24,10 @@ const CelestiaBlockResult = v.object({
           v.object({
             type: v.string(),
             attributes: v.array(
-              v.object({ key: v.string(), value: v.string().optional() }),
+              v.object({
+                key: v.string(),
+                value: v.union([v.string(), v.null()]).optional(),
+              }),
             ),
           }),
         ),

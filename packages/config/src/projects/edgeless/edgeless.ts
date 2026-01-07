@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('edgeless')
 
 export const edgeless: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1712313901), // 2024-04-05T10:45:01Z
+  archivedAt: UnixTime(1761698219),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

@@ -3,8 +3,9 @@
   "name": "shared-zk-stack",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213", // BridgeHub
     "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+    "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
 
     "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
@@ -24,25 +25,9 @@
     "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": "GovOpsTimelockController",
     "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
     "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9": "Guardians_l2Alias",
-    "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": "ZKFoundationMultisig_l2Alias",
-    "zksync:0xe788e09324F8bb3cc64f009973693f751C33b999": "Guardians_l2Alias_deprecated",
-    "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8": "ProtocolUpgradeHandler_l2Alias_deprecated"
+    "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": "ZKFoundationMultisig_l2Alias"
   },
   "overrides": {
-    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213": {
-      "fields": {
-        "admin": {
-          // manual override while we are lacking cross-module permissions
-          // this adds the permissions from the zksync2 module to the shared-zk-stack module
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
-            }
-          ]
-        }
-      }
-    },
     // sub-ms spam
     "eth:0x13f07d9BF17615f6a17F272fe1A913168C275A66": { "category": "spam" },
     "eth:0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": { "category": "spam" },

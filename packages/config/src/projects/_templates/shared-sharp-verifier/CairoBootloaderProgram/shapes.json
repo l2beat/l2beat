@@ -8,5 +8,16 @@
     "hash": "0xbeae5546b3ade5af5df9bfc3c26b178639a7c992a8d59b98a3fbb46dfe0c3a2c",
     "address": "eth:0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
     "blockNumber": 22188285
+  },
+  "CairoBootloaderProgram_Oct25": {
+    "hash": "0x0b9b4b38529e2dcb2b7e139a78e6782d3d51cef14af3587bb076ab2f46564104",
+    "address": "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636",
+    "blockNumber": 23682614
+  },
+  "CairoBootloaderProgram_Dec25": {
+    "hash": "0x42d3a15726c4bd738b1226f33f49c774be8d9cfb84489033d992c4b6c22f4037",
+    "address": "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917",
+    "chain": "ethereum",
+    "blockNumber": 23968827
   }
 }

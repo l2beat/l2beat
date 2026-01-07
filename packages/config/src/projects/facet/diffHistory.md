@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x03fdb537b5c34b130611311a139a3f72c06f05c7
+
+# Diff at Mon, 24 Nov 2025 11:36:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1756809496
+- current timestamp: 1763984140
+
+## Description
+
+predeploy source hash changed. there is no diff between the code on disco.l2beat.com and local latest ver.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756809496 (main branch discovery), not current.
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.0:
+-        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d"
++        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a"
+    }
+```
+
+Generated with discovered.json: 0x6e72e8999769d8491f81dc867356b9f578232874
+
+# Diff at Tue, 04 Nov 2025 11:32:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1756809496
+- current timestamp: 1756809496
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756809496 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
+      sourceHashes.1:
+-        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
++        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
+    }
+```
+
 Generated with discovered.json: 0x88f5fa6d952d7ee313819a598a64aab568f50506
 
 # Diff at Tue, 02 Sep 2025 10:39:32 GMT:

@@ -88,7 +88,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     ]
 
     return async () => {
-      await this.$.db.tvsAmount.insertMany(amounts)
+      await this.$.db.tvsAmount.upsertMany(amounts)
       this.logger.info('Saved onchain amounts into DB', {
         timestamp: timestamp,
         amounts: amounts.length,

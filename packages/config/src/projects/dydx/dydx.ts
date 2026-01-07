@@ -156,6 +156,8 @@ export const dydx: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1613033682),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
     trackedTxs: [
       {

@@ -43,13 +43,16 @@ export type StructureContractConfig = StructureContractOverrides & {
 }
 
 export function makeEntryStructureConfig(
-  config: Pick<StructureConfig, 'overrides' | 'types'> & { defidisco?: DefiDiscoConfig },
+  config: Pick<StructureConfig, 'overrides' | 'types' | 'discoverLibraries'> & { defidisco?: DefiDiscoConfig },
   address: ChainSpecificAddress,
 ): StructureContractConfig {
-  const override =
-    config.overrides?.[address.toString()] ?? StructureContract.parse({})
+  const override = StructureContract.parse(
+    config.overrides?.[address.toString()] ?? {},
+  )
+  const discoverLibraries =
+    override.discoverLibraries ?? config.discoverLibraries ?? false
 
-  const overrides = { address, ...override }
+  const overrides = { address, ...override, discoverLibraries }
 
   const result = {
     ...overrides,
@@ -60,6 +63,8 @@ export function makeEntryStructureConfig(
         address: this.address,
         ...StructureContract.parse(merge({}, values, this)),
       }
+      newState.discoverLibraries ??=
+        this.discoverLibraries ?? config.discoverLibraries ?? false
       Object.assign(this, newState)
     },
   }

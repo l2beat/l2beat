@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { UnixTime } from '../types'
-import { clampRangeToDay } from './clampToDayRange'
+import { UnixTime } from '../types/UnixTime.js'
+import { clampRangeToDay } from './clampToDayRange.js'
 
 describe(clampRangeToDay.name, () => {
   it('the same day', () => {

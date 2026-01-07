@@ -23,5 +23,8 @@ export function getContractType(
   if (Array.isArray(entry.values?.['$implementation'])) {
     return 'Diamond'
   }
+  if (entry.template === undefined) {
+    return 'Untemplatized'
+  }
   return 'Contract'
 }

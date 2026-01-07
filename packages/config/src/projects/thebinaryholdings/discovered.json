@@ -1,7 +1,7 @@
 {
   "name": "thebinaryholdings",
   "timestamp": 1734520283,
-  "configHash": "0xa490d6f14a7cacc84e983c28a59c07a6aacb151392f436b1eb826604223b8749",
+  "configHash": "0xf99e967b20bd9369ae35f6a2e3ded369ae5a8e6da91aeb7f5b68991afbc17546",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -457,7 +457,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533"
+        "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",

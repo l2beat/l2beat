@@ -24,6 +24,7 @@ export const vemphorizon: ScalingProject = underReviewL3({
         'https://x.com/VEMPHorizon/',
         'https://t.me/VEMPCommunityHub',
       ],
+      repositories: ['https://github.com/v-Empire'],
     },
   },
   ecosystemInfo: {

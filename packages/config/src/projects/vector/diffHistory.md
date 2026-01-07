@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x91505dbf050e1d953ed41137bb6dea5122716245
+
+# Diff at Tue, 18 Nov 2025 16:35:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c3835bcdcb7588e6060ac6cbd4b3d2d9049082ba block: 1755605082
+- current timestamp: 1763483689
+
+## Description
+
+New relayer, new multisig member.
+
+## Watched changes
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        false
++        true
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
++        "eth:0x70a4F624A4E62C539abf0002634377b646612b1C"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755605082 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        true
++        false
+      values.relayers.0:
+-        "eth:0x87b8171993dA656F1bdbF862B071f21E82D674B9"
++        "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"
+    }
+```
+
 Generated with discovered.json: 0x695bca534b1610b1359d7936f09d31d1c0705887
 
 # Diff at Wed, 03 Sep 2025 15:52:25 GMT:

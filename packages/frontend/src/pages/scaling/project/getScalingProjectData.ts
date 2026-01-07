@@ -42,7 +42,7 @@ export async function getScalingProjectData(
       'discoveryInfo',
       'daTrackingConfig',
       'costsInfo',
-      'hasActivity',
+      'activityConfig',
     ],
   })
   if (!project) return undefined
@@ -51,7 +51,6 @@ export async function getScalingProjectData(
     getAppLayoutProps(),
     getScalingProjectEntry(project, helpers),
   ])
-
   return {
     head: {
       manifest,

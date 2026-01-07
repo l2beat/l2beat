@@ -27,6 +27,7 @@ import { brine } from '../projects/brine/brine'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
 import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
+import { cartesiprthoneypotv2 } from '../projects/cartesi-prt-honeypot-v2/cartesi-prt-honeypot-v2'
 import { celo } from '../projects/celo/celo'
 import { codex } from '../projects/codex/codex'
 import { corn } from '../projects/corn/corn'
@@ -48,7 +49,6 @@ import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
 import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
-import { ethstorage } from '../projects/ethstorage/ethstorage'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
@@ -64,7 +64,6 @@ import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
 import { gasp } from '../projects/gasp/gasp'
-import { gateLayer } from '../projects/gate-layer/gate-layer'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
@@ -86,6 +85,7 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { iotex } from '../projects/iotex/iotex'
+import { janction } from '../projects/janction/janction'
 import { jovay } from '../projects/jovay/jovay'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
@@ -113,6 +113,7 @@ import { lyra } from '../projects/lyra/lyra'
 import { mantapacific } from '../projects/mantapacific/mantapacific'
 import { mantle } from '../projects/mantle/mantle'
 import { mawari } from '../projects/mawari/mawari'
+import { megaeth } from '../projects/megaeth/megaeth'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
@@ -169,6 +170,7 @@ import { river } from '../projects/river/river'
 import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
+import { sandchain } from '../projects/sandchain/sandchain'
 import { scroll } from '../projects/scroll/scroll'
 import { sentient } from '../projects/sentient/sentient'
 import { settlus } from '../projects/settlus/settlus'
@@ -260,6 +262,7 @@ export const layer2s: ScalingProject[] = [
   canvasconnect,
   capx,
   cartesiprthoneypot,
+  cartesiprthoneypotv2,
   celo,
   codex,
   corn,
@@ -316,6 +319,7 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   iotex,
+  janction,
   jovay,
   karak,
   katana,
@@ -343,6 +347,7 @@ export const layer2s: ScalingProject[] = [
   mantapacific,
   mantle,
   mawari,
+  megaeth,
   memento,
   metal,
   metis,
@@ -381,7 +386,6 @@ export const layer2s: ScalingProject[] = [
   polynomial,
   powerloom,
   prom,
-  ethstorage,
   publicgoodsnetwork,
   puffer,
   quarkchain,
@@ -392,7 +396,6 @@ export const layer2s: ScalingProject[] = [
   real,
   reddioex,
   roninNetwork,
-  gateLayer,
   reddiozkvm,
   redstone,
   reya,
@@ -401,6 +404,7 @@ export const layer2s: ScalingProject[] = [
   river,
   rss3,
   rufus,
+  sandchain,
   scroll,
   settlus,
   sentient,

@@ -46,10 +46,16 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-const tanxProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const tanxProgramHashes = []
+tanxProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+tanxProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+tanxProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const brine: ScalingProject = {
   type: 'layer2',
@@ -76,6 +82,7 @@ export const brine: ScalingProject = {
       websites: ['https://tanx.fi/'],
       bridges: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
+      repositories: ['https://github.com/tanx-libs'],
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',
@@ -111,6 +118,8 @@ export const brine: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1657453320),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {
@@ -153,7 +162,7 @@ export const brine: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(tanxProgramHash)],
+    zkProgramHashes: tanxProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

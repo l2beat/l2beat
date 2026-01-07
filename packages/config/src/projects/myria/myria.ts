@@ -46,10 +46,16 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const { committeePermission, minSigners } = getCommittee(discovery)
 
-const myriaProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const myriaProgramHashes = []
+myriaProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+myriaProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+myriaProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const myria: ScalingProject = {
   type: 'layer2',
@@ -81,7 +87,7 @@ export const myria: ScalingProject = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
-        'https://discord.gg/myria',
+        'https://discord.com/invite/yCU3aXTxM6',
         'https://t.me/myriaofficialgroup',
         'https://instagram.com/myriagames',
       ],
@@ -114,6 +120,8 @@ export const myria: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1659542607),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {
@@ -156,7 +164,7 @@ export const myria: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(myriaProgramHash)],
+    zkProgramHashes: myriaProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

@@ -1,3 +1,381 @@
+Generated with discovered.json: 0x9ba4e67fb76881a775c47316ca90294cede0c3d6
+
+# Diff at Thu, 18 Dec 2025 08:55:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765882362
+- current timestamp: 1766048053
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x0d3d8967e21f6aac0d92050950028b33cf64938d
+
+# Diff at Tue, 16 Dec 2025 10:53:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c617e27cd7f65519be3bc9bb0e27c564ec208785 block: 1765794808
+- current timestamp: 1765882362
+
+## Description
+
+Added game 2000 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765794808 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xf8a362986aa7c09d0f15b57a1e47a4b07eba667b
+
+# Diff at Fri, 12 Dec 2025 14:38:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764322969
+- current timestamp: 1765550224
+
+## Description
+
+Jello hardfork, introducing OP Succinct Lite and DA verification through Hokulea.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x9F18D91949731E766f294A14027bBFE8F28328CC) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 42."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        42
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
+      values.initBondGame42:
+-        0
++        "10000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816)
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/celo/.flat/AccessManager.sol      |  214 +++
+ .../celo/.flat/OPSuccinctFaultDisputeGame.sol      | 1083 +++++++++++++++
+ .../src/projects/celo/.flat/SP1Verifier.sol        | 1396 ++++++++++++++++++++
+ .../src/projects/celo/.flat/SP1VerifierGateway.sol |  231 ++++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 6 files changed, 3912 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764322969 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xeffb6b20b30d108b8f266146cddfb61163e7b1f8
+
+# Diff at Thu, 11 Dec 2025 14:14:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764322969
+- current timestamp: 1764322969
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764322969 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1204884E697efD929729B9A717Ea14496298A689) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6b145Ebf66602Ec524b196426B46631259689583) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0x792e2fb66517e119e7351b8a94478a49ab5b7e81
+
+# Diff at Fri, 28 Nov 2025 09:44:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1761222915
+- current timestamp: 1764322969
+
+## Description
+
+Jovian upgrade SuperchainConfig, 
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 26 ++--------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+```
+
+Generated with discovered.json: 0x3c8db135156df3228c45dc6952a1104a9bdff355
+
+# Diff at Tue, 04 Nov 2025 11:32:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761222915
+- current timestamp: 1761222915
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222915 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xde1dd3a62e9db0a611ef7256805eb375a1fa1a6c8fa0ba6afc44df5b3cd7d8be"
++        "0x91eb7a11bc6b22871adb21c12699c6d110b59393d358aa82559927584f1bf804"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x65fba25d8e4f3948f7d63aff835445e0f93ba92b8aa4e4f1bdfe6851a5d9476c"
++        "0xee3a1122871bc9fb46239036b055832fd091a7bb04a848208c582bf47b5d37a0"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xf5a782e7a87f4bc9ee32a988e6e97e11e371861c87f91e4563897a8e73c92b2e"
++        "0x5998fb7556449af7ebb08bf75378bca0d91d65aba386c371d4c6773ed9eac54f"
+    }
+```
+
+Generated with discovered.json: 0x78742ee2e68a9c645b61d004e9a2ed67751f532c
+
+# Diff at Mon, 03 Nov 2025 17:45:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6b72018cd9706ce7cba8ec489b67d7193f34dc20 block: 1761222915
+- current timestamp: 1761222915
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222915 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1204884E697efD929729B9A717Ea14496298A689) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6b145Ebf66602Ec524b196426B46631259689583) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0xb1dfff37fb0b0ebfa565534f810ad3878b8444b5
+
+# Diff at Mon, 20 Oct 2025 15:24:08 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759250495
+- current timestamp: 1760973770
+
+## Description
+
+OpFoundationUpgradeSafe multisig member change.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0x4b977fdeb97c691951a4093a6e0b454f4a5ff3a8
 
 # Diff at Thu, 02 Oct 2025 11:59:26 GMT:

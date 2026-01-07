@@ -107,6 +107,8 @@ export class ActivityRepository extends BaseRepository {
     projectIds: ProjectId[],
     timeRange: [UnixTime | null, UnixTime],
   ): Promise<ActivityRecord[]> {
+    if (projectIds.length === 0) return []
+
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('Activity')

@@ -26,6 +26,7 @@ export const phala: ScalingProject = opStackL2({
         'https://discord.com/invite/phala-network',
         'https://t.me/phalanetwork',
         'https://phala.network/blog',
+        'https://linkedin.com/company/phala-network',
       ],
     },
   },
@@ -142,7 +143,7 @@ export const phala: ScalingProject = opStackL2({
       },
     },
   ],
-  associatedTokens: ['PHA'],
+  associatedTokens: ['PHA', 'vPHA'],
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPSuccinct],
   milestones: [
     {

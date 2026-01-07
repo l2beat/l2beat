@@ -17,5 +17,6 @@
       },
       "edit": ["format", "OpStackAbsolutePrestate"]
     }
+    // proposer and challenger permissions are manually set in projects that use this dispute game actively
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "zeronetwork",
-  "timestamp": 1759757379,
-  "configHash": "0xff416d7e7bd47079e01a97c6b814405f8cf5fead30ead5e40bbab8165fd08f5c",
+  "timestamp": 1761642925,
+  "configHash": "0x19ef7f4c52d383cfdbacfd674ee932c1966dac305efdd9a1291ee9abe623ab34",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -53,7 +53,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0xeef6daabc71bf67f02da2eebec0939402f99a165f2c3f40225b4b804021b4962"
+        "0xec6ace0c70a65bb3a520b16f88be2f013354490bc29572255ece332c9dbe2d14"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
@@ -87,7 +87,7 @@
         {
           "permission": "interact",
           "from": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3" }
@@ -272,11 +272,12 @@
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ],
@@ -332,7 +333,7 @@
       }
     },
     {
-      "name": "ZeroNetworkZkEvm",
+      "name": "Diamond",
       "address": "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -552,7 +553,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 4960,
+        "getFirstUnprocessedPriorityTx": 4989,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -561,20 +562,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xf03717d43720ea18a50ed0e5460f0addb142955ea60c1c42de4b499f02a59770",
+        "getPriorityTreeRoot": "0x875a6e84c3abfe7ad6abe54ec2e4b0c6d37490fdfab881838a4b3aaaf82b8078",
         "getPriorityTreeStartIndex": 3696,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 1518,
-        "getTotalBatchesExecuted": 1517,
-        "getTotalBatchesVerified": 1518,
-        "getTotalBlocksCommitted": 1518,
-        "getTotalBlocksExecuted": 1517,
-        "getTotalBlocksVerified": 1518,
-        "getTotalPriorityTxs": 4960,
+        "getTotalBatchesCommitted": 1613,
+        "getTotalBatchesExecuted": 1612,
+        "getTotalBatchesVerified": 1613,
+        "getTotalBlocksCommitted": 1613,
+        "getTotalBlocksExecuted": 1612,
+        "getTotalBlocksVerified": 1613,
+        "getTotalPriorityTxs": 4989,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -605,7 +606,10 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "getDAValidatorPair": { "severity": "HIGH" },
+        "getDAValidatorPair": {
+          "severity": "HIGH",
+          "description": "l1da, l2da"
+        },
         "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -652,9 +656,8 @@
     },
     {
       "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-zk-stack"
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1074,6 +1077,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23519033 },
-  "permissionsConfigHash": "0x8e72c181d1b825c5131ec420bb99529e4da186a7ba327d0d75a9a2e32f7c249c"
+  "usedBlockNumbers": { "ethereum": 23674966 },
+  "permissionsConfigHash": "0xfc609b05ff5e2ea18debcd04b21a8f27636e257a5a01e822647e4b7767a20d30"
 }

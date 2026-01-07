@@ -1,4 +1,306 @@
-Generated with discovered.json: 0x255a08bffbc6e5c2d0ddb3d6cf39a7f41892bb61
+Generated with discovered.json: 0x9ca5aa3cad8eebe4a35386b4d8dc08248b6bea69
+
+# Diff at Fri, 12 Dec 2025 16:19:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765382149
+- current timestamp: 1765382149
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765382149 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x43643d7ff096194b9ed8ce6b696e6d0618599d11
+
+# Diff at Wed, 10 Dec 2025 15:56:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@512df45ec78c32f18fdafac751d924f8a6cf238c block: 1764933721
+- current timestamp: 1765382149
+
+## Description
+
+Mint migrates from Conduit to self-host and self-manage. SuperchainConfig contract upgraded with no diff to migrate from Conduit superchain config to Mint's own config. As a consequence contracts needed upgraded storage to new superchainConfig proxy address, so the old SuperchainConfig  (0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) was replaced with the new one (0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad) across all these contracts through a storage setter.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+    contract L1StandardBridge (eth:0x2b3F201543adF73160bA42E1a5b7750024F30420) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.superchainConfig:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.$pastUpgrades.7:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.8:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$upgradeCount:
+-        7
++        9
+      values.guardian:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+      values.superchainConfig:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.$pastUpgrades.2:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.3:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e"]]
+      values.$upgradeCount:
+-        2
++        4
+      values.config:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x807c2aF3Ae99a20576B00b58327B594D47f837FB) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades.1:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.2:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0x7b465370BB7A333f99edd19599EB7Fb1c2D3F8D2"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.superchainConfig:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5)
+    +++ description: None
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xC2C908F3226d9082130D8e48378CD2eFb08B521D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.7:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.8:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"]]
+      values.$upgradeCount:
+-        7
++        9
+      values.superchainConfig:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xC975862927797812371A9Fb631f83F8f5e2240D5) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA"
++        "eth:0x560aFA9cF6B39D8C83938C77036E80807a56Da16"
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+      values.unsafeBlockSigner:
+-        "eth:0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db"
++        "eth:0xEf8452Bfe63c7a370504bcEDCF19D07f2dC6412f"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531"
++        "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7"
+      values.owner:
+-        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.8:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.9:
++        ["2025-12-08T17:26:23.000Z","0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]]
+      values.$upgradeCount:
+-        8
++        10
+      values.superchainConfig:
+-        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
++        "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract Mint Multisig (eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xDa5C416025D5eED8440667C5E80A7c35c2F56220)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Mint Multisig/Safe.sol}                        | 685 ++++++++++++---------
+ .../Mint Multisig/SafeProxy.p.sol}                 |  10 +-
+ ...0xDa5C416025D5eED8440667C5E80A7c35c2F56220.sol} |   0
+ 3 files changed, 416 insertions(+), 279 deletions(-)
+```
+
+Generated with discovered.json: 0xe340366a8e169059e18c79773c9e079e01566e0e
+
+# Diff at Fri, 05 Dec 2025 11:23:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1759480887
+- current timestamp: 1764933721
+
+## Description
+
+Conduit multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.4:
+-        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+Generated with discovered.json: 0x54aca2f628af57851dbdcce6f341ad94030e36ce
+
+# Diff at Tue, 04 Nov 2025 11:33:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1759480887
+- current timestamp: 1759480887
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759480887 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x7129ee348039f13e017c18c90ffcb319f67a8fdd3b4a5a28c39aabc8bf0c57f6"
++        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776"
++        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+    }
+```
+
+Generated with discovered.json: 0xa415d49d9f9f0e3edc74d34e01987b13476f8ee3
 
 # Diff at Fri, 03 Oct 2025 08:42:37 GMT:
 

@@ -1,12 +1,7 @@
 {
   "entrypoints": {
-    "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": {
-      "name": "EcdsaPointsXColumn",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046": {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
+    "eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6": {
+      "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -14,38 +9,18 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": {
-      "name": "PedersenHashPointsXColumn",
+    "eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC": {
+      "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x05C98569CA566a2035b87dE7d1b623C950798035": {
+    "eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420": {
       "name": "CpuConstraintPoly",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": {
-      "name": "CpuFrilessVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": {
-      "name": "CpuFrilessVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": {
-      "name": "PedersenHashPointsYColumn",
+    "eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F": {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -54,8 +29,13 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791": {
+    "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B": {
       "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1": {
+      "name": "CpuConstraintPoly",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -64,23 +44,28 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": {
       "name": "MerkleStatementContract",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x351666E9EeA6E012f08695ccd1923f37519563f1": {
+    "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba": {
       "name": "CpuConstraintPoly",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": {
-      "name": "CpuFrilessVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771": {
-      "name": "CpuFrilessVerifier",
+    "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -89,57 +74,45 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5": {
-      "name": "CpuConstraintPoly",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x53daC4aB94955f35657463252a7b25F343A14451": {
+    "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E": {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717": {
-      "name": "CpuConstraintPoly",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": {
-      "name": "CairoBootloaderProgram",
-      "type": "Contract",
+    "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c": {
+      "type": "EOA",
       "project": "shared-sharp-verifier"
     },
     "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": {
+    "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e": {
+    "eth:0x71574057D12541ccDa98643aC56441838353A26D": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e": {
       "name": "CpuOods",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46": {
-      "name": "CpuConstraintPoly",
+    "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": {
+      "name": "CpuOods",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -147,78 +120,107 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
-    "eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": {
-      "name": "SHARPVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE": {
-      "name": "CpuConstraintPoly",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xA9db7bDfbc3664C8954f490e4d94B8607a080f23": {
+    "eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595": {
       "name": "CpuOods",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xAaAe0edF6536de72E7163D293518c40011179f8a": {
-      "name": "CpuFrilessVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67": {
+    "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9": {
       "name": "CpuConstraintPoly",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": {
+    "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce": {
+      "name": "EcdsaPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2": {
+      "name": "PedersenHashPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0": {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B": {
-      "name": "CpuConstraintPoly",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": {
-      "name": "PoseidonPoseidonFullRoundKey0Column",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84": {
-      "name": "CpuOods",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
-    "eth:0xe155154845950573EC5F518fC0D4950AB71303ff": {
+    "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xE3929Ea107238Ce59d64A3cE497f12b57846B716": {
+    "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771": {
       "name": "EcdsaPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70": {
+      "name": "PedersenHashPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xdf10757de64811df030cf88bB700B8CC63bAB090": {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xE4937AC1Da4211c6E48cf41A7B298b74edA9B103": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xe58327a05F21ab12AB33A4408003A87e571f810D": {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
@@ -227,19 +229,285 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0xE5AC9312f30623EB20D435533A4205790aF68Fd0": {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0xebc8416179fE90854fe8B3f774801165572cfD7F": {
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
+    "eth:0xECc282Dc2571E43696d3259490faFa3b98790e20": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": {
+      "name": "EcdsaPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": {
+      "name": "PedersenHashPointsXColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x05C98569CA566a2035b87dE7d1b623C950798035": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": {
+      "name": "PedersenHashPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x351666E9EeA6E012f08695ccd1923f37519563f1": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x53daC4aB94955f35657463252a7b25F343A14451": {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xA9db7bDfbc3664C8954f490e4d94B8607a080f23": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xAaAe0edF6536de72E7163D293518c40011179f8a": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B": {
+      "name": "CpuConstraintPoly",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84": {
+      "name": "CpuOods",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xe155154845950573EC5F518fC0D4950AB71303ff": {
+      "name": "CpuFrilessVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xE3929Ea107238Ce59d64A3cE497f12b57846B716": {
+      "name": "EcdsaPointsYColumn",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
     "eth:0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "type": "Contract",
-      "project": "shared-sharp-verifier"
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
     },
     "eth:0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": {
       "name": "PoseidonPoseidonFullRoundKey1Column",
       "type": "Contract",
-      "project": "shared-sharp-verifier"
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
     }
   }
 }

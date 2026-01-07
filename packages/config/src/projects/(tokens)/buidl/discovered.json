@@ -1,7 +1,7 @@
 {
   "name": "buidl",
-  "timestamp": 1755163834,
-  "configHash": "0x8c7d3efdc20582e92af97d9923a147a4f3ae6a8c5bb910cce90f7030ad592560",
+  "timestamp": 1762265216,
+  "configHash": "0xa54e81c1e58114168b12e2065c9a3d02af11c9692d383d70df5d41c91d3af4cc",
   "entries": [
     {
       "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
@@ -38,7 +38,7 @@
           "decimals": 6,
           "deploymentTimestamp": 1730729689,
           "coingeckoListingTimestamp": 1739318400,
-          "category": "other",
+          "category": "rwaRestricted",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
           "chainId": 42161,
           "supply": "totalSupply",
@@ -77,8 +77,8 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 47392637480000,
-        "totalSupply": 30709020510000,
+        "totalIssued": 47652247550000,
+        "totalSupply": 30968630580000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
@@ -208,6 +208,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 368291904 },
+  "usedBlockNumbers": { "arbitrum": 396730117 },
   "permissionsConfigHash": "0x2a82a405963425c693d9f2dd82d1dbfbf2e3b57fe263aee148af26a1c97ff044"
 }

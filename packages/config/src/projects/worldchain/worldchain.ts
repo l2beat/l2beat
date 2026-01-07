@@ -37,12 +37,15 @@ export const worldchain = opStackL2({
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [
         'https://x.com/worldcoin',
-        'https://discord.com/invite/worldcoin',
+        'https://discord.com/invite/worldnetwork',
         'https://t.me/worldcoin',
         'https://linkedin.com/company/worldcoinproject/',
         'https://youtube.com/@worldcoinofficial',
       ],
-      rollupCodes: 'https://rollup.codes/world-chain',
+      other: [
+        'https://rollup.codes/world-chain',
+        'https://growthepie.com/chains/worldchain',
+      ],
     },
   },
   associatedTokens: ['WLD'],

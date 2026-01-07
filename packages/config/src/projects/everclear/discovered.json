@@ -1,7 +1,7 @@
 {
   "name": "everclear",
-  "timestamp": 1756118323,
-  "configHash": "0x3758a7d21256c6ea92ca7263fa9ac8a97fa6ccc7d8d290d6370af6a8e548b9d3",
+  "timestamp": 1764335266,
+  "configHash": "0xd3e30ff2b1e182de03b5692c2b14f9676fa11e5c19453de15168dab99f37af87",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -303,7 +303,7 @@
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 792,
+        "delayedMessageCount": 1054,
         "inboxHistory": [
           "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
@@ -311,8 +311,8 @@
         "outboxHistory": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 697,
-        "sequencerReportedSubMessageCount": 2308513
+        "sequencerMessageCount": 887,
+        "sequencerReportedSubMessageCount": 3298040
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -406,7 +406,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 697,
+        "batchCount": 887,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -443,7 +443,7 @@
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 791,
+        "totalDelayedMessagesRead": 1053,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -658,7 +658,31 @@
     {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
-      "proxyType": "EOA"
+      "template": "uniswap/calibur7702",
+      "sourceHashes": [
+        "0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00",
+        "CUSTOM_STORAGE_ROOT": "0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600",
+        "domainBytes": "0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+        "domainSeparator": "0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301",
+        "eip712Domain": {
+          "fields": "0x1f",
+          "name": "Calibur",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+          "salt": "0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+          "extensions": []
+        },
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "keyAt": [],
+        "keyCount": 0,
+        "keyHashes": 0,
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
+      }
     },
     {
       "name": "Gelato Multisig",
@@ -874,13 +898,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 695,
+        "firstUnresolvedNode": 885,
         "inbox": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895344,
-        "latestConfirmed": 694,
-        "latestNodeCreated": 694,
+        "latestConfirmed": 884,
+        "latestNodeCreated": 884,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
@@ -961,6 +985,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -1126,7 +1151,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 459,
+        "nonce": 649,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1180,6 +1205,73 @@
     }
   ],
   "abis": {
+    "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00": [
+      "error AllowanceExceeded()",
+      "error CallFailed(bytes reason)",
+      "error CannotRegisterRootKey()",
+      "error CannotUpdateRootKey()",
+      "error ExcessiveInvalidation()",
+      "error FnSelectorNotRecognized()",
+      "error IncorrectSender()",
+      "error IndexOutOfBounds()",
+      "error InvalidHookResponse()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error KeyDoesNotExist()",
+      "error KeyExpired(uint40 expiration)",
+      "error NotEntryPoint()",
+      "error OnlyAdminCanSelfCall()",
+      "error SignatureExpired()",
+      "error TransferNativeFailed()",
+      "error Unauthorized()",
+      "error UnsupportedExecutionMode()",
+      "event ApproveNative(address indexed owner, address indexed spender, uint256 value)",
+      "event ApproveNativeTransient(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event EntryPointUpdated(address indexed newEntryPoint)",
+      "event KeySettingsUpdated(bytes32 indexed keyHash, uint256 settings)",
+      "event NativeAllowanceUpdated(address indexed spender, uint256 value)",
+      "event NonceInvalidated(uint256 nonce)",
+      "event Registered(bytes32 indexed keyHash, tuple(uint8 keyType, bytes publicKey) key)",
+      "event Revoked(bytes32 indexed keyHash)",
+      "event TransferFromNative(address indexed from, address indexed to, uint256 value)",
+      "event TransferFromNativeTransient(address indexed from, address indexed to, uint256 value)",
+      "function CUSTOM_STORAGE_ROOT() view returns (bytes32)",
+      "function ENTRY_POINT() view returns (address)",
+      "function approveNative(address spender, uint256 amount) returns (bool)",
+      "function approveNativeTransient(address spender, uint256 amount) returns (bool)",
+      "function domainBytes() view returns (bytes)",
+      "function domainSeparator() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall) payable",
+      "function execute(tuple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall, uint256 nonce, bytes32 keyHash, address executor, uint256 deadline) signedBatchedCall, bytes wrappedSignature) payable",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32)",
+      "function getKey(bytes32 keyHash) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function getKeySettings(bytes32 keyHash) view returns (uint256)",
+      "function getSeq(uint256 key) view returns (uint256 seq)",
+      "function hashTypedData(bytes32 hash) view returns (bytes32)",
+      "function invalidateNonce(uint256 newNonce)",
+      "function isRegistered(bytes32 keyHash) view returns (bool)",
+      "function isValidSignature(bytes32 digest, bytes wrappedSignature) view returns (bytes4)",
+      "function keyAt(uint256 i) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function keyCount() view returns (uint256)",
+      "function keyHashes() view returns (uint256 _spacer)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function namespaceAndVersion() pure returns (string)",
+      "function nativeAllowance(address spender) view returns (uint256 allowance)",
+      "function nonceSequenceNumber(uint256 key) view returns (uint256 seq)",
+      "function register(tuple(uint8 keyType, bytes publicKey) key)",
+      "function revoke(bytes32 keyHash)",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool result)",
+      "function transferFromNative(address from, address recipient, uint256 amount) returns (bool)",
+      "function transferFromNativeTransient(address from, address recipient, uint256 amount) returns (bool)",
+      "function transientNativeAllowance(address spender) view returns (uint256)",
+      "function update(bytes32 keyHash, uint256 settings)",
+      "function updateEntryPoint(address entryPoint)",
+      "function updateSalt(uint96 prefix)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
+    ],
     "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
@@ -1932,8 +2024,9 @@
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
-    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23217576 },
+  "usedBlockNumbers": { "ethereum": 23897366 },
   "permissionsConfigHash": "0x480b292435d18a7ff09f895c1cd9dd8d4850b1bccff1d352d377b5a84ce9906e"
 }

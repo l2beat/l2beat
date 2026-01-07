@@ -8,48 +8,28 @@
   ],
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "names": {
-    "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
+    "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "Diamond",
     "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
-    "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig",
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
+    "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },
   "overrides": {
-    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+    "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": {
       "fields": {
-        "validatorsVTL": {
+        "validatorsVTLFullAC": {
+          // giving the permission to the entire AC, because in practice the actor(s) have all roles
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 50104]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 50104]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
           },
           "permissions": [{ "type": "validateZkStack" }]
-        }
-      }
-    },
-    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
-      "category": "spam",
-      "fields": {
+        },
         "validatorsVTL": {
+          // for backwards compatibility with the zkstack template
           "handler": {
-            "type": "event",
-            "select": ["validator"],
-            "add": {
-              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 50104]
-            },
-            "remove": {
-              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 50104]
-            }
+            "type": "crossChainAccessControl",
+            "pickChainAddress": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "edit": ["get", "EXECUTOR_ROLE", "members"]
         }
       }
     }

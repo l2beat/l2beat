@@ -231,7 +231,7 @@ export const termstructure: ScalingProject = {
         {
           title:
             'Force Withdrawal and Evacuation Mode - Term Structure documentation',
-          url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode',
+          url: 'https://tutorials.ts.finance/how-to-use-term-structure/onboarding-guide/withdraw#forced-withdraw-and-evacuation-mode',
         },
       ],
     },
@@ -246,7 +246,7 @@ export const termstructure: ScalingProject = {
           },
           {
             title: 'Withdraw - Term Structure documentation',
-            url: 'https://docs.ts.finance/protocol-spec/general/withdraw',
+            url: 'https://docs.institutional.ts.finance/features/withdrawal',
           },
         ],
       },
@@ -260,7 +260,7 @@ export const termstructure: ScalingProject = {
           },
           {
             title: 'Forced Withdrawal - Term Structure documentation',
-            url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#forced-withdrawal',
+            url: 'https://tutorials.ts.finance/how-to-use-term-structure/onboarding-guide/withdraw?utm_source=chatgpt.com#forced-withdraw-and-evacuation-mode',
           },
         ],
       },
@@ -269,7 +269,7 @@ export const termstructure: ScalingProject = {
         references: [
           {
             title: 'Evacuation Mode - Term Structure documentation',
-            url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#evacuation-mode',
+            url: 'https://tutorials.ts.finance/how-to-use-term-structure/onboarding-guide/withdraw?utm_source=chatgpt.com#forced-withdraw-and-evacuation-mode',
           },
         ],
       },

@@ -2,5 +2,9 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "popapex",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"]
+  "archived": true,
+  "initialAddresses": ["arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"],
+  "names": {
+    "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6": "Bridge"
+  }
 }

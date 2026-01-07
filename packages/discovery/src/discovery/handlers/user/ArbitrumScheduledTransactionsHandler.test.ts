@@ -32,6 +32,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       constructorArguments: '',
       files: {},
       remappings: [],
+      libraries: {},
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
     const provider = mockObject<Thenable<IProvider>>({

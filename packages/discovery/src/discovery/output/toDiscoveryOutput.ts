@@ -20,11 +20,17 @@ export function toDiscoveryOutput(
   usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): DiscoveryOutput {
+  const sortedUsedBlockNumbers = Object.fromEntries(
+    Object.entries(usedBlockNumbers).sort(([keyA], [keyB]) =>
+      keyA.localeCompare(keyB),
+    ),
+  )
+
   const discovery = toRawDiscoveryOutput(
     templateService,
     config,
     timestamp,
-    usedBlockNumbers,
+    sortedUsedBlockNumbers,
     results,
   )
 

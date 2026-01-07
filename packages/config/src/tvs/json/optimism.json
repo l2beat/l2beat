@@ -206,7 +206,7 @@
         "decimals": 6,
         "sinceTimestamp": 1739318400
       },
-      "category": "other",
+      "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
     },

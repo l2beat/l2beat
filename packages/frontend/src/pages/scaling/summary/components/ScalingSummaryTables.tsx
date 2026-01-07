@@ -12,10 +12,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import { ExcludeAssociatedTokensCheckbox } from '~/pages/scaling/components/ExcludeAssociatedTokensCheckbox'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TabbedScalingEntries } from '../../utils/groupByScalingTabs'
 import { ScalingSummaryNotReviewedTable } from './table/ScalingSummaryNotReviewedTable'
@@ -26,6 +27,7 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummary
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsDisplayControlsContext()
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -42,7 +44,7 @@ export function ScalingSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 max-md:hidden" />
-      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+      <div className="mr-4 flex flex-wrap items-end justify-between gap-y-1 md:mr-0">
         <TableFilters
           entries={[
             ...props.rollups,
@@ -51,7 +53,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <ExcludeAssociatedTokensCheckbox />
+        <DisplayControls display={display} setDisplay={setDisplay} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

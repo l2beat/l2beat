@@ -1,3 +1,206 @@
+Generated with discovered.json: 0x8326948790675639479ef62f27c6923b45928175
+
+# Diff at Tue, 06 Jan 2026 16:57:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1757661532
+- current timestamp: 1767718570
+
+## Description
+
+New signer added to World Foundation Cold Wallets multisig (4/5 -> 4/6).
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901"
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/worldcoin/.flat/Safe/Safe.sol     | 1088 ++++++++++++++++++++
+ .../projects/worldcoin/.flat/Safe/SafeProxy.p.sol  |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0x2d8b86da94c719aaa6f0a2fc895958e6d4ff5ff1
+
+# Diff at Wed, 05 Nov 2025 12:48:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1757661532
+- current timestamp: 1757661532
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757661532 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Pairing (eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
+    contract SemaphoreVerifier (eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pairing (oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4)
+    +++ description: None
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
+```diff
+    contract OpWorldID_Zero (oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364"]
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB) {
+    +++ description: None
+      values.$libraries:
+-        ["oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4"]
+    }
+```
+
+```diff
+    contract OpWorldID_One (oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      values.$libraries:
+-        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
+Generated with discovered.json: 0xd7490a70d46b440e9e91c817cf26b5e5c75e4f95
+
+# Diff at Fri, 31 Oct 2025 11:49:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@68f3981f1586af86667332178b61f6953b1bd153 block: 1757661532
+- current timestamp: 1757661532
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757661532 (main branch discovery), not current.
+
+```diff
+    contract SemaphoreVerifier (eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"]
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF) {
+    +++ description: None
+      values.$libraries:
++        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
+```diff
+    contract OpWorldID_Zero (oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02) {
+    +++ description: None
+      values.$libraries:
++        ["oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364"]
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB) {
+    +++ description: None
+      values.$libraries:
++        ["oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4"]
+    }
+```
+
+```diff
+    contract OpWorldID_One (oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      values.$libraries:
++        ["oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Pairing (eth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Pairing (oeth:0x047eE5313F98E26Cc8177fA38877cB36292D2364)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Pairing (oeth:0x2a968958E6136FA0FC2Ed068aF8Bef464c7b66EA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Pairing (oeth:0x379C62556c665F1eDD25f2c2A0f76Bc70a53b2e4)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xab40a816016aa118c5721619fbe0f238cffa3bd2
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

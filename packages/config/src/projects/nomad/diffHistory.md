@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x4d2e82d2f437d88b8a228cb1a9066a9e5bc4557d
+
+# Diff at Wed, 19 Nov 2025 14:52:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1740653555
+- current timestamp: 1763563780
+
+## Description
+
+archive.
+
+## Watched changes
+
+```diff
+    contract HomeBeaconProxy (eth:0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8) {
+    +++ description: None
+      values.count:
+-        20122
++        20123
+      values.queueEnd:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8"
+      values.queueLength:
+-        0
++        1
+      values.root:
+-        "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f"
++        "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8"
+      values.suggestUpdate._committedRoot:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f"
+      values.suggestUpdate._new:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8"
+      values.tree:
+-        20122
++        20123
+    }
+```
+
 Generated with discovered.json: 0x45b6789d83ad64d5f274a9780c14162f19f8ea21
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

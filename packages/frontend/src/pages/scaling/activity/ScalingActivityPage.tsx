@@ -6,14 +6,13 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
+import { ActivityChartRangeContextProvider } from './components/ActivityChartRangeContext'
 import { ActivityMetricContextProvider } from './components/ActivityMetricContext'
-import { ActivityTimeRangeContextProvider } from './components/ActivityTimeRangeContext'
-import { ScalingActivityTabs } from './components/ScalingActivityTabs'
+import { ScalingActivityCard } from './components/ScalingActivityCard'
 
 interface Props extends AppLayoutProps {
-  entries: TabbedScalingEntries<ScalingActivityEntry>
+  entries: ScalingActivityEntry[]
   milestones: Milestone[]
   queryState: DehydratedState
 }
@@ -29,12 +28,15 @@ export function ScalingActivityPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <TableFilterContextProvider>
-            <ActivityTimeRangeContextProvider>
+            <ActivityChartRangeContextProvider>
               <ActivityMetricContextProvider>
                 <MainPageHeader>Activity</MainPageHeader>
-                <ScalingActivityTabs {...entries} milestones={milestones} />
+                <ScalingActivityCard
+                  entries={entries}
+                  milestones={milestones}
+                />
               </ActivityMetricContextProvider>
-            </ActivityTimeRangeContextProvider>
+            </ActivityChartRangeContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>

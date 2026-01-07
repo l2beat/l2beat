@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ethereal",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
+    "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc",
+    "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3"
+  ],
+  "names": {
+    "arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9": "Ethereal Multisig"
+  }
+}

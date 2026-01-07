@@ -1,7 +1,7 @@
 {
   "name": "mog",
-  "timestamp": 1756285476,
-  "configHash": "0x7b802b3a06a3a23dea22715abc1b16d70a77c9563f2065ee4ff00dc28b5124a1",
+  "timestamp": 1761551264,
+  "configHash": "0x88e15935c3af4f164a51d7e546ece27cc4e1173ba7da333a2680d208f8b2bc64",
   "entries": [
     {
       "name": "Mog Coin Token",
@@ -43,7 +43,7 @@
         "REMOTE_TOKEN": "base:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
         "remoteToken": "base:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
         "symbol": "Mog",
-        "totalSupply": "69555795309877088234894590991327",
+        "totalSupply": "82044871106158668592291655126897",
         "version": "1.0.3"
       },
       "implementationNames": {
@@ -89,7 +89,6 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "pair": "eth:0xc2eaB7d33d3cB97692eCB231A5D0e4A649Cb539d",
         "router": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "showSupply": "360447601430949687966814425289995",
         "swapEnabled": true,
         "swapThreshold": "2944830000000000000000000000000",
         "symbol": "Mog",
@@ -187,6 +186,6 @@
   "usedTemplates": {
     "tokens/OptimismMintableERC20": "0xc3a07d61ea3f87a7c6f83d6e66e3e9dcee7812e0677383410b20fc9c6832b80c"
   },
-  "usedBlockNumbers": { "ethereum": 23231445, "base": 34748064 },
+  "usedBlockNumbers": { "base": 37380958, "ethereum": 23667389 },
   "permissionsConfigHash": "0xd35bc918a3e94c8e3d32d101d45e77133ac532f1d023ac70a2959326a4d552cb"
 }

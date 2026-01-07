@@ -23,5 +23,17 @@
     "hash": "0xb44ee6b08f1771b57cb0eaac00eb8ac68c0b86d1f4cbd25e8b80debe791ad2eb",
     "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
     "blockNumber": 23282448
+  },
+  "RiscZeroGroth16Verifier_251204.sol": {
+    "hash": "0x5bdef1c5dee5066841fc386ed4f744a9763e0f18392a2398958f1a96718f7730",
+    "address": "eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599",
+    "chain": "ethereum",
+    "blockNumber": 23938931
+  },
+  "RiscZeroGroth16Verifier.sol_v2_0_0_rc3_megaeth": {
+    "hash": "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb",
+    "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
+    "chain": "ethereum",
+    "blockNumber": 24067663
   }
 }

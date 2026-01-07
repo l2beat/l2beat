@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,13 +9,14 @@ const discovery = new ProjectDiscovery('form')
 const genesisTimestamp = UnixTime(1733419991)
 
 export const form: ScalingProject = opStackL2({
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   celestiaDa: {
     sinceBlock: 2943925,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0=',
   },
   capability: 'universal',
   addedAt: UnixTime(1717490033), // 2024-06-04T08:33:53Z
+  archivedAt: UnixTime(1765789029), // 2025-12-15T08:57:09Z
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -46,6 +47,7 @@ export const form: ScalingProject = opStackL2({
     chainId: 478,
     explorerUrl: 'https://explorer.form.network',
     sinceTimestamp: genesisTimestamp,
+    untilTimestamp: 1765519200,
     apis: [
       {
         type: 'rpc',

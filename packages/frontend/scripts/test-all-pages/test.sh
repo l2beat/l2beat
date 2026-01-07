@@ -17,6 +17,6 @@ pnpm build
 LOG_LEVEL=ERROR pnpm start:mock &
 server_pid=$!
 
-sleep 2
+sleep 4
 
 node -r esbuild-register scripts/test-all-pages/index.ts

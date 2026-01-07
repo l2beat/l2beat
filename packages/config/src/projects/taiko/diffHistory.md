@@ -1,3 +1,1058 @@
+Generated with discovered.json: 0x582a656024746d3b7ede216c73d218c0d437e05a
+
+# Diff at Mon, 22 Dec 2025 13:12:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784042
+- current timestamp: 1766409056
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        23
++        24
+      values.proposalIds.23:
++        "601076267109018851735115853749277719853690519575"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
+Generated with discovered.json: 0x1ee880a85a95b20283158759aa0d1936f5e2f5d3
+
+# Diff at Mon, 15 Dec 2025 07:35:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765464471
+- current timestamp: 1765784042
+
+## Description
+
+new proposal: add gattaca to sc and increase emergency threshold from 6 to 7/9.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        26
++        27
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (eth:0x9B17fdA35eD7EB7bB11a73AB69D0462045364514)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        13
++        14
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xEdB91449947ca7d74243Af9b39DCbb4D86F636c0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         |  953 --------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |   35 -
+ .../ProverSet}/ERC1967Proxy.p.sol                  |    0
+ .../ProverSet}/ProverSet.sol                       |    0
+ .../ERC1967Proxy.p.sol => /dev/null                |  594 -----
+ .../ProverSet.sol => /dev/null                     | 2287 --------------------
+ 6 files changed, 3869 deletions(-)
+```
+
+Generated with discovered.json: 0xe8c0a26cf6c7d493f96e2e66670f216114ff39a9
+
+# Diff at Thu, 11 Dec 2025 14:53:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764841913
+- current timestamp: 1765464471
+
+## Description
+
+Operator changes.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 1 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.operatorCount:
+-        2
++        4
+      values.registeredOperators.1:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"}
+      values.registeredOperatorsCount:
+-        1
++        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (eth:0x9B17fdA35eD7EB7bB11a73AB69D0462045364514)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xEdB91449947ca7d74243Af9b39DCbb4D86F636c0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../projects/taiko/.flat/GnosisSafe/GnosisSafe.sol |  953 ++++++++
+ .../taiko/.flat/GnosisSafe/GnosisSafeProxy.p.sol   |   35 +
+ .../ERC1967Proxy.p.sol                             |    0
+ .../ProverSet.sol                                  |    0
+ .../ERC1967Proxy.p.sol                             |  594 +++++
+ .../ProverSet.sol                                  | 2287 ++++++++++++++++++++
+ 6 files changed, 3869 insertions(+)
+```
+
+Generated with discovered.json: 0x7ab2e7dd320b34b01e9bfd9175b38b00b9c85651
+
+# Diff at Thu, 04 Dec 2025 10:07:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2a7759be93afd2795092571b763c06140680932 block: 1764759251
+- current timestamp: 1764841913
+
+## Description
+
+execution of a standard upgrade via governance. targeting the proof system: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559
+
+TEE config and zk program hashes updated.
+
+usual operator changes.
+
+## Watched changes
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.2:
++        "0x3e6113a23bbdf9231520153253047d02db8f1dd38a9b52914ab7943278f52db0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
+    contract Risc0VerifierGateway (eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      values.$implementation:
+-        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
++        "eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"
+      values.$pastUpgrades.3:
++        ["2025-12-04T02:13:59.000Z","0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",["eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.impl:
+-        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
++        "eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36"
+      values.riscoGroth16Verifier:
+-        "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c"
++        "eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599"
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.8:
++        "0x3d933868e2ac698df98209b45e6c34c435df2d3c97754bb6739d541d5fd312e3"
++++ description: Image IDs (i.e. program digest) of Risc0 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.9:
++        "0x77ff0953ded4fb48bb52b1099cc36c6b8bf603dc4ed9211608c039c7ec31b82b"
+      implementationNames.eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614:
+-        "Risc0Verifier"
+      implementationNames.eth:0xDF6327caafC5FeB8910777Ac811e0B1d27dCdf36:
++        "Risc0Verifier"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.20:
++        "0xe5774b71990b0d5f3eca8d4d22546764dd9549c743a1a6d4d4863d97f6b8c67a"
+      values.mrEnclaves.21:
++        "0x605ad10c1a56ed7289f198d64a39a952cd3b8a0bed3fcb19c8301c1847dc3a2f"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.12:
++        "0x008f96447139673b3f2d29b30ad4b43fe6ccb3f31d40f6e61478ac5640201d9e"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.13:
++        "0x47cb22384e59cecf65a536612d4b43fe36659f987503db9828f158ac40201d9e"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.14:
++        "0x00a32a15ab7a74a9a79f3b97a71d1b014cd4361b37819004b9322b502b5f5be1"
++++ description: Program hashes of SP1 programs trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains program hash data within them.
++++ severity: HIGH
+      values.trustedPrograms.15:
++        "0x51950ad55e9d2a6973e772f471d1b01466a1b0d95e064012726456a02b5f5be1"
+    }
+```
+
+```diff
+    contract PreconfRouter (eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a) {
+    +++ description: Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.
+      sourceHashes.1:
+-        "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd"
++        "0xa69b68882c2eac4ec75e64e92a7946b6311cf7e0fa7c844251baabfa7803d81b"
+      values.$implementation:
+-        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
++        "eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"
+      values.$pastUpgrades.3:
++        ["2025-12-04T02:13:59.000Z","0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",["eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.impl:
+-        "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913"
++        "eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709"
+      values.getConfig:
++        {"handOverSlots":8}
+      implementationNames.eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913:
+-        "PreconfRouter"
+      implementationNames.eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709:
++        "PreconfRouter"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 1 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 1 operators registered."
+      values.operatorCount:
+-        3
++        2
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperatorsCount:
+-        2
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+## Source code changes
+
+```diff
+.../PreconfRouter/PreconfRouter.sol                       | 15 +++++++++++++++
+ .../RiscZeroGroth16Verifier.sol                           |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0xae2297c4a62652b67661d3f82605b4be6df55d08
+
+# Diff at Wed, 03 Dec 2025 11:03:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb61f5ec5bdfe1b0d99f8a8bbf88c803aa243605 block: 1764165081
+- current timestamp: 1764759251
+
+## Description
+
+Forkrouter removed, minor bugfix in MainnetInbox: https://disco.l2beat.com/diff/eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8/eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5
+
+this was an SC emergency proposal reviewed by us.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      name:
+-        "PacayaForkRouter"
++        "TaikoL1"
+      sourceHashes.1:
+-        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
++        "0x2fc623a8d2d43eaa7b59707ea9d1f766608b3626be55f68a9617b218e44b3cd5"
+      values.$implementation:
+-        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"
++        "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5"
+      values.$pastUpgrades.29:
++        ["2025-12-03T00:16:35.000Z","0x22ad3111b2e282663d8ee67b9a1e8c64add6a87f1e1f0e89dd589619ad42cce4",["eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5"]]
+      values.$upgradeCount:
+-        29
++        30
+      values.newFork:
+-        "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
+      values.oldFork:
+-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.bondToken:
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.impl:
++        "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5"
+      values.inboxWrapper:
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.inNonReentrant:
++        false
+      values.isOnL1:
++        true
+      values.pacayaConfig:
++        {"chainId":167000,"maxUnverifiedBatches":324000,"batchRingBufferSize":360000,"maxBatchesToVerify":8,"blockMaxGasLimit":240000000,"livenessBondBase":"25000000000000000000","livenessBondPerBlock":0,"stateRootSyncInternal":4,"maxAnchorHeightOffset":96,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":75,"gasIssuancePerSecond":5000000,"minGasExcess":1344899430,"maxGasIssuancePerBlock":600000000},"provingWindow":7200,"cooldownWindow":7200,"maxSignalsToReceive":16,"maxBlocksPerBatch":768,"forkHeights":{"ontake":538304,"pacaya":1166000,"shasta":0,"unzen":0}}
+      values.paused:
++        false
+      values.resolver:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.signalService:
++        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.verifier:
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7:
+-        "PacayaForkRouter"
+      implementationNames.eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5:
++        "MainnetInbox"
+      template:
++        "taiko/TaikoL1PostPacaya"
+      description:
++        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        24
++        26
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetTaikoL1 (eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264)
+    +++ description: None
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        22
++        23
+      values.proposalIds.22:
++        "600503437133673611609410939840991465998794096662"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetInbox (eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8)
+    +++ description: None
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      values.registeredOperators.0:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.1:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../MainnetTaikoL1.sol => /dev/null                | 5128 --------------------
+ .../PacayaForkRouter.sol => /dev/null              | 1173 -----
+ .../TaikoL1}/ERC1967Proxy.p.sol                    |    0
+ .../TaikoL1}/MainnetInbox.sol                      |   21 +-
+ 4 files changed, 9 insertions(+), 6313 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764165081 (main branch discovery), not current.
+
+```diff
+    contract PacayaForkRouter (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: None
+      name:
+-        "TaikoL1"
++        "PacayaForkRouter"
+      template:
+-        "taiko/TaikoL1PostPacaya"
+      sourceHashes.1:
+-        "0x4a046242c16270e33ec006d5d7d18a68040b417d8355d24cc6a44926ce444f6e"
++        "0x5702f8ecc44ca1160a3d0954d937678c18e339e0b8b415d47e8d20c5f3fb4a19"
+      proxyType:
+-        "TaikoFork proxy"
++        "EIP1967 proxy"
+      description:
+-        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
+      values.$implementation:
+-        ["eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7","eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"]
++        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"
+      values.$pastUpgrades.0.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.0.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.5.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.5.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.6.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.6.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.7.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.7.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.8.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.8.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.10.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.10.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.11.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.11.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.14.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.14.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.15.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.15.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.16.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.16.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.17.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.17.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.21.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.21.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.22.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.22.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.23.2.1:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.23.2.2:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.24.2.1:
+-        "eth:0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01"
+      values.$pastUpgrades.24.2.2:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.$pastUpgrades.25.2.1:
+-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$pastUpgrades.25.2.2:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.$pastUpgrades.26.2.1:
+-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$pastUpgrades.26.2.2:
+-        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      values.$pastUpgrades.27.2.1:
+-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$pastUpgrades.27.2.2:
+-        "eth:0x257df77Ec059ca5CF9B7eD523f85B731A2eCdb82"
+      values.$pastUpgrades.28.2.1:
+-        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$pastUpgrades.28.2.2:
+-        "eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8"
+      values.bondToken:
+-        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.getConfig:
+-        {"chainId":167000,"blockMaxProposals":324000,"blockRingBufferSize":360000,"maxBlocksToVerify":16,"blockMaxGasLimit":240000000,"livenessBond":"125000000000000000000","stateRootSyncInternal":16,"maxAnchorHeightOffset":64,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":75,"gasIssuancePerSecond":5000000,"minGasExcess":1340000000,"maxGasIssuancePerBlock":600000000},"ontakeForkHeight":538304}
+      values.getLastSyncedTransition:
+-        {"batchId_":1342928,"blockId_":3396240,"ts_":{"parentHash":"0x740903f45f38a455cbb1eae05f4bf0569b3fd0e39d5970e040c7dd6d445a09ae","blockHash":"0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537","stateRoot":"0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c","prover":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","inProvingWindow":true,"createdAt":1764126647}}
+      values.getLastVerifiedBlock:
+-        {"blockId_":1342928,"blockHash_":"0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537","stateRoot_":"0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c","verifiedAt_":1742136263}
+      values.getLastVerifiedTransition:
+-        {"batchId_":1342928,"blockId_":3396240,"ts_":{"parentHash":"0x740903f45f38a455cbb1eae05f4bf0569b3fd0e39d5970e040c7dd6d445a09ae","blockHash":"0xd60313901b0386e3e0ada3f015010e6d5d5a15592321620b4ef6c8e44ce1a537","stateRoot":"0xaf543e849defeb5fddadcba696b0c1f8c7912baff6c62e5d4d4d89e2ea3f363c","prover":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","inProvingWindow":true,"createdAt":1764126647}}
+      values.getStateVariables:
+-        [{"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1342928,"lastSynecdAt":1764164903},{"numBlocks":1342992,"lastVerifiedBlockId":1342928,"provingPaused":false,"lastProposedIn":23883316,"lastUnpausedAt":1716571955}]
+      values.getStats1:
+-        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1342928,"lastSyncedAt":1764164903}
+      values.getStats2:
+-        {"numBatches":1342992,"lastVerifiedBatchId":1342928,"paused":false,"lastProposedIn":23883316,"lastUnpausedAt":1716571955}
+      values.impl:
+-        "eth:0xbB1f830636e1A017b81C3E38b7f6219344149Eb7"
+      values.inboxWrapper:
+-        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.inNonReentrant:
+-        false
+      values.isOnL1:
+-        true
+      values.lastProposedIn:
+-        23883316
+      values.pacayaConfig:
+-        {"chainId":167000,"maxUnverifiedBatches":324000,"batchRingBufferSize":360000,"maxBatchesToVerify":8,"blockMaxGasLimit":240000000,"livenessBondBase":"25000000000000000000","livenessBondPerBlock":0,"stateRootSyncInternal":4,"maxAnchorHeightOffset":96,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":75,"gasIssuancePerSecond":5000000,"minGasExcess":1344899430,"maxGasIssuancePerBlock":600000000},"provingWindow":7200,"cooldownWindow":7200,"maxSignalsToReceive":16,"maxBlocksPerBatch":768,"forkHeights":{"ontake":538304,"pacaya":1166000,"shasta":0,"unzen":0}}
+      values.paused:
+-        false
+      values.resolver:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.signalService:
+-        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.state:
+-        {"__reserve1":"0x0000000000000000000000000000000000000000000000000000000000000000","stats1":{"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1342928,"lastSyncedAt":1764164903},"stats2":{"numBatches":1342992,"lastVerifiedBatchId":1342928,"paused":false,"lastProposedIn":23883316,"lastUnpausedAt":1716571955}}
+      values.verifier:
+-        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      implementationNames.eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264:
+-        "MainnetTaikoL1"
+      implementationNames.eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8:
+-        "MainnetInbox"
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MainnetTaikoL1 (eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetInbox (eth:0xaF95C030c7b8994Ba9213B6A3964baa64E7dF9D8)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xda6103201bc85588c491ec36f614bcd3d5af4150
+
+# Diff at Wed, 26 Nov 2025 13:52:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763978021
+- current timestamp: 1764165081
+
+## Description
+
+proposal to move TAIKO from the DAO to the Labs treasury: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/21
+
+operator changes
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        21
++        22
+      values.proposalIds.21:
++        "600279957369763019115429650404480285099304157205"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+      values.operatorCount:
+-        4
++        3
+      values.registeredOperators.0:
+-        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+      values.registeredOperators.2.sequencer:
+-        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.2.proposer:
+-        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperatorsCount:
+-        3
++        2
+    }
+```
+
+Generated with discovered.json: 0x8502867169e7ab04e91bb2855670f7d3c12974fe
+
+# Diff at Mon, 24 Nov 2025 09:55:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1763551862
+- current timestamp: 1763978021
+
+## Description
+
+new operators.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+    }
+```
+
+Generated with discovered.json: 0x095928c20034073bbb323b58e5b1cc29f4c1ab86
+
+# Diff at Wed, 19 Nov 2025 11:32:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765141
+- current timestamp: 1763551862
+
+## Description
+
+new proposal: move TAIKO to team treasury multisig.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        12
++        13
+    }
+```
+
+Generated with discovered.json: 0xdfecee0624fe6c1598c14b0e53b43c43549983d6
+
+# Diff at Mon, 10 Nov 2025 09:00:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1762269183
+- current timestamp: 1762765141
+
+## Description
+
+PreconfWhitelist changed, and the verifier upgrade proposal is now in the public / optimistic phase:
+- dao frontend: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/20
+- review: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        20
++        21
+      values.proposalIds.20:
++        "599695636739451592739723352125243732881756389396"
+    }
+```
+
+```diff
+    contract Daniel Wang (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.$members.1:
++        "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44"
+      values.$members.2:
++        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
++        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$members.1:
+-        "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$threshold:
+-        1
++        4
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
+Generated with discovered.json: 0xa6b0b533d0ee714110efc7db3fbbfa1f6d0ae39b
+
+# Diff at Wed, 05 Nov 2025 12:48:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1762269183
+- current timestamp: 1762269183
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762269183 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
+-        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x576c334abeb3e31443fed29382c4b557df4e7902
+
+# Diff at Tue, 04 Nov 2025 15:15:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2a2e6dec6588b124016c602f3ebd0bbf5fa7ec73 block: 1761894930
+- current timestamp: 1762269183
+
+## Description
+
+operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74","sequencer":"eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"}
+      values.registeredOperators.3.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperators.3.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0xe2dA8aC2E550cd141198a117520D4EDc8692AB74"
+      values.registeredOperatorsCount:
+-        4
++        3
+    }
+```
+
+Generated with discovered.json: 0x3176f5adf28bb496205bbfff361cda93ee8c6998
+
+# Diff at Tue, 04 Nov 2025 11:34:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: Library for managing PEM certificate chains.
+      sourceHashes.0:
+-        "0x97476fc6413c58015ddf51b5d2e37c3fdfc6b85ced25779773a1652ecc154c77"
++        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0x0568e673edec0254e0d0584958369ffcb951f679158dd2a7c167bbf5fcf2a5bf"
++        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      sourceHashes.1:
+-        "0xac51975c574b128e9dc1e8542c616ed655d4a2abc91d3233648ac688e530c68c"
++        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      sourceHashes.1:
+-        "0xd2bffd1aa4016a982cb8f166de6b32cfa89406896b754e2f5abb2f63e7defd5a"
++        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
+    }
+```
+
+Generated with discovered.json: 0xaefab4cb6d9e9b925cae4be6786e47867737eeb5
+
+# Diff at Mon, 03 Nov 2025 14:19:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761894930
+- current timestamp: 1761894930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761894930 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      values.$libraries:
++        ["eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6","eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84","eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593","eth:0x5565543Ec09f746721928B0A4d019c9E750d0552"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LibUtils (eth:0x5565543Ec09f746721928B0A4d019c9E750d0552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibBonds (eth:0xc618b0bA27F751D33689DebA538f8567AeF53ee6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibData (eth:0xe61FD6715FfFA2f4057f1Cf0230512b91A9f5f84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LibProving (eth:0xfD9B548c00a1E96BbFc2C5FE0D339618B40B4593)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x4ad2be96a6472cb72c1740890c9ba97f5d2c0a3f
+
+# Diff at Fri, 31 Oct 2025 07:17:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1761643945
+- current timestamp: 1761894930
+
+## Description
+
+Minor upgrade proposed.
+
+Reviewed here: https://gist.github.com/sekuba/46d7bcab5127c0ed6e0d66ce285b0559 (approved, will go to optimistic phase if at least 5 approve)
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        11
++        12
+    }
+```
+
+Generated with discovered.json: 0x48b3c9a94d3498c063182c27bf387c8f600816ad
+
+# Diff at Tue, 28 Oct 2025 09:33:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761550873
+- current timestamp: 1761643945
+
+## Description
+
+proposer/sequencer whitelist changed.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0.sequencer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.0.proposer:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.registeredOperators.3.sequencer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+      values.registeredOperators.3.proposer:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+Generated with discovered.json: 0x833740284aedb8b48b0da3078846244cdb7d3086
+
+# Diff at Mon, 27 Oct 2025 07:42:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1759909174
+- current timestamp: 1761550873
+
+## Description
+
+Operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 4 operators registered.
+      values.registeredOperators.0:
+-        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.3:
++        {"proposer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990","sequencer":"eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"}
+    }
+```
+
 Generated with discovered.json: 0x55b32044ebd850568f757d8965b323b8b37b1ae5
 
 # Diff at Wed, 08 Oct 2025 07:42:30 GMT:

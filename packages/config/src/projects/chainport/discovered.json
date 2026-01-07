@@ -1,7 +1,7 @@
 {
   "name": "chainport",
-  "timestamp": 1756124502,
-  "configHash": "0x3860294d22649e054320f2096db43caba1e062560d7c191b191e94381e34145a",
+  "timestamp": 1765464194,
+  "configHash": "0x7bf72c1d1666a8c556f65463d3688bcdad8b3431a942eb6e21ac7540e98706cd",
   "entries": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -207,7 +207,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 218,
+        "nonce": 221,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -257,7 +257,7 @@
         "$immutable": true,
         "getMembersRegistry": "eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
-        "proposalCount": 67
+        "proposalCount": 69
       },
       "fieldMeta": {
         "proposalCount": {
@@ -403,6 +403,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23218089 },
+  "usedBlockNumbers": { "ethereum": 23990107 },
   "permissionsConfigHash": "0x1178b70905d7b744ecfefbe0c0d97b3f8c9a95162e595bf78b38a1a35038aca5"
 }

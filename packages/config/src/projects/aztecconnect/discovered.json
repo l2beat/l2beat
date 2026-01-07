@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "timestamp": 1729849619,
-  "configHash": "0xbf6b021227465b7bc1b428f727f70b5f1381b0e51b4c4c5d1a687cb15ed90b9a",
+  "configHash": "0x7d557333c2ba4e9d9a68ce465043b0b3b4487a541ab535d9756385d09ae85f83",
   "entries": [
     {
       "address": "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -13,7 +13,7 @@
       "address": "eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927",
       "type": "Contract",
       "sourceHashes": [
-        "0xf15c9cfd9eb12a3556a88221df34d944dd453922d9b9b9f7c3d50d41b027b06a"
+        "0x01278507559e13896df8442bcf39edd2998ae3788e582fa0e8d80e83143e4687"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1654638211,
@@ -45,7 +45,7 @@
       "address": "eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
       "type": "Contract",
       "sourceHashes": [
-        "0x4c3447f738f38931105bfe030716b1bdc26c6e9ca0bbed38fff31afccabc90fb"
+        "0x9c330dea69f01bdf65cfce5dd18bc7b9d78e257db070df45fe39ad14cf396a9a"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1654638146,
@@ -143,7 +143,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xca3afcf92a9c12ce307d9de265b57fe02f7022f6a5f0eab38511eccafbfff478"
+        "0xf5d46f176c2c0d256ee7bea1f340a7625b48c0c8a4e52d0cf068fd7c0bfbfefe"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [

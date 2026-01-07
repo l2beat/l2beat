@@ -1,7 +1,7 @@
 {
   "name": "termstructure",
   "timestamp": 1722945083,
-  "configHash": "0xb664c092a5580d19b4c54bc8713fbaa9550b2fdfec6fd754b166b1b9df5a6c0d",
+  "configHash": "0x3377ea0fc807a51b10905a94d49d515dc4ec5f3dd3e0f994e4a09ebcb7f98573",
   "entries": [
     {
       "name": "ZkTrueUp",
@@ -9,7 +9,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24",
-        "0x5726c0198a0c274ad32ac9194a369dd3709ac0a790c50b9708d15aeeeaa16fea"
+        "0xa7ec1647f38f0c7990529d7ce895aaf366ba15069dd6236f6d38956e710a466d"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
@@ -415,7 +415,7 @@
       "address": "eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D",
       "type": "Contract",
       "sourceHashes": [
-        "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"
+        "0xd90046cacc0e54862f057569b7ee64939824c8d68e7d58a78c0f6bf3850ed3ec"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1716263831,

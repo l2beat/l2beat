@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
-  "timestamp": 1752074063,
-  "configHash": "0x95893524e6f28597e080d8071e5af58cf81a2736e337060758aa204990d69708",
+  "timestamp": 1761550307,
+  "configHash": "0xe78a3b5c89ec83758a8c58ac6ca0ac7992e3c0e555e4cf4affcf8e4fa1ac870e",
   "entries": [
     {
       "address": "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
@@ -371,10 +371,12 @@
       "name": "HorizenDVN",
       "address": "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1706495231,
       "sinceBlock": 19109198,
       "values": {
@@ -421,10 +423,12 @@
       "name": "USDT0DVN",
       "address": "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1736918087,
       "sinceBlock": 21627731,
       "values": {
@@ -587,7 +591,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 61,
+        "nonce": 98,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -631,10 +635,12 @@
       "name": "LayerZeroDVN",
       "address": "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1706307995,
       "sinceBlock": 19093742,
       "values": {
@@ -787,17 +793,9 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1736918087,
-      "sinceBlock": 21627731,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2": ""
-      }
+      "address": "eth:0x6d695bDb416274d37fb877f5f46A3F20c9343D80",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
@@ -914,11 +912,13 @@
       "name": "PolyhedraDVN",
       "address": "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x7b47ae15df80519afbed6bca2472ab35b7e20938dfc898ececbbb6d1c7a369a0"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1708740203,
       "sinceBlock": 19294337,
       "values": {
@@ -957,29 +957,6 @@
       }
     },
     {
-      "name": "DVNFeeLib",
-      "address": "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1706495219,
-      "sinceBlock": 19109197,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
-      },
-      "implementationNames": {
-        "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": "DVNFeeLib"
-      }
-    },
-    {
-      "address": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "type": "Contract",
@@ -1002,6 +979,36 @@
       },
       "implementationNames": {
         "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "CanaryDVN",
+      "address": "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+      "type": "Contract",
+      "template": "layerzero/DVN",
+      "sourceHashes": [
+        "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5"
+      ],
+      "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
+      "sinceTimestamp": 1732036019,
+      "sinceBlock": 21223166,
+      "values": {
+        "$immutable": true,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "getSigners": ["eth:0x6d695bDb416274d37fb877f5f46A3F20c9343D80"],
+        "localEidV2": 30101,
+        "paused": false,
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "quorum": 1,
+        "signerSize": 1,
+        "vid": 101,
+        "workerFeeLib": "eth:0x8FDc0d92647537694F5971b2Ca495977a072D990"
+      },
+      "implementationNames": {
+        "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd": "DVN"
       }
     },
     {
@@ -1032,7 +1039,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 54,
+        "nonce": 55,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1068,29 +1075,6 @@
       "implementationNames": {
         "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711": "WooTokenOFTAdapter"
       }
-    },
-    {
-      "name": "DVNFeeLib",
-      "address": "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1706307983,
-      "sinceBlock": 19093741,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-      },
-      "implementationNames": {
-        "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": "DVNFeeLib"
-      }
-    },
-    {
-      "address": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB88dca912E27EB7929a145458B99649C1120fE6b",
@@ -1238,7 +1222,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 2,
+        "nonce": 17,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -1314,10 +1298,12 @@
       "name": "GoogleCloudDVN",
       "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -1363,21 +1349,6 @@
       },
       "implementationNames": {
         "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf": "KinetixFinanceTokenOFTAdapter"
-      }
-    },
-    {
-      "name": "VerifierFeeLib",
-      "address": "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1694217119,
-      "sinceBlock": 18095085,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
       }
     },
     {
@@ -2913,21 +2884,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": [
-      "constructor(uint256 _nativeDecimalsRate)",
-      "error DVN_EidNotSupported(uint32 eid)",
-      "error DVN_InvalidDVNOptions(uint256 cursor)",
-      "error DVN_UnsupportedOptionType(uint8 optionType)",
-      "error Transfer_NativeFailed(address _to, uint256 _value)",
-      "error Transfer_ToAddressIsZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdrawToken(address _token, address _to, uint256 _amount)"
-    ],
     "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
       "constructor(address initialOwner)",
       "error AdminCallFailed()",
@@ -2941,6 +2897,89 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd": [
+      "constructor(uint32 _localEidV2, uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
+      "error DVN_DuplicatedHash(bytes32 executableHash)",
+      "error DVN_InstructionExpired()",
+      "error DVN_InvalidRole(bytes32 role)",
+      "error DVN_InvalidSignatures()",
+      "error DVN_InvalidTarget(address target)",
+      "error DVN_InvalidVid(uint32 vid)",
+      "error DVN_OnlySelf()",
+      "error MultiSig_InvalidSigner()",
+      "error MultiSig_OnlySigner()",
+      "error MultiSig_QuorumIsZero()",
+      "error MultiSig_SignersSizeIsLessThanQuorum(uint64 signersSize, uint64 quorum)",
+      "error MultiSig_StateAlreadySet(address signer, bool active)",
+      "error MultiSig_StateNotSet(address signer, bool active)",
+      "error MultiSig_UnorderedSigners()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event ExecuteFailed(uint256 _index, bytes _data)",
+      "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] params)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event UpdateQuorum(uint64 _quorum)",
+      "event UpdateSigner(address _signer, bool _active)",
+      "event VerifierFeePaid(uint256 fee)",
+      "event VerifySignaturesFailed(uint256 idx)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(tuple(uint32 dstEid, bytes packetHeader, bytes32 payloadHash, uint64 confirmations, address sender) _param, bytes _options) payable returns (uint256 totalFee)",
+      "function assignJob(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) returns (uint256 totalFee)",
+      "function assignJob(address _sender, bytes, bytes _cmd, bytes _options) payable returns (uint256 fee)",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)",
+      "function execute(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures)[] _params)",
+      "function getFee(uint32 _dstEid, uint64 _confirmations, address _sender, bytes _options) view returns (uint256 fee)",
+      "function getFee(uint16 _dstEid, uint16, uint64 _confirmations, address _sender) view returns (uint256 fee)",
+      "function getFee(address _sender, bytes, bytes _cmd, bytes _options) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSigners() view returns (address[])",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashCallData(uint32 _vid, address _target, bytes _callData, uint256 _expiration) pure returns (bytes32)",
+      "function isSigner(address _signer) view returns (bool)",
+      "function localEidV2() view returns (uint32)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function quorum() view returns (uint64)",
+      "function quorumChangeAdmin(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) _param)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setQuorum(uint64 _quorum)",
+      "function setSigner(address _signer, bool _active)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function signerSize() view returns (uint256)",
+      "function signers(address _signer) view returns (bool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function usedHashes(bytes32 executableHash) view returns (bool used)",
+      "function verifySignatures(bytes32 _hash, bytes _signatures) view returns (bool, uint8)",
+      "function vid() view returns (uint32)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
     ],
     "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7": [
       "constructor(address _singleton)"
@@ -3005,21 +3044,6 @@
       "function sharedDecimals() view returns (uint8)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": [
-      "constructor(uint256 _nativeDecimalsRate)",
-      "error DVN_EidNotSupported(uint32 eid)",
-      "error DVN_InvalidDVNOptions(uint256 cursor)",
-      "error DVN_UnsupportedOptionType(uint8 optionType)",
-      "error Transfer_NativeFailed(address _to, uint256 _value)",
-      "error Transfer_ToAddressIsZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes _options) payable returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
     "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
@@ -3462,10 +3486,6 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
-    ],
     "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390": [
       "constructor(address _layerZeroEndpointV2, address _layerZeroEndpointV1)",
       "error AlreadySet()",
@@ -3737,12 +3757,13 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
     "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 22882451 },
-  "permissionsConfigHash": "0x97aa839c444823eba72a0fccaed5e05f9281cb5a398125294bf36e9009167b3f"
+  "usedBlockNumbers": { "ethereum": 23667311 },
+  "permissionsConfigHash": "0xe5da03ef3084bf1f00883b82c5087b7aeab3838ce06736d4c7be7e83831d61a5"
 }

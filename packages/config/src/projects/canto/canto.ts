@@ -15,13 +15,13 @@ export const canto: ScalingProject = upcomingL2({
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://canto.io'],
-      bridges: ['https://app.canto.io/bridge'],
+      bridges: ['https://canto.io/bridge'],
       documentation: ['https://docs.canto.io'],
-      explorers: ['https://tuber.build'],
+      explorers: ['https://oklink.com/canto'],
       repositories: ['https://github.com/Canto-Network'],
       socialMedia: [
         'https://twitter.com/CantoPublic',
-        'https://discord.gg/canto',
+        'https://discord.com/invite/63GmEXZsVf',
       ],
     },
   },

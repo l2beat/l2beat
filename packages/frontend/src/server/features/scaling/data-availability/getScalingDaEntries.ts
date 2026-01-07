@@ -25,7 +25,7 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingDaEntries() {
@@ -38,7 +38,7 @@ export async function getScalingDaEntries() {
     zkCatalogProjects,
     projectsEconomicSecurity,
   ] = await Promise.all([
-    getProjectsLatestTvsUsd(),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
@@ -78,7 +78,7 @@ export async function getScalingDaEntries() {
         risks,
         daLayers,
         projectsChangeReport.getChanges(project.id),
-        tvs[project.id],
+        tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
       )
     })
@@ -146,61 +146,58 @@ function getRisks(
   },
   projectsEconomicSecurity: ProjectsEconomicSecurity,
 ): ScalingDaEntry['risks'] | undefined {
-  const risks: ScalingDaEntry['risks'] = []
-  if (project.customDa) {
-    risks.push({
-      daLayer: mapLayerRisksToRosetteValues(getDaLayerRisks(project.customDa)),
-      daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
-      daHref: getDaHref(
-        project,
-        {
-          layer: {
-            value: 'DAC',
-          },
-        } as ProjectScalingDa,
-        daLayers,
-      ),
-    })
-  }
-
-  risks.push(
-    ...project.scalingDa
-      .map((da) => {
-        const daLayerProject =
-          da === undefined
-            ? undefined
-            : daLayers.find((daLayer) => daLayer.id === da.layer.projectId)
-
-        const daBridgeProject =
-          da === undefined
-            ? undefined
-            : daBridges.find((daBridge) => daBridge.id === da.bridge.projectId)
-
-        if (!daLayerProject) {
-          return undefined
-        }
-        const usedProjectIds = daBridgeProject
-          ? daBridgeProject.daBridge.usedIn.map((project) => project.id)
-          : daLayerProject.daLayer.usedWithoutBridgeIn.map(
-              (project) => project.id,
-            )
-
-        const tvs = getTvs(usedProjectIds).latest
-        const economicSecurity = projectsEconomicSecurity[daLayerProject.id]
-
+  return project.scalingDa
+    .map((da) => {
+      if (da.layer.value === 'DAC' && project.customDa) {
         return {
           daLayer: mapLayerRisksToRosetteValues(
-            getDaLayerRisks(daLayerProject.daLayer, tvs, economicSecurity),
+            getDaLayerRisks(project.customDa),
           ),
-          daBridge: daBridgeProject
-            ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
-            : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
-          daHref: getDaHref(project, da, daLayers),
+          daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
+          daHref: getDaHref(
+            project,
+            {
+              layer: {
+                value: 'DAC',
+              },
+            } as ProjectScalingDa,
+            daLayers,
+          ),
         }
-      })
-      .filter((da) => da !== undefined),
-  )
-  return risks
+      }
+      const daLayerProject =
+        da === undefined
+          ? undefined
+          : daLayers.find((daLayer) => daLayer.id === da.layer.projectId)
+
+      const daBridgeProject =
+        da === undefined
+          ? undefined
+          : daBridges.find((daBridge) => daBridge.id === da.bridge.projectId)
+
+      if (!daLayerProject) {
+        return undefined
+      }
+      const usedProjectIds = daBridgeProject
+        ? daBridgeProject.daBridge.usedIn.map((project) => project.id)
+        : daLayerProject.daLayer.usedWithoutBridgeIn.map(
+            (project) => project.id,
+          )
+
+      const tvs = getTvs(usedProjectIds).latest
+      const economicSecurity = projectsEconomicSecurity[daLayerProject.id]
+
+      return {
+        daLayer: mapLayerRisksToRosetteValues(
+          getDaLayerRisks(daLayerProject.daLayer, tvs, economicSecurity),
+        ),
+        daBridge: daBridgeProject
+          ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
+          : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
+        daHref: getDaHref(project, da, daLayers),
+      }
+    })
+    .filter((da) => da !== undefined)
 }
 
 interface ScalingDaEntryHref {

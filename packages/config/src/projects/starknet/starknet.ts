@@ -171,7 +171,7 @@ const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'DAI',
+  'STRK',
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
@@ -188,6 +188,12 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+starknetProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+starknetProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const starknet: ScalingProject = {
   type: 'layer2',
@@ -220,12 +226,13 @@ export const starknet: ScalingProject = {
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
-        'https://discord.com/invite/qypnmzkhbc',
+        'https://discord.com/invite/starknet-community',
         'https://twitter.com/StarkWareLtd',
         'https://medium.com/starkware',
         'https://starkware.co/',
         'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg',
       ],
+      other: ['https://growthepie.com/chains/starknet'],
     },
     liveness: {
       explanation:
@@ -239,7 +246,7 @@ export const starknet: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogId: ProjectId('stwo'),
   },
   chainConfig: {
     name: 'starknet',
@@ -249,7 +256,7 @@ export const starknet: ScalingProject = {
     apis: [
       {
         type: 'starknet',
-        url: 'https://starknet-mainnet.public.blastapi.io',
+        url: 'https://starknet-rpc.publicnode.com',
         callsPerMinute: 120,
       },
     ],
@@ -336,7 +343,7 @@ export const starknet: ScalingProject = {
       {
         title: 'Proven Program',
         description:
-          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/master/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
+          'The source code of the Starknet OS can be found [here](https://github.com/keep-starknet-strange/snos). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
         risks: [],
       },
       {
@@ -412,6 +419,14 @@ The Operator role in the Starknet contract is permissioned to update the state o
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
   milestones: [
+    {
+      title: 'Starknet upgrades its proving system to Stwo',
+      url: 'https://etherscan.io/tx/0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797',
+      date: '2025-10-19T00:00:00.00Z',
+      description:
+        'Starknet switches to the next-generation prover Stwo to prove its STF on Ethereum L1.',
+      type: 'general',
+    },
     {
       title: 'Starknet is down for several hours',
       url: 'https://x.com/Starknet/status/1962740091937317247',
@@ -507,7 +522,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
-        tokens: ['USDC'],
+        tokens: [], // removed due to custom config in starknet.json
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -596,7 +611,9 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       }),
     ],
     activityConfig: {
-      type: 'block',
+      type: 'day',
+      sinceTimestamp: UnixTime(1637020800),
+      dataSource: 'Voyager API',
     },
     daTracking: [
       {
@@ -784,8 +801,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '918745833886511857768061986591752808672496300091957204265383861063635175685', // Starknet OS (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,
@@ -828,8 +860,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '1701025211190912681772481128523426351562426117847395998223683709327746845867', // Aggregator (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,

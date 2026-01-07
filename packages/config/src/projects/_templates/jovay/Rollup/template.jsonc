@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "Rollup",
+  "description": "The Rollup contract is used to submit and verify L2 batches.",
+  "ignoreMethods": [
+    "committedBatches",
+    "finalizedStateRoots",
+    "getL2MsgRoot",
+    "l1MsgCount",
+    "l2MsgRoots"
+  ],
+  "ignoreInWatchMode": ["lastCommittedBatch", "lastTeeVerifiedBatch"],
+  "fields": {
+    "relayer": {
+      "handler": {
+        "type": "hardcoded",
+        "value": [
+          "eth:0xA217ee134CB95B1ab56eF83a33956E5A979bf6e7",
+          "eth:0xAe13Ce4Cd416cb4598865aa5aC8d13532bd3Cd99"
+        ]
+      },
+      "permissions": [{ "type": "propose" }, { "type": "sequence" }]
+    }
+  },
+  "category": "core"
+}

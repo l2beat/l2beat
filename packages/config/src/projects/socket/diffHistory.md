@@ -1,3 +1,126 @@
+Generated with discovered.json: 0xc08b89cc5d91177e9b7eca9f2b6487bfcd71dec4
+
+# Diff at Wed, 19 Nov 2025 14:56:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1762765696
+- current timestamp: 1763564064
+
+## Description
+
+plug added.
+
+## Watched changes
+
+```diff
+    contract Socket (eth:0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.170:
++        "eth:0x82D4A4f701A5781AE6236FFA25545329a6161b76"
+    }
+```
+
+Generated with discovered.json: 0xe46203ca32977eb4d7dfa82373eca6330ca9806b
+
+# Diff at Mon, 10 Nov 2025 09:10:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1756899680
+- current timestamp: 1762765696
+
+## Description
+
+plug added.
+
+## Watched changes
+
+```diff
+    contract Socket (eth:0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.169:
++        "eth:0x35bD9b69108CA11b8648eea424aaB3dC31a09eea"
+    }
+```
+
+Generated with discovered.json: 0x55b9c632c1a981f5e2009480d87c5a8a04743af0
+
+# Diff at Wed, 05 Nov 2025 12:47:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1756899680
+- current timestamp: 1756899680
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756899680 (main branch discovery), not current.
+
+```diff
+    contract sdeUSD Vault (Reya) (eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
+```diff
+    contract deUSD Vault (Reya) (eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
+```diff
+    contract sUSDe Vault (Reya) (eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3:
+-        ""
++        "Vault"
+      sourceHashes:
++        ["0x602df965bf4dcd6a254d0f73df43d800eba973378ebe545c730e4eaebc9f8e02"]
+    }
+```
+
 Generated with discovered.json: 0xd196cc4ae7cbe918c3d116d920240c124363fcd9
 
 # Diff at Wed, 03 Sep 2025 11:42:55 GMT:

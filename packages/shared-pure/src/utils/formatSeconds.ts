@@ -1,6 +1,6 @@
-import { assert } from '../tools'
-import { notUndefined } from './notUndefined'
-import { pluralize } from './pluralize'
+import { assert } from '../tools/assert.js'
+import { notUndefined } from './notUndefined.js'
+import { pluralize } from './pluralize.js'
 
 const units = ['y', 'mo', 'd', 'h', 'm', 's']
 const fullUnits = ['year', 'month', 'day', 'hour', 'minute', 'second']

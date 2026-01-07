@@ -1,7 +1,8 @@
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InMemoryCache } from '../../cache/InMemoryCache'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import { getActivityData } from './getActivityData'
@@ -11,6 +12,7 @@ export function addActivityRoutes(
   openapi: OpenApi,
   ps: ProjectService,
   db: Database,
+  cache: InMemoryCache,
 ) {
   openapi.get(
     '/v1/activity',
@@ -23,11 +25,19 @@ export function addActivityRoutes(
       result: ActivityResultSchema,
     },
     async (req, res) => {
-      const { range } = req.query
+      const { range = '30d' } = req.query
 
-      const projectIds = await getActivityProjects(ps)
-
-      const data = await getActivityData(db, range ?? '30d', projectIds)
+      const data = await cache.get(
+        {
+          key: ['activity', range],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        async () => {
+          const projectIds = await getActivityProjects(ps)
+          return getActivityData(db, range, projectIds)
+        },
+      )
 
       res.json(data)
     },
@@ -52,7 +62,7 @@ export function addActivityRoutes(
     },
     async (req, res) => {
       const { projectId } = req.params
-      const { range } = req.query
+      const { range = '30d' } = req.query
 
       const project = await ps.getProject({
         id: ProjectId(projectId),
@@ -66,7 +76,14 @@ export function addActivityRoutes(
         return
       }
 
-      const data = await getActivityData(db, range ?? '30d', [project.id])
+      const data = await cache.get(
+        {
+          key: ['activity', projectId, range],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        () => getActivityData(db, range, [project.id]),
+      )
 
       res.json(data)
     },

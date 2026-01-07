@@ -1,7 +1,7 @@
+import { assert } from '@l2beat/shared-pure'
 import type { Validator } from '@l2beat/validate'
 import type { ImpMeta } from 'node_modules/@l2beat/validate/dist/esm/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
-import { assert } from './assertUnreachable'
 
 export function validateResolver<Input extends FieldValues, Context, Output>(
   schema: Validator<Input> & { meta?: ImpMeta },
@@ -10,7 +10,6 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
     assert(schema.meta, 'Meta is required')
 
     const errors = getErrors(schema, input)
-
     if (errors.length > 0) {
       return {
         values: {},

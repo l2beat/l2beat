@@ -1,5 +1,5 @@
 import type { AdjustCount } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
@@ -130,6 +130,8 @@ export function initActivityModule({
 
       case 'day': {
         const dayTargetIndexer = new DayTargetIndexer(logger, clock, {
+          // We do not want to index today's data because it's not fully processed yet
+          // We want to process full previous day
           onTick: async (targetTimestamp) => {
             if (!config.activity) {
               return
@@ -146,25 +148,32 @@ export function initActivityModule({
         })
 
         const provider = providers.day.getDayProvider(project.chainName)
-        const txsCountService = new DayTxsCountService(provider, project.id)
+        const txsCountService = new DayTxsCountService({
+          provider,
+          projectId: project.id,
+        })
 
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: 10,
           minHeight: UnixTime.toDays(
             UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
           ),
-          uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
           parents: [dayTargetIndexer],
           txsCountService,
           indexerService,
           db: database,
+          batchSize:
+            project.activityConfig.batchSize ?? Number.POSITIVE_INFINITY,
+          uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
         })
 
         indexers.push(dayTargetIndexer, activityIndexer)
         break
       }
+
+      default:
+        assertUnreachable(project.activityConfig)
     }
   }
 

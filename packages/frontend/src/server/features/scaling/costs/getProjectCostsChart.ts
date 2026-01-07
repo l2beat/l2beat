@@ -1,16 +1,17 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughputChart'
+import { ChartRange } from '~/utils/range/range'
+import { getScalingProjectDaThroughputChart } from '../../data-availability/throughput/getScalingProjectDaThroughtputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { type CostsChartDataPoint, getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
-import { CostsTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
 export type ProjectCostsChartParams = v.infer<typeof ProjectCostsChartParams>
 export const ProjectCostsChartParams = v.object({
-  range: CostsTimeRange,
+  range: ChartRange,
   projectId: v.string(),
 })
 
@@ -20,8 +21,15 @@ type Stats<T extends number | null> = {
   usd: T
 }
 
+type DaDataPoint = [
+  ethereumPosted: number | null,
+  celestiaPosted: number | null,
+  availPosted: number | null,
+  eigendaPosted: number | null,
+]
+
 export type ProjectCostsChartResponse = {
-  chart: [...CostsChartDataPoint, posted: number | null][]
+  chart: [...CostsChartDataPoint, ...DaDataPoint][]
   hasBlobs: boolean
   stats:
     | {
@@ -43,10 +51,9 @@ export async function getProjectCostsChart(
         range: params.range,
       }),
       getCostsForProject(params.projectId, params.range),
-      getProjectDaThroughputChart({
-        range: { type: params.range },
+      getScalingProjectDaThroughputChart({
         projectId: params.projectId,
-        includeScalingOnly: false,
+        range: params.range,
       }),
       getActivityForProjectAndRange(params.projectId, params.range),
     ])
@@ -62,9 +69,11 @@ export async function getProjectCostsChart(
 
   const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
 
-  const resolution = rangeToResolution({ type: params.range })
+  const resolution = rangeToResolution(params.range)
 
-  const timestampedDaData = Object.fromEntries(throughputChart?.chart ?? [])
+  const timestampedDaData = Object.fromEntries(
+    throughputChart?.chart.map((d) => [d[0], d.slice(1) as DaDataPoint]) ?? [],
+  )
   const chart: ProjectCostsChartResponse['chart'] = costsChart.chart.map(
     (cost) => {
       const dailyTimestamp = UnixTime.toStartOf(
@@ -75,11 +84,12 @@ export async function getProjectCostsChart(
             ? 'six hours'
             : 'hour',
       )
+      const daData = timestampedDaData[dailyTimestamp]
       const posted =
-        dailyTimestamp <= costsChart.syncedUntil
-          ? (timestampedDaData[dailyTimestamp] ?? null)
-          : null
-      return [...cost, posted]
+        dailyTimestamp <= costsChart.syncedUntil && daData
+          ? daData
+          : ([null, null, null, null] as const)
+      return [...cost, ...posted]
     },
   )
 
@@ -146,10 +156,7 @@ function getCostPerDay(data: ReturnType<typeof getTotal>, days: number) {
   }
 }
 
-function getSummedUopsCount(
-  records: ActivityRecord[],
-  range: [UnixTime | null, UnixTime],
-) {
+function getSummedUopsCount(records: ActivityRecord[], range: ChartRange) {
   const [from, to] = range
   const filteredRecords = records.filter((record) => {
     return from !== null

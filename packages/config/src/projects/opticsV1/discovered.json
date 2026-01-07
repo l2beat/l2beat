@@ -1,7 +1,7 @@
 {
   "name": "opticsV1",
-  "timestamp": 1740653603,
-  "configHash": "0xebf6b3d6693953ba78dd816a961dcbd2d331977e6eeb24f9dcfa20f14588c7e4",
+  "timestamp": 1762765635,
+  "configHash": "0x6e8424b8df042fddc5ba7d56f0fafc1b5dd808885c8a8535a8c115d5df89e32f",
   "entries": [
     {
       "address": "eth:0x07f5bFE05C5C4BF4a86af7BAf667e3737A3BA18F",
@@ -458,8 +458,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "committedRoot": "0xb009576a87c5ba9be5b7eef33372aec7a379a1219a212f0c861d5d976fb25c48",
-        "count": 2248,
+        "committedRoot": "0x98fcbbf75ac46aea3c9af3b3e12fcefef9d0c73dfd0bcd92db00165f5c41aa6b",
+        "count": 2259,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
@@ -467,13 +467,13 @@
         "owner": "eth:0x42303634F37956687fB7ff2c6146AC842481A052",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0xb009576a87c5ba9be5b7eef33372aec7a379a1219a212f0c861d5d976fb25c48",
+        "root": "0x98fcbbf75ac46aea3c9af3b3e12fcefef9d0c73dfd0bcd92db00165f5c41aa6b",
         "state": 1,
         "suggestUpdate": {
           "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
-        "tree": 2248,
+        "tree": 2259,
         "updater": "eth:0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
         "updaterManager": "eth:0x2CC80EE8a3f9c85309866F4C6BDF82f6846891EC",
         "VERSION": 0
@@ -743,6 +743,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21937199 },
+  "usedBlockNumbers": { "ethereum": 23767862 },
   "permissionsConfigHash": "0x49dfc44c0aaaa668132584cfc965cc49922cf4bb33fd69d15dc07c08dd91a47e"
 }

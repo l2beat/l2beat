@@ -1,9 +1,10 @@
 import type { Project } from '@l2beat/config'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimestamp'
 
 export function getZkCatalogProjectTvs(
   project: Project<'zkCatalogInfo'>,
@@ -12,23 +13,71 @@ export function getZkCatalogProjectTvs(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
   tvs: SevenDayTvsBreakdown,
-  contractUtils: ContractUtils,
 ) {
-  const usedInVerifiers = uniq(
-    project.zkCatalogInfo.verifierHashes
-      .flatMap((v) =>
-        v.knownDeployments.flatMap((d) =>
-          contractUtils.getUsedIn(project.id, d.chain, d.address),
-        ),
-      )
-      .map((u) => u.id),
+  const target = getTvsTargetTimestamp()
+  const todayTvsProjects = getLiveProjectsAtTimestamp(
+    project.zkCatalogInfo.projectsForTvs,
+    target,
   )
-  const projectsForTvs = uniq(
-    usedInVerifiers.flatMap((vp) => {
-      const project = allProjects.find((p) => p.id === vp)
+  const sevenDaysAgoTvsProjects = getLiveProjectsAtTimestamp(
+    project.zkCatalogInfo.projectsForTvs,
+    target - 7 * UnixTime.DAY,
+  )
+
+  const projectsForTodayTvs = getProjectsForTvs(todayTvsProjects, allProjects)
+  const projectsForSevenDaysAgoTvs = getProjectsForTvs(
+    sevenDaysAgoTvsProjects,
+    allProjects,
+  )
+
+  const projectTvs = projectsForTodayTvs.reduce((acc, projectId) => {
+    return acc + (tvs.projects[projectId]?.breakdown.total ?? 0)
+  }, 0)
+  const tvs7d = projectsForSevenDaysAgoTvs.reduce((acc, p) => {
+    return acc + (tvs.projects[p]?.breakdown7d.total ?? 0)
+  }, 0)
+
+  return {
+    tvs: projectTvs,
+    numberOfProjects: projectsForTodayTvs.length,
+    change: calculatePercentageChange(projectTvs, tvs7d),
+  }
+}
+
+function getLiveProjectsAtTimestamp(
+  projects:
+    | {
+        projectId: ProjectId
+        sinceTimestamp: UnixTime
+        untilTimestamp?: UnixTime
+      }[]
+    | undefined,
+  timestamp: UnixTime,
+): ProjectId[] {
+  if (!projects) return []
+  return projects
+    .filter((p) => {
+      return (
+        p.sinceTimestamp <= timestamp &&
+        (p.untilTimestamp === undefined || p.untilTimestamp >= timestamp)
+      )
+    })
+    .map((p) => p.projectId)
+}
+
+function getProjectsForTvs(
+  projectIds: ProjectId[],
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+) {
+  return uniq(
+    projectIds.flatMap((tp) => {
+      const project = allProjects.find((p) => p.id === tp)
       if (!project) {
         const logger = getLogger().for('getZkCatalogEntry')
-        logger.warn(`Project ${vp} not found`)
+        logger.warn(`Project ${tp} not found`)
         return []
       }
 
@@ -36,52 +85,7 @@ export function getZkCatalogProjectTvs(
       if (project.daBridge) {
         return project.daBridge.usedIn.flatMap((p) => p.id)
       }
-      return vp
+      return tp
     }),
   )
-
-  const projectTvs = projectsForTvs.reduce((acc, projectId) => {
-    return acc + calculateProjectTvs(projectId, allProjects, tvs)
-  }, 0)
-
-  const tvs7d = projectsForTvs.reduce((acc, p) => {
-    const projectTvs = tvs.projects[p]?.breakdown7d.total
-    if (!projectTvs) {
-      return acc
-    }
-    return acc + projectTvs
-  }, 0)
-
-  return {
-    tvs: projectTvs,
-    change: calculatePercentageChange(projectTvs, tvs7d),
-  }
-}
-
-export function calculateProjectTvs(
-  projectId: string,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
-  tvs: SevenDayTvsBreakdown,
-): number {
-  const project = allProjects.find((p) => p.id === projectId)
-  if (!project) {
-    const logger = getLogger().for('getZkCatalogEntry')
-    logger.warn(`Project ${projectId} not found`)
-    return 0
-  }
-
-  // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-  if (project.daBridge) {
-    return project.daBridge.usedIn
-      .map((p) => p.id)
-      .reduce((acc, p) => {
-        const projectTvs = tvs.projects[p]?.breakdown.total
-        return projectTvs ? acc + projectTvs : acc
-      }, 0)
-  }
-
-  return tvs.projects[project.id]?.breakdown.total ?? 0
 }

@@ -1,6 +1,6 @@
 {
   "spec": ["src/**/*.test.ts"],
-  "require": ["esbuild-register", "src/test/hooks.ts"],
+  "require": ["esbuild-register"],
   "watchExtensions": "ts",
   "extension": "ts",
   "reporterOption": "maxDiffSize=0"

@@ -2,17 +2,18 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useScalingTvsDataKeys } from '~/pages/scaling/tvs/components/ScalingTvsDataKeysContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
+import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { AssetCategoryTvsChart } from './AssetCategoryTvsChart'
 
 interface Props {
   filter: TvsProjectFilter
   milestones: Milestone[]
-  range: TvsChartRange
+  range: ChartRange
   unit: ChartUnit
   excludeAssociatedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
 }
 
 export function ScalingAssetCategoryTvsChart({
@@ -21,6 +22,7 @@ export function ScalingAssetCategoryTvsChart({
   range,
   unit,
   excludeAssociatedTokens,
+  excludeRwaRestrictedTokens,
 }: Props) {
   const { assetCategoryDataKeys, assetCategoryToggleDataKey } =
     useScalingTvsDataKeys()
@@ -29,12 +31,25 @@ export function ScalingAssetCategoryTvsChart({
     range,
     excludeAssociatedTokens,
     filter,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(
     () =>
       data?.chart.map(
-        ([timestamp, ethPrice, _, __, ___, ether, stablecoin, btc, other]) => {
+        ([
+          timestamp,
+          ethPrice,
+          _,
+          __,
+          ___,
+          ether,
+          stablecoin,
+          btc,
+          other,
+          rwaRestricted,
+          rwaPublic,
+        ]) => {
           const divider = unit === 'usd' ? 1 : ethPrice
           return {
             timestamp,
@@ -54,6 +69,14 @@ export function ScalingAssetCategoryTvsChart({
               other !== null && divider !== null && divider !== 0
                 ? other / divider
                 : null,
+            rwaPublic:
+              rwaPublic !== null && divider !== null && divider !== 0
+                ? rwaPublic / divider
+                : null,
+            rwaRestricted:
+              rwaRestricted !== null && divider !== null && divider !== 0
+                ? rwaRestricted / divider
+                : null,
           }
         },
       ),
@@ -69,6 +92,7 @@ export function ScalingAssetCategoryTvsChart({
       syncedUntil={data?.syncedUntil}
       dataKeys={assetCategoryDataKeys}
       toggleDataKey={assetCategoryToggleDataKey}
+      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
     />
   )
 }

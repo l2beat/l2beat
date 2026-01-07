@@ -17,6 +17,8 @@ interface TokenBreakdownProps {
   stablecoin: number
   btc: number
   other: number
+  rwaPublic: number
+  rwaRestricted: number
   className?: string
 }
 
@@ -34,6 +36,8 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
     { value: props.stablecoin, className: 'dark:bg-teal-400 bg-teal-500' },
     { value: props.btc, className: 'bg-orange-400' },
     { value: props.other, className: 'bg-sky-600' },
+    { value: props.rwaPublic, className: 'bg-lime-650' },
+    { value: props.rwaRestricted, className: 'bg-pink-750' },
   ]
 
   return (
@@ -48,6 +52,8 @@ export function TokenBreakdownTooltipContent({
   stablecoin,
   btc,
   other,
+  rwaPublic,
+  rwaRestricted,
   associatedTokens,
   tvsWarnings,
 }: TokenBreakdownTooltipContentProps & { associated: number }) {
@@ -68,6 +74,12 @@ export function TokenBreakdownTooltipContent({
       variant: 'btc' as const,
     },
     { title: 'Other', value: other, variant: 'other' as const },
+    { title: 'Public RWAs', value: rwaPublic, variant: 'rwaPublic' as const },
+    {
+      title: 'Restricted RWAs',
+      value: rwaRestricted,
+      variant: 'rwaRestricted' as const,
+    },
   ]
 
   return (

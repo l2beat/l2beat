@@ -54,7 +54,6 @@ export class BlockTargetIndexer extends RootIndexer {
     )
 
     this.blockHeight = blockNumber
-    // TODO: is this the right timestamp? or maybe getBlockNumberAtOrBefore should return the timestamp too?
     await this.options?.onTick?.(timestamp, blockNumber)
     return blockNumber
   }

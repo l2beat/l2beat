@@ -8,5 +8,11 @@
     "hash": "0x34a58f3c77d5666ec8a39b17ab327273604248af9004c771429a4413b09e20dd",
     "address": "eth:0xC44577BAA22f999a16a9dF817A2aba6e5e696913",
     "blockNumber": 23259716
+  },
+  "PreconfRouter_251204.sol": {
+    "hash": "0xa69b68882c2eac4ec75e64e92a7946b6311cf7e0fa7c844251baabfa7803d81b",
+    "address": "eth:0xafCEDDe020dB8D431Fa86dF6B14C20f327382709",
+    "chain": "ethereum",
+    "blockNumber": 23938931
   }
 }

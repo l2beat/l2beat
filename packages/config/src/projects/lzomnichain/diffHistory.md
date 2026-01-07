@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x1f1d561a3da836113f68ee05f18ebecf38610442
+
+# Diff at Mon, 27 Oct 2025 08:03:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1752073991
+- current timestamp: 1761552123
+
+## Description
+
+config: dvn template matches.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752073991 (main branch discovery), not current.
+
+```diff
+    contract DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (eth:0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+```diff
+    contract Google Cloud Oracle (eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      template:
++        "layerzero/DVN"
+      description:
++        "Defines the logic that validates LayerZero Packets for this DVN."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2d453ac620fe726bf76a3780915063a511bea041
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

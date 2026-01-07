@@ -1,4 +1,94 @@
-Generated with discovered.json: 0xb2aba6e3d04f85c51e5e99cea0e56822c678d139
+Generated with discovered.json: 0x6bb0b76f710a92ed0d5c323aa6bd691a0e345a77
+
+# Diff at Fri, 12 Dec 2025 16:19:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1756721254
+- current timestamp: 1765550542
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756721254 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x0946ff6f123b57437dcad50bd95b473147f8f9d0
+
+# Diff at Tue, 04 Nov 2025 11:32:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1756721254
+- current timestamp: 1756721254
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756721254 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xa49e39ce5420cad79f28224507ee4639c68c6d017b42f844b9d31e9cfc5c2c6f"
++        "0x3cdcfae65bb5f8df426350541726ba956e428f7b58730577db22fc48bd7ac4c7"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x7447b25b91336127042CC6899B2C15668a1Ab8BA) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xb09d83cfb489ff7f6e5c0d0ca61324097190fd21243bf2a122da50b7c4a47413"
++        "0x41762a10a7d78d4074b50ffc9b426420faa947abc31d9279c9f1973504deed01"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0xdac9cce03f8066b7a55f8f75f29c4dea8d99ebe438d1724f9d29ac150f6c5b3f"
++        "0x42d9bef8dd252ad9f5c4e0f9476d758e0580ba046660165ffc4991ddcefae7f8"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      sourceHashes.0:
+-        "0xbd6116af9840987ef3c83075917f47592d6b1a13143aa7172a578125bdc983cf"
++        "0x1a2367437cfb7cb21928a5bbd1fe8d8ba9602190438fee88e83a08f25a1e14c6"
+    }
+```
+
+Generated with discovered.json: 0xdb9503b6e8df397804c9f56c52ab21b5d6a2b9c8
 
 # Diff at Mon, 15 Sep 2025 09:50:23 GMT:
 

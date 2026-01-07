@@ -58,7 +58,7 @@ export function SideNavLayout({
           )}
         >
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
-          <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0">
+          <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-5 lg:pl-0">
             {children}
             {whatsNew && isMobile && (
               <WhatsNewWidgetCloseable whatsNew={whatsNew} />
@@ -227,12 +227,12 @@ const groups = compact<NavGroup>([
 
 const sideLinks = compact([
   {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
     title: 'About Us',
     href: '/about-us',
+  },
+  {
+    title: 'Publications',
+    href: '/publications',
   },
   {
     title: 'Forum',
@@ -245,6 +245,10 @@ const sideLinks = compact([
   {
     title: 'Governance',
     href: '/governance',
+  },
+  {
+    title: 'Tools',
+    href: externalLinks.tools,
   },
   {
     title: 'Glossary',

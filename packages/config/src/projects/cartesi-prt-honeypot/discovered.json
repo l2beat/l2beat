@@ -1,7 +1,7 @@
 {
   "name": "cartesi-prt-honeypot",
-  "timestamp": 1750257587,
-  "configHash": "0x44d506659bc1d2342ed10db25a8f0d8e2b9f8a880d3f8858d468d51d24fe709b",
+  "timestamp": 1763114428,
+  "configHash": "0x89be21237c47f08bfc392bd4e1c47f14ddc476fca5106c0df665418595b4c539",
   "entries": [
     {
       "name": "TopTournament",
@@ -82,7 +82,8 @@
       },
       "implementationNames": {
         "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BottomTournamentFactory",
@@ -148,7 +149,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 322,
+        "nonce": 328,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -165,7 +166,7 @@
         "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c"
       ],
       "proxyType": "immutable",
-      "description": "Contract managing PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.",
+      "description": "Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.",
       "ignoreInWatchMode": ["canSettle", "getCurrentSealedEpoch"],
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
@@ -173,22 +174,23 @@
         "$immutable": true,
         "canSettle": {
           "isFinished": false,
-          "epochNumber": 1,
+          "epochNumber": 13,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getApplicationContract": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
         "getCurrentSealedEpoch": {
-          "epochNumber": 1,
-          "inputIndexLowerBound": 0,
-          "inputIndexUpperBound": 3,
-          "tournament": "eth:0x907d1A3092F63400FDA8E0bd33Fe774FE6a62399"
+          "epochNumber": 13,
+          "inputIndexLowerBound": 6,
+          "inputIndexUpperBound": 6,
+          "tournament": "eth:0x83a126e4DDe48eA211aa4B698eA5045CCec0cBB0"
         },
         "getInputBox": "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
         "getTournamentFactory": "eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7"
       },
       "implementationNames": {
         "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": "DaveConsensus"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "TopTournamentFactory",
@@ -275,7 +277,8 @@
       "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
       "implementationNames": {
         "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ERC20Portal",
@@ -630,20 +633,20 @@
   },
   "usedTemplates": {
     "cartesi/Application": "0x25cf6358cdb4ce6f1ad6666a17c67fa6597c997ad826e59ea5d26b4e22371d98",
-    "cartesi/BottomTournament_clone": "0x579b475804c11d95a09655ad2b7f9a176d93ea4aae5cc7b7072c629053dc4761",
+    "cartesi/BottomTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/CanonicalTournamentParametersProvider": "0x8364633bedcaf40a3dffcf8d3f6a21ef89b781e066a844406cde84f2538e8ca3",
     "cartesi/CartesiStateTransition": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/DaveConsensus": "0xada999c77c97d3602c1a6045a54d53e8a0393b1726ad34bda9ba2b71d6662384",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "cartesi/MiddleTournament_clone": "0x579b475804c11d95a09655ad2b7f9a176d93ea4aae5cc7b7072c629053dc4761",
+    "cartesi/MiddleTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/MiddleTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
-    "cartesi/TopTournament_clone": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
+    "cartesi/TopTournament_clone": "0x5e2031ecddb58d746b76b12f287e57e33f48d7b509f6409fcee1f5b8f1e19070",
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22732019 },
+  "usedBlockNumbers": { "ethereum": 23796692 },
   "permissionsConfigHash": "0xeb5b65494022006b366d9813f45a340050c6c497467585273bdc743c858f147a"
 }

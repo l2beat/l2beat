@@ -21,7 +21,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
-  CLIENT_SIDE_PROGRAM_HASHES: featureFlag.default(false),
+  CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -33,12 +33,8 @@ const SERVER_CONFIG = {
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
-  ETHEREUM_RPC_URL: z
-    .string()
-    .check((v) => !!new URL(v))
-    .default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default(false),
-  CRON_SECRET: z.string().optional(),
+  REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
 
@@ -46,16 +42,7 @@ const SERVER_CONFIG = {
   HEROKU_APP_NAME: z.string().optional(),
 
   LOG_LEVEL: z
-    .enum([
-      'NONE',
-      'CRITICAL',
-      'ERROR',
-      'WARN',
-      'INFO',
-      'DEBUG',
-      'TRACE',
-      'METRIC',
-    ])
+    .enum(['NONE', 'CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
     .default('INFO'),
 
   // Elastic Search
@@ -75,22 +62,22 @@ const ServerEnv = z.object(SERVER_CONFIG)
 
 type Env = z.infer<typeof ServerEnv>
 
-export const env = createEnv()
+export const rawEnv = getRawEnv()
+export const env = parseEnv(rawEnv)
 
-function createEnv(): Env {
-  const env = getEnv()
+function parseEnv(rawEnv: ReturnType<typeof getRawEnv>): Env {
   const isClient = typeof window !== 'undefined'
 
-  for (const key in env) {
-    if (env[key as keyof Env] === '') {
-      delete env[key as keyof Env]
+  for (const key in rawEnv) {
+    if (rawEnv[key as keyof Env] === '') {
+      delete rawEnv[key as keyof Env]
     }
   }
 
-  const parsed = isClient ? ClientEnv.parse(env) : ServerEnv.parse(env)
+  const parsed = isClient ? ClientEnv.parse(rawEnv) : ServerEnv.parse(rawEnv)
   return new Proxy<Env>(parsed as Env, {
     get(target, key, receiver) {
-      if (!Reflect.has(SERVER_CONFIG, key)) {
+      if (!Reflect.has(SERVER_CONFIG, key) && key !== 'toJSON') {
         throw new Error(`Accessing invalid env: ${key.toString()}`)
       }
 
@@ -99,7 +86,10 @@ function createEnv(): Env {
   })
 }
 
-function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
+function getRawEnv(): Record<
+  keyof z.infer<typeof ServerEnv>,
+  string | undefined
+> {
   if (typeof process === 'undefined') {
     return window.__ENV__
   }
@@ -111,12 +101,11 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
-    ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
     HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    CRON_SECRET: process.env.CRON_SECRET,
+    REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
@@ -126,10 +115,10 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     // Client
-    CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
+    CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
-    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_PROGRAM_HASHES: process.env.CLIENT_SIDE_PROGRAM_HASHES,
+    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
+    CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
   }
 }

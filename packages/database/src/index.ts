@@ -15,19 +15,6 @@ export type { AggregatedLivenessRecord } from './repositories/AggregatedLiveness
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
 export type { BlobRecord } from './repositories/BlobsRepository'
-export type {
-  BridgeEventRecord,
-  BridgeEventStatsRecord,
-} from './repositories/BridgeEventRepository'
-export type {
-  BridgeMessageRecord,
-  BridgeMessageStatsRecord,
-} from './repositories/BridgeMessageRepository'
-export type {
-  BridgeTransferRecord,
-  BridgeTransfersStatsRecord,
-  BridgeTransferUpdate,
-} from './repositories/BridgeTransferRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
@@ -42,15 +29,30 @@ export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheReposito
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
+export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
+export type {
+  InteropEventContext,
+  InteropEventRecord,
+  InteropEventStatsRecord,
+} from './repositories/InteropEventRepository'
+export type {
+  InteropMessageDetailedStatsRecord,
+  InteropMessageRecord,
+  InteropMessageStatsRecord,
+  InteropMessageUniqueAppsRecord,
+} from './repositories/InteropMessageRepository'
+export type {
+  InteropMissingTokenInfo,
+  InteropTransferRecord,
+  InteropTransfersDetailedStatsRecord,
+  InteropTransfersStatsRecord,
+  InteropTransferUpdate,
+} from './repositories/InteropTransferRepository'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type { PermissionResolutionRecord } from './repositories/PermissionResolutionRepository'
-export type {
-  ProjectValueRecord,
-  SummedByTimestampProjectValueRecord,
-} from './repositories/ProjectValueRepository'
 export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,

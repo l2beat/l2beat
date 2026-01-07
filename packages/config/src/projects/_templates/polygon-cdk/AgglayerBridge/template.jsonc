@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+  "ignoreMethods": [
+    "claimedBitMap",
+    "depositCount",
+    "lastUpdatedDepositCount",
+    "INIT_BYTECODE_TRANSPARENT_PROXY"
+  ],
+  "ignoreInWatchMode": ["getRoot"],
+  "ignoreRelatives": [
+    "getWrappedTokenBridgeImplementation",
+    "wrappedTokenBytecodeStorer"
+  ],
+  "fields": {
+    "isEmergencyState": {
+      "description": "pauses the bridge, managed by the PolygonRollupManager.",
+      "severity": "HIGH"
+    },
+    "proxiedTokensManager": {
+      "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge."
+        }
+      ]
+    }
+  },
+  "category": "shared"
+}

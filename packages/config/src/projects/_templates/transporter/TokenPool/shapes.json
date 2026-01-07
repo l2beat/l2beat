@@ -177,19 +177,49 @@
   "EDENBurnMintTokenPool_v1.5.1": {
     "hash": "0xd4231237360ee144dbc119eb099532e4967735875473e236358a39b7c6061f7f",
     "address": "eth:0xC8ADf2f51a35b0a9d8f74675b64c954Ca2Dcbc14",
-    "chain": "ethereum",
     "blockNumber": 23383001
   },
   "BurnMintERC20.sol": {
     "hash": "0xaad5fab64eb7b1f522906d4dea61cc4467e050fd6c8ab74e021332248e3d8d36",
     "address": "eth:0xea17Df5Cf6D172224892B5477A16ACb111182478",
-    "chain": "ethereum",
     "blockNumber": 23547033
   },
   "BurnMintTokenPool_v9": {
     "hash": "0x0d500b634b888b3ac68c0c2752060ab040f1d34003f0c52a14d3429fb43ee310",
     "address": "eth:0xC03F9E6c1C5F5D553C77781327640E0c7d30a73d",
-    "chain": "ethereum",
     "blockNumber": 23547033
+  },
+  "LockReleaseTokenPoolUpgradeable.sol": {
+    "hash": "0xb47b62660c92c8d6d2ad18cbc951b0f13df71372af3bdf622946860cf5bf8100",
+    "address": "eth:0x7Ff02bb686658f2d55f28fDF45286f9499beb9a5",
+    "blockNumber": 23583487
+  },
+  "LockReleaseTokenPool.sol": {
+    "hash": "0x5d791d4a1c4ba668ef8cd49e08b3420a149dc2006354ccf5750e483910ffd661",
+    "address": "eth:0x05eEe76f456C51Be0459EC1c0a78bf177B2c877C",
+    "blockNumber": 23667407
+  },
+  "LombardTokenPoolV2.sol": {
+    "hash": "0x92cb1726de12b1da49da271817aa8cb3adff6ddfc57fe572946feff137fecc30",
+    "address": "eth:0x88E18636EfFC3b3cd520FC72B710eb99C0017BC7",
+    "blockNumber": 23667407
+  },
+  "LombardTokenPoolV2_1.sol": {
+    "hash": "0x8e421d5afd1c7e19b36271c4b4881ec63b043cafb738247e93581440affd41fb",
+    "address": "eth:0xBA59cF1c1563a9B93A8C5D70F8E445eaCa9842D0",
+    "chain": "ethereum",
+    "blockNumber": 23726399
+  },
+  "BurnMintTokenPool7.sol": {
+    "hash": "0x947fe96d0e62740a79e8289cc4674caa9c541ee30847c832d9c9bfeb4a7caec1",
+    "address": "eth:0x36C036E22C350442F63A189352345c4A7534bbdC",
+    "chain": "ethereum",
+    "blockNumber": 23767885
+  },
+  "BurnFromMintTokenPool_v2.sol": {
+    "hash": "0xbbd73828600eaff2779037a570d73f417840ae33de5cdb196914a6cda8606f4e",
+    "address": "eth:0x32b48530f8a2c5CbE79d6b43823bfC9D9584Dbd5",
+    "chain": "ethereum",
+    "blockNumber": 23883577
   }
 }

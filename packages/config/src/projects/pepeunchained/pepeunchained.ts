@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('pepeunchained')
 export const pepeunchained: ScalingProject = opStackL2({
   addedAt: UnixTime(1739541812), // 2025-02-14T14:03:32Z
   archivedAt: UnixTime(1752134764), //2025-07-10
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   celestiaDa: {
     sinceBlock: 21314461,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4=',

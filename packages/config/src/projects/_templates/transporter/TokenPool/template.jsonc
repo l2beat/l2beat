@@ -14,12 +14,14 @@
     "getLockbox",
     "getOnRamps",
     "getOffRamps",
-    "adapter"
+    "adapter",
+    "bridge"
   ],
   "ignoreInWatchMode": [
     "getOnRamps",
     "getCurrentBridgedAmount",
     "getUnsiloedLiquidity",
-    "getLockedTokens"
+    "getLockedTokens",
+    "getSupportedChains"
   ]
 }

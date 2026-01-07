@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "timestamp": 1753944354,
-  "configHash": "0x20fdd2fa015c11ccb572ebb3f10659f8778822ff7a30df872847680d42d20f29",
+  "configHash": "0xbfe10a34dd18e18ae901b3659a728e90b6a292a589aa4817fb11745497f69ff9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -50,7 +50,7 @@
         {
           "permission": "interact",
           "from": "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
             { "address": "eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }
@@ -159,7 +159,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "TreasureZkEvm",
+      "name": "Diamond",
       "address": "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -398,7 +398,10 @@
           "severity": "HIGH",
           "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
-        "getDAValidatorPair": { "severity": "HIGH" },
+        "getDAValidatorPair": {
+          "severity": "HIGH",
+          "description": "l1da, l2da"
+        },
         "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
           "severity": "HIGH",
@@ -497,11 +500,12 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
       ],
@@ -545,7 +549,7 @@
       "type": "Contract",
       "template": "shared-zk-stack/old/Verifier",
       "sourceHashes": [
-        "0xac062c888d75a5e5685f3daea3d381ad10133a719da8fe05d01ec88eca972104"
+        "0x0eee3e8ac76b79ea0ebd002e2253db2e69b9bc1521975dbc939fff5f77e9f1e0"
       ],
       "proxyType": "immutable",
       "description": "Implements the ZK proof verification logic.",
@@ -986,5 +990,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037387 },
-  "permissionsConfigHash": "0x81fc2563eebe98308acf943a7099965cec2e2318304f1b501ccafb3e8352ca39"
+  "permissionsConfigHash": "0xc47388647444bb075090143c10a967ff3f5d047e56e66f4379bd04240bc5cd5c"
 }

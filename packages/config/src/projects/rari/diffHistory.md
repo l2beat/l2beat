@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x601b85851172db9d8adc864f70662a358d200dba
+
+# Diff at Mon, 05 Jan 2026 17:44:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764334605
+- current timestamp: 1764334605
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764334605 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xd6fcca64ccdf3a3ebf8af0cb80a10dd4e0c9f0f8
+
+# Diff at Fri, 28 Nov 2025 12:57:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@279d1ad356551e0a039b2400b6ca3bfd5e1e0974 block: 1762880716
+- current timestamp: 1764334605
+
+## Description
+
+Rari posting to DAC for a while.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
+Generated with discovered.json: 0x0d067a71b49bce6f954472f5763252be4cf3f3ec
+
+# Diff at Tue, 11 Nov 2025 17:06:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6a57543e1aa91ba0548ecf149f1f03a74c2120d0 block: 1760088323
+- current timestamp: 1762880716
+
+## Description
+
+Caldera multisig decreased threshold.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.7:
+-        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0x36a5c35fea6b305d5cde324260b78abf5eae0564
+
+# Diff at Tue, 04 Nov 2025 11:33:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1760088323
+- current timestamp: 1760088323
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760088323 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (arb1:0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84"
++        "0x6833c39c55c2ef237e1417eabde0d10d78a37138115915b27f9703a35615a400"
+    }
+```
+
 Generated with discovered.json: 0x21ffb48a81d52d44ab89429a7663d9787e3b7ce5
 
 # Diff at Fri, 10 Oct 2025 09:26:30 GMT:

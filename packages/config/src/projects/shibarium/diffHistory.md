@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xaa1bae773635ee31aeefbee378b1b4e993a5ff7a
+
+# Diff at Wed, 15 Oct 2025 14:11:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1759763659
+- current timestamp: 1760536727
+
+## Description
+
+WithdrawalManager upgrade with support for blacklisting.
+
+## Watched changes
+
+```diff
+    contract WithdrawalManager (eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support.
+      template:
+-        "polygonposbridge/WithdrawManager"
++        "shibarium/WithdrawManager"
+      sourceHashes.1:
+-        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
++        "0xcdde166e8888dfe4fae172f6008fe3fbc0bcb1db2e5be1ca6519f3eff028ba7b"
+      description:
+-        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager."
++        "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support."
+      values.$implementation:
+-        "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3"
++        "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97"
+      values.HALF_EXIT_PERIOD:
+-        864000
++        302400
+      values.implementation:
+-        "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3"
++        "eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97"
+      implementationNames.eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3:
+-        "WithdrawManager"
+      implementationNames.eth:0xD12B1d5f28736cE0Bfd9330F5595d3fFE6e01A97:
++        "WithdrawManager"
+    }
+```
+
+```diff
+    EOA  (eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0","description":"manage critical config values like the exit period and the blacklist.","role":".owner"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../WithdrawalManager/WithdrawManager.sol          | 67 +++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0x6f9ba0ab84c084ca12fcde474716e18e54bfddc5
 
 # Diff at Mon, 06 Oct 2025 15:21:58 GMT:

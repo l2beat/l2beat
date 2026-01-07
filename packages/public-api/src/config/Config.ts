@@ -3,6 +3,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly auth: AuthConfig | false
   readonly openapi: OpenApiConfig
+  readonly cacheEnabled: boolean
 }
 
 export interface ApiConfig {

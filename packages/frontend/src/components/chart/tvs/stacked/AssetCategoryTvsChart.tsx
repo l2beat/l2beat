@@ -36,6 +36,7 @@ interface Props {
   tickCount?: number
   className?: string
   project?: ChartProject
+  excludeRwaRestrictedTokens: boolean
 }
 
 export const assetCategoryTvsChartMeta = {
@@ -59,6 +60,16 @@ export const assetCategoryTvsChartMeta = {
     color: 'var(--chart-yellow-lime)',
     indicatorType: { shape: 'square' },
   },
+  rwaPublic: {
+    label: 'Public RWAs',
+    color: 'var(--color-lime-650)',
+    indicatorType: { shape: 'square' },
+  },
+  rwaRestricted: {
+    label: 'Restricted RWAs',
+    color: 'var(--color-pink-750)',
+    indicatorType: { shape: 'square' },
+  },
 } satisfies ChartMeta
 
 export function AssetCategoryTvsChart({
@@ -72,6 +83,7 @@ export function AssetCategoryTvsChart({
   dataKeys,
   toggleDataKey,
   project,
+  excludeRwaRestrictedTokens,
 }: Props) {
   // If only one data key is selected we want to change the domain
   // Having it from 0 to MAX does make sense for stacked chart (better comparison)
@@ -91,6 +103,26 @@ export function AssetCategoryTvsChart({
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        <Area
+          dataKey="rwaPublic"
+          hide={!dataKeys.includes('rwaPublic')}
+          fill={assetCategoryTvsChartMeta.rwaPublic.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId={dataKeys.length === 1 ? undefined : 'a'}
+          isAnimationActive={false}
+        />
+        {!excludeRwaRestrictedTokens && (
+          <Area
+            dataKey="rwaRestricted"
+            hide={!dataKeys.includes('rwaRestricted')}
+            fill={assetCategoryTvsChartMeta.rwaRestricted.color}
+            fillOpacity={1}
+            strokeWidth={0}
+            stackId={dataKeys.length === 1 ? undefined : 'a'}
+            isAnimationActive={false}
+          />
+        )}
         <Area
           dataKey="other"
           hide={!dataKeys.includes('other')}

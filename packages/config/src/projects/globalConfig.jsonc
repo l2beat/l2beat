@@ -63,6 +63,9 @@
     "eth:0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc": "StevenThornton-OpenZeppelin",
     "eth:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D": "Certora 2",
     "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392": "Michael Lewellen - blockaid",
+    "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
+    "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
+    "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
     "arb1:0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
     "arb1:0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
     "arb1:0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
@@ -79,6 +82,9 @@
     "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D": "Certora 2",
     "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392": "Michael Lewellen - blockaid",
     "arb1:0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera",
+    "arb1:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
+    "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
+    "arb1:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
     "arb-nova:0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
     "arb-nova:0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
     "arb-nova:0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
@@ -95,6 +101,9 @@
     "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D": "Certora 2",
     "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392": "Michael Lewellen - blockaid",
     "arb-nova:0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera",
+    "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208": "zachxbt",
+    "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988": "Gauntlet",
+    "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157": "Immunefi",
     // kinto SC
     "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "KintoFoundation",
     "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "MamoriLabs",
@@ -261,6 +270,7 @@
     "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": "INTMAX Multisig 2",
     "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea": "INTMAX Multisig 3",
     "eth:0xBE634B030FEAaB661300667EaF82510a3a025413": "Stargate Multisig 2",
+    "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b": "Mint Multisig",
     // Taiko SC
     "eth:0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",
     "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "Chainbound",
@@ -461,6 +471,7 @@
         "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
         "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
         "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+        "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
         "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
         "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
         "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -470,6 +481,9 @@
       "typeCaster": "Mapping",
       "arg": {
         // source: https://github.com/ethereum-optimism/superchain-registry/blob/main/validation/standard/standard-prestates.toml
+        // verification example: https://oplabs.notion.site/U17-2a1f153ee162804f94d0c10d0a1e1258
+        // TODO cannot add more due to refresh being broken
+        // "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b": "v1.8.0-rc.4 (cannon64)",
         "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
         "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
         "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",

@@ -53,10 +53,16 @@ const requiredHonestMembersPercentage = (
   100
 ).toFixed(0)
 
-const immutablexProgramHash = discovery.getContractValue<string>(
-  'GpsFactRegistryAdapter',
-  'programHash',
+const immutablexProgramHashes = []
+immutablexProgramHashes.push(
+  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
+const bootloaderConfig = discovery.getContractValue<string[]>(
+  'SHARPVerifier',
+  'getBootloaderConfig',
+)
+immutablexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+immutablexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
 
 export const immutablex: ScalingProject = {
   type: 'layer2',
@@ -80,7 +86,7 @@ export const immutablex: ScalingProject = {
     stacks: ['StarkEx'],
     links: {
       websites: ['https://immutable.com/'],
-      bridges: ['https://market.immutable.com/'],
+      bridges: ['https://toolkit.immutable.com/squid-bridge/'],
       documentation: [
         'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
       ],
@@ -89,7 +95,9 @@ export const immutablex: ScalingProject = {
       socialMedia: [
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
+        'https://discord.com/invite/immutable-play',
       ],
+      other: ['https://growthepie.com/chains/immutable-x'],
     },
   },
   proofSystem: {
@@ -120,6 +128,8 @@ export const immutablex: ScalingProject = {
       type: 'day',
       sinceTimestamp: UnixTime(1615389188),
       resyncLastDays: 7,
+      batchSize: 10,
+      dataSource: 'StarkEx Aggregations API',
     },
   },
   dataAvailability: {
@@ -162,7 +172,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(immutablexProgramHash)],
+    zkProgramHashes: immutablexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

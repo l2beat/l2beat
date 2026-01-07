@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x690637adf6f01686648f1f71fce254dfd54d85a9
+
+# Diff at Mon, 05 Jan 2026 17:44:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1765381186
+- current timestamp: 1765381186
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765381186 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (base:0x50752f7988d0195d4d5fb09a1A22B8354b5A8c0b) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x0b7faca198f0416d098df651a12f4a17573bf45f
+
+# Diff at Wed, 10 Dec 2025 15:41:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1759481388
+- current timestamp: 1765381186
+
+## Description
+
+Conduit msig change.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.0:
++        "base:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "base:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "base:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x45dbdbd2abd20214fad85ab92448f0a54a4027de
 
 # Diff at Fri, 03 Oct 2025 08:51:03 GMT:

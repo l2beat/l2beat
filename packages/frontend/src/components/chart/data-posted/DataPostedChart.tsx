@@ -1,8 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
+import pick from 'lodash/pick'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import { AreaChart } from 'recharts'
+import type { ChartProject } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -12,15 +14,47 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
+import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
+import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
+import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
+import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 
+const chartMeta = {
+  ethereum: {
+    label: 'Ethereum',
+    color: 'var(--chart-ethereum)',
+    indicatorType: { shape: 'line' as const },
+  },
+  celestia: {
+    label: 'Celestia',
+    color: 'var(--chart-fuchsia)',
+    indicatorType: { shape: 'line' as const },
+  },
+  avail: {
+    label: 'Avail',
+    color: 'var(--chart-sky)',
+    indicatorType: { shape: 'line' as const },
+  },
+  eigenda: {
+    label: 'EigenDA',
+    color: 'var(--chart-lime)',
+    indicatorType: { shape: 'line' as const },
+  },
+}
+
 interface DataPostedChartDataPoint {
   timestamp: number
-  posted: number | null
+  ethereum: number | null
+  celestia: number | null
+  avail: number | null
+  eigenda: number | null
 }
 
 interface Props {
@@ -44,36 +78,42 @@ export function DataPostedChart({
   tickCount,
   milestones,
 }: Props) {
-  const chartMeta = {
-    posted: {
-      label: 'Data posted',
-      color: 'var(--chart-emerald)',
-      indicatorType: {
-        shape: 'line',
-      },
-    },
-  } satisfies ChartMeta
+  const filteredChartMeta = useMemo(
+    () =>
+      pick(
+        chartMeta,
+        Object.keys(chartMeta).filter((key) =>
+          data?.some((d) => d[key as keyof DataPostedChartDataPoint] !== null),
+        ),
+      ),
+    [data],
+  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(filteredChartMeta)
 
   return (
     <ChartContainer
       data={data}
       className={className}
-      meta={chartMeta}
+      meta={filteredChartMeta}
       isLoading={isLoading}
       milestones={milestones}
       project={project}
+      interactiveLegend={{
+        dataKeys,
+        onItemClick: toggleDataKey,
+      }}
     >
-      <ComposedChart data={data} margin={{ top: 20 }}>
+      <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        <Area
-          dataKey="posted"
-          fill="url(#fillPosted)"
-          fillOpacity={1}
-          stroke={chartMeta.posted.color}
-          strokeWidth={2}
-          isAnimationActive={false}
-          dot={false}
-        />
+        {getStrokeOverFillAreaComponents({
+          data: Object.keys(filteredChartMeta).flatMap((key) => ({
+            dataKey: key,
+            stroke:
+              filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
+            fill: `url(#${key}-fill)`,
+            hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
+          })),
+        })}
         {getCommonChartComponents({
           data,
           isLoading,
@@ -85,12 +125,15 @@ export function DataPostedChart({
         })}
         <ChartTooltip
           content={<DataPostedCustomTooltip resolution={resolution} />}
-          filterNull={false}
         />
         <defs>
-          <EmeraldFillGradientDef id="fillPosted" />
+          <EthereumFillGradientDef id="ethereum-fill" />
+          <FuchsiaFillGradientDef id="celestia-fill" />
+          <LimeFillGradientDef id="eigenda-fill" />
+          <SkyFillGradientDef id="avail-fill" />
+          <NoDataPatternDef />
         </defs>
-      </ComposedChart>
+      </AreaChart>
     </ChartContainer>
   )
 }
@@ -108,7 +151,7 @@ function DataPostedCustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col sm:w-60">
+      <div className="flex w-50 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,

@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x0591c05d955d70fabb8de335db73215997c85c53
+
+# Diff at Mon, 05 Jan 2026 17:43:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1746690827
+- current timestamp: 1767626385
+
+## Description
+
+Multisig members and threshold change, validators increased to 3, batcher address changed and DAC keyset changed (DAC is 1/1).
+
+## Watched changes
+
+```diff
+    contract AlienXMultisig (eth:0x32f6CAE58A89aA7c91D736Bb1100E377C570bb27) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.$members.1:
+-        "eth:0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.$members.2:
+-        "eth:0xa179bB7DbA00815007866F20539D39116B36b052"
++        "eth:0x932b2E31AE7282b002Cc199FAE08791D7394bCc0"
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 7 (71%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x6fa8b24c85409A4fcb541c9964766862aA007f39) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        3
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "eth:0x32AD06477129F4470294Fbaf11C0FC682d92E4A3"
++        "eth:0xB4cD58Be1C64AA42deA0C58f7482462EE250b88F"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0xb7d188eb30e7984f93Bec34Ee8b45A148bd594C6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.0:
+-        "eth:0xff309E0c74874a3efeAAff630A818fd9c6DE4f25"
++        "eth:0x58480e2A163BA83282A11231134263bc1D7a79e9"
+      values.dacKeyset.blsSignatures.0:
+-        "YAgvXvoyZ4tnNZxZ3G5faDrVRTdcnaYK5JESM9SfhwoWkKQvLh5WLal/xHalS3l2ThFyJ5+atfnChJEHXFsG5AZQf0sdstHTm5k5MoFNJiQPZ1bwh842YyCcBk96EOuGAwpraamjOjZMeTTsbpDbJqOIECGhFI8me9vP0Y3Xo1UqEpsX2+kQU5BH2FQiLY5I7QWsl/yv6yCiUrWKcdE/Zo3OumW0darf4x2UYkW2zlPXx8ZVghnQDYUmeAcS0AhbMxX1zh19S4lnufKwzVBjxFqRh/c9GL3xEccu1ohPSMu9qJfruBl0trDrSfwMOmljYgmbz2ZiNJZkx/of8jROyAG12uPZk/pF+wKDM9TwhFokptODOw1bhUHrQ2C8q+uQDw=="
++        "YAWhpF4SeInITAX3Nc8qyYqaOcoTS7hbmUsoSue++Z17Cgo4PDomjboxVlF9kRVSZhjEZAKMLLNPF0kfnxoF+wYzTbmw2sEvM32dIlyrVks2xm6IWWNR6b2q/8oQPdh0hAAArDj9LbATgv3odW7OER299o+yvmZjC7PizCTyd7jHlZcsvBxbpj41WeqgZZegJwGFWV1aUfeKFeZGgPjIaNWKbcqYCGyS7YM0nJM37lSzFd1KUtvJHnOgjZS7iliMNg0Ym42ZzTkZC00OypaLYTHrOqFeoHsC+mr42w+dDirDHXov54SjYilDUKz4CptMUwx1w2/yqetcx6kxMZD4jE1M7QGMxVSCHewGrWUcUqGNyxzaQwhxbO8Bp/jp5q0uwg=="
+      values.keySetUpdates:
+-        1
++        2
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1746690827 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x6fa8b24c85409A4fcb541c9964766862aA007f39) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x9b70b29af64d4851d345979296ef0eed4352f928
 
 # Diff at Fri, 26 Sep 2025 12:44:35 GMT:

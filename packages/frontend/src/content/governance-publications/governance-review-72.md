@@ -174,7 +174,7 @@ You can find us to discuss everything related to Lisk’s governance, from curre
 
 [[ZIP-12] V29 Interop Messaging Upgrade](https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) - ends on October 6 at 17:12 UTC.
 
-[[ZIP-13] Adding a ZKsync OS CTM](https://www.tally.xyz/gov/zksync/proposal/22471812359223094779541460804735287481991027375586193607912523407322605938475?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34fhttps://www.tally.xyz/gov/zksync/proposal/22471812359223094779541460804735287481991027375586193607912523407322605938475?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) - ends on October 6 at 17:13 UTC.
+[[ZIP-13] Adding a ZKsync OS CTM](https://www.tally.xyz/gov/zksync/proposal/22471812359223094779541460804735287481991027375586193607912523407322605938475?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) - ends on October 6 at 17:13 UTC.
 
 
 ### **New ZKsync Delegate Announcement Telegram Channel**
@@ -207,4 +207,4 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 
 [Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 9.10 at 00:00.
 
-[Scroll Delegate Proposal Bonanza](https://meet.google.com/zfd-asoc-rmx) - on 9.10 at 17:45. 
+[Scroll Delegate Proposal Bonanza](https://meet.google.com/zfd-asoc-rmx) - on 9.10 at 17:45.  

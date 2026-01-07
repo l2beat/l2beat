@@ -16,7 +16,7 @@ export function getAssociatedTokenWarning({
   associatedRatio,
   associatedTokens,
 }: Params): WarningWithSentiment | undefined {
-  if (associatedRatio < 0.1) return
+  if (associatedRatio < 0.2) return
   const sentiment: 'bad' | 'warning' = associatedRatio > 0.8 ? 'bad' : 'warning'
 
   const percent = formatPercent(associatedRatio)

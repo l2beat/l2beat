@@ -21,7 +21,7 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('cyber')
 const genesisTimestamp = UnixTime(1713428569)
-const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const sequencerInbox = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
@@ -66,7 +66,7 @@ export const cyber: ScalingProject = opStackL2({
   display: {
     name: 'Cyber',
     slug: 'cyber',
-    architectureImage: 'opstack-dachallenge',
+    architectureImage: 'opstack-rollup-superchain-opfp',
     description:
       'Cyber is a chain designed for social applications using an implementation of OP Plasma with DA challenges.',
     links: {
@@ -77,7 +77,7 @@ export const cyber: ScalingProject = opStackL2({
         'https://wallet.cyber.co/',
       ],
       documentation: ['https://docs.cyber.co/'],
-      explorers: ['https://cyberscan.co/', 'https://7560.routescan.io/'],
+      explorers: ['https://cyberscan.co/'],
       repositories: ['https://github.com/cyberconnecthq'],
       socialMedia: [
         'https://twitter.com/cyberconnecthq',
@@ -153,11 +153,26 @@ export const cyber: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(l2OutputOracle.address),
+        address: EthereumAddress('0xa669A743b065828682eE16109273F5CFeF5e676d'), // old L2OutputOracle
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
         sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1763438927), // upgrade to DisputeGameFactory
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1763438927),
       },
     },
   ],

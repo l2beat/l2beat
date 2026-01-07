@@ -107,25 +107,21 @@
   "DoctorWho_Adapter_v2.sol": {
     "hash": "0x4fed24508db075cc7ece3f2b393b38baa14d83cb16b7435622c6b3b7a2af178f",
     "address": "eth:0x8956eFa31572E1d7ed5c8e36772F214A57DFA0D1",
-    "chain": "ethereum",
     "blockNumber": 23533560
   },
   "Optimism_Adapter_v2.sol": {
     "hash": "0xbc0e9c23007f3c3c61476c843d07e2734aef4507d5180c4e849a4f48580101b7",
     "address": "eth:0x3562e309C6C79626E5F0Cf746FB5Bf4f6b8EebE5",
-    "chain": "ethereum",
     "blockNumber": 23533560
   },
   "Base_Adapter_v2.sol": {
     "hash": "0x235e6017ab764deb7de4cf894fc0b8d15bebacad6ff219fc122864ee964bf523",
     "address": "eth:0x799BDC55d91864b14B2eD63A34DeF5d502AA897f",
-    "chain": "ethereum",
     "blockNumber": 23533560
   },
   "Arbitrum_Adapter_v2.sol": {
     "hash": "0x6ca9ce1725f28d3a737cdadeddcf98fdfee47b324e779a5cdbab51cea361d883",
     "address": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
-    "chain": "ethereum",
     "blockNumber": 23533560
   }
 }

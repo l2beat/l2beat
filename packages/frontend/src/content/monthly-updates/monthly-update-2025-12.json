@@ -1,0 +1,131 @@
+{
+  "title": "Monthly Updates - December 2025",
+  "startDate": "2025-12-01",
+  "endDate": "2025-12-31",
+  "publishedOn": "2026-01-05",
+  "description": "Discover the most important December developments across major ecosystems — from governance updates to technical upgrades and ecosystem milestones.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum in 2025: The Year of Everywhere",
+          "content": "In a year-end [post](https://blog.arbitrum.foundation/arbitrum-in-2025-the-year-of-everywhere/), the Arbitrum Foundation claims institutional finance moved from trials to production on its stack, citing Robinhood’s tokenized equities rollout, RWA deployments with Franklin Templeton, WisdomTree, BlackRock, and Spiko. Overall, it continued its L2 lead by market share. They report 2.1B+ lifetime transactions, $20B+ total value secured, 100+ chains in flight, 1,000+ projects, and ~$600M in “ecosystem GDP.”\n\nOn DeFi/RWAs, they highlight stablecoin supply up ~82% to ~$8B, RWA value at $1.1B+ (≈18× YoY), major Aave/Uniswap footprints, active loans up ~109% to ~$1.5B, and DRIP-driven stablecoin growth since September.\n\nFinancially, the Foundation says margins topped 90% across four revenue streams, Timeboost generated $5M+ in seven months, Q4 gross profit is ~$6.5M (~$26M annualized), and the DAO holds $150M+ in non-native assets. Looking ahead to 2026, they position Arbitrum to “deepen the rails” for institutional adoption and broader tokenization, while noting that Robinhood plans to launch a dedicated chain using the Arbitrum stack."
+        },
+        {
+          "title": "ArbitrumDAO Approves ArbOS 51 “Dia” and Gas-Pricing Updates",
+          "content": "ArbitrumDAO [has approved](https://www.tally.xyz/gov/arbitrum/proposal/53154361738756237993090798888616593723057470462495169047773178676976253908001?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) a constitutional AIP to activate ArbOS 51 (“Dia”) on Arbitrum One and Nova. According to the proposers, the release aligns with Ethereum’s Fusaka era while adding Arbitrum-specific changes: a MaxTxGasLimit of 32M (with an effective per-block ceiling of 64M without changing overall gas/second), instrumentation of the state transition function to track multiple resource types (a step toward multi-dimensional pricing), native token mint/burn support included but explicitly disabled on One and Nova, and several bug fixes. The package excludes Fusaka blob-market EIPs that don’t apply to Arbitrum’s architecture. Trail of Bits completed an external audit, and Nitro v3.9.3 introduced support ahead of mainnet rollout.\n\nThe same vote bundles gas-pricing changes that, they say, should reduce L2 fee spikes: multiple (higher) gas targets measured over multiple adjustment windows, authority for the aligned entity (Offchain Labs) to make gradual parameter tweaks, a higher long-term effective gas target (up to a 100 Mgas/s maximum), and an increase of the minimum L2 base fee from 0.01 to 0.02 gwei. Activation is scheduled for Thursday, January 8, 2026, at 17:00:00 UTC.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZKsync Managed Services Launches for Enterprise ZK Stack Rollups",
+          "content": "ZKsync [announced](https://www.zksync.io/blog/zksync-managed-services-raas) a new Managed Services offering to help institutions launch and operate dedicated ZK Stack rollups or validiums with enterprise-grade reliability. The service covers managed provers and sequencers, high-throughput RPC, durable webhooks, observability, audits, and 24/7 SRE, while the institution retains governance keys and policy.\n\nInstitutions can define gas token, fee curves, MEV rules, access controls, and data-availability preferences; Matter Labs delivers high availability, seamless upgrades, incident response, and capacity planning. Native interoperability with Ethereum and other ZK Stack chains is built in, with optional privacy via Prividiums for sensitive workflows.\n\nDesigned for banks, FMIs, fintechs, exchanges, and large web platforms, the offering delivers tuned performance, compliance-ready controls, and enterprise integrations (SSO, SIEM/APM, GRC, data exports) without the cost of an in-house operations team. Typical use cases include treasury rails, intraday collateral and repo, cross-border payments, DvP/RvP settlement, and tokenized deposits. Engagements include requirements and SLO scoping, architecture design, deployment across dev/stage/prod, and steady-state operations under SLAs (uptime, RTO/RPO, change windows) with full audit logs and signed releases."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "New blog post: The Largest Exchanges in the World Are Choosing the OP Stack",
+          "content": "According to Optimism/OP Labs’ [own post](https://www.optimism.io/blog/the-largest-exchanges-in-the-world-are-choosing-the-op-stack), real-world assets (~$35B today) are positioned as a driver for on-chain growth toward “trillions” by 2030. In that narrative, more issuance means more on-chain mints, redemptions, interest flows, and trading, and they say “major players” (including Coinbase, Uniswap, Kraken, Mantle, Bybit, Upbit, and HashKey) are choosing the OP Stack for low-latency, predictable costs.\n\nThey further argue the OP Stack stands out for production-tested security, high performance, and modularity (DA choices, sequencing, proofs, fee tokens, compliance), plus pre-/post-mainnet support and a long-term roadmap."
+        },
+        {
+          "title": "Optimism Selects Ether.fi to Deploy Liquid Staking Treasury on OP Mainnet",
+          "content": "Optimism has [announced](https://www.optimism.io/blog/optimism-selects-ether.fi-to-deploy-liquid-staking-treasury-on-op-mainnet) that the Collective selected [Ether.fi](http://ether.fi/)’s weETH as its “strategic” **liquid-staking partner** on OP Mainnet after a comparative RFP process across liquidity, net yield, alignment, and risk. They argue that weETH offers an audited architecture, institutional integrations, and cross-DEX and lending integrations, positioning it as core collateral for OP Mainnet’s next phase.\n\nOptimism also frames this as part of a multi-protocol approach: the Ether.fi choice is “**additive, not exclusive**,” and they say more LST options may follow as the ecosystem scales."
+        },
+        {
+          "title": "Cycle 45 Results Posted for Season 8 Audit Grants",
+          "content": "Optimism shared in a [forum post](https://gov.optimism.io/t/cycle-45-results-season-8-audit-grants/10508) on Dec 22 that four applications were approved: Metrom (25,200 OP), 40acres (75,000 OP), VII Finance (72,928 OP), and Arcadia Finance (53,950 OP), out of 18 submissions. In total, 227,078 OP were approved from 1.71M OP requested, leaving 8,798.40 OP in the Season 8 audit-grants budget after prior cycles. Fourteen applications were rejected this round.\n\nThe council says budget constraints shaped decisions despite strong demand. They note AI-assisted triage and that reviews **prioritize** open-source, Superchain-aligned projects with clear impact, co-funding, realistic OP-to-scope ratios, and underfunded audits. Next steps: the four approved teams proceed to funding; others were declined mainly due to budget exhaustion or cost/runway concerns.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Polygon Speeds Up by 33% with Madhugiri Hardfork",
+          "content": "Polygon [announced](https://polygon.technology/blog/polygon-speeds-up-by-33-with-madhugiri-hardfork) the Madhugiri hardfork, a network upgrade that boosts throughput by ~33%, introduces adjustable block times at the protocol level (so future speed increases won’t require hardforks), and standardizes faster consensus to ~1s. Current capacity is ~1,400 TPS on a path to 5,000, with improved uptime and observability, and Ethereum’s “Fusaka” EIPs activated for stronger security.\n\nNo action is required from users or developers; full-node operators should upgrade to the latest release."
+        },
+        {
+          "title": "Polygon Labs Makes Strategic Investment in Boys Club to Advance Cultural Crypto Storytelling",
+          "content": "Polygon Labs [announced](https://polygon.technology/blog/polygon-labs-makes-strategic-investment-in-boys-club-to-advance-cultural-crypto-storytelling) a strategic investment in Boys Club, aimed at turning its payments vision into stories that reach mainstream audiences while Boys Club stays fully independent and neutral.\n\nBoys Club will support events with real-world utility, sharpen messaging around payments and stablecoins, and contribute to editorial and social strategies. The goal is to help people see how Polygon shows up in daily life, from remittances and instant payouts to consumer apps like Polymarket, pairing strong infrastructure with straightforward, human storytelling."
+        },
+        {
+          "title": "Shift4 Brings 24/7 Stablecoin Payments to Global Commerce on Polygon",
+          "content": "Shift4 [launched](https://polygon.technology/blog/shift4-brings-24-7-stablecoin-payments-to-global-commerce-on-polygon) a 24/7 stablecoin settlement platform on Polygon, bringing always-on payouts and treasury moves to hundreds of thousands of merchants with support for USDC, USDT, EURC, and DAI. Merchants get fast, low-cost settlement without banking hours, enterprise-grade reliability, and seamless access to the broader Ethereum ecosystem while keeping fees predictable.\n\nThe integration reinforces Polygon’s role as a payments infrastructure used by real businesses, not just crypto natives. Stablecoins are moving from trading floors into checkout lines, powering merchant payouts, global settlements, and round-the-clock liquidity. With Shift4 on board, Polygon advances its position as the preferred network for everyday money movement, where speed, uptime, and scale matter most."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "ELIP-012: Incentive Council Proposed",
+          "content": "EigenFoundation [proposed](https://forum.eigenlayer.xyz/t/elip-012-incentive-council/14753) ELIP-012 to create an Incentive Council under Protocol Council oversight that can actively steer EIGEN emissions for EigenLayer and EigenCloud within the ELIP-approved inflation limits. The goal is to move beyond the rigid, programmatic incentives that jump-started restaking and early AVS launches, toward a more flexible system that rewards productive stake and drives organic AVS yield.\n\nThe council would manage allocation of emissions, keep rewards distribution responsive, and support EigenCloud growth with clear governance accountability. It would also introduce fees that capture value created across EigenCloud and participating AVSs, aligning that value with the EIGEN token while preserving prudent guardrails and stewardship.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "A New Era of EIGEN Incentives",
+          "content": "EigenCloud [outlines](https://blog.eigencloud.xyz/a-new-era-of-eigen-incentives/) “A New Era of EIGEN Incentives” tied to ELIP-12, which would create an Incentives Committee empowered to steer emissions toward productive activity, introduce a fee model, and route value back to EIGEN. On subsidized stake, the committee proposes a 20% fee on AVS rewards flowing to a fee contract for buybacks, and 100% of EigenAI, EigenCompute, and EigenDA cloud fees (after operator costs) going to the same contract.\n\nThe mandate includes reducing rewards to idle stake, prioritizing fee-paying AVSs and slashable or redistributable stake, and gaining the agility to reallocate emissions without repeated contract upgrades; total emission caps would remain under Protocol Council control. If ratified, the rollout will proceed in two steps: forming the committee, then shipping its first policy changes, with an early focus on attracting capital to live, fee-generating AVSs and bootstrapping apps on EigenCloud.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "OpenFront x EigenCloud: Verifiable Tournaments Go Live",
+          "content": "EigenCloud and OpenFront [ran](https://blog.eigencloud.xyz/openfront-eigencloud-verifiable-tournaments/) the first verifiable tournament on OpenFront powered by EigenCompute, turning real-money competitions into a plug-and-play experience while keeping gameplay off-chain and snappy. Results are computed in a way anyone can verify, then payouts settle on-chain automatically in USDC, removing manual reviews, frozen payment accounts, and trust bottlenecks.\n\nThe Winter Championship Finals validated the flow with five teams and 30-plus players, more than 200K impressions, over 20K live viewers, multiple YouTube streams, and strong social engagement, all without changing how the game feels."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Getting Ethereum Ready for GigaGas",
+          "content": "Nethermind [introduced](https://www.nethermind.io/blog/getting-ethereum-ready-for-gigagas) a reproducible benchmarking framework that replays identical mainnet workloads to fairly compare Ethereum clients, eliminating the variance of live-network syncs. The suite runs two modes—exact historical blocks and “merged” super-blocks that stitch 100 consecutive blocks into ~1.1 GGas payloads (peaking near 2 GGas)—to surface execution bottlenecks relevant to future higher gas limits and L2-scale batches.\n\nOn modest hardware, Nethermind reports leading throughput on real-mainnet replays at a mean 697 MGas/s and widening its lead under merged loads, outpacing others by roughly 2x to 10x; Reth showed degradation on larger blocks, with an identified issue pending retest.\n\nBeyond headline numbers, the framework’s fixed inputs and quick reset loop make performance gains measurable and repeatable for client teams and L2s alike, enabling tuning against real mainnet state or their own chain state. The authors outline next steps, including testing different slot times, larger and newer block ranges, and expanding client coverage, all to prepare Ethereum execution for a GigaGas future where stability, throughput, and predictable finality are the bar, not the bonus."
+        },
+        {
+          "title": "Deutsche Bank and Nethermind Publish Whitepaper on ZK Proofs in Blockchain Finance",
+          "content": "Deutsche Bank [released](https://corporates.db.com/more/latest-news/deutsche-bank-and-nethermind-produce-white-paper-on-the-role-of-zero-knowledge-proofs-in-blockchain-finance) a whitepaper with Nethermind arguing that zero-knowledge proofs can help reconcile transparency with confidentiality in blockchain finance by proving facts without exposing underlying data. The report highlights practical uses such as KYC and AML verification, proof of reserves for custodians, and scalability through ZK rollups, with real activity from central bank research and major exchanges, plus builders like Starknet, Taiko, Intmax, ZKsync, and Aztec.\n\nThe paper also flags open hurdles, including uneven legal recognition, the need for common standards, and careful handling of regulated disclosures. Its recommendation is coordinated work across banks, regulators, and technology providers, alongside ongoing hardware and software improvements. Institutions that engage early position themselves to protect client assets, streamline compliance, and capture the next wave of digital finance innovation."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Enhancements in Cartesi’s Execution Environment",
+          "content": "The Cartesi Machine received major rework on hash tree computation, delivering orders-of-magnitude faster root hash calculation with parallelized execution and support for SHA-256. The update also introduces persistent, disk-backed hash trees, a new C API for constructing computation hashes, and the ability to run machines directly from disk for improved scalability. Check the merged PR [here](https://github.com/cartesi/machine-emulator/pull/335).\n\nA [draft](https://github.com/cartesi/machine-emulator/pull/344) is in progress that supports new RISC-V extensions. 43 new instructions are now implemented, delivering ~30% fewer cycles and ~1.35x speedup in cryptographic workloads like Keccak-256, and aligning the machine toward the upcoming RVA23 profile required by the next Ubuntu LTS."
+        },
+        {
+          "title": "Rollups Node Alpha Introduces PRT Consensus Integration",
+          "content": "The latest Cartesi Rollups Node release (v2.0.0-alpha.9) adds foundational support for the Permissionless Refereed Tournament (PRT) consensus flows. This update includes database support for PRT tournaments and epochs, enables PRT applications in the EVM reader and Rollups CLI, integrates PRT contracts into devnet, and introduces a new Merkle builder API, among other improvements. Find the new release [here](https://github.com/cartesi/rollups-node/releases/tag/v2.0.0-alpha.9)."
+        },
+        {
+          "title": "Honeypot Stage 2 Listing and PRT Contract Simplification Work",
+          "content": "Cartesi’s bug bounty application, Honeypot, has completed its review and is now live on [L2BEAT](https://l2beat.com/scaling/projects/cartesi-prt-honeypot-v2) as a Stage-2 application. Anyone can test the security of Cartesi Rollups by hacking the application and draining the funds locked in the rollup contract.\n\nAlongside this milestone, work is ongoing to simplify Permissionless Refereed Tournament (PRT) contracts. One example is a [pull request](https://github.com/cartesi/dave/pull/230) that unifies leaf and non-leaf handling for more maintainable fraud-proof primitives."
+        },
+        {
+          "title": "Visualization Tool for the Fraud Proof System In Progress",
+          "content": "A new web-based UI is under development to visualize fraud-proof activity on a network, including deployed applications, epochs, and their associated inputs. The tool surfaces Permissionless Refereed Tournament’s state at the epoch level, exposing claims, participants, machine cycles, matches, and dispute progress, making the fraud-proof process more transparent and easier to inspect for developers and operators.\n\nHere’s an [early preview](https://dave-git-feat-400-test-scenarios-for-visualization-tool-cartesi.vercel.app/apps) with synthetic data."
+        }
+      ]
+    }
+  ]
+}

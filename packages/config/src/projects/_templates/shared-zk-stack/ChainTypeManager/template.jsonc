@@ -11,7 +11,11 @@
     "upgradeCutHash",
     "protocolVersionDeadline"
   ],
-  "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"], // ignore validatorTimelock because it needs chain-specific config
+  "ignoreRelatives": [
+    "getAllHyperchains",
+    "validatorTimelock",
+    "validatorTimelockPostV29"
+  ], // ignore validatorTimelock because it needs chain-specific config
   "fields": {
     "owner": {
       "permissions": [

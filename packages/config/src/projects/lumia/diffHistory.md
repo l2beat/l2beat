@@ -1,3 +1,202 @@
+Generated with discovered.json: 0x55202438f19786ade68ae74674f52e3ff3889b1f
+
+# Diff at Tue, 09 Dec 2025 11:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1761895563
+- current timestamp: 1761895563
+
+## Description
+
+config: add aggchain_type description and severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761895563 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+    }
+```
+
+Generated with discovered.json: 0x768338199bc0a7cc70230a0da7b8e36c6bd93403
+
+# Diff at Fri, 31 Oct 2025 13:56:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1759756767
+- current timestamp: 1761895563
+
+## Description
+
+Upgrade of the main Lumia contract: https://disco.l2beat.com/diff/eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B/eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21
+- rename
+- move to CONSENSUS_TYPE (no change in permissions nor state validation) ref: https://app.excalidraw.com/s/1Pobo8fNXle/oDCa0vpJ3X?element=x9PfT775QIukDuV3P-sUz
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.description:
+-        "must provide a signature for each pessimistic proof, attesting to a valid state transition."
++        "sign state transitions (replaces state validation for this aggchain)."
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      name:
+-        "PolygonPessimisticConsensus"
++        "AggchainECDSAMultisig"
+      template:
+-        "polygon-cdk/PolygonPessimisticConsensus"
++        "polygon-cdk/AggchainECDSAMultisig"
+      sourceHashes.1:
+-        "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7"
++        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
+      description:
+-        "System contract defining the prism logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven."
++        "System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s)."
+      values.$implementation:
+-        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
++++ severity: HIGH
+      values.CONSENSUS_TYPE:
+-        0
++        1
+      values.getConsensusHash:
+-        "0x2740986d6807b549ead363c0f4a6bb7b2d8b0a1c7bff3c1adac5274fb4efc14d"
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.AGGCHAIN_ECDSA_MULTISIG_VERSION:
++        "v1.0.0"
+      values.AGGCHAIN_TYPE:
++        "0x0000"
+      values.aggchainManager:
++        "eth:0x258862dec9a77db57b398c441390783293E2a7A1"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0x56d8bc2e1eecaf68ad03aa2d252136284a839aac7cd6971d9f421cc0f415f93b"
+      values.aggchainSigners:
++        ["eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F"]
+      values.aggLayerGateway:
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      values.getAggchainMultisigHash:
++        "0x56d8bc2e1eecaf68ad03aa2d252136284a839aac7cd6971d9f421cc0f415f93b"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F","url":"https://prism-sequencer.eu-north-2.gateway.fm/"}]
+      values.getAggchainSigners:
++        ["eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.pendingAggchainManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        false
+      values.version:
++        "v1.0.0"
+      fieldMeta.CONSENSUS_TYPE.severity:
++        "HIGH"
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
+-        "PolygonPessimisticConsensus"
+      implementationNames.eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21:
++        "AggchainECDSAMultisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggchainECDSAMultisig.sol                      | 2242 ++++++++++++++++++++
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonPessimisticConsensus.sol => /dev/null   |  845 --------
+ 3 files changed, 2242 insertions(+), 845 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759756767 (main branch discovery), not current.
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
+```diff
+    contract PolygonPessimisticConsensus (eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: System contract defining the prism logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven.
+      name:
+-        "Validium"
++        "PolygonPessimisticConsensus"
+    }
+```
+
 Generated with discovered.json: 0xdf0a6975baa5a9b16816931d5ad3529a5dbd2f96
 
 # Diff at Mon, 13 Oct 2025 06:48:37 GMT:

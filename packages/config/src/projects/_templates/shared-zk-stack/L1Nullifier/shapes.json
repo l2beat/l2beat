@@ -8,5 +8,10 @@
     "hash": "0x56a8f9e2feec75535d897e8159a8cdf1546d81df34f77964c66bc908820e8687",
     "address": "eth:0x3B4FD84B27fE7B9247d5B8C6d1A29B2889C81518",
     "blockNumber": 22374168
+  },
+  "L1Nullifier_v29": {
+    "hash": "0x6ea5a06371f681d6fc53ffcddfc1395a3748a7d57499d48cf32cefb035e24af0",
+    "address": "eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0",
+    "blockNumber": 23588465
   }
 }

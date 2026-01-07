@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionedDisputeGame",
+  "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger. In the context of this permissioned aggkit deployment, there are no state proposals made here and the op stack fault proof system is not used.",
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ],
+  "fields": {
+    "absolutePrestateDecoded": {
+      "description": "Prestate tag for known prestates.",
+      "handler": {
+        "type": "call",
+        "method": "absolutePrestate",
+        "args": []
+      },
+      "edit": ["format", "OpStackAbsolutePrestate"]
+    }
+    // no proposer/challenger permissions for clarity (theoretically state could be proposed here)
+  }
+}

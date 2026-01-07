@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Used to verify offchain signed oracle data.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the trusted offchain signer."
+        }
+      ]
+    }
+  }
+}

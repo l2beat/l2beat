@@ -27,6 +27,7 @@ export const satellite: Bridge = {
     category: 'Hybrid',
     links: {
       websites: ['https://satellite.money/', 'https://axelar.network/'],
+      documentation: ['https://docs.axelar.dev/'],
       explorers: ['https://axelarscan.io/'],
       repositories: ['https://github.com/axelarnetwork/axelar-examples'],
       socialMedia: [

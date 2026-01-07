@@ -57,7 +57,12 @@ export type ImpMeta =
   | { type: 'null' }
   | { type: 'boolean' }
   | { type: 'enum'; values: unknown[] }
-  | { type: 'object'; schema: Record<string, Imp<unknown>>; strict: boolean }
+  | {
+      type: 'object'
+      schema: Record<string, Imp<unknown>>
+      strict: boolean
+      passthrough: boolean
+    }
   | { type: 'literal'; value: unknown }
   | { type: 'array'; element: Imp<unknown> }
   | { type: 'union'; values: Imp<unknown>[] }
@@ -246,11 +251,11 @@ function whatType(value: unknown) {
   if (type === 'object') {
     if (value === null) {
       type = 'null'
-    } else if (Array.isArray(type)) {
+    } else if (Array.isArray(value)) {
       type = 'array'
     } else {
       try {
-        type = Object.getPrototypeOf(type).constructor.name
+        type = Object.getPrototypeOf(value).constructor.name
       } catch {}
     }
   }
@@ -344,13 +349,14 @@ function impObject<T extends object>(
   schema: T,
   clone: boolean,
   strict: boolean,
+  passthrough: boolean,
 ) {
   return function impObject(value: unknown): Result<Object<T>> {
     if (typeof value !== 'object' || value === null || Array.isArray(object)) {
       return failType('object', value)
     }
     if (strict) {
-      for (const key in object) {
+      for (const key in value) {
         if (!(key in schema)) {
           return {
             success: false,
@@ -382,6 +388,13 @@ function impObject<T extends object>(
         result[key] = res.data
       }
     }
+    if (clone && passthrough) {
+      for (const key in value) {
+        if (!(key in schema)) {
+          result[key] = (value as { [record: string]: unknown })[key]
+        }
+      }
+    }
     return { success: true, data: (clone ? result : value) as Object<T> }
   }
 }
@@ -397,10 +410,11 @@ function object<T extends object>(schema: T): Imp<Object<T>> {
     {
       type: 'object',
       strict: false,
+      passthrough: false,
       schema: schema as Record<string, Imp<unknown>>,
     },
-    impObject(schema, false, false),
-    impObject(schema, true, false),
+    impObject(schema, false, false, false),
+    impObject(schema, true, false, false),
   )
 }
 
@@ -415,10 +429,30 @@ function strictObject<T extends object>(schema: T): Imp<Object<T>> {
     {
       type: 'object',
       strict: true,
+      passthrough: false,
       schema: schema as Record<string, Imp<unknown>>,
     },
-    impObject(schema, false, true),
-    impObject(schema, true, true),
+    impObject(schema, false, true, false),
+    impObject(schema, true, true, false),
+  )
+}
+
+function passthroughObject<T extends { [key: string]: Validator<unknown> }>(
+  schema: T,
+): Validator<Object<T>>
+function passthroughObject<T extends { [key: string]: Parser<unknown> }>(
+  schema: T,
+): Parser<Object<T>>
+function passthroughObject<T extends object>(schema: T): Imp<Object<T>> {
+  return new Imp(
+    {
+      type: 'object',
+      strict: false,
+      passthrough: true,
+      schema: schema as Record<string, Imp<unknown>>,
+    },
+    impObject(schema, false, false, true),
+    impObject(schema, true, false, true),
   )
 }
 
@@ -485,18 +519,22 @@ function impUnion<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T, clone: boolean) {
   return function impUnion(value: unknown): Result<Infer<T[number]>> {
-    for (const element of elements) {
+    let errorMessage = ''
+    for (const [i, element] of elements.entries()) {
       const result = clone
         ? element.safeParse(value)
         : element.safeValidate(value)
       if (result.success) {
         return result as Result<Infer<T[number]>>
       }
+
+      const location = result.path ? ` at ${result.path}` : ''
+      errorMessage += ` Variant ${i}${location}: ${result.message}`
     }
     return {
       success: false,
       path: '',
-      message: `None of the union variants matched, got ${whatType(value)}.`,
+      message: `None of the union variants matched, got ${whatType(value)}.${errorMessage}`,
     }
   }
 }
@@ -528,7 +566,7 @@ function impRecord<K extends string | number, V>(
   }
 
   return function impRecord(value: unknown): Result<Record<K, V>> {
-    if (typeof value !== 'object' || value === null || Array.isArray(object)) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
       return failType('object', value)
     }
     const result = {} as Record<K, V>
@@ -602,7 +640,7 @@ function impEnum<T extends string | number>(values: readonly T[]) {
     return {
       success: false,
       path: '',
-      message: `None of the enum variants matched, got ${whatType(value)}.`,
+      message: `None of the enum variants matched, got ${whatType(value)}. Possible values: ${values.join(', ')}.`,
     }
   }
 }
@@ -736,6 +774,7 @@ export const v = {
   undefined: _undefined,
   object,
   strictObject,
+  passthroughObject,
   array,
   literal,
   union,

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to {{ TOTAL_CHALLENGE_PERIOD }}, the manta quorum can reduce it by a maximum of {{ MANTA_REDUCE_PERIOD }}, the bitcoin quorum can reduce it by a maximum of {{ BITCOIN_REDUCE_PERIOD }}, and the minimum challenge period allowed is set to {{ MIN_CHALLENGE_PERIOD }}.",
+  "ignoreInWatchMode": ["confirmBatchId"],
   "fields": {
     "operatorWhitelistManager": {
       "permissions": [

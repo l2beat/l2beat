@@ -102,7 +102,7 @@ export const zklinknova: ScalingProject = {
       socialMedia: [
         'https://blog.zk.link',
         'https://x.com/zkLink_Official',
-        'https://discord.gg/zklink',
+        'https://discord.com/invite/SFrUD5gysj',
         'https://t.me/zkLinkorg',
       ],
     },

@@ -32,6 +32,7 @@ export const polynomial: ScalingProject = opStackL2({
       socialMedia: [
         'https://x.com/PolynomialFi',
         'https://discord.com/invite/8WYEPDqyCR',
+        'https://t.me/polynomialtrade',
       ],
     },
   },

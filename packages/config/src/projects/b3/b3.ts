@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('b3')
 export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.L3ParentChain.Base],
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   hostChain: 'base',
   discovery,
   additionalPurposes: ['Gaming'],
@@ -34,6 +34,7 @@ export const b3: ScalingProject = opStackL3({
         'https://x.com/b3dotfun',
         'https://discord.com/invite/b3dotfun',
         'https://warpcast.com/b3dotfun',
+        'https://t.me/b3dotfun',
       ],
     },
   },

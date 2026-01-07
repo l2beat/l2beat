@@ -1,7 +1,7 @@
 {
   "name": "r0ar",
-  "timestamp": 1743765215,
-  "configHash": "0xc19631c67b1bd7e18843ced0233c84c77ea6d538112073787bae96f1c5705cb2",
+  "timestamp": 1765550969,
+  "configHash": "0xb8b9136862425cea8d3db03f32dc494cc6b6840224ce32450acf84a6f1a9dd11",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -16,7 +16,14 @@
     {
       "address": "eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "PreimageOracle",
@@ -76,7 +83,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 309981,
-          "prevBlockNum": 22024919
+          "prevBlockNum": 23983670
         },
         "paused": false,
         "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
@@ -155,7 +162,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619782",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620957",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -242,7 +249,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x958268b83f73163b36af36fa55f5c0905421c07369bff2791652da02fa692a42"
+        "0xd11ebc38ae875b9412d457a72f0a1fcd3e10098f5c74ff8d7139c4afd4edcf27"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -371,6 +378,11 @@
           "permission": "challenge",
           "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".CHALLENGER"
+        },
+        {
+          "permission": "challenge",
+          "from": "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+          "role": ".challenger"
         }
       ]
     },
@@ -596,10 +608,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7738200,
-        "latestOutputIndex": 4298,
-        "nextBlockNumber": 7740000,
-        "nextOutputIndex": 4299,
+        "latestBlockNumber": 18630000,
+        "latestOutputIndex": 10349,
+        "nextBlockNumber": 18631800,
+        "nextOutputIndex": 10350,
         "proposer": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "PROPOSER": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "startingBlockNumber": 0,
@@ -628,7 +640,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x95275ddb3e393113e19b284d6806675c79ab6698047f0cf6bdf7bb5ca1568c6d"
+        "0x58864ca785ad0e38e611f758e06007a088cbf2a5879db0007cd97d598af27a2c"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -896,7 +908,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1728285359,
       "sinceBlock": 20912126,
       "values": {
@@ -911,6 +923,8 @@
         ],
         "$upgradeCount": 1,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
+        "game42": "eth:0x0000000000000000000000000000000000000000",
         "gameCount": 0,
         "gameImpls": [
           "eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2",
@@ -921,6 +935,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752",
         "permissionedGamesTotal": 0,
@@ -928,7 +943,9 @@
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
-        "game1337": { "severity": "HIGH" }
+        "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",
@@ -1035,7 +1052,7 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0xfcfd8e9eb9d6ec1518326de5385476d4d26b0682d70267add0084193ae403652"
+        "0xdb01a01fb5143b496ce6858f53dfad238652f6662be66a7b56c75807b5cbfb6a"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
@@ -1847,7 +1864,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -1860,6 +1877,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22195184 },
-  "permissionsConfigHash": "0xe03a506b0b4b165de70e4bbe28ad49348469776b27a704dbd7abebcf158a4c7f"
+  "usedBlockNumbers": { "ethereum": 23997239 },
+  "permissionsConfigHash": "0xe6caa1f1a7e48253b1d50ac1c5c1a390e758e97917b9d4734b885ecb35e6e970"
 }

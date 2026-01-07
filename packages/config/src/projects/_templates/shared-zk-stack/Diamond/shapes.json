@@ -18,5 +18,26 @@
       "eth:0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
     ],
     "blockNumber": 22188285
+  },
+  "ZKsync_v29_2": {
+    "hash": "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff",
+    "address": [
+      "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
+      "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
+      "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45",
+      "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
+    ],
+    "blockNumber": 23638783
+  },
+  "Diamond_ADI": {
+    "hash": "0x76fff5526d80b9fe957c75fa758aa5c38311d3267060edefc11f4b9aac8c5c34",
+    "address": [
+      "eth:0x8C653b99f18Eb3bAb927519990bfC281500b0De6",
+      "eth:0x1807f10E686E5Cd6A655cF7343f093a7372cAf34",
+      "eth:0x3Be4B380F277Cb02dF56712667f7F8FA1Ca1536d",
+      "eth:0x6fB87A1dd4DE3bDbB96f2FA9ac7FCb74b7d4C792"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

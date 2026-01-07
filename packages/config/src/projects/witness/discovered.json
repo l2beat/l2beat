@@ -1,7 +1,7 @@
 {
   "name": "witness",
-  "timestamp": 1738234259,
-  "configHash": "0x8cbfa087d98cb47ad148b7afdabe8f4c3a246652cd24aaf073a52e1269bf7594",
+  "timestamp": 1762264414,
+  "configHash": "0x531b9d9f31ab31fd9014b24239ec8e973014a2fb150855498336b798daf56992",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -23,7 +23,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "PolygonSharedBridge",
+      "name": "AgglayerBridge",
       "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Reference",
       "targetType": "Contract",
@@ -112,14 +112,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "PolygonRollupManager",
+      "name": "AgglayerManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-polygon-cdk"
     },
     {
-      "name": "PolygonGlobalExitRootV2",
+      "name": "AgglayerGER",
       "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "type": "Reference",
       "targetType": "Contract",
@@ -437,6 +437,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 21736867 },
+  "usedBlockNumbers": { "ethereum": 23726377 },
   "permissionsConfigHash": "0xce30b75302142d82b21b163b276443eef4cb29a69cb4218d0644b7af7ab25fe6"
 }

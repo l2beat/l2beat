@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { stripAnsiEscapeCodes } from './formatAsAsciiTable'
+import { stripAnsiEscapeCodes } from './formatAsAsciiTable.js'
 
 export function formatAsciiBorder(lines: string[], colorGrey = false): string {
   const maxWidth = lines.reduce(

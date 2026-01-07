@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { expect } from 'earl'
-import { formatAsciiBorder } from './formatAsciiBorder'
+import { formatAsciiBorder } from './formatAsciiBorder.js'
 
 describe(formatAsciiBorder.name, () => {
   it('should print a border', () => {

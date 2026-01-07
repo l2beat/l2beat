@@ -1,3 +1,383 @@
+Generated with discovered.json: 0x9a9ee83c44e410f78addac559b69f23dc8db36cf
+
+# Diff at Mon, 15 Dec 2025 07:47:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1761643706
+- current timestamp: 1765784441
+
+## Description
+
+ignore in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      template:
++        "tokens/Lido/TriggerableWithdrawalsGateway"
+    }
+```
+
+Generated with discovered.json: 0xe2e25b60ce7c849d7415fa8a81c84b21615028da
+
+# Diff at Wed, 05 Nov 2025 12:48:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1761643706
+- current timestamp: 1761643706
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SignatureChecker (base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e)
+    +++ description: None
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.$libraries:
+-        ["base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e"]
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract QueueLib (eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55)
+    +++ description: None
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MinFirstAllocationStrategy (eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993)
+    +++ description: None
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AssetRecovererLib (eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9)
+    +++ description: None
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract QueueLib (eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9)
+    +++ description: None
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc","eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract NOAddresses (eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NOAddresses (eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72)
+    +++ description: None
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+Generated with discovered.json: 0xc077f2619bccae9f3e3ee2bf0c36bb2d96cd5158
+
+# Diff at Mon, 03 Nov 2025 14:49:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c0ded7fb517fbc1fc7a271bd8f66f3f3538c35d3 block: 1761643706
+- current timestamp: 1761643706
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      values.$libraries:
++        ["base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e"]
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9"]
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9"]
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72","eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9","eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9","eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc","eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55"]
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SignatureChecker (base:0x2D943E25e1859ED786AFe4AFB2B42e14EFAC691e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QueueLib (eth:0x6eFF460627b6798C2907409EA2Fdfb287Eaa2e55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MinFirstAllocationStrategy (eth:0x7e70De6D1877B3711b2bEDa7BA00013C7142d993)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetRecovererLib (eth:0xa74528edc289b1a597Faf83fCfF7eFf871Cc01D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QueueLib (eth:0xD19B40Cb5401f1413D014A56529f03b3452f70f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NOAddresses (eth:0xE4d5a7be8d7c3db15755061053F5a49b6a67fFfc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NOAddresses (eth:0xF8E5de8bAf8Ad7C93DCB61D13d00eb3D57131C72)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3d824f2011aa3545a5832209ad30a1e5c17fa2da
+
+# Diff at Tue, 28 Oct 2025 09:32:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1759761526
+- current timestamp: 1761643706
+
+## Description
+
+ignored some values in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759761526 (main branch discovery), not current.
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      template:
++        "tokens/Lido/CSStrikes"
+    }
+```
+
 Generated with discovered.json: 0xa580ce65af310668ee81ae6cd4bc2e630f58603d
 
 # Diff at Mon, 06 Oct 2025 15:12:19 GMT:

@@ -1,8 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import {
@@ -16,19 +17,18 @@ import {
   DeployedTokenSchema,
   setDeployedTokenExistsError,
 } from '~/components/forms/DeployedTokenForm'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
+import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
-import { UnixTime } from '~/utils/UnixTime'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function DeployedTokenPage() {
   const { chain, address } = useParams()
-  const navigate = useNavigate()
-  const { data } = api.tokens.getDeployedByChainAndAddress.useQuery(
+  const { data } = api.deployedTokens.findByChainAndAddress.useQuery(
     {
       chain: chain ?? '',
       address: address ?? '',
@@ -37,15 +37,15 @@ export function DeployedTokenPage() {
       enabled: chain !== '' && address !== '',
     },
   )
+
   if (!chain || !address || data === null) {
-    navigate('/not-found')
-    return
+    return <Navigate to="/not-found" replace />
   }
 
   return (
     <AppLayout>
       {data === undefined ? (
-        <LoadingText />
+        <LoadingState className="h-full" />
       ) : (
         <DeployedTokenView token={data} />
       )}
@@ -56,7 +56,7 @@ export function DeployedTokenPage() {
 function DeployedTokenView({ token }: { token: DeployedToken }) {
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
 
-  const [searchParams] = useSearchParams()
+  const [abstractTokenId] = useQueryState('abstractTokenId', '')
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
     defaultValues: {
@@ -66,15 +66,18 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
       deploymentTimestamp: UnixTime.toDate(token.deploymentTimestamp)
         .toISOString()
         .slice(0, -5),
+      metadata: token.metadata ?? undefined,
     },
   })
 
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    api.abstractTokens.getAll.useQuery()
+
   useEffect(() => {
-    const abstractTokenId = searchParams.get('abstractTokenId')
     if (abstractTokenId) {
       form.setValue('abstractTokenId', abstractTokenId, { shouldDirty: true })
     }
-  }, [searchParams, form.setValue])
+  }, [abstractTokenId, form.setValue])
 
   const { mutate: planMutate, isPending: isPending } =
     api.plan.generate.useMutation({
@@ -86,6 +89,9 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         }
       },
     })
+
+  const { data: chains, isLoading: isLoadingChains } =
+    api.chains.getAll.useQuery()
 
   function onSubmit(values: DeployedTokenSchema) {
     if (deployedTokenExistsLoading) return
@@ -107,6 +113,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         deploymentTimestamp: dateTimeInputToUnixTimestamp(
           values.deploymentTimestamp,
         ),
+        metadata: values.metadata ?? undefined,
       },
     })
   }
@@ -114,7 +121,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
   const chain = form.watch('chain')
   const address = form.watch('address')
   const { data: deployedTokenExists, isLoading: deployedTokenExistsLoading } =
-    api.tokens.checkIfDeployedTokenExists.useQuery(
+    api.deployedTokens.checkIfExists.useQuery(
       {
         chain,
         address,
@@ -172,10 +179,28 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
               form={form}
               onSubmit={onSubmit}
               isFormDisabled={isPending}
-              deployedTokenCheck={{
-                exists: deployedTokenExists,
+              tokenDetails={{
+                data: deployedTokenExists
+                  ? {
+                      error: {
+                        type: 'already-exists',
+                        message:
+                          'Deployed token with given address and chain already exists',
+                      },
+                      data: undefined,
+                    }
+                  : undefined,
                 loading: deployedTokenExistsLoading,
               }}
+              abstractTokens={{
+                data: abstractTokens,
+                loading: areAbstractTokensLoading,
+              }}
+              chains={{
+                data: chains,
+                loading: isLoadingChains,
+              }}
+              autofill={undefined}
             >
               <ButtonWithSpinner
                 isLoading={isPending}
@@ -191,6 +216,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         <ButtonWithSpinner
           variant="destructive"
           className="mt-2"
+          size="icon"
           onClick={() => {
             planMutate({
               type: 'DeleteDeployedTokenIntent',

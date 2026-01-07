@@ -6,12 +6,12 @@ import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
-import { createBridgeModule } from './modules/bridges/BridgeModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createDefiUpdateMonitorModule } from './modules/defi-update-monitor/DefiUpdateMonitorModule'
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
+import { createInteropModule } from './modules/interop/engine/InteropModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createPermissionMonitorModule } from './modules/permission-monitor/PermissionMonitorModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -58,7 +58,6 @@ export class Application {
     }
 
     const modules: (ApplicationModule | undefined)[] = [
-      createMetricsModule(deps),
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
@@ -71,7 +70,7 @@ export class Application {
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
-      createBridgeModule(deps),
+      createInteropModule(deps),
       createBlockSyncModule(deps),
     ]
 

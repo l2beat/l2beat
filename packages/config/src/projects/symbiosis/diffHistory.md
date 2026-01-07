@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xd4a531d3be03c37db801439857205cae4609207f
+
+# Diff at Tue, 04 Nov 2025 13:56:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f12d06bbf120eab9f5356a235918d4d6b2484290 block: 1759406260
+- current timestamp: 1762264533
+
+## Description
+
+[Portal upgrade](https://disco.l2beat.com/diff/eth:0x755a967298c96d50216C6ED8D68869747B4f6878/eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3): Minor changes in context of new interface  that the bridge does not have implemented yet.
+
+## Watched changes
+
+```diff
+    contract Portal (eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8c47d485b7d202eb666ef592012502f811cc91f1337393dbfd3411b67dea3580"
++        "0x88f9af5b639d093bef909055aeab8deeb89f0960c4e729408ead2e7bebaa988b"
+      values.$implementation:
+-        "eth:0x755a967298c96d50216C6ED8D68869747B4f6878"
++        "eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3"
+      values.$pastUpgrades.7:
++        ["2025-11-03T11:35:59.000Z","0x24fe0ae55786abe96a4fbd26893143d7abf4babb38c602b80c118db1eda313ce",["eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3"]]
+      values.$upgradeCount:
+-        7
++        8
+      implementationNames.eth:0x755a967298c96d50216C6ED8D68869747B4f6878:
+-        "Portal"
+      implementationNames.eth:0x57dBCB192fA64bf07Eab76941D1daE5177c8f4f3:
++        "Portal"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1759406260 => .flat}/Portal/Portal.sol    | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0xfc26dd7c32072768ef88f4f79deff375af73e894
 
 # Diff at Thu, 02 Oct 2025 07:30:30 GMT:

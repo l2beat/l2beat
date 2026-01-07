@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { Bytes } from './Bytes'
+import { Bytes } from './Bytes.js'
 
 describe(Bytes.name, () => {
   describe(Bytes.fromHex.name, () => {

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { pluralize } from './pluralize'
+import { pluralize } from './pluralize.js'
 
 describe(pluralize.name, () => {
   it('should return plural form for -1', () => {

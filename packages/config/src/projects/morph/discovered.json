@@ -1,7 +1,7 @@
 {
   "name": "morph",
-  "timestamp": 1758795850,
-  "configHash": "0xb1738f8f5e824117d5ba7e4607dc46a3e611677183d8e3a84a16916cf026bdab",
+  "timestamp": 1767365287,
+  "configHash": "0x2742757df23ff811599c5ada31eff0688b5667a0d23786423a7d98ff08aec4c8",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -33,6 +33,27 @@
       ]
     },
     {
+      "name": "ZkEvmVerifierV1",
+      "address": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423",
+      "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
+      "sourceHashes": [
+        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+      ],
+      "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
+      "sinceTimestamp": 1763718611,
+      "sinceBlock": 23846603,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e",
+        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
+      },
+      "implementationNames": {
+        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": "ZkEvmVerifierV1"
+      }
+    },
+    {
       "address": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "type": "EOA",
       "proxyType": "EOA"
@@ -41,12 +62,21 @@
       "name": "L1Staking",
       "address": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
       "type": "Contract",
+      "template": "morph/L1Staking",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "can send gasless transactions to L2 (L2 gas fee waived).",
+          "role": ".whitelisted"
+        }
+      ],
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
       "values": {
@@ -66,18 +96,15 @@
         ],
         "$upgradeCount": 2,
         "challengeDeposit": 1,
-        "deleteList": [
-          "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
-          "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-          "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-          "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
-        ],
+        "deleteList": [],
         "gasLimitAddStaker": 1000000,
         "gasLimitRemoveStakers": 8000000,
         "getActiveStakers": [
           "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
           "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
-          "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
+          "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
+          "eth:0x76F91869161dC4348230D5F60883Dd17462035f4"
         ],
         "getStakersFromBitmap": [
           ["eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0"],
@@ -100,6 +127,18 @@
       }
     },
     {
+      "address": "eth:0x111BC31F5cfE920004FD17449BDb5e476C02AEC5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
       "type": "EOA",
       "proxyType": "EOA",
@@ -115,6 +154,7 @@
       "name": "L1ETHGateway",
       "address": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
       "type": "Contract",
+      "template": "morph/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
@@ -247,7 +287,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -256,6 +296,7 @@
       "name": "L1MessageQueueWithGasPriceOracle",
       "address": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
       "type": "Contract",
+      "template": "morph/L1MessageQueueWithGasPriceOracle",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
@@ -290,9 +331,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25066,
+        "nextCrossDomainMessageIndex": 25514,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25031,
+        "pendingQueueIndex": 25513,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -302,29 +343,22 @@
       }
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "proxyType": "immutable",
-      "description": "Current SP1 verifier using Blobs for DA.",
-      "sinceTimestamp": 1747024619,
-      "sinceBlock": 22464880,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x006c835a4c049b699a3675fefa51b182c7efe404a656151c0410245966724bc3",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "implementationNames": {
-        "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": "ZkEvmVerifierV1"
-      }
+      "address": "eth:0x3b065B18EdFFC7cf3D751E33d45C1FB4fD78d57b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "name": "L1StandardERC20Gateway",
       "address": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
       "type": "Contract",
+      "template": "morph/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
@@ -424,26 +458,26 @@
       "name": "MultipleVersionRollupVerifier",
       "address": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
       "type": "Contract",
+      "template": "morph/MultipleVersionRollupVerifier",
       "sourceHashes": [
         "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
       ],
       "proxyType": "immutable",
-      "description": "Used to update the verifier and keep track of current and old versions.",
+      "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
       "sinceTimestamp": 1737359447,
       "sinceBlock": 21664323,
       "values": {
         "$immutable": true,
         "latestVerifier": [
           {
-            "startBatchIndex": 0,
-            "verifier": "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
+            "startBatchIndex": 45847,
+            "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
           },
           {
-            "startBatchIndex": 20230,
-            "verifier": "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953"
+            "startBatchIndex": 45847,
+            "verifier": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
           }
         ],
-        "legacyVerifiersLength": [0, 0],
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
@@ -465,11 +499,6 @@
       ]
     },
     {
-      "address": "eth:0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
       "type": "EOA",
       "proxyType": "EOA",
@@ -477,7 +506,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -507,6 +536,18 @@
       ]
     },
     {
+      "address": "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
       "type": "EOA",
       "proxyType": "EOA",
@@ -522,12 +563,13 @@
       "name": "L1GatewayRouter",
       "address": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
       "type": "Contract",
+      "template": "morph/L1GatewayRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
+      "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
       "sinceTimestamp": 1729307555,
       "sinceBlock": 20996850,
       "values": {
@@ -558,15 +600,16 @@
       }
     },
     {
-      "name": "MorphRollup",
+      "name": "Rollup",
       "address": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
       "type": "Contract",
+      "template": "morph/MorphRollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
+      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.",
       "ignoreInWatchMode": [
         "batchChallenged",
         "lastCommittedBatchIndex",
@@ -577,7 +620,7 @@
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec",
+        "$implementation": "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -608,10 +651,15 @@
             "2025-05-12T07:11:23.000Z",
             "0x1cd98e49b0d0c30a39c97683c374f5d3541d1ed02b14272a7113709fe01700d7",
             ["eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec"]
+          ],
+          [
+            "2025-11-25T08:51:35.000Z",
+            "0x27b0e1b46f9878a502c68e414bc6fea028c3a551760e5687c56bdd4eda4f31c9",
+            ["eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5"]
           ]
         ],
-        "$upgradeCount": 6,
-        "batchChallenged": 45,
+        "$upgradeCount": 7,
+        "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
@@ -643,30 +691,62 @@
           "eth:0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
           "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
           "eth:0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
-          "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738"
+          "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+          "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
+          "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be",
+          "eth:0x111BC31F5cfE920004FD17449BDb5e476C02AEC5",
+          "eth:0x3b065B18EdFFC7cf3D751E33d45C1FB4fD78d57b",
+          "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
+          "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
+          "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442"
         ],
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 43541,
-        "lastFinalizedBatchIndex": 43459,
-        "LAYER_2_CHAIN_ID": 1,
+        "lastCommittedBatchIndex": 47547,
+        "lastFinalizedBatchIndex": 47474,
+        "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
         "proofRewardPercent": 70,
         "proofWindow": 259200,
-        "proveRemaining": 3000000000000000,
+        "proveRemaining": "2103000000000000000",
         "revertReqIndex": 0,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "implementationNames": {
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
-        "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": "Rollup"
+        "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": "Rollup"
       }
     },
     {
+      "address": "eth:0x76F91869161dC4348230D5F60883Dd17462035f4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    {
       "address": "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -738,9 +818,40 @@
       ]
     },
     {
-      "address": "eth:0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+      "address": "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
+        }
+      ]
     },
     {
       "address": "eth:0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
@@ -753,11 +864,6 @@
           "role": ".challengers"
         }
       ]
-    },
-    {
-      "address": "eth:0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Morph Multisig 2",
@@ -777,14 +883,38 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+          "description": "register new verifiers to be used starting from a given L2 batch index.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "description": "manage token to escrow mapping and (un-)register escrows.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "description": "can pause and unpause",
+          "description": "pause and unpause, update the fee vault.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "manage the whitelist.",
           "role": ".owner"
         }
       ],
@@ -806,7 +936,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 40,
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -827,7 +957,7 @@
         {
           "permission": "sequence",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
           "role": ".getActiveStakers"
         }
       ]
@@ -884,12 +1014,13 @@
       "name": "EnforcedTxGateway",
       "address": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
       "type": "Contract",
+      "template": "morph/EnforcedTxGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
+      "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: true.",
       "sinceTimestamp": 1729308143,
       "sinceBlock": 20996899,
       "values": {
@@ -978,6 +1109,7 @@
       "name": "L1CrossDomainMessenger",
       "address": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
       "type": "Contract",
+      "template": "morph/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
@@ -1011,7 +1143,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25066,
+        "messageNonce": 25514,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1053,24 +1185,17 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
-      ],
-      "proxyType": "immutable",
-      "description": "SP1 verifier using Blobs for DA (being deprecated).",
-      "sinceTimestamp": 1736755163,
-      "sinceBlock": 21614228,
-      "values": {
-        "$immutable": true,
-        "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
-      },
-      "implementationNames": {
-        "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": "ZkEvmVerifierV1"
-      }
+      "address": "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
     },
     {
       "name": "Morph Multisig 1",
@@ -1174,7 +1299,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1219,24 +1344,21 @@
       ]
     },
     {
-      "address": "eth:0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Whitelist",
       "address": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
       "type": "Contract",
+      "template": "morph/Whitelist",
       "sourceHashes": [
         "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
       ],
       "proxyType": "immutable",
-      "description": "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.",
+      "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",
       "sinceTimestamp": 1729328435,
       "sinceBlock": 20998580,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
+        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "whitelisted": ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
       },
       "implementationNames": {
         "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
@@ -1244,6 +1366,18 @@
     }
   ],
   "abis": {
+    "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
       "constructor()",
       "error ErrZeroAddress()",
@@ -1313,18 +1447,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1491,74 +1613,6 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": [
-      "constructor(uint64 _chainID)",
-      "error ErrZeroAddress()",
-      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
-      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
-      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProveRemainingClaimed(address receiver, uint256 amount)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateChallenger(address indexed account, bool status)",
-      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
-      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
-      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "function LAYER_2_CHAIN_ID() view returns (uint64)",
-      "function __maxNumTxInChunk() view returns (uint256)",
-      "function addChallenger(address _account)",
-      "function batchChallengeReward(address owner) view returns (uint256 amount)",
-      "function batchChallenged() view returns (uint256)",
-      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
-      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
-      "function batchExist(uint256 batchIndex) view returns (bool)",
-      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
-      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
-      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
-      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
-      "function claimProveRemaining(address receiver)",
-      "function claimReward(address receiver)",
-      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
-      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
-      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function finalizeBatch(bytes _batchHeader)",
-      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function importGenesisBatch(bytes _batchHeader)",
-      "function inChallenge() view returns (bool)",
-      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
-      "function initialize2(bytes32 _prevStateRoot)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
-      "function l1StakingContract() view returns (address)",
-      "function lastCommittedBatchIndex() view returns (uint256)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function messageQueue() view returns (address)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proofRewardPercent() view returns (uint256)",
-      "function proofWindow() view returns (uint256)",
-      "function proveRemaining() view returns (uint256)",
-      "function proveState(bytes _batchHeader, bytes _batchProof)",
-      "function removeChallenger(address _account)",
-      "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function revertReqIndex() view returns (uint256)",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
-      "function updateProofWindow(uint256 _newWindow)",
-      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
-      "function updateVerifier(address _newVerifier)",
-      "function verifier() view returns (address)",
-      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
-    ],
     "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
       "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
       "error ErrZeroAddress()",
@@ -1697,17 +1751,73 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": [
+      "constructor(uint64 _chainID)",
+      "error ErrZeroAddress()",
+      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
+      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
+      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProveRemainingClaimed(address receiver, uint256 amount)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Unpaused(address account)",
+      "event UpdateChallenger(address indexed account, bool status)",
+      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
+      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
+      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "function LAYER_2_CHAIN_ID() view returns (uint64)",
+      "function __maxNumTxInChunk() view returns (uint256)",
+      "function addChallenger(address _account)",
+      "function batchChallengeReward(address owner) view returns (uint256 amount)",
+      "function batchChallenged() view returns (uint256)",
+      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
+      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
+      "function batchExist(uint256 batchIndex) view returns (bool)",
+      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
+      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
+      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
+      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
+      "function claimProveRemaining(address receiver)",
+      "function claimReward(address receiver)",
+      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
+      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
+      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function finalizeBatch(bytes _batchHeader)",
+      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function importGenesisBatch(bytes _batchHeader)",
+      "function inChallenge() view returns (bool)",
+      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
+      "function initialize2(bytes32 _prevStateRoot)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
+      "function l1StakingContract() view returns (address)",
+      "function lastCommittedBatchIndex() view returns (uint256)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proofRewardPercent() view returns (uint256)",
+      "function proofWindow() view returns (uint256)",
+      "function proveRemaining() view returns (uint256)",
+      "function proveState(bytes _batchHeader, bytes _batchProof)",
+      "function removeChallenger(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _batchHeader, uint256 _count)",
+      "function revertReqIndex() view returns (uint256)",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
+      "function updateProofWindow(uint256 _newWindow)",
+      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
+      "function updateVerifier(address _newVerifier)",
+      "function verifier() view returns (address)",
+      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
     ],
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
@@ -1725,8 +1835,19 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morph/EnforcedTxGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",
+    "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "morph/L1GatewayRouter": "0x75d8f72d7a567ebdd261b1cd49fbe60bb70eba6eba7f76e062da2077aef8766b",
+    "morph/L1MessageQueueWithGasPriceOracle": "0x397bfa253b671dce5c2dc237c74abbcb62a8546a82f9f0dde3296ab9596e4d81",
+    "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
+    "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "morph/MorphRollup": "0x8c1811818c29498d4bb01605e3bd9329308c48a8745b57e46b177360b3107556",
+    "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
+    "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
+    "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23439432 },
-  "permissionsConfigHash": "0x9d706040e6b6175e67963212b7359937379436850260ff96ef020bb55ce93388"
+  "usedBlockNumbers": { "ethereum": 24147646 },
+  "permissionsConfigHash": "0xaddfc6f11d438300a233239b203603fdaccec91998402658b709559c6d1f0f97"
 }

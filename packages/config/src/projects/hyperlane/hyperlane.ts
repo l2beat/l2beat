@@ -105,7 +105,7 @@ export const hyperlane: Bridge = {
         'The Hyperlane message protocol is used. If the verifier (called ISM, default is a multisig) agrees on a message, it is considered verified and can be executed at the destination.',
       sentiment: 'bad',
     },
-    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   technology: {
     destination: [

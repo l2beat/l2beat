@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('oevnetwork')
 
 export const oevnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  archivedAt: UnixTime(1766143183),
   additionalPurposes: ['Oracles'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -33,6 +34,8 @@ export const oevnetwork: ScalingProject = orbitStackL2({
       socialMedia: [
         'https://discord.com/invite/api3dao',
         'https://medium.com/api3',
+        'https://x.com/api3dao',
+        'https://t.me/API3DAO',
       ],
     },
   },

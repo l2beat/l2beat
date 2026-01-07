@@ -2,9 +2,7 @@ import { getEnv } from '@l2beat/backend-tools'
 import type { Config } from './Config'
 import { makeConfig } from './makeConfig'
 
-export const config = getConfig()
-
-function getConfig(): Config {
+export function getConfig(): Config {
   const env = getEnv()
   const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
 

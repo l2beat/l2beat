@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1759928430,
-  "configHash": "0x398fa437a677823692bb44ea735473f748f77c4dc61677f75c6db8dac8ceb159",
+  "timestamp": 1765280943,
+  "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
   "entries": [
     {
       "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -30,13 +30,13 @@
       }
     },
     {
-      "name": "AggLayerGateway",
+      "name": "AgglayerGateway",
       "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
       "type": "Contract",
       "template": "polygon-cdk/AgglayerGateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba"
+        "0x3e98abe94ddfb10602e8ecfe755bcbc2ef664b24dbdf25c9231ac726af8d7da7"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
@@ -44,15 +44,20 @@
       "sinceBlock": 22717971,
       "values": {
         "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346",
+        "$implementation": "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49",
         "$pastUpgrades": [
           [
             "2025-06-16T15:27:23.000Z",
             "0xe7c64d567589723d0920e6104296a434fb24193d2ccd33814d0b3fd753be5db2",
             ["eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346"]
+          ],
+          [
+            "2025-10-29T14:11:11.000Z",
+            "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+            ["eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -69,23 +74,56 @@
           "AL_FREEZE_PP_ROUTE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "AL_MULTISIG_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
         "addPpRouteAC": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
         "aggchainDefaultVKeyAC": [
           "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ],
+        "aggchainMultisigHash": "0x5fea5922ef634456425d2e3251455050449b5c787cdca45b6733d5b624d39591",
+        "aggchainSigners": ["eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"],
         "aggchainVKeys": {
           "0x00040001": [
             {
               "selector": "0x00040001",
               "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
             }
+          ],
+          "0x00060001": [
+            {
+              "selector": "0x00060001",
+              "newVKey": "0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6"
+            }
+          ],
+          "0x00080001": [
+            {
+              "selector": "0x00080001",
+              "newVKey": "0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"
+            }
           ]
         },
         "aggchainVKeysUpdated": {},
+        "AGGLAYER_GATEWAY_VERSION": "v1.1.0",
+        "alMultisigAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "freezePpRouteAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "getAggchainMultisigHash": "0x5fea5922ef634456425d2e3251455050449b5c787cdca45b6733d5b624d39591",
+        "getAggchainSignerInfos": [
+          {
+            "addr": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+            "url": "test"
+          }
+        ],
+        "getAggchainSigners": [
+          "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+        ],
+        "getAggchainSignersCount": 1,
+        "getThreshold": 1,
+        "MAX_AGGCHAIN_SIGNERS": 255,
         "routes": {
           "0x00000004": [
             {
@@ -93,31 +131,35 @@
               "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
             }
+          ],
+          "0x00000008": [
+            {
+              "selector": "0x00000008",
+              "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "pessimisticVKey": "0x000055f14384bdb5bb092fd7e5152ec31856321c5a30306ab95836bdf5cdb639"
+            }
           ]
-        }
+        },
+        "version": "v1.1.0"
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP = 1, ECDSA = 0). This map is e.g. used by AggchainFEP.getAggchainVKey()."
         },
         "aggchainVKeysUpdated": {
           "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
           "severity": "HIGH",
-          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
-        }
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey. It is freely chosen by the aggregator from among any of the listed routes."
+        },
+        "aggchainMultisigHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
-        "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": "AggLayerGateway"
+        "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49": "AgglayerGateway"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SharedProxyAdmin",
@@ -173,11 +215,6 @@
       ]
     },
     {
-      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
       "type": "EOA",
       "proxyType": "EOA"
@@ -211,6 +248,12 @@
           "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
           "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
           "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "change the aggchainSigners and threshold (a multisig used for permissioned state transitions).",
+          "role": ".alMultisigAC"
         },
         {
           "permission": "interact",
@@ -350,14 +393,11 @@
         "$members": [
           "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
           "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
-          "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
-          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
           "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
           "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
           "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
           "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
           "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
         ],
@@ -365,8 +405,8 @@
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 90,
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 95,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -375,22 +415,22 @@
       }
     },
     {
-      "name": "PolygonSharedBridge",
+      "name": "AgglayerBridge",
       "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonSharedBridge_al030",
+      "template": "polygon-cdk/AgglayerBridge",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xf77e37156ee166ea86bbe304138c8d57dd299347f411e731fa2086e15153a780"
+        "0xb40fddae6c645a55f315f2543ba01f6f0129babd6c85689e32e56f2d5d4b5b4a"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+      "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
         "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+        "$implementation": "eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad",
         "$pastUpgrades": [
           [
             "2023-03-24T10:18:47.000Z",
@@ -406,24 +446,31 @@
             "2025-06-23T14:46:23.000Z",
             "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
             ["eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
+          ],
+          [
+            "2025-10-29T14:11:11.000Z",
+            "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+            ["eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad"]
           ]
         ],
-        "$upgradeCount": 3,
-        "BRIDGE_VERSION": "al-v0.3.0",
+        "$upgradeCount": 4,
+        "BRIDGE_VERSION": "v1.1.0",
+        "bridgeLib": "eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3",
         "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x634fa87ece28ae8a4203c56d56ee22fdecdbc3878f139614ee7f8b2b5ef10118",
-        "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
+        "getRoot": "0xc30da45431d7b57d7a1b49dd8f987b4affea8d1a061184afd56413e295f9feb7",
+        "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
         "pendingProxiedTokensManager": "eth:0x0000000000000000000000000000000000000000",
         "polygonRollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "proxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "version": "v1.1.0",
         "WETHToken": "eth:0x0000000000000000000000000000000000000000",
-        "wrappedTokenBytecodeStorer": "eth:0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
+        "wrappedTokenBytecodeStorer": "eth:0xD4D47e9106EE78178d17201d59F83B1b4626DfDf"
       },
       "fieldMeta": {
         "isEmergencyState": {
@@ -437,7 +484,7 @@
       },
       "implementationNames": {
         "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
-        "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": "PolygonZkEVMBridgeV2"
+        "eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad": "AgglayerBridge"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -445,6 +492,23 @@
       "address": "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "BridgeLib",
+      "address": "eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3",
+      "type": "Contract",
+      "template": "polygon-cdk/BridgeLib",
+      "sourceHashes": [
+        "0xdc916d8fce90dde319984053e4265a1f951ffaefd2f0608c89644491bf493e07"
+      ],
+      "proxyType": "immutable",
+      "description": "Extension contract of the AgglayerBridge for asset metadata..",
+      "sinceTimestamp": 1759503191,
+      "sinceBlock": 23497972,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3": "BridgeLib"
+      }
     },
     {
       "name": "PolygonSecurityCouncil",
@@ -509,13 +573,13 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PolygonRollupManager",
+      "name": "AgglayerManager",
       "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonRollupManager_al030",
+      "template": "polygon-cdk/AgglayerManager",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xe1a044e355c430aefc18f156be2c4f677baa559d3fb102b60b836bb4e2b91220"
+        "0xc090b472b887aea0913f1a8fd38eec84d8a0faf5a90a03114035ebe5401c3d1f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
@@ -530,7 +594,7 @@
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240",
+        "$implementation": "eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:23.000Z",
@@ -571,9 +635,14 @@
             "2025-07-30T13:35:23.000Z",
             "0x289865ea6d92cdf5be21123b6ce61447f500ba14c229f02153113f8419af1695",
             ["eth:0x42B9fF0644741e3353162678596e7D6aA6a13240"]
+          ],
+          [
+            "2025-10-29T14:11:11.000Z",
+            "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+            ["eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -582,8 +651,8 @@
           "TRUSTED_AGGREGATOR": {
             "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
             "members": [
-              "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+              "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
             ]
           },
           "ADD_ROLLUP_TYPE": {
@@ -650,23 +719,25 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xe08a99731ebb5f67b1c389afad0edeb363cb131c7a09b16bd4bf4aa7a5ee2061",
+        "getRollupExitRoot": "0xcf9153c0e2d78892de71e048775120ce0d92794459f50442974cd95182efec32",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1759927595,
+        "lastAggregationTimestamp": 1765279847,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14, 17, 18, 19, 20, 3, 21, 22, 23, 7],
+        "pessimisticProofSenders": [
+          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
+        ],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "ROLLUP_MANAGER_VERSION": "al-v0.3.1",
-        "rollupCount": 23,
+        "ROLLUP_MANAGER_VERSION": "v1.0.0",
+        "rollupCount": 26,
         "rollupsDataV2": [
           {
             "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             "chainID": 1101,
-            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            "forkID": 12,
-            "rollupTypeID": 6,
-            "rollupVerifierType": 0,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
@@ -681,11 +752,11 @@
           {
             "rollupContract": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
             "chainID": 196,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
@@ -717,11 +788,11 @@
           {
             "rollupContract": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             "chainID": 994873017,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
@@ -780,11 +851,11 @@
           {
             "rollupContract": "eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
             "chainID": 9369,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
@@ -807,68 +878,95 @@
           {
             "rollupContract": "eth:0x7449449460b5B732A9754CA3d9A7916122A9190d",
             "chainID": 801,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
             "chainID": 45056,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
             "chainID": 8088,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
             "chainID": 747474,
             "verifier": "eth:0x0000000000000000000000000000000000000000",
             "forkID": 0,
-            "rollupTypeID": 12,
+            "rollupTypeID": 13,
             "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0xaf6a4CDe41B9C7FCe858E1B875765cdEDB8f84c8",
             "chainID": 838,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0x2f3d687e02dbe83B6cDaE02aeb66C0e8E69CcA4b",
             "chainID": 8338,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
             "rollupContract": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
             "chainID": 3864,
-            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xEB7eeB10CC04447262715ddaF7C7B111141c2358",
+            "chainID": 6767,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x7A7db0e6006827825ccfEA7eaA0d12979b6f9968",
+            "chainID": 6360,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0xE369D0C2aee9B32c3b0EC54443890bEDF11Ef6D4",
+            "chainID": 125125,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 13,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "rollupTypeCount": 12,
+        "rollupTypeCount": 14,
         "rollupTypes": [
           {
             "consensusImplementation": "eth:0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -965,15 +1063,32 @@
             "rollupVerifierType": 2,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x9532A2F35fc9B18BD4FE8315D9C5B1C1Cf6Ac660",
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "consensusImplementation": "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21",
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 819908,
-        "totalVerifiedBatches": 819413,
+        "totalSequencedBatches": 843619,
+        "totalVerifiedBatches": 843154,
         "trustedAggregatorAC": [
-          "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+          "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
         ],
-        "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+        "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "version": "v1.0.0"
       },
       "fieldMeta": {
         "isEmergencyState": {
@@ -993,7 +1108,7 @@
       },
       "implementationNames": {
         "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "TransparentUpgradeableProxy",
-        "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240": "PolygonRollupManager"
+        "eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618": "AgglayerManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -1003,18 +1118,13 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "PolygonGlobalExitRootV2",
+      "name": "AgglayerGER",
       "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonGlobalExitRootV2",
+      "template": "polygon-cdk/AgglayerGER",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067"
+        "0x0691e028b98db8d6bfadf2704505338eeea6f915426cadc2422a6b034b81e2fb"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
@@ -1023,7 +1133,7 @@
       "sinceBlock": 16896720,
       "values": {
         "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
+        "$implementation": "eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:11.000Z",
@@ -1044,32 +1154,26 @@
             "2025-06-23T14:46:23.000Z",
             "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
             ["eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]
+          ],
+          [
+            "2025-10-29T14:11:11.000Z",
+            "0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",
+            ["eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 73584,
-        "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x5d5294f4612dd29da2949252951f44be3da16dc0a595cd3d408797a6f2a7aa5d",
-        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        "depositCount": 81615,
+        "GER_VERSION": "v1.0.0",
+        "getRoot": "0x999974da86bea185c803d6bcff7c5ce703a1855901ee61670b4a44e548bda891",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "version": "v1.0.0"
       },
       "implementationNames": {
         "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "TransparentUpgradeableProxy",
-        "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": "PolygonZkEVMGlobalExitRootV2"
+        "eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5": "AgglayerGER"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "aggregatePolygon",
-          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "role": ".trustedAggregatorAC"
-        }
-      ]
     },
     {
       "address": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
@@ -1136,7 +1240,6 @@
           "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
           "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
           "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-          "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
           "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
           "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
         ],
@@ -1144,8 +1247,8 @@
         "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 21,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1162,6 +1265,18 @@
       "address": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "role": ".trustedAggregatorAC"
+        }
+      ]
     },
     {
       "address": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
@@ -1959,6 +2074,11 @@
       "address": "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1988,24 +2108,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240": [
+    "eth:0x15cAF18dEd768e3620E0f656221Bf6B400ad2618": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _aggLayerGateway)",
       "error AccessControlOnlyCanRenounceRolesForSelf()",
       "error AddressDoNotHaveRequiredRole()",
@@ -2055,6 +2158,7 @@
       "error NotAllowedAddress()",
       "error OldAccInputHashDoesNotExist()",
       "error OldStateRootDoesNotExist()",
+      "error OnlyAggchainManager()",
       "error OnlyEmergencyState()",
       "error OnlyNotEmergencyState()",
       "error OnlyRollupAdmin()",
@@ -2149,7 +2253,35 @@
       "function updateRollup(address rollupContract, uint32 newRollupTypeID, bytes upgradeData)",
       "function updateRollupByRollupAdmin(address rollupContract, uint32 newRollupTypeID)",
       "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
-      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof, bytes aggchainData)"
+      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof, bytes aggchainData)",
+      "function version() pure returns (string)"
+    ],
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3": [
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function safeDecimals(address token) view returns (uint8)",
+      "function safeName(address token) view returns (string)",
+      "function safeSymbol(address token) view returns (string)",
+      "function validateAndProcessPermit(address token, bytes permitData, address expectedOwner, address expectedSpender) returns (bool success)"
+    ],
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
+      "constructor(address _singleton)"
     ],
     "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2173,7 +2305,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": [
+    "eth:0x66E0120e3c965552a89AcC37b03f762624baC5Ad": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2186,6 +2318,7 @@
       "error FailedProxyDeployment()",
       "error GasTokenNetworkMustBeZeroOnEther()",
       "error GlobalExitRootInvalid()",
+      "error InvalidGlobalIndex()",
       "error InvalidInitializeFunction()",
       "error InvalidProxyAdmin(address proxyAdmin)",
       "error InvalidSmtProof()",
@@ -2195,17 +2328,17 @@
       "error MessageFailed()",
       "error MsgValueNotZero()",
       "error NativeTokenIsEther()",
+      "error NewDepositCountExceedsMax()",
       "error NoValueInMessagesOnGasTokenNetworks()",
+      "error NonZeroValueForUnusedFrontier()",
       "error NotValidAmount()",
-      "error NotValidOwner()",
-      "error NotValidSignature()",
-      "error NotValidSpender()",
       "error OnlyEmergencyState()",
       "error OnlyNotEmergencyState()",
       "error OnlyPendingProxiedTokensManager()",
       "error OnlyProxiedTokensManager()",
       "error OnlyRollupManager()",
       "error SafeERC20FailedOperation(address token)",
+      "error SubtreeFrontierMismatch()",
       "event AcceptProxiedTokensManagerRole(address oldProxiedTokensManager, address newProxiedTokensManager)",
       "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
       "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
@@ -2220,6 +2353,7 @@
       "function acceptProxiedTokensManagerRole()",
       "function activateEmergencyState()",
       "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeLib() view returns (address)",
       "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
       "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
       "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
@@ -2252,65 +2386,24 @@
       "function transferProxiedTokensManagerRole(address newProxiedTokensManager)",
       "function updateGlobalExitRoot()",
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
+      "function version() pure returns (string)",
       "function wrappedTokenBytecodeStorer() view returns (address)",
       "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
-    "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": [
-      "constructor()",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AggchainVKeyAlreadyExists()",
-      "error AggchainVKeyNotFound()",
-      "error InvalidInitialization()",
-      "error InvalidProofBytesLength()",
-      "error InvalidZeroAddress()",
-      "error NotInitializing()",
-      "error OnlyAggLayerAdmin()",
-      "error OnlyPendingAggLayerAdmin()",
-      "error PPSelectorCannotBeZero()",
-      "error RouteAlreadyExists(bytes4 selector, address verifier)",
-      "error RouteIsAlreadyFrozen(bytes4 selector)",
-      "error RouteIsFrozen(bytes4 selector)",
-      "error RouteNotFound(bytes4 selector)",
-      "error VKeyCannotBeZero()",
-      "event AddDefaultAggchainVKey(bytes4 selector, bytes32 newVKey)",
-      "event Initialized(uint64 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RouteAdded(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
-      "event RouteFrozen(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
-      "event UnsetDefaultAggchainVKey(bytes4 selector)",
-      "event UpdateDefaultAggchainVKey(bytes4 selector, bytes32 previousVKey, bytes32 newVKey)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function addDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newAggchainVKey)",
-      "function addPessimisticVKeyRoute(bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
-      "function defaultAggchainVKeys(bytes4 defaultAggchainSelector) view returns (bytes32 defaultAggchainVKey)",
-      "function freezePessimisticVKeyRoute(bytes4 pessimisticVKeySelector)",
-      "function getDefaultAggchainVKey(bytes4 defaultAggchainSelector) view returns (bytes32)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address defaultAdmin, address aggchainDefaultVKeyRole, address addRouteRole, address freezeRouteRole, bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
-      "function pessimisticVKeyRoutes(bytes4 pessimisticVKeySelector) view returns (address verifier, bytes32 pessimisticVKey, bool frozen)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unsetDefaultAggchainVKey(bytes4 defaultAggchainSelector)",
-      "function updateDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newDefaultAggchainVKey)",
-      "function verifyPessimisticProof(bytes publicValues, bytes proofBytes) view"
-    ],
-    "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": [
+    "eth:0x7F1655d9d570167B2a3FfD1Ef809D3Fdd74427C5": [
       "constructor(address _rollupManager, address _bridgeAddress)",
       "error GlobalExitRootAlreadySet()",
       "error GlobalExitRootNotFound()",
       "error InvalidZeroAddress()",
       "error MerkleTreeFull()",
+      "error NewDepositCountExceedsMax()",
+      "error NonZeroValueForUnusedFrontier()",
       "error OnlyAllowedContracts()",
       "error OnlyGlobalExitRootRemover()",
       "error OnlyGlobalExitRootUpdater()",
       "error OnlyPendingGlobalExitRootRemover()",
       "error OnlyPendingGlobalExitRootUpdater()",
+      "error SubtreeFrontierMismatch()",
       "event InitL1InfoRootMap(uint32 leafCount, bytes32 currentL1InfoRoot)",
       "event Initialized(uint8 version)",
       "event UpdateL1InfoTree(bytes32 indexed mainnetExitRoot, bytes32 indexed rollupExitRoot)",
@@ -2329,10 +2422,80 @@
       "function lastRollupExitRoot() view returns (bytes32)",
       "function rollupManager() view returns (address)",
       "function updateExitRoot(bytes32 newRoot)",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
+      "function version() pure returns (string)"
     ],
     "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xD062B7f9fbB89bdA59262E77015C34a27Dc9aB49": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AggchainSignersHashNotInitialized()",
+      "error AggchainSignersTooHigh()",
+      "error AggchainVKeyAlreadyExists()",
+      "error AggchainVKeyNotFound()",
+      "error IndicesNotInDescendingOrder()",
+      "error InvalidInitialization()",
+      "error InvalidInitializer()",
+      "error InvalidProofBytesLength()",
+      "error InvalidThreshold()",
+      "error InvalidZeroAddress()",
+      "error NotInitializing()",
+      "error OnlyAggLayerAdmin()",
+      "error OnlyPendingAggLayerAdmin()",
+      "error PPSelectorCannotBeZero()",
+      "error RouteAlreadyExists(bytes4 selector, address verifier)",
+      "error RouteIsAlreadyFrozen(bytes4 selector)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SignerAlreadyExists()",
+      "error SignerCannotBeZero()",
+      "error SignerDoesNotExist()",
+      "error SignerURLCannotBeEmpty()",
+      "error VKeyCannotBeZero()",
+      "event AddDefaultAggchainVKey(bytes4 selector, bytes32 newVKey)",
+      "event Initialized(uint64 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RouteAdded(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event RouteFrozen(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event SignersAndThresholdUpdated(address[] aggchainSigners, uint256 newThreshold, bytes32 newAggchainMultisigHash)",
+      "event UnsetDefaultAggchainVKey(bytes4 selector)",
+      "event UpdateDefaultAggchainVKey(bytes4 selector, bytes32 previousVKey, bytes32 newVKey)",
+      "function AGGLAYER_GATEWAY_VERSION() view returns (string)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MAX_AGGCHAIN_SIGNERS() view returns (uint256)",
+      "function addDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newAggchainVKey)",
+      "function addPessimisticVKeyRoute(bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
+      "function aggchainMultisigHash() view returns (bytes32)",
+      "function aggchainSigners(uint256) view returns (address)",
+      "function defaultAggchainVKeys(bytes4 defaultAggchainSelector) view returns (bytes32 defaultAggchainVKey)",
+      "function freezePessimisticVKeyRoute(bytes4 pessimisticVKeySelector)",
+      "function getAggchainMultisigHash() view returns (bytes32)",
+      "function getAggchainSignerInfos() view returns (tuple(address addr, string url)[])",
+      "function getAggchainSigners() view returns (address[])",
+      "function getAggchainSignersCount() view returns (uint256)",
+      "function getDefaultAggchainVKey(bytes4 defaultAggchainSelector) view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getThreshold() view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address multisigRole, tuple(address addr, string url)[] signersToAdd, uint256 newThreshold)",
+      "function initialize(address defaultAdmin, address aggchainDefaultVKeyRole, address addRouteRole, address freezeRouteRole, bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey, address multisigRole, tuple(address addr, string url)[] signersToAdd, uint256 newThreshold)",
+      "function isSigner(address _signer) view returns (bool)",
+      "function pessimisticVKeyRoutes(bytes4 pessimisticVKeySelector) view returns (address verifier, bytes32 pessimisticVKey, bool frozen)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function signerToURLs(address) view returns (string)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unsetDefaultAggchainVKey(bytes4 defaultAggchainSelector)",
+      "function updateDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newDefaultAggchainVKey)",
+      "function updateSignersAndThreshold(tuple(address addr, uint256 index)[] _signersToRemove, tuple(address addr, string url)[] _signersToAdd, uint256 _newThreshold)",
+      "function verifyPessimisticProof(bytes publicValues, bytes proofBytes) view",
+      "function version() pure returns (string)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -2426,13 +2589,14 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygon-cdk/AgglayerGateway": "0xe3233eedc0609119210c56c62004ae0e2f7b5e9d45e5d46aee3f9c2cbdc606d3",
-    "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
-    "polygon-cdk/PolygonRollupManager_al030": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
-    "polygon-cdk/PolygonSharedBridge_al030": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
+    "polygon-cdk/AgglayerBridge": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
+    "polygon-cdk/AgglayerGateway": "0x3119b04d3a7d74dbcbce6eb68fa36e4b7463b5b0606804a1406e5c73d8759f63",
+    "polygon-cdk/AgglayerGER": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
+    "polygon-cdk/AgglayerManager": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
+    "polygon-cdk/BridgeLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23533188 },
-  "permissionsConfigHash": "0xd18e3cb59729a51f2eda4291afc54ac6559021862018826e4e39e3326a643691"
+  "usedBlockNumbers": { "ethereum": 23975025 },
+  "permissionsConfigHash": "0xace2d8b8f73deb05db8db2e0c8347706b0d2c0109310f061d0da28ebfb0bb785"
 }

@@ -15,7 +15,6 @@ import {
 import { ChevronIcon } from '~/icons/Chevron'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
-import { formatAddress } from '~/utils/formatAddress'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
@@ -26,6 +25,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
       hash: string
       description?: string
       knownDeployments: {
+        projectsUsedIn: UsedInProjectWithIcon[]
         url?: string
         address: string
       }[]
@@ -86,7 +86,7 @@ function VerifierCollapsibleWithDetails({
         <div className="flex w-full items-center justify-between gap-1 px-6 py-3 font-bold hover:cursor-pointer">
           <div className="grid w-full grid-cols-[1fr_1fr_230px_1fr] gap-4 max-md:grid-cols-2 lg:[@media(max-width:1380px)]:grid-cols-[1fr_1fr_230px] md:[@media(max-width:850px)]:grid-cols-[1fr_1fr_230px]">
             <span className="text-left">
-              {formatAddress(verifierHash.hash)}
+              {`${verifierHash.hash.slice(0, 6)}...${verifierHash.hash.slice(-4)}`}
             </span>
             <div className="flex items-center gap-1.5 text-center">
               <p className="font-medium text-label-value-12 text-secondary">
@@ -102,10 +102,12 @@ function VerifierCollapsibleWithDetails({
               <p className="font-medium text-label-value-12 text-secondary">
                 Used in
               </p>
-              <ProjectsUsedIn
-                noL2ClassName="text-label-value-12 font-medium text-secondary"
-                usedIn={verifierHash.projectsUsedIn}
-              />
+              <div onClick={(e) => e.stopPropagation()}>
+                <ProjectsUsedIn
+                  noL2ClassName="text-label-value-12 font-medium text-secondary"
+                  usedIn={verifierHash.projectsUsedIn}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-1.5 lg:[@media(max-width:1380px)]:hidden [@media(max-width:850px)]:hidden">
               <div className="font-medium text-label-value-12 text-secondary">
@@ -131,7 +133,7 @@ function VerifierCollapsibleWithDetails({
               <div className="font-bold text-label-value-16">
                 Known deployments
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {verifierHash.knownDeployments.map((deployment, index) => (
                   <div key={deployment.url} className="space-y-2">
                     <h3 className="font-bold text-label-value-14">{`Deployment #${index + 1}`}</h3>
@@ -143,6 +145,15 @@ function VerifierCollapsibleWithDetails({
                         address={deployment.address}
                         href={deployment.url}
                         className="text-label-value-14"
+                      />
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium text-label-value-14 text-secondary">
+                        Used in:
+                      </span>
+                      <ProjectsUsedIn
+                        noL2ClassName="text-label-value-14 font-medium text-secondary"
+                        usedIn={deployment.projectsUsedIn}
                       />
                     </div>
                   </div>

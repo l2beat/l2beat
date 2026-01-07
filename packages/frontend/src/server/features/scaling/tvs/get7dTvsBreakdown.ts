@@ -1,12 +1,10 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
 import pick from 'lodash/pick'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
@@ -19,9 +17,7 @@ export interface SevenDayTvsBreakdown {
 export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit
   breakdown7d: BreakdownSplit
-  associated: BreakdownSplit
   change: BreakdownSplit
-  changeExcludingAssociated: BreakdownSplit
 }
 
 interface BreakdownSplit {
@@ -33,151 +29,148 @@ interface BreakdownSplit {
   stablecoin: number
   btc: number
   other: number
+  rwaRestricted: number
+  rwaPublic: number
+  associated: number
 }
 
-// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
-// support it yet. It's a performance issue.
-export const TvsBreakdownProjectFilter = v.union([
-  v.object({ type: v.enum(['all', 'layer2', 'bridge']) }),
-  v.object({ type: v.literal('projects'), projectIds: v.array(v.string()) }),
-])
+const TvsAdditionalProps = {
+  excludeAssociatedTokens: v.boolean().optional(),
+  excludeRwaRestrictedTokens: v.boolean().optional(),
+  customTarget: v.number().optional(),
+}
 
+export const TvsBreakdownProjectFilter = v.union([
+  v.object({
+    type: v.enum([
+      'all',
+      'layer2',
+      'bridge',
+      'rollups',
+      'validiumsAndOptimiums',
+      'others',
+      'notReviewed',
+    ]),
+    ...TvsAdditionalProps,
+  }),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
+    ...TvsAdditionalProps,
+  }),
+])
 type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
-  customTarget?: UnixTime,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
     return getMockTvsBreakdownData()
   }
 
-  const db = getDb()
-  const target = customTarget ?? getTvsTargetTimestamp()
-
-  const projectIds = props.type === 'projects' ? props.projectIds : undefined
+  const target = props.customTarget ?? getTvsTargetTimestamp()
 
   const [tvsProjects, values] = await Promise.all([
     getTvsProjects(createTvsBreakdownProjectFilter(props)),
-    db.tvsProjectValue.getProjectValuesAtTimestamps(
-      target - 7 * UnixTime.DAY,
-      target,
-      ['PROJECT', 'PROJECT_WA'],
-      projectIds,
-    ),
+    queryExecutor.execute({
+      name: 'getAtTimestampsPerProjectQuery',
+      args: [
+        target - 7 * UnixTime.DAY,
+        target,
+        props.excludeAssociatedTokens ?? false,
+        props.excludeRwaRestrictedTokens ?? true,
+      ],
+    }),
   ])
-
   const valuesByProject = pick(
-    groupBy(values, (v) => v.project),
+    values,
     tvsProjects.map((p) => p.projectId),
   )
 
   const projects: Record<string, ProjectSevenDayTvsBreakdown> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const [projectValuesAll, projectValuesWithoutAssociated] = partition(
-      projectValues,
-      (v) => v.type === 'PROJECT',
-    )
+    const latestValueRecord = projectValues.at(-1)
+    const oldestValueRecord = projectValues.at(0)
 
-    const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
-    const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
-    const latestValue = projectValuesAll.at(-1)
-    const oldestValue = projectValuesAll.at(0)
-
-    if (
-      !latestValue ||
-      !oldestValue ||
-      !latestWithoutAssociated ||
-      !oldestWithoutAssociated
-    ) {
+    if (!latestValueRecord || !oldestValueRecord) {
       continue
     }
 
+    const [
+      latestValue,
+      latestCanonical,
+      latestExternal,
+      latestNative,
+      latestEther,
+      latestStablecoin,
+      latestBtc,
+      latestRwaRestricted,
+      latestRwaPublic,
+      latestOther,
+      latestAssociated,
+    ] = latestValueRecord
+
+    const [
+      oldestValue,
+      oldestCanonical,
+      oldestExternal,
+      oldestNative,
+      oldestEther,
+      oldestStablecoin,
+      oldestBtc,
+      oldestRwaRestricted,
+      oldestRwaPublic,
+      oldestOther,
+      oldestAssociated,
+    ] = oldestValueRecord
+
     projects[projectId] = {
       breakdown: {
-        total: latestValue.value,
-        native: latestValue.native,
-        canonical: latestValue.canonical,
-        external: latestValue.external,
-        ether: latestValue.ether,
-        stablecoin: latestValue.stablecoin,
-        btc: latestValue.btc,
-        other: latestValue.other,
+        total: latestValue,
+        native: latestNative,
+        canonical: latestCanonical,
+        external: latestExternal,
+        ether: latestEther,
+        stablecoin: latestStablecoin,
+        btc: latestBtc,
+        other: latestOther,
+        rwaRestricted: latestRwaRestricted,
+        rwaPublic: latestRwaPublic,
+        associated: latestAssociated,
       },
       breakdown7d: {
-        total: oldestValue.value,
-        native: oldestValue.native,
-        canonical: oldestValue.canonical,
-        external: oldestValue.external,
-        ether: oldestValue.ether,
-        stablecoin: oldestValue.stablecoin,
-        btc: oldestValue.btc,
-        other: oldestValue.other,
-      },
-      associated: {
-        total: latestValue.associated,
-        native: latestValue.native - latestWithoutAssociated.native,
-        canonical: latestValue.canonical - latestWithoutAssociated.canonical,
-        external: latestValue.external - latestWithoutAssociated.external,
-        ether: latestValue.ether - latestWithoutAssociated.ether,
-        stablecoin: latestValue.stablecoin - latestWithoutAssociated.stablecoin,
-        btc: latestValue.btc - latestWithoutAssociated.btc,
-        other: latestValue.other - latestWithoutAssociated.other,
+        total: oldestValue,
+        native: oldestNative,
+        canonical: oldestCanonical,
+        external: oldestExternal,
+        ether: oldestEther,
+        stablecoin: oldestStablecoin,
+        btc: oldestBtc,
+        other: oldestOther,
+        rwaRestricted: oldestRwaRestricted,
+        rwaPublic: oldestRwaPublic,
+        associated: oldestAssociated,
       },
       change: {
-        total: calculatePercentageChange(latestValue.value, oldestValue.value),
-        native: calculatePercentageChange(
-          latestValue.native,
-          oldestValue.native,
-        ),
-        canonical: calculatePercentageChange(
-          latestValue.canonical,
-          oldestValue.canonical,
-        ),
-        external: calculatePercentageChange(
-          latestValue.external,
-          oldestValue.external,
-        ),
-        ether: calculatePercentageChange(latestValue.ether, oldestValue.ether),
+        total: calculatePercentageChange(latestValue, oldestValue),
+        native: calculatePercentageChange(latestNative, oldestNative),
+        canonical: calculatePercentageChange(latestCanonical, oldestCanonical),
+        external: calculatePercentageChange(latestExternal, oldestExternal),
+        ether: calculatePercentageChange(latestEther, oldestEther),
         stablecoin: calculatePercentageChange(
-          latestValue.stablecoin,
-          oldestValue.stablecoin,
+          latestStablecoin,
+          oldestStablecoin,
         ),
-        btc: calculatePercentageChange(latestValue.btc, oldestValue.btc),
-        other: calculatePercentageChange(latestValue.other, oldestValue.other),
-      },
-      changeExcludingAssociated: {
-        total: calculatePercentageChange(
-          latestWithoutAssociated.value,
-          oldestWithoutAssociated.value,
+        btc: calculatePercentageChange(latestBtc, oldestBtc),
+        other: calculatePercentageChange(latestOther, oldestOther),
+        rwaRestricted: calculatePercentageChange(
+          latestRwaRestricted,
+          oldestRwaRestricted,
         ),
-        native: calculatePercentageChange(
-          latestWithoutAssociated.native,
-          oldestWithoutAssociated.native,
-        ),
-        canonical: calculatePercentageChange(
-          latestWithoutAssociated.canonical,
-          oldestWithoutAssociated.canonical,
-        ),
-        external: calculatePercentageChange(
-          latestWithoutAssociated.external,
-          oldestWithoutAssociated.external,
-        ),
-        ether: calculatePercentageChange(
-          latestWithoutAssociated.ether,
-          oldestWithoutAssociated.ether,
-        ),
-        stablecoin: calculatePercentageChange(
-          latestWithoutAssociated.stablecoin,
-          oldestWithoutAssociated.stablecoin,
-        ),
-        btc: calculatePercentageChange(
-          latestWithoutAssociated.btc,
-          oldestWithoutAssociated.btc,
-        ),
-        other: calculatePercentageChange(
-          latestWithoutAssociated.other,
-          oldestWithoutAssociated.other,
+        rwaPublic: calculatePercentageChange(latestRwaPublic, oldestRwaPublic),
+        associated: calculatePercentageChange(
+          latestAssociated,
+          oldestAssociated,
         ),
       },
     }
@@ -204,6 +197,26 @@ function createTvsBreakdownProjectFilter(
       return () => true
     case 'layer2':
       return (project) => !!project.scalingInfo
+    case 'notReviewed':
+      return (project) => project.statuses.reviewStatus === 'initialReview'
+    case 'rollups':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'validiumsAndOptimiums':
+      return (project) =>
+        !!project.scalingInfo &&
+        (project.scalingInfo.type === 'Validium' ||
+          project.scalingInfo.type === 'Optimium' ||
+          project.scalingInfo.type === 'Plasma') &&
+        !(project.statuses.reviewStatus === 'initialReview')
+    case 'others':
+      return (project) =>
+        !!project.scalingInfo &&
+        project.scalingInfo.type === 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'bridge':
       return (project) => !!project.isBridge
   }
@@ -226,6 +239,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 30,
             btc: 4,
             other: 0,
+            rwaRestricted: 0,
+            rwaPublic: 0,
+            associated: 0,
           },
           breakdown7d: {
             total: 50,
@@ -236,16 +252,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 25,
             btc: 5,
             other: 0,
-          },
-          associated: {
-            total: 6,
-            native: 1,
-            canonical: 2,
-            external: 3,
-            ether: 0,
-            stablecoin: 0,
-            btc: 0,
-            other: 0,
+            rwaRestricted: 0,
+            rwaPublic: 0,
+            associated: 0,
           },
           change: {
             total: 0.4,
@@ -256,16 +265,9 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             stablecoin: 0.25,
             btc: 0.25,
             other: 0.25,
-          },
-          changeExcludingAssociated: {
-            total: 0.3,
-            canonical: 0.4,
-            native: 0.15,
-            external: 0.15,
-            ether: 0.15,
-            stablecoin: 0.15,
-            btc: 0.15,
-            other: 0.15,
+            rwaRestricted: 0.25,
+            rwaPublic: 0.25,
+            associated: 0.25,
           },
         },
       ]),

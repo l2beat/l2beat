@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x643352ab2a0a077b56f7e3efd4930971d2b3f8f7
+
+# Diff at Mon, 05 Jan 2026 17:44:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764933656
+- current timestamp: 1764933656
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933656 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x5303acf81c41c00eee7de3ceb69de3503bf1365b
+
+# Diff at Fri, 05 Dec 2025 11:21:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1edf3e71cea32596658a3ea017cea9df6408b77c block: 1763554611
+- current timestamp: 1764933656
+
+## Description
+
+Conduit multisig key rotation.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "eth:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.4:
+-        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+Generated with discovered.json: 0xc2a9a19320ccc138aa8fc46e52a8ec810f87c6cd
+
+# Diff at Wed, 19 Nov 2025 12:17:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b637644c92662f812c5b3f8fe7a2b8a31d11187 block: 1759480830
+- current timestamp: 1763554611
+
+## Description
+
+No more a Celestia L2.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x63"
++        "0x88"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "Celestia Nitro 3.3.2 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
+    }
+```
+
 Generated with discovered.json: 0x79ad1db1bfd211a048bf54728d743e18b1e5b504
 
 # Diff at Fri, 03 Oct 2025 08:41:37 GMT:

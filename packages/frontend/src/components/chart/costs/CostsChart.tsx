@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
@@ -17,43 +18,13 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
-import {
-  type CostsTimeRange,
-  rangeToResolution,
-} from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
-
-const chartMeta = {
-  calldata: {
-    label: 'Calldata',
-    color: 'var(--chart-stacked-blue)',
-    indicatorType: { shape: 'square' },
-  },
-  blobs: {
-    label: 'Blobs',
-    color: 'var(--chart-stacked-yellow)',
-    indicatorType: { shape: 'square' },
-  },
-  compute: {
-    label: 'Compute',
-    color: 'var(--chart-stacked-pink)',
-    indicatorType: { shape: 'square' },
-  },
-  overhead: {
-    label: 'Overhead',
-    color: 'var(--chart-stacked-purple)',
-    indicatorType: { shape: 'square' },
-  },
-  posted: {
-    label: 'Data posted',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line' },
-  },
-} satisfies ChartMeta
+import type { ChartRange, ChartResolution } from '~/utils/range/range'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from '../../../server/features/data-availability/throughput/utils/consts'
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -61,7 +32,10 @@ interface CostsChartDataPoint {
   blobs: number | null
   compute: number | null
   overhead: number | null
-  posted?: number | null
+  ethereum?: number | null
+  celestia?: number | null
+  avail?: number | null
+  eigenda?: number | null
 }
 
 interface Props {
@@ -70,15 +44,12 @@ interface Props {
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
-  range: CostsTimeRange
-  hasPostedData: boolean
+  range: ChartRange
   hasBlobs: boolean
   project?: ChartProject
   tickCount?: number
   className?: string
 }
-
-const hiddenDataKeys = ['posted'] as const
 
 export function CostsChart({
   project,
@@ -90,11 +61,19 @@ export function CostsChart({
   className,
   range,
   tickCount,
-  hasPostedData,
   hasBlobs,
 }: Props) {
-  const chartMeta = useMemo(
-    () => ({
+  const chartMeta = useMemo(() => {
+    const hasData = data?.reduce(
+      (acc, d) => ({
+        ethereum: acc.ethereum || isNumber(d.ethereum),
+        celestia: acc.celestia || isNumber(d.celestia),
+        avail: acc.avail || isNumber(d.avail),
+        eigenda: acc.eigenda || isNumber(d.eigenda),
+      }),
+      { ethereum: false, celestia: false, avail: false, eigenda: false },
+    )
+    return {
       calldata: {
         label: 'Calldata',
         color: 'var(--chart-stacked-blue)',
@@ -119,21 +98,51 @@ export function CostsChart({
         color: 'var(--chart-stacked-purple)',
         indicatorType: { shape: 'square' },
       },
-      posted: {
-        label: 'Data posted',
-        color: 'var(--chart-emerald)',
-        indicatorType: { shape: 'line' },
-      },
-    }),
-    [hasBlobs],
-  ) satisfies ChartMeta
+      ...(hasData?.ethereum
+        ? {
+            ethereum: {
+              label: 'Data posted on Ethereum',
+              color: 'var(--chart-ethereum)',
+              indicatorType: { shape: 'line' as const },
+            },
+          }
+        : {}),
+      ...(hasData?.celestia
+        ? {
+            celestia: {
+              label: 'Data posted on Celestia',
+              color: 'var(--chart-fuchsia)',
+              indicatorType: { shape: 'line' as const },
+            },
+          }
+        : {}),
+      ...(hasData?.avail
+        ? {
+            avail: {
+              label: 'Data posted on Avail',
+              color: 'var(--chart-sky)',
+              indicatorType: { shape: 'line' as const },
+            },
+          }
+        : {}),
+      ...(hasData?.eigenda
+        ? {
+            eigenda: {
+              label: 'Data posted on EigenDA',
+              color: 'var(--chart-lime)',
+              indicatorType: { shape: 'line' as const },
+            },
+          }
+        : {}),
+    }
+  }, [hasBlobs, data]) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     chartMeta,
-    hiddenDataKeys,
+    THROUGHPUT_ENABLED_DA_LAYERS as (keyof typeof chartMeta)[],
   )
 
-  const resolution = rangeToResolution({ type: range })
+  const resolution = rangeToResolution(range)
 
   return (
     <ChartContainer
@@ -202,34 +211,64 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />
-        {hasPostedData && (
+        {chartMeta.ethereum && (
           <Line
             yAxisId="right"
-            dataKey="posted"
+            dataKey="ethereum"
             strokeWidth={2}
-            stroke={chartMeta.posted.color}
+            stroke={chartMeta.ethereum.color}
             isAnimationActive={false}
             dot={false}
-            hide={!dataKeys.includes('posted')}
+            hide={!dataKeys.includes('ethereum')}
+          />
+        )}
+        {chartMeta.celestia && (
+          <Line
+            yAxisId="right"
+            dataKey="celestia"
+            strokeWidth={2}
+            stroke={chartMeta.celestia.color}
+            isAnimationActive={false}
+            dot={false}
+            hide={!dataKeys.includes('celestia')}
+          />
+        )}
+        {chartMeta.avail && (
+          <Line
+            yAxisId="right"
+            dataKey="avail"
+            strokeWidth={2}
+            stroke={chartMeta.avail.color}
+            isAnimationActive={false}
+            dot={false}
+            hide={!dataKeys.includes('avail')}
+          />
+        )}
+        {chartMeta.eigenda && (
+          <Line
+            yAxisId="right"
+            dataKey="eigenda"
+            strokeWidth={2}
+            stroke={chartMeta.eigenda.color}
+            isAnimationActive={false}
+            dot={false}
+            hide={!dataKeys.includes('eigenda')}
           />
         )}
 
-        {hasPostedData && (
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tickFormatter={(value: number) => formatBytes(value)}
-            tickLine={false}
-            axisLine={false}
-            mirror
-            tickCount={tickCount ?? 3}
-            dy={-10}
-            tick={{
-              width: 100,
-            }}
-            hide={!dataKeys.includes('posted')}
-          />
-        )}
+        <YAxis
+          yAxisId="right"
+          orientation="right"
+          tickFormatter={(value: number) => formatBytes(value)}
+          tickLine={false}
+          axisLine={false}
+          mirror
+          tickCount={tickCount ?? 3}
+          dy={-10}
+          tick={{
+            width: 100,
+          }}
+        />
 
         {getCommonChartComponents({
           data,
@@ -245,8 +284,13 @@ export function CostsChart({
           syncedUntil,
         })}
         <ChartTooltip
-          content={<CustomTooltip unit={unit} resolution={resolution} />}
-          filterNull={false}
+          content={
+            <CustomTooltip
+              unit={unit}
+              resolution={resolution}
+              chartMeta={chartMeta}
+            />
+          }
         />
       </ComposedChart>
     </ChartContainer>
@@ -259,9 +303,11 @@ function CustomTooltip({
   label,
   unit,
   resolution,
+  chartMeta,
 }: TooltipProps<number, string> & {
   unit: CostsUnit
-  resolution: CostsResolution
+  resolution: ChartResolution
+  chartMeta: ChartMeta
 }) {
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -311,10 +357,11 @@ function CustomTooltip({
           {actualPayload.map((entry) => {
             if (entry.type === 'none' || entry.hide) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
+            assert(config, 'No config')
             return (
               <div
                 key={entry.name}
-                className="flex items-center justify-between gap-x-1"
+                className="flex items-center justify-between gap-x-2"
               >
                 <span className="flex items-center gap-1">
                   <ChartDataIndicator
@@ -326,9 +373,10 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.value !== null && entry.value !== undefined
-                    ? entry.name === 'posted' ||
-                      entry.name === 'estimatedPosted'
+                  {entry.value !== null &&
+                  entry.value !== undefined &&
+                  entry.name !== undefined
+                    ? THROUGHPUT_ENABLED_DA_LAYERS.includes(entry.name)
                       ? formatBytes(entry.value)
                       : formatCostValue(entry.value, unit, 'total')
                     : 'No data'}

@@ -1,17 +1,19 @@
 import { getTvsChart } from '~/server/features/scaling/tvs/getTvsChartData'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { ps } from '~/server/projects'
+import type { ChartRange } from '~/utils/range/range'
 
 interface Params {
   slug: string
-  range: TvsChartRange
+  range: ChartRange
   excludeAssociatedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
 }
 
 export async function getScalingTvsProjectApiData({
   slug,
   range,
   excludeAssociatedTokens,
+  excludeRwaRestrictedTokens,
 }: Params) {
   const project = await ps.getProject({
     slug,
@@ -26,9 +28,10 @@ export async function getScalingTvsProjectApiData({
   }
 
   const data = await getTvsChart({
-    range: { type: range },
+    range,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const pointsWithData = data.chart.filter(

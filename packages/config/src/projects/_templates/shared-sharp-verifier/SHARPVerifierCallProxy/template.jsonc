@@ -3,6 +3,7 @@
   "displayName": "SHARPVerifierCallProxy",
   "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows {{$admin}} to change the otherwise immutable verifier contract with {{upgradeActivationDelayFmt}} delay.",
   "category": "shared",
+  "ignoreRelatives": ["customProxyImplementations"],
   "fields": {
     "$admin": {
       "severity": "HIGH",
@@ -20,6 +21,70 @@
         "args": []
       },
       "edit": ["format", "FormatSeconds"]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+          "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+          "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+          "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+          "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+          "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+          "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+        }
+      }
+    },
+    "governanceAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN"
+        },
+        "pickRoleMembers": "GOVERNANCE_ADMIN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the upgrade admin amd access control roles."
+        }
+      ]
+    },
+    "appGovernorAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR"
+        },
+        "pickRoleMembers": "APP_GOVERNOR"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set custom implementations for specific operators (changes the verifier based on who calls it)."
+        }
+      ]
+    },
+    "customProxyImplementations": {
+      "description": "Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "customReference",
+        "add": { "event": "CustomReferenceSet" }
+      }
+    },
+    "customImplOperators": {
+      "description": "Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": { "event": "CustomReferenceSet" },
+        "remove": { "event": "CustomReferenceCleared" }
+      }
     }
   }
 }

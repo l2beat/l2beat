@@ -9,7 +9,7 @@ import {
   makeEntryStructureConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
@@ -35,8 +35,8 @@ export const onChainProjects: string[] = [
   'dydx',
   'tokens',
   'gateway',
-  'hibachi',
   'opcm16',
+  'aztecnetwork',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
@@ -118,13 +118,52 @@ describe('discovery config.jsonc', () => {
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
     for (const c of configs) {
       const discovery = configReader.readDiscovery(c.name)
-      const reason = templateService.discoveryNeedsRefresh(discovery, c)
+      const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
       assert(
-        reason === undefined,
-        `${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
+        reasons.length === 0,
+        `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
+  })
+
+  describe('shape addresses are unique', () => {
+    const shapes = templateService.listAllTemplates()
+
+    for (const [templateId, { shapePath }] of Object.entries(shapes)) {
+      it(`shape ${templateId}:${shapePath} has unique addresses`, () => {
+        const shape = templateService.readShapeSchema(shapePath)
+        const addresses = Object.values(shape).map((x) => x.address)
+
+        const asKey = (
+          address: ChainSpecificAddress | ChainSpecificAddress[],
+        ) => {
+          const array = Array.isArray(address) ? address : [address]
+          return JSON.stringify(array.sort())
+        }
+
+        const uniqueAddresses = unique(addresses, asKey)
+        expect(addresses).toHaveLength(uniqueAddresses.length)
+      })
+    }
+  })
+
+  describe('description is not default', () => {
+    for (const c of configs)
+      it(`project ${c.name} has a change descripition in diffHistory.md that's not the default one`, () => {
+        const description = configReader.readDiffLastDescription(c.name)
+
+        const defaultDescriptionDiscover =
+          'Provide description of changes. This section will be preserved.'
+
+        // TODO(radomski): Enable this when projects less projects have this as
+        // their last diffHistory.md description
+        //
+        // const defaultDescriptionRediscover =
+        //   'Discovery rerun on the same block number with only config-related changes.'
+
+        expect(description).not.toEqual(defaultDescriptionDiscover)
+      })
   })
 
   it('discovery.json does not include errors', () => {

@@ -1,11 +1,11 @@
 {
   "Verifier": {
-    "hash": "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235",
+    "hash": "0xd881126529e0daf8d0b2ae5f0e2cba1e08d66257d01bc4307c119c601ab7cbc0",
     "address": "eth:0x70F3FBf8a427155185Ec90BED8a3434203de9604",
     "blockNumber": 22188285
   },
   "Verifier_v26": {
-    "hash": "0xac062c888d75a5e5685f3daea3d381ad10133a719da8fe05d01ec88eca972104",
+    "hash": "0x0eee3e8ac76b79ea0ebd002e2253db2e69b9bc1521975dbc939fff5f77e9f1e0",
     "address": "eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
     "blockNumber": 22188285
   }

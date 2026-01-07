@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x88e08a4cef7852ad536bf992b19147a8a36bd940
+
+# Diff at Tue, 21 Oct 2025 13:03:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f84f38d955d28a8999dd7d778885ae35c9ff2846 block: 1756452095
+- current timestamp: 1761051768
+
+## Description
+
+Multisig member removed and threshold decreased.
+
+## Watched changes
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306"
+      values.$threshold:
+-        9
++        8
+      values.multisigThreshold:
+-        "9 of 12 (75%)"
++        "8 of 11 (73%)"
+    }
+```
+
 Generated with discovered.json: 0x6b9ca482d09410f0c20874b2e74b1bf5f587a76b
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

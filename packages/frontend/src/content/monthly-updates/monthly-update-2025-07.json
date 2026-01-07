@@ -92,6 +92,7 @@
     },
     {
       "type": "data-availability",
+      "id": "eigenlayer",
       "daLayerId": "eigenda",
       "name": "EigenLayer",
       "news": [

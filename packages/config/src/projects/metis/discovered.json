@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "timestamp": 1759830990,
-  "configHash": "0x0392ea2028909b0926d04dd6762027bea1c5b6b1090ac6a608d080501dcc96af",
+  "configHash": "0xdc31177b0f5e95d424c001b522ab0d46e73dca6bb2f080d05edd9803ded9c9cf",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -339,7 +339,7 @@
       "type": "Contract",
       "template": "metis/FaultDisputeGame",
       "sourceHashes": [
-        "0xdb0bc4b729d8cc8e76dd61589bf15ae77b281c791ca8a7c9c615f855d0e1be37"
+        "0xcab2446b5b05f3af5fbdda3c99e19228203a34e88d64e1c3a1f0d011e8465100"
       ],
       "proxyType": "immutable",
       "description": "Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.",
@@ -1418,7 +1418,7 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "l1CrossDomainMessenger": "metis-andromeda:0xEeeeffFfFffFFFfFFFFFFFffffffFffFFfFfEEeF",
         "messageNonce": 107989
       },
       "implementationNames": {
@@ -2630,6 +2630,6 @@
     "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060"
   },
-  "usedBlockNumbers": { "metis": 21390716, "ethereum": 23525123 },
+  "usedBlockNumbers": { "ethereum": 23525123, "metis": 21390716 },
   "permissionsConfigHash": "0xe9dbaf23bc09033cf4f6e1ff53ba9c47d3cba348345f0472202e28783e85125c"
 }

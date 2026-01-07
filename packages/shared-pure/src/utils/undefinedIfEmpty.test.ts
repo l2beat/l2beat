@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { undefinedIfEmpty } from './undefinedIfEmpty'
+import { undefinedIfEmpty } from './undefinedIfEmpty.js'
 
 describe(undefinedIfEmpty.name, () => {
   it('returns undefined if array is empty', () => {

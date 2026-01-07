@@ -45,7 +45,7 @@ export function toAddressArray(
   if (Array.isArray(value)) {
     return value.flatMap((v) => toAddressArray(v))
   }
-  if (typeof value === 'object') {
+  if (typeof value === 'object' && value !== null) {
     return Object.values(value).flatMap((v) => toAddressArray(v))
   }
   if (typeof value === 'string') {

@@ -18,3 +18,20 @@ DEV_REMOTE_DB_URL_READ_ONLY=
 ```
 ./db-restore.sh <FEATURE>
 ```
+
+## Table restore script
+
+The `table-restore.sh` script allows you to restore specific tables from the remote database instead of restoring entire features.
+
+### How to use
+
+1. Follow steps 0-2 from the main restore script above (same prerequisites and setup)
+
+2. Run the script with one or more table names:
+```bash
+# Restore a single table
+./table-restore.sh IndexerState
+
+# Restore multiple tables
+./table-restore.sh IndexerState IndexerConfiguration
+```

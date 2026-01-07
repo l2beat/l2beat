@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x8d612e9099446825668bf2debaaa5824b183022f
+
+# Diff at Tue, 04 Nov 2025 11:32:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1738322195
+- current timestamp: 1738322195
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1738322195 (main branch discovery), not current.
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
 Generated with discovered.json: 0x950eba8b9ede82d116d5d9c7f78f53da44ed4b2d
 
 # Diff at Wed, 03 Sep 2025 15:52:15 GMT:

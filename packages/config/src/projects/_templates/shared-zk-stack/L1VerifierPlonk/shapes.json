@@ -1,17 +1,28 @@
 {
   "L1VerifierPlonk": {
-    "hash": "0xece6251be1fc5f10e3b32223286672aa3d21fe15b0a9708327c3f4eadc5792ea",
+    "hash": "0xba563b3e93c053e22e0d26b866f611ea2fcbd2c57551aac025e12cf6a59e0366",
     "address": "eth:0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e",
     "blockNumber": 22423941
   },
   "L1VerifierPlonk_v28": {
-    "hash": "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387",
+    "hash": "0x4307e17da28c7b2fe29ba4658f25dec8e6611161bb60270d2ad04feb38988dc2",
     "address": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
     "blockNumber": 22775246
   },
   "L1VerifierPlonk_v28_1": {
-    "hash": "0xeef6daabc71bf67f02da2eebec0939402f99a165f2c3f40225b4b804021b4962",
+    "hash": "0xec6ace0c70a65bb3a520b16f88be2f013354490bc29572255ece332c9dbe2d14",
     "address": "gateway:0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717",
     "blockNumber": 17025
+  },
+  "L1VerifierPlonk_v29": {
+    "hash": "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d",
+    "address": "gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d",
+    "blockNumber": 75862
+  },
+  "L1VerifierPlonk_Airbender": {
+    "hash": "0x9fcab13afddb5d3eab2fff3a4f5df75281d1d9019bace6f64c13b210e1550958",
+    "address": "eth:0x8F870CF6621AEaF6026dFfc77f484FdAb370c4Ba",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

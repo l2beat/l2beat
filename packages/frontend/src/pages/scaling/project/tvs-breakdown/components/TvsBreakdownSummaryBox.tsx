@@ -1,10 +1,12 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   ChartStats,
   ChartStatsItem,
   ChartStatsPrimaryItem,
 } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +16,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-type Props = {
+export type TvsData = {
   breakdown: {
     total: number
     native: number
@@ -35,10 +37,17 @@ type Props = {
     btc: number
     other: number
   }
-  warning: WarningWithSentiment | undefined
 }
 
-export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
+export function TvsBreakdownSummaryBox({
+  tvsData,
+  isLoading,
+  warning,
+}: {
+  tvsData: TvsData | undefined
+  isLoading: boolean
+  warning: WarningWithSentiment | undefined
+}) {
   return (
     <ChartStats className="md:gap-8">
       <ChartStatsPrimaryItem
@@ -46,26 +55,33 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
         label="Total"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
       >
-        <ValueWithPercentageChange
-          change={change.total}
-          className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
-          changeClassName="text-label-value-16"
-          containerClassName="lg:flex-col max-lg:items-baseline"
-          changeContainerClassName="leading-none"
-        >
-          {warning && (
-            <Tooltip>
-              <TooltipTrigger className="relative top-[3px] mr-2">
-                <RoundedWarningIcon
-                  sentiment={warning?.sentiment}
-                  className="size-6"
-                />
-              </TooltipTrigger>
-              <TooltipContent>{warning?.value}</TooltipContent>
-            </Tooltip>
-          )}
-          {formatCurrency(breakdown.total, 'usd')}
-        </ValueWithPercentageChange>
+        {isLoading ? (
+          <div className="flex items-end gap-3.5 lg:flex-col lg:items-center lg:gap-0.5">
+            <Skeleton className="h-6 w-24" />
+            <Skeleton className="h-4 w-13" />
+          </div>
+        ) : (
+          <ValueWithPercentageChange
+            change={tvsData?.change.total}
+            className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
+            changeClassName="text-label-value-16"
+            containerClassName="lg:flex-col max-lg:items-baseline"
+            changeContainerClassName="leading-none"
+          >
+            {warning && (
+              <Tooltip>
+                <TooltipTrigger className="relative top-[3px] mr-2">
+                  <RoundedWarningIcon
+                    sentiment={warning?.sentiment}
+                    className="size-6"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>{warning?.value}</TooltipContent>
+              </Tooltip>
+            )}
+            {formatCurrency(tvsData?.breakdown.total ?? 0, 'usd')}
+          </ValueWithPercentageChange>
+        )}
       </ChartStatsPrimaryItem>
       <div className="grid gap-2 max-md:mt-3 md:col-span-3 md:grid-cols-3 md:gap-3">
         <ChartStatsItem
@@ -81,8 +97,9 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
           tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         >
           <StatItemContent
-            value={breakdown.canonical}
-            change={change.canonical}
+            isLoading={isLoading}
+            value={tvsData?.breakdown.canonical}
+            change={tvsData?.change.canonical}
           />
         </ChartStatsItem>
         <ChartStatsItem
@@ -97,7 +114,11 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
           }
           tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
         >
-          <StatItemContent value={breakdown.native} change={change.native} />
+          <StatItemContent
+            isLoading={isLoading}
+            value={tvsData?.breakdown.native}
+            change={tvsData?.change.native}
+          />
         </ChartStatsItem>
         <ChartStatsItem
           label={
@@ -112,25 +133,39 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
           tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
         >
           <StatItemContent
-            value={breakdown.external}
-            change={change.external}
+            isLoading={isLoading}
+            value={tvsData?.breakdown.external}
+            change={tvsData?.change.external}
           />
         </ChartStatsItem>
         <HorizontalSeparator className="my-1 md:col-span-3" />
         <ChartStatsItem label="ETH & derivatives">
-          <StatItemContent value={breakdown.ether} change={change.ether} />
+          <StatItemContent
+            isLoading={isLoading}
+            value={tvsData?.breakdown.ether}
+            change={tvsData?.change.ether}
+          />
         </ChartStatsItem>
         <ChartStatsItem label="Stablecoins">
           <StatItemContent
-            value={breakdown.stablecoin}
-            change={change.stablecoin}
+            isLoading={isLoading}
+            value={tvsData?.breakdown.stablecoin}
+            change={tvsData?.change.stablecoin}
           />
         </ChartStatsItem>
         <ChartStatsItem label="BTC & derivatives">
-          <StatItemContent value={breakdown.btc} change={change.btc} />
+          <StatItemContent
+            isLoading={isLoading}
+            value={tvsData?.breakdown.btc}
+            change={tvsData?.change.btc}
+          />
         </ChartStatsItem>
         <ChartStatsItem label="Other">
-          <StatItemContent value={breakdown.other} change={change.other} />
+          <StatItemContent
+            isLoading={isLoading}
+            value={tvsData?.breakdown.other}
+            change={tvsData?.change.other}
+          />
         </ChartStatsItem>
       </div>
     </ChartStats>
@@ -138,12 +173,16 @@ export function TvsBreakdownSummaryBox({ breakdown, change, warning }: Props) {
 }
 
 interface StatsItemProps {
-  value: number
-  change: number
+  value: number | undefined
+  change: number | undefined
   warning?: WarningWithSentiment
+  isLoading: boolean
 }
 
 function StatItemContent(props: StatsItemProps) {
+  if (props.isLoading) return <Skeleton className="h-[20px] w-32" />
+  if (props.value === undefined) return <NoDataBadge />
+
   return (
     <div className="flex items-center gap-1">
       <ValueWithPercentageChange

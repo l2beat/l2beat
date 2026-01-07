@@ -35,21 +35,11 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get(
-    '/scaling/activity',
-    validateRoute({
-      query: v.object({
-        tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
-          .default('rollups'),
-      }),
-    }),
-    async (req, res) => {
-      const data = await getScalingActivityData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
+  router.get('/scaling/activity', async (req, res) => {
+    const data = await getScalingActivityData(req, manifest, cache)
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   router.get('/scaling/risk', async (req, res) => {
     const data = await getScalingRiskData(req, manifest, cache)

@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x9f338bc11f9fff5fcbbf4dfed5803c51f5543e2d
+
+# Diff at Thu, 11 Dec 2025 14:44:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1761057242
+- current timestamp: 1765464194
+
+## Description
+
+Proposal 'Add operator and whitelist on ArbitrageManager'.
+
+https://etherscan.io/tx/0x5fc0f82626050e69d321cc50739845f5f491d68a5fe31293428751277205d308
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        68
++        69
+    }
+```
+
+Generated with discovered.json: 0x93cc56f31f0264a70a3b165609a797477c35f95b
+
+# Diff at Tue, 21 Oct 2025 14:35:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d52ad2c1af6ac3243376427c1aab587fd7b34800 block: 1756124502
+- current timestamp: 1761057242
+
+## Description
+
+new proposal to change the chaingpt token ownership.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        67
++        68
+    }
+```
+
 Generated with discovered.json: 0xa986b4c69be41d33fb4dc0278e910c53309ba052
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

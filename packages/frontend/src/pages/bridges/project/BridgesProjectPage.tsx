@@ -1,16 +1,14 @@
-import type { DehydratedState } from '@tanstack/react-query'
-import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
-import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -19,14 +17,9 @@ import { BridgesProjectSummary } from './components/BridgesProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: BridgesProjectEntry
-  queryState: DehydratedState
 }
 
-export function BridgesProjectPage({
-  projectEntry,
-  queryState,
-  ...props
-}: Props) {
+export function BridgesProjectPage({ projectEntry, ...props }: Props) {
   const navigationSections = projectDetailsToNavigationSections(
     projectEntry.sections,
   )
@@ -34,32 +27,33 @@ export function BridgesProjectPage({
 
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <SideNavLayout childrenWrapperClassName="md:pt-0">
-          <div
-            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
-            data-project-page
-            style={
-              projectEntry.colors
-                ? ({
-                    '--project-primary': projectEntry.colors.primary,
-                    '--project-secondary': projectEntry.colors.secondary,
-                  } as React.CSSProperties)
-                : undefined
-            }
-            data-has-colors={!!projectEntry.colors}
-          >
-            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
+      <SideNavLayout childrenWrapperClassName="md:pt-0">
+        <div
+          className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+          data-project-page
+          style={
+            projectEntry.colors
+              ? ({
+                  '--project-primary': projectEntry.colors.primary,
+                  '--project-secondary': projectEntry.colors.secondary,
+                } as React.CSSProperties)
+              : undefined
+          }
+          data-has-colors={!!projectEntry.colors}
+        >
+          <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
-            {!isNavigationEmpty && (
-              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
-                <MobileProjectNavigation sections={navigationSections} />
-              </div>
-            )}
+          {!isNavigationEmpty && (
+            <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+              <MobileSectionNavigation sections={navigationSections} />
+            </div>
+          )}
 
-            <div className="relative z-0 max-md:bg-surface-primary">
-              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
-              <div className="pt-6 max-md:px-4 lg:w-[calc(100%-196px)] lg:pt-4">
+          <div className="relative z-0 max-md:bg-surface-primary">
+            <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
+
+            <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+              <div className="pt-6 max-md:px-4 lg:pt-4">
                 <ProjectHeader project={projectEntry} />
                 <ProjectSummaryBars project={projectEntry} showBridgesWarning />
 
@@ -78,34 +72,31 @@ export function BridgesProjectPage({
                   />
                 </div>
               </div>
+              <div className="row-start-2 w-full">
+                <BridgesProjectSummary project={projectEntry} />
 
-              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
-                <div className="w-full">
-                  <BridgesProjectSummary project={projectEntry} />
-
-                  <HighlightableLinkContextProvider>
-                    <ProjectDetails items={projectEntry.sections} />
-                  </HighlightableLinkContextProvider>
-                </div>
-                {!isNavigationEmpty && (
-                  <div className="mt-2 hidden shrink-0 lg:block">
-                    <DesktopProjectNavigation
-                      project={{
-                        title: projectEntry.shortName ?? projectEntry.name,
-                        slug: projectEntry.slug,
-                        isUnderReview: !!projectEntry.underReviewStatus,
-                        icon: projectEntry.icon,
-                      }}
-                      sections={navigationSections}
-                    />
-                  </div>
-                )}
+                <HighlightableLinkContextProvider>
+                  <ProjectDetails items={projectEntry.sections} />
+                </HighlightableLinkContextProvider>
               </div>
+              {!isNavigationEmpty && (
+                <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
+                  <DesktopProjectNavigation
+                    project={{
+                      title: projectEntry.shortName ?? projectEntry.name,
+                      slug: projectEntry.slug,
+                      isUnderReview: !!projectEntry.underReviewStatus,
+                      icon: projectEntry.icon,
+                    }}
+                    sections={navigationSections}
+                  />
+                </div>
+              )}
             </div>
-            <ScrollToTopButton />
           </div>
-        </SideNavLayout>
-      </HydrationBoundary>
+          <ScrollToTopButton />
+        </div>
+      </SideNavLayout>
     </AppLayout>
   )
 }

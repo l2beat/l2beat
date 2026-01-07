@@ -1,7 +1,7 @@
 {
   "name": "nomad",
-  "timestamp": 1740653555,
-  "configHash": "0x5293339bc3444b28d45ba33d689e865d4b9a12496bbd080904c3db5425315eaf",
+  "timestamp": 1763563780,
+  "configHash": "0xc475693478521065e111d5fae761a234d30c65e5e8f6baadbb74a2aa381754f8",
   "entries": [
     {
       "name": "ReplicaBeaconProxy",
@@ -12,7 +12,9 @@
         "0x5a213a8e0ec856d7338e82299deea6e024ae062e3529eba107f202a6d8600857"
       ],
       "proxyType": "Optics Beacon proxy",
-      "ignoreInWatchMode": ["committedRoot"],
+      "ignoreInWatchMode": [
+        "committedRoot"
+      ],
       "sinceTimestamp": 1641898337,
       "sinceBlock": 13983756,
       "values": {
@@ -22,21 +24,27 @@
           [
             "2022-01-11T10:52:17.000Z",
             "0xfa18f505b85ddcf628daace22a887b59d6a65005975d0abcf71d33398d9984a7",
-            ["eth:0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"]
+            [
+              "eth:0x7F58bb8311DB968AB110889F2Dfa04ab7E8E831B"
+            ]
           ],
           [
             "2022-06-21T18:39:29.000Z",
             "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
-            ["eth:0xB92336759618F55bd0F8313bd843604592E27bd8"]
+            [
+              "eth:0xB92336759618F55bd0F8313bd843604592E27bd8"
+            ]
           ],
           [
             "2022-11-30T19:54:11.000Z",
             "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
-            ["eth:0x7f221A1850c12b57fed1f0831dd25399a13b68c2"]
+            [
+              "eth:0x7f221A1850c12b57fed1f0831dd25399a13b68c2"
+            ]
           ]
         ],
         "$upgradeCount": 3,
-        "committedRoot": "0xe4b36eb1b76ae0a0519308627ca33e93fa126308d5e90c9156967009db1877d1",
+        "committedRoot": "0x3ff7063d0ab1100b8ba755897ee08537d2381f5677edf884a87f602a01daa9c3",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
@@ -65,7 +73,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641898210,
       "sinceBlock": 13983742,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x063e871f8DB991CEAd34B557A00B157B360084cc": "UpgradeBeacon"
       }
@@ -85,7 +95,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641898337,
       "sinceBlock": 13983756,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x0876dFe4AcAe0e1c0a43302716483f5752298b71": "UpgradeBeacon"
       }
@@ -100,7 +112,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641899379,
       "sinceBlock": 13983838,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x0A6f564C5c9BeBD66F1595f1B51D1F3de6Ef3b79": "UpgradeBeaconProxy"
       }
@@ -128,21 +142,33 @@
           [
             "2022-01-11T10:51:01.000Z",
             "0xa9005bc6bbfdb16ae648a796e15a1ebea3f62af29f617647bb1b3399dff1dfbe",
-            ["eth:0x569D80f7FC17316B4C83f072b92EF37B72819DE0"]
+            [
+              "eth:0x569D80f7FC17316B4C83f072b92EF37B72819DE0"
+            ]
           ],
           [
             "2022-06-21T18:39:29.000Z",
             "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
-            ["eth:0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"]
+            [
+              "eth:0xfBea6D67DDd90E1f726C2622c6C42b016fDad5a7"
+            ]
           ],
           [
             "2022-11-30T19:54:11.000Z",
             "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
-            ["eth:0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"]
+            [
+              "eth:0xE9F0a0a787CEEA82f1c8fE7A783826eBD181e707"
+            ]
           ]
         ],
         "$upgradeCount": 3,
-        "domains": [1650811245, 25393, 2019844457, 1635148152, 1702260083],
+        "domains": [
+          1650811245,
+          25393,
+          2019844457,
+          1635148152,
+          1702260083
+        ],
         "governor": "eth:0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
         "governorDomain": 6648936,
         "inRecovery": true,
@@ -174,7 +200,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641898261,
       "sinceBlock": 13983750,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x67833a48b3F509d4252ac2c19cd604556eD6c981": "UpgradeBeacon"
       }
@@ -207,17 +235,23 @@
           [
             "2022-01-11T11:10:23.000Z",
             "0xbeb76185575a5352f7b9c9c2d302883fd092525e741f33434faea86af8bbcc7b",
-            ["eth:0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"]
+            [
+              "eth:0xD3dfD3eDe74E0DCEBC1AA685e151332857efCe2d"
+            ]
           ],
           [
             "2022-06-21T18:39:29.000Z",
             "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
-            ["eth:0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"]
+            [
+              "eth:0x15fdA9F60310d09FEA54E3c99d1197DfF5107248"
+            ]
           ],
           [
             "2022-11-30T19:54:11.000Z",
             "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
-            ["eth:0xe0db61ac718f502B485DEc66D013afbbE0B52F84"]
+            [
+              "eth:0xe0db61ac718f502B485DEc66D013afbbE0B52F84"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -271,36 +305,42 @@
           [
             "2022-01-11T10:50:10.000Z",
             "0x04d115136ab73cee543d5ab5635aa11f085511306720cbd77c75f175b7713802",
-            ["eth:0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"]
+            [
+              "eth:0x8F184D6Aa1977fd2F9d9024317D0ea5cF5815b6f"
+            ]
           ],
           [
             "2022-06-21T18:39:29.000Z",
             "0x7bccd64f4c4d5f6f545c2edf904857e6ddb460532fc0ac7eb5ac175cd21e56b1",
-            ["eth:0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"]
+            [
+              "eth:0x1f98FDc4D8d0806eB3902d57df7a2183b333B80C"
+            ]
           ],
           [
             "2022-11-30T19:54:11.000Z",
             "0x6795e8b0dc56aa4f3c7f1cc549b7c95efd97cb381f0d3227cce61c1700e9db65",
-            ["eth:0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"]
+            [
+              "eth:0xf3bb7e2d4B26ae2C3EAC41171840c227f457EA06"
+            ]
           ]
         ],
         "$upgradeCount": 3,
         "committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
-        "count": 20122,
+        "count": 20123,
         "homeDomainHash": "0x112314385541338d132d96253c1d3cb02a64b68804296e64e833f21583d1c512",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
         "OpticsBeacon_beacon": "eth:0x063e871f8DB991CEAd34B557A00B157B360084cc",
         "owner": "eth:0x3009C99D370B780304D2098196f1EBF779a4777a",
-        "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "queueLength": 0,
-        "root": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+        "queueEnd": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8",
+        "queueLength": 1,
+        "root": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8",
         "state": 1,
         "suggestUpdate": {
-          "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          "_committedRoot": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
+          "_new": "0x13f1c527a69e7a9343a2c654058213282fed23efb562ba55aa984aaad42e13e8"
         },
-        "tree": 20122,
+        "tree": 20123,
         "updater": "eth:0xa728bE5Be33E60D9c65677EBa569555536e587E4",
         "updaterManager": "eth:0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
         "VERSION": 0
@@ -320,7 +360,9 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1641859677,
       "sinceBlock": 13980892,
       "values": {
@@ -371,7 +413,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1669736603,
       "sinceBlock": 16076617,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xa4B86BcbB18639D8e708d6163a0c734aFcDB770c": "UpgradeBeaconProxy"
       }
@@ -396,7 +440,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641899423,
       "sinceBlock": 13983843,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xB70588b1A51F847d13158ff18E9Cac861dF5Fb00": "UpgradeBeacon"
       }
@@ -426,7 +472,9 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1641860106,
       "sinceBlock": 13980925,
       "values": {
@@ -793,6 +841,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21937195 },
+  "usedBlockNumbers": {
+    "ethereum": 23833821
+  },
   "permissionsConfigHash": "0x623f0eca1c36ff96d3bfb02d8745a05e6ed8173106b98ec23c2db45c9582baed"
 }

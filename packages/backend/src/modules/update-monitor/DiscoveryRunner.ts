@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  type AllProviderStats,
   type AllProviders,
   type Analysis,
   ConfigReader,
@@ -14,8 +13,6 @@ import {
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
-  ProviderMeasurement,
-  type ProviderStats,
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -27,7 +24,6 @@ import {
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
-import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
@@ -39,10 +35,6 @@ export interface DiscoveryRunResult {
   discovery: DiscoveryOutput
   flatSources: Record<string, string>
 }
-
-// 10 minutes
-const MAX_RETRIES = 30
-const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(
@@ -58,9 +50,6 @@ export class DiscoveryRunner {
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
-    // Reset discovery engine state to prevent contamination from previous failed discoveries
-    this.discoveryEngine.reset()
-
     logger.info(
       `Attempting discovery of ${projectName} at timestamp ${discoveryTimestamp}`,
     )
@@ -99,11 +88,6 @@ export class DiscoveryRunner {
       configReader,
       logger,
     )
-
-    const metrics = this.allProviders.getStats()
-    for (const [chain, chainMetrics] of Object.entries(metrics)) {
-      setDiscoveryMetrics(chainMetrics, chain)
-    }
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -193,127 +177,38 @@ export class DiscoveryRunner {
     return discoveries
   }
 
-  async discoverWithRetry(
+  async run(
     config: ConfigRegistry,
     timestamp: UnixTime,
     logger: Logger,
-    maxRetries = MAX_RETRIES,
-    delayMs = RETRY_DELAY_MS,
     dependentDiscoveries?: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
-    let result: DiscoveryRunResult | undefined = undefined
-    let err: Error | undefined = undefined
-
-    for (let i = 0; i <= maxRetries; i++) {
-      try {
-        result = await this.discover(
-          config.name,
-          timestamp,
-          dependentDiscoveries ?? {},
-          logger,
-          configReader,
-        )
-        break
-      } catch (error) {
-        err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
-      }
-
+    try {
+      return await this.discover(
+        config.name,
+        timestamp,
+        dependentDiscoveries ?? {},
+        logger,
+        configReader,
+      )
+    } catch (error) {
+      const err = isError(error)
+        ? (error as Error)
+        : new Error(JSON.stringify(error))
       const errorString = JSON.stringify(
         err,
         Object.getOwnPropertyNames(err),
         2,
       )
-      logger.warn(
-        `DiscoveryRunner: Retrying ${config.name} | attempt:${i} | error:${errorString}`,
-      )
-      await new Promise((resolve) => setTimeout(resolve, delayMs))
-    }
 
-    if (result === undefined) {
-      assert(
-        err !== undefined,
-        'Programmer error: Error should not be undefined there',
+      logger.warn(
+        `DiscoveryRunner: Failed to discover ${config.name} - error: ${errorString}`,
       )
       throw err
     }
-
-    return result
   }
 }
-
-function setDiscoveryMetrics(stats: AllProviderStats, chain: string) {
-  setProviderGauge(
-    lowLevelProviderCountGauge,
-    lowLevelProviderDurationGauge,
-    stats.lowLevelMeasurements,
-    chain,
-  )
-  setProviderGauge(
-    cacheProviderCountGauge,
-    cacheProviderDurationGauge,
-    stats.cacheMeasurements,
-    chain,
-  )
-  setProviderGauge(
-    highLevelProviderCountGauge,
-    highLevelProviderDurationGauge,
-    stats.highLevelMeasurements,
-    chain,
-  )
-}
-
-function setProviderGauge(
-  countGauge: ProviderGauge,
-  durationGauge: ProviderGauge,
-  stats: ProviderStats,
-  chain: string,
-) {
-  for (const [key, index] of Object.entries(ProviderMeasurement)) {
-    const entry = stats.get(index)
-    let avg = 0
-    if (entry.durations.length > 0) {
-      avg = entry.durations.reduce((acc, v) => acc + v) / entry.durations.length
-    }
-
-    countGauge.set({ chain: chain, method: key }, entry.count)
-    durationGauge.set({ chain: chain, method: key }, avg)
-  }
-}
-
-type ProviderGauge = Gauge<'chain' | 'method'>
-const lowLevelProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_low_level_provider_stats',
-  help: 'Low level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const lowLevelProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_low_level_provider_duration_stats',
-  help: 'Average duration of methods in low level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-
-const cacheProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_cache_provider_stats',
-  help: 'Cache hit counts done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const cacheProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_cache_provider_duration_stats',
-  help: 'Average duration of methods when a cache hit occurs during discovery',
-  labelNames: ['chain', 'method'],
-})
-
-const highLevelProviderCountGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_high_level_provider_stats',
-  help: 'High level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
-const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
-  name: 'update_monitor_high_level_provider_duration_stats',
-  help: 'Average duration of methods in high level provider calls done during discovery',
-  labelNames: ['chain', 'method'],
-})
 
 function remapNames(
   results: Analysis[],

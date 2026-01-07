@@ -22,7 +22,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "ethers": "^5.7.2",
     "flowbite-react": "^0.10.1",
-    "next": "15.0.1",
+    "next": "15.0.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "uuid": "^10.0.0",

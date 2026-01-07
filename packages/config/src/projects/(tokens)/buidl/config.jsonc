@@ -19,6 +19,7 @@
             "type": "ERC20Data",
             "overrides": {
               "source": "native",
+              "category": "rwaRestricted",
               "supply": "totalSupply" // minted by operators on each chain
             }
           }

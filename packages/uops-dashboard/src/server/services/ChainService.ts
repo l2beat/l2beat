@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { HttpClient, RpcClientCompat } from '@l2beat/shared'
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import type { BlockClient } from '../clients/block/BlockClient'
@@ -8,7 +8,7 @@ import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ScanClient } from '../clients/contract/ScanClient'
 import { EtherfaceClient } from '../clients/signature/EtherfaceClient'
 import { FourByteClient } from '../clients/signature/FourByteClient'
-import { OpenChainClient } from '../clients/signature/OpenChainClient'
+import { Sourcify4ByteClient } from '../clients/signature/Sourcify4ByteClient'
 import type { Counter } from '../counters/counter'
 import { RpcCounter } from '../counters/RpcCounter'
 import { StarknetCounter } from '../counters/StarknetCounter'
@@ -29,9 +29,9 @@ export class ChainService {
         this.counter = new StarknetCounter()
         break
       case 'rpc': {
-        this.client = new RpcClient({
+        this.client = RpcClientCompat.create({
           url: chain.blockchainApi.url,
-          sourceName: chain.id,
+          chain: chain.id,
           http,
           callsPerMinute: chain.blockchainApi.callsPerMinute ?? 100,
           logger: Logger.SILENT,
@@ -43,7 +43,7 @@ export class ChainService {
         const signatureClients = [
           new EtherfaceClient(),
           new FourByteClient(),
-          new OpenChainClient(),
+          new Sourcify4ByteClient(),
         ]
 
         let contractClient = undefined

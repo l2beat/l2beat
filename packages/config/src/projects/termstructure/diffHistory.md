@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x50e17bb1b6e70755ac961a8b0fef4c4d3419beae
+
+# Diff at Tue, 04 Nov 2025 11:34:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1722945083
+- current timestamp: 1722945083
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1722945083 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x5726c0198a0c274ad32ac9194a369dd3709ac0a790c50b9708d15aeeeaa16fea"
++        "0xa7ec1647f38f0c7990529d7ce895aaf366ba15069dd6236f6d38956e710a466d"
+    }
+```
+
+```diff
+    contract RollupFacet (eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"
++        "0xd90046cacc0e54862f057569b7ee64939824c8d68e7d58a78c0f6bf3850ed3ec"
+    }
+```
+
 Generated with discovered.json: 0x36c884f7af89a7cec515822cac7ce82650d16bba
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

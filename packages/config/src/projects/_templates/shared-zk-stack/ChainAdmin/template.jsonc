@@ -1,10 +1,9 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A governance proxy that lets {{owner}} act through it.",
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
-    "owner": {
-      "permissions": [{ "type": "act" }]
-    },
+    "owner": { "permissions": [{ "type": "act" }] },
     "tokenMultiplierSetter": {
       "permissions": [
         {

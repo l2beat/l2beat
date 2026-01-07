@@ -5,10 +5,10 @@ import {
   AccordionTrigger,
 } from '~/components/core/Accordion'
 import { CustomLink } from '~/components/link/CustomLink'
-import { SocialIcon } from '~/icons/products/SocialIcon'
+import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
-import { parseSocial } from './parseSocial'
+import { parseCustom } from './parseCustom'
 import type { ProjectLink } from './types'
 
 interface Props {
@@ -51,8 +51,8 @@ export function MobileProjectLinks({
                   </th>
                   <td className={cn('py-3', i === 0 && 'pt-0')}>
                     {links.map((link) => {
-                      if (name === 'Social') {
-                        const parsed = parseSocial(link)
+                      if (name === 'Social' || name === 'Other') {
+                        const parsed = parseCustom(link)
                         return (
                           <CustomLink
                             key={link}
@@ -60,7 +60,7 @@ export function MobileProjectLinks({
                             href={link}
                           >
                             {parsed.platform ? (
-                              <SocialIcon
+                              <CustomIcon
                                 className="size-[1em] shrink-0 fill-current"
                                 product={parsed.platform}
                               />

@@ -30,6 +30,7 @@ export const everclear: ScalingProject = orbitStackL2({
       socialMedia: [
         'https://x.com/everclearorg',
         'https://discord.gg/everclear',
+        'https://t.me/EverclearCommunity',
         'https://blog.everclear.org/',
       ],
     },

@@ -1,3 +1,713 @@
+Generated with discovered.json: 0x91e5ce7cf182f095806f70d554370066c7405451
+
+# Diff at Mon, 08 Dec 2025 15:40:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@57890661a42a73a0a4e8b9f30546cf1492a8662e block: 1761735589
+- current timestamp: 1765205910
+
+## Description
+
+Updated the SHARP verifier by modifying bootloader programs (applicative and simple).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram (eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.$pastUpgrades.10:
++        ["2025-12-08T11:08:11.000Z","0xed93cf713d33ac63297d8c7e2eafc0d9f277b718b4074600536eb9a4205bcb81",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.callProxyImplementation:
+-        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
++        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.2:
++        "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284"
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators.3:
++        "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526"
++++ description: Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.
++++ severity: HIGH
+      values.customProxyImplementations.1:
++        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
++        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (eth:0xdf0B63653E86995556079cbc09594BCD88D1D917)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+## Source code changes
+
+```diff
+.../CairoBootloaderProgram.sol                     | 145 +++++++++++----------
+ .../{.flat@1761735589 => .flat}/SHARPVerifier.sol  |   4 +-
+ 2 files changed, 75 insertions(+), 74 deletions(-)
+```
+
+Generated with discovered.json: 0xc394eaf0b246f4846a339613477ce2b05ea7052a
+
+# Diff at Wed, 29 Oct 2025 16:13:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eb258fc8a4f09c1ec78661959e5ef0ad546c0bea block: 1747113875
+- current timestamp: 1761735589
+
+## Description
+
+Upgraded SHARP verifier to support Stwo proofs. This includes:
+
+- An upgrade of bootloader program, diff: https://disco.l2beat.com/diff/eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515/eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636. The bootloader now holds some of the "builtins" code instead of the OS (EC_OP, Keccak).
+- An upgrade of the SHARPVerifier, diff: https://disco.l2beat.com/diff/eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942/eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934. Minor refactoring + program size update.
+- An upgrade of callproxy, diff: https://disco.l2beat.com/diff/eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458/eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb. Major changes: access control with new roles was added to call proxy. Custom proxy impl references added to call proxy to allow project operators use the old SHARP prover.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract EcdsaPointsXColumn (eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PedersenHashPointsXColumn (eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0x05C98569CA566a2035b87dE7d1b623C950798035)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PedersenHashPointsYColumn (eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed)
+    +++ description: None
+```
+
+```diff
+    contract SHARP Multisig (eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"manage the upgrade admin amd access control roles.","role":".governanceAdminAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60","description":"set custom implementations for specific operators (changes the verifier based on who calls it).","role":".appGovernorAC"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0x351666E9EeA6E012f08695ccd1923f37519563f1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771)
+    +++ description: None
+```
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      sourceHashes.1:
+-        "0x1993eaf381afc46f98a6d57b20658554efa839ecfb519a698bf45042d7ff5b27"
++        "0x7477a4b1d5db367c21e2c2d493553a2f519bd0d4305433a902d9b9322e7b81cb"
+      values.$implementation:
+-        "eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"
++        "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"
+      values.$pastUpgrades.9:
++        ["2025-10-19T08:27:47.000Z","0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
+      values.CALL_PROXY_VERSION:
+-        "3.1.0"
+      values.callProxyImplementation:
+-        "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"
++        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+      values.implementation:
+-        "eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"
++        "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"
++        "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+      values.appGovernorAC:
++        ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
++++ description: Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers.
++++ severity: HIGH
+      values.customImplOperators:
++        ["eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c","eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f"]
++++ description: Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call.
++++ severity: HIGH
+      values.customProxyImplementations:
++        ["eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"]
+      values.ENABLE_WINDOW_DURATION_SLOT:
++        "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738"
+      values.governanceAdminAC:
++        ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
+      errors:
+-        {"appGovernorAC":"Processing error occurred.","customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred.","governanceAdminAC":"Processing error occurred."}
+      implementationNames.eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458:
+-        "CallProxy"
+      implementationNames.eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb:
++        "CallProxy"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0x53daC4aB94955f35657463252a7b25F343A14451)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram (eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0xA9db7bDfbc3664C8954f490e4d94B8607a080f23)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0xAaAe0edF6536de72E7163D293518c40011179f8a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (eth:0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (eth:0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (eth:0xe155154845950573EC5F518fC0D4950AB71303ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EcdsaPointsYColumn (eth:0xE3929Ea107238Ce59d64A3cE497f12b57846B716)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0xedFfEA8296945aA91FC035Aefc8c33D737dBc573)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0x69833933e59269aB062eAfDe074C059ce5DC7755)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0x71574057D12541ccDa98643aC56441838353A26D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsXColumn (eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsYColumn (eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsYColumn (eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsXColumn (eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0xdf10757de64811df030cf88bB700B8CC63bAB090)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (eth:0xE4937AC1Da4211c6E48cf41A7B298b74edA9B103)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0xe58327a05F21ab12AB33A4408003A87e571f810D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0xE5AC9312f30623EB20D435533A4205790aF68Fd0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0xECc282Dc2571E43696d3259490faFa3b98790e20)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../CairoBootloaderProgram.sol                     |  712 +++++++++----
+ ...0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420.sol} |    0
+ ...0x2c9726B081305F314A74D570F0FED8dd9fab01A1.sol} |    0
+ ...0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba.sol} |    0
+ ...0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9.sol} |    0
+ ...0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F.sol} |    0
+ ...0xC716C4E3f68ad6785524f65Df129fC090339dBD8.sol} |    0
+ ...0xE4937AC1Da4211c6E48cf41A7B298b74edA9B103.sol} |    0
+ ...0xd8e47340bdC4fB06D37056b1725c653836Cc81E5.sol} |    0
+ ...0x015381651F240Ed6C44122dCba6Cf807c9442CD6.sol} |    0
+ ...0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC.sol} |    0
+ ...0x2867A4509B0969531641A42a3D4A9B0A07109B6B.sol} |    0
+ ...0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b.sol} |    0
+ ...0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11.sol} |    0
+ ...0x71574057D12541ccDa98643aC56441838353A26D.sol} |    0
+ ...0xFFC7974cd74b95f631f454cd787AAc28F0476b44.sol} |    0
+ ...0xbe0F8F150Fd10798524B4de80eD75751658CAEF3.sol} |    0
+ ...0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb.sol} |    0
+ ...0x7ca0201319f98b5494d90d0f8dA9427C64AF135e.sol} |    0
+ ...0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775.sol} |    0
+ ...0x99480b7c32C4F8965fF1929a368Dd586C6DC3595.sol} |    0
+ ...0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766.sol} |    0
+ ...0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4.sol} |    0
+ ...0xaE325CE505AA13EDC30d48187B05c24A3BaC2707.sol} |    0
+ ...0xd67C6798df68b98f1ef10BEeF0f35De788014fAA.sol} |    0
+ ...0x21578B24F86AdF6f59C406f641F693745C31Ea8F.sol} |    0
+ ...0xdf10757de64811df030cf88bB700B8CC63bAB090.sol} |    0
+ ...0xE5AC9312f30623EB20D435533A4205790aF68Fd0.sol} |    0
+ ...0xe58327a05F21ab12AB33A4408003A87e571f810D.sol} |    0
+ ...0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b.sol} |    0
+ ...0x69833933e59269aB062eAfDe074C059ce5DC7755.sol} |    0
+ ...0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E.sol} |    0
+ ...0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0.sol} |    0
+ ...0xECc282Dc2571E43696d3259490faFa3b98790e20.sol} |    0
+ ...0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc.sol} |    0
+ .../{.flat@1747113875 => .flat}/SHARPVerifier.sol  |   37 +-
+ .../SHARPVerifierCallProxy/CallProxy.sol           | 1080 ++++++++++++++++++--
+ 37 files changed, 1550 insertions(+), 279 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747113875 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      fieldMeta.customProxyImplementations:
++        {"severity":"HIGH","description":"Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call."}
+      fieldMeta.customImplOperators:
++        {"severity":"HIGH","description":"Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers."}
+      errors:
++        {"appGovernorAC":"Processing error occurred.","customImplOperators":"Processing error occurred.","customProxyImplementations":"Processing error occurred.","governanceAdminAC":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x1159dc07a4e41b92fb2d359ea34748d8d0e649c3
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

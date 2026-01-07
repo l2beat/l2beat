@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { CostsTableData } from '~/server/features/scaling/costs/getCostsTableData'
@@ -31,9 +32,11 @@ export function ScalingCostsTable({ entries }: Props) {
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
   }, [data, entries, metric, unit])
 
+  const columns = useMemo(() => getScalingCostsColumns(metric), [metric])
+
   const table = useTable({
     data: tableEntries,
-    columns: getScalingCostsColumns(metric),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -59,7 +62,12 @@ export function ScalingCostsTable({ entries }: Props) {
     }
   }, [metric, setSorting, table])
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }
 
 function mapToTableEntry(

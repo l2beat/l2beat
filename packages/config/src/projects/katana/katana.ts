@@ -32,7 +32,7 @@ const upgradeDelayString = formatSeconds(
   discovery.getContractValue<number>('Timelock', 'getMinDelay'),
 )
 const emergencyActivatedCount = discovery.getContractValue<number>(
-  'PolygonRollupManager',
+  'AgglayerManager',
   'emergencyStateCount',
 )
 const katanaVKeys = getKatanaVKeys()
@@ -59,7 +59,7 @@ export const katana: ScalingProject = {
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
     stacks: ['Agglayer CDK', 'OP Stack'],
-    upgradesAndGovernanceImage: 'agglayer-algateway',
+    upgradesAndGovernanceImage: 'agglayer',
     links: {
       websites: ['https://katana.network/'],
       bridges: [
@@ -332,19 +332,19 @@ export const katana: ScalingProject = {
           },
           {
             title:
-              'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
+              'Etherscan: AgglayerManager.sol - verifyPessimisticTrustedAggregator() function',
+            url: 'https://etherscan.io/address/0x15cAF18dEd768e3620E0f656221Bf6B400ad2618#code#F1#L1300',
           },
         ],
       },
     ],
   },
   upgradesAndGovernance: `
-The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
+The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
 
-The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
+The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Finally, it can manage SP1 verification keys for pessimistic proofs and aggchain proofs, which defines the affected chains' state validation. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Finally, it can manage SP1 verification keys for pessimistic proofs and aggchain proofs, which defines the affected chains' state validation. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
 
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
@@ -371,31 +371,29 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
 
 function getKatanaVKeys(): string[] {
   const vKeys: string[] = []
-  vKeys.push(
-    discovery.getContractValue<string>('AggchainFEP', 'aggregationVkey'),
-  )
-  vKeys.push(
-    discovery.getContractValue<string>('AggchainFEP', 'rangeVkeyCommitment'),
-  )
-
+  const opSuccinctConfig = discovery.getContractValue<{
+    [key: string]: string
+  }>('AggchainFEP', 'selectedOpSuccinctConfig')
+  vKeys.push(opSuccinctConfig['aggregationVkey'])
+  vKeys.push(opSuccinctConfig['rangeVkeyCommitment'])
   // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
   // Otherwise they are taken from AggchainFEP itself
   type ProgramHashDict = Record<string, Record<string, string>[]>
-  const useDefaultGateway = discovery.getContractValue<boolean>(
+  const useDefaultVkeys = discovery.getContractValue<boolean>(
     'AggchainFEP',
-    'useDefaultGateway',
+    'useDefaultVkeys',
   )
-  const aggchainVKeyDict = useDefaultGateway
+  const aggchainVKeyDict = useDefaultVkeys
     ? discovery.getContractValue<ProgramHashDict>(
-        'AggLayerGateway',
+        'AgglayerGateway',
         'aggchainVKeys',
       )
     : discovery.getContractValue<ProgramHashDict>(
         'AggchainFEP',
-        'ownedAggchainVKeys',
+        'aggregationVkey',
       )
   const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
-    'AggLayerGateway',
+    'AgglayerGateway',
     'routes',
   )
 

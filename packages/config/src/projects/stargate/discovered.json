@@ -1,7 +1,7 @@
 {
   "name": "stargate",
-  "timestamp": 1752074003,
-  "configHash": "0xe9b085ef02c6a9dc8ffc3651c027470359c6451454b4ef7d8cad5dd722b4f8a1",
+  "timestamp": 1761552231,
+  "configHash": "0xd7efd7daa259e31697499b1af42fcd632ebaebc23d83a7ed7bb9e457a2a60205",
   "entries": [
     {
       "name": "Factory",
@@ -84,18 +84,18 @@
             "dstChainId": 109,
             "dstPoolId": 3,
             "weight": 3027,
-            "balance": 814883223,
-            "lkb": 9970329739,
+            "balance": 645460822,
+            "lkb": 9821610331,
             "credits": 0,
-            "idealBalance": 3031522357
+            "idealBalance": 2752969670
           }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 716793345,
-        "eqFeePool": 1370250184,
+        "deltaCredit": 2119617657,
+        "eqFeePool": 1356928223,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -104,15 +104,15 @@
         "mintFeeBP": 0,
         "name": "Dai Stablecoin-LP",
         "poolId": 3,
-        "protocolFeeBalance": 74450869,
+        "protocolFeeBalance": 127843,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*DAI",
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "totalLiquidity": 215697417051,
-        "totalSupply": 215692854039,
+        "totalLiquidity": 215081389500,
+        "totalSupply": 215076839511,
         "totalWeight": 9999
       },
       "implementationNames": {
@@ -169,40 +169,40 @@
             "dstChainId": 111,
             "dstPoolId": 13,
             "weight": 2120,
-            "balance": "142307600885497113819",
-            "lkb": "88502865106986601953",
+            "balance": "39075230831766558363",
+            "lkb": "46017276949441930934",
             "credits": 0,
-            "idealBalance": "95304390885047188618"
+            "idealBalance": "16574342152789370197"
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 13,
             "weight": 4192,
-            "balance": "316520444659308757341",
-            "lkb": "68422449483782219232",
+            "balance": "37523644382115153203",
+            "lkb": "69016181601677765452",
             "credits": 0,
-            "idealBalance": "328141664037861957819"
+            "idealBalance": "82140342042666879857"
           },
           {
             "ready": true,
             "dstChainId": 184,
             "dstPoolId": 13,
             "weight": 1203,
-            "balance": "45133984078641128818",
-            "lkb": "8942666556338309395",
+            "balance": "765001843359348543",
+            "lkb": "11517449480720178113",
             "credits": 0,
-            "idealBalance": "59462702791434917144"
+            "idealBalance": "12439335554889263823"
           },
           {
             "ready": true,
             "dstChainId": 183,
             "dstPoolId": 13,
             "weight": 2483,
-            "balance": "682441042761041160411",
-            "lkb": "172026504358975995862",
-            "credits": 0,
-            "idealBalance": "181405038710538934983"
+            "balance": 0,
+            "lkb": "13461001732972370995",
+            "credits": "17260624952286482326",
+            "idealBalance": "61791402185269064532"
           },
           {
             "ready": true,
@@ -210,7 +210,7 @@
             "dstPoolId": 13,
             "weight": 2300,
             "balance": 0,
-            "lkb": "2646491575579306304854",
+            "lkb": "1460441007699289325891",
             "credits": 0,
             "idealBalance": 0
           }
@@ -219,8 +219,8 @@
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "9635366758269094861",
-        "eqFeePool": "10175565542292995547",
+        "deltaCredit": "5116088930332850836",
+        "eqFeePool": "21486171185084956163",
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 7,
         "localDecimals": 18,
@@ -229,15 +229,15 @@
         "mintFeeBP": 0,
         "name": "Stargate Ether Vault-LP",
         "poolId": 13,
-        "protocolFeeBalance": "1783581870914406927",
+        "protocolFeeBalance": "1192839700948319100",
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*SGETH",
         "token": "eth:0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c",
-        "totalLiquidity": "1821435838064107710917",
-        "totalSupply": "1820913278154853534538",
+        "totalLiquidity": "340954004903667200493",
+        "totalSupply": "340845783210980459045",
         "totalWeight": 12298
       },
       "implementationNames": {
@@ -276,7 +276,7 @@
             "weight": 1000,
             "balance": "10202716518128765932011",
             "lkb": "51634463168862864582672",
-            "credits": "8997100807464354021295",
+            "credits": "9783457769680007241215",
             "idealBalance": "110361166865538970192749"
           },
           {
@@ -284,40 +284,40 @@
             "dstChainId": 111,
             "dstPoolId": 20,
             "weight": 1000,
-            "balance": "50332479979004359859494",
-            "lkb": "68199271109297248719058",
+            "balance": "101720501399333680129894",
+            "lkb": "5507239376611099517746",
             "credits": 0,
-            "idealBalance": "101729220804119271168378"
+            "idealBalance": "101720501399333680129894"
           },
           {
             "ready": true,
             "dstChainId": 102,
             "dstPoolId": 20,
             "weight": 5000,
-            "balance": "35594679123183651860822",
-            "lkb": "227234274925684564867586",
-            "credits": "29107595084404509357696",
-            "idealBalance": "135710296834612152488467"
+            "balance": "135486510825182198962068",
+            "lkb": "152734335816923117943936",
+            "credits": "41390810676679400933951",
+            "idealBalance": "134792286799028886564823"
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 20,
             "weight": 2500,
-            "balance": "23040143882307273352810",
-            "lkb": "103312517399544650965368",
+            "balance": "17256720492542155366003",
+            "lkb": "32580257029410168699940",
             "credits": 0,
-            "idealBalance": "202138722407448546214642"
+            "idealBalance": "202046662642529643149746"
           },
           {
             "ready": true,
             "dstChainId": 106,
             "dstPoolId": 20,
             "weight": 500,
-            "balance": "107345895529837614646013",
-            "lkb": "23507927525029745678326",
+            "balance": "106365557188943291875428",
+            "lkb": "22553720728242086875881",
             "credits": 0,
-            "idealBalance": "107343876869667045272452"
+            "idealBalance": "107341720610029498397093"
           },
           {
             "ready": true,
@@ -325,7 +325,7 @@
             "dstPoolId": 20,
             "weight": 0,
             "balance": "7987504438728615266",
-            "lkb": "1095457356361792822367",
+            "lkb": "95557356361792822367",
             "credits": "35872067910060589139",
             "idealBalance": 0
           }
@@ -334,8 +334,8 @@
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "14222094153460752075243",
-        "eqFeePool": "655637515595360983563",
+        "deltaCredit": "1273107600958192365648",
+        "eqFeePool": "884892920589790607929",
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 6,
         "localDecimals": 18,
@@ -344,14 +344,14 @@
         "mintFeeBP": 0,
         "name": "Wootrade Network-LP",
         "poolId": 20,
-        "protocolFeeBalance": "304492868915317774656",
+        "protocolFeeBalance": "497529063143666344104",
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 250,
         "symbol": "S*WOO",
         "token": "eth:0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
-        "totalLiquidity": "705756926044512029323473",
+        "totalLiquidity": "705779712658954987368392",
         "totalSupply": "704816654964950715997533",
         "totalWeight": 10000
       },
@@ -573,138 +573,138 @@
             "dstChainId": 111,
             "dstPoolId": 1,
             "weight": 127,
-            "balance": 81612783038,
-            "lkb": 11463533901,
-            "credits": 0,
-            "idealBalance": 103621925330
+            "balance": 0,
+            "lkb": 816650915,
+            "credits": 8783939355,
+            "idealBalance": 0
           },
           {
             "ready": true,
             "dstChainId": 106,
             "dstPoolId": 1,
             "weight": 100,
-            "balance": 76983571388,
-            "lkb": 22066923425,
+            "balance": 3618986818,
+            "lkb": 1843422313,
             "credits": 0,
-            "idealBalance": 121597084709
+            "idealBalance": 11229802911
           },
           {
             "ready": true,
             "dstChainId": 106,
             "dstPoolId": 2,
             "weight": 100,
-            "balance": 21624514585,
-            "lkb": 17665844462,
-            "credits": 8121509749,
-            "idealBalance": 54820725394
+            "balance": 878670204,
+            "lkb": 5473302552,
+            "credits": 997658541,
+            "idealBalance": 4158030251
           },
           {
             "ready": true,
             "dstChainId": 102,
             "dstPoolId": 5,
             "weight": 325,
-            "balance": 87878750837,
-            "lkb": 82939668233,
+            "balance": 9394442407,
+            "lkb": 16529368056,
             "credits": 0,
-            "idealBalance": 9569957043
+            "idealBalance": 9461448341
           },
           {
             "ready": true,
             "dstChainId": 102,
             "dstPoolId": 2,
             "weight": 6390,
-            "balance": 571476122924,
-            "lkb": 743637089534,
+            "balance": 5289555820,
+            "lkb": 152200240443,
             "credits": 0,
-            "idealBalance": 1661354955404
+            "idealBalance": 110522750345
           },
           {
             "ready": true,
             "dstChainId": 109,
             "dstPoolId": 1,
             "weight": 100,
-            "balance": 108834719898,
-            "lkb": 26934880476,
+            "balance": 11944058380,
+            "lkb": 8019389919,
             "credits": 0,
-            "idealBalance": 215635445108
+            "idealBalance": 13052700515
           },
           {
             "ready": true,
             "dstChainId": 109,
             "dstPoolId": 2,
             "weight": 470,
-            "balance": 20927982206,
-            "lkb": 106963253350,
-            "credits": 19266425367,
-            "idealBalance": 57551294199
+            "balance": 2050426661,
+            "lkb": 46582727120,
+            "credits": 0,
+            "idealBalance": 4904111575
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 1,
             "weight": 100,
-            "balance": 14846378587,
-            "lkb": 28907948961,
+            "balance": 5817430819,
+            "lkb": 6944538819,
             "credits": 0,
-            "idealBalance": 91859631113
+            "idealBalance": 20497548302
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 2,
             "weight": 1917,
-            "balance": 49821903751,
-            "lkb": 508540269735,
+            "balance": 10949626780,
+            "lkb": 69149823541,
             "credits": 0,
-            "idealBalance": 88886360048
+            "idealBalance": 17344448795
           },
           {
             "ready": true,
             "dstChainId": 112,
             "dstPoolId": 21,
             "weight": 100,
-            "balance": 0,
-            "lkb": 0,
-            "credits": 486063660540,
-            "idealBalance": 0
+            "balance": 932452748,
+            "lkb": 98959822274,
+            "credits": 0,
+            "idealBalance": 916912230
           },
           {
             "ready": true,
             "dstChainId": 184,
             "dstPoolId": 1,
             "weight": 704,
-            "balance": 350367548580,
-            "lkb": 10410630767,
-            "credits": 0,
-            "idealBalance": 665033367905
+            "balance": 0,
+            "lkb": 4761621404,
+            "credits": 48782193563,
+            "idealBalance": 101367462595
           },
           {
             "ready": true,
             "dstChainId": 177,
             "dstPoolId": 2,
             "weight": 100,
-            "balance": 62133166503,
-            "lkb": 10637639684,
-            "credits": 18526669274,
-            "idealBalance": 316246145916
+            "balance": 102202584649,
+            "lkb": 0,
+            "credits": 1840909546,
+            "idealBalance": 315953646870
           },
           {
             "ready": true,
             "dstChainId": 181,
             "dstPoolId": 2,
             "weight": 675,
-            "balance": 14539644815,
-            "lkb": 176550285055,
+            "balance": 3285073095,
+            "lkb": 182061798978,
             "credits": 0,
-            "idealBalance": 233665324
+            "idealBalance": 173462661
           }
         ],
         "convertRate": 1,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 119156008825,
-        "eqFeePool": 200702189,
+        "deltaCredit": 64474288663,
+        "eqFeePool": 21890630833,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 26,
         "localDecimals": 6,
@@ -713,15 +713,15 @@
         "mintFeeBP": 0,
         "name": "Tether USD-LP",
         "poolId": 2,
-        "protocolFeeBalance": 64624989027,
+        "protocolFeeBalance": 5073493349,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDT",
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "totalLiquidity": 2871381620391,
-        "totalSupply": 2868053900660,
+        "totalLiquidity": 1308880770282,
+        "totalSupply": 1307356336093,
         "totalWeight": 11208
       },
       "implementationNames": {
@@ -763,18 +763,18 @@
             "dstChainId": 151,
             "dstPoolId": 19,
             "weight": 1,
-            "balance": 2232867952,
-            "lkb": 11131880149,
+            "balance": 25682347350,
+            "lkb": 2908555307,
             "credits": 0,
-            "idealBalance": 10199486811
+            "idealBalance": 0
           }
         ],
         "convertRate": 1,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 1,
-        "eqFeePool": 36768304,
+        "deltaCredit": 10102,
+        "eqFeePool": 37334919,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 1,
         "localDecimals": 6,
@@ -783,15 +783,15 @@
         "mintFeeBP": 0,
         "name": "Tether USD-LP",
         "poolId": 19,
-        "protocolFeeBalance": 54987518,
+        "protocolFeeBalance": 4042502,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDT",
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "totalLiquidity": 92583278243,
-        "totalSupply": 92495333492,
+        "totalLiquidity": 6648152936,
+        "totalSupply": 6641043874,
         "totalWeight": 1
       },
       "implementationNames": {
@@ -886,18 +886,18 @@
             "dstChainId": 111,
             "dstPoolId": 14,
             "weight": 1,
-            "balance": 3846607440,
-            "lkb": 460124292,
+            "balance": 4406861108,
+            "lkb": 2029728300,
             "credits": 0,
-            "idealBalance": 7049858487
+            "idealBalance": 6668297017
           }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 4778856244,
-        "eqFeePool": 33184127,
+        "deltaCredit": 1954864610,
+        "eqFeePool": 37021574,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 1,
         "localDecimals": 18,
@@ -906,15 +906,15 @@
         "mintFeeBP": 0,
         "name": "Synth sUSD-LP",
         "poolId": 14,
-        "protocolFeeBalance": 134933793,
+        "protocolFeeBalance": 1472193,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*sUSD",
         "token": "eth:0x57Ab1ec28D129707052df4dF418D58a2D46d5f51",
-        "totalLiquidity": 2035729489,
-        "totalSupply": 2035325654,
+        "totalLiquidity": 2028834301,
+        "totalSupply": 2028431833,
         "totalWeight": 1
       },
       "implementationNames": {
@@ -1003,7 +1003,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 974,
+        "nonce": 1037,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1080,18 +1080,18 @@
             "dstChainId": 102,
             "dstPoolId": 11,
             "weight": 1,
-            "balance": "150179259497061384574127",
-            "lkb": "131898599373955394638145",
+            "balance": "150180112335638829102264",
+            "lkb": "132205800022587444412983",
             "credits": 0,
-            "idealBalance": "150182348838011614356275"
+            "idealBalance": "150184103405402684419458"
           }
         ],
         "convertRate": 1,
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "2816705412845708314500",
-        "eqFeePool": "2918268987609284765",
+        "deltaCredit": "4942628844358690218713",
+        "eqFeePool": "3371292002638189665",
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -1100,15 +1100,15 @@
         "mintFeeBP": 0,
         "name": "Decentralized USD-LP",
         "poolId": 11,
-        "protocolFeeBalance": "24754682405902414200",
+        "protocolFeeBalance": "6447280911289714941",
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDD",
         "token": "eth:0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
-        "totalLiquidity": "150019710023024284279020",
-        "totalSupply": "149990084690792301371012",
+        "totalLiquidity": "150007025541103322893479",
+        "totalSupply": "149975892957820278647328",
         "totalWeight": 1
       },
       "implementationNames": {
@@ -1338,7 +1338,7 @@
             "dstChainId": 110,
             "dstPoolId": 16,
             "weight": 0,
-            "balance": 6569437649,
+            "balance": 6068331996,
             "lkb": 5801339,
             "credits": 0,
             "idealBalance": 0
@@ -1423,10 +1423,10 @@
             "dstChainId": 181,
             "dstPoolId": 22,
             "weight": 1,
-            "balance": "9779479140212311685",
-            "lkb": "67997971470649324",
+            "balance": "5145996697457450943",
+            "lkb": "3543814755599992999",
             "credits": 0,
-            "idealBalance": "9570314813075287307"
+            "idealBalance": "8012254436700593460"
           }
         ],
         "convertRate": 1,
@@ -1443,15 +1443,15 @@
         "mintFeeBP": 0,
         "name": "mETH-LP",
         "poolId": 22,
-        "protocolFeeBalance": "1231185650048865088",
+        "protocolFeeBalance": 218588745883906,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 0,
         "symbol": "S*mETH",
         "token": "eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "totalLiquidity": "277162298607673702",
-        "totalSupply": "276074777295238729",
+        "totalLiquidity": "677206016356850482",
+        "totalSupply": "674505125253116648",
         "totalWeight": 1
       },
       "implementationNames": {
@@ -1509,7 +1509,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 2,
+        "nonce": 17,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -1529,10 +1529,12 @@
       "name": "Google Cloud Oracle",
       "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "type": "Contract",
+      "template": "layerzero/DVN",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
       ],
       "proxyType": "immutable",
+      "description": "Defines the logic that validates LayerZero Packets for this DVN.",
       "sinceTimestamp": 1694217107,
       "sinceBlock": 18095084,
       "values": {
@@ -1591,18 +1593,18 @@
             "dstChainId": 151,
             "dstPoolId": 17,
             "weight": 1,
-            "balance": "2631808699329116426020",
-            "lkb": "164688024954855094111",
+            "balance": "2631753537518764963091",
+            "lkb": "134652398877197827801",
             "credits": 0,
-            "idealBalance": "5137929412639314112433"
+            "idealBalance": "5137818333188350834198"
           }
         ],
         "convertRate": 1,
         "decimals": 18,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": "18415886198213555139",
-        "eqFeePool": "8101150604018146808",
+        "deltaCredit": "12466217356932405842",
+        "eqFeePool": "12088122845270812461",
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -1611,34 +1613,19 @@
         "mintFeeBP": 0,
         "name": "Metis Token-LP",
         "poolId": 17,
-        "protocolFeeBalance": "10215418289092551925",
+        "protocolFeeBalance": 0,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 18,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*Metis",
         "token": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-        "totalLiquidity": "3438825441220324520531",
-        "totalSupply": "3430861657861432087145",
+        "totalLiquidity": "3432823605072257314551",
+        "totalSupply": "3424870733203721265743",
         "totalWeight": 1
       },
       "implementationNames": {
         "eth:0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": "Pool"
-      }
-    },
-    {
-      "name": "VerifierFeeLib",
-      "address": "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1694217119,
-      "sinceBlock": 18095085,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
       }
     },
     {
@@ -1800,91 +1787,91 @@
             "ready": true,
             "dstChainId": 111,
             "dstPoolId": 1,
-            "weight": 2394,
-            "balance": 93042284278,
-            "lkb": 350359617476,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
             "credits": 0,
-            "idealBalance": 103607130904
+            "idealBalance": 753960596057
           },
           {
             "ready": true,
             "dstChainId": 106,
             "dstPoolId": 1,
-            "weight": 674,
-            "balance": 50237832546,
-            "lkb": 100293335328,
-            "credits": 15915385787,
-            "idealBalance": 121603307815
+            "weight": 100,
+            "balance": 3923323302,
+            "lkb": 104774996370,
+            "credits": 0,
+            "idealBalance": 11230768222
           },
           {
             "ready": true,
             "dstChainId": 106,
             "dstPoolId": 2,
-            "weight": 108,
-            "balance": 54802968298,
-            "lkb": 16092941360,
-            "credits": 2548640079,
-            "idealBalance": 54802968298
+            "weight": 0,
+            "balance": 2847984932,
+            "lkb": 3086530241,
+            "credits": 0,
+            "idealBalance": 4041070979
           },
           {
             "ready": true,
             "dstChainId": 102,
             "dstPoolId": 5,
-            "weight": 643,
-            "balance": 75511367580,
-            "lkb": 167994798000,
-            "credits": 9968311165,
-            "idealBalance": 41072003874
+            "weight": 0,
+            "balance": 3842465106,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 40925033138
           },
           {
             "ready": true,
             "dstChainId": 102,
             "dstPoolId": 2,
-            "weight": 1119,
-            "balance": 52872897361,
-            "lkb": 55554008311,
+            "weight": 0,
+            "balance": 370270914,
+            "lkb": 1855,
             "credits": 0,
-            "idealBalance": 115033898376
+            "idealBalance": 7879590179
           },
           {
             "ready": true,
             "dstChainId": 109,
             "dstPoolId": 1,
-            "weight": 932,
-            "balance": 35977466126,
-            "lkb": 161272170753,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
             "credits": 0,
-            "idealBalance": 215556174647
+            "idealBalance": 44978850102
           },
           {
             "ready": true,
             "dstChainId": 109,
             "dstPoolId": 2,
-            "weight": 89,
-            "balance": 31814612098,
-            "lkb": 13413480308,
-            "credits": 2089335667,
-            "idealBalance": 57551294199
+            "weight": 0,
+            "balance": 1755415729,
+            "lkb": 1751339320,
+            "credits": 0,
+            "idealBalance": 4966222787
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 1,
-            "weight": 2953,
-            "balance": 144074431663,
-            "lkb": 371317130127,
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
             "credits": 0,
-            "idealBalance": 197392231229
+            "idealBalance": 65131101857
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 2,
-            "weight": 313,
-            "balance": 56539768157,
-            "lkb": 10530493378,
+            "weight": 0,
+            "balance": 7309881313,
+            "lkb": 90041,
             "credits": 0,
-            "idealBalance": 88864500936
+            "idealBalance": 17650698282
           },
           {
             "ready": true,
@@ -1900,39 +1887,39 @@
             "ready": true,
             "dstChainId": 184,
             "dstPoolId": 1,
-            "weight": 775,
-            "balance": 103167762206,
-            "lkb": 173555630130,
-            "credits": 14071494078,
-            "idealBalance": 105552697138
+            "weight": 0,
+            "balance": 0,
+            "lkb": 0,
+            "credits": 0,
+            "idealBalance": 18493576498
           },
           {
             "ready": true,
             "dstChainId": 214,
             "dstPoolId": 1,
-            "weight": 675,
+            "weight": 0,
             "balance": 1000000,
-            "lkb": 32663175048,
-            "credits": 55957127444,
+            "lkb": 0,
+            "credits": 0,
             "idealBalance": 1000000
           },
           {
             "ready": true,
             "dstChainId": 181,
             "dstPoolId": 1,
-            "weight": 675,
-            "balance": 6716641912,
-            "lkb": 176224929786,
-            "credits": 10477733307,
-            "idealBalance": 6716641912
+            "weight": 0,
+            "balance": 18060510124,
+            "lkb": 375147333,
+            "credits": 0,
+            "idealBalance": 37573090534
           }
         ],
         "convertRate": 1,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 37186509795,
-        "eqFeePool": 11040521113,
+        "deltaCredit": 202551127,
+        "eqFeePool": 399837961,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 26,
         "localDecimals": 6,
@@ -1941,16 +1928,16 @@
         "mintFeeBP": 0,
         "name": "USD Coin-LP",
         "poolId": 1,
-        "protocolFeeBalance": 14590655394,
+        "protocolFeeBalance": 1879202596,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*USDC",
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "totalLiquidity": 5407932060076,
-        "totalSupply": 5403651629235,
-        "totalWeight": 11350
+        "totalLiquidity": 297546871818,
+        "totalSupply": 297310586402,
+        "totalWeight": 100
       },
       "implementationNames": {
         "eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": "Pool"
@@ -1992,27 +1979,27 @@
             "dstPoolId": 15,
             "weight": 7342,
             "balance": 1643191658,
-            "lkb": 5616105692,
+            "lkb": 3740080711,
             "credits": 0,
-            "idealBalance": 42126846
+            "idealBalance": 42097366
           },
           {
             "ready": true,
             "dstChainId": 110,
             "dstPoolId": 15,
             "weight": 2158,
-            "balance": 91085737,
-            "lkb": 1189354040,
+            "balance": 20298717,
+            "lkb": 1149231199,
             "credits": 0,
-            "idealBalance": 493841717
+            "idealBalance": 493847178
           }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 4550495760,
-        "eqFeePool": 235588400,
+        "deltaCredit": 4996681650,
+        "eqFeePool": 246102362,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 2,
         "localDecimals": 18,
@@ -2021,15 +2008,15 @@
         "mintFeeBP": 0,
         "name": "LUSD Stablecoin-LP",
         "poolId": 15,
-        "protocolFeeBalance": 998560,
+        "protocolFeeBalance": 0,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
         "swapDeltaBP": 500,
         "symbol": "S*LUSD",
         "token": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "totalLiquidity": 101412875692,
-        "totalSupply": 101393214657,
+        "totalLiquidity": 101385468092,
+        "totalSupply": 101365808359,
         "totalWeight": 9500
       },
       "implementationNames": {
@@ -2081,7 +2068,7 @@
             "dstChainId": 106,
             "dstPoolId": 7,
             "weight": 4713,
-            "balance": 456011038,
+            "balance": 451020747,
             "lkb": 685319861,
             "credits": 0,
             "idealBalance": 465528193
@@ -2091,18 +2078,18 @@
             "dstChainId": 110,
             "dstPoolId": 7,
             "weight": 3482,
-            "balance": 17502767,
-            "lkb": 1189760374,
+            "balance": 827536360,
+            "lkb": 1182543083,
             "credits": 0,
-            "idealBalance": 834606107
+            "idealBalance": 817757672
           }
         ],
         "convertRate": 1000000000000,
         "decimals": 6,
         "defaultLPMode": false,
         "defaultSwapMode": false,
-        "deltaCredit": 1,
-        "eqFeePool": 323055190,
+        "deltaCredit": 4990788,
+        "eqFeePool": 323054761,
         "feeLibrary": "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
         "getChainPathsLength": 3,
         "localDecimals": 18,
@@ -2111,7 +2098,7 @@
         "mintFeeBP": 0,
         "name": "Frax-LP",
         "poolId": 7,
-        "protocolFeeBalance": 41135523,
+        "protocolFeeBalance": 3728,
         "router": "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98",
         "sharedDecimals": 6,
         "stopSwap": false,
@@ -3462,10 +3449,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
-      "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
-      "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
-    ],
     "eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": [
       "constructor(uint256 _poolId, address _router, address _token, uint256 _sharedDecimals, uint256 _localDecimals, address _feeLibrary, string _name, string _symbol)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -3721,8 +3704,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
-  "usedBlockNumbers": { "ethereum": 22882446 },
-  "permissionsConfigHash": "0xafa4f020829c0d52d852fe24a0c9542ea9765bb6478fdabc6cfbff9f75d2f7b6"
+  "usedBlockNumbers": { "ethereum": 23667470 },
+  "permissionsConfigHash": "0x1af48fd013447364e4bd4e81fc34edc3e0acaaa25b8988bf64305b778f0e656a"
 }

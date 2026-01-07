@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+  "ignoreInWatchMode": ["getLastProposalTimestamp"],
+  "fields": {
+    "challengers": {
+      "description": "Addresses allowed to challenge dispute games.",
+      "severity": "HIGH",
+      "permissions": [{ "type": "challenge" }],
+      "handler": {
+        "type": "event",
+        "select": "challenger",
+        "add": {
+          "event": "ChallengerPermissionUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "ChallengerPermissionUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      }
+    },
+    "proposers": {
+      "description": "Addresses allowed to propose dispute games.",
+      "severity": "HIGH",
+      "permissions": [{ "type": "propose" }],
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["!=", "#allowed", true]
+        }
+      }
+    }
+  }
+}

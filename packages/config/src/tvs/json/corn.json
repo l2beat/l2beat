@@ -188,6 +188,32 @@
     },
     {
       "mode": "auto",
+      "id": "corn-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+        "chain": "corn",
+        "decimals": 6,
+        "sinceTimestamp": 1741375647
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "corn-USDC.e",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
@@ -225,8 +251,7 @@
         "chain": "ethereum",
         "escrowAddress": "0x00943b11764176C3a8323aEFCBd6fE70CFb6272d",
         "decimals": 8,
-        "sinceTimestamp": 1733923955,
-        "untilTimestamp": 1756645200
+        "sinceTimestamp": 1733923955
       },
       "category": "btc",
       "source": "external",

@@ -1,22 +1,43 @@
 import * as trpcExpress from '@trpc/server/adapters/express'
 import { config as dotenv } from 'dotenv'
 import express from 'express'
-import { db } from './database/db'
-import { appRouter } from './trpc/appRouter'
+import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
+import { getConfig } from './config'
+import { getDb } from './database/db'
+import { createAppRouter } from './trpc/appRouter'
+import { createTRPCContext } from './trpc/trpc'
 
 dotenv()
 
 function main() {
   const app = express()
+  const config = getConfig()
+  const db = getDb(config)
+
   app.use(express.json())
+
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: config.coingeckoApiKey,
+  })
+
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
+  })
 
   app.use(
     '/trpc',
     trpcExpress.createExpressMiddleware({
-      router: appRouter,
-      createContext: ({ req }) => ({
-        headers: new Headers(req.headers as Record<string, string>),
+      router: createAppRouter({
+        coingeckoClient,
+        etherscanApiKey: config.etherscanApiKey,
       }),
+      allowMethodOverride: true, // Allow POST for GET queries due to large payload
+      createContext: ({ req }) =>
+        createTRPCContext({
+          headers: new Headers(req.headers as Record<string, string>),
+          config,
+          db,
+        }),
     }),
   )
 

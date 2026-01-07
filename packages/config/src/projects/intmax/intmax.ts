@@ -15,6 +15,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { scroll } from '../scroll/scroll'
 
 const discovery = new ProjectDiscovery('intmax')
+const finalizationPeriod = 0 // state root immediately finalized when proven
 
 export const intmax: ScalingProject = {
   type: 'layer3',
@@ -140,7 +141,10 @@ export const intmax: ScalingProject = {
   },
 
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:
@@ -152,7 +156,10 @@ export const intmax: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stackedRiskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:
@@ -199,4 +206,14 @@ export const intmax: ScalingProject = {
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
+  milestones: [
+    {
+      title: 'INTMAX mainnet officially launched',
+      url: 'https://www.linkedin.com/posts/intmax_june-26-2025-marked-a-turning-point-activity-7346176278313476097-8bUL/',
+      date: '2025-06-26T00:00:00Z',
+      description:
+        'After a testnet launch in December 2024, INTMAX publicly launches its mainnet.',
+      type: 'general',
+    },
+  ],
 }

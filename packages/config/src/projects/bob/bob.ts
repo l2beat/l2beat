@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW } from '../../common'
+import { DERIVATION, ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -28,7 +28,12 @@ export const bob: ScalingProject = opStackL2({
       documentation: ['https://docs.gobob.xyz'],
       explorers: ['https://explorer.gobob.xyz?'],
       repositories: ['https://github.com/bob-collective'],
-      socialMedia: ['https://twitter.com/build_on_bob'],
+      socialMedia: [
+        'https://twitter.com/build_on_bob',
+        'https://discord.com/invite/gobob',
+        'https://t.me/gobobxyz',
+        'https://youtube.com/@BuildOnBitcoin',
+      ],
     },
   },
   nonTemplateEscrows: [
@@ -42,8 +47,18 @@ export const bob: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://boundless-xyz.github.io/kailua/operate.html', // also the standard op stack op-node and op-geth but that is mentioned in the link
+  stateDerivation: DERIVATION.OPSTACK('BOB'),
   milestones: [
+    {
+      title: 'Kona derivation bug',
+      url: 'https://github.com/op-rs/kona/issues/3108',
+      date: '2025-12-05T00:00:00Z',
+      description:
+        'To fix a bug in the Kona derivation, the proof system is updated and a state root manually resolved.',
+      type: 'incident',
+    },
     {
       title: 'Proof System Intervention',
       url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
@@ -74,6 +89,7 @@ export const bob: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+  associatedTokens: ['BOB'],
   chainConfig: {
     name: 'bob',
     chainId: 60808,

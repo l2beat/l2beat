@@ -5,7 +5,7 @@ import { hotCacheFns } from 'scripts/hot-cache/hotCacheFns'
 export function createCacheWarmer(logger: Logger) {
   logger = logger.for('CacheWarmer')
 
-  cron.schedule('30 * * * *', async () => {
+  cron.schedule('0,15,30,45 * * * *', async () => {
     await Promise.all(
       Object.entries(hotCacheFns).map(async ([key, fn]) => {
         const start = performance.now()

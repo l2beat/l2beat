@@ -50,42 +50,42 @@
     "blockNumber": 22188285
   },
   "SystemConfig_v2_2_0_gastoken": {
-    "hash": "0x958268b83f73163b36af36fa55f5c0905421c07369bff2791652da02fa692a42",
+    "hash": "0xd11ebc38ae875b9412d457a72f0a1fcd3e10098f5c74ff8d7139c4afd4edcf27",
     "address": "eth:0xe9670A42Fd1433c29Eda37eE63EF96A3277A9b93",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0": {
-    "hash": "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c",
+    "hash": "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231",
     "address": "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_1": {
-    "hash": "0x5c566f7b9bd649708500a4ea89e4031d2dad1273ce56f6cb5e67d0193f136eb1",
+    "hash": "0xba7053b8415f99701360cfd314df22038f131c38fd35244b17f11e9f1edccbca",
     "address": "eth:0xcb32593E7eD1FBbf6db22348d444e2b1dDe71Fe6",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_2": {
-    "hash": "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533",
+    "hash": "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10",
     "address": "eth:0x2705B4628552F8F9E5f39DBb5a3Ec47B20cf6EA3",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_2_soon": {
-    "hash": "0xe25c80e0504b1ab9202b66f81f2f479e695d2440a0b5fe1ad31a300a75e64f2a",
+    "hash": "0xe264dfc9565dc9e2256bd9af6d66d2d37810f48be7d933f83acd3f6447258093",
     "address": "eth:0x9711256c6F2dFFabff9671dBaf1B4A3F7FB3Cffb",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_2_soon2": {
-    "hash": "0xc55288826f56a35e98165958789bfe8d6d7b222e1d4b406ef195bb4a390bfd71",
+    "hash": "0x839b34401a76cc25acc40c619feca981ae72bcbfea47fcc684c44caed2ece257",
     "address": "eth:0x2B0634e5b534BA765e24640281b4eB636d446dF3",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_3": {
-    "hash": "0xa49e39ce5420cad79f28224507ee4639c68c6d017b42f844b9d31e9cfc5c2c6f",
+    "hash": "0x3cdcfae65bb5f8df426350541726ba956e428f7b58730577db22fc48bd7ac4c7",
     "address": "eth:0xbc10fE919504D53953d27989CD5B48B9A7c08Be0",
     "blockNumber": 22188285
   },
   "SystemConfig_v2_3_0_beta_5": {
-    "hash": "0xe8f575933bc08fd1b1839c74e98447d0a629845c07c4281981ee0ba86ce88298",
+    "hash": "0x486cc643bd9a814c508c70bfdde67ca4b06b1e78c751b8d36a28df3480b5f499",
     "address": "eth:0xb52F8f5D1285e3bc13F9C53D27C6F7336a3B50A9",
     "blockNumber": 22188285
   },
@@ -100,7 +100,7 @@
     "blockNumber": 22346130
   },
   "SystemConfigCGT": {
-    "hash": "0xbc39dcaa99e0ac5d2815c68d4b71402fec659f68f2096d36220eda3402d6afdd",
+    "hash": "0xb2bb07938e4fd127a06b7b8aaee7e2fc9f01a80ab6a0d4e98819fc312dd3d9fa",
     "address": "eth:0xB58D3b8F88AC9234dc2329D0fb1197B0c381446D",
     "blockNumber": 22395854
   },
@@ -115,12 +115,12 @@
     "blockNumber": 22779924
   },
   "SystemConfig_v2_5_0_celo": {
-    "hash": "0xde1dd3a62e9db0a611ef7256805eb375a1fa1a6c8fa0ba6afc44df5b3cd7d8be",
+    "hash": "0x91eb7a11bc6b22871adb21c12699c6d110b59393d358aa82559927584f1bf804",
     "address": "eth:0x9c61C5a8FF9408B83ac92571278550097A9d2BB5",
     "blockNumber": 22882513
   },
   "SystemConfig_v2_5_0_L2OutputOracle": {
-    "hash": "0x50cae8451b81d721b283a52337ae8d16911d84dc1f12fc8183da626b93161519",
+    "hash": "0xd2fb7800c8a63e6663a1b5d55f47921d7ef7cdf159f0ad8310ae401e97fa6b05",
     "address": "eth:0xbF9d1CDF02720b50254e0ca70f01ffE4C9d82bae",
     "blockNumber": 23175174
   },
@@ -132,7 +132,30 @@
   "SystemConfig_v3_7_0": {
     "hash": "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9",
     "address": "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557",
-    "chain": "ethereum",
     "blockNumber": 23496267
+  },
+  "SystemConfig_v1_12_0_zircuit.sol": {
+    "hash": "0xe99a7b3921e19ba67802b943b31b611bea7fa413649085f55e087689879522d5",
+    "address": "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F",
+    "chain": "ethereum",
+    "blockNumber": 23874529
+  },
+  "SystemConfig_v3_11_0.sol": {
+    "hash": "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0",
+    "address": "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED",
+    "chain": "ethereum",
+    "blockNumber": 23881654
+  },
+  "SystemConfig_v3_12_0_CGT": {
+    "hash": "0x5515a1ec2bf3f610967c597e7288c4d493e9638e2c19d24e4fe368f0bf047a7c",
+    "address": "eth:0xfCA51bf5bDc5aC16B86F859d6BEe90cfdF6fEb72",
+    "chain": "ethereum",
+    "blockNumber": 23975101
+  },
+  "SystemConfig_v2_5_0_100b_GAS_LIMIT.sol": {
+    "hash": "0x5f25d989fb6ccdc8dcf6fec90727faecf13ba2e3a9cc2d4ca902a5be71e10b9a",
+    "address": "eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639",
+    "chain": "ethereum",
+    "blockNumber": 24047652
   }
 }

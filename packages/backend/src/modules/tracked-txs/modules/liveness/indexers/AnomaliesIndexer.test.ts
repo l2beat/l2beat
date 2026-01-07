@@ -229,7 +229,7 @@ describe(AnomaliesIndexer.name, () => {
       ]
 
       const mockLivenessRepository = mockObject<Database['liveness']>({
-        getByConfigurationIdWithinTimeRange:
+        getRecordsInRangeWithLatestBefore:
           mockFn().resolvesTo(mockLivenessRecords),
       })
 
@@ -310,7 +310,7 @@ describe(AnomaliesIndexer.name, () => {
       const result = await indexer.getAnomalies(NOW)
 
       expect(
-        mockLivenessRepository.getByConfigurationIdWithinTimeRange,
+        mockLivenessRepository.getRecordsInRangeWithLatestBefore,
       ).toHaveBeenCalledWith(
         [MOCK_CONFIGURATION_ID],
         NOW - 60 * UnixTime.DAY,
@@ -369,11 +369,12 @@ describe(AnomaliesIndexer.name, () => {
       const indexer = createIndexer({ tag: 'not-enough-data' })
 
       const lastHour = UnixTime.toStartOf(NOW, 'hour')
+      // Create records that only go back 50 days (less than 2 * SYNC_RANGE = 60 days)
       const records: LivenessRecordWithConfig[] = Array.from({
-        length: 1000,
+        length: 100,
       }).map((_, i) =>
         mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour - i * UnixTime.HOUR,
+          timestamp: lastHour - i * 12 * UnixTime.HOUR, // 12 hours apart = 50 days total
           subtype: 'batchSubmissions' as const,
         }),
       )

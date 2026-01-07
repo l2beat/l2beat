@@ -1,6 +1,6 @@
 import { type ComponentType, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '../../../hooks/useIsMobile'
-import { BottomBar } from './BottomBar'
+import { BottomBar } from './BottomBar/BottomBar'
 import { Panel } from './Panel'
 import { type PanelId, useMultiViewStore } from './store'
 import { TopBar } from './TopBar'

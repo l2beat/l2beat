@@ -71,17 +71,12 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
           project.scalingRisks.stacked ?? project.scalingRisks.self,
         ),
         tvs: {
-          breakdown: latestTvs?.breakdown
-            ? {
-                ...latestTvs.breakdown,
-                associated: latestTvs.associated.total,
-              }
-            : {
-                total: 0,
-                associated: 0,
-                ether: 0,
-                stablecoin: 0,
-              },
+          breakdown: latestTvs?.breakdown ?? {
+            total: 0,
+            associated: 0,
+            ether: 0,
+            stablecoin: 0,
+          },
           change7d: latestTvs?.change.total ?? 0,
           associatedTokens: project.tvsInfo.associatedTokens,
         },

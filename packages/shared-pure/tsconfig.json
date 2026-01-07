@@ -1,8 +1,13 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": false,
-    "outDir": "build"
+    "verbatimModuleSyntax": true,
+    "outDir": "build/esm"
   },
   "exclude": ["build", "node_modules"]
 }

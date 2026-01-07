@@ -1432,7 +1432,7 @@
         "decimals": 18,
         "sinceTimestamp": 1596501090
       },
-      "category": "other",
+      "category": "rwaPublic",
       "source": "canonical",
       "isAssociated": false
     },
@@ -1870,6 +1870,39 @@
     },
     {
       "mode": "auto",
+      "id": "omni-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-SUSHI",
       "priceId": "sushi",
       "symbol": "SUSHI",
@@ -2034,6 +2067,39 @@
         "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
         "decimals": 18,
         "sinceTimestamp": 1596501090
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "omni-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",

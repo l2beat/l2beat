@@ -1,8 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
-import { ArrowRightIcon, CoinsIcon, TrashIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button } from '~/components/core/Button'
@@ -23,30 +24,31 @@ import {
   AbstractTokenForm,
   AbstractTokenSchema,
 } from '~/components/forms/AbstractTokenForm'
-import { LoadingText } from '~/components/LoadingText'
+import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
-import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
-import { UnixTime } from '~/utils/UnixTime'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AbstractTokenPage() {
   const { id } = useParams()
-  const navigate = useNavigate()
-  const { data } = api.tokens.getAbstractById.useQuery(id ?? '', {
+  const { data } = api.abstractTokens.getById.useQuery(id ?? '', {
     enabled: id !== '',
   })
+
   if (!id || data === null) {
-    navigate('/not-found')
-    return
+    return <Navigate to="/not-found" replace />
   }
 
   return (
     <AppLayout>
-      {data ? <AbstractTokenView token={data} /> : <LoadingText />}
+      {data ? (
+        <AbstractTokenView token={data} />
+      ) : (
+        <LoadingState className="h-full" />
+      )}
     </AppLayout>
   )
 }
@@ -72,19 +74,6 @@ function AbstractTokenView({
     },
   })
 
-  const coingeckoId = form.watch('coingeckoId')
-  const debouncedCoingeckoId = useDebouncedValue(form.watch('coingeckoId'), 500)
-  const { data: coin, isLoading } = api.coingecko.getCoinById.useQuery(
-    debouncedCoingeckoId ?? '',
-    {
-      enabled:
-        !!debouncedCoingeckoId && token.coingeckoId !== debouncedCoingeckoId,
-      retry: false,
-    },
-  )
-
-  const showCoingeckoLoading = isLoading || coingeckoId !== debouncedCoingeckoId
-
   const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
     onSuccess: (data) => {
       if (data.outcome === 'success') {
@@ -95,37 +84,13 @@ function AbstractTokenView({
     },
   })
 
-  useEffect(() => {
-    if (isLoading) return
-    if (!debouncedCoingeckoId) return
-    if (token.coingeckoId === debouncedCoingeckoId) {
-      form.setValue('iconUrl', token.iconUrl ?? '')
-      return
-    }
-
-    if (coin) {
-      form.clearErrors('coingeckoId')
-      form.setValue('iconUrl', coin.image.large)
-    }
-    if (!coin) {
-      form.setValue('iconUrl', '')
-    }
-    if (coin === null) {
-      form.setError('coingeckoId', {
-        message: 'Coin not found',
-        type: 'validate',
-      })
-    }
-  }, [
-    coin,
-    form.clearErrors,
-    form.setValue,
-    form.setError,
-    isLoading,
-    debouncedCoingeckoId,
-    token.coingeckoId,
-    token.iconUrl,
-  ])
+  const { data: suggestions, isLoading: isLoadingSuggestions } =
+    api.deployedTokens.getSuggestionsByCoingeckoId.useQuery(
+      token.coingeckoId ?? '',
+      {
+        enabled: !!token.coingeckoId,
+      },
+    )
 
   return (
     <>
@@ -168,17 +133,11 @@ function AbstractTokenView({
                   })
                 }}
                 isFormDisabled={isPending}
-                coingeckoFields={{
-                  isLoading: showCoingeckoLoading,
-                  success: !!coin,
-                  isListingTimestampLoading: false,
-                }}
               >
                 <ButtonWithSpinner
                   isLoading={false}
                   disabled={
-                    Object.keys(form.formState.dirtyFields).length === 0 ||
-                    showCoingeckoLoading
+                    Object.keys(form.formState.dirtyFields).length === 0
                   }
                   className="w-full"
                   type="submit"
@@ -188,6 +147,51 @@ function AbstractTokenView({
               </AbstractTokenForm>
             </CardContent>
           </Card>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Suggestions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoadingSuggestions ? (
+                <LoadingState />
+              ) : suggestions && suggestions.length !== 0 ? (
+                <div className="-mx-6 flex flex-col gap-2">
+                  {suggestions.map((suggestion) => {
+                    return (
+                      <div
+                        key={suggestion.chain}
+                        className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                      >
+                        {suggestion.chain} ({suggestion.address})
+                        <Button variant="link" asChild size="icon">
+                          <Link
+                            to={buildUrlWithParams('/tokens/new', {
+                              tab: 'deployed',
+                              chain: suggestion.chain,
+                              address: suggestion.address,
+                            })}
+                            target="_blank"
+                          >
+                            <PlusIcon />
+                          </Link>
+                        </Button>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No suggestions found</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              )}
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -198,11 +202,11 @@ function AbstractTokenView({
               {token.deployedTokens.length !== 0 ? (
                 token.deployedTokens.map((token) => (
                   <div
-                    key={getDeployedTokenDisplayId(token)}
+                    key={`${token.chain}+${token.address}`}
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
                     {token.chain} ({token.symbol})
-                    <Button asChild variant="link">
+                    <Button asChild variant="link" size="icon">
                       <Link to={`/tokens/${token.chain}/${token.address}`}>
                         <ArrowRightIcon />
                       </Link>
@@ -230,6 +234,7 @@ function AbstractTokenView({
         <ButtonWithSpinner
           variant="destructive"
           className="mt-2"
+          size="icon"
           onClick={() => {
             planMutate({
               type: 'DeleteAbstractTokenIntent',

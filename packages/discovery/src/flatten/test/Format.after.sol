@@ -240,7 +240,7 @@ contract Test {
 		assembly {
 			function evaluateLagrangePolyOutOfDomain(polyNum, at) -> res {
 				let omegaPower := 1
-				if polyNum{
+				if polyNum {
 					omegaPower := modexp(OMEGA, polyNum)
 				}
 				res := addmod(modexp(at, DOMAIN_SIZE), sub(R_MOD, 1), R_MOD)

@@ -63,6 +63,51 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-KYO",
+      "priceId": "kyo",
+      "symbol": "KYO",
+      "name": "Kyo",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71031/large/Kyo.png?1765377840",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1765324800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-LOOT",
+      "priceId": "lootcoin",
+      "symbol": "LOOT",
+      "name": "Lootcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71197/large/lootcoin-logo.jpg?1766302463",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "lootcoin",
+        "decimals": 18,
+        "sinceTimestamp": 1766275200,
+        "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+        "chain": "soneium"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-nsASTR",
       "priceId": "neemo-staked-astar",
       "symbol": "nsASTR",
@@ -156,6 +201,25 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 18,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -440,6 +504,32 @@
         "bridges": [
           {
             "name": "Custom escrow"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-USDSC",
+      "priceId": "startale-usd",
+      "symbol": "USDSC",
+      "name": "Startale USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70883/large/stataleusd.png?1764393252",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+        "chain": "soneium",
+        "decimals": 6,
+        "sinceTimestamp": 1764633600
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (M Token)",
+            "slug": "hyperlane"
           }
         ]
       }

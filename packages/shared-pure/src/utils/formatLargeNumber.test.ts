@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { formatLargeNumber } from './formatLargeNumber'
+import { formatLargeNumber } from './formatLargeNumber.js'
 
 describe(formatLargeNumber.name, () => {
   const cases = [

@@ -1,7 +1,7 @@
 {
   "name": "layer2financezk",
-  "timestamp": 1715171711,
-  "configHash": "0xbb0a2b66098af50606e943fc7e57a62cab2d6d92446e8f778298f152eb930e34",
+  "timestamp": 1761551414,
+  "configHash": "0x410a3b16a8a78aea160d302a81f78d7a990e437be9807d38664dcd305b305ee1",
   "entries": [
     {
       "address": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
@@ -766,6 +766,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 19825376 },
+  "usedBlockNumbers": { "ethereum": 23667402 },
   "permissionsConfigHash": "0x3dd4c3416e4ea233c251c36e36e5edb123aa9c4db8fe35cb6748dad047d32a1a"
 }

@@ -1,7 +1,7 @@
 {
   "name": "popapex",
-  "timestamp": 1760089728,
-  "configHash": "0x08a0b1b334305adea9dc891308ede3a40d868a48a1c6426022b4e94418bc6482",
+  "timestamp": 1760975839,
+  "configHash": "0xf9114c570ac3d2ce0d32940a9ac74459a8ca932b321bcfe466350f1441d5cf9b",
   "entries": [
     {
       "address": "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6",
@@ -33,73 +33,35 @@
       "name": "Bridge",
       "address": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
       "type": "Contract",
-      "template": "orbitstack/Bridge",
-      "sourceHashes": [
-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
       "sinceTimestamp": 1708543048,
       "sinceBlock": 183097524,
       "values": {
         "$admin": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d",
-        "$implementation": "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0",
+        "$implementation": "arb1:0x866CF7AE3d44dC5f7Dd3d4B36e8467F18fd2B9F2",
         "$pastUpgrades": [
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"]
+            [
+              "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"
+            ]
+          ],
+          [
+            "2025-10-17T18:51:33.000Z",
+            "0x77b693822f7699a3e4a181aeb90ed6a0d9242b78032cc6ed9727264e1b90b8e9",
+            [
+              "arb1:0x866CF7AE3d44dC5f7Dd3d4B36e8467F18fd2B9F2"
+            ]
           ]
         ],
-        "$upgradeCount": 1,
-        "activeOutbox": "arb1:0x0000000000000000000000000000000000000000",
-        "allowedDelayedInboxList": [
-          "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
-          "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
-        ],
-        "allowedOutboxList": [
-          "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
-        ],
-        "delayedMessageCount": 57101,
-        "inboxHistory": [
-          "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
-          "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
-        ],
-        "outboxHistory": ["arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "rollup": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407",
-        "sequencerInbox": "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 55914,
-        "sequencerReportedSubMessageCount": 136266975
-      },
-      "fieldMeta": {
-        "allowedOutboxList": {
-          "severity": "HIGH",
-          "description": "Can make calls as the bridge, steal all funds."
-        },
-        "outboxHistory": {
-          "severity": "HIGH",
-          "description": "All Outboxes that were ever set as allowed in the bridge."
-        },
-        "allowedDelayedInboxList": {
-          "severity": "HIGH",
-          "description": "Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."
-        },
-        "inboxHistory": {
-          "severity": "HIGH",
-          "description": "All Inboxes that were ever set as allowed in the bridge."
-        }
+        "$upgradeCount": 2
       },
       "implementationNames": {
         "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6": "TransparentUpgradeableProxy",
-        "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0": "Bridge"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "arb1:0x866CF7AE3d44dC5f7Dd3d4B36e8467F18fd2B9F2": ""
+      }
     },
     {
       "address": "arb1:0x0C79a90C94E1C1091D7D3a188730105be00798f9",
@@ -134,7 +96,9 @@
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+            [
+              "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -152,7 +116,10 @@
         "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2": "TransparentUpgradeableProxy",
         "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": "Outbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "arb1:0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E",
@@ -192,7 +159,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148192,
       "sinceBlock": 244802957,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4": "OneStepProverHostIo"
       }
@@ -240,7 +209,9 @@
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]
+            [
+              "arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -251,7 +222,9 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"]
+            "members": [
+              "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
@@ -273,7 +246,10 @@
         "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3": "TransparentUpgradeableProxy",
         "arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": "UpgradeExecutor"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
     },
     {
       "address": "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -344,7 +320,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148167,
       "sinceBlock": 244802857,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "arb1:0x54E0923782b701044444De5d8c3A45aC890b0881": "OneStepProver0"
       }
@@ -504,7 +482,10 @@
           }
         }
       ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "arb1:0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB",
@@ -531,7 +512,9 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b": "ValidatorUtils"
       }
@@ -553,7 +536,9 @@
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -561,8 +546,12 @@
           "from": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -570,8 +559,12 @@
           "from": "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -579,8 +572,12 @@
           "from": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -588,16 +585,9 @@
           "from": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407",
           "role": "admin",
           "via": [
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -605,8 +595,12 @@
           "from": "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -614,8 +608,12 @@
           "from": "arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -623,8 +621,12 @@
           "from": "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         }
       ],
@@ -635,7 +637,9 @@
           "role": ".executors"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1701465533,
       "sinceBlock": 155965667,
       "values": {
@@ -658,7 +662,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 100,
+        "nonce": 105,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -678,38 +682,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "name": "RollupEventInbox",
-      "address": "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
-      "type": "Contract",
-      "template": "orbitstack/RollupEventInbox",
-      "sourceHashes": [
-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "sinceTimestamp": 1708543048,
-      "sinceBlock": 183097524,
-      "values": {
-        "$admin": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d",
-        "$implementation": "arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C",
-        "$pastUpgrades": [
-          [
-            "2024-02-21T19:17:28.000Z",
-            "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "bridge": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
-        "rollup": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
-      },
-      "implementationNames": {
-        "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7": "TransparentUpgradeableProxy",
-        "arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C": "RollupEventInbox"
-      }
     },
     {
       "address": "arb1:0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7",
@@ -809,17 +781,23 @@
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+            [
+              "arb1:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
+            ]
           ],
           [
             "2025-01-23T20:27:56.000Z",
             "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
-            ["arb1:0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
+            [
+              "arb1:0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
+            ]
           ],
           [
             "2025-04-25T21:55:46.000Z",
             "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",
-            ["arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"]
+            [
+              "arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -881,7 +859,10 @@
         "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1": "TransparentUpgradeableProxy",
         "arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2": "SequencerInbox"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "arb1:0xa65100caA20c06Bd278D83C60475ec4F69b23dc1",
@@ -916,17 +897,23 @@
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0x09824fe72BFF474d16D9c2774432E381BBD60662"]
+            [
+              "arb1:0x09824fe72BFF474d16D9c2774432E381BBD60662"
+            ]
           ],
           [
             "2025-01-23T20:27:56.000Z",
             "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
-            ["arb1:0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+            [
+              "arb1:0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"
+            ]
           ],
           [
             "2025-01-23T20:27:56.000Z",
             "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
-            ["arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"]
+            [
+              "arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -940,7 +927,10 @@
         "arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea": "TransparentUpgradeableProxy",
         "arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED": "ChallengeManager"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "arb1:0xB180d28c01D3248C3fa88d67154a5070e5039135",
@@ -988,12 +978,16 @@
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
-            ["arb1:0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]
+            [
+              "arb1:0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
+            ]
           ],
           [
             "2025-04-25T21:55:46.000Z",
             "0xb219997f52a5ffaeb50fb6de4b69cefdd4f1844879a102820ce0878df63bc80b",
-            ["arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"]
+            [
+              "arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1008,7 +1002,10 @@
         "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1": "TransparentUpgradeableProxy",
         "arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447": "Inbox"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "arb1:0xC929c820dC03C2a22e44F440721Af3c835e071fc",
@@ -1046,11 +1043,6 @@
         {
           "permission": "upgrade",
           "from": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
           "role": "admin"
         },
         {
@@ -1192,7 +1184,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148184,
       "sinceBlock": 244802923,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4": "OneStepProverMath"
       }
@@ -1250,7 +1244,9 @@
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1258,8 +1254,12 @@
           "from": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1267,8 +1267,12 @@
           "from": "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1276,8 +1280,12 @@
           "from": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1285,16 +1293,9 @@
           "from": "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407",
           "role": "admin",
           "via": [
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1302,8 +1303,12 @@
           "from": "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1311,8 +1316,12 @@
           "from": "arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         },
         {
@@ -1320,8 +1329,12 @@
           "from": "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
           "role": "admin",
           "via": [
-            { "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d" },
-            { "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3" }
+            {
+              "address": "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+            },
+            {
+              "address": "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+            }
           ]
         }
       ],
@@ -1358,7 +1371,9 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148175,
       "sinceBlock": 244802890,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881": "OneStepProverMemory"
       }
@@ -1774,17 +1789,6 @@
     "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": [
       "constructor(address _singleton)"
     ],
-    "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1806,44 +1810,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0": [
-      "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
-      "error InvalidOutboxSet(address outbox)",
-      "error NotContract(address addr)",
-      "error NotDelayedInbox(address sender)",
-      "error NotOutbox(address sender)",
-      "error NotRollupOrOwner(address sender, address rollup, address owner)",
-      "error NotSequencerInbox(address sender)",
-      "event BridgeCallTriggered(address indexed outbox, address indexed to, uint256 value, bytes data)",
-      "event InboxToggle(address indexed inbox, bool enabled)",
-      "event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)",
-      "event OutboxToggle(address indexed outbox, bool enabled)",
-      "event RollupUpdated(address rollup)",
-      "event SequencerInboxUpdated(address newSequencerInbox)",
-      "function acceptFundsFromOldBridge() payable",
-      "function activeOutbox() view returns (address)",
-      "function allowedDelayedInboxList(uint256) view returns (address)",
-      "function allowedDelayedInboxes(address inbox) view returns (bool)",
-      "function allowedOutboxList(uint256) view returns (address)",
-      "function allowedOutboxes(address outbox) view returns (bool)",
-      "function delayedInboxAccs(uint256) view returns (bytes32)",
-      "function delayedMessageCount() view returns (uint256)",
-      "function enqueueDelayedMessage(uint8 kind, address sender, bytes32 messageDataHash) payable returns (uint256)",
-      "function enqueueSequencerMessage(bytes32 dataHash, uint256 afterDelayedMessagesRead, uint256 prevMessageCount, uint256 newMessageCount) returns (uint256 seqMessageIndex, bytes32 beforeAcc, bytes32 delayedAcc, bytes32 acc)",
-      "function executeCall(address to, uint256 value, bytes data) returns (bool success, bytes returnData)",
-      "function initialize(address rollup_)",
-      "function rollup() view returns (address)",
-      "function sequencerInbox() view returns (address)",
-      "function sequencerInboxAccs(uint256) view returns (bytes32)",
-      "function sequencerMessageCount() view returns (uint256)",
-      "function sequencerReportedSubMessageCount() view returns (uint256)",
-      "function setDelayedInbox(address inbox, bool enabled)",
-      "function setOutbox(address outbox, bool enabled)",
-      "function setSequencerInbox(address _sequencerInbox)",
-      "function setSequencerReportedSubMessageCount(uint256 newMsgCount)",
-      "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
-      "function updateRollupAddress(address _rollup)"
     ],
     "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1969,20 +1935,6 @@
     "arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C": [
-      "constructor()",
-      "error AlreadyInit()",
-      "error HadZeroInit()",
-      "error NotOwner(address sender, address owner)",
-      "error RollupNotChanged()",
-      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
-      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
-      "function bridge() view returns (address)",
-      "function initialize(address _bridge)",
-      "function rollup() view returns (address)",
-      "function rollupInitialized(uint256 chainId, string chainConfig)",
-      "function updateRollupAddress()"
-    ],
     "arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ]
@@ -1990,7 +1942,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1999,12 +1950,13 @@
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
-    "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 388018032 },
-  "permissionsConfigHash": "0x649608663d2a003d107c3bc32fb73608f5b23253cb6ad0e71e62a6219fa10439"
+  "usedBlockNumbers": {
+    "arbitrum": 391566533
+  },
+  "permissionsConfigHash": "0x2123c8f1d370c9e0a4ec42542c2cb46dd0f5268330da7959eca3f7d62faa2767"
 }

@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
   "timestamp": 1746614171,
-  "configHash": "0x44f92ad8d32a0c7f187fc24d9a1786bd084842d82e83abdfadc22846f0cab709",
+  "configHash": "0x667e6f7983e7aa66abf26728642ec996493a4f18d288a4e27622e26beb613f7c",
   "entries": [
     {
       "address": "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
@@ -202,7 +202,7 @@
       "address": "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27",
       "type": "Contract",
       "sourceHashes": [
-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
+        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1684141523,
@@ -232,7 +232,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x580afb6cca5222e2dcaa0dcab547ed491b14414cabd97992abf96566d6af0fa0"
+        "0x31d9ff8bb8c774d65b94c200d0bac48982120ec0636efd182a79785a0a9068a0"
       ],
       "proxyType": "Eternal Storage proxy",
       "sinceTimestamp": 1684140863,

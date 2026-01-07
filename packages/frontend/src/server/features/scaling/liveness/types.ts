@@ -18,9 +18,9 @@ export interface LivenessAnomaly {
 }
 
 export interface LivenessDetails {
-  '30d'?: LivenessDataPoint
-  '90d'?: LivenessDataPoint
-  max?: LivenessDataPoint
+  '30d'?: LivenessDataPoint | null
+  '90d'?: LivenessDataPoint | null
+  max?: LivenessDataPoint | null
   syncedUntil: number
 }
 

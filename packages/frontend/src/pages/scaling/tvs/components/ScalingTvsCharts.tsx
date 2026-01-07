@@ -3,18 +3,18 @@ import { useMemo, useState } from 'react'
 import { ScalingAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/ScalingAssetCategoryTvsChart'
 import { ScalingBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ScalingBridgeTypeTvsChart'
 import { TvsChartHeader } from '~/components/chart/tvs/TvsChartHeader'
-import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
+import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
-import { Checkbox } from '~/components/core/Checkbox'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
-import { useScalingAssociatedTokensContext } from '../../components/ScalingAssociatedTokensContext'
+import type { ChartRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { ChartTabs } from '../../summary/components/ChartTabs'
 
 interface Props {
@@ -24,11 +24,9 @@ interface Props {
 }
 
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
-  const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
-    useScalingAssociatedTokensContext()
-
+  const { display } = useTvsDisplayControlsContext()
   const { state: filters } = useTableFilterContext()
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {
@@ -44,12 +42,13 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   }, [entries, filters, tab])
 
   const { data } = api.tvs.detailedChart.useQuery({
-    range: timeRange,
-    excludeAssociatedTokens,
+    range,
     filter,
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
   })
 
-  const chartRange = getChartRange(
+  const timeRange = getChartTimeRangeFromData(
     data?.chart.map(([timestamp]) => ({
       timestamp,
     })),
@@ -60,8 +59,9 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     <ScalingBridgeTypeTvsChart
       unit={unit}
       filter={filter}
-      range={timeRange}
-      excludeAssociatedTokens={excludeAssociatedTokens}
+      range={range}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -70,8 +70,9 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
     <ScalingAssetCategoryTvsChart
       unit={unit}
       filter={filter}
-      range={timeRange}
-      excludeAssociatedTokens={excludeAssociatedTokens}
+      range={range}
+      excludeAssociatedTokens={display.excludeAssociatedTokens}
+      excludeRwaRestrictedTokens={display.excludeRwaRestrictedTokens}
       milestones={milestones}
     />
   )
@@ -82,8 +83,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         unit={unit}
         value={stats?.total}
         change={stats?.change}
-        range={timeRange}
-        timeRange={chartRange}
+        range={range}
+        timeRange={timeRange}
       />
       <div className="mt-4 mb-3 grid grid-cols-2 gap-x-6 max-lg:hidden">
         {byBridgeTypeChart}
@@ -94,19 +95,8 @@ export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
         charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
       <ChartControlsWrapper>
-        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          <Checkbox
-            name="excludeAssociatedTokens"
-            checked={excludeAssociatedTokens}
-            onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-          >
-            Exclude associated tokens
-          </Checkbox>
-        </TvsChartUnitControls>
-        <TvsChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
+        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+        <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </div>
   )
@@ -124,21 +114,39 @@ function getStats(
         number | null,
         number | null,
         number | null,
+        number | null,
+        number | null,
       ][]
     | undefined,
 ) {
   const pointsWithData = data?.filter(
-    ([_, __, native, canonical, external, ether, stablecoin, btc, other]) =>
+    ([
+      _,
+      __,
+      native,
+      canonical,
+      external,
+      ether,
+      stablecoin,
+      btc,
+      other,
+      rwaRestricted,
+      rwaPublic,
+    ]) =>
       native !== null &&
       canonical !== null &&
       external !== null &&
       ether !== null &&
       stablecoin !== null &&
       btc !== null &&
-      other !== null,
+      other !== null &&
+      rwaRestricted !== null &&
+      rwaPublic !== null,
   ) as [
     number,
     number | null,
+    number,
+    number,
     number,
     number,
     number,

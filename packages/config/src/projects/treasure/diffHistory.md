@@ -1,3 +1,103 @@
+Generated with discovered.json: 0xe236fd0d92c5ebc1b2ea21f7a51e04ac86e8cb51
+
+# Diff at Wed, 17 Dec 2025 14:34:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "TreasureZkEvm"
++        "Diamond"
+    }
+```
+
+Generated with discovered.json: 0x68dff22600de08fd2bc3ef1afdb45d4dd26749fa
+
+# Diff at Tue, 04 Nov 2025 11:34:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract Verifier (eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5) {
+    +++ description: Implements the ZK proof verification logic.
+      sourceHashes.0:
+-        "0xac062c888d75a5e5685f3daea3d381ad10133a719da8fe05d01ec88eca972104"
++        "0x0eee3e8ac76b79ea0ebd002e2253db2e69b9bc1521975dbc939fff5f77e9f1e0"
+    }
+```
+
+Generated with discovered.json: 0x8930130052b1a64ae22e3c9fbe44ec2ecdf00100
+
+# Diff at Fri, 24 Oct 2025 09:13:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract TreasureChainAdminMultisig (eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract TreasureZkEvm (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it."
+    }
+```
+
 Generated with discovered.json: 0x38bf125c86feb7160211b50edf29725fe853cd4a
 
 # Diff at Wed, 03 Sep 2025 15:51:41 GMT:

@@ -1,17 +1,11 @@
-import {
-  type Env,
-  getEnv,
-  LogFormatterPretty,
-  Logger,
-  type LogLevel,
-} from '@l2beat/backend-tools'
+import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
   type Project,
   ProjectService,
   type TvsToken,
 } from '@l2beat/config'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { HttpClient, RpcClientCompat } from '@l2beat/shared'
 import {
   assert,
   type LegacyToken,
@@ -213,7 +207,7 @@ function generateConfigForProject(
 
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
-    ? new RpcClient({
+    ? RpcClientCompat.create({
         http: new HttpClient(),
         callsPerMinute: env.integer(
           `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
@@ -222,7 +216,7 @@ function generateConfigForProject(
         retryStrategy: 'RELIABLE',
         logger,
         url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
-        sourceName: project.id,
+        chain: project.id,
       })
     : undefined
 
@@ -298,17 +292,9 @@ function updateConfigWithTvs(
 }
 
 function initLogger(env: Env) {
-  const logLevel = env.string('LOG_LEVEL', 'INFO') as LogLevel
-  const logger = new Logger({
-    logLevel: logLevel,
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
+  return new Logger({
+    level: env.string('LOG_LEVEL', 'INFO') as LogLevel,
   })
-  return logger
 }
 
 function writeToFile(

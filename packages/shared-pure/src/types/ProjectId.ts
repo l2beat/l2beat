@@ -1,4 +1,4 @@
-import type { Branded } from './branded'
+import type { Branded } from './branded.js'
 
 export type ProjectId = Branded<string, 'ProjectId'>
 

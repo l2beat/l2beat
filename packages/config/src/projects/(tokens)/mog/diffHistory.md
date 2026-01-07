@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3ad79e7e6367d994dab4d83548d685d7161db364
+
+# Diff at Mon, 27 Oct 2025 07:50:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e31499883253bb2b7c36fe0654ea187cfa3ca612 block: 1756285476
+- current timestamp: 1761551264
+
+## Description
+
+Config: ignore supply.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756285476 (main branch discovery), not current.
+
+```diff
+    contract Mog Coin Token (eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a) {
+    +++ description: None
+      values.showSupply:
+-        "360447601430949687966814425289995"
+    }
+```
+
 Generated with discovered.json: 0x4f3ae99b3f6a85c18845dfefd8b6f6859499c8e0
 
 # Diff at Wed, 10 Sep 2025 16:42:55 GMT:

@@ -1,5 +1,4 @@
-import type { Logger } from '@l2beat/backend-tools'
-import type { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
+import type { Logger, LogLevel } from '@l2beat/backend-tools'
 import chalk from 'chalk'
 import { getPlainLogger } from './common/getPlainLogger'
 

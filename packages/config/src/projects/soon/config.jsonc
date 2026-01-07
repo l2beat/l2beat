@@ -5,7 +5,10 @@
   "initialAddresses": ["eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"],
   "names": {
     "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": "SystemConfig",
-    "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": "SoonMultisig"
+    "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": "SoonMultisig",
+    "eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6": "RiscZeroVerifier",
+    "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e": "FaultDisputeGame",
+    "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087": "PermissionedDisputeGame"
   },
   "overrides": {
     "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": {
@@ -17,16 +20,6 @@
             "type": "call",
             "method": "function batcherHash() view returns (address)",
             "args": []
-          }
-        },
-        "opStackDA": {
-          "handler": {
-            "type": "hardcoded", // !!! since they use the wrong encoding
-            "value": {
-              "isSequencerSendingBlobTx": false,
-              "isUsingCelestia": false,
-              "isUsingEigenDA": "v3"
-            }
           }
         },
         "sequencerInbox": {

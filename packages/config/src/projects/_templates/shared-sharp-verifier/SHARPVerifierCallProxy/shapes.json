@@ -3,5 +3,10 @@
     "hash": "0x1993eaf381afc46f98a6d57b20658554efa839ecfb519a698bf45042d7ff5b27",
     "address": "eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
     "blockNumber": 22188285
+  },
+  "CallProxy_Oct25": {
+    "hash": "0x7477a4b1d5db367c21e2c2d493553a2f519bd0d4305433a902d9b9322e7b81cb",
+    "address": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
+    "blockNumber": 23682200
   }
 }

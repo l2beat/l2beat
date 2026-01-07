@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
+import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { api } from '~/trpc/React'
 import {
   BridgeTypeTvsChart,
@@ -19,12 +20,14 @@ export function ProjectBridgeTypeTvsChart({
   milestones,
 }: ProjectBridgeTypeTvsChartProps) {
   const { range, unit } = useTvsChartControlsContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { dataKeys, toggleDataKey } = useChartDataKeys(bridgeTypeTvsChartMeta)
 
   const { data, isLoading } = api.tvs.detailedChart.useQuery({
     filter: { type: 'projects', projectIds: [project.id] },
     range,
     excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens,
   })
 
   const chartData = useMemo(

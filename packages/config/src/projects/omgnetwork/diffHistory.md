@@ -1,3 +1,175 @@
+Generated with discovered.json: 0x3132f67e6766a1a587d51eeed0a2d118001dbc7f
+
+# Diff at Wed, 05 Nov 2025 12:47:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1670682767
+- current timestamp: 1670682767
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1670682767 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738)
+    +++ description: None
+```
+
+```diff
+    contract PaymentExitGame (eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3) {
+    +++ description: None
+      values.$libraries:
+-        ["eth:0xf38380bbf08961123960fAd630a0609906849751","eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738","eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518","eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557","eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8","eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650","eth:0xEf6133d149460C9B79e132517934f77F1E62b23e","eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F","eth:0x4f05855B6dF026726037500D10D91652b5C9e784","eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x4f05855B6dF026726037500D10D91652b5C9e784)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xEf6133d149460C9B79e132517934f77F1E62b23e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0xf38380bbf08961123960fAd630a0609906849751)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x1f8048537a461604e8e7bf1759df87b8f8497e0b
+
+# Diff at Tue, 04 Nov 2025 11:33:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1670682767
+- current timestamp: 1670682767
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1670682767 (main branch discovery), not current.
+
+```diff
+    contract PaymentExitGame (eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3) {
+    +++ description: None
+      values.$libraries:
++        ["eth:0xf38380bbf08961123960fAd630a0609906849751","eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738","eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518","eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557","eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8","eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650","eth:0xEf6133d149460C9B79e132517934f77F1E62b23e","eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F","eth:0x4f05855B6dF026726037500D10D91652b5C9e784","eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x081d7B167a94E7421Ea5D0016C3D01E0cFf6B557)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x24c0a84090135AD04F257C85E10db6B4A74E0738)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x4f05855B6dF026726037500D10D91652b5C9e784)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x5d3EE50E31293B45A7eb8B864c0B015E169AC7D8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x5E84DF30ce17A9AC34E5474fc37a9c2267454518)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x67C3E5524dBE05B54fE08c3D4af65c273B87E630)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x7A8C0D7F1e6dBe36AB3A9adE0C44a0b868bB703F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x9e3108FB11cAEDA64e264B2953a0eDa81cf1a650)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xEf6133d149460C9B79e132517934f77F1E62b23e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xf38380bbf08961123960fAd630a0609906849751)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb99409115ed3bc3dcea6b50b2cb2816a0632be36
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

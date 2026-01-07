@@ -6,14 +6,17 @@
   "types": "build/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && pnpm precompute:package-hash",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:dal",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:dal",
+    "precompute:package-hash": "ts-node scripts/precomputePackageHash.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -23,12 +26,14 @@
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@types/redis": "^4.0.11",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/mocha": "^10.0.6",
     "earl": "^1.1.0",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "@types/lodash": "^4.17.4"
   }
 }

@@ -31,6 +31,7 @@ export const celestia: BaseProject = {
         'https://x.com/Celestia',
         'https://discord.com/invite/YsnTPcSfWQ',
         'https://t.me/CelestiaCommunity',
+        'https://youtube.com/@CelestiaNetwork',
       ],
     },
     badges: [],
@@ -53,7 +54,7 @@ export const celestia: BaseProject = {
 
       ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. Currently k = 64, for a total of 4096 shares.\n
+      All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares. The maximum original square size is 512 (k = 512), for a total of 262,144 shares.\n
 
       ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
@@ -125,26 +126,32 @@ export const celestia: BaseProject = {
     },
     /*
       Node params sources:
-      - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
-      - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-004.md
+      - unbondingPeriod: CIP-37 https://cips.celestia.org/cip-037.html
+      - pruningWindow: CIP-34 https://cips.celestia.org/cip-034.html
+      - finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
       - block time: https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/consensus_consts.go
-      - max block size: (DefaultMaxBytes) https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/initial_consts.go
+      - max square size: CIP-38 https://cips.celestia.org/cip-038.html
     */
     consensusAlgorithm: {
       name: 'CometBFT',
       description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm.
       CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
       The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
-      blockTime: 15, // goal block time, seconds
-      consensusFinality: 1, // 1 second for tendermint, time_iota_ms
-      unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
+      blockTime: 6, // seconds (CIP-26)
+      consensusFinality: 1, // instant finality with CometBFT, time_iota_ms
+      unbondingPeriod: UnixTime.DAY * 14 + UnixTime.HOUR, // ~14 days (CIP-37)
     },
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Fraud proofs',
     },
-    pruningWindow: 86400 * 30, // 30 days in seconds
+    pruningWindow: 86400 * 7 + 3600, // 7 days + 1 hour in seconds (CIP-34)
     throughput: [
+      {
+        size: 33554432, // 32 MiB
+        frequency: 6, // 6 seconds
+        sinceTimestamp: 1764802980, // 2025-12-03 23:03 UTC
+      },
       {
         size: 8388608, // 8 MiB
         frequency: 6, // 6 seconds
@@ -182,6 +189,17 @@ export const celestia: BaseProject = {
             type: 'celestia',
             sinceBlock: 5047670,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg=',
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('camp'),
+        name: 'Camp',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 6459709,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ=',
           },
         ],
       },
@@ -400,6 +418,22 @@ export const celestia: BaseProject = {
         ],
       },
       {
+        projectId: ProjectId('xo-market'),
+        name: 'XO Market',
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 8164261,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc=',
+          },
+          {
+            type: 'celestia',
+            sinceBlock: 8383370,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU=',
+          },
+        ],
+      },
+      {
         projectId: ProjectId('yominet'),
         name: 'Yominet',
         daTrackingConfig: [
@@ -445,6 +479,22 @@ export const celestia: BaseProject = {
       date: '2025-01-28T00:00:00Z',
       description:
         'Celestia onchain governance votes to increase the block size from 2MB to 8MB.',
+      type: 'general',
+    },
+    {
+      title: 'Matcha upgrade',
+      url: 'https://blog.celestia.org/matcha/',
+      date: '2025-11-24T00:00:00Z',
+      description:
+        'Matcha upgrade enables 128MB blocks, reduces unbonding period to 14 days, and introduces high-throughput block propagation.',
+      type: 'general',
+    },
+    {
+      title: 'Block size increase to 32MB',
+      url: 'https://celenium.io/proposal/8',
+      date: '2025-12-03T00:00:00Z',
+      description:
+        'Celestia onchain governance votes to increase the block size from 8MB to 32MB.',
       type: 'general',
     },
   ],

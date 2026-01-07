@@ -2,7 +2,6 @@ import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
@@ -20,6 +19,7 @@ import {
   type TrustedSetupsByProofSystem,
 } from '../utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { getZkCatalogProjectTvs } from '../utils/getZkCatalogProjectTvs'
+import { getZkCatalogTvsSection } from '../utils/getZkCatalogTvsSection'
 
 export interface ProjectZkCatalogEntry {
   name: string
@@ -48,7 +48,7 @@ export interface ProjectZkCatalogEntry {
 export async function getZkCatalogProjectEntry(
   project: Project<
     'display' | 'zkCatalogInfo' | 'statuses',
-    'archivedAt' | 'milestones'
+    'archivedAt' | 'milestones' | 'tvsInfo'
   >,
 ): Promise<ProjectZkCatalogEntry> {
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
@@ -59,7 +59,7 @@ export async function getZkCatalogProjectEntry(
       ps.getProjects({
         select: ['contracts'],
       }),
-      get7dTvsBreakdown({ type: 'layer2' }),
+      get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
     ])
 
@@ -73,7 +73,6 @@ export async function getZkCatalogProjectEntry(
     project,
     allProjects,
     tvs,
-    contractUtils,
   )
 
   const sortedMilestones =
@@ -111,6 +110,18 @@ export async function getZkCatalogProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
+  const zkCatalogTvsSection = getZkCatalogTvsSection(project, allProjects)
+  if (zkCatalogTvsSection) {
+    sections.push({
+      type: 'ZkCatalogTvsSection',
+      props: {
+        id: 'tvs',
+        title: 'Value Secured',
+        ...zkCatalogTvsSection,
+      },
+    })
+  }
+
   if (project.zkCatalogInfo.proofSystemInfo) {
     sections.push({
       type: 'MarkdownSection',
@@ -143,7 +154,12 @@ export async function getZkCatalogProjectEntry(
     },
   })
 
-  const verifiersSection = await getVerifiersSection(project, contractUtils)
+  const verifiersSection = await getVerifiersSection(
+    project,
+    contractUtils,
+    allProjects,
+    tvs,
+  )
   sections.push({
     type: 'VerifiersSection',
     props: {
@@ -156,8 +172,10 @@ export async function getZkCatalogProjectEntry(
   const programHashesSection = await getProgramHashesSection(
     project,
     allProjectsWithContracts,
+    allProjects,
+    tvs,
   )
-  if (programHashesSection && env.CLIENT_SIDE_PROGRAM_HASHES) {
+  if (programHashesSection) {
     sections.push({
       type: 'ProgramHashesSection',
       props: {

@@ -19,9 +19,10 @@ import {
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
+import { BlobPriceProvider } from '../modules/tracked-txs/modules/l2-costs/BlobPriceProvider'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
-import { DayProviders } from './DayProviders'
+import { DayProviders } from './day/DayProviders'
 import { LogsProviders } from './LogsProviders'
 import { SvmBlockProviders } from './SvmBlockProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
@@ -42,12 +43,17 @@ export class Providers {
   svmBlock: SvmBlockProviders
   slotTimestamp: SlotTimestampProvider
   daBeatStats: DaBeatStatsProvider
+  blobPrice: BlobPriceProvider | undefined
 
   constructor(
     readonly config: Config,
     readonly logger: Logger,
   ) {
     this.clients = initClients(config, logger)
+    const ethereumRpcClient = this.clients.rpcClients.find(
+      (c) => c.chain === 'ethereum',
+    )
+
     this.block = new BlockProviders(this.clients.block)
     this.logs = new LogsProviders(this.clients.logs)
     this.svmBlock = new SvmBlockProviders(this.clients.svmBlock)
@@ -64,7 +70,11 @@ export class Providers {
       ),
     )
     this.uops = new UopsAnalyzers(config.chainConfig)
-    this.day = new DayProviders(config.chainConfig, this.clients.starkex)
+    this.day = new DayProviders(config.chainConfig, {
+      starkex: this.clients.starkex,
+      voyager: this.clients.voyager,
+      lighter: this.clients.lighter,
+    })
 
     const blobProviders: DaBlobProvider[] = []
     if (this.clients.beacon) {
@@ -108,6 +118,10 @@ export class Providers {
       this.clients.celestiaDaBeat,
       this.clients.availWs,
     )
+
+    if (ethereumRpcClient) {
+      this.blobPrice = new BlobPriceProvider(logger, ethereumRpcClient)
+    }
   }
 
   getPriceProviders() {

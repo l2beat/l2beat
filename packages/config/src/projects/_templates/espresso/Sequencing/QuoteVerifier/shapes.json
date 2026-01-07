@@ -1,11 +1,11 @@
 {
   "V3QuoteVerifier": {
-    "hash": "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84",
+    "hash": "0x6833c39c55c2ef237e1417eabde0d10d78a37138115915b27f9703a35615a400",
     "address": "arb1:0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1",
     "blockNumber": 322488866
   },
   "QuoteVerifierV3_1": {
-    "hash": "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e",
+    "hash": "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236",
     "address": "eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89",
     "blockNumber": 22623572
   }

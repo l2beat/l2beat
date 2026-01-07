@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xcb3efcd7cb4b178800d636f5d7a640d20c749b77
+
+# Diff at Mon, 05 Jan 2026 17:45:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764335299
+- current timestamp: 1764335299
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764335299 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x6c9a3cc053892e83e4cfdb7492b7ec99a36cebfd
+
+# Diff at Fri, 28 Nov 2025 13:09:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@279d1ad356551e0a039b2400b6ca3bfd5e1e0974 block: 1756118197
+- current timestamp: 1764335299
+
+## Description
+
+EOA delegated to Calibur 7702 wallet.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      template:
++        "uniswap/calibur7702"
+      sourceHashes:
++        ["0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"]
+      values:
++        {"$implementation":"eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00","CUSTOM_STORAGE_ROOT":"0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600","domainBytes":"0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","domainSeparator":"0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301","eip712Domain":{"fields":"0x1f","name":"Calibur","version":"1.0.0","chainId":1,"verifyingContract":"eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259","salt":"0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","extensions":[]},"ENTRY_POINT":"eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108","keyAt":[],"keyCount":0,"keyHashes":0,"namespaceAndVersion":"Uniswap.Calibur.1.0.0"}
+    }
+```
+
 Generated with discovered.json: 0xd10451721a338ad3be84699d4f98ec9562ec9950
 
 # Diff at Fri, 26 Sep 2025 14:15:27 GMT:

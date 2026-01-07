@@ -44,6 +44,7 @@ export const ronin: Bridge = {
       bridges: ['https://bridge.roninchain.com/'],
       documentation: ['https://docs.roninchain.com/get-started'],
       explorers: ['https://explorer.roninchain.com/'],
+      repositories: ['https://github.com/ronin-chain/bridge-contract'],
       socialMedia: [
         'https://discord.gg/axie',
         'https://twitter.com/ronin_network',

@@ -1,7 +1,7 @@
 {
   "name": "appchain",
-  "timestamp": 1759830301,
-  "configHash": "0xac9dc3368d73b5049c45c1640d1e9185206de29be1148eeaf9d9dc6dd9a6735b",
+  "timestamp": 1760538476,
+  "configHash": "0xbdaadbaedeff0818e52f6e703ee47695b14df2c0e2564e28936e49018f8ee268",
   "entries": [
     {
       "name": "Inbox",
@@ -120,7 +120,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 5508,
+        "delayedMessageCount": 5556,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -128,8 +128,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 2776,
-        "sequencerReportedSubMessageCount": 703313
+        "sequencerMessageCount": 2814,
+        "sequencerReportedSubMessageCount": 708012
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -159,10 +159,13 @@
       "name": "CertManager",
       "address": "eth:0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494",
       "type": "Contract",
+      "template": "espresso/Sequencing",
       "sourceHashes": [
         "0xe2fe482c8972a84ccf0c6bb6c2b0d3540f1fcf9b21bb5ec08a14cd11659e3e9d"
       ],
       "proxyType": "immutable",
+      "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
+      "ignoreInWatchMode": [""],
       "sinceTimestamp": 1750699271,
       "sinceBlock": 22768583,
       "values": {
@@ -260,13 +263,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 617,
+        "firstUnresolvedNode": 621,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 616,
-        "latestNodeCreated": 619,
+        "latestConfirmed": 620,
+        "latestNodeCreated": 623,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -340,6 +343,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -467,7 +471,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 37,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -625,7 +629,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 2776,
+        "batchCount": 2814,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -656,7 +660,7 @@
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 5507,
+        "totalDelayedMessagesRead": 5555,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -677,7 +681,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
-        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
+        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
       ],
       "proxyType": "immutable",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
@@ -1791,6 +1795,7 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
     "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
@@ -1812,6 +1817,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23525066 },
+  "usedBlockNumbers": { "ethereum": 23583683 },
   "permissionsConfigHash": "0xf891c00c9d32dff8185f757d04d1548d49156cd5d0d6ccef997bcd79cc368824"
 }

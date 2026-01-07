@@ -1,4 +1,5 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -29,6 +30,10 @@ export function LivenessIntervalCell(props: {
   const data = props.entry.data?.[props.dataType]
   const durationInSeconds = data?.averageInSeconds
   const isSynced = props.entry.data?.isSynced
+
+  if (data === null) {
+    return <NoDataBadge />
+  }
 
   if (!durationInSeconds) {
     const tooltipText = getNonApplicableTooltipText(props.dataType, props.entry)

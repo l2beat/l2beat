@@ -1,3 +1,377 @@
+Generated with discovered.json: 0xae7732ee7053799438a2a19f25b49baaabded033
+
+# Diff at Mon, 15 Dec 2025 07:34:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765464425
+- current timestamp: 1765784028
+
+## Description
+
+ms and operators change.
+
+## Watched changes
+
+```diff
+    contract Gnosis Bridge Multisig (eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_DAI (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "eth:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      values.$members.1:
+-        "gno:0xb8173f558f75EE263013fd6294177bf75279a21e"
+      values.multisigThreshold:
+-        "8 of 16 (50%)"
++        "8 of 15 (53%)"
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
++        "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "gno:0xfA98B60E02A61B6590f073cAD56e68326652d094"
+    }
+```
+
+Generated with discovered.json: 0x9fb1e4dffde27421816da8950d5caeeea4057028
+
+# Diff at Thu, 11 Dec 2025 14:48:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1764164995
+- current timestamp: 1765464425
+
+## Description
+
+7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xe407cbc76d2dcba4c87608219a8254a23a316e5331aaac1a04865186145eddb3","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706)
+    +++ description: None
+```
+
+```diff
+    contract GnosisSafeL2 (gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0) {
+    +++ description: None
+      values.$members.1:
+-        "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706"
++        "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0xfa2b4a458b2745ee1b0a251270945f9925eae61d
+
+# Diff at Wed, 26 Nov 2025 13:51:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1762767834
+- current timestamp: 1764164995
+
+## Description
+
+bridgevali multisig changes.
+
+## Watched changes
+
+```diff
+    contract BridgeValidators_DAI (eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x90776017057b84bc47D7e7383b65C463C80a6cdd"
++        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "eth:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
++        "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "gno:0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
++        "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4"
+    }
+```
+
+Generated with discovered.json: 0xcc45dbe40818af28f77cdb24cafddd3ed3498309
+
+# Diff at Mon, 10 Nov 2025 10:11:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c7b384345bf6076e020559556d64e4e6add0bee0 block: 1757940700
+- current timestamp: 1762767834
+
+## Description
+
+DaiForeignBridge upgrade - https://disco.l2beat.com/diff/eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299/eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49
+- migrate from DAI  and sDAI to USDS and sUSDS
+- function names are confusing, e.g. daiToken now returns the USDS address
+
+cannot use templates because of the eternalStorageProxy
+
+added USDS and sUSDS to TVS
+
+## Watched changes
+
+```diff
+    contract DaiForeignBridge (eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+      sourceHashes.1:
+-        "0x3c108eaa9520cd55043d9ba97a6dea1d273e4300c8b99800347d12780410f08f"
++        "0x31707ec58aa0ebd43328575885a3495f21a2d3e21890280fafe5cbaf1ab5938b"
+      values.$implementation:
+-        "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
++        "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"
+      values.$pastUpgrades.9:
++        ["2025-11-07T15:06:59.000Z","0x05db4562ed98cb55938bb541e030222c9630e6ff8e224abc3fc0aefd5aba1202",["eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.daiToken:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      values.erc20token:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      values.implementation:
+-        "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
++        "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49"
+      values.sDaiToken:
+-        "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA"
++        "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
+      values.version:
+-        9
++        10
+      values.DAI:
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.DAI_USDS:
++        "eth:0x3225737a9Bbb6473CB4a45b7244ACa2BeFdB276A"
+      values.USDS:
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      implementationNames.eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299:
+-        "XDaiForeignBridge"
+      implementationNames.eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49:
++        "XDaiForeignBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DaiForeignBridge/XDaiForeignBridge.sol         | 218 +++++++++++++--------
+ 1 file changed, 141 insertions(+), 77 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EternalStorageProxy (gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x63c731d9a064f5294ea2772c40ba07dc4c7d362b
+
+# Diff at Wed, 05 Nov 2025 12:47:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract SP1HeliosAdapter (gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf) {
+    +++ description: None
+      values.$libraries:
+-        ["gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MerklePatricia (gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd406ff6e6f64ddedeaedac62563897ccb121fdfe
+
+# Diff at Tue, 04 Nov 2025 11:33:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract DaiForeignBridge (eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+      sourceHashes.1:
+-        "0x07db9068db8cb815b37ab00e7a0098b6200657a2c4126fc4c87af49468891d99"
++        "0x3c108eaa9520cd55043d9ba97a6dea1d273e4300c8b99800347d12780410f08f"
+    }
+```
+
+```diff
+    contract ForeignAMB (eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+      sourceHashes.1:
+-        "0xd9dd29f51753144909a424e20a1281bc15263ea2de2f5f028666b183b00d5fc3"
++        "0x5d956ab2f7704c419737b2e96845631d87156578b49801dde52cc9e56eaa182f"
+    }
+```
+
+```diff
+    contract PermittableToken (eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
++        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+    }
+```
+
+```diff
+    contract PermittableToken (gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
++        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+    }
+```
+
+```diff
+    contract HomeAMB (gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
++        "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4"
+    }
+```
+
+Generated with discovered.json: 0xecc8a52201850fd3bf471509b00b4a84276bf3dd
+
+# Diff at Fri, 31 Oct 2025 11:17:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1757940700
+- current timestamp: 1757940700
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1757940700 (main branch discovery), not current.
+
+```diff
+    contract SP1HeliosAdapter (gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf) {
+    +++ description: None
+      values.$libraries:
++        ["gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MerklePatricia (gno:0xff07C59F7D882D1799e1CABd1D17faaDE7694fe0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x64463a25ed3f55cef66e484b40a9475e744109a4
 
 # Diff at Thu, 18 Sep 2025 08:59:29 GMT:

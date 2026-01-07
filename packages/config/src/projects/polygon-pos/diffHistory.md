@@ -1,3 +1,188 @@
+Generated with discovered.json: 0x817c9843fe37ef352f3fdc5f83a759840d1dfb0d
+
+# Diff at Mon, 29 Dec 2025 11:33:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1766409364
+- current timestamp: 1767007913
+
+## Description
+
+Added validator.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
+Generated with discovered.json: 0x598209d4b60851a69f816e46bb1417a8c45f97a8
+
+# Diff at Mon, 22 Dec 2025 13:17:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784278
+- current timestamp: 1766409364
+
+## Description
+
++1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0xd9e08989fb8a83873d878b314c683d87371baa01
+
+# Diff at Mon, 15 Dec 2025 07:39:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765280918
+- current timestamp: 1765784278
+
+## Description
+
+sub ms change.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
++        "eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC"
+    }
+```
+
+Generated with discovered.json: 0x8220aab2e8f3cdc50fbb378f98aa2277eccbfd3f
+
+# Diff at Tue, 09 Dec 2025 11:49:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1763987381
+- current timestamp: 1765280918
+
+## Description
+
+vali removed.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        103
+    }
+```
+
+Generated with discovered.json: 0x7bdbc7767a12d547ada0155feb0814e4a5e78e99
+
+# Diff at Mon, 24 Nov 2025 12:30:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1761643008
+- current timestamp: 1763987381
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0x6b3be109a853454ad5b79b78dbcf83b009aa4b25
+
+# Diff at Tue, 28 Oct 2025 09:18:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1761060009
+- current timestamp: 1761643008
+
+## Description
+
+vali rm.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+Generated with discovered.json: 0xca91ce0b5d242835e18af42fa9b0c75de0249f1f
+
+# Diff at Tue, 21 Oct 2025 15:21:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d52ad2c1af6ac3243376427c1aab587fd7b34800 block: 1760536617
+- current timestamp: 1761060009
+
+## Description
+
+multisig member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34"
+      values.$members.6:
+-        "eth:0x4Fb38Ca1b96f8694229486636cabe029BdcdbBe7"
+    }
+```
+
+Generated with discovered.json: 0xe7b626b2f9d27577913c9f9cb54219f89afc27e7
+
+# Diff at Wed, 15 Oct 2025 13:58:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3b2c8898ebe0c61228f50617e2de65973094dd39 block: 1758802148
+- current timestamp: 1760536617
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0x49ed7d8c357d21f671e8bf9ece413ba47a849914
 
 # Diff at Mon, 06 Oct 2025 15:22:56 GMT:

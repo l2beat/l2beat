@@ -5,34 +5,39 @@
     "blockNumber": 22188285
   },
   "MIPS_v1_1_1_beta3": {
-    "hash": "0xb09d83cfb489ff7f6e5c0d0ca61324097190fd21243bf2a122da50b7c4a47413",
+    "hash": "0x41762a10a7d78d4074b50ffc9b426420faa947abc31d9279c9f1973504deed01",
     "address": "eth:0x7447b25b91336127042CC6899B2C15668a1Ab8BA",
     "blockNumber": 22188285
   },
   "MIPS_v1_2_1": {
-    "hash": "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779",
+    "hash": "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8",
     "address": "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C",
     "blockNumber": 22188285
   },
   "MIPS_v1_3_0": {
-    "hash": "0x65fba25d8e4f3948f7d63aff835445e0f93ba92b8aa4e4f1bdfe6851a5d9476c",
+    "hash": "0xee3a1122871bc9fb46239036b055832fd091a7bb04a848208c582bf47b5d37a0",
     "address": "eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a",
     "blockNumber": 22188285
   },
   "MIPS64": {
-    "hash": "0x115725ab57eeed11f754138c0ec5f9bfba41e494b2336c2cd4745778eb26f776",
+    "hash": "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0",
     "address": "eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1",
     "blockNumber": 22346130
   },
   "MIPS64_v1_2_0": {
-    "hash": "0x4cb0db3ab622eb010a64351dfd58c389cab9241c930e73b450bfd321193837eb",
+    "hash": "0xccc71436377371d47dc4d6756c459705bd73f03bcecd56ad6c074ac6c17482fc",
     "address": "eth:0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a",
     "blockNumber": 22995199
   },
   "MIPS64_v1_8_0": {
-    "hash": "0x4bde2f6a5214eb2f1bd8caaeb2a6700260f66f1ae8f389a13763187c11634d03",
+    "hash": "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee",
     "address": "eth:0x07BABE08EE4D07dBA236530183B24055535A7011",
-    "chain": "ethereum",
     "blockNumber": 23496267
+  },
+  "MIPS64_v1_9_0.sol": {
+    "hash": "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04",
+    "address": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+    "chain": "ethereum",
+    "blockNumber": 23881654
   }
 }

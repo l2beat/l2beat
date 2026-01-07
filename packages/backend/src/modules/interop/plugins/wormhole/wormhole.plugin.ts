@@ -1,0 +1,51 @@
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import {
+  createEventParser,
+  createInteropEventType,
+  type InteropPlugin,
+  type LogToCapture,
+} from '../types'
+import { WormholeConfig } from './wormhole.config'
+
+const parseLogMessagePublished = createEventParser(
+  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
+)
+
+export const LogMessagePublished = createInteropEventType<{
+  payload: `0x${string}`
+  sequence: bigint
+  wormholeChainId: number
+  sender: EthereumAddress
+}>('wormhole.LogMessagePublished')
+
+export class WormholePlugin implements InteropPlugin {
+  name = 'wormhole'
+
+  constructor(private configs: InteropConfigStore) {}
+
+  capture(input: LogToCapture) {
+    const networks = this.configs.get(WormholeConfig)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.chain)
+    if (!network) {
+      return
+    }
+
+    assert(network.coreContract, 'We capture only chain with core contracts')
+
+    const parsed = parseLogMessagePublished(input.log, [network.coreContract])
+    if (!parsed) return
+
+    return [
+      LogMessagePublished.create(input, {
+        payload: parsed.payload,
+        sequence: parsed.sequence,
+        wormholeChainId: network.wormholeChainId,
+        sender: EthereumAddress(parsed.sender),
+      }),
+    ]
+  }
+  // no matching because wormhole matches by source emitter address + sequence, of which the destination event depends on the app layer
+}

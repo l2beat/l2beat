@@ -1,3 +1,207 @@
+Generated with discovered.json: 0x8654624b8b34c59ad30457a4bf988dfb78b570ce
+
+# Diff at Thu, 18 Dec 2025 08:57:58 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765550612
+- current timestamp: 1766048190
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x5228ab6ab16cbdfdeb983c405c4e5b5c7eb7b9c1
+
+# Diff at Fri, 12 Dec 2025 16:19:56 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764329775
+- current timestamp: 1765550612
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764329775 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xb377ecc967eff9917c550a94ab2bc8e2769aaa07
+
+# Diff at Fri, 28 Nov 2025 11:37:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@10f814ec1e4e08d34183a00c458ece2b8605dede block: 1761222973
+- current timestamp: 1764329775
+
+## Description
+
+Jovian upgrade.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2025-11-25T17:46:35.000Z","0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      template:
++        "uniswap/calibur7702"
+      sourceHashes:
++        ["0xb3eb47d8d57eba02013e5d347d05147f7ac072ef2e5e4e1f9a5c6fbced93f8b0"]
+      values:
++        {"$implementation":"eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00","CUSTOM_STORAGE_ROOT":"0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600","domainBytes":"0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000b65540bba534e88eb4a5062d0e6519c07063b259000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","domainSeparator":"0xae1ae59b43b99665a7d7de7c1ca92017a6e8c484587869daf07b2bd3a6aa0301","eip712Domain":{"fields":"0x1f","name":"Calibur","version":"1.0.0","chainId":1,"verifyingContract":"eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259","salt":"0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00","extensions":[]},"ENTRY_POINT":"eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108","keyAt":[],"keyCount":0,"keyHashes":0,"namespaceAndVersion":"Uniswap.Calibur.1.0.0"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 26 ++--------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+```
+
+Generated with discovered.json: 0x7c1a5c8cf292055befc46f99022d53a1744a9cf3
+
+# Diff at Tue, 04 Nov 2025 11:33:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761222973
+- current timestamp: 1761222973
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761222973 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
++        "0x8738d176c361d44d45a0045debf90812ce2af53a3ca1a6483afd9d85d5f95883"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
++        "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8"
+    }
+```
+
+Generated with discovered.json: 0x963e71fa9d01ac3ced805164d71fe6ad7ae6e5f4
+
+# Diff at Mon, 20 Oct 2025 15:26:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@bfe80e92f67656ee716f7ab40cc8f3f9e92dc7d6 block: 1759250569
+- current timestamp: 1760973885
+
+## Description
+
+OpFoundation multisig member rotation.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
++        "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02"
+    }
+```
+
 Generated with discovered.json: 0xc8ae34ea301f01c93d448c8471675069b7302bf6
 
 # Diff at Tue, 30 Sep 2025 16:43:54 GMT:

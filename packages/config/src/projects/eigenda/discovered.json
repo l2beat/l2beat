@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
-  "timestamp": 1760089295,
-  "configHash": "0xb11e33e5fd90edad1c28740b16dd5ea8b4cbf49ff2a7cebfb6d8c4c66008ae17",
+  "timestamp": 1763633846,
+  "configHash": "0x892ebea752f55cf257a83ce2dca497b9d5fb68216dca083eced501f86c092e1d",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -54,6 +54,14 @@
         {
           "permission": "upgrade",
           "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
           "role": "admin",
           "via": [
             { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
@@ -135,15 +143,14 @@
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
           "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489",
-          "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3",
-          "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
+          "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
         ],
         "$threshold": 3,
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 27,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 31,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -323,14 +330,10 @@
           "0xedebd1222578e5cd75d76c8972ab5ee7439591ee667094aea695b092484877fb",
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
-          "0xdc9181f5b57437dcaaf3bb375cb770220dd467a179bdcab6f03e752face8d62e",
           "0x53db8d725c0ab3508a316c447486588e8ecf3f0e312e1eb660a78cc4da0435b9",
           "0x4af3dac73046df0094622345c6546dafd0125ac82675783c76939c70c90c3583",
-          "0xa4a276a179a448bb62e32a82dafe3993b3766e4356d14d48ff4b71ac43eb510c",
           "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
-          "0xdae28f1990cf3b9624990b150b9fdc900263c94398b54139807ece31cedcf02a",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
-          "0x2b8ecfbc8ddc1cf0fd356e16eb1e4c4b36df5e35fd6fa1f5b1c36ee5b3c23cb5",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
           "0x57279ee111eae047c50148a1828b367aab0de682a8b2f871773b7ceedfec0ccf",
           "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
@@ -357,7 +360,6 @@
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
           "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
-          "0x1d4a7b4c590e8caae1f8e026fffe978b77e1dd3c4cd238951b0753fc724fb6d0",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
           "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
           "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
@@ -365,7 +367,6 @@
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
-          "0x607bfc20f482482ff1a1585e2d1296146cce65cef0fa271eecba591de650576e",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
@@ -378,7 +379,6 @@
           "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
-          "0xe00658029de46cca6f8cc46d3cfcbb24e633b6014a642907fe2e484148224e42",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
           "0x3b874990e71ab573e41e7807e8c884700858af957cb72c728369aaf7b1b7ef94",
           "0x4104842f50e49ad930345cd0c3620b615730315b983118d55ddb256fb97ab0d8",
@@ -390,36 +390,27 @@
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0x903031a70695f8c94aed1a36044804a65be3da21523663c5e44d95bce12bb261",
           "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
-          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
           "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
-          "0xc0cfa2a72cc4eb8e33a6a76fb2a5e4c89b5dc28151a0e072cdbb509abdfb7d82",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
           "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
-          "0x0bab77e7b94af273411482782c1999adfc91b7d76af43eb60b4802278b8204d0",
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
-          "0x0caff7e91769a74c203b21a099a9095df26726a888c8ae50ec29c661a698d5d5",
-          "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
-          "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245",
           "0xafa52dc954a63d64a5f5226cc23a879200a4eb72dcddc260dc6c5a8856f542b6",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
-          "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
-          "0x52cdf25657d146c979e43ac697ed359fc5efb203895b5ed797b3c534e6354eb0",
           "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
-          "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
           "0xe9b67ca9a3930733843aa8b2ccddf5257a88517f5a71686bfd8b5ce28a1cf92f",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
@@ -440,7 +431,13 @@
           "0x6da56349059cb0ec5c810d0eb2ef43e048f7713dccbd786247f47bd65fc9039f",
           "0x1c9b842872d119a38569314f96152c019f31f97f4f11b9b8f20331c7ff693e40",
           "0x2e2ee953aa3c2a499640270eaaf2ba1973265f7e0d0b1e0ebef6ead13fcce307",
-          "0x9289a68c8990de394bdd809795157db1fd533359ecca479dfe650079cfad7c80"
+          "0x9289a68c8990de394bdd809795157db1fd533359ecca479dfe650079cfad7c80",
+          "0xa4a276a179a448bb62e32a82dafe3993b3766e4356d14d48ff4b71ac43eb510c",
+          "0xb019237ca1552564cbdf37b4fbc5be3a6caaa7ffb7db23ac9f6abe893dfce570",
+          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
+          "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
+          "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
+          "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -633,6 +630,53 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDACertVerifierRouter",
+      "address": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifierRouter",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x74e8ba69f5e8defb4c133681950b646f84ffb58fd5e7173c13c1e10e020f7fea"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.",
+      "sinceTimestamp": 1751656319,
+      "sinceBlock": 22847862,
+      "values": {
+        "$admin": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "eth:0xff35F7DC73F7fA664910Ab58200dFD4129F1D9E0",
+        "$pastUpgrades": [
+          [
+            "2025-07-04T19:11:59.000Z",
+            "0x5488e95653a4fee14a5d79879453d85348aa9cf73ee1ac692af8b2b15f669f60",
+            ["eth:0xff35F7DC73F7fA664910Ab58200dFD4129F1D9E0"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "certVerifierABNs": [0, 23786550],
+        "DAVerifiers": [
+          {
+            "activationBlockNumber": 0,
+            "certVerifier": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7"
+          },
+          {
+            "activationBlockNumber": 23786550,
+            "certVerifier": "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846"
+          }
+        ],
+        "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      },
+      "fieldMeta": {
+        "DAVerifiers": {
+          "description": "The DA verifier contracts indexed by activation block number."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12": "TransparentUpgradeableProxy",
+        "eth:0xff35F7DC73F7fA664910Ab58200dFD4129F1D9E0": "EigenDACertVerifierRouter"
+      }
+    },
+    {
       "name": "EigenDA Multisig",
       "address": "eth:0x338477FfaF63c04AC06048787f910671eC914B34",
       "type": "Contract",
@@ -727,6 +771,34 @@
       ]
     },
     {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier",
+      "sourceHashes": [
+        "0x5461af9788e297da9de7651464e440e49400a3448477acba821ff196c83d3c0e"
+      ],
+      "proxyType": "immutable",
+      "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "sinceTimestamp": 1762569287,
+      "sinceBlock": 23751593,
+      "values": {
+        "$immutable": true,
+        "certVersion": 3,
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "quorumNumbersRequired": "0x0001",
+        "securityThresholds": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        },
+        "semver": { "major": 3, "minor": 1, "patch": 0 }
+      },
+      "implementationNames": {
+        "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846": "EigenDACertVerifier"
+      }
+    },
+    {
       "address": "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
       "type": "EOA",
       "proxyType": "EOA"
@@ -797,9 +869,31 @@
       ]
     },
     {
-      "address": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "EigenDACertVerifier",
+      "address": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier",
+      "sourceHashes": [
+        "0x89110242a58d5638684fdfe8778df04acaea95a903f7261783575fcef2b61fcd"
+      ],
+      "proxyType": "immutable",
+      "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "sinceTimestamp": 1749145139,
+      "sinceBlock": 22639950,
+      "values": {
+        "$immutable": true,
+        "certVersion": 3,
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "quorumNumbersRequired": "0x0001",
+        "securityThresholds": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        }
+      },
+      "implementationNames": {
+        "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7": "EigenDACertVerifier"
+      }
     },
     {
       "address": "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0",
@@ -869,6 +963,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
           "role": "admin"
         },
         {
@@ -991,7 +1090,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 129007,
+        "batchId": 137420,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1027,7 +1126,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 129007,
+        "taskNumber": 137420,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1309,6 +1408,39 @@
       ]
     },
     {
+      "name": "EigenDACertVerifier",
+      "address": "eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6",
+      "type": "Contract",
+      "template": "eigenda/EigenDACertVerifier_Legacy",
+      "sourceHashes": [
+        "0x3f32e0b975cf311b07f50d7af9a8c48fb99b5968c12a2d151b2433216d62994b"
+      ],
+      "proxyType": "immutable",
+      "description": "A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.",
+      "sinceTimestamp": 1748903123,
+      "sinceBlock": 22619945,
+      "values": {
+        "$immutable": true,
+        "eigenDABatchMetadataStorage": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDARelayRegistry": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+        "eigenDASignatureVerifier": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "eigenDAThresholdRegistry": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+        "operatorStateRetriever": "eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce",
+        "quorumAdversaryThresholdPercentages": "0x212121",
+        "quorumConfirmationThresholdPercentages": "0x373737",
+        "quorumNumbersRequired": "0x0001",
+        "quorumNumbersRequiredV2": "0x0001",
+        "registryCoordinator": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+        "securityThresholdsV2": {
+          "confirmationThreshold": 55,
+          "adversaryThreshold": 33
+        }
+      },
+      "implementationNames": {
+        "eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6": "EigenDACertVerifier"
+      }
+    },
+    {
       "address": "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1319,6 +1451,23 @@
           "role": ".relayers"
         }
       ]
+    },
+    {
+      "name": "OperatorStateRetriever",
+      "address": "eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce",
+      "type": "Contract",
+      "template": "eigenda/OperatorStateRetriever",
+      "sourceHashes": [
+        "0xb6add464cc4c22f315c05593100662fbaeb1033ac9cb9eb84d42cb5c4c6cc334"
+      ],
+      "proxyType": "immutable",
+      "description": "A contract for retrieving AVS operators state (e.g., quorum bitmaps, ordered operator lists, stakes, sockets, signatures indices—at) at a given block directly from on-chain registries.",
+      "sinceTimestamp": 1748903123,
+      "sinceBlock": 22619945,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce": "OperatorStateRetriever"
+      }
     },
     {
       "name": "EIGEN Token",
@@ -1421,6 +1570,17 @@
       "function registerOperator(bytes32 operatorId, bytes quorumNumbers) returns (uint32[])",
       "function registryCoordinator() view returns (address)",
       "function totalOperatorsForQuorum(uint8 quorumNumber) view returns (uint32)"
+    ],
+    "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x1C468cf7089D263c2f53e2579b329B16aBc4dd96": [
       "constructor(address _registryCoordinator, address _delegationManager)",
@@ -1579,6 +1739,25 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846": [
+      "constructor(address initEigenDAThresholdRegistry, address initEigenDASignatureVerifier, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) initSecurityThresholds, bytes initQuorumNumbersRequired)",
+      "error BlobQuorumsNotSubset(uint256 blobQuorumsBitmap, uint256 confirmedQuorumsBitmap)",
+      "error InvalidBlobVersion(uint16 blobVersion, uint16 nextBlobVersion)",
+      "error InvalidInclusionProof(uint32 blobIndex, bytes32 blobHash, bytes32 rootHash)",
+      "error InvalidQuorumNumbersRequired(uint256 length)",
+      "error InvalidSecurityThresholds()",
+      "error RequiredQuorumsNotSubset(uint256 requiredQuorumsBitmap, uint256 blobQuorumsBitmap)",
+      "error SecurityAssumptionsNotMet(uint256 gamma, uint256 n, uint256 minRequired)",
+      "function _decodeCert(bytes data) pure returns (tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) cert)",
+      "function certVersion() pure returns (uint8)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function checkDACertReverts(tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) daCert) view",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function securityThresholds() view returns (tuple(uint8 confirmationThreshold, uint8 adversaryThreshold))",
+      "function semver() pure returns (uint8 major, uint8 minor, uint8 patch)"
+    ],
     "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1622,6 +1801,16 @@
       "function registerBLSPublicKey(address operator, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(uint256 X, uint256 Y) pubkeyRegistrationMessageHash) returns (bytes32 operatorId)",
       "function registerOperator(address operator, bytes quorumNumbers)",
       "function registryCoordinator() view returns (address)"
+    ],
+    "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7": [
+      "constructor(address initEigenDAThresholdRegistry, address initEigenDASignatureVerifier, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) initSecurityThresholds, bytes initQuorumNumbersRequired)",
+      "error InvalidSecurityThresholds()",
+      "function certVersion() pure returns (uint8)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function securityThresholds() view returns (tuple(uint8 confirmationThreshold, uint8 adversaryThreshold))"
     ],
     "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD": [
       "constructor()",
@@ -1912,6 +2101,47 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6": [
+      "constructor(address _eigenDAThresholdRegistry, address _eigenDABatchMetadataStorage, address _eigenDASignatureVerifier, address _eigenDARelayRegistry, address _operatorStateRetriever, address _registryCoordinator, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) _securityThresholdsV2, bytes _quorumNumbersRequiredV2)",
+      "event DefaultSecurityThresholdsV2Updated(tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) previousDefaultSecurityThresholdsV2, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) newDefaultSecurityThresholdsV2)",
+      "event QuorumAdversaryThresholdPercentagesUpdated(bytes previousQuorumAdversaryThresholdPercentages, bytes newQuorumAdversaryThresholdPercentages)",
+      "event QuorumConfirmationThresholdPercentagesUpdated(bytes previousQuorumConfirmationThresholdPercentages, bytes newQuorumConfirmationThresholdPercentages)",
+      "event QuorumNumbersRequiredUpdated(bytes previousQuorumNumbersRequired, bytes newQuorumNumbersRequired)",
+      "event VersionedBlobParamsAdded(uint16 indexed version, tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate) versionedBlobParams)",
+      "function eigenDABatchMetadataStorage() view returns (address)",
+      "function eigenDARelayRegistry() view returns (address)",
+      "function eigenDASignatureVerifier() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function getBlobParams(uint16 version) view returns (tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate))",
+      "function getIsQuorumRequired(uint8 quorumNumber) view returns (bool)",
+      "function getNonSignerStakesAndSignature(tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256 X, uint256 Y) sigma, tuple(uint256[2] X, uint256[2] Y) apkG2, uint32[] quorumNumbers) attestation) signedBatch) view returns (tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices))",
+      "function getQuorumAdversaryThresholdPercentage(uint8 quorumNumber) view returns (uint8)",
+      "function getQuorumConfirmationThresholdPercentage(uint8 quorumNumber) view returns (uint8)",
+      "function operatorStateRetriever() view returns (address)",
+      "function quorumAdversaryThresholdPercentages() view returns (bytes)",
+      "function quorumConfirmationThresholdPercentages() view returns (bytes)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function quorumNumbersRequiredV2() view returns (bytes)",
+      "function registryCoordinator() view returns (address)",
+      "function securityThresholdsV2() view returns (uint8 confirmationThreshold, uint8 adversaryThreshold)",
+      "function verifyDACertSecurityParams(tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate) blobParams, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) securityThresholds) pure",
+      "function verifyDACertSecurityParams(uint16 version, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) securityThresholds) view",
+      "function verifyDACertV1(tuple(tuple(uint256 X, uint256 Y) commitment, uint32 dataLength, tuple(uint8 quorumNumber, uint8 adversaryThresholdPercentage, uint8 confirmationThresholdPercentage, uint32 chunkLength)[] quorumBlobParams) blobHeader, tuple(uint32 batchId, uint32 blobIndex, tuple(tuple(bytes32 blobHeadersRoot, bytes quorumNumbers, bytes signedStakeForQuorums, uint32 referenceBlockNumber) batchHeader, bytes32 signatoryRecordHash, uint32 confirmationBlockNumber) batchMetadata, bytes inclusionProof, bytes quorumIndices) blobVerificationProof) view",
+      "function verifyDACertV2(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) view",
+      "function verifyDACertV2ForZKProof(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature, bytes signedQuorumNumbers) view returns (bool)",
+      "function verifyDACertV2FromSignedBatch(tuple(tuple(bytes32 batchRoot, uint32 referenceBlockNumber) batchHeader, tuple(tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256 X, uint256 Y) sigma, tuple(uint256[2] X, uint256[2] Y) apkG2, uint32[] quorumNumbers) attestation) signedBatch, tuple(tuple(tuple(uint16 version, bytes quorumNumbers, tuple(tuple(uint256 X, uint256 Y) commitment, tuple(uint256[2] X, uint256[2] Y) lengthCommitment, tuple(uint256[2] X, uint256[2] Y) lengthProof, uint32 length) commitment, bytes32 paymentHeaderHash) blobHeader, bytes signature, uint32[] relayKeys) blobCertificate, uint32 blobIndex, bytes inclusionProof) blobInclusionInfo) view",
+      "function verifyDACertsV1(tuple(tuple(uint256 X, uint256 Y) commitment, uint32 dataLength, tuple(uint8 quorumNumber, uint8 adversaryThresholdPercentage, uint8 confirmationThresholdPercentage, uint32 chunkLength)[] quorumBlobParams)[] blobHeaders, tuple(uint32 batchId, uint32 blobIndex, tuple(tuple(bytes32 blobHeadersRoot, bytes quorumNumbers, bytes signedStakeForQuorums, uint32 referenceBlockNumber) batchHeader, bytes32 signatoryRecordHash, uint32 confirmationBlockNumber) batchMetadata, bytes inclusionProof, bytes quorumIndices)[] blobVerificationProofs) view"
+    ],
+    "eth:0xEC35aa6521d23479318104E10B4aA216DBBE63Ce": [
+      "function getBatchOperatorFromId(address registryCoordinator, bytes32[] operatorIds) view returns (address[] operators)",
+      "function getBatchOperatorId(address registryCoordinator, address[] operators) view returns (bytes32[] operatorIds)",
+      "function getCheckSignaturesIndices(address registryCoordinator, uint32 referenceBlockNumber, bytes quorumNumbers, bytes32[] nonSignerOperatorIds) view returns (tuple(uint32[] nonSignerQuorumBitmapIndices, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices))",
+      "function getOperatorState(address registryCoordinator, bytes quorumNumbers, uint32 blockNumber) view returns (tuple(address operator, bytes32 operatorId, uint96 stake)[][])",
+      "function getOperatorState(address registryCoordinator, bytes32 operatorId, uint32 blockNumber) view returns (uint256, tuple(address operator, bytes32 operatorId, uint96 stake)[][])",
+      "function getOperatorStateWithSocket(address registryCoordinator, bytes quorumNumbers, uint32 blockNumber) view returns (tuple(address operator, bytes32 operatorId, uint96 stake)[][] operators, string[][] sockets)",
+      "function getOperatorStateWithSocket(address registryCoordinator, bytes32 operatorId, uint32 blockNumber) view returns (uint256 quorumBitmap, tuple(address operator, bytes32 operatorId, uint96 stake)[][] operators, string[][] sockets)",
+      "function getQuorumBitmapsAtBlockNumber(address registryCoordinator, bytes32[] operatorIds, uint32 blockNumber) view returns (uint256[])"
+    ],
     "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -1926,9 +2156,31 @@
       "function relayKeyToUrl(uint32 key) view returns (string)",
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xff35F7DC73F7fA664910Ab58200dFD4129F1D9E0": [
+      "error ABNNotGreaterThanLast(uint32 activationBlockNumber)",
+      "error ABNNotInFuture(uint32 activationBlockNumber)",
+      "error InvalidCertLength()",
+      "error RBNInFuture(uint32 referenceBlockNumber)",
+      "event CertVerifierAdded(uint32 indexed activationBlockNumber, address indexed certVerifier)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addCertVerifier(uint32 activationBlockNumber, address certVerifier)",
+      "function certVerifierABNs(uint256) view returns (uint32)",
+      "function certVerifiers(uint32) view returns (address)",
+      "function checkDACert(bytes abiEncodedCert) view returns (uint8)",
+      "function getCertVerifierAt(uint32 referenceBlockNumber) view returns (address)",
+      "function initialize(address _initialOwner, address certVerifier)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
     ]
   },
   "usedTemplates": {
+    "eigenda/EigenDACertVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenda/EigenDACertVerifier_Legacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenda/EigenDACertVerifierRouter": "0xbf4b9e7411ab344f2636764539df0cae49a73d201eb66cfca0ec7f22c1ccd364",
+    "eigenda/OperatorStateRetriever": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/EigenDADisperserRegistry": "0x2c838fbf8c11140f540ad7325afadb6581a83d99e20b209772f8f4a52ff01ea4",
     "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
@@ -1944,6 +2196,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23546502 },
-  "permissionsConfigHash": "0x95074358c73848a2d03712ffa8a757a88016003e8dd910d63a0c6e3de8e1b4c0"
+  "usedBlockNumbers": { "ethereum": 23839602 },
+  "permissionsConfigHash": "0x5e4286fbb4c16b078f76ca13796944ddc6e07da5ba8125d018cbf6634b52a8ee"
 }

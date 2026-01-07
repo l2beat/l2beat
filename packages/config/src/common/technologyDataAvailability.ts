@@ -127,15 +127,22 @@ const PLASMA_OFF_CHAIN: ProjectTechnologyChoice = {
 
 function CELESTIA_OFF_CHAIN(
   isUsingBlobstream: boolean,
+  fallback?: string,
 ): ProjectTechnologyChoice {
   const additionalDescription = isUsingBlobstream
     ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
     : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
+
+  const fallbackDescription = fallback
+    ? ` If Celestia becomes unavailable, the sequencer falls back to ${fallback}.`
+    : ''
+
   return {
     name: 'Data is posted to Celestia',
     description:
       'Transactions roots are posted onchain and the full data is posted on Celestia. ' +
-      additionalDescription,
+      additionalDescription +
+      fallbackDescription,
     risks: [
       {
         category: 'Funds can be lost if',
@@ -191,6 +198,7 @@ function AVAIL_OFF_CHAIN(isUsingVector: boolean): ProjectTechnologyChoice {
 function EIGENDA_OFF_CHAIN(
   isUsingDACertVerifier: boolean,
   eigenDACertVersion: string,
+  fallback?: string,
 ): ProjectTechnologyChoice {
   let additionalDescription: string
 
@@ -201,15 +209,20 @@ function EIGENDA_OFF_CHAIN(
   } else {
     // v2 and v3 both use EigenDA v2
     additionalDescription = isUsingDACertVerifier
-      ? 'The sequecencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
-      : 'The sequecencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+      ? 'The sequencer is publishing data to EigenDA v2. The DACert Verifier is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+      : 'The sequencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
   }
+
+  const fallbackDescription = fallback
+    ? ` If EigenDA becomes unavailable, the sequencer falls back to ${fallback}.`
+    : ''
 
   return {
     name: 'Data is posted to EigenDA',
     description:
       'Transactions roots are posted onchain and the full data is posted on EigenDA. ' +
-      additionalDescription,
+      additionalDescription +
+      fallbackDescription,
     risks: [
       {
         category: 'Funds can be lost if',
@@ -235,6 +248,7 @@ function DACHALLENGES_OFF_CHAIN(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
+  fallback?: string,
 ): ProjectTechnologyChoice {
   const risks: ProjectRisk[] = [
     {
@@ -252,13 +266,17 @@ function DACHALLENGES_OFF_CHAIN(
       text: 'the source-unavailable L2 node is configured to ignore successful DA challenges.',
     })
   }
+
+  const fallbackDescription = fallback
+    ? ` If a DA challenge is successful and the preimage data is not published, the chain reorgs to the last fully derivable state, falling back to ${fallback}.`
+    : ' If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.'
+
   return {
     name: 'Data required to compute fraud proof is published offchain without onchain attestations',
-    description: `The project relies on DA challenges for data availability. If a DA challenger finds that the data behind a tx data commitment is not available, 
-      they can submit a challenge which requires locking a bond within ${daChallengeWindow}. A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}. 
-      In such a case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, 
-      meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-      If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code,${nodeSourceLink ? ` which [can be reviewed here](${nodeSourceLink}).` : ' which in this case is not made available.'}`,
+    description: `The project relies on DA challenges for data availability. If a DA challenger finds that the data behind a tx data commitment is not available,
+      they can submit a challenge which requires locking a bond within ${daChallengeWindow}. A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
+      In such a case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data,
+      meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers.${fallbackDescription} This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code,${nodeSourceLink ? ` which [can be reviewed here](${nodeSourceLink}).` : ' which in this case is not made available.'}`,
     references: [
       {
         title: 'OP Plasma specification',

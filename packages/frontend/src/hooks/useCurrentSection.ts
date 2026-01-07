@@ -17,7 +17,7 @@ export function useCurrentSection(threshold?: Threshold) {
 
   const findCurrentSection = useCallback(() => {
     const sections = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-role="project-section"]'),
+      document.querySelectorAll<HTMLElement>('[data-role="nav-section"]'),
     )
     const firstSection = sections.at(0)
     const lastSection = sections.at(-1)

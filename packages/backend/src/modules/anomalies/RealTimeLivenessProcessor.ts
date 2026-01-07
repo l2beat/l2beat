@@ -12,15 +12,14 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import {
-  assert,
   type Block,
   type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Config, TrackedTxsConfig } from '../../config/Config'
-import { isChainIdMatching } from '../tracked-txs/utils/isChainIdMatching'
+import type { TrackedTxsConfig } from '../../config/Config'
+import { isFistParameterMatching } from '../tracked-txs/utils/isFirstParameterMatching'
 import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
 import type { AnomalyNotifier } from './AnomalyNotifier'
@@ -29,7 +28,6 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   chain = 'ethereum'
 
   private logger: Logger
-  private trackedTxsConfig: TrackedTxsConfig
   private transfers: (TrackedTxLivenessConfig & {
     params: TrackedTxTransferConfig
   })[] = []
@@ -44,17 +42,14 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   })[] = []
 
   constructor(
-    config: Config,
+    private readonly trackedTxsConfig: TrackedTxsConfig,
     logger: Logger,
     private readonly db: Database,
     private readonly notifier?: AnomalyNotifier,
   ) {
     this.logger = logger.for(this)
 
-    assert(config.trackedTxsConfig, 'TrackedTxsConfig is required')
-
-    this.trackedTxsConfig = config.trackedTxsConfig
-    this.mapConfigurations(config.trackedTxsConfig)
+    this.mapConfigurations(trackedTxsConfig)
   }
 
   async start() {
@@ -106,7 +101,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       )
 
       const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
-        isChainIdMatching(tx.data as string, c.params),
+        isFistParameterMatching(tx.data as string, c.params),
       )
 
       const results = [

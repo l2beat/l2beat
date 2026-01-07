@@ -1,7 +1,7 @@
 {
   "name": "fuel",
-  "timestamp": 1756452095,
-  "configHash": "0xc4f31194790216f2fb48fe39d383e8195c4d563b0199422224ff6bb2492eaa7f",
+  "timestamp": 1761051768,
+  "configHash": "0xb6d6727829e7245bc4444784756e2b3de12a753724a568d8ade284b5840f018f",
   "entries": [
     {
       "name": "Fuel Security Council",
@@ -23,7 +23,6 @@
           "eth:0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4",
           "eth:0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F",
           "eth:0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8",
-          "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306",
           "eth:0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09",
           "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc",
           "eth:0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d",
@@ -33,12 +32,12 @@
           "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6",
           "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
         ],
-        "$threshold": 9,
+        "$threshold": 8,
         "domainSeparator": "0x28903eeea49a6c98614f0cf994eddf5eb5b63ffc10fb7f4277c1b7859b6f877a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 45,
+        "multisigThreshold": "8 of 11 (73%)",
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -82,7 +81,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -102,11 +101,6 @@
     },
     {
       "address": "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -283,15 +277,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "1202075035000000000",
-        "currentPeriodEnd": 1756933139,
+        "currentPeriodAmount": "738077800000000000",
+        "currentPeriodEnd": 1761283763,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 249211,
+        "getNextOutgoingMessageNonce": 249400,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -300,7 +294,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "1880224994053000000000",
+        "totalDeposited": "1782413374617000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -720,6 +714,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23245256 },
-  "permissionsConfigHash": "0x0a92f2152313dd0271b5c7cfe6613fb7e69a9a056676a08da03864bf27ceacbc"
+  "usedBlockNumbers": { "ethereum": 23626107 },
+  "permissionsConfigHash": "0x93cb22fa6e3657d0a98ae9a74d0f547a69226fb1237fe2cdbc7aefa545d6f6c2"
 }

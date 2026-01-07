@@ -8,12 +8,12 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvsUsd(),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getProjectsChangeReport(),
     ps.getProjects({
       select: [
@@ -35,7 +35,7 @@ export async function getScalingRiskEntries() {
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvs[project.id],
+        tvs.projects[project.id]?.breakdown.total,
       ),
     )
     .sort(compareTvs)

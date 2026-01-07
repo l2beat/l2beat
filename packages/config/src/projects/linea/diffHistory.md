@@ -1,3 +1,243 @@
+Generated with discovered.json: 0x2539feb622b1cabeebee8f8f33dd1080acca93c3
+
+# Diff at Tue, 09 Dec 2025 10:38:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764667818
+- current timestamp: 1765276326
+
+## Description
+
+Removed Type0 verifier, added new Type4 verifier.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
+-        "eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.4:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+...0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b.sol} | 44 +++++++++++-----------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
+```
+
+Generated with discovered.json: 0x3a1c6a363038e14cf3b28374631c5fcdf9e43eb8
+
+# Diff at Tue, 02 Dec 2025 09:31:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2ff2c0fcad19f3cf20f79b990ed6b3c41d29f33f block: 1761668177
+- current timestamp: 1764667818
+
+## Description
+
+Removed one unused verifier (Type 1), changed other verifier (Type 4 -> Type 3).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.3:
++        "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.4:
+-        "eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+...0x814D80782aA8c508aBABE9C6956D8F1f90E5177a.sol} |  367 +++---
+ .../dev/null                                       | 1324 --------------------
+ 2 files changed, 188 insertions(+), 1503 deletions(-)
+```
+
+Generated with discovered.json: 0xda441d5c91f3783767b6f8607bdc19f5103a1970
+
+# Diff at Wed, 05 Nov 2025 12:47:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bc0ecd2e43db8badee0981759f26dbc0b38299e3 block: 1761668177
+- current timestamp: 1761668177
+
+## Description
+
+Libraries are opt-in
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761668177 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Permissions (eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597)
+    +++ description: None
+```
+
+```diff
+    contract Roles (eth:0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      values.$libraries:
+-        ["eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597"]
+    }
+```
+
+Generated with discovered.json: 0x651700b0004fb3a386c38c69c1e61bf606817a42
+
+# Diff at Fri, 31 Oct 2025 11:10:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@03b105955032cf1d17dbaa7be1e98258a77944f6 block: 1761668177
+- current timestamp: 1761668177
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761668177 (main branch discovery), not current.
+
+```diff
+    contract Roles (eth:0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      values.$libraries:
++        ["eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permissions (eth:0x33D1C5A5B6a7f3885c7467e829aaa21698937597)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x21b71892768b708faa4114b197fb43baf6ab2ec6
+
+# Diff at Tue, 28 Oct 2025 16:17:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1759250766
+- current timestamp: 1761668177
+
+## Description
+
+Presumably [Beta 4.1 upgrade](https://docs.linea.build/release-notes#beta-v41):
+
+Updated Linea verifiers for different forks, see details here: https://docs.linea.build/security-council-record.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
+-        "eth:0xED39C0C41A7651006953AB58Ecb3039363620995"
++        "eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873"
++        "eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.4:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0xED39C0C41A7651006953AB58Ecb3039363620995)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+## Source code changes
+
+```diff
+...0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d.sol} |  367 +++---
+ ...0x8CAE7ff138e401384df88a408314e4E9a92f274E.sol} |  397 +++---
+ ...:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De.sol | 1324 ++++++++++++++++++++
+ 3 files changed, 1697 insertions(+), 391 deletions(-)
+```
+
 Generated with discovered.json: 0x3305d3d53dc03ee2d1f569c0ca1f664ba05dbd2d
 
 # Diff at Tue, 30 Sep 2025 16:48:29 GMT:

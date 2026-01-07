@@ -1,7 +1,7 @@
 {
   "name": "linea",
-  "timestamp": 1759250766,
-  "configHash": "0xb555ae23206254fbd35ae8de0105dd64ca7ec66f24d65ae32ade6708fb007f71",
+  "timestamp": 1765276326,
+  "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
       "name": "TokenBridge",
@@ -443,6 +443,23 @@
       "proxyType": "EOA"
     },
     {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a",
+      "type": "Contract",
+      "template": "linea/Verifier",
+      "sourceHashes": [
+        "0x4c61353c5284bd858a3678aa48b2e4f17eac4449abaed557f97d8be2b462ecd6"
+      ],
+      "proxyType": "immutable",
+      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
+      "sinceTimestamp": 1762955423,
+      "sinceBlock": 23783553,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a": "PlonkVerifierMainnetFull"
+      }
+    },
+    {
       "name": "Linea Multisig 1",
       "address": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
@@ -698,7 +715,7 @@
           "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
         ],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 63,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -707,26 +724,26 @@
       }
     },
     {
-      "address": "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
+      "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
       "type": "Contract",
       "template": "linea/Verifier",
       "sourceHashes": [
-        "0x64013fe6cc4367b6dbbeb934bdb33f30aa57f2e6ebd6342fd05f2beb795c59c4"
+        "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71"
       ],
       "proxyType": "immutable",
       "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1755702719,
-      "sinceBlock": 23183104,
+      "sinceTimestamp": 1764597227,
+      "sinceBlock": 23919055,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": "PlonkVerifierMainnetFull"
+        "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b": "PlonkVerifierMainnetFull"
       }
+    },
+    {
+      "address": "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UpgradeableBeacon",
@@ -826,7 +843,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -984,11 +1001,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x1f17837bc402cc5d658f854692e9c8daee83839d9aeb42b9a64bf608ca71fe56",
-        "currentFinalizedState": "0xf70a393798f738021fc1c1612b1f12e8c382e83818b1755da2fb9645fa8d7d7d",
+        "currentFinalizedShnarf": "0xe0d8d361166471634c44f2d1a8edb4d9cf442069f5ec88b2f4cd05eb7cb6ef89",
+        "currentFinalizedState": "0x205d06913e881dc4f0b8a04479c2bedd8252821a8255b3757fbb28c499eb0aa6",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "2853546850000000000000",
+        "currentPeriodAmountInWei": "1868874518657706733479",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -1030,11 +1047,11 @@
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
-          "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
-          "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a",
+          "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -1150,23 +1167,6 @@
       },
       "implementationNames": {
         "eth:0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
-      }
-    },
-    {
-      "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0xED39C0C41A7651006953AB58Ecb3039363620995",
-      "type": "Contract",
-      "template": "linea/Verifier",
-      "sourceHashes": [
-        "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8"
-      ],
-      "proxyType": "immutable",
-      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1748943779,
-      "sinceBlock": 22623305,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xED39C0C41A7651006953AB58Ecb3039363620995": "PlonkVerifierMainnetFull"
       }
     },
     {
@@ -1768,8 +1768,8 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "272141900000000000000",
-        "currentPeriodEnd": 1759329419,
+        "currentPeriodAmountInWei": "62002000000000000000",
+        "currentPeriodEnd": 1765357905,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1778,11 +1778,11 @@
         "l1l2MessageSetter": [
           "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
         ],
-        "lastAnchoredL1MessageNumber": 787542,
+        "lastAnchoredL1MessageNumber": 794034,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 100739,
+        "nextMessageNumber": 104920,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -1959,7 +1959,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2785,10 +2785,13 @@
       "function txHash(uint256) view returns (bytes32)",
       "function txNonce() view returns (uint256)"
     ],
+    "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
     ],
-    "eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873": [
+    "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
@@ -2897,9 +2900,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0xED39C0C41A7651006953AB58Ecb3039363620995": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0xF24f1DC519d88246809B660eb56D94048575d083": [
       "constructor(address _owner, address _avatar, address _target)",
@@ -3504,6 +3504,6 @@
     "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23477086, "linea": 23990343 },
-  "permissionsConfigHash": "0x79d73cc93a72f72d682b38f102a7053a7fd3fdee72ca1293b5e7b5145281d5da"
+  "usedBlockNumbers": { "ethereum": 23974643, "linea": 26494862 },
+  "permissionsConfigHash": "0xbe6937ce06f8cf928030f065d32297a15e58c1824e8208a68afdaf6fc2fdbe86"
 }

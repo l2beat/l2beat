@@ -17,7 +17,10 @@ export {
 } from './discovery/analysis/AddressAnalyzer'
 export { codeIsEOA } from './discovery/analysis/codeIsEOA'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
-export { TemplateService } from './discovery/analysis/TemplateService'
+export {
+  type RefreshReason,
+  TemplateService,
+} from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
@@ -38,6 +41,10 @@ export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
 } from './discovery/config/structureUtils'
+export {
+  type DiscoveryCounter,
+  SimpleDiscoveryCounter,
+} from './discovery/engine/DiscoveryCounter'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
@@ -101,9 +108,11 @@ export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
+export { asStructured } from './discovery/type-casters/asStructured'
 export { get$Implementations } from './discovery/utils/extractors'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
+export { getReachableEntries } from './discovery/utils/reachable'
 export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export { flattenStartingFrom } from './flatten/flatten'
@@ -117,6 +126,11 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
+export {
+  type ContractConfigSchema,
+  type DiscoveryConfigSchema,
+  type FieldConfigSchema,
+} from './schemas/schemas'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {

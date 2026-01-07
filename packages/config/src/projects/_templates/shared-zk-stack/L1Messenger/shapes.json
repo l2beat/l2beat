@@ -1,7 +1,7 @@
 {
-  "L1Messenger": {
-    "hash": "0xd2ecfc7e11d1c2bd428a0170a09a7734dd4640ef3291609ddf62dbdb4c344f14",
+  "L1Messenger_Nov25": {
+    "hash": "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5",
     "address": "gateway:0x0000000000000000000000000000000000008008",
-    "blockNumber": 14855
+    "blockNumber": 84434
   }
 }

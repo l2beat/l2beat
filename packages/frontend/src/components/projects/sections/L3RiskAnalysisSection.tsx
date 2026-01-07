@@ -138,8 +138,8 @@ function CombinedRiskTable(props: {
 }) {
   return (
     // Wrapper to override mobile nav x-clipping
-    <div className=" overflow-x-auto overflow-y-hidden whitespace-nowrap">
-      <table className="mt-5 min-w-full border-separate border-spacing-0 overflow-x-scroll text-left text-xs ">
+    <div className="overflow-x-auto overflow-y-hidden whitespace-nowrap">
+      <table className="mt-5 min-w-full border-separate border-spacing-0 overflow-x-scroll text-left text-xs">
         <thead>
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             {/* Empty top-left header cell */}

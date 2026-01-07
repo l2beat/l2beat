@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.",
+  "ignoreMethods": ["getRound"],
+  "ignoreInWatchMode": ["getCurrentRound"]
+}

@@ -40,6 +40,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.EMPTY,
+        chain: 'ethereum',
       })
       const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
@@ -112,6 +113,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -126,6 +128,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
         ],
@@ -133,6 +136,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -228,6 +232,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -242,6 +247,7 @@ describe(AddressAnalyzer.name, () => {
               files: {},
               remappings: [],
               solidityVersion: '0.8.0',
+              libraries: {},
             },
           },
         ],
@@ -249,6 +255,7 @@ describe(AddressAnalyzer.name, () => {
 
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -345,6 +352,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
           {
@@ -359,6 +367,7 @@ describe(AddressAnalyzer.name, () => {
               constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
+              libraries: {},
             },
           },
         ],
@@ -367,6 +376,7 @@ describe(AddressAnalyzer.name, () => {
       const provider = mockObject<IProvider>({
         getBytecode: async () => Bytes.fromHex('0x1234'),
         getDeployment: mockFn().resolvesTo(undefined),
+        chain: 'ethereum',
       })
 
       const addressAnalyzer = new AddressAnalyzer(

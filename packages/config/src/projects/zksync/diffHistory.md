@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x6be21968e25f79d16c68a979ce6e95cc38748763
+
+# Diff at Mon, 29 Dec 2025 11:34:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1759932670
+- current timestamp: 1767007984
+
+## Description
+
+Upgraded Safe multisig to version 1.4.1. Also rotated one multisig member, added a new one and increased the threshold.
+
+## Watched changes
+
+```diff
+    contract Multisig 3 (eth:0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
++        "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e"
+      values.$members.1:
++        "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7"
+      values.$members.1:
+-        "eth:0x0d4E989c7620C8749c9417d2BF218896C767B606"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 4 (75%)"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Multisig 3/Safe.sol}   | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
 Generated with discovered.json: 0x57db3e05b4808e8084a3e933a2bde465bbf78755
 
 # Diff at Tue, 07 Oct 2025 14:25:01 GMT:

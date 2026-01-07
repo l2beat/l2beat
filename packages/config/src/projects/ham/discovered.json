@@ -1,7 +1,7 @@
 {
   "name": "ham",
   "timestamp": 1758875696,
-  "configHash": "0x5d72f314389160b5b41c814a48def06bb6c1f9f23b4b29aa5c97c1f3eda87d85",
+  "configHash": "0xdfee625cdf860f7fb1abdc49e5242f5a9656ff8fa508ed9653340443a00197f9",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { formatJson } from './formatJson'
+import { formatJson } from './formatJson.js'
 
 describe(formatJson.name, () => {
   it('primitives', () => {

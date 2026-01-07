@@ -24,6 +24,11 @@ export interface IndexerOptions {
 export abstract class Indexer {
   private readonly children: Indexer[] = []
 
+  static metricsEnabled = true
+  static setMetricsEnabled(value: boolean) {
+    Indexer.metricsEnabled = value
+  }
+
   /**
    * This can be overridden to provide a custom retry strategy. It will be
    * used for all indexers that don't specify their own strategy.
@@ -426,11 +431,13 @@ export abstract class Indexer {
   }
 
   private logMetrics(current: number, target: number): void {
-    this.logger.metric('Metrics', {
-      delay: target - current,
-      current,
-      target,
-    })
+    if (Indexer.metricsEnabled) {
+      this.logger.info('Metrics', {
+        delay: target - current,
+        current,
+        target,
+      })
+    }
   }
 
   // #endregion

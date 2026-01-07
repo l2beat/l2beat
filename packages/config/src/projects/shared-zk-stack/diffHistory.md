@@ -1,3 +1,724 @@
+Generated with discovered.json: 0xc440fd1d02b23efff7574feda951f565885e3665
+
+# Diff at Fri, 19 Dec 2025 12:27:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6a2695d64aef8f9e1ff8ab83d80056987e84f332 block: 1765211471
+- current timestamp: 1766146814
+
+## Description
+
+Registered a new chain with chain ID 5010405 in zksync ecosystem (version 30.1, zksyncOS, probably Airbender). The base token is Sophon token (https://etherscan.io/address/0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0), so probably it's Sophon upgrade.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.17:
++        {"chainId":5010405,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x27c3e74A53885afa564334abA5a7A336C8411Db2"}
+      values.getAllZKChainChainIDs.17:
++        5010405
+      values.getAllZKChains.17:
++        "eth:0xD08FE81c77860E66525b773fDBeB0b171b9E9e91"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        18
++        19
+    }
+```
+
+Generated with discovered.json: 0x8f3ad86e6cb5a3ac833ea3d094d8dba369f96f39
+
+# Diff at Mon, 08 Dec 2025 16:36:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@57890661a42a73a0a4e8b9f30546cf1492a8662e block: 1764167689
+- current timestamp: 1765211471
+
+## Description
+
+Upgraded ZKToken from v2 to v3 (https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f): added burn functionality (including permissioned burnFrom) and maxSupply.
+
+Also decreased votingDelay and lateQuorumVoteExtension params on ZkTokenGovernor and ZkGovOpsGovernor as per these proposals: https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160, https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      sourceHashes.1:
+-        "0x3a3b3a9708ad3a6179afe0f24a1426254e558d14bbaa4f155ed0db49027b2099"
++        "0x3f0cc88001b7e517d2d7fb4520faaf8deeb323106b3ab032ff35b0952046f99d"
+      values.$implementation:
+-        "zksync:0x01a6715d3560241E09E865a46122bf347A576c09"
++        "zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274"
+      values.$pastUpgrades.2:
++        ["2025-12-08T12:06:52.000Z","0x749b9e6eed328052d679eb86639be807b4acf811ac8786f730b45258ba41ce6f",["zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.maxSupply:
++        "21000000000000000000000000000"
+      implementationNames.zksync:0x01a6715d3560241E09E865a46122bf347A576c09:
+-        "ZkTokenV2"
+      implementationNames.zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274:
++        "ZkTokenV3"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.lateQuorumVoteExtension:
+-        604800
++        172800
+      values.proposalQueuedCount:
+-        11
++        12
+      values.votingDelay:
+-        604800
++        259200
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.lateQuorumVoteExtension:
+-        604800
++        172800
+      values.proposalQueuedCount:
+-        1
++        2
+      values.votingDelay:
+-        604800
++        259200
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkTokenV2.sol => .flat/ZkToken/ZkTokenV3.sol}  | 37 +++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0xa85a720f53b8a91c211bf22cb3a6239ce07e3a55
+
+# Diff at Wed, 26 Nov 2025 14:36:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd7c1c00cfe8eb7b4034082d8812fb8962098918 block: 1763987551
+- current timestamp: 1764167689
+
+## Description
+
+token proposal queued: https://www.tally.xyz/gov/zksync/proposal/59956436467786828609747327435664724459335730934530897411573906572229159062327?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        10
++        11
+    }
+```
+
+Generated with discovered.json: 0x85c2396421e140cef9c2914de8fe8fb8d18ce476
+
+# Diff at Mon, 24 Nov 2025 12:35:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7f22580fca8d48e9cc5f7f28da38d6b8725e891 block: 1762866771
+- current timestamp: 1763987551
+
+## Description
+
+[Queue ZIP-14 Upgrade ZK Token with Permissionless Burn Function](https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+upgrades ZK token with permissioned burn function: https://disco.l2beat.com/diff/zksync:0x01a6715d3560241E09E865a46122bf347A576c09/zksync:0x4fcd824D304e9b1584CdBb582c104BDcbFb11274
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.16:
++        {"chainId":30715,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x6aED6A0aCaAa8E434d5d98e31D01175d08F409d2"}
+      values.getAllZKChainChainIDs.16:
++        30715
+      values.getAllZKChains.16:
++        "eth:0xb6d615084d7a72bF98C2BD35DD6aBE824feb2dc7"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        17
++        18
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        13
++        14
+    }
+```
+
+Generated with discovered.json: 0x17d305bb1cd2e10751f16a70fea702221904cd5c
+
+# Diff at Tue, 11 Nov 2025 13:13:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b1f047143f23a2eb66cb8ee546e40e8456ba2c8c block: 1762779859
+- current timestamp: 1762866771
+
+## Description
+
+New proposal on ZkTokenGovernor: https://www.tally.xyz/gov/zksync/proposal/68452231205260788796569713423066878142593117468039270123415287058789227565934?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Token Program Proposals.
+
+New proposal on ZkProtocolGovernor: https://www.tally.xyz/gov/zksync/proposal/56697539346434504259886089137844919991955896472242107434527974192173343556352?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. This proposal will upgrade ZK token on zksync to ZKTokenV3, introducing role-gated burnFrom, permissionless burn of owned tokens and max supply.
+
+New proposal on ZkGovOpsGovernor: https://www.tally.xyz/gov/zksync/proposal/106273763076555939732473066377698909735843793351966221159383225521787704405222?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160. This proposal will shorten votingDelay from 7 to 3 days and lateQuorumVoteExtension from 7 to 2 days for Governance Advisory Proposals.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        14
++        15
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        13
++        14
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        1
++        2
+    }
+```
+
+Generated with discovered.json: 0x2ed9ffadb7c9ba5aadebefd4c7c3dcb4b02bf708
+
+# Diff at Mon, 10 Nov 2025 13:05:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e5b98f73e765185048172a39ccf6cdf19ca5fe79 block: 1762349131
+- current timestamp: 1762779859
+
+## Description
+
+Part of [TPP-12](https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) execution: `Zk_StakingPilot_2025` (0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B) was granted the minter role on ZK token.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.16:
++        "zksync:0xb1c5f8ea8cE447FDaFB234D85EAD8c8A83b6306B"
+    }
+```
+
+Generated with discovered.json: 0x5962fc0632a9211b2a4bb5cfa30da6aa5b533dce
+
+# Diff at Wed, 05 Nov 2025 13:27:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@65e01cac46a1da4a93a30562e3b62c4f0590a2f9 block: 1762180826
+- current timestamp: 1762349131
+
+## Description
+
+Created a new proposal: https://www.tally.xyz/gov/zksync/proposal/59956436467786828609747327435664724459335730934530897411573906572229159062327?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. Queued a proposal: https://www.tally.xyz/gov/zksync/proposal/97314764080859415498674952864578860560861880297360481348949362100730414449748?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+Executed proposal: https://www.tally.xyz/gov/zksync/proposal/8043865517871673466500920771587039178855876090726876272793935297016439640908?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. This proposal added a new capped minter for ZK token to fund governance system.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.15:
++        "zksync:0x1E386bc1FC6556c831371816f0a62705189939A1"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        12
++        13
+      values.proposalQueuedCount:
+-        9
++        10
+    }
+```
+
+Generated with discovered.json: 0x4e2aff97b2b4185b08bea09e2aa30159eb71658a
+
+# Diff at Mon, 03 Nov 2025 14:41:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@64561b32de50bd9ecc1f1ddea1db1aa9e5ae4bee block: 1761220191
+- current timestamp: 1762180826
+
+## Description
+
+Queued this proposal, funding for governance: https://www.tally.xyz/gov/zksync/proposal/8043865517871673466500920771587039178855876090726876272793935297016439640908?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746. 
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        8
++        9
+    }
+```
+
+Generated with discovered.json: 0xca96b303a588e901da012a888fda90ac91477451
+
+# Diff at Fri, 24 Oct 2025 09:13:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1760604460
+- current timestamp: 1761220191
+
+## Description
+
+zk token proxy admin moved to new protocolupgradehandler l2 alias.
+
+Config: zksync v29 upgrade.
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1761121800}
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      values.owner:
+-        "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
++        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","role":"admin","via":[{"address":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC","role":".owner"}]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760604460 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      description:
++        "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it."
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      directlyReceivedPermissions.2.description:
+-        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
++        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.0.description:
+-        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
++        "set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration."
+    }
+```
+
+```diff
+    EOA  (zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      name:
+-        "ProtocolUpgradeHandler_l2Alias_deprecated"
+    }
+```
+
+Generated with discovered.json: 0xa54977ac3168282658040f1c7f667d67529d9167
+
+# Diff at Thu, 16 Oct 2025 08:50:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@88fac19bbe6dc3868d941d9cb093cb5181d8344a block: 1760369926
+- current timestamp: 1760604460
+
+## Description
+
+### ZIP-12 V29 'Interop Messaging' Upgrade
+enables interop for Gateway chains, of which there is only one.
+
+Bridgehub - https://disco.l2beat.com/diff/eth:0x08A98B1048Fb61E9Fff7d7d98305aC6286Ae9F32/eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B
+- move chain asset handling (for chain migrations) to a separate contract: [ChainAssetHandler](https://flat.l2beat.com/address/eth:0xaa180C70126f751C164465638770B865965A744B)
+- 'precommitment' support (the gov proposal talks about preconf support in the contracts that is not supported in practice / offchain yet)
+- NewValidatorTimelockPostV29, setValidatorTimelockPostV29 - new event/func for changing the VTL
+
+ChainAssetHandler - smallish new contract handling migrations only (and migration pausing is also moved here)
+https://flat.l2beat.com/address/eth:0xaa180C70126f751C164465638770B865965A744B
+
+ProtocolUpgradeHandler - https://disco.l2beat.com/diff/eth:0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A/eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B
+- mini change: add ChainAssetHandler support
+
+ChainTypeManager - https://disco.l2beat.com/diff/eth:0x345314c7E4af84B763d98d23f772622E23AfB5CE/eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f
+- minimal compatibility changes similar to Bridgehub abbove
+- pre-/post v29 VTL fields
+
+MessageRoot - https://disco.l2beat.com/diff/eth:0x382fb241396eA915108e7B7Ce1adE1322bA73aeE/eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD
+- support new proofMetadata structure
+- interop support for gateway
+
+L1AssetRouter, L1Nullifier, CTMDeploymentTracker - https://disco.l2beat.com/diff/eth:0x0cb7f11BA981E13598D70625dF8f4597d59f2F4F/eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725, https://disco.l2beat.com/diff/eth:0xC6f08EFb7BA78f40d00F41aFAC00211d59eb9431/eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0, https://disco.l2beat.com/diff/eth:0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1/eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991
+- minor compat changes for new ChainAssetHandler, interop
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      sourceHashes.1:
+-        "0x85a0337c9b2db31a1b7e623ed99509d22ead32ce301ae832247ee1240f43eccb"
++        "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21"
+      values.$implementation:
+-        "eth:0x08A98B1048Fb61E9Fff7d7d98305aC6286Ae9F32"
++        "eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B"
+      values.$pastUpgrades.6:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.migrationPaused:
+-        true
++        false
+      values.chainAssetHandler:
++        "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076"
+      implementationNames.eth:0x08A98B1048Fb61E9Fff7d7d98305aC6286Ae9F32:
+-        "Bridgehub"
+      implementationNames.eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B:
++        "Bridgehub"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      sourceHashes.1:
+-        "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
++        "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe"
+      values.$implementation:
+-        "eth:0x382fb241396eA915108e7B7Ce1adE1322bA73aeE"
++        "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD"
+      values.$pastUpgrades.2:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.L1_CHAIN_ID:
++        1
+      implementationNames.eth:0x382fb241396eA915108e7B7Ce1adE1322bA73aeE:
+-        "MessageRoot"
+      implementationNames.eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD:
++        "MessageRoot"
+    }
+```
+
+```diff
+    contract CTMDeploymentTracker (eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860) {
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+      sourceHashes.1:
+-        "0xb55fe571d010f5a5fa7f06d0aa6602a1a6b406ed8c3163fb400b0f6a947a4bba"
++        "0xfd2eb86126d27fd1027643f37fdf17726d5043abf02f5a0d31f4337a5c400ea5"
+      values.$implementation:
+-        "eth:0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1"
++        "eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991"
+      values.$pastUpgrades.1:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1:
+-        "CTMDeploymentTracker"
+      implementationNames.eth:0x00e9d8A4b35C32880A10Feb391aDEDA0D3F90991:
++        "CTMDeploymentTracker"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (eth:0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+    contract L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      sourceHashes.1:
+-        "0xba83b7c168ffa78d2e714cfb804ca1cd4f33807f6e9b2abb2820457d6d2bf77a"
++        "0x44ec209239ba609c6f52edc0357702dd6bc4ee3f43da8492e4aa658b598b0a74"
+      values.$implementation:
+-        "eth:0x0cb7f11BA981E13598D70625dF8f4597d59f2F4F"
++        "eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725"
+      values.$pastUpgrades.3:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725"]]
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.eth:0x0cb7f11BA981E13598D70625dF8f4597d59f2F4F:
+-        "L1AssetRouter"
+      implementationNames.eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725:
++        "L1AssetRouter"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      values.$implementation:
+-        "eth:0xBa05B8B761386289Ba413a74AF1933d6a76E1b52"
++        "eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083"
+      values.$pastUpgrades.3:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083"]]
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.eth:0xBa05B8B761386289Ba413a74AF1933d6a76E1b52:
+-        "L1NativeTokenVault"
+      implementationNames.eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083:
++        "L1NativeTokenVault"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","role":"admin"}
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,2.
+      sourceHashes.1:
+-        "0x5462a6c55c6e9f2d98c21f2588b2b9a4de1dc41ba0c10906f8965e21849a3a52"
++        "0xee0ad6dd34008989477a03f84eca5083a1cb79b46c01c850617d62c7b406c4ba"
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,1."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,2."
+      values.$implementation:
+-        "eth:0x345314c7E4af84B763d98d23f772622E23AfB5CE"
++        "eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f"
+      values.$pastUpgrades.6:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.getSemverProtocolVersion.1:
+-        28
++        29
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+      values.initialCutHash:
+-        "0x1ba089adbb5d0a9aa3f96947db5b1fd831e17ab789f1147883d891e1e7951605"
++        "0xfe2b1933fcc0d0a6fd9758ee5c6d121081bd4580ec7d87bdf299470ed70208c5"
+      values.initialForceDeploymentHash:
+-        "0xed1057fbf858575d7348c4f2c82dd034534c62d97d0ac1d46f98ed197403f3d9"
++        "0xad3fb7f31b114db9c3bce490d6ff173ee5bb075efddae0bd6ed01432f5c09860"
+      values.l1GenesisUpgrade:
+-        "eth:0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E"
++        "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4"
+      values.protocolVersion:
+-        120259084289
++        124554051586
+      values.storedBatchZero:
+-        "0x9629612e3685846dc5056347758c0f8286fc877383c762aa17b1411758a582d8"
++        "0x4e89e7408b8a0abb45917cb07d586b1b0affca0ba4e6fd450504bdea9dd079a1"
+      values.validatorTimelockPostV29:
++        "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
+      implementationNames.eth:0x345314c7E4af84B763d98d23f772622E23AfB5CE:
+-        "ChainTypeManager"
+      implementationNames.eth:0x4aB7204e4205c96C32E23ADa9191720976dC084f:
++        "ChainTypeManager"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      sourceHashes.1:
+-        "0x56a8f9e2feec75535d897e8159a8cdf1546d81df34f77964c66bc908820e8687"
++        "0x6ea5a06371f681d6fc53ffcddfc1395a3748a7d57499d48cf32cefb035e24af0"
+      values.$implementation:
+-        "eth:0xC6f08EFb7BA78f40d00F41aFAC00211d59eb9431"
++        "eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0"
+      values.$pastUpgrades.6:
++        ["2025-10-15T09:09:11.000Z","0xa022a2ce09b145eb5d0c4342b3f3583e79b66ee7205ab986322be819f277ba83",["eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0"]]
+      values.$upgradeCount:
+-        6
++        7
+      implementationNames.eth:0xC6f08EFb7BA78f40d00F41aFAC00211d59eb9431:
+-        "L1Nullifier"
+      implementationNames.eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0:
++        "L1Nullifier"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sourceHashes.1:
+-        "0x12958ca399cc6a20305ec705a35cae0ee77a75afd66ee1eb5f09d3a811ca4457"
++        "0x34c46d93159964444be38043b9ec094342e281f9e5fcb7f69eef181251cfd8e1"
+      values.$implementation:
+-        "eth:0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"
++        "eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B"
+      values.$pastUpgrades.2:
++        ["2025-10-15T09:11:11.000Z","0x2309df20dd1cb3f3a3289e97517d10d399989292f966578240ec387246a13e61",["eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.CHAIN_ASSET_HANDLER:
++        "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076"
+      implementationNames.eth:0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A:
+-        "ProtocolUpgradeHandler"
+      implementationNames.eth:0x36625Bd3dDB469377C6e9893712158cA3c0cC14B:
++        "ProtocolUpgradeHandler"
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","description":"pause, resume chain migrations.","role":".owner"}
+    }
+```
+
+```diff
+    contract RollupDAManager (eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
++++ severity: HIGH
+      values.daPairs.3:
++        {"l1DAValidator":"eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119","l2DAValidator":"eth:0x177aB33Cf2EAce3d03318d59CBFE955aFEf2326A","status":true}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","description":"pause, resume chain migrations.","role":".owner","via":[{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","role":"admin","via":[{"address":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        10
++        12
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076)
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        |  340 ++--
+ .../CTMDeploymentTracker/CTMDeploymentTracker.sol  |   24 +-
+ .../.flat/ChainAssetHandler/ChainAssetHandler.sol  | 1887 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++++++
+ .../ChainTypeManager/ChainTypeManager.sol          |   74 +-
+ .../L1AssetRouter/L1AssetRouter.sol                |    4 +
+ .../L1GenesisUpgrade.sol                           |   34 +-
+ .../L1Nullifier/L1Nullifier.sol                    |    2 +-
+ .../MessageRoot/MessageRoot.sol                    |  291 ++-
+ .../ProtocolUpgradeHandler.sol                     |   10 +-
+ 10 files changed, 3106 insertions(+), 289 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760369926 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      values.migrations:
+-        [{"chainId":324,"assetId":"0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a","settlementLayerChainId":9075}]
+      fieldMeta.migrationPaused:
+-        {"severity":"HIGH","description":"If false, chains can migrate to whitelisted settlement layers."}
+      fieldMeta.migrations:
+-        {"severity":"HIGH","description":"zk chain migrations that were started"}
+    }
+```
+
 Generated with discovered.json: 0x9dfa3ca69ccb7f5da4ce2109adc02dc752c34bc6
 
 # Diff at Mon, 13 Oct 2025 15:39:54 GMT:

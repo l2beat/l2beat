@@ -1,8 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
-export const GetMetricsSuccessSchema = v.object({
+export const GetMetricsV1SuccessSchema = v.object({
   throughput: v.number(),
+})
+
+export const GetMetricsV2SuccessSchema = v.object({
+  total_bytes_posted: v.number(),
 })
 
 const ProjectDataSchema = v.object({

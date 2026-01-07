@@ -6,6 +6,7 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
+import { createWorkerPool } from './createWorkers'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMessagesService } from './UpdateMessagesService'
@@ -46,7 +47,6 @@ export function createUpdateMonitorModule({
     logger,
     updateMessagesService,
     projectService,
-    config.updateMonitor.disabledChains,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
     ? new UpdateDiffer(
@@ -71,6 +71,13 @@ export function createUpdateMonitorModule({
     cacheUri,
   )
 
+  const workerPool = createWorkerPool({
+    workerCount: config.updateMonitor.workerPool.workerCount,
+    timeoutPerTaskMs: config.updateMonitor.workerPool.timeoutPerTaskMs,
+    timeoutPerRunMs: config.updateMonitor.workerPool.timeoutPerRunMs,
+    logger: logger.for('UpdateMonitor'),
+  })
+
   const updateMonitor = new UpdateMonitor(
     runner,
     updateNotifier,
@@ -81,6 +88,8 @@ export function createUpdateMonitorModule({
     discoveryOutputCache,
     logger,
     !!config.updateMonitor.runOnStart,
+    workerPool,
+    config.updateMonitor.disabledProjects,
   )
 
   const updateMonitorController = new UpdateMonitorController(

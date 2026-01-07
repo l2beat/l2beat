@@ -1,7 +1,7 @@
 {
   "name": "automata",
   "timestamp": 1743923255,
-  "configHash": "0xff2521b1b13fcf4a65852aa4009e9767aeb23ed7302158537fc2a40789de29c1",
+  "configHash": "0x9a5f529603689785f67d98d3639f6aeb0070a49d18aebaf20478aee96492ce91",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -315,7 +315,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533"
+        "0x37e4bc420a724954556b571c6d8bc8c72d7c7f2b6c48465c65d895e51d5bbc10"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",

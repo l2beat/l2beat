@@ -1,3 +1,4 @@
+import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
@@ -5,6 +6,7 @@ import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
+import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
@@ -26,6 +28,7 @@ import { sp1 } from '../projects/sp1/sp1'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
 import { stone } from '../projects/stone/stone'
+import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
@@ -48,6 +51,7 @@ export const refactored: BaseProject[] = [
   // zk catalog v2
   sp1,
   boojum,
+  airbender,
   zkprover,
   stone,
   lineaprover,
@@ -59,6 +63,7 @@ export const refactored: BaseProject[] = [
   aztecv1prover,
   espressoprover,
   lighterprover,
+  stwo,
   // da-beat
   ethereum,
   avail,
@@ -69,6 +74,7 @@ export const refactored: BaseProject[] = [
   espresso,
   teeBridge,
   eigenda,
+  eigendaV2,
   memo,
   // chains
   bsc,

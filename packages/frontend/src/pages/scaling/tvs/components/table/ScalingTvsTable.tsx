@@ -1,34 +1,46 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
+import { api } from '~/trpc/React'
 import { toTableRows } from '../../utils/ToTableRows'
 import { getScalingTvsColumns } from './columns'
 
 interface Props {
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   entries: ScalingTvsEntry[]
   breakdownType: 'bridgeType' | 'assetCategory'
   ignoreUnderReviewIcon?: boolean
 }
 
 export function ScalingTvsTable({
+  tab,
   entries,
   breakdownType,
   ignoreUnderReviewIcon,
 }: Props) {
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
+
+  const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
+    api.tvs.table.useQuery({
+      type: tab,
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    })
 
   const data = useMemo(
     () =>
       toTableRows({
         projects: entries,
-        excludeAssociatedTokens,
+        excludeAssociatedTokens: display.excludeAssociatedTokens,
+        sevenDayBreakdown,
       }),
-    [entries, excludeAssociatedTokens],
+    [entries, display, sevenDayBreakdown],
   )
 
   const columns = useMemo(
@@ -36,8 +48,10 @@ export function ScalingTvsTable({
       getScalingTvsColumns({
         ignoreUnderReviewIcon,
         breakdownType,
+        excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+        isTvsLoading,
       }),
-    [breakdownType, ignoreUnderReviewIcon],
+    [breakdownType, ignoreUnderReviewIcon, display, isTvsLoading],
   )
 
   const table = useTable({
@@ -57,5 +71,10 @@ export function ScalingTvsTable({
     },
   })
 
-  return <BasicTable table={table} insideMainPageCard />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} insideMainPageCard />
+    </>
+  )
 }

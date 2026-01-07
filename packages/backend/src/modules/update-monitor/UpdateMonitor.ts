@@ -10,9 +10,10 @@ import {
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { Gauge } from 'prom-client'
+import shuffle from 'lodash/shuffle'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { WorkerPool } from './createWorkers'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
 import { sanitizeDiscoveryOutput} from './sanitizeDiscoveryOutput'
@@ -34,6 +35,8 @@ export class UpdateMonitor {
     private readonly discoveryOutputCache: DiscoveryOutputCache,
     private readonly logger: Logger,
     private readonly runOnStart: boolean,
+    private readonly workerPool: WorkerPool,
+    private readonly disabledProjects: string[] = [],
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -68,11 +71,30 @@ export class UpdateMonitor {
       updateTargetDate: targetDateIso,
     })
 
-    const projects = this.configReader.readAllDiscoveredProjects()
-    for (const project of projects) {
-      await this.updateProject(this.runner, project, timestamp)
-      await this.updateDiffer?.runForProject(project, timestamp)
-    }
+    const allProjects = this.configReader.readAllDiscoveredProjects()
+    const enabledProjects = shuffle(allProjects).filter(
+      (project) => !this.disabledProjects.includes(project),
+    )
+
+    this.logger.info('Processing projects', {
+      total: allProjects.length,
+      enabled: enabledProjects.length,
+      disabled: this.disabledProjects.length,
+      disabledProjects: this.disabledProjects,
+    })
+
+    const tasks = enabledProjects.map((project) => ({
+      identity: {
+        id: project,
+        name: `Update project ${project}`,
+      },
+      job: async () => {
+        await this.updateProject(this.runner, project, timestamp)
+        await this.updateDiffer?.runForProject(project, timestamp)
+      },
+    }))
+
+    const results = await this.workerPool.runInPool(tasks)
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -83,10 +105,20 @@ export class UpdateMonitor {
       duration: updateDuration,
       updateTarget: timestamp,
       updateTargetDate: targetDateIso,
+      timedOut: results.timedOut,
+      successCount: results.results.length,
+      failedCount: results.errors.length,
+      totalCount: tasks.length,
     })
+    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
-    await this.updateNotifier.sendDailyReminder(reminders, timestamp)
+    await this.updateNotifier.sendDailyReminder(
+      reminders,
+      timestamp,
+      this.disabledProjects,
+      failedProjects,
+    )
   }
 
   generateDailyReminder(): Record<string, DailyReminderChainEntry> {
@@ -133,8 +165,6 @@ export class UpdateMonitor {
       date: UnixTime.toDate(timestamp).toISOString(),
     })
 
-    const projectFinished = projectGauge.startTimer({ project })
-
     const chainUpdateStart = UnixTime.now()
     try {
       const projectConfig = this.configReader.readConfig(project)
@@ -147,13 +177,11 @@ export class UpdateMonitor {
 
       // DEFIDISCO FIX: Pass explicit timestamp instead of 'useCurrentTimestamp' to avoid
       // DiscoveryRunner calling UnixTime.now() again and creating future timestamps
-      const runResult = await runner.discoverWithRetry(
+      const runResult = await runner.run(
         projectConfig,
         timestamp,
         this.logger,
-        undefined,
-        undefined,
-        { [projectConfig.name]: { timestamp } }, // Use explicit timestamp
+        { [projectConfig.name]: { timestamp } }, // Use explicit timestamp instead of 'useCurrentTimestamp'
       )
 
       // read previous state (committed vs DB) and prime flat sources if needed
@@ -200,16 +228,7 @@ export class UpdateMonitor {
         discovery,
         configHash: generateStructureHash(projectConfig.structure),
       })
-
-      const chainUpdateEnd = UnixTime.now()
-      this.logger.info('Per-chain project update finished', {
-        project,
-        start: chainUpdateStart,
-        end: chainUpdateEnd,
-        duration: chainUpdateEnd - chainUpdateStart,
-      })
     } catch (error) {
-      errorCount.inc()
       const chainUpdateEnd = UnixTime.now()
       this.logger.error(
         {
@@ -222,7 +241,6 @@ export class UpdateMonitor {
       )
     }
 
-    projectFinished()
     const projectUpdateEnd = UnixTime.now()
     this.logger.info('Project update finished', {
       project,
@@ -240,6 +258,7 @@ export class UpdateMonitor {
       if (contract.errors !== undefined) {
         for (const [field, error] of Object.entries(contract.errors)) {
           logger.warn('There was an error during discovery', {
+            projectId: discovery.name,
             field,
             error,
           })
@@ -287,12 +306,10 @@ export class UpdateMonitor {
       return diskDiscovery
     }
 
-    const runResult = await runner.discoverWithRetry(
+    const runResult = await runner.run(
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      undefined,
-      undefined,
       previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
@@ -344,18 +361,6 @@ export class UpdateMonitor {
     )
   }
 }
-
-type ProjectGauge = Gauge<'project'>
-const projectGauge: ProjectGauge = new Gauge({
-  name: 'update_monitor_project_discovery_duration_seconds',
-  help: 'Duration gauge of discovering a project',
-  labelNames: ['project'],
-})
-
-const errorCount = new Gauge({
-  name: 'update_monitor_error_count',
-  help: 'Value showing amount of errors in the update cycle',
-})
 
 function countSeverities(diffs: DiscoveryDiff[]) {
   const result = { low: 0, high: 0, unknown: 0 }

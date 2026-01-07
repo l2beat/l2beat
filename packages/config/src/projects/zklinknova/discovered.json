@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "timestamp": 1753687799,
-  "configHash": "0x62cb7c5c1e19814de1368722171f653f3c84156b212f3299ff8ae00ccbe191ca",
+  "configHash": "0x8a288837bccb6a304f2b91a93bb34a42962862d9bed6c647f59d3c2d80427c6f",
   "entries": [
     {
       "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -2008,7 +2008,7 @@
       "address": "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458",
       "type": "Contract",
       "sourceHashes": [
-        "0x456c64183a7130a9bf99039d4d381b4b827b7efe87e684f81c20871836d975cb"
+        "0x792d878e324f2a31f66005ea64ff88a3c43115da5bb27ed146b7be88e638dca7"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1709217961,
@@ -5708,16 +5708,16 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {
-    "zksync2": 63447251,
-    "mantle": 82778743,
-    "mantapacific": 5946384,
-    "ethereum": 23016163,
-    "linea": 21375252,
-    "optimism": 139044511,
-    "scroll": 17695863,
+    "arbitrum": 362382003,
     "base": 33449226,
     "blast": 22438992,
-    "arbitrum": 362382003
+    "ethereum": 23016163,
+    "linea": 21375252,
+    "mantapacific": 5946384,
+    "mantle": 82778743,
+    "optimism": 139044511,
+    "scroll": 17695863,
+    "zksync2": 63447251
   },
   "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

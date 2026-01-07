@@ -26,7 +26,7 @@ export const powerloom: ScalingProject = orbitStackL2({
       websites: ['https://powerloom.io/'],
       bridges: ['https://bridge-v2.powerloom.network/'],
       documentation: ['https://docs.powerloom.io/'],
-      explorers: ['https://explorer.powerloom.network/'],
+      explorers: ['https://explorer-v2.powerloom.network'],
       repositories: ['https://github.com/powerLoom'],
       socialMedia: [
         'https://x.com/powerloom',

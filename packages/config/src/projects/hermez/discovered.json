@@ -1,7 +1,7 @@
 {
   "name": "hermez",
-  "timestamp": 1738736459,
-  "configHash": "0x26e88bedfeceb6a05b03555b812bec62a3f7d64149c67b8a835b8290f2141d58",
+  "timestamp": 1765784148,
+  "configHash": "0x2e189d8d6844ac641c74138bf78b380f1dc4cb759a58ff2517914e6f8d9930f4",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -52,7 +52,11 @@
         "BLOCKS_PER_SLOT": 40,
         "bootCoordinatorURL": "https://api.hermez.io",
         "genesisBlock": 12094000,
-        "getAllocationRatio": [4000, 4000, 2000],
+        "getAllocationRatio": [
+          4000,
+          4000,
+          2000
+        ],
         "getBootCoordinator": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
         "getClosedAuctionSlots": 2,
         "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -84,7 +88,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206720,
       "sinceBlock": 12373414,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
       }
@@ -136,7 +142,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206715,
       "sinceBlock": 12373413,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
       }
@@ -151,7 +159,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206929,
       "sinceBlock": 12373429,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
       }
@@ -203,7 +213,31 @@
     {
       "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0xe407cbc76d2dcba4c87608219a8254a23a316e5331aaac1a04865186145eddb3",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "HermezAuctionProtocol2",
@@ -220,7 +254,11 @@
         "BLOCKS_PER_SLOT": 40,
         "bootCoordinatorURL": "",
         "genesisBlock": 0,
-        "getAllocationRatio": [0, 0, 0],
+        "getAllocationRatio": [
+          0,
+          0,
+          0
+        ],
         "getBootCoordinator": "eth:0x0000000000000000000000000000000000000000",
         "getClosedAuctionSlots": 0,
         "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -254,7 +292,9 @@
           [
             "2021-05-13T08:02:37.000Z",
             "0x57ad65625027cd8324566421b6b838c4eccbc76dcad9c837d76beb841d5dc70c",
-            ["eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"]
+            [
+              "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -278,8 +318,16 @@
         "nextL1ToForgeQueue": 7626,
         "registerTokensCount": 33,
         "rollupVerifiers": [
-          ["eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2", 400, 32],
-          ["eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342", 2048, 32]
+          [
+            "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
+            400,
+            32
+          ],
+          [
+            "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
+            2048,
+            32
+          ]
         ],
         "rollupVerifiersLength": 2,
         "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
@@ -308,7 +356,9 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1616309707,
       "sinceBlock": 12080648,
       "values": {
@@ -490,6 +540,58 @@
     "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": [
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
     ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
     "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": [
       "event AddToken(address indexed tokenAddress, uint32 tokenID)",
       "event ForgeBatch(uint32 indexed batchNum, uint16 l1UserTxsLen)",
@@ -669,6 +771,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21778467 },
+  "usedBlockNumbers": {
+    "ethereum": 24016547
+  },
   "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
 }

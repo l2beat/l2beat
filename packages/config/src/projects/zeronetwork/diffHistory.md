@@ -1,3 +1,136 @@
+Generated with discovered.json: 0xa9e12182d8f6db6ed779103511e2371273d83820
+
+# Diff at Wed, 17 Dec 2025 14:34:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1761642925
+- current timestamp: 1761642925
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642925 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "ZeroNetworkZkEvm"
++        "Diamond"
+    }
+```
+
+Generated with discovered.json: 0x80e37145096bf011f65dcb7b8edbc508860ae765
+
+# Diff at Tue, 04 Nov 2025 11:34:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1761642925
+- current timestamp: 1761642925
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761642925 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      sourceHashes.0:
+-        "0xeef6daabc71bf67f02da2eebec0939402f99a165f2c3f40225b4b804021b4962"
++        "0xec6ace0c70a65bb3a520b16f88be2f013354490bc29572255ece332c9dbe2d14"
+    }
+```
+
+Generated with discovered.json: 0xa129dfb14386cff324142863c3bd34e220c54fac
+
+# Diff at Tue, 28 Oct 2025 09:16:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@090e135db1084f4a9678d6bf1cb0ff5e854903ea block: 1759757379
+- current timestamp: 1761642925
+
+## Description
+
+config related: something to do with the shared modules work imo.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759757379 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-zk-stack"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x4a48f107cb040dd8a7cc1993c9dbadfb287a1c80
+
+# Diff at Fri, 24 Oct 2025 09:13:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@11b074f59e0a769fa3d144569b93ef0f7ba1e44f block: 1759757379
+- current timestamp: 1759757379
+
+## Description
+
+Config: add da vali comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759757379 (main branch discovery), not current.
+
+```diff
+    contract Zeronetwork Multisig (eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++        "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      description:
++        "A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it."
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvm (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
 Generated with discovered.json: 0x1c2cbf55485875fc241f58cd07f1932601522d2d
 
 # Diff at Mon, 06 Oct 2025 13:30:42 GMT:

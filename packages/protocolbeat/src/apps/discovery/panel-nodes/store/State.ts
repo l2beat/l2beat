@@ -39,6 +39,7 @@ export interface State {
   readonly positionsBeforeMove: Readonly<
     Record<string, { readonly x: number; readonly y: number }>
   >
+  readonly loaded: boolean
 }
 
 export interface Node {
@@ -54,6 +55,7 @@ export interface Node {
   readonly color: number
   readonly hueShift: number
   readonly data: unknown
+  readonly isReachable: boolean
 }
 
 export interface Field {

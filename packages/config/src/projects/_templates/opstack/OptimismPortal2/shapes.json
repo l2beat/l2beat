@@ -32,7 +32,24 @@
   "OptimismPortal2_v5_0_0": {
     "hash": "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9",
     "address": "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999",
-    "chain": "ethereum",
     "blockNumber": 23496267
+  },
+  "OptimismPortal2_v5_1_1.sol": {
+    "hash": "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2",
+    "address": "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202",
+    "chain": "ethereum",
+    "blockNumber": 23881654
+  },
+  "OptimismPortal2_v5_2_0_CGT": {
+    "hash": "0x544d5b534ddffee0c1943b4e8063acf620c70531480b92fe381656a8f8a9079b",
+    "address": "eth:0xa0fEfC3A457F6A1aE2d81FC172D6dE090a9F4033",
+    "chain": "ethereum",
+    "blockNumber": 23975101
+  },
+  "OptimismPortal2_v3_15_0_MEGA.sol": {
+    "hash": "0x2cb05d8405b381db83cf08312454b15a474ae2344ca5b34a2c69b3e2f3c1c87e",
+    "address": "eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9",
+    "chain": "ethereum",
+    "blockNumber": 24047652
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "espresso",
   "timestamp": 1746205715,
-  "configHash": "0xc10a33c67d8afa8cdd597f38efabd39268d8d27d452a14e6d0b46e8ebe897fc2",
+  "configHash": "0xbc54f4e990277e1a7e9850dc4be8d4c97975b9416b09258ad4e2a97d28b34b96",
   "entries": [
     {
       "name": "EspressoMultisig",
@@ -94,6 +94,10 @@
       "values": {
         "$admin": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "$implementation": "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B",
+        "$libraries": [
+          "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb",
+          "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f"
+        ],
         "$pastUpgrades": [
           [
             "2024-11-05T18:20:35.000Z",
@@ -136,6 +140,40 @@
       "implementationNames": {
         "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "ERC1967Proxy",
         "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": "LightClient"
+      }
+    },
+    {
+      "name": "OperatorRegistryV1Admin",
+      "address": "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe27cd7251355953a27d4b5d1ac9b631394c1c3590034e725819f23037642d915"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1713568631,
+      "sinceBlock": 19692700,
+      "values": {
+        "$immutable": true,
+        "MAX_ACTIVE_OPERATOR_COUNT": 32,
+        "MAX_OPERATOR_COUNT": 254
+      },
+      "implementationNames": {
+        "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb": "OperatorRegistryV1Admin"
+      }
+    },
+    {
+      "name": "PlonkVerifier",
+      "address": "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x66c2dfbbce4205be42d0caa868ec62ca5ac92b17540adf55d632bc3d66de907c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730830799,
+      "sinceBlock": 21123198,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f": "PlonkVerifier"
       }
     },
     {
@@ -204,6 +242,40 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb": [
+      "error CANNOT_EXIT_ZERO_SHARES()",
+      "error HEAP_OVERFLOW()",
+      "error INVALID_EARNINGS_RECEIVER()",
+      "error INVALID_HEAP_SIZE()",
+      "error INVALID_INDEX()",
+      "error INVALID_MANAGER()",
+      "error INVALID_OPERATOR()",
+      "error INVALID_OPERATOR_DELEGATOR()",
+      "error MAX_ACTIVE_OPERATOR_COUNT_EXCEEDED()",
+      "error MAX_OPERATOR_COUNT_EXCEEDED()",
+      "error OPERATOR_ALREADY_ACTIVE()",
+      "error OPERATOR_ALREADY_INACTIVE()",
+      "error OPERATOR_NOT_FOUND()",
+      "event ETHDepositsDeallocated(uint8 indexed operatorId, uint256 depositsDeallocated, bytes pubKeyBatch)",
+      "event MinStakerOptOutBlocksSet(uint24 minStakerOptOutBlocks)",
+      "event OperatorActivated(uint8 indexed operatorId)",
+      "event OperatorAdded(uint8 indexed operatorId, address indexed operator, address indexed delegator, address initialManager, address initialEarningsReceiver, string initialMetadataURI)",
+      "event OperatorDeactivated(uint8 indexed operatorId)",
+      "event OperatorStrategyExitQueued(uint8 indexed operatorId, address strategy, uint256 sharesToExit, bytes32 withdrawalRoot)",
+      "event OperatorStrategyShareCapSet(uint8 indexed operatorId, address strategy, uint128 cap)",
+      "event OperatorValidatorCapSet(uint8 indexed operatorId, uint40 cap)",
+      "event ProofUploaderSet(address proofUploader)",
+      "event SecurityDaemonSet(address securityDaemon)",
+      "event ValidatorKeyReviewPeriodSet(uint24 validatorKeyReviewPeriod)",
+      "function MAX_ACTIVE_OPERATOR_COUNT() view returns (uint8)",
+      "function MAX_OPERATOR_COUNT() view returns (uint8)"
+    ],
+    "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f": [
+      "error InvalidPlonkArgs()",
+      "error UnsupportedDegree()",
+      "error WrongPlonkVK()",
+      "function verify(tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) verifyingKey, uint256[7] publicInput, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof) view returns (bool)"
+    ],
     "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": [
       "constructor()",
       "error AddressEmptyCode(address target)",
@@ -264,5 +336,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 22397507 },
-  "permissionsConfigHash": "0xf1670186d22d7e42e2246bda9b7f3600bf922ef914cd7ce3f0558e366981e146"
+  "permissionsConfigHash": "0xc4ecd18d9e29b8cfde58d6ba78f8911a2261b99556772f0a6c539fa19eb328dd"
 }

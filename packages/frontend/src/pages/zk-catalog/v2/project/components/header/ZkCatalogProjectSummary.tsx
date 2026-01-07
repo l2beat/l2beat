@@ -21,7 +21,7 @@ export function ProjectZkCatalogSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      data-role="project-section"
+      data-role="nav-section"
       className="w-full border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="md:hidden">
@@ -45,14 +45,14 @@ export function ProjectZkCatalogSummary({ project }: Props) {
         )}
       </div>
       <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)] md:hidden" />
-      <div className="md:hidden ">
+      <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
     </section>
   )
 }
 
-function TrustedSetupsByProofSystemSection({
+export function TrustedSetupsByProofSystemSection({
   trustedSetupsByProofSystem,
 }: {
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem

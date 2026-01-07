@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface State {
   readonly selected: string | undefined
@@ -10,9 +11,23 @@ interface Actions {
   highlight: (highlighted: readonly string[]) => void
 }
 
-export const usePanelStore = create<State & Actions>((set) => ({
+const INITIAL_STATE: State = {
   selected: undefined,
   highlighted: [],
-  select: (selected) => set(() => ({ selected })),
-  highlight: (highlighted) => set(() => ({ highlighted })),
-}))
+}
+
+export const usePanelStore = create<State & Actions>()(
+  persist(
+    (set) => ({
+      ...INITIAL_STATE,
+      select: (selected) => set(() => ({ selected })),
+      highlight: (highlighted) => set(() => ({ highlighted })),
+    }),
+    {
+      name: 'discovery-app-selection-store-v1',
+      partialize: (state) => ({
+        selected: state.selected,
+      }),
+    },
+  ),
+)

@@ -1,4 +1,179 @@
-Generated with discovered.json: 0x0b0cca0a4e82aea994f4f0631f4e5e54f7fce2c2
+Generated with discovered.json: 0x0a404719288055046e5a47501d9672c75b7cc01b
+
+# Diff at Mon, 22 Dec 2025 12:28:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765550395
+- current timestamp: 1766406428
+
+## Description
+
+safe multisig upgrade.
+
+## Watched changes
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Boba Multisig/Safe.sol}                        | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0xacf849415a2f04a611dd2ece8f897dc6a4cf8258
+
+# Diff at Fri, 12 Dec 2025 16:19:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1762517395
+- current timestamp: 1765550395
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762517395 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xb8c8ea4ee32bb78ad4f6dfb2da15834c06370203
+
+# Diff at Fri, 07 Nov 2025 12:11:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@13bc02ee5170e2fdf5ee8d6add3be941d055d545 block: 1762276576
+- current timestamp: 1762517395
+
+## Description
+
+msig change.
+
+## Watched changes
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
++        "eth:0xBEC9D08ddfb46F20f3a847180E6bC04c8Dc8aCb4"
+    }
+```
+
+Generated with discovered.json: 0xef0ceb6e69c517c4bd23d4af72948192d5ca6c4c
+
+# Diff at Tue, 04 Nov 2025 17:17:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@247fa0b26d8d13bf9c509f1c360df6ee053d13ee block: 1751366039
+- current timestamp: 1762276576
+
+## Description
+
+System config owner moved to EOA.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4"
++        "eth:0xD382C8Ae5c51131086E2c5a2292E7B35D2093369"
+    }
+```
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+Generated with discovered.json: 0xd38f16d5b5fc4d0a0bb3e204512e6ec9b0394433
+
+# Diff at Tue, 04 Nov 2025 11:32:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ff7b62a511791b99f61b604fb6b56e4ea223bb0 block: 1751366039
+- current timestamp: 1751366039
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1751366039 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xa2e4c062c9c44866846c9caf76340a103baaf77ec936f0e8fd29e5de6bdeb779"
++        "0xbb3cae27c16856a4265d2e2e2614765c1254c07cf3bb84574cd46e033524f1c8"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x36b6d01ce1c06ddc49ae1e3fcb2954cf2bfba1c55fd1174fce55ebd20e3dbe13"
++        "0x8738d176c361d44d45a0045debf90812ce2af53a3ca1a6483afd9d85d5f95883"
+    }
+```
+
+Generated with discovered.json: 0x313a1ea20f5cd4139ea23bf1c56537d7f09af4c3
 
 # Diff at Mon, 15 Sep 2025 09:50:21 GMT:
 

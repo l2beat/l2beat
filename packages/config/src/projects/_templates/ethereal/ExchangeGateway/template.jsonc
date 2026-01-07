@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getExchangeTokens", "proxiableUUID"],
+  "ignoreRelatives": ["getAccountGlobalUsdToken"],
+  "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
+  "fields": {
+    "isEmergencyPaused": { "severity": "HIGH" },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "this primary administrator can modify system parameters, add or remove tokens, sequencers, emergency pausers, delegate depositors, and claimers. They also manage fee schedules and perpetual products, liquidator details, implementation pointers and other essential exchange settings."
+        }
+      ]
+    },
+    "registry": {
+      "handler": {
+        "type": "event",
+        "select": "record",
+        "set": { "event": "RegistryRecordUpdated" },
+        "groupBy": "name"
+      }
+    },
+    "registeredSequencers": {
+      "handler": {
+        "type": "event",
+        "select": "sequencer",
+        "add": { "event": "SequencerAdded" },
+        "remove": { "event": "SequencerRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "trusted off-chain operator that bundles user actions and submits them for on-chain execution, only role that can call the core state-transition function processActions in the Exchange contract."
+        }
+      ]
+    },
+    "pausedSequencers": {
+      "handler": {
+        "type": "event",
+        "select": "sequencer",
+        "add": {
+          "event": "SequencerPausedUpdated",
+          "where": ["=", "#paused", true]
+        },
+        "remove": {
+          "event": "SequencerPausedUpdated",
+          "where": ["!=", "#paused", true]
+        }
+      }
+    },
+    "emergencyPausers": {
+      "permissions": [
+        { "type": "interact", "description": "pause the exchange contract." }
+      ],
+      "handler": {
+        "type": "event",
+        "select": "pauser",
+        "add": {
+          "event": "EmergencyPauserUpdated",
+          "where": ["=", "#enabled", true]
+        },
+        "remove": {
+          "event": "EmergencyPauserUpdated",
+          "where": ["!=", "#enabled", true]
+        }
+      }
+    },
+    "getFeeCollector": {
+      "permissions": [
+        { "type": "interact", "description": "receive exchange fees." }
+      ]
+    },
+    "getLiquidator": {
+      "permissions": [
+        { "type": "interact", "description": "take over liquidated accounts." }
+      ]
+    }
+  }
+}

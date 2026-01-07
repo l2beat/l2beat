@@ -28,6 +28,10 @@ import {
   ConstructorArgsHandler,
 } from './ConstructorArgsHandler'
 import {
+  CrossChainAccessControlHandler,
+  CrossChainAccessControlHandlerDefinition,
+} from './CrossChainAccessControlHandler'
+import {
   DynamicArrayHandler,
   DynamicArrayHandlerDefinition,
 } from './DynamicArrayHandler'
@@ -144,6 +148,7 @@ export const UserHandlerDefinition = v.union([
   YieldFiMintersDefinition,
   EventTraceHandlerDefinition,
   LidoACLHandlerDefinition,
+  CrossChainAccessControlHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -214,5 +219,7 @@ export function getUserHandler(
       return new EventTraceHandler(field, definition, abi)
     case 'lidoACL':
       return new LidoACLHandler(field, definition, abi)
+    case 'crossChainAccessControl':
+      return new CrossChainAccessControlHandler(field, definition, abi)
   }
 }

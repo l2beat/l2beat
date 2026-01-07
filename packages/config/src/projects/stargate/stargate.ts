@@ -24,6 +24,7 @@ export const stargate: Bridge = {
         'https://github.com/stargate-protocol/stargate',
         'https://github.com/LayerZero-Labs/LayerZero',
       ],
+      documentation: ['https://docs.stargate.finance/'],
       socialMedia: [
         'https://discord.com/invite/eG5TgNpUE7',
         'https://t.me/joinchat/LEM0ELklmO1kODdh',
@@ -83,7 +84,7 @@ export const stargate: Bridge = {
     },
   },
   config: {
-    // In StarkGate these are pools, there is a separate Pool contract for each supported token. The list of all the pools can be obtained
+    // In StarGate these are pools, there is a separate Pool contract for each supported token. The list of all the pools can be obtained
     // from the pool factory: 0x06d538690af257da524f25d0cd52fd85b1c2173e. For Ether pool (SGETH) there is additional Escrow contract
     escrows: [
       discovery.getEscrowDetails({

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd7b56c5590cc0dc22e9f49ea56f7db7b238d864f
+
+# Diff at Wed, 19 Nov 2025 14:50:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c2740481ca5c9bb2be3283052c4a68b2d735c71b block: 1711624295
+- current timestamp: 1763563670
+
+## Description
+
+bridge paused, disco archived.
+
+## Watched changes
+
+```diff
+    contract Bridge (eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x20392e4f6ec182af44fd6f14b22dac8a97a5aa93
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -4,9 +4,16 @@ import {
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
+import uniq from 'lodash/uniq'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -215,6 +222,36 @@ describe('getProjects', () => {
     }
   })
 
+  describe('zk catalog', async () => {
+    const usageMap = getUsageMap(projects)
+
+    for (const project of projects) {
+      describe(project.id, () => {
+        if (!project.zkCatalogInfo) return
+        const liveTvsProjects = new Set(
+          project.zkCatalogInfo.projectsForTvs
+            ?.filter((p) => !p.untilTimestamp)
+            .map((p) => p.projectId),
+        )
+
+        const usedInVerifiers = uniq(
+          project.zkCatalogInfo.verifierHashes.flatMap((v) =>
+            v.knownDeployments.flatMap(
+              (d) =>
+                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+            ),
+          ),
+        ).filter((p) => p !== undefined)
+
+        for (const usedIn of usedInVerifiers) {
+          it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
+            expect(liveTvsProjects.has(usedIn)).toEqual(true)
+          })
+        }
+      })
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
@@ -226,7 +263,7 @@ describe('getProjects', () => {
 
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
-          for (const [i, contract] of perChain.entries()) {
+          for (const contract of perChain) {
             it(`contract [${chain}:${contract.address}] name isn't empty`, () => {
               assert(
                 contract.name.trim().length > 0,
@@ -241,13 +278,24 @@ describe('getProjects', () => {
             const actorIds = all.map((a) => a.id)
 
             if (upgradableBy) {
-              it(`contracts[${project.id}][${chain}][${contract.name ?? contract.address.toString()} (${i})].upgradableBy is valid \n ${actorIds} | \n${upgradableBy.map((a) => a.name)}`, () => {
+              it('contracts.upgradableBy is valid', () => {
                 const expectedToContain = upgradableBy.map(
                   (a) => a.id ?? a.name,
                 )
 
                 for (const expected of expectedToContain) {
-                  expect(actorIds).toInclude(expected)
+                  const message = [
+                    '',
+                    chalk.red('ERROR:'),
+                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
+                    `But the actor ${chalk.magenta(expected)} does not exist in the list of actors!`,
+                    '',
+                    `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
+                    '',
+                    `${chalk.green('POSSIBLE FIX')}: check if the actor is not marked as spam`,
+                  ].join('\n')
+
+                  assert(actorIds.includes(expected), message)
                 }
               })
             }
@@ -374,6 +422,24 @@ describe('getProjects', () => {
         }
       }
     })
+
+    describe('every untilTimestamp (if present) is greater than sinceTimestamp', () => {
+      for (const project of projects) {
+        const trackedTxsConfig = project.trackedTxsConfig
+        if (!trackedTxsConfig) continue
+
+        it(project.id, () => {
+          for (const config of trackedTxsConfig) {
+            if (config.untilTimestamp) {
+              expect(config.untilTimestamp).toBeGreaterThan(
+                config.sinceTimestamp,
+              )
+            }
+          }
+        })
+      }
+    })
+
     describe('transfers', () => {
       it('every configuration points to unique transfer params', () => {
         const transfers = new Set<string>()
@@ -548,21 +614,6 @@ describe('getProjects', () => {
       }
     })
 
-    describe('every project has no multiple daLayers configured for tracking (not supported on FE)', () => {
-      for (const project of projects) {
-        if (project.daTrackingConfig) {
-          const usedDaLayers = new Set<ProjectId>()
-          it(project.id, () => {
-            assert(project.daTrackingConfig) // type issue
-            for (const config of project.daTrackingConfig) {
-              usedDaLayers.add(config.daLayer)
-            }
-            expect(usedDaLayers.size).toEqual(1)
-          })
-        }
-      }
-    })
-
     describe('every appId is unique for Avail projects', () => {
       const appIds = new Map<string, string>()
       for (const project of projects) {
@@ -663,3 +714,40 @@ describe('getProjects', () => {
     }
   })
 })
+
+// This is simpler version of getContractUtils that we have in FE. It's used only for testing.
+function getUsageMap(projects: BaseProject[]) {
+  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+
+  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
+    const key = `${chain}-${address}` as const
+    const uses = usageMap.get(key)
+    if (!uses) {
+      usageMap.set(key, [usage])
+      return
+    }
+    if (!uses.includes(usage)) {
+      uses.push(usage)
+    }
+  }
+
+  for (const project of projects) {
+    if (!project.isScaling || !project.contracts) continue
+
+    for (const [chain, contracts] of Object.entries(
+      project.contracts.addresses,
+    )) {
+      for (const contract of contracts) {
+        addUsage(
+          chain,
+          ChainSpecificAddress.address(contract.address),
+          project.id,
+        )
+        for (const impl of contract.upgradeability?.implementations ?? []) {
+          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+        }
+      }
+    }
+  }
+  return usageMap
+}

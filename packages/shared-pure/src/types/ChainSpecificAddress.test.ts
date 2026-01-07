@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { ChainSpecificAddress } from './ChainSpecificAddress'
-import { EthereumAddress } from './EthereumAddress'
+import { ChainSpecificAddress } from './ChainSpecificAddress.js'
+import { EthereumAddress } from './EthereumAddress.js'
 
 describe(ChainSpecificAddress.name, () => {
   describe('creation', () => {

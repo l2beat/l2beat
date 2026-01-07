@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { LineSelection } from '../extensions/lineSelector'
-import { LineSelector } from '../extensions/lineSelector'
+import type { LineSelection } from '../plugins/lineSelector'
+import { LineSelector } from '../plugins/lineSelector'
 
 export function useLineSelection(linesParam: string | null) {
   const [selection, setSelection] = useState<LineSelection | null>(null)

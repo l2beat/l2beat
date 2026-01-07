@@ -4,6 +4,10 @@ import { getLogger } from '../utils/logger'
 export function MetricsMiddleware() {
   const logger = getLogger().for('Metrics')
   return (req: Request, res: Response, next: NextFunction) => {
+    if (req.headers['user-agent']?.includes('Cloudflare-Healthchecks')) {
+      return next()
+    }
+
     logger.info('Processing request', {
       method: req.method,
       url: req.originalUrl,

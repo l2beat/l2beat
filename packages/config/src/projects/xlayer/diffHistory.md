@@ -1,3 +1,400 @@
+Generated with discovered.json: 0x0b907d154e8769bd7ae9bc6fc0d883cd5ddfcadc
+
+# Diff at Mon, 29 Dec 2025 10:14:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1765461274
+- current timestamp: 1767003202
+
+## Description
+
+Rotated batcher address.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d"
++        "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459"
+    }
+```
+
+Generated with discovered.json: 0x35aec606f1bf653110095fa92d32c417480edf34
+
+# Diff at Fri, 12 Dec 2025 16:20:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765461274
+- current timestamp: 1765461274
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765461274 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x26009ef7cf751c84029aec48e4558c937bc6afe8
+
+# Diff at Wed, 10 Dec 2025 09:17:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fbe10a69a76cdcab5529ac68e11f14f4d3a22396 block: 1765279563
+- current timestamp: 1765281854
+
+## Description
+
+add opstack contracts:
+
+[SystemConfig](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xfCA51bf5bDc5aC16B86F859d6BEe90cfdF6fEb72), [OptimismPortal2](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0xa0fEfC3A457F6A1aE2d81FC172D6dE090a9F4033):
+- standard op stack, includes custom gas token logic
+
+[L1StandardBridge](https://disco.l2beat.com/diff/eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A/eth:0x2978527d5D1372C32fEdC182FDE7559c0471d051), [L1ERC721Bridge](https://disco.l2beat.com/diff/eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9/eth:0xFbd06fCb2a023d89a7ae9BeE89d157C5264cf42b):
+- all bridging disabled (revert)
+
+[SuperchainConfig](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xe78543A6bE59F5561717B69a2AD7c83DA9249572):
+- standard OP stack, but not local fork of the contract (not connected to superchain)
+
+other contracts have no diff with knows op stack contracts.
+
+the proof system is closed/permissioned and bridge is disabled. meaning that there is a questionable difference in risk to not deploying these contracts and just simulating them offchain. project remains in 'others', but following pizza slices change to the closed-proofs op stack variant:
+- DA is now onchain
+- Sequencer failure is now green: users can force transactions
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        1024
++        1025
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765279563 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993)
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge_neutered (eth:0x85d37236f063C687d056b3604CBEe4B60d124858)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge_neutered (eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a)
+    +++ description: This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xC6901aBf8D39079d6b028dA550BB643f10840552)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+Generated with discovered.json: 0x16767557349619cf242e9ea39a871af19557de34
+
+# Diff at Tue, 09 Dec 2025 11:33:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ed25b2aa28d6ab9faa5f06bc943948919be9627d block: 1761903013
+- current timestamp: 1765279563
+
+## Description
+
+config: add aggchain_type description and severity.
+
+put chain under review because of a parallel deployment: https://etherscan.io/address/0x5065809Af286321a05fBF85713B5D5De7C8f0433 
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761903013 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      fieldMeta.AGGCHAIN_TYPE:
++        {"severity":"HIGH","description":"0: ECDSA sig verification, 1: limited to vkeys in AggchainGateway with 1 as second byte"}
+    }
+```
+
+Generated with discovered.json: 0x5c770dc0fc1c566eead414c7ef5b88420096261f
+
+# Diff at Fri, 31 Oct 2025 13:56:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@68eb98b0468d176aa44713dcaed98f67b2a200a0 block: 1754482928
+- current timestamp: 1761903013
+
+## Description
+
+Upgrade of the main XLayer contract: https://disco.l2beat.com/diff/eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B/eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21
+- rename
+- move to CONSENSUS_TYPE (no change in permissions nor state validation) ref: https://app.excalidraw.com/s/1Pobo8fNXle/oDCa0vpJ3X?element=x9PfT775QIukDuV3P-sUz
+
+## Watched changes
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      name:
+-        "PolygonPessimisticConsensus"
++        "AggchainECDSAMultisig"
+      template:
+-        "polygon-cdk/PolygonPessimisticConsensus"
++        "polygon-cdk/AggchainECDSAMultisig"
+      sourceHashes.1:
+-        "0x555aef5e938f2211fc99363d15a2fcb7a9dc24ee5154f0d6be32a136d7dfbdf7"
++        "0xa58b59f574674919f2c3fb755a6e3e369c0d5f734d8fcca6fe2664629ad8b25e"
+      description:
+-        "System contract defining the X Layer logic. It only enforces bridge accounting (pessimistic) proofs and is otherwise kept minimal as the layer 2 state transitions are not proven."
++        "System contract defining the X Layer Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s)."
+      values.$implementation:
+-        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"
+      values.$pastUpgrades.3:
++        ["2025-10-29T14:11:11.000Z","0x7be3301b763f904f5076e22914b0ea13e101ed3cff6480b23a7757e7b9875939",["eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: 0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)
++++ severity: HIGH
+      values.CONSENSUS_TYPE:
+-        0
++        1
+      values.getConsensusHash:
+-        "0x98293538c941dc104cfe32cbcbb62446815cbaf38feebc35af553113b8499aee"
+      values._legacypendingVKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values._legacyvKeyManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.AGGCHAIN_ECDSA_MULTISIG_VERSION:
++        "v1.0.0"
+      values.AGGCHAIN_TYPE:
++        "0x0000"
+      values.aggchainManager:
++        "eth:0xa90B4C8B8807569980F6cC958c8905383136B5eA"
+      values.aggchainMetadataManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.aggchainMultisigHash:
++        "0x5c2eda769fd0841c5db40db6857126dbe0460d5b16c7ed396f4d1d0a66acdee0"
+      values.aggchainSigners:
++        ["eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102"]
+      values.aggLayerGateway:
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      values.getAggchainMultisigHash:
++        "0x5c2eda769fd0841c5db40db6857126dbe0460d5b16c7ed396f4d1d0a66acdee0"
+      values.getAggchainSignerInfos:
++        [{"addr":"eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102","url":"https://rpc.xlayer.tech"}]
+      values.getAggchainSigners:
++        ["eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102"]
+      values.getAggchainSignersCount:
++        1
+      values.getThreshold:
++        1
+      values.MAX_AGGCHAIN_SIGNERS:
++        255
+      values.pendingAggchainManager:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.threshold:
++        1
++++ severity: HIGH
+      values.useDefaultSigners:
++        false
++++ severity: HIGH
+      values.useDefaultVkeys:
++        false
+      values.version:
++        "v1.0.0"
+      fieldMeta.CONSENSUS_TYPE.severity:
++        "HIGH"
+      fieldMeta.aggchainMultisigHash:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultSigners:
++        {"severity":"HIGH"}
+      fieldMeta.useDefaultVkeys:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B:
+-        "PolygonPessimisticConsensus"
+      implementationNames.eth:0x0D49fD0d79723e4D24AaC83f604ED2D3d5fC0f21:
++        "AggchainECDSAMultisig"
+    }
+```
+
+```diff
+    EOA  (eth:0x610DE9141a2c51A9A9624278AA97fbE54b27c102) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".trustedSequencer"
++        ".aggchainSigners"
+      receivedPermissions.0.description:
+-        "must provide a signature for each pessimistic proof, attesting to a valid state transition."
++        "sign state transitions (replaces state validation for this aggchain)."
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AggchainECDSAMultisig.sol                      | 2242 ++++++++++++++++++++
+ .../PolygonTransparentProxy.p.sol                  |    0
+ .../PolygonPessimisticConsensus.sol => /dev/null   |  845 --------
+ 3 files changed, 2242 insertions(+), 845 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754482928 (main branch discovery), not current.
+
+```diff
+    reference AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      name:
+-        "PolygonSharedBridge"
++        "AgglayerBridge"
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      name:
+-        "PolygonRollupManager"
++        "AgglayerManager"
+    }
+```
+
+```diff
+    reference AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "PolygonGlobalExitRootV2"
++        "AgglayerGER"
+    }
+```
+
 Generated with discovered.json: 0x72aa7160cb47e725a00e4cc934ea71c5a4182268
 
 # Diff at Wed, 03 Sep 2025 15:52:06 GMT:

@@ -1,4 +1,4 @@
-import { UnixTime } from '../types'
+import { UnixTime } from '../types/UnixTime.js'
 
 export function clampRangeToDay(
   from: UnixTime,

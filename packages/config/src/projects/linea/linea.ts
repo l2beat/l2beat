@@ -142,7 +142,10 @@ export const linea: ScalingProject = {
         'https://linea.mirror.xyz/',
         'https://community.linea.build/',
       ],
-      rollupCodes: 'https://rollup.codes/linea',
+      other: [
+        'https://rollup.codes/linea',
+        'https://growthepie.com/chains/linea',
+      ],
     },
     liveness: {
       explanation:
@@ -559,12 +562,12 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol 1 (Proof Type 0)',
-            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 3)',
+            url: 'https://etherscan.io/address/0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
-            url: 'https://etherscan.io/address/0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',
+            url: 'https://etherscan.io/address/0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
           },
         ],
       },

@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -14,7 +13,7 @@ export const lyra: ScalingProject = opStackL2({
     isPartOfSuperchain: false,
   },
   addedAt: UnixTime(1702978961), // 2023-12-19T09:42:41Z
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
@@ -38,7 +37,10 @@ export const lyra: ScalingProject = opStackL2({
         'https://x.com/derivexyz',
         'https://warpcast.com/lyra.eth',
         'https://discord.gg/Derive',
+        'https://youtube.com/@derivexyz',
+        'https://linkedin.com/company/derivelabs',
       ],
+      other: ['https://growthepie.com/chains/derive'],
     },
   },
   genesisTimestamp: UnixTime(1700022479),

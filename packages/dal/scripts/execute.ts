@@ -1,35 +1,34 @@
-import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Cache } from '../src/cache/Cache'
 import { QueryExecutor } from '../src/QueryExecutor'
+import { getPackageHash } from '../src/utils/packageHash'
 
 main().catch((err) => console.error(err))
 
 async function main() {
-  const logger = getLogger()
+  const logger = Logger.INFO
 
   const db = getDb()
   const cache = getCache()
 
   const rollups = await getRollups()
   const queryExecutor = new QueryExecutor(db, logger, cache)
+  const to = UnixTime.toStartOf(UnixTime.now() - 1, 'hour')
 
   try {
     const result = await queryExecutor.execute(
       {
-        name: 'getTvsChartQuery',
-        args: [rollups],
+        name: 'getSummedByTimestampTvsValuesQuery',
+        args: [rollups, [to, to - UnixTime.DAY * 30], true, false, true],
       },
       10,
     )
 
-    const size = Buffer.byteLength(JSON.stringify(result.data), 'utf8')
+    const size = Buffer.byteLength(JSON.stringify(result), 'utf8')
     logger.info(`Data size: ${size / 1024} KB`)
-    logger.info(
-      `Data timestamp: ${UnixTime.toDate(result.timestamp).toISOString()}`,
-    )
   } catch (error) {
     logger.error('Error occurred while fetching TVS chart:', error)
   }
@@ -71,19 +70,8 @@ export function getDb() {
 
 export function getCache() {
   const env = getEnv()
+  const dbUrl = env.string('DB_URL')
+  const packageHash = getPackageHash(dbUrl)
   const redisUrl = env.string('REDIS_URL')
-  return new Cache(redisUrl)
-}
-
-export function getLogger() {
-  const logger = new Logger({
-    logLevel: 'INFO',
-    transports: [
-      {
-        transport: console,
-        formatter: new LogFormatterPretty(),
-      },
-    ],
-  })
-  return logger
+  return new Cache(redisUrl, packageHash)
 }

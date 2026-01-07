@@ -9,7 +9,7 @@
   ],
   "overrides": {
     "eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a": {
-      "ignoreMethods": ["showBacking"],
+      "ignoreMethods": ["showBacking", "showSupply"],
       "fields": {
         "$tokenData": {
           "handler": {

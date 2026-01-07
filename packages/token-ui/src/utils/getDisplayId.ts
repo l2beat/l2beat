@@ -3,9 +3,3 @@ export function getAbstractTokenDisplayId<
 >(abstractToken: T) {
   return `${abstractToken.id}:${abstractToken.issuer}:${abstractToken.symbol}`
 }
-
-export function getDeployedTokenDisplayId<
-  T extends { chain: string; address: string },
->(deployedToken: T) {
-  return `${deployedToken.chain}+${deployedToken.address}`
-}

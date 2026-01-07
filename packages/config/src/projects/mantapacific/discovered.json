@@ -1,7 +1,7 @@
 {
   "name": "mantapacific",
-  "timestamp": 1757662779,
-  "configHash": "0xaf9f34625e0173b2503ba9bdb839e805065faf3f0ca88425d060336f64044f0e",
+  "timestamp": 1761589819,
+  "configHash": "0x300e1253748b10fbffcc34c2de245602190d642bef3dc4edd779620709236a67",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -79,10 +79,10 @@
         "finalityProvider": "eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E",
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 6343680,
-        "latestOutputIndex": 52863,
-        "nextBlockNumber": 6343800,
-        "nextOutputIndex": 52864,
+        "latestBlockNumber": 6736320,
+        "latestOutputIndex": 56135,
+        "nextBlockNumber": 6736440,
+        "nextOutputIndex": 56136,
         "PROPOSER": "eth:0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -317,7 +317,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292682934",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292683134",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -446,6 +446,7 @@
           "role": ".finalityProvider"
         }
       ],
+      "ignoreInWatchMode": ["confirmBatchId"],
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": {
@@ -466,7 +467,7 @@
         "$upgradeCount": 2,
         "BITCOIN_REDUCE_PERIOD": "1d",
         "blsApkRegistry": "eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60",
-        "confirmBatchId": 0,
+        "confirmBatchId": 20,
         "disputeGameFactory": "eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "isDisputeGameFactory": false,
         "l2OutputOracle": "eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
@@ -523,8 +524,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 23343371
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 23670055
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D",
@@ -1112,7 +1113,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "mantapacific/BLSApkRegistry": "0x42c5c91c633f53c492fc5a523ca7d99c93eeb62d9d9687ffb45908bcaab9b044",
-    "mantapacific/FinalityRelayerManager": "0x65f471cecbc6d45110699c0d8ac1d4e37c06004dee41270b37f10e4e58b06e6a",
+    "mantapacific/FinalityRelayerManager": "0xc0b6211e00f61dfe8911cd14e7a0d28057c9a61faf30900d9ba008210430f254",
     "mantapacific/L2OutputOracle_FinalityProvider": "0xa2d43a71bd121156db784aa64cb0c3149d1f0b6e60a0a97102bdb964f97d407d",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -1120,6 +1121,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23345543 },
+  "usedBlockNumbers": { "ethereum": 23670576 },
   "permissionsConfigHash": "0x1990614972ad113852d7debd952b4fde039318d6e675346cc7bbb56df89a1680"
 }

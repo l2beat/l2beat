@@ -1,10 +1,13 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
+import { makeQueryExecutor } from '@l2beat/dal'
 import { createDatabase } from '@l2beat/database'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
+import { InMemoryCache } from './cache/InMemoryCache'
 import { getConfig } from './config'
 import { authMiddleware } from './middleware/authMiddleware'
+import { errorHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
@@ -19,6 +22,13 @@ function main() {
   const logger = createLogger(env)
 
   const ps = new ProjectService()
+
+  const queryExecutor = makeQueryExecutor({
+    redisUrl: env.optionalString('REDIS_URL'),
+    db,
+    logger,
+    ci: process.env.CI === 'true',
+  })
 
   const app = express()
   const openapi = new OpenApi(app, {
@@ -43,6 +53,10 @@ function main() {
         description: 'Endpoints for retrieving activity data',
       },
     ],
+    externalDocs: {
+      description: 'Changelog',
+      url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
+    },
     components: {
       securitySchemes: {
         apiKeyAuth: {
@@ -54,9 +68,17 @@ function main() {
     },
     security: [{ apiKeyAuth: [] }],
   })
+  const cache = new InMemoryCache({
+    logger,
+    enabled: config.cacheEnabled,
+  })
 
   app.get('/', (_, res) => {
     res.redirect('/docs')
+  })
+
+  app.get('/health', (_, res) => {
+    res.status(200).send('OK')
   })
 
   app.get('/openapi', (_, res) => {
@@ -79,9 +101,11 @@ function main() {
   }
   app.use(loggerMiddleware(logger))
 
-  addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, db)
-  addActivityRoutes(openapi, ps, db)
+  addProjectsRoutes(openapi, ps, db, cache)
+  addTvsRoutes(openapi, ps, db, queryExecutor, cache)
+  addActivityRoutes(openapi, ps, db, cache)
+
+  app.use(errorHandler(logger))
 
   app.listen(config.api.port, () => {
     console.log(`Example app listening on port ${config.api.port}`)

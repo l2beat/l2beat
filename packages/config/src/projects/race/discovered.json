@@ -1,7 +1,7 @@
 {
   "name": "race",
   "timestamp": 1745587139,
-  "configHash": "0xfb172d4e4da4dfba074d3c809fe15a2c016a5bc6d1d17db2f6c1ffac8a7cddc2",
+  "configHash": "0x14e2b87de07518bb2fb95054dd49060f97bad0f1a809938960c4c9e0df147b0d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -651,7 +651,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
