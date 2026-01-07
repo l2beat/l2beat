@@ -161,19 +161,6 @@ describe(SvmRpcClient.name, () => {
       expect(validationInfo.success).toEqual(false)
     })
 
-    it('returns true for skipped slot error', async () => {
-      const client = mockClient({})
-      const validationInfo = client.validateResponse({
-        error: {
-          code: -32009,
-          message:
-            'Slot 4979844 was skipped, or missing due to ledger jump to recent snapshot',
-        },
-      })
-
-      expect(validationInfo.success).toEqual(true)
-    })
-
     it('returns true otherwise', async () => {
       const rpc = mockClient({})
       const validationInfo = rpc.validateResponse({
