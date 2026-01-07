@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type {
+  DuneClient,
+  DuneExecutionState,
+  DunePerformance,
+} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Parser } from '@l2beat/validate'
-import type { DuneClient, DunePerformance } from './DuneClient'
-import type { DuneExecutionState } from './types'
 
 type Dependencies = {
   logger: Logger

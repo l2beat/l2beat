@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
-  "timestamp": 1764944434,
-  "configHash": "0x88cb167c851735ec64123f956d8141abf626e195f2addee10c7e3d3f04f28208",
+  "timestamp": 1767608184,
+  "configHash": "0x733aa019a17b511ef699f2708d1db721100ab73d6f1f03005b1960e9b021c11a",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -255,24 +255,6 @@
         "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": "L1EscrowProxy",
         "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": "L1Escrow"
       }
-    },
-    {
-      "name": "Verifier",
-      "address": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-      "type": "Contract",
-      "template": "polygon-cdk/Verifier",
-      "sourceHashes": [
-        "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
-      "sinceTimestamp": 1729157663,
-      "sinceBlock": 20984421,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
@@ -686,9 +668,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
-    ],
     "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
       "constructor()",
       "error NotValidAmount()",
@@ -843,9 +822,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772",
-    "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 23947299 },
-  "permissionsConfigHash": "0x0f2060af9a46375f25785591d4a53878a9af2682764d4474c7619a6f351bdace"
+  "usedBlockNumbers": { "ethereum": 24167804 },
+  "permissionsConfigHash": "0xa6fa4fa5aefe06801cdc2e164b02aa44f6f78444ab8d06677a5fffd0121c9bba"
 }

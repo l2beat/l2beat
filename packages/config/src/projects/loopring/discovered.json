@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "timestamp": 1755157592,
-  "configHash": "0x204c6756882b9b5bb00cd3b9ece985a45255e35461d07d2db3fcbd34eaa5fd77",
+  "configHash": "0x7c5d7ddeab7972b8c228d6e827bcde4c1d7c419a0a1d6cbde99ec35fb6aa2824",
   "entries": [
     {
       "name": "ExchangeV3",

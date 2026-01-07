@@ -1,7 +1,7 @@
 {
   "name": "grvt",
   "timestamp": 1767005527,
-  "configHash": "0xb18acbfcd6b661d4c978e0eff3f83c8f5577770bb07eaf070337ccbdbb0dcd9e",
+  "configHash": "0x26bd8c3e58b2e9806d0c664edb76c534f244854119673724bf41a4b192e332c9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

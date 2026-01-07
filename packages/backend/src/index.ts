@@ -14,7 +14,7 @@ import { getConfig } from './config'
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
-} from './peripherals/elastic-search/ElasticSearchTransport'
+} from './tools/elastic-search/ElasticSearchTransport'
 
 main().catch(() => {
   process.exit(1)

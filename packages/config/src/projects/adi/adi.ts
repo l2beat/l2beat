@@ -41,6 +41,11 @@ const govSecurityCouncilAddress = discovery.getContractValue<string>(
   'securityCouncil',
 )
 
+const executionDelayS = discovery.getContractValue<number>(
+  'ValidatorTimelock',
+  'executionDelay',
+)
+
 export const adi: ScalingProject = {
   type: 'layer2',
   id: ProjectId('adi'),
@@ -184,7 +189,10 @@ export const adi: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS_COMPRESSED,
   },
   riskView: {
-    stateValidation: { ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP },
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      executionDelay: executionDelayS,
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW_ZKSTACK(minGovUpgradeDelayS),
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),

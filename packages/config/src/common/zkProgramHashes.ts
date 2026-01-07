@@ -436,10 +436,11 @@ Verify:
     verificationStatus: 'notVerified',
   },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
-    title: 'Kailua fault proof program (Risc0 v3.0.4)', // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
+    title: 'Kailua fault proof program (Risc0 v3.0.4, Kailua v1.1.8)', // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.1.8',
     verificationStatus: 'notVerified',
   },
   '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
@@ -447,6 +448,13 @@ Verify:
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
     programUrl: 'https://github.com/soonlabs/kailua-soon',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
+  '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
+    title: 'Kailua fault proof program (MegaETH)',
+    description:
+      'Program that supposedly executes OP Kona client (no source available yet) to derive blocks and generate fault or validity proofs for MegaETH chain, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
   },
@@ -699,7 +707,38 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
     programUrl:
       'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.1/crates/circuits/bundle-circuit',
     proverSystemProject: ProjectId('openvmprover'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174).
+
+Although the guide below uses docker for reproducable builds, we failed to obtain the correct program hash on a MacOS machine. 
+The steps below work only for a Linux OS (e.g. Ubuntu).
+
+1. On a Linux machine, install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.7.1\` Commit hash should be \`85dc6bc56728b8eef22281fdb215c136d7b5bbda\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`circuits/bundle-circuit/bundle_leaf_commit.rs\`. 
+4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
+    \`\`\`
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::FieldAlgebra;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
+
+fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
+    let order = Bn254Fr::from_canonical_u64(BabyBear::ORDER_U32 as u64);
+
+    let mut base = Bn254Fr::ONE;      // from PrimeCharacteristicRing
+    let mut compressed = Bn254Fr::ZERO; // from PrimeCharacteristicRing
+
+    for val in commitment {
+        compressed += Bn254Fr::from_canonical_u64(*val as u64) * base;
+        base *= order;
+    }
+
+    compressed
+} 
+\`\`\`
+    `,
   },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',

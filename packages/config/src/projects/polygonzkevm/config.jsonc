@@ -4,7 +4,6 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
     "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
     "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
     "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"

@@ -9,9 +9,9 @@ import { DaBeatStatsIndexer } from './DaBeatStatsIndexer'
 export function createDaBeatModule({
   config,
   logger,
-  peripherals,
   providers,
   clock,
+  db,
 }: ModuleDependencies): ApplicationModule | undefined {
   const daBeatConfig = config.daBeat
   if (!daBeatConfig) {
@@ -25,12 +25,12 @@ export function createDaBeatModule({
   })
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const indexerService = new IndexerService(peripherals.database)
+  const indexerService = new IndexerService(db)
   const statsIndexers: DaBeatStatsIndexer[] = []
 
   for (const projectId of daBeatConfig.projectsForDaBeatStats) {
     const indexer = new DaBeatStatsIndexer({
-      db: peripherals.database,
+      db,
       projectId: projectId as ProjectId,
       logger,
       indexerService,
@@ -43,7 +43,7 @@ export function createDaBeatModule({
 
   const pricesIndexer = new DaBeatPricesIndexer({
     priceProvider: providers.price,
-    db: peripherals.database,
+    db,
     logger,
     indexerService,
     parents: [hourlyIndexer],

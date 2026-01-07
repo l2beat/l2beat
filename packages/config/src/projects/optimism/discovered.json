@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1766048259,
-  "configHash": "0x7807b9e9d2d3f9f4f3d5e1eb5db0500b2b4dabc1ceeb4c528eabf3b96aa9e6d3",
+  "configHash": "0x728c1ee94170d1da3bf04ddc0f06ceb5e57c493187319024fc37e93185268f31",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -412,7 +412,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2mo 4d",
+        "timeSinceLastL2beatInteraction": "2mo 23d",
         "version": "1.0.0"
       },
       "implementationNames": {

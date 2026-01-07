@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xff71a32df1b34c61b6cd0f08c9efad95ec7e760d
+
+# Diff at Mon, 05 Jan 2026 10:17:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ded36a398f8392d07b94c4664e7cb9b83ec991d block: 1764944434
+- current timestamp: 1767608184
+
+## Description
+
+rm initial address: verifier.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764944434 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0x443621b0a482954adff179d54d034389cb3171d2
 
 # Diff at Tue, 09 Dec 2025 11:33:10 GMT:

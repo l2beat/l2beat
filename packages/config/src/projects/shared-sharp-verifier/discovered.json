@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "timestamp": 1765205910,
-  "configHash": "0x699ec6a39187c155c5d7ba7b573776a7afedde53b44aff228d9e6e6e8a586171",
+  "configHash": "0x6bee813c1b46f75d22129b0931ea2f27541a2f65588d1249aa8224674ee9f16e",
   "entries": [
     {
       "name": "CpuFrilessVerifier",

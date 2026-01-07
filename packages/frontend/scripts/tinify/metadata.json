@@ -1288,7 +1288,7 @@
   "static/meta-images/stages/opengraph-image.png": "c2a843df3be80db77a039d60c930c6f8",
   "static/images/badges/OPKailua.png": "39ee2717cb3c9d54d97a45b75265d832",
   "static/images/architecture/opstack-rollup-superchain-opfp-kailua.png": "45b3fcfc4aed7a34c1dcd983abc979c1",
-  "static/images/state-validation/kailua.png": "4d81907b39efd81f9e64d678f2152167",
+  "static/images/state-validation/kailua.png": "0ee25f0643261fc22b0e056b5afcd5f9",
   "static/icons/rayls.png": "2bee394fc8892d86cd810ea8c26a860a",
   "static/meta-images/scaling/projects/rayls/opengraph-image.png": "fd5da999b513b0be0a75b257bdf49120",
   "static/icons/lineaprover.png": "f0fb14ed2ebda97dff114b90a2625e8b",
@@ -1528,5 +1528,8 @@
   "static/meta-images/publications/governance-review-78.png": "7b58914cf086ce94cebee0b1d73344f2",
   "static/icons/airbender.png": "0b3d39bd877b06007df23ffb811598cf",
   "static/meta-images/zk-catalog/projects/airbender/opengraph-image.png": "ff406ac255d6d3f4de4a0d1663b37ff5",
-  "static/meta-images/publications/governance-review-79.png": "eda9e8ffee3090084d306fa9fd108bc6"
+  "static/meta-images/publications/governance-review-79.png": "eda9e8ffee3090084d306fa9fd108bc6",
+  "static/images/architecture/opstack-optimium-superchain-opfp-kailua.png": "8a21482c8c0c0475cba7e68ca154750f",
+  "static/images/state-validation/megaeth.png": "92b65f2ff88f8d1b44f7ab96d485daf7",
+  "static/meta-images/publications/monthly-update-2025-12.png": "f02a6fd1e2eb16bc3ca5d3f34faba301"
 }

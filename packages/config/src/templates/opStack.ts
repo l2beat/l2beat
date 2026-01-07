@@ -106,13 +106,15 @@ export function EIGENDA_DA_PROVIDER(
       typeof eigenDAConfig === 'string' ? eigenDAConfig : 'v1'
 
     const bridge =
-      isUsingDACertVerifier && eigenDACertVersion === 'v2'
+      isUsingDACertVerifier &&
+      (eigenDACertVersion === 'v2' || eigenDACertVersion === 'v3')
         ? {
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
-            description:
-              'EigenDA V2 certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.',
-            projectId: ProjectId('eigenda-v2'),
+            description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
+            projectId: ProjectId(
+              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
+            ),
           }
         : DA_BRIDGES.NONE
 
@@ -847,7 +849,7 @@ Proposals target sequential tournament epochs of currently ${proposalOutputCount
 The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
             references: [
               {
-                title: "'Sequencing' - Kailua Docs",
+                title: 'Sequencing - Kailua Docs',
                 url: 'https://boundless-xyz.github.io/kailua/design.html#sequencing',
               },
               {
@@ -855,6 +857,15 @@ The **Vanguard** is a privileged actor who can always make the first child propo
                 url: 'https://boundless-xyz.github.io/kailua/parameters.html#vanguard-advantage',
               },
             ],
+            risks:
+              vanguardAdvantage > 604800 // 7d, arbitrary threshold
+                ? [
+                    {
+                      category: 'Funds can be frozen if',
+                      text: `the vanguard exploits their vanguard advantage (${formatSeconds(vanguardAdvantage)}), halting the chain until they propose.`,
+                    },
+                  ]
+                : [],
           },
           {
             title: 'Challenges',
@@ -871,6 +882,10 @@ Proving any of the ${proposalOutputCount} intermediate state commitments in a pr
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
+                url: 'https://boundless-xyz.github.io/kailua/operate.html',
+                title: 'How to run a challenger - Boundless Docs',
+              },
+              {
                 url: 'https://boundless-xyz.github.io/kailua/dispute.html',
                 title: 'Disputes - Kailua Book',
               },
@@ -883,8 +898,8 @@ A single remaining child in a tournament can be 'resolved' and will be finalized
 The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which they can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
             references: [
               {
-                url: 'https://risczero.com/blog/kailua-how-it-works',
-                title: 'Risc0 Kailua Docs',
+                url: 'https://boundless-xyz.github.io/kailua/introduction.html',
+                title: 'Kailua Proof System - Boundless Docs',
               },
               {
                 url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',
@@ -1323,13 +1338,19 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-    case 'Kailua':
-      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
-        templateVars.discovery.getContractValue<number>(
-          'KailuaTreasury',
-          'vanguardAdvantage',
-        ),
+    case 'Kailua': {
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
       )
+      const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+      if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
+        return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      }
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        vanguardAdvantage,
+      )
+    }
     case 'KailuaSoon':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     case 'OpSuccinct':
