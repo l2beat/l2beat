@@ -3,6 +3,7 @@ import { cn } from '~/utils/cn'
 export function ScrollWithGradient({
   children,
   className,
+  ref,
   ...props
 }: React.ComponentProps<'div'>) {
   function updateFades(node: HTMLDivElement) {
@@ -36,6 +37,12 @@ export function ScrollWithGradient({
     <div
       className={cn('overflow-y-auto', className)}
       ref={(node) => {
+        // Forward ref to parent
+        if (ref) {
+          if (typeof ref === 'function') ref(node)
+          else ref.current = node
+        }
+
         if (!node) return
         updateFades(node)
 
