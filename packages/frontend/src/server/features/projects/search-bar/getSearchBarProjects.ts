@@ -23,6 +23,7 @@ export async function getSearchBarProjects(
       'ecosystemConfig',
       'zkCatalogInfo',
       'contracts',
+      'permissions',
     ],
   })
 
@@ -32,7 +33,7 @@ export async function getSearchBarProjects(
 
   if (EthereumAddress.check(search)) {
     const matched = searchBarEntries.filter((entry) =>
-      entry.contractAddresses?.includes(search),
+      entry.projectAddresses?.includes(EthereumAddress(search)),
     )
     logger.info('Search bar projects address-based result', {
       search,

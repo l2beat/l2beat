@@ -1,17 +1,28 @@
-import type { Project, ProjectContracts } from '@l2beat/config'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type {
+  Project,
+  ProjectContracts,
+  ProjectPermissions,
+} from '@l2beat/config'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SearchBarProjectEntry } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
 
-function getContractAddresses(
+function extractProjectAddresses(
   contracts: ProjectContracts | undefined,
-): string[] {
-  if (!contracts?.addresses) return []
-
-  return Object.values(contracts.addresses)
+  permissions: Record<string, ProjectPermissions> | undefined,
+): EthereumAddress[] {
+  const contractAddresses = Object.values(contracts?.addresses ?? {})
     .flat()
-    .map((contract) => ChainSpecificAddress.address(contract.address))
+    .map((c) => ChainSpecificAddress.address(c.address))
+
+  const permissionAddresses = Object.values(permissions ?? {})
+    .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
+    .flatMap((p) =>
+      p.accounts.map((a) => ChainSpecificAddress.address(a.address)),
+    )
+
+  return [...contractAddresses, ...permissionAddresses]
 }
 
 export function getSearchBarProjectEntries<
@@ -26,6 +37,7 @@ export function getSearchBarProjectEntries<
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'contracts'
+    | 'permissions'
   >,
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
@@ -47,7 +59,10 @@ export function getSearchBarProjectEntries<
     iconUrl: getProjectIcon(project.slug),
     kind: getSearchBarProjectKind(project),
     isUpcoming: false,
-    contractAddresses: getContractAddresses(project.contracts),
+    projectAddresses: extractProjectAddresses(
+      project.contracts,
+      project.permissions,
+    ),
     tags: [project.slug],
   } satisfies Partial<SearchBarProjectEntry>
 
