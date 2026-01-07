@@ -10,6 +10,23 @@
   "author": "Piotr Szlachciak <szlachciak.piotr@gmail.com>",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./elastic-search": {
+      "types": "./dist/index-elastic-search.d.ts",
+      "default": "./dist/index-elastic-search.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "elastic-search": [
+        "./dist/index-elastic-search.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist",
     "src",
@@ -30,10 +47,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
     "@l2beat/shared-pure": "workspace:*",
     "chalk": "^4.1.2",
     "dotenv": "^16.3.1",
-    "error-stack-parser": "^2.1.4"
+    "error-stack-parser": "^2.1.4",
+    "uuid": "11.1.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

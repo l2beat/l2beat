@@ -25,7 +25,6 @@
     "hot-cache": "tsx scripts/hot-cache/index.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/dal": "workspace:*",

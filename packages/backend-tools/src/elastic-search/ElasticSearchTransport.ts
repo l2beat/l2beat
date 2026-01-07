@@ -1,14 +1,6 @@
-/*
-  WARNING:
-  this class is copypasted in other modules,
-  when doing updates remember to update them all.
- */
-import {
-  formatEcsLog,
-  type LogEntry,
-  type LoggerTransport,
-} from '@l2beat/backend-tools'
 import { v4 as uuidv4 } from 'uuid'
+import { formatEcsLog } from '../logger/formatEcsLog'
+import type { LogEntry, LoggerTransport } from '../logger/types'
 import {
   ElasticSearchClient,
   type ElasticSearchClientOptions,
