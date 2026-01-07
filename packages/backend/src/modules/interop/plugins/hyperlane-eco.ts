@@ -46,17 +46,42 @@ const IntentProvenProcess = createInteropEventType<{
   recipient: Address32 // claimant
 }>('hyperlane-eco.IntentProvenProcess')
 
+function findParsedAround<T>(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  parse: (log: LogToCapture['txLogs'][number]) => T | undefined,
+): { parsed: T; index: number } | undefined {
+  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
+  if (startPos === -1) return
+
+  for (let offset = 0; offset < logs.length; offset++) {
+    const forward = startPos + offset
+    if (forward < logs.length) {
+      const parsed = parse(logs[forward])
+      if (parsed) return { parsed, index: forward }
+    }
+
+    if (offset === 0) continue
+    const backward = startPos - offset
+    if (backward >= 0) {
+      const parsed = parse(logs[backward])
+      if (parsed) return { parsed, index: backward }
+    }
+  }
+}
+
 export class HyperlaneEcoPlugin implements InteropPlugin {
   name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
     if (batchSent) {
-      const nextnextLog = input.txLogs.find(
+      const dispatchId = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 2,
+        input.log.logIndex!,
+        (log) => parseDispatchId(log, null),
       )
-      const dispatchId = nextnextLog && parseDispatchId(nextnextLog, null)
       if (!dispatchId) return
 
       const $dstChain = findChain(
@@ -67,7 +92,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
 
       return [
         BatchSentDispatch.create(input, {
-          messageId: dispatchId.messageId,
+          messageId: dispatchId.parsed.messageId,
           $dstChain,
         }),
       ]
@@ -75,30 +100,29 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
 
     const intentProven = parseIntentProven(input.log, null)
     if (intentProven) {
-      const previousLog = input.txLogs.find(
+      const processMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 1,
+        input.log.logIndex!,
+        (log) => parseProcess(log, null),
       )
-      const dispatchId = previousLog && parseProcessId(previousLog, null)
-      if (!dispatchId) return
+      console.log('processMatch', processMatch)
+      if (!processMatch) return
 
-      const previouspreviousLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 2,
-      )
-      const process =
-        previouspreviousLog && parseProcess(previouspreviousLog, null)
-      if (!process) return
+      const processIdLog = input.txLogs[processMatch.index + 1]
+      const processId = processIdLog && parseProcessId(processIdLog, null)
+      console.log('processId', processId)
+      if (!processId) return
 
       const $srcChain = findChain(
         HYPERLANE_NETWORKS,
         (x) => x.chainId,
-        Number(process.origin), // intended
+        Number(processMatch.parsed.origin), // intended
       )
 
       return [
         IntentProvenProcess.create(input, {
-          messageId: dispatchId.messageId,
+          messageId: processId.messageId,
           $srcChain,
           recipient: Address32.from(intentProven._claimant),
         }),
