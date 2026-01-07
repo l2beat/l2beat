@@ -124,7 +124,7 @@ export class AnomalyNotifier {
       return
     }
 
-    this.anomalyDetected(
+    await this.anomalyDetected(
       ongoingAnomaly,
       interval,
       z,
