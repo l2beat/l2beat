@@ -336,15 +336,12 @@ function MissingTokensTable(props: {
               <td>{t.count}</td>
               <td>{t.plugins.join(', ')}</td>
               <td>
-                {t.tokenAddress !== 'native' &&
-                t.tokenAddress !== Address32.ZERO ? (
-                  <a
-                    target="_blank"
-                    href={`https://tokens.l2beat.com/tokens/new?tab=deployed&chain=${encodeURIComponent(t.chain)}&address=${encodeURIComponent(address)}`}
-                  >
-                    Add token
-                  </a>
-                ) : null}
+                <a
+                  target="_blank"
+                  href={`https://tokens.l2beat.com/tokens/new?tab=deployed&chain=${encodeURIComponent(t.chain)}&address=${t.tokenAddress === 'native' || t.tokenAddress === Address32.ZERO ? 'native' : encodeURIComponent(address)}`}
+                >
+                  Add token
+                </a>
               </td>
             </tr>
           )
