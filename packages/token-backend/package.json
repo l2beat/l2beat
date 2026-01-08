@@ -32,7 +32,6 @@
     "test-client": "ts-node ./scripts/test-client.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "8.18.2",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
@@ -40,8 +39,7 @@
     "@l2beat/validate": "workspace:*",
     "@trpc/server": "^11.0.0-rc.446",
     "fuzzysort": "3.1.0",
-    "jose": "^6.1.0",
-    "uuid": "11.1.0"
+    "jose": "^6.1.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
