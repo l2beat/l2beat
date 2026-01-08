@@ -203,10 +203,6 @@ export interface InteropEventDb {
   ): InteropEvent<T> | undefined
 }
 
-export interface EventToCaptureParams {
-  addresses: ChainSpecificAddress[]
-}
-
 export type DataRequest = EventDataRequest
 
 interface EventDataRequest {

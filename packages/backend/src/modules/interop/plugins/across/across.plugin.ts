@@ -4,7 +4,6 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  type EventToCaptureParams,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -48,7 +47,6 @@ export const AcrossFilledRelay = createInteropEventType<{
 
 export class AcrossPlugin implements InteropPlugin {
   name = 'across'
-  capturesEvents?: Record<string, EventToCaptureParams> | undefined
 
   constructor(private configs: InteropConfigStore) {}
 
