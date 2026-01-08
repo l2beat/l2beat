@@ -1,13 +1,56 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getCallGraphData } from '../../../api/api'
+import { getCallGraphData, getCode } from '../../../api/api'
 import type { ContractCallGraph, ExternalCall } from '../../../api/types'
 import { usePanelStore } from '../store/panel-store'
+import { useMultiViewStore } from '../multi-view/store'
+import { useCodeStore } from '../../../components/editor/store'
+
+// Helper function to find all function occurrences in source code
+function findAllFunctionOccurrences(
+  sources: Array<{ name: string; code: string }>,
+  functionName: string
+): Array<{ startOffset: number; length: number; sourceIndex: number }> {
+  const occurrences: Array<{ startOffset: number; length: number; sourceIndex: number }> = []
+
+  for (let sourceIndex = 0; sourceIndex < sources.length; sourceIndex++) {
+    const source = sources[sourceIndex]
+    if (!source) continue
+
+    // Look for function definition with various patterns
+    const patterns = [
+      new RegExp(`function\\s+${functionName}\\s*\\(`, 'gi'),
+      new RegExp(`\\b${functionName}\\s*\\(.*?\\)\\s*(?:public|external|internal|private)?(?:\\s+\\w+)*\\s*(?:returns\\s*\\([^)]*\\))?\\s*{`, 'gi')
+    ]
+
+    for (const pattern of patterns) {
+      let match
+      while ((match = pattern.exec(source.code)) !== null) {
+        const startOffset = match.index
+        // Try to find the end of the function signature (up to opening brace or semicolon)
+        const remainingCode = source.code.slice(startOffset)
+        const endMatch = remainingCode.match(/[{;]/)
+        const length = endMatch ? endMatch.index! + 1 : functionName.length + 10
+
+        occurrences.push({ startOffset, length, sourceIndex })
+      }
+    }
+  }
+
+  return occurrences
+}
 
 export function CallGraphPanel() {
   const { project } = useParams()
   const [expandedContracts, setExpandedContracts] = useState<Set<string>>(new Set())
+  const [functionOccurrenceCounters, setFunctionOccurrenceCounters] = useState<Record<string, number>>({})
+
+  // Store hooks for navigation
+  const selectContract = usePanelStore((state) => state.select)
+  const ensurePanel = useMultiViewStore((state) => state.ensurePanel)
+  const setActivePanel = useMultiViewStore((state) => state.setActivePanel)
+  const { showRange, setSourceIndex } = useCodeStore()
 
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
@@ -67,6 +110,57 @@ export function CallGraphPanel() {
     })
   }
 
+  const handleOpenInCode = async (contractAddress: string, functionName: string) => {
+    if (!project) return
+
+    try {
+      // First select the contract so the Code panel shows its source
+      selectContract(contractAddress)
+
+      // Ensure Code panel is open and active
+      ensurePanel('code')
+      setActivePanel('code')
+
+      // Fetch source code for the contract
+      const codeResponse = await getCode(project, contractAddress)
+
+      // Find all occurrences of the function
+      const allOccurrences = findAllFunctionOccurrences(codeResponse.sources, functionName)
+
+      if (allOccurrences.length === 0) {
+        console.warn(`Function "${functionName}" not found in any source file`)
+        return
+      }
+
+      // Create a key for cycling through occurrences
+      const functionKey = `${contractAddress}:${functionName}`
+
+      // Get current counter for this function (defaults to 0)
+      const currentCounter = functionOccurrenceCounters[functionKey] || 0
+
+      // Calculate next occurrence index (cycle through all occurrences)
+      const nextOccurrenceIndex = currentCounter % allOccurrences.length
+      const functionLocation = allOccurrences[nextOccurrenceIndex]
+
+      if (functionLocation) {
+        // Update the counter for next time
+        setFunctionOccurrenceCounters(prev => ({
+          ...prev,
+          [functionKey]: currentCounter + 1
+        }))
+
+        // Navigate to the selected occurrence
+        setSourceIndex(contractAddress, functionLocation.sourceIndex)
+        showRange(contractAddress, {
+          startOffset: functionLocation.startOffset,
+          length: functionLocation.length
+        })
+      }
+    } catch (error) {
+      console.error('Failed to navigate to function:', error)
+    }
+  }
+
   return (
     <div className="flex h-full w-full flex-col text-sm">
       <div className="sticky top-0 z-10 bg-coffee-600 p-2 border-b border-coffee-500">
@@ -90,6 +184,7 @@ export function CallGraphPanel() {
             contract={contract}
             isExpanded={expandedContracts.has(contract.address)}
             onToggle={() => toggleContract(contract.address)}
+            onOpenInCode={handleOpenInCode}
           />
         ))}
       </div>
@@ -101,9 +196,10 @@ interface ContractSectionProps {
   contract: ContractCallGraph
   isExpanded: boolean
   onToggle: () => void
+  onOpenInCode: (contractAddress: string, functionName: string) => void
 }
 
-function ContractSection({ contract, isExpanded, onToggle }: ContractSectionProps) {
+function ContractSection({ contract, isExpanded, onToggle, onOpenInCode }: ContractSectionProps) {
   const selectGlobal = usePanelStore((state) => state.select)
 
   const callCount = contract.externalCalls.length
@@ -150,7 +246,11 @@ function ContractSection({ contract, isExpanded, onToggle }: ContractSectionProp
       </div>
       {isExpanded && !contract.skipped && !contract.error && contract.externalCalls.length > 0 && (
         <div className="bg-coffee-700 p-2">
-          <ExternalCallsList calls={contract.externalCalls} />
+          <ExternalCallsList
+            calls={contract.externalCalls}
+            callerContractAddress={contract.address}
+            onOpenInCode={onOpenInCode}
+          />
         </div>
       )}
     </div>
@@ -159,9 +259,11 @@ function ContractSection({ contract, isExpanded, onToggle }: ContractSectionProp
 
 interface ExternalCallsListProps {
   calls: ExternalCall[]
+  callerContractAddress: string
+  onOpenInCode: (contractAddress: string, functionName: string) => void
 }
 
-function ExternalCallsList({ calls }: ExternalCallsListProps) {
+function ExternalCallsList({ calls, callerContractAddress, onOpenInCode }: ExternalCallsListProps) {
   const selectGlobal = usePanelStore((state) => state.select)
 
   // Group calls by caller function using Map to avoid prototype pollution issues
@@ -184,7 +286,13 @@ function ExternalCallsList({ calls }: ExternalCallsListProps) {
     <div className="space-y-2">
       {Object.entries(callsByFunction).map(([funcName, funcCalls]) => (
         <div key={funcName} className="text-xs">
-          <div className="font-semibold text-coffee-200 mb-1">{funcName}()</div>
+          <div
+            className="font-semibold text-coffee-200 mb-1 hover:text-aux-blue cursor-pointer inline-block"
+            onClick={() => onOpenInCode(callerContractAddress, funcName)}
+            title="Open in Code panel"
+          >
+            {funcName}()
+          </div>
           <div className="ml-4 space-y-1">
             {funcCalls.map((call, idx) => (
               <div key={idx} className="flex items-center gap-2">
@@ -200,7 +308,17 @@ function ExternalCallsList({ calls }: ExternalCallsListProps) {
                 )}
                 <span className="text-coffee-200">{call.storageVariable}</span>
                 <span className="text-coffee-400">→</span>
-                <span className="text-aux-teal">{call.calledFunction}()</span>
+                {call.resolvedAddress ? (
+                  <span
+                    className="text-aux-teal hover:text-aux-blue cursor-pointer"
+                    onClick={() => onOpenInCode(call.resolvedAddress!, call.calledFunction)}
+                    title="Open in Code panel"
+                  >
+                    {call.calledFunction}()
+                  </span>
+                ) : (
+                  <span className="text-aux-teal">{call.calledFunction}()</span>
+                )}
                 {call.resolvedAddress ? (
                   <span
                     className="text-aux-green hover:underline cursor-pointer"
