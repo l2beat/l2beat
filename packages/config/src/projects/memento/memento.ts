@@ -16,6 +16,7 @@ export const memento: ScalingProject = upcomingL2({
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://mementoblockchain.com/'],
+      documentation: ['https://mementoblockchain.com/dfm-protocol'],
       socialMedia: [
         'https://x.com/Memento_Bc',
         'https://linkedin.com/company/memento-blockchain/',
