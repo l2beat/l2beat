@@ -8,5 +8,11 @@
     "hash": "0x515c1999e39bdd6435caf0c49791fcb515fb14c69a02e55dac0ff893f07bc6fe",
     "address": "eth:0x669ed5BB1377C917333e7d4223ce3419EE4099fD",
     "blockNumber": 23588465
+  },
+  "MessageRoot_v29_ADI": {
+    "hash": "0x806141ca543ff2d7b93b64ab46742d430ccdcb865f31f8a31f913974d5b27b62",
+    "address": "eth:0x5BaC331B75f3bF88148bfb0be2a76be4FBb05417",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

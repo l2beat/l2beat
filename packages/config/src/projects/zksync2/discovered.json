@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1762505590,
-  "configHash": "0x4d6bfcee7b0158ff6dc00b005447a210bdb446c7ecc62cd6e8be98125aea492c",
+  "configHash": "0x24ad2c196dc8ef16edfe66a11285ef78f110fd0abe41113ba7f97529027dd9ea",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
@@ -19,7 +19,7 @@
       "targetProject": "gateway"
     },
     {
-      "name": "ZKsync",
+      "name": "Diamond",
       "address": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond_NotSettlementLayer",
@@ -2748,5 +2748,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 23746323, "gateway": 87463 },
-  "permissionsConfigHash": "0x086649429f79cd0e85a7bed5d80cd72309e980baf193ca9622c427008c52b550"
+  "permissionsConfigHash": "0xc5c2cf4124ea8657c51b30b5d4966a774a2870c268f0cac543f742ce1367c55c"
 }

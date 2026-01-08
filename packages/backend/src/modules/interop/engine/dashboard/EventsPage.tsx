@@ -6,6 +6,7 @@ import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
+import { ShortenedHash } from './ShortenedHash'
 
 function EventsTable(props: {
   events: InteropEventRecord[]
@@ -38,10 +39,10 @@ function EventsTable(props: {
               <td>
                 {explorerUrl ? (
                   <a target="_blank" href={`${explorerUrl}/tx/${e.ctx.txHash}`}>
-                    {e.ctx.txHash}
+                    <ShortenedHash hash={e.ctx.txHash} />
                   </a>
                 ) : (
-                  e.ctx.txHash
+                  <ShortenedHash hash={e.ctx.txHash} />
                 )}
               </td>
               <td>{srcChain ?? ''}</td>

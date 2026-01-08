@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1765815217,
-  "configHash": "0x10bb9a3d1f2a82ea07be3a7c892bd8e0bab790b6e51b9b5808652202bc8c2596",
+  "timestamp": 1766408981,
+  "configHash": "0xb7229e9992d6f2c363f1bb050d5c55f5be74520cecce43df19ec2b590fd2feb0",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -577,14 +577,14 @@
           "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "eth:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+          "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 1,
         "domainSeparator": "0xe9a5efc52797721f6bd4d9839b18dcdc4162a6e91c2fe8ce6e0d679f65e814a4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -618,49 +618,6 @@
         }
       ],
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        }
-      ]
     },
     {
       "name": "ZkEvmVerifierV2",
@@ -1044,11 +1001,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1765807943,
+        "getFirstUnfinalizedMessageEnqueueTime": 1766403047,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 975586,
-        "nextUnfinalizedQueueIndex": 975566,
+        "nextCrossDomainMessageIndex": 976843,
+        "nextUnfinalizedQueueIndex": 976825,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1341,6 +1298,49 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0x6F166508d423169A3C7cb3e7856Ba4bf9Fb2cCed",
@@ -1961,14 +1961,14 @@
           "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "eth:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "eth:0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0",
-          "eth:0xfc31892C5500AbE00974280b28907BaA9190E384"
+          "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 2,
         "domainSeparator": "0x6de3852a7023a7bbf3cfe5ef762e1a4e088df670ad27867cbaecde81a0061a94",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 44,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2147,14 +2147,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 484433,
+        "lastFinalizedBatchIndex": 489114,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 484433,
-          "lastFinalizedBatchIndex": 484433,
-          "lastFinalizeTimestamp": 1765812299,
+          "lastCommittedBatchIndex": 489120,
+          "lastFinalizedBatchIndex": 489114,
+          "lastFinalizeTimestamp": 1766408555,
           "flags": 1,
           "reserved": 0
         },
@@ -2445,14 +2445,14 @@
           "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "eth:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+          "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 2,
         "domainSeparator": "0x7fefd60c480c008b3e78bd9438ded85b15722eff470797839b69ed8f36a54f6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 158,
+        "nonce": 159,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2554,11 +2554,6 @@
         "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": ""
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD83C4892BB5aA241B63d8C4C134920111E142A20",
@@ -2870,14 +2865,14 @@
           "eth:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
           "eth:0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
           "eth:0xfc31892C5500AbE00974280b28907BaA9190E384",
-          "eth:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
+          "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 3,
         "domainSeparator": "0x0b2d8b018b82a6f3df3603b40beb281bc01da06566bbb8ecc16a0f0a2dbea20f",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 26,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2922,7 +2917,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 22353024250885,
+        "totalBridgedUSDC": 24426564704892,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3601,14 +3596,14 @@
           "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "scr:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
           "scr:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
-          "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+          "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 1,
         "domainSeparator": "0x3c1c8289504b61cac5885c3d77180adebd3efcde75abfd92bb93d7c22ef71bf9",
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 24,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3620,40 +3615,6 @@
       "address": "scr:0x218C720079833e0e40a3cc68CD5fA2f89D65d0bf",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor",
-          "via": [
-            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
-          ]
-        }
-      ]
     },
     {
       "name": "TimelockFast",
@@ -3973,9 +3934,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x2c3e57f85c416a21fd48301372a28a5ed4790326073b6d2cef700210d38edf53",
+        "messageRoot": "0xd906a8d64d195fc3f8b15d6ada40452d48024afc900ec5bb0cda73f881b476df",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 216179,
+        "nextMessageIndex": 216751,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4140,6 +4101,40 @@
         "scr:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor",
+          "via": [
+            { "address": "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }
+          ]
+        }
+      ]
     },
     {
       "name": "L2ETHGateway",
@@ -4843,14 +4838,14 @@
           "scr:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
           "scr:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
           "scr:0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402",
-          "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
+          "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 2,
         "domainSeparator": "0x01958bc76f8f37a78dc2cc3d55599b3272496041a7cf25da7f6586bdd9773700",
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -4983,11 +4978,6 @@
         "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": "TransparentUpgradeableProxy",
         "scr:0x7600174E2a730a05da046fFA8Fc32DEC27FfdDC8": "L2GovToken"
       }
-    },
-    {
-      "address": "scr:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "scr:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
@@ -5180,14 +5170,14 @@
           "scr:0x8460aCc9A42D2CF07015a3e838df2E3aB37d30ae",
           "scr:0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
           "scr:0xfc31892C5500AbE00974280b28907BaA9190E384",
-          "scr:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
+          "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
         ],
         "$threshold": 3,
         "domainSeparator": "0x2da259468fe80a1de4ef3b7c82f8f7156ab4a8aa9572c765f3e977f1e2aa23a9",
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 25,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7581,6 +7571,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24019121, "scroll": 26605307 },
-  "permissionsConfigHash": "0xa0baebffa15523651949bad87323ad8bbcdad791bd148c76b428d1e21c769fdd"
+  "usedBlockNumbers": { "ethereum": 24068355, "scroll": 26995172 },
+  "permissionsConfigHash": "0xb9a6c09f9529a2b844eb306fa7f863b4d5b58d93f316d0bb293f11225419d9b5"
 }

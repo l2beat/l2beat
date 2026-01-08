@@ -83,7 +83,7 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
         const entry = ctx.row.original
         const showComingSoon = !entry.data?.isSynced
 
-        if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
+        if (env.CLIENT_SIDE_TRACKED_TXS_OUTAGE) {
           return <NoDataBadge />
         }
 

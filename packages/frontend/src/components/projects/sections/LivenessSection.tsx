@@ -1,11 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
-import { BigQueryOutageNotice } from '~/components/BigQueryOutageNotice'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
 import { env } from '~/env'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
@@ -50,8 +50,8 @@ export function LivenessSection({
           ? 'This section shows how "live" the project\'s operators are by displaying how frequently they submit transactions of the selected type. It also highlights anomalies - significant deviations from their typical schedule.'
           : 'This section shows how frequently DA attestations are submitted. It also highlights anomalies - significant deviations from the typical schedule.'}
       </p>
-      {env.CLIENT_SIDE_BIG_QUERY_OUTAGE && (
-        <BigQueryOutageNotice type="section" />
+      {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
+        <TrackedTxsOutageNotice type="section" />
       )}
       {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 

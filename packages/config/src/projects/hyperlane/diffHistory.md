@@ -1,4 +1,176 @@
-Generated with discovered.json: 0xf5605e738995123afb84c0c5d7773da2307f8685
+Generated with discovered.json: 0x0847c74148fab4d437346c79e85ce33cd16fe8f3
+
+# Diff at Wed, 07 Jan 2026 15:18:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1765464299
+- current timestamp: 1767794027
+
+## Description
+
+default ism changed (hyperlane) and [HypERC20Collateral implementation upgraded](https://disco.l2beat.com/diff/eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE/eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454) (eclipse USDC).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB for the origin Eclipse.
+```
+
+```diff
+    contract HyperlaneMultisig (eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599"
++        "eth:0x3f6D8219Cf0eEECd470150B20DAa018fCfe0714B"
+      values.$members.7:
+-        "eth:0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B"
++        "eth:0x0f37358c518475Aad722c666a3f60Ac2cbA526F7"
+      values.$members.8:
+-        "eth:0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5"
++        "eth:0xD7C3cc05e4311286e8E837EF6a8add9A54488B1e"
+      receivedPermissions.3.description:
+-        "change the ISM and hooks, register new remote escrows to rebalance collateral to, whitelist new routes and update destination fees."
++        "change the ISM and hooks, whitelist new routes and update destination fees."
+    }
+```
+
+```diff
+    contract Hyperlane Multisig (eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426"
++        "eth:0x3982025682dCE2Dc6B688fF747646376B0819574"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PausableIsm (eth:0x5e77c382994f9859cD5D08A54a6Fa894ED7AA9D3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm (eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    EOA  (eth:0xa3948a15e1d0778a7d53268b651B2411AF198FE3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7","description":"reblance the 'locked' collateral to remote escrows that were previously whitelisted by the owner.","role":".allowedRebalancers"}]
+    }
+```
+
+```diff
+    contract Mailbox (eth:0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB"
++        "eth:0xa64c7503edCCa2085FB0535739bed4C062d09Eee"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+      template:
+-        "hyperlane/HypERC20Collateral_MovableCollateralRouter"
++        "hyperlane/HypERC20Collateral"
+      sourceHashes.1:
+-        "0x5fc3214e479761007bc3001f10a465e893e0013c39c9a3449c859efa82a1568f"
++        "0x2e9655c34acdb3e5d0827ddfa907ee72f19d0561b1755941969a5761f9e86260"
+      values.$implementation:
+-        "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE"
++        "eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454"
+      values.$pastUpgrades.2:
++        ["2025-12-29T14:48:23.000Z","0x26ed67866c14260511e792a4578a38fa976feaa61bb99acdb72e747e68d75759",["eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.domains.1:
++        1399811149
+      values.domains.2:
++        10
+      values.domains.3:
++        130
+      values.domains.4:
++        137
+      values.domains.3:
+-        1399811149
+      values.PACKAGE_VERSION:
+-        "9.0.16"
++        "10.1.3"
+      values.asset:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.decimals:
++        0
+      values.feeRecipient:
++        "eth:0xA4083FC009A39FC43A341a7D676C8Eb17D3fe3a1"
+      values.name:
++        ""
+      values.symbol:
++        ""
+      values.token:
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE:
+-        "HypERC20Collateral"
+      implementationNames.eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (eth:0x3982025682dCE2Dc6B688fF747646376B0819574)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (eth:0xa64c7503edCCa2085FB0535739bed4C062d09Eee)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0x3982025682dCE2Dc6B688fF747646376B0819574,eth:0xbe0E08751F8C6f1cDC87cc8e56Ac8A1999d7D97f] ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
+    contract PausableIsm (eth:0xbe0E08751F8C6f1cDC87cc8e56Ac8A1999d7D97f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../HypERC20Collateral.sol                         | 3896 ++++++++++++++------
+ .../{.flat@1765464299 => .flat}/PausableIsm.sol    |    2 +-
+ .../StaticAggregationIsm_default.sol}              |    0
+ 3 files changed, 2785 insertions(+), 1113 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765464299 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm (eth:0x6775e4D50cd8d5Be0016CEACBE34ad05b3f284BB) {
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+      description:
+-        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426,eth:0x5e77c382994f9859cD5D08A54a6Fa894ED7AA9D3] ISM contracts successfully verify a message."
++        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
+      values.modules:
+-        ["eth:0x03dD8F687Eb3a80926bc5aC75f5c5A2356bC0426","eth:0x5e77c382994f9859cD5D08A54a6Fa894ED7AA9D3"]
+      values.threshold:
+-        2
+    }
+```
+
+Generated with discovered.json: 0x10e13114827f7ea957f8612d4831c7e664ee0b37
 
 # Diff at Thu, 11 Dec 2025 14:47:07 GMT:
 

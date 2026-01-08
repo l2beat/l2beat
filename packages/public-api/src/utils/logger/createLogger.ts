@@ -9,7 +9,7 @@ import {
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
-} from './elastic-search/ElasticSearchTransport'
+} from '@l2beat/backend-tools/elastic-search'
 
 export function createLogger(env: Env): Logger {
   const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined

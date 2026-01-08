@@ -6,6 +6,8 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
+  DiscordClient,
+  DuneClient,
   EigenApiClient,
   FuelClient,
   HttpClient,
@@ -22,7 +24,9 @@ import {
   StarknetClient,
   type SvmBlockClient,
   SvmRpcClient,
+  toRetryOptions,
   VoyagerClient,
+  withRetries,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -50,6 +54,8 @@ export interface Clients {
   rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
+  dune: DuneClient | undefined
+  discord: DiscordClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -67,6 +73,8 @@ export function initClients(config: Config, logger: Logger): Clients {
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
+  let dune: DuneClient | undefined
+  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -261,6 +269,22 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
+  if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
+    const retryOptions = toRetryOptions('RELIABLE')
+    dune = withRetries(
+      new DuneClient({
+        http: http,
+        apiKey: config.trackedTxsConfig.duneApiKey,
+      }),
+      {
+        initialTimeoutMs: retryOptions.initialRetryDelayMs,
+        maxAttempts: retryOptions.maxRetries,
+        maxTimeoutMs: retryOptions.maxRetryDelayMs,
+        logger,
+      },
+    )
+  }
+
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
@@ -333,6 +357,10 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
+  if (config.updateMonitor && config.updateMonitor.discord) {
+    discord = new DiscordClient(http, config.updateMonitor.discord)
+  }
+
   return {
     block: blockClients,
     logs: logsClients,
@@ -355,5 +383,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,
+    dune,
+    discord,
   }
 }

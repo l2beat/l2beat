@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x4cd55c8821f56a57026261abfcffcaa5452f3984
+
+# Diff at Wed, 17 Dec 2025 10:37:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e3e624ee8b25c3a6106ebb6a5295b78f99241f8 block: 1765882505
+- current timestamp: 1765882505
+
+## Description
+
+config: rename noforce portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765882505 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2_neutered (eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      name:
+-        "OptimismPortal2"
++        "OptimismPortal2_neutered"
+    }
+```
+
 Generated with discovered.json: 0x15e7681c66e08464d55220041d8529b908b24045
 
 # Diff at Tue, 16 Dec 2025 10:56:14 GMT:

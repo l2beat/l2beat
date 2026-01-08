@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -22,7 +23,10 @@ export const lighterprover: BaseProject = {
     links: {
       websites: ['https://lighter.xyz'],
       documentation: ['https://docs.lighter.xyz'],
-      repositories: ['https://github.com/elliottech'],
+      repositories: [
+        'https://github.com/elliottech/lighter-prover/tree/main',
+        'https://github.com/elliottech',
+      ],
     },
     badges: [],
   },
@@ -37,19 +41,27 @@ export const lighterprover: BaseProject = {
       finalWrap: [ZK_CATALOG_TAGS.Plonk.Gnark, ZK_CATALOG_TAGS.curve.BN254],
     },
     proofSystemInfo: `
-    ## Description
+## Description
 
-Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits (see [this audit report](https://1186887628-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FXuISSHTfjHCg60BNss6v%2Fuploads%2F1rAS0JHojcLLcERDaceR%2Fzklighter-block.pdf?alt=media&token=3cc0f17d-7d5a-411d-800a-4c7116b6fb76) for more info). It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
+Lighter prover is a zk proving system for Lighter L2 based on [Plonky2](https://github.com/0xPolygonZero/plonky2/tree/main) circuits. It verifies the logic for regular state transition of Lighter L2, as well as state transitions in the “desert mode” when L2 is shut down and users exit, using different sets of circuits. The circuits are proven with a STARK which is wrapped into a Plonk SNARK before settling onchain.
 
 ## Proof system
 
 [Plonky2](https://github.com/0xPolygonZero/plonky2) implements a circuit aritmetization based on TurboPlonk over Goldilocks field, but it replaces KZG polynomial commitment scheme with a FRI-based polynomial testing scheme. In this way proving Plonky2 circuits requires no trusted setup, i.e. it is a STARK. 
 
-However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup (see [below](#trusted-setups) for more details).
+However Lighter wraps these STARK in a [gnark](https://github.com/Consensys/gnark) implementation of Plonk over BN254 curve, which requires a trusted setup.
 
 ### Circuits
 
-The proof system operates on Lighter STF circuits, desert mode circuits and state root upgrade verifier circuits. The Lighter team has not published any of these circuits yet.
+The proof system operates on Lighter STF circuits and desert mode circuits. All published circuits are available [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit), note that the Lighter team has not published the desert circuits yet. 
+
+Lighter proof system defines circuits for proving all transactions, including internal, L1 and L2 transactions. The full list of available transactions that define Lighter STF can be seen [here](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/transactions). 
+
+Transaction circuits use custom implementations for arithmetic operations ([bigint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/bigint), [uint](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/uint)), cryptographic primitives ([ecdsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/ecdsa) on the Secp256k1 curve, [eddsa](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/eddsa) on the ECgFp5 curve, [keccak](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/keccak), [poseidon_bn128](https://github.com/elliottech/lighter-prover/tree/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/poseidon_bn128)) and other helper circuits.
+
+### Recursion
+
+Lighter prover implements recursive aggregation of transaction proofs to make the whole pipeline more efficient and parallelizable. First, fixed-size blocks of consecutive transactions are processed and proven by [BlockTx circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_constraints.rs), which can be done on separate machines. Next, arbitrary number of BlockTx proofs are aggregated into a single proof by [BlockTxChain circuit](https://github.com/elliottech/lighter-prover/blob/053ceda7c59a9a0e05997661ca5a1bb7a92bb267/circuit/src/block_tx_chain_constraints.rs), which includes continuity checks across all BlockTx proofs.
 `,
     trustedSetups: [
       {
@@ -64,19 +76,64 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
       },
     ],
     verifierHashes: [
+      // {
+      //   // ZKLighterVerifier
+      //   hash: '0x4a5c9d5981ae8f323f0ce7f93733b6b1b66e502e035768a8f3e4f1a23a287338',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x7ddAD28962571F77fE5E9cB2fE74A896300EEed4',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      // },
       {
         // ZKLighterVerifier
-        hash: '0x4a5c9d5981ae8f323f0ce7f93733b6b1b66e502e035768a8f3e4f1a23a287338',
+        hash: '0x9e4384e13903411340a32aba01d77482c0d2d7b8ae91ef4fcc8725db2a85683b',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0x7ddAD28962571F77fE5E9cB2fE74A896300EEed4',
+              '0x05F8176860955D94F974dB0CE8BB4F160AE425a2',
             ),
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+The steps below are for Ubuntu 24.04 OS.
+
+1. Install rust, gcc, go.
+
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt update
+sudo apt install build-essential golang-go
+go version
+\`\`\`
+        
+2. Run the correct version of the script to regenerate the keys.
+
+\`\`\`
+git clone https://github.com/elliottech/lighter-prover.git
+cd lighter-prover
+git checkout d0ff2304aea516b22f3a5223881006b6a9af1cc9
+chmod +x build_circuits.sh
+./build_circuits.sh
+\`\`\`
+
+The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+        `,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -92,7 +149,9 @@ The proof system operates on Lighter STF circuits, desert mode circuits and stat
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'unsuccessful',
+        verificationSteps:
+          'The sources for desert verifier circuits are not published and thus the verifier cannot be independently regenerated.',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

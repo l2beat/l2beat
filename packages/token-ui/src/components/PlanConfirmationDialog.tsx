@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { api } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
-import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import { ButtonWithSpinner } from './ButtonWithSpinner'
 import { Button } from './core/Button'
 import {
@@ -65,7 +64,7 @@ export function PlanConfirmationDialog({
             <span>
               Token added successfully.{' '}
               <Link
-                to={`/tokens/${getDeployedTokenDisplayId(plan.intent.record)}`}
+                to={`/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
                 className="underline"
               >
                 View token

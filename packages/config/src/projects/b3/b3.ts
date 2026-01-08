@@ -34,6 +34,7 @@ export const b3: ScalingProject = opStackL3({
         'https://x.com/b3dotfun',
         'https://discord.com/invite/b3dotfun',
         'https://warpcast.com/b3dotfun',
+        'https://t.me/b3dotfun',
       ],
     },
   },

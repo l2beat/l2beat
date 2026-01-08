@@ -174,6 +174,9 @@ class EventTypeStore<T> {
   add(event: InteropEvent<T>) {
     this.all.push(event)
     this.indices.set(event, this.all.length - 1)
+    for (const lookup of this.lookups) {
+      lookup.addEvent(event)
+    }
     this.siftUp(this.all.length - 1)
   }
 

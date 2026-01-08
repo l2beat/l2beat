@@ -184,6 +184,16 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
       if (!latestRecord || !latestStat || isLatestStatStale) {
+        if (ongoingAnomaly) {
+          // if there is an ongoing anomaly and we don't have all data
+          // needed to calculate the anomaly, we recover it automatically
+          const recoveredAnomaly: RealTimeAnomalyRecord = {
+            ...ongoingAnomaly,
+            status: 'recovered',
+          }
+          await this.notifier?.anomalyAutoRecovered(recoveredAnomaly, block)
+          records.push(recoveredAnomaly)
+        }
         continue
       }
 

@@ -221,5 +221,29 @@
     "address": "eth:0x32b48530f8a2c5CbE79d6b43823bfC9D9584Dbd5",
     "chain": "ethereum",
     "blockNumber": 23883577
+  },
+  "LockReleaseDextfPool.sol": {
+    "hash": "0xd8a4f556ce780d4d3c96a55a244b54a3dbe15d8e7bf7dc977e8b118d40941b2d",
+    "address": "eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "LockReleaseTokenPoolV8.sol": {
+    "hash": "0x25127d73459fbc32a9cc86cb39ca30db3ac7c8c1558611948b88c3713cfc5359",
+    "address": "eth:0x22B8B1ea06AEE07880436a90dA396594350D4f19",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "TokenTransferorPool.sol": {
+    "hash": "0x96c99f2a4b7d1bf8de83e0efbc50ffb250cfd2322cf5c6f9ed82b51a4556f217",
+    "address": "eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "LockReleaseTokenPoolV9.sol": {
+    "hash": "0x379e8f0151a796ddf784dabde1f3a32bae484f8298066fda7ac19843ef16030a",
+    "address": "eth:0x267aE721c7b9BB409847C324A06259A7d96a644A",
+    "chain": "ethereum",
+    "blockNumber": 24183337
   }
 }

@@ -39,8 +39,6 @@
     "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
-    "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
@@ -68,7 +66,6 @@
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
     "source-map-support": "^0.5.21",
-    "uuid": "^9.0.1",
     "viem": "^2.31.6",
     "ws": "^8.18.2"
   },
@@ -85,7 +82,6 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/supertest": "^2.0.12",
-    "@types/uuid": "^9.0.8",
     "cmd-ts": "^0.13.0",
     "jsonc-parser": "^3.2.0",
     "supertest": "^6.2.3",

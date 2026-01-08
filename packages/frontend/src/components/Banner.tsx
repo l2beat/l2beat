@@ -4,7 +4,7 @@ import { cn } from '~/utils/cn'
 import { Markdown } from './markdown/Markdown'
 
 const bannerVariants = cva(
-  'flex gap-2 rounded-lg border px-6 py-2 font-medium text-paragraph-13',
+  'flex items-center gap-2 rounded-lg border px-6 py-2 font-medium text-paragraph-13',
   {
     variants: {
       type: {
@@ -45,9 +45,7 @@ export function Banner({
 }: Props) {
   return (
     <div className={cn(bannerVariants({ type, centered }), className)}>
-      {!hideIcon && (
-        <InfoIcon className="mt-px size-[14px] shrink-0 fill-current" />
-      )}
+      {!hideIcon && <InfoIcon className="size-[14px] shrink-0 fill-current" />}
       {asMarkdown ? <Markdown>{children}</Markdown> : children}
     </div>
   )

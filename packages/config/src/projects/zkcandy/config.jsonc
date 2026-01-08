@@ -5,7 +5,7 @@
   "initialAddresses": ["eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92": "zkCandyZkEvm",
+    "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92": "Diamond",
     "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2": "zkCandyZkEvmAdmin",
     "eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196": "zkCandy Multisig",
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"

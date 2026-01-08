@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xdf5ac5c47f1fe13609c81d625be6f43eb5e0a972
+
+# Diff at Wed, 07 Jan 2026 14:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1766409056
+- current timestamp: 1767795947
+
+## Description
+
+agent of one SC member updated. new proposal up targeting the gas config.
+
+## Watched changes
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.getEncryptionAgents.7:
+-        "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        14
++        15
+    }
+```
+
+Generated with discovered.json: 0x582a656024746d3b7ede216c73d218c0d437e05a
+
+# Diff at Mon, 22 Dec 2025 13:12:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784042
+- current timestamp: 1766409056
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        23
++        24
+      values.proposalIds.23:
++        "601076267109018851735115853749277719853690519575"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.registeredOperators.1:
+-        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+      values.registeredOperators.2:
++        {"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}
+    }
+```
+
 Generated with discovered.json: 0x1ee880a85a95b20283158759aa0d1936f5e2f5d3
 
 # Diff at Mon, 15 Dec 2025 07:35:28 GMT:

@@ -25,7 +25,6 @@
     "hot-cache": "tsx scripts/hot-cache/index.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/dal": "workspace:*",
@@ -76,7 +75,6 @@
     "satori": "^0.12.2",
     "sirv": "^3.0.1",
     "tailwind-merge": "^3.3.1",
-    "uuid": "^11.1.0",
     "vaul": "^0.9.1",
     "ws": "^8.18.2"
   },

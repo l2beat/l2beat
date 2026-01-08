@@ -1,10 +1,12 @@
+import { assert } from '@l2beat/shared-pure'
 import type { ApplicationModule, ModuleDependencies } from '../../../types'
 import { L2CostsUpdater } from './L2CostsUpdater'
 
 export function createL2CostsModule({
   config,
   logger,
-  peripherals,
+  db,
+  providers,
 }: ModuleDependencies):
   | (ApplicationModule & { updater: L2CostsUpdater })
   | undefined {
@@ -15,7 +17,8 @@ export function createL2CostsModule({
 
   logger = logger.tag({ feature: 'costs', module: 'costs' })
 
-  const l2CostsUpdater = new L2CostsUpdater(peripherals.database, logger)
+  assert(providers.blobPrice, 'Blob price provider is required')
+  const l2CostsUpdater = new L2CostsUpdater(db, logger, providers.blobPrice)
 
   return {
     updater: l2CostsUpdater,

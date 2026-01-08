@@ -10,9 +10,11 @@ import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossComparePlugin } from './across/across.compare'
 import { AcrossConfigPlugin } from './across/across.config'
 import { AcrossPlugin } from './across/across.plugin'
+import { AcrossSettlementPlugin } from './across-settlement'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
+import { BeefyBridgePlugin } from './beefy-bridge'
 import { CCIPPlugIn } from './ccip'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
@@ -27,10 +29,13 @@ import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
+import { HyperlaneSimpleAppsPlugIn } from './hyperlane-simple-apps'
 import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
 import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
+import { LidoWstethPlugin } from './lido-wsteth'
+import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
@@ -43,14 +48,18 @@ import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standar
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
 import { RelaySimplePlugIn } from './relay-simple'
+import { SkyBridgePlugin } from './sky-bridge'
+import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import type { InteropPlugin } from './types'
+import { WorldIdPlugin } from './world-id'
 import { WormholeConfigPlugin } from './wormhole/wormhole.config'
 import { WormholePlugin } from './wormhole/wormhole.plugin'
 import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
+import { ZklinkNovaPlugin } from './zklink-nova'
 
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
@@ -127,11 +136,20 @@ export function createInteropPlugins(
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
+      new AcrossSettlementPlugin(), // should be run before OpStack
+      new ZklinkNovaPlugin(), // should be run before OpStack
+      new WorldIdPlugin(), // should be run before OpStack
+      new LidoWstethPlugin(), // should be run before OpStack
+      new SorareBasePlugin(), // should be run before OpStackStandardBridge
+      new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
+      new MakerBridgePlugin(), // should be run before OpStackStandardBridge
+      new SkyBridgePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
+      new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),

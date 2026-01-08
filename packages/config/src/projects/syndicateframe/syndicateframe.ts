@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('syndicateframe')
 
 export const syndicateframe: ScalingProject = opStackL3({
   addedAt: UnixTime(1711471599), // 2024-03-26T16:46:39Z
+  archivedAt: UnixTime(1766143183),
   discovery,
   hostChain: 'base',
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],

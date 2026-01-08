@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
   createEventParser,
@@ -18,6 +18,7 @@ import {
 export const MessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
+  value: bigint
 }>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY }) // needs to go through the challenge period
 
 export const parseMessagePassed = createEventParser(
@@ -50,6 +51,7 @@ export const parseRelayedMessage = createEventParser(
 export const SentMessage = createInteropEventType<{
   chain: string
   msgHash: string
+  value: bigint
 }>('opstack.SentMessage')
 
 export const parseSentMessage = createEventParser(
@@ -170,11 +172,12 @@ export class OpStackPlugin implements InteropPlugin {
           parseSentMessageExtension1(nextLog, [network.l1CrossDomainMessenger])
 
         // Calculate the message hash using the same method as the contract
+        const value = extension?.value ?? 0n
         const msgHash = hashCrossDomainMessageV1(
           sentMessage.messageNonce,
           sentMessage.sender,
           sentMessage.target,
-          extension?.value ?? 0n,
+          value,
           sentMessage.gasLimit,
           sentMessage.message,
         )
@@ -183,6 +186,7 @@ export class OpStackPlugin implements InteropPlugin {
           SentMessage.create(input, {
             chain: network.chain,
             msgHash,
+            value,
           }),
         ]
       }
@@ -199,6 +203,7 @@ export class OpStackPlugin implements InteropPlugin {
           MessagePassed.create(input, {
             chain: network.chain,
             withdrawalHash: messagePassed.withdrawalHash,
+            value: messagePassed.value,
           }),
         ]
       }
@@ -227,13 +232,30 @@ export class OpStackPlugin implements InteropPlugin {
         chain: event.args.chain,
       })
       if (!messagePassed) return
-      return [
+
+      const results: MatchResult = [
         Result.Message('opstack.L2ToL1Message', {
           app: 'unknown',
           srcEvent: messagePassed,
           dstEvent: event,
         }),
       ]
+
+      // If ETH was sent via L2ToL1MessagePasser, also create a Transfer
+      if (messagePassed.args.value > 0n) {
+        results.push(
+          Result.Transfer('opstack-cdm.L2ToL1Transfer', {
+            srcEvent: messagePassed,
+            srcAmount: messagePassed.args.value,
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: messagePassed.args.value,
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        )
+      }
+
+      return results
     }
 
     // Match L1->L2 messages
@@ -243,13 +265,30 @@ export class OpStackPlugin implements InteropPlugin {
         chain: event.args.chain,
       })
       if (!sentMessage) return
-      return [
+
+      const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'unknown',
           srcEvent: sentMessage,
           dstEvent: event,
         }),
       ]
+
+      // If ETH was sent via CrossDomainMessenger, also create a Transfer
+      if (sentMessage.args.value > 0n) {
+        results.push(
+          Result.Transfer('opstack-cdm.L1ToL2Transfer', {
+            srcEvent: sentMessage,
+            srcAmount: sentMessage.args.value,
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: sentMessage.args.value,
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        )
+      }
+
+      return results
     }
   }
 }

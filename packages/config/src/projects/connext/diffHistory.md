@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x3f54a5363fbfd4bb7bf0b0ba91c22bafcffde1f8
+
+# Diff at Mon, 05 Jan 2026 17:43:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1753682687
+- current timestamp: 1767634943
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract TransactionManager (eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09) {
+    +++ description: None
+      values.owner:
+-        "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493"
++        "eth:0x4D96f2d2143DD74A96D015a70953A5686fa6ed55"
+      values.proposed:
+-        "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653"
++        "eth:0x4D96f2d2143DD74A96D015a70953A5686fa6ed55"
+      values.proposedTimestamp:
+-        1753521239
++        0
+    }
+```
+
 Generated with discovered.json: 0x7bba8c42406ddf92dd8b6735aa4a4ecd85ffeb3d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

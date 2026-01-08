@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x7c28ecd3279e4e4a9b5f6a12510209c76b1e59dd
+
+# Diff at Mon, 22 Dec 2025 13:11:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765815217
+- current timestamp: 1766408981
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 1 (eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "scr:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
 Generated with discovered.json: 0x567c1823b2a5b7d61feaa88d9c83d47e26551e74
 
 # Diff at Mon, 15 Dec 2025 16:14:53 GMT:

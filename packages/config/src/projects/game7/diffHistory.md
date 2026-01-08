@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x1810b2b90739ff134cdb6fcdbb2d4d1c72406b74
+
+# Diff at Tue, 06 Jan 2026 10:43:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1766407241
+- current timestamp: 1767696070
+
+## Description
+
+Multisig member removed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6) {
+    +++ description: None
+      values.$members.3:
+-        "arb1:0x823DeFCBf7Be01b6469a22E163bc15BdFfb6C649"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x378d56200c86cfa1a77218edfea306a143584f53
+
+# Diff at Mon, 05 Jan 2026 17:44:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1766407241
+- current timestamp: 1766407241
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766407241 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xa992c6a178ca14961a84e46c6221a1001441f22c
+
+# Diff at Mon, 22 Dec 2025 12:43:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765795563
+- current timestamp: 1766407241
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0xfe7C286480C7ff638319f8Aa1A97D224d82A55C6) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xDe87572d7e556B2EBfD4410F1835A503b175794c"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x78a1cad0284b988f06aa1c9dde25875574fef2bd
 
 # Diff at Mon, 15 Dec 2025 10:48:35 GMT:

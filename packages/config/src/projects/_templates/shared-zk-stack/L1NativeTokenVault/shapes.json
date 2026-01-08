@@ -8,5 +8,11 @@
     "hash": "0xb5c84cdd8085d4ad38124e19b8be87360c9401f9621534284de4ed5fa69c3b63",
     "address": "eth:0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947",
     "blockNumber": 22374168
+  },
+  "L1NativeTokenVault_v27_ADI": {
+    "hash": "0x33a60acada6f0e7dd9d8bfa6dee951983bb48b9797519edccef844be75627251",
+    "address": "eth:0x2FC2a2dB562046C732d3aB0f4e1c1F62C3eE8e3E",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

@@ -7,12 +7,12 @@ import { api } from '~/trpc/React'
 
 export function ChartControls({ projectId }: { projectId: string }) {
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data } = api.tvs.detailedChart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const timeRange = useMemo(

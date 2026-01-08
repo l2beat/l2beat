@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x9ba4e67fb76881a775c47316ca90294cede0c3d6
+
+# Diff at Thu, 18 Dec 2025 08:55:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765882362
+- current timestamp: 1766048053
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
 Generated with discovered.json: 0x0d3d8967e21f6aac0d92050950028b33cf64938d
 
 # Diff at Tue, 16 Dec 2025 10:53:48 GMT:

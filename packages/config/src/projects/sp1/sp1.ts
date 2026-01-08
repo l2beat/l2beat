@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -24,7 +23,10 @@ export const sp1: BaseProject = {
       websites: ['https://www.succinct.xyz'],
       documentation: ['https://docs.succinct.xyz/docs/sp1/introduction'],
       repositories: ['https://github.com/succinctlabs/sp1'],
-      socialMedia: ['https://x.com/SuccinctLabs'],
+      socialMedia: [
+        'https://x.com/SuccinctLabs',
+        'https://discord.com/invite/succinctlabs',
+      ],
     },
     badges: [],
   },
@@ -190,6 +192,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('omni'),
         sinceTimestamp: UnixTime(1748856160),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1737359447),
+      },
       // archived projects
       {
         projectId: ProjectId('gpt'),
@@ -236,26 +242,26 @@ export const sp1: BaseProject = {
         ],
         verificationStatus: 'notVerified',
       },
-      {
-        hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'successful',
-        verificationSteps: `
-      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-      - Make sure that you have [go lang installed](https://go.dev/doc/install).
-      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-      `,
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      },
+      // {
+      //   hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   verificationSteps: `
+      // - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      // - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      // - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      // - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      // `,
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      // },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
@@ -277,6 +283,19 @@ export const sp1: BaseProject = {
               '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
             ),
             chain: 'gnosis',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
+            ),
+            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

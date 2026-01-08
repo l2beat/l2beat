@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
+import { createContext, useContext, useState } from 'react'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 
 type CostsUnitContextValue = {
@@ -14,7 +13,7 @@ interface Props {
 }
 
 export function CostsUnitContextProvider({ children }: Props) {
-  const [unit, setUnit] = useLocalStorage<CostsUnit>('costs-unit', 'usd')
+  const [unit, setUnit] = useState<CostsUnit>('usd')
   return (
     <CostsUnitContext.Provider
       value={{

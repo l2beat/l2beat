@@ -9,6 +9,7 @@ import type {
   CallParameters,
   EVMBlock,
   EVMBlockWithTransactions,
+  EVMFeeHistory,
   EVMLog,
   EVMTransaction,
 } from '../../clients/rpc/types'
@@ -56,6 +57,11 @@ export interface IRpcClient extends BlockClient, LogsClient {
     addresses?: string[],
     topics?: string[],
   ): Promise<EVMLog[]>
+  getFeeHistory(
+    blockCount: number,
+    newestBlock: number,
+    rewardPercentiles: number[],
+  ): Promise<EVMFeeHistory>
   call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
@@ -221,6 +227,19 @@ export class RpcClientCompat implements IRpcClient {
       }
       throw e
     }
+  }
+
+  async getFeeHistory(
+    blockCount: number,
+    newestBlock: number,
+    rewardPercentiles: number[],
+  ): Promise<EVMFeeHistory> {
+    const feeHistory = await this.ethRpcClient.getFeeHistory(
+      blockCount,
+      newestBlock,
+      rewardPercentiles,
+    )
+    return { ...feeHistory, oldestBlock: Number(feeHistory.oldestBlock) }
   }
 
   async call(

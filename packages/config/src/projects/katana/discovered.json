@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1765882505,
-  "configHash": "0x64ebf917e51d14dd0b4564c672bf94ee591614d5611d10f04255dfc199e5f8b1",
+  "configHash": "0x806d8fc8262f28a519f8a7e4b860ccc2f7c1c9095d0f2d67132045670c079946",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -554,7 +554,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OptimismPortal2",
+      "name": "OptimismPortal2_neutered",
       "address": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
       "type": "Contract",
       "template": "opstack/OptimismPortal2_noForce",
@@ -4284,5 +4284,5 @@
     "polygon-cdk/PermissionedDisputeGameUnused": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3"
   },
   "usedBlockNumbers": { "ethereum": 24024702 },
-  "permissionsConfigHash": "0x2a27f6e581e66b021fd74cf2566e513c5e42c0fc533e24b9057e0b22ad6db202"
+  "permissionsConfigHash": "0x6b45170a19ccd765ecfde2bf9e0d83a03b1222b3c4567136f857750ee862e3a3"
 }

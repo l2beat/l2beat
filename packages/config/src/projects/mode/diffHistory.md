@@ -1,3 +1,73 @@
+Generated with discovered.json: 0x74807678e37af508b595c9fe291bdc0f3410812e
+
+# Diff at Thu, 18 Dec 2025 08:58:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765550723
+- current timestamp: 1766048242
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.domainSeparator:
+-        "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890"
++        "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76"
+      values.getModules:
+-        []
+      values.NAME:
+-        "Gnosis Safe"
+      values.VERSION:
+-        "1.1.1"
++        "1.4.1"
+      values.getChainId:
++        1
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  959 -----------------
+ .../OpFoundationOperationsSafe/Safe.sol}           |  685 +++++++-----
+ .../mode/.flat/OpFoundationUpgradeSafe/Safe.sol    | 1088 ++++++++++++++++++++
+ 3 files changed, 1498 insertions(+), 1234 deletions(-)
+```
+
 Generated with discovered.json: 0x5c51037d32226a11fad9e33b707b959aa1999bea
 
 # Diff at Fri, 12 Dec 2025 16:19:59 GMT:

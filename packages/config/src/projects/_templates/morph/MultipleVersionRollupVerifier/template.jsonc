@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
+  "ignoreMethods": ["getVerifier", "legacyVerifiersLength"],
+  "fields": {
+    "verifierVersions": {
+      "handler": {
+        "type": "event",
+        "select": "version",
+        "add": { "event": "UpdateVerifier" }
+      }
+    },
+    "latestVerifier": {
+      "handler": {
+        "type": "array",
+        "maxLength": 20,
+        "indices": "{{ verifierVersions }}"
+      },
+      "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register new verifiers to be used starting from a given L2 batch index."
+        }
+      ]
+    }
+  }
+}

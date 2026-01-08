@@ -24,11 +24,7 @@ export async function getTrackedTxsConfig(
         id: createTrackedTxId(c),
       })),
     })),
-    bigQuery: {
-      clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
-      privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
-      projectId: env.string('BIGQUERY_PROJECT_ID'),
-    },
+    duneApiKey: env.string('DUNE_API_KEY'),
     // TODO: figure out how to set it for local development
     minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     uses: {

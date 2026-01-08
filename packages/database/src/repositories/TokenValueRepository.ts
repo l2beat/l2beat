@@ -218,7 +218,7 @@ export class TokenValueRepository extends BaseRepository {
     opts: {
       forSummary: boolean
       excludeAssociated: boolean
-      includeRwaRestrictedTokens: boolean
+      excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
     const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
@@ -256,7 +256,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
-    if (!opts.includeRwaRestrictedTokens) {
+    if (opts.excludeRwaRestrictedTokens) {
       query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
@@ -288,7 +288,7 @@ export class TokenValueRepository extends BaseRepository {
     opts: {
       forSummary: boolean
       excludeAssociated: boolean
-      includeRwaRestrictedTokens: boolean
+      excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
     if (projectsWithRanges.length === 0) {
@@ -345,7 +345,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
-    if (!opts.includeRwaRestrictedTokens) {
+    if (opts.excludeRwaRestrictedTokens) {
       query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
@@ -371,7 +371,7 @@ export class TokenValueRepository extends BaseRepository {
     latestTimestamp: number,
     opts: {
       excludeAssociated: boolean
-      includeRwaRestrictedTokens: boolean
+      excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
     },
   ): Promise<
@@ -439,7 +439,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
-    if (!opts.includeRwaRestrictedTokens) {
+    if (opts.excludeRwaRestrictedTokens) {
       query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
     }
 
