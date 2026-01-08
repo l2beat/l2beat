@@ -862,7 +862,7 @@
       "opstack.WithdrawalFinalized"
     ],
     "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
-    "transfers": ["opstack-cdm.L1ToL2Transfer", "opstack-cdm.L2ToL1Transfer"]
+    "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement": {
     "txs": [
