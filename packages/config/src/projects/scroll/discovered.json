@@ -43,8 +43,7 @@
           "text": "Source Code",
           "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
         }
-      ],
-      "category": { "name": "Spam", "priority": -1 }
+      ]
     },
     {
       "address": "eth:0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
@@ -616,8 +615,7 @@
           "text": "Source Code",
           "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
         }
-      ],
-      "category": { "name": "Spam", "priority": -1 }
+      ]
     },
     {
       "name": "ZkEvmVerifierV2",
@@ -871,8 +869,7 @@
           "text": "Source Code",
           "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
         }
-      ],
-      "category": { "name": "Spam", "priority": -1 }
+      ]
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -1881,8 +1878,7 @@
           "text": "Source Code",
           "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
         }
-      ],
-      "category": { "name": "Spam", "priority": -1 }
+      ]
     },
     {
       "name": "PlonkVerifierV2-1",
@@ -1903,8 +1899,7 @@
           "text": "Source Code",
           "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
         }
-      ],
-      "category": { "name": "Spam", "priority": -1 }
+      ]
     },
     {
       "name": "Safe",
