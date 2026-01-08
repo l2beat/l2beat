@@ -210,17 +210,14 @@ function Group({
             <span
               style={{
                 fontSize: '12px',
-                color:
-                  projectsWithChanges.length > 0 ? '#ffb155' : '#6b7280',
+                color: projectsWithChanges.length > 0 ? '#ffb155' : '#6b7280',
                 fontWeight: projectsWithChanges.length > 0 ? 600 : 400,
               }}
             >
               {changesText}
             </span>
           </summary>
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
-          >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {projects.map((project, index) => (
               <ProjectRow
                 key={project.name}
