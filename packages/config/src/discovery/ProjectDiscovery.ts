@@ -214,8 +214,9 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: ChainSpecificAddress): boolean {
-    const eoas = this.discoveries.flatMap((discovery) => discovery.entries)
-    const entry = eoas.find((x) => x.address.toString() === address.toString())
+    const entry = this.reachableEntries.find(
+      (x) => x.address.toString() === address.toString(),
+    )
     return entry?.type === 'EOA'
   }
 
