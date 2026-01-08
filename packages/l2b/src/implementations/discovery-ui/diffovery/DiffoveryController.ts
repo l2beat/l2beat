@@ -3,13 +3,13 @@ import {
   AllProviders,
   asStructured,
   codeIsEOA,
+  findLeadingCommentStart,
   flattenStartingFrom,
   getChainConfigs,
   getChainFullName,
   getDiscoveryPaths,
   type IProvider,
   SQLiteCache,
-  findLeadingCommentStart,
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
