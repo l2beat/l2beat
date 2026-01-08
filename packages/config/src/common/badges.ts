@@ -547,7 +547,7 @@ export const badges = [
     id: 'LoopringFork',
     type: BadgeType.Fork,
     name: 'Fork of Loopring',
-    description: 'The project is fork of Loopring',
+    description: 'The project is a fork of Loopring',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -558,7 +558,7 @@ export const badges = [
     id: 'OVM',
     type: BadgeType.Fork,
     name: 'Fork of OVM',
-    description: 'The project is fork of the Optimistic Virtual Machine',
+    description: 'The project is a fork of the Optimistic Virtual Machine',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -569,7 +569,7 @@ export const badges = [
     id: 'ZKsyncLiteFork',
     type: BadgeType.Fork,
     name: 'Fork of ZKsync Lite',
-    description: 'The project is fork of ZKsync Lite',
+    description: 'The project is a fork of ZKsync Lite',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -580,7 +580,7 @@ export const badges = [
     id: 'TaikoFork',
     type: BadgeType.Fork,
     name: 'Fork of Taiko',
-    description: 'The project is fork of Taiko',
+    description: 'The project is a fork of Taiko',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -591,7 +591,7 @@ export const badges = [
     id: 'FacetFork',
     type: BadgeType.Fork,
     name: 'Fork of Facet',
-    description: 'The project is fork of Facet',
+    description: 'The project is a fork of Facet',
     action: {
       type: 'scalingFilter',
       id: 'stack',
