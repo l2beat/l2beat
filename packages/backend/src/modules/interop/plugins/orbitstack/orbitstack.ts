@@ -237,7 +237,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         // This is an ETH withdrawal - create both Message and Transfer
         return [
           Result.Message('orbitstack.L2ToL1Message', {
-            app: 'orbitstack',
+            app: 'orbitstack-eth',
             srcEvent: ethWithdrawalInitiated,
             dstEvent: event,
           }),
@@ -285,7 +285,7 @@ export class OrbitStackPlugin implements InteropPlugin {
 
         return [
           Result.Message('orbitstack.L1ToL2Message', {
-            app: 'orbitstack',
+            app: 'orbitstack-eth',
             srcEvent: messageDelivered,
             dstEvent: event,
           }),
