@@ -1230,14 +1230,33 @@
       },
       // ERA metaErc20 hub - not implemented yet
       {
-        "chain": "optimism",
-        "tx": "0x68e40b00afb8b3b9d2f7737aad1131e6d8984ee5adc264589cf8bd95e7cd2357"
+        "chain": "ethereum",
+        "tx": "0xeffe52863003d08f66eb80b4841191a2a80ca2f5c07b5a999d6b27b66271d4c1"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xa447095a535fcfb2582655b3c481449e330e61f9cc83dacaa2aad4e0672f2b52"
+        "tx": "0xfd7e7b55a60c5787ee429d9c25056212be388dad1daef7ba5730aec3f9f81647"
+      },
+      // cctpv1 via hyperlane
+      {
+        "chain": "ethereum",
+        "tx": "0x323eebc77516ba13ba5b48c5e8c04f1b2a8ba323c3d7c3a86be964883566bc2c"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd2562db8676570356c302a868e0c7ab12319e2a6e123e4268ed7e9a2cba8dc0a"
       }
-    ]
+    ],
+    "events": [
+      "hyperlane-decent.ReceivedFromBridge",
+      "hyperlane-hwr.TransferReceived",
+      "hyperlane-hwr.TransferSent",
+      "hyperlane-renzo.PriceUpdatedProcess",
+      "hyperlane.Dispatch",
+      "hyperlane.Process"
+    ],
+    "messages": ["hyperlane.Message"],
+    "transfers": ["hyperlaneHwr.Transfer"]
   },
   "wormhole-debug": {
     "txs": [
