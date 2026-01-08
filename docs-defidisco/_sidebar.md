@@ -1,0 +1,7 @@
+- [Home](/)
+- **Developers**
+  - [Architecture](developers/architecture.md)
+  - [Contributing](developers/contributing.md)
+- **Researchers**
+  - [Getting Started](researchers/getting-started.md)
+  - [Methodology](researchers/methodology.md)

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DefidDisco Documentation</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="DefidDisco - DeFi Protocol Analysis Documentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    :root {
+      --theme-color: #8B5CF6;
+    }
+
+    /* Cover page gradient */
+    section.cover {
+      background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 50%, #FFFFFF 100%) !important;
+    }
+
+    section.cover .cover-main {
+      background: transparent;
+    }
+
+    section.cover h1 {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    section.cover blockquote {
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    section.cover p {
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      border-right: 1px solid #e8e8e8;
+    }
+
+    .sidebar-nav a {
+      color: #333;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: #8B5CF6;
+    }
+
+    /* Links */
+    .markdown-section a {
+      color: #8B5CF6;
+    }
+
+    .markdown-section a:hover {
+      color: #7C3AED;
+    }
+
+    /* Code blocks */
+    .markdown-section code {
+      background-color: #F5F3FF;
+      color: #5B21B6;
+    }
+
+    /* Cover page buttons */
+    section.cover .cover-main > p:last-child a {
+      border-radius: 8px;
+      padding: 12px 24px;
+      text-decoration: none;
+      color: #8B5CF6 !important;
+      background-color: white;
+      border: 2px solid white;
+      margin: 5px;
+      text-shadow: none;
+    }
+
+    section.cover .cover-main > p:last-child a:last-child {
+      background-color: transparent;
+      color: white !important;
+      border-color: white;
+    }
+
+    section.cover .cover-main > p:last-child a:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-color: white;
+      color: #7C3AED !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'DeFiDisco',
+      repo: '',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      coverpage: true,
+      search: {
+        placeholder: 'Search',
+        noData: 'No results',
+        depth: 3
+      }
+    }
+  </script>
+  <!-- Docsify core -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Search plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+</body>
+</html>
