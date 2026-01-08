@@ -148,7 +148,8 @@ The script will generate the \`final::....sol\` file that contains the verifier 
           },
         ],
         verificationStatus: 'unsuccessful',
-        verificationSteps: 'The sources for desert verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationSteps:
+          'The sources for desert verifier circuits are not published and thus the verifier cannot be independently regenerated.',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
