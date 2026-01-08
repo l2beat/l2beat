@@ -34,7 +34,7 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-const parseTransfer = createEventParser(
+export const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
