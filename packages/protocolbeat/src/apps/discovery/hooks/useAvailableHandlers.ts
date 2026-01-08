@@ -35,7 +35,7 @@ export function useAvailableHandlers() {
     )
   }
 
-  function validateRawHandler(content: string) {
+  function validateRawHandler(type: string, content: string) {
     if (content.trim() === '') {
       return { ok: true, handler: undefined } as const
     }
@@ -46,16 +46,8 @@ export function useAvailableHandlers() {
       return { ok: false, message: 'Invalid JSONC' } as const
     }
 
-    const result = HandlerBaseSchema.safeParse(maybeJsonc)
-
-    if (!result.success) {
-      return { ok: false, message: 'Invalid base definition' } as const
-    }
-
-    const handlerType = result.data.type
-
     const matchingHandler = availableHandlers.find(
-      (handler) => handler.type === handlerType,
+      (handler) => handler.type === type,
     )
 
     if (!matchingHandler) {
@@ -65,7 +57,7 @@ export function useAvailableHandlers() {
     const handlerSchema = matchingHandler.schema
 
     const handlerResult = fromJsonSchema(handlerSchema as JsonSchema).safeParse(
-      result.data,
+      maybeJsonc,
     )
 
     if (!handlerResult.success) {

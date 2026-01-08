@@ -13,7 +13,7 @@ type HandlerSelectorProps = {
 }
 
 export function HandlerSelector(props: HandlerSelectorProps) {
-  const [tab, setTab] = useState('docs')
+  const [tab, setTab] = useState('schema')
   return (
     <div className="flex h-full w-full flex-col">
       <Tabs.Root
@@ -81,7 +81,6 @@ function getEditorManualMarkdown() {
 
   - Definitions are validated against a \`schema\` - switching between handlers will update the schema in the editor so you can see the errors and intellisense.
   - Editor is using \`jsonc\` syntax - you can use comments and multi-line strings.
-  - Editor will try to automatically detect the handler type based on the contents (\`type\` property).
   - You've added a handler and can't see it in the list? Make sure you've re-built the discovery package and restarted the server.
   `
 }

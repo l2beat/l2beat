@@ -38,7 +38,7 @@ export function HandlerEditor({
 
   const uri = useMemo(() => {
     return editor?.createUri(file)
-  }, [file])
+  }, [file, editor])
 
   // monaco schema synchronization
   useEffect(() => {

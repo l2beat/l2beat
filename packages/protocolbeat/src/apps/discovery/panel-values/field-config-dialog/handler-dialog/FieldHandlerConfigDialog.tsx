@@ -44,18 +44,27 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
 
   const [selectedHandler, setSelectedHandler] = useState<
     ApiHandlersResponse['handlers'][number] | undefined
-  >(undefined)
+  >(detectHandler(handlerEditorContent))
 
   useEffect(() => {
     setHandlerEditorContent(currentlyConfiguredHandler)
   }, [currentlyConfiguredHandler])
 
   useEffect(() => {
-    setSelectedHandler(detectHandler(handlerEditorContent))
-  }, [handlerEditorContent])
+    validateContents(selectedHandler?.type ?? '', handlerEditorContent)
+  }, [selectedHandler, handlerEditorContent])
+
+  function validateContents(type: string, content: string) {
+    const result = parseRaw(type, content)
+    if (!result.ok) {
+      setErrorMessage(result.message)
+    } else {
+      setErrorMessage(undefined)
+    }
+  }
 
   function onSave(content: string) {
-    const result = parseRaw(content)
+    const result = parseRaw(selectedHandler?.type ?? '', content)
     if (!result.ok) {
       toast.error('Cannot save handler', {
         description: <pre>{result.message}</pre>,
@@ -69,12 +78,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
 
   function onChange(content: string) {
     setHandlerEditorContent(content)
-    const result = parseRaw(content)
-    if (!result.ok) {
-      setErrorMessage(result.message)
-    } else {
-      setErrorMessage(undefined)
-    }
   }
 
   function onSelectedHandlerChange(type: string) {
