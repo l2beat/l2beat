@@ -587,6 +587,17 @@ export const badges = [
       value: 'Taiko',
     },
   },
+  {
+    id: 'FacetFork',
+    type: BadgeType.Fork,
+    name: 'Fork of Facet',
+    description: 'The project is fork of Facet',
+    action: {
+      type: 'scalingFilter',
+      id: 'stack',
+      value: 'Facet',
+    },
+  },
   //L3 host chains
   {
     id: 'Arbitrum',
