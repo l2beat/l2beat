@@ -5,3 +5,5 @@
 - **Researchers**
   - [Getting Started](researchers/getting-started.md)
   - [Methodology](researchers/methodology.md)
+- **L2BEAT Docs**
+  - [L2 Code Walkthroughs](l2beat/mdbook/)
