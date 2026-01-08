@@ -1236,6 +1236,15 @@
       {
         "chain": "arbitrum",
         "tx": "0xa447095a535fcfb2582655b3c481449e330e61f9cc83dacaa2aad4e0672f2b52"
+      },
+      // cctpv1 via hyperlane
+      {
+        "chain": "ethereum",
+        "tx": "0x323eebc77516ba13ba5b48c5e8c04f1b2a8ba323c3d7c3a86be964883566bc2c"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd2562db8676570356c302a868e0c7ab12319e2a6e123e4268ed7e9a2cba8dc0a"
       }
     ]
   },
