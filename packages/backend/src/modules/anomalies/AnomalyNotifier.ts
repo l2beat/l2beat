@@ -183,7 +183,7 @@ export class AnomalyNotifier {
 
     const message =
       `🚧 AUTO RECOVERY: **${ongoingAnomaly.projectId}** recovered from **${formatSubtype(ongoingAnomaly.subtype)}**\n` +
-      `We don't have all data to calculate the anomaly, so we recovered it automatically. Probably by mistake we removed some configuration and now we don't have the whole range (60 days) of data to calculate the anomaly.\n\n` +
+      'Insufficient data available to calculate the anomaly, resulting in automatic recovery. This may be due to configuration changes that caused the loss of the required 60-day data range for anomaly calculation.\n\n' +
       `- recovered at time: \`${block.timestamp}\`\n` +
       `- recovered on block: \`${block.number}\``
 
