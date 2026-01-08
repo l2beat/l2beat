@@ -866,7 +866,7 @@
   },
   "across-settlement": {
     "txs": [
-      // OpStack: L1 -> Optimism + Base
+      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
       {
         "chain": "ethereum",
         "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
@@ -879,14 +879,9 @@
         "chain": "base",
         "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
       },
-      // OrbitStack: L1 -> Arbitrum
-      {
-        "chain": "ethereum",
-        "tx": "0x12d9782b9fa6e6287fef14ed12f02da87d50cb4f3823980feabd78dbff7f774f"
-      },
       {
         "chain": "arbitrum",
-        "tx": "0x09fb54a365e266ea4b23631504d89cd33c903fea20eb5f9c6b1a1f991a769386"
+        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
     ],
     "events": [
