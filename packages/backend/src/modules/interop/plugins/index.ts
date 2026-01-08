@@ -29,6 +29,7 @@ import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
+import { HyperlaneSimpleAppsPlugIn } from './hyperlane-simple-apps'
 import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
 import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
@@ -148,6 +149,7 @@ export function createInteropPlugins(
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
+      new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
       new HyperlanePlugIn(),
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),

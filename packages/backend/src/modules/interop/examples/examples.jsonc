@@ -1196,26 +1196,27 @@
   },
   "hyperlane-mix": {
     "txs": [
-      {
-        "chain": "optimism",
-        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b" // 1 dispatch message, merkly(? uses same event as hwr but not on destination)
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9" // single process message (destination event of above one)
-      },
-      {
-        "chain": "base",
-        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3" // 1 dispatch message, 1 hwr
-      },
-      {
-        "chain": "base",
-        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719" // 1 dispatch message, 1 hwr
-      },
+      // renzo price update
       {
         "chain": "arbitrum",
-        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb" // 2x process message, 2x hwr received
+        "tx": "0x5727eea6424da4008348fb255e52ceb66dff4cdac3966d51ad8fa0af408e1c60"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb8d4628d39ae669e5e0726ab8c027c2eac952d684651d6c18e1015a1f5037fdb"
       }
+      // {
+      //   "chain": "base",
+      //   "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
+      // },
+      // {
+      //   "chain": "base",
+      //   "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
+      // },
+      // {
+      //   "chain": "arbitrum",
+      //   "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
+      // }
     ]
   },
   "wormhole-debug": {
