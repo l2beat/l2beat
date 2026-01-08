@@ -172,10 +172,7 @@ export class OrbitStackPlugin implements InteropPlugin {
           let isEthOnly: boolean | undefined
           const txValue = input.tx.value ?? 0n
           if (txValue > 0n) {
-            const calldata =
-              typeof input.tx.data === 'string'
-                ? (input.tx.data as `0x${string}`)
-                : '0x'
+            const calldata = input.tx.data as `0x${string}`
             if (calldata.startsWith(CREATE_RETRYABLE_TICKET_SELECTOR)) {
               const decoded = decodeFunctionData({
                 abi: createRetryableTicketAbi,
@@ -183,7 +180,7 @@ export class OrbitStackPlugin implements InteropPlugin {
               })
               // data is the last param (bytes) - if empty, it's ETH-only
               const retryableData = decoded.args[7] as `0x${string}`
-              isEthOnly = retryableData === '0x' || retryableData.length <= 2
+              isEthOnly = retryableData === '0x'
             }
           }
 
@@ -228,11 +225,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         network.arbRetryableTx,
       ])
       if (redeemScheduled) {
-        const calldata =
-          typeof input.tx.data === 'string'
-            ? (input.tx.data as `0x${string}`)
-            : '0x'
-
+        const calldata = input.tx.data as `0x${string}`
         if (!calldata.startsWith(SUBMIT_RETRYABLE_SELECTOR)) {
           return
         }
