@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1767691305,
+  "timestamp": 1767864703,
   "configHash": "0xb38099a89f4a1650c4592eb5b206aa3dfb12f4b33ad639c81fcfc9928be4e4d5",
   "entries": [
     {
@@ -85,14 +85,17 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 114892,
-        "committedPriorityRequestCount": 1713080,
+        "committedBatchesCount": 115972,
+        "committedPriorityRequestCount": 1724183,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
           "XLM",
           "LIT/USDC",
-          "LIT"
+          "LIT",
+          "CRCL",
+          "MSTR",
+          "BMNR"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -150,21 +153,26 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
-        "executedBatchesCount": 114876,
-        "executedOnChainBatchesCount": 83007,
-        "executedPriorityRequestCount": 1712613,
+        "executedBatchesCount": 115961,
+        "executedOnChainBatchesCount": 84058,
+        "executedPriorityRequestCount": 1724095,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
         "l2AssetConfigUpdates": [[2, 1, 100000000, 0]],
         "l2AssetRegistrations": [
-          "0x4c49540000000000000000000000000000000000000000000000000000000000"
+          "0x4c49540000000000000000000000000000000000000000000000000000000000",
+          "0x4c494e4b00000000000000000000000000000000000000000000000000000000",
+          "0x554e490000000000000000000000000000000000000000000000000000000000",
+          "0x4141564500000000000000000000000000000000000000000000000000000000",
+          "0x534b590000000000000000000000000000000000000000000000000000000000",
+          "0x4c444f0000000000000000000000000000000000000000000000000000000000"
         ],
-        "lastAccountIndex": 701155,
-        "lastVerifiedEndBlockNumber": 142965709,
-        "lastVerifiedStateRoot": "0xa85209f2880067e8c3efa867e85b91202bd061c9b9f615801ca1c9be5b429e04",
-        "lastVerifiedValidiumRoot": "0x813704709d915b50f4a33dd0a235d86a8496623fc5560bd244e7c46912a544aa",
+        "lastAccountIndex": 702198,
+        "lastVerifiedEndBlockNumber": 144690174,
+        "lastVerifiedStateRoot": "0x9d1d918a0a4c5fd1e3eee8cb0c2c9b468530f1fe511921bec183852e4b1bc96e",
+        "lastVerifiedValidiumRoot": "0x5ba2ee43655aa1595bbc651ece710e0d8dbd4bc1e5fe3277397d8306b5a4d27d",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -186,8 +194,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 535,
-        "pendingOnChainBatchesCount": 16,
+        "openPriorityRequestCount": 129,
+        "pendingOnChainBatchesCount": 11,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -201,15 +209,35 @@
           {
             "assetIndex": 2,
             "tokenAddress": "eth:0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2"
+          },
+          {
+            "assetIndex": 5,
+            "tokenAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
+          },
+          {
+            "assetIndex": 6,
+            "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+          },
+          {
+            "assetIndex": 7,
+            "tokenAddress": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+          },
+          {
+            "assetIndex": 8,
+            "tokenAddress": "eth:0x56072C95FAA701256059aa122697B133aDEd9279"
+          },
+          {
+            "assetIndex": 9,
+            "tokenAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
           }
         ],
-        "stateRoot": "0x823711c0f0c2d4729cf4f89c99d3de7b12609990894ee8b996fbbc9746052c87",
+        "stateRoot": "0x542e514f1aec5d915ad5b7e171f46481bdde813a6423689095b08a7f9ecbc34d",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xd1d11e8a8cfa38d9150570d83ff310485c4589397a70ff6a8f21f3fedfe4d235",
-        "verifiedBatchesCount": 114877,
-        "verifiedPriorityRequestCount": 1712717,
+        "validiumRoot": "0x82dbcb7134412d9f83d7f4c98f0c2719aceddeae238af2589bd37455fd1219b3",
+        "verifiedBatchesCount": 115962,
+        "verifiedPriorityRequestCount": 1724101,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -268,6 +296,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -289,6 +322,11 @@
           "role": ".validators"
         }
       ]
+    },
+    {
+      "address": "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8B0190046D7b366642D4ff091C100d84ec4AB6f6",
@@ -468,16 +506,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E",
+          "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
           "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
           "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
           "eth:0xF65F409d8f3fa3635287783256394D7eB7aD7835"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x82a99693c24b4f1e92f83904e0d75d68ca8bcf7654ae5ad10db6a8f7e2c8959c",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 23,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 27,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1091,6 +1131,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xc00318e126be1461845e143d518fe8dc218304f44203d1b26d6498613c67f4a0"
   },
-  "usedBlockNumbers": { "ethereum": 24174705 },
-  "permissionsConfigHash": "0xc400b717b3ea8371bbdf6793658d0db481d032bbcb1a32d6e30bc06d879ab9e6"
+  "usedBlockNumbers": { "ethereum": 24189081 },
+  "permissionsConfigHash": "0xd1e0b2f796c0d96b4b9801c4453b5edc394d28a91eb706a0ef4d51bb4c58fc9a"
 }
