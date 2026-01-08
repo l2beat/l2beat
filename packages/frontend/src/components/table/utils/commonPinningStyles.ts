@@ -12,16 +12,20 @@ export function getCommonPinningStyles<T>(
       ? 'right'
       : undefined
 
+  const maskGradient =
+    isLastPinned &&
+    `linear-gradient(to ${
+      isLastPinned === 'left' ? 'right' : 'left'
+    }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`
+
   return {
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
     position: 'sticky',
     width: column.getSize(),
-    maskImage:
-      isLastPinned &&
-      `linear-gradient(to ${
-        isLastPinned === 'left' ? 'right' : 'left'
-      }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`,
+    transform: 'translateZ(0)', // Force GPU compositing for iOS WebView
+    WebkitMaskImage: maskGradient, // Safari/iOS prefix
+    maskImage: maskGradient,
     zIndex: 1,
   }
 }
