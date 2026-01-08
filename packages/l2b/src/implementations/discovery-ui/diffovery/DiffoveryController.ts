@@ -9,6 +9,7 @@ import {
   getDiscoveryPaths,
   type IProvider,
   SQLiteCache,
+  findLeadingCommentStart,
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
@@ -152,7 +153,8 @@ function splitFlatSolidity(flat: string): Record<string, string> {
     assert(childName !== undefined)
     assert(child.range !== undefined)
 
-    const childContent = flat.substring(child.range[0], child.range[1] + 1)
+    const left = findLeadingCommentStart(flat, child.range[0])
+    const childContent = flat.substring(left, child.range[1] + 1)
     result[childName] = childContent
   }
 
