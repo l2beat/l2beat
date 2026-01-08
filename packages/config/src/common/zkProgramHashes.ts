@@ -384,7 +384,8 @@ Verify:
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps: 'The sources for this program contain a security advisory fix and are not published yet. Thus the hash cannot be independently regenerated.',
   },
   '0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0': {
     title: 'SP1 Helios program',
@@ -456,7 +457,8 @@ Verify:
     description:
       'Program that supposedly executes OP Kona client (no source available yet) to derive blocks and generate fault or validity proofs for MegaETH chain, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps: 'The sources for this program are under development and not published yet. The hash cannot be independently regenerated.',
   },
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     title: 'Aggregation program of Raiko (reth Taiko)',
