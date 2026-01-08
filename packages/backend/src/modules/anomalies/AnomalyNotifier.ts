@@ -168,6 +168,37 @@ export class AnomalyNotifier {
     )
   }
 
+  async anomalyAutoRecovered(
+    ongoingAnomaly: RealTimeAnomalyRecord,
+    block: Block,
+  ) {
+    const relatedEntityId = this.generateRelatedEntityId(ongoingAnomaly)
+    const notifications =
+      await this.db.notifications.getByRelatedEntityId(relatedEntityId)
+
+    // we only want to send notification if we previously sent a notification about the detected anomaly
+    if (notifications.length === 0) {
+      return
+    }
+
+    const message =
+      `🚧 AUTO RECOVERY: **${ongoingAnomaly.projectId}** recovered from **${formatSubtype(ongoingAnomaly.subtype)}**\n` +
+      'Insufficient data available to calculate the anomaly, resulting in automatic recovery. This may be due to configuration changes that caused the loss of the required 60-day data range for anomaly calculation.\n\n' +
+      `- recovered at time: \`${block.timestamp}\`\n` +
+      `- recovered on block: \`${block.number}\``
+
+    const id = await this.sendDiscordNotification(message)
+
+    if (!id) return
+
+    await this.saveNotification(
+      id,
+      'anomaly-recovered',
+      this.generateRelatedEntityId(ongoingAnomaly),
+      block.timestamp,
+    )
+  }
+
   async dailyReport() {
     this.logger.info('Sending daily report')
 

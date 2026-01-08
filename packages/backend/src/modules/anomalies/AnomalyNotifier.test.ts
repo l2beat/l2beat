@@ -736,6 +736,83 @@ describe(AnomalyNotifier.name, () => {
     })
   })
 
+  describe(AnomalyNotifier.prototype.anomalyAutoRecovered.name, () => {
+    it('notifies about auto-recovered anomaly', async () => {
+      const notificationsRepository = mockObject<Database['notifications']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getByRelatedEntityId: mockFn().resolvesTo([
+          { id: '123', type: 'anomaly-detected' },
+        ]),
+      })
+
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordWebhookClient>(),
+        mockDatabase({ notifications: notificationsRepository }),
+        0,
+        mockTrackedTxsConfig([]),
+      )
+
+      const messageId = '1234567890'
+      const mockSendDiscordNotification = mockFn().resolvesTo(messageId)
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      const ongoingAnomaly: RealTimeAnomalyRecord = {
+        start: 5678,
+        projectId: 'project-1',
+        subtype: 'batchSubmissions',
+        status: 'recovered',
+        isApproved: false,
+      }
+      const block = mockObject<Block>({ number: 123456, timestamp: 1234 })
+
+      await notifier.anomalyAutoRecovered(ongoingAnomaly, block)
+
+      expect(mockSendDiscordNotification).toHaveBeenCalled()
+      expect(notificationsRepository.insertMany).toHaveBeenCalledWith([
+        {
+          id: messageId,
+          channel: 'discord',
+          type: 'anomaly-recovered',
+          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          timestamp: block.timestamp,
+        },
+      ])
+    })
+
+    it('does not notify if we did not send a notification about the detected anomaly', async () => {
+      const notificationsRepository = mockObject<Database['notifications']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getByRelatedEntityId: mockFn().resolvesTo([]),
+      })
+
+      const notifier = new AnomalyNotifier(
+        Logger.SILENT,
+        mockObject<Clock>(),
+        mockObject<DiscordWebhookClient>(),
+        mockDatabase({ notifications: notificationsRepository }),
+        0,
+        mockTrackedTxsConfig([]),
+      )
+
+      const mockSendDiscordNotification = mockFn().resolvesTo(undefined)
+      notifier.sendDiscordNotification = mockSendDiscordNotification
+
+      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
+        projectId: 'project-1',
+        subtype: 'batchSubmissions',
+        start: 1234,
+      })
+      const block = mockObject<Block>({ number: 123456, timestamp: 1234 })
+
+      await notifier.anomalyAutoRecovered(ongoingAnomaly, block)
+
+      expect(mockSendDiscordNotification).not.toHaveBeenCalled()
+      expect(notificationsRepository.insertMany).not.toHaveBeenCalled()
+    })
+  })
+
   describe(AnomalyNotifier.prototype.dailyReport.name, () => {
     it('sends daily report', async () => {
       const realTimeAnomaliesRepository = mockObject<
