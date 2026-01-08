@@ -4,6 +4,7 @@ import { Markdown } from '../../../../../components/Markdown'
 import { Select } from '../../../../../components/Select'
 import { Tabs } from '../../../../../components/Tabs'
 import { complexMarkdownExample } from './handlerExamples'
+import { schemaToMarkdown } from './schemaToMarkdown'
 
 type HandlerSelectorProps = {
   handlers: ApiHandlersResponse['handlers']
@@ -42,13 +43,10 @@ export function HandlerSelector(props: HandlerSelectorProps) {
               Editor manual
             </Tabs.Trigger>
             <Tabs.Trigger value="docs" className="mb-1 border-b-none">
-              Documentation
+              Docs & Examples
             </Tabs.Trigger>
-            <Tabs.Trigger value="examples" className="mb-1 border-b-none">
-              Examples
-            </Tabs.Trigger>
-            <Tabs.Trigger value="preview" className="mb-1 border-b-none">
-              Preview
+            <Tabs.Trigger value="schema" className="mb-1 border-b-none">
+              Schema
             </Tabs.Trigger>
           </Tabs.List>
         </div>
@@ -64,15 +62,11 @@ export function HandlerSelector(props: HandlerSelectorProps) {
             </div>
           </Tabs.Content>
 
-          <Tabs.Content value="examples" className="h-full py-0">
+          <Tabs.Content value="schema" className="h-full py-0">
             <div className="h-full overflow-y-auto bg-coffee-800 p-1">
-              <Markdown>{complexMarkdownExample}</Markdown>
-            </div>
-          </Tabs.Content>
-
-          <Tabs.Content value="preview" className="h-full py-0">
-            <div className="h-full overflow-y-auto bg-coffee-800 p-1">
-              <Markdown>To be implemented</Markdown>
+              <Markdown>
+                {schemaToMarkdown(props.selectedHandler?.schema)}
+              </Markdown>
             </div>
           </Tabs.Content>
         </div>
