@@ -1109,6 +1109,15 @@
       {
         "chain": "arbitrum",
         "tx": "0xb12497a13c6cb72700c8233c037581b38c5c218dd6e1ed0899a5da641d1cdbf7"
+      },
+      // ethereum -> arbitrum (deposit with calldata via unknown gateway - not ETH-only)
+      {
+        "chain": "ethereum",
+        "tx": "0xe411110d6005c854c95d04b635a2dd572ff7309e11c58f002b945428e08309e5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa85c825b48fbd0158b2c43ea4dde4c2d8eafcda242ed9cee9430b8e8079a7e29"
       }
     ],
     "events": [
@@ -1118,14 +1127,8 @@
       "orbitstack.MessageDelivered",
       "orbitstack.RedeemScheduled"
     ],
-    "messages": [
-      "orbitstack.L2ToL1Message",
-      "orbitstack.L1ToL2Message"
-    ],
-    "transfers": [
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L1ToL2Transfer"
-    ]
+    "messages": ["orbitstack.L2ToL1Message", "orbitstack.L1ToL2Message"],
+    "transfers": ["orbitstack.L2ToL1Transfer", "orbitstack.L1ToL2Transfer"]
   },
   "orbitstack-standardgateway": {
     "txs": [
