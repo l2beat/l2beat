@@ -15,6 +15,7 @@ import {
   type MatchResult,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import type { InteropTransferStream } from '../stream/InteropTransferStream'
 
 export class InteropMatchingLoop extends TimeLoop {
   constructor(
@@ -23,7 +24,8 @@ export class InteropMatchingLoop extends TimeLoop {
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
-    intervalMs = 10_000,
+    private transferStream: InteropTransferStream,
+    private readonly intervalMs = 10_000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
@@ -40,6 +42,9 @@ export class InteropMatchingLoop extends TimeLoop {
       this.logger,
     )
 
+    const messageRecords = result.messages.map(toMessageRecord)
+    const transferRecords = result.transfers.map(toTransferRecord)
+
     await this.db.transaction(async () => {
       if (result.matched.length > 0 || result.unsupported.length > 0) {
         await this.store.updateMatchedAndUnsupported({
@@ -47,18 +52,19 @@ export class InteropMatchingLoop extends TimeLoop {
           unsupported: result.unsupported,
         })
       }
-      const messages = await this.db.interopMessage.insertMany(
-        result.messages.map(toMessageRecord),
-      )
-      const transfers = await this.db.interopTransfer.insertMany(
-        result.transfers.map(toTransferRecord),
-      )
+      const messages = await this.db.interopMessage.insertMany(messageRecords)
+      const transfers =
+        await this.db.interopTransfer.insertMany(transferRecords)
 
       this.logger.info('Matching results saved', {
         messages,
         transfers,
       })
     })
+
+    if (transferRecords.length > 0) {
+      this.transferStream?.publishBulk(transferRecords, this.intervalMs)
+    }
   }
 }
 

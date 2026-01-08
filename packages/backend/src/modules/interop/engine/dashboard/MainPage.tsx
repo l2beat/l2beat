@@ -14,6 +14,7 @@ import { getInteropChains } from '../../../../config/makeConfig'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
+import { LiveTransfers } from './LiveTransfers'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -380,6 +381,7 @@ function MainPageLayout(props: {
       <a href="/interop/configs" target="_blank">
         Automated configs
       </a>
+      <LiveTransfers />
       <DataTablePage
         showHome={false}
         tables={[

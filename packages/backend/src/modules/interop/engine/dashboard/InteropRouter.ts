@@ -5,6 +5,10 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
+import type {
+  InteropTransferStream,
+  SerializableInteropTransfer,
+} from '../stream/InteropTransferStream'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -15,6 +19,7 @@ export function createInteropRouter(
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
   logger: Logger,
+  transferStream: InteropTransferStream,
 ) {
   const router = new Router()
 
@@ -158,6 +163,36 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
       status,
     })
+  })
+
+  router.get('/interop/transfers/stream', (ctx) => {
+    ctx.set('Content-Type', 'text/event-stream')
+    ctx.set('Cache-Control', 'no-cache')
+    ctx.set('Connection', 'keep-alive')
+    ctx.set('X-Accel-Buffering', 'no')
+    ctx.status = 200
+    ctx.compress = false
+    ctx.respond = false
+
+    ctx.res.write(':\n\n')
+
+    const write = (payload: SerializableInteropTransfer[]) => {
+      ctx.res.write(`data: ${JSON.stringify(payload)}\n\n`)
+    }
+
+    const unsubscribe = transferStream.subscribe(write, { replay: 20 })
+
+    const heartbeat = setInterval(() => {
+      ctx.res.write(':\n\n')
+    }, 15_000)
+
+    const close = () => {
+      clearInterval(heartbeat)
+      unsubscribe()
+    }
+
+    ctx.req.on('close', close)
+    ctx.req.on('end', close)
   })
 
   router.get('/interop/transfers/:type', async (ctx) => {
