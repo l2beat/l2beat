@@ -866,6 +866,7 @@
   },
   "across-settlement": {
     "txs": [
+      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
       {
         "chain": "ethereum",
         "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
@@ -877,13 +878,22 @@
       {
         "chain": "base",
         "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
     ],
     "events": [
       "across-settlement.SentMessage",
-      "across-settlement.SentMessage"
+      "across-settlement.SentMessage",
+      "across-settlement.MessageDelivered"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+    "messages": [
+      "opstack.L1ToL2Message",
+      "opstack.L1ToL2Message",
+      "orbitstack.L1ToL2Message"
+    ]
   },
   "world-id": {
     "txs": [
