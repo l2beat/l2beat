@@ -27,48 +27,84 @@ const PriceUpdatedProcess = createInteropEventType<{
   $srcChain: string
 }>('hyperlane.PriceUpdatedProcess')
 
+// ReceivedFromBridge (index_topic_1 bytes32 txId)
+const parseReceivedFromBridge = createEventParser(
+  'event ReceivedFromBridge(bytes32 indexed txId)',
+)
+
+const ReceivedFromBridgeProcess = createInteropEventType<{
+  messageId: `0x${string}`
+  $srcChain: string
+}>('hyperlane.ReceivedFromBridge')
+
 export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
   name = 'hyperlane-simple-apps'
 
   capture(input: LogToCapture) {
     const priceUpdated = parsePriceUpdated(input.log, null)
-    if (!priceUpdated) return
-    const process = findParsedAround(
-      input.txLogs,
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      input.log.logIndex!,
-      (log) => parseProcess(log, null),
-    )
-    if (!process) return
-    const processIdLog = input.txLogs[process.index + 1]
-    const processId = processIdLog && parseProcessId(processIdLog, null)
-    if (!processId) return
-    return [
-      PriceUpdatedProcess.create(input, {
-        messageId: processId.messageId,
-        $srcChain: findChain(
-          HYPERLANE_NETWORKS,
-          (x) => x.chainId,
-          process.parsed.origin,
-        ),
-      }),
-    ]
+    if (priceUpdated) {
+      const process = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log) => parseProcess(log, null),
+      )
+      if (!process) return
+      const processIdLog = input.txLogs[process.index + 1]
+      const processId = processIdLog && parseProcessId(processIdLog, null)
+      if (!processId) return
+      return [
+        PriceUpdatedProcess.create(input, {
+          messageId: processId.messageId,
+          $srcChain: findChain(
+            HYPERLANE_NETWORKS,
+            (x) => x.chainId,
+            process.parsed.origin,
+          ),
+        }),
+      ]
+    }
+
+    const receivedFromBridge = parseReceivedFromBridge(input.log, null)
+    if (receivedFromBridge) {
+      const process = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log) => parseProcess(log, null),
+      )
+      if (!process) return
+      const processIdLog = input.txLogs[process.index + 1]
+      const processId = processIdLog && parseProcessId(processIdLog, null)
+      if (!processId) return
+
+      return [
+        ReceivedFromBridgeProcess.create(input, {
+          messageId: processId.messageId,
+          $srcChain: findChain(
+            HYPERLANE_NETWORKS,
+            (x) => x.chainId,
+            process.parsed.origin,
+          ),
+        }),
+      ]
+    }
   }
 
-  matchTypes = [PriceUpdatedProcess]
+  matchTypes = [PriceUpdatedProcess, ReceivedFromBridgeProcess]
   match(
-    priceUpdatedProcess: InteropEvent,
+    incomingInteropEvent: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (PriceUpdatedProcess.checkType(priceUpdatedProcess)) {
+    if (PriceUpdatedProcess.checkType(incomingInteropEvent)) {
       const dispatch = db.find(Dispatch, {
-        messageId: priceUpdatedProcess.args.messageId,
+        messageId: incomingInteropEvent.args.messageId,
       })
       if (!dispatch) {
         return
       }
       const process = db.find(Process, {
-        messageId: priceUpdatedProcess.args.messageId,
+        messageId: incomingInteropEvent.args.messageId,
       })
       if (!process) {
         return
@@ -78,7 +114,30 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         Result.Message('hyperlane.Message', {
           app: 'renzo-l2-deposit-price-feed',
           srcEvent: dispatch,
-          dstEvent: priceUpdatedProcess,
+          dstEvent: incomingInteropEvent,
+          extraEvents: [process],
+        }),
+      ]
+    }
+    if (ReceivedFromBridgeProcess.checkType(incomingInteropEvent)) {
+      const dispatch = db.find(Dispatch, {
+        messageId: incomingInteropEvent.args.messageId,
+      })
+      if (!dispatch) {
+        return
+      }
+      const process = db.find(Process, {
+        messageId: incomingInteropEvent.args.messageId,
+      })
+      if (!process) {
+        return
+      }
+
+      return [
+        Result.Message('hyperlane.Message', {
+          app: 'decent-utb-swapper',
+          srcEvent: dispatch,
+          dstEvent: incomingInteropEvent,
           extraEvents: [process],
         }),
       ]

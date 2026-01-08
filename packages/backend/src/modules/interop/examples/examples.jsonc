@@ -1204,19 +1204,29 @@
       {
         "chain": "base",
         "tx": "0xb8d4628d39ae669e5e0726ab8c027c2eac952d684651d6c18e1015a1f5037fdb"
+      },
+      // hwr and decent UTB swapper (batched by AA at origin)
+      {
+        "chain": "base",
+        "tx": "0xea16312fe577a4f03bd3d2ae7bf108f2a0a1f4b5ed87051316eb901dd6d26b25"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x2bc03f10d6e44a4c8e5f261dba6f0e01dd564c1d4dc9cb93758956f489f2e539"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4690c8491055d6cd60f2e07f76330de3a8dc546be0c95d66e80c762fede67f9"
+      },
+      // ERA metaErc20 hub - not implemented yet
+      {
+        "chain": "optimism",
+        "tx": "0x68e40b00afb8b3b9d2f7737aad1131e6d8984ee5adc264589cf8bd95e7cd2357"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa447095a535fcfb2582655b3c481449e330e61f9cc83dacaa2aad4e0672f2b52"
       }
-      // {
-      //   "chain": "base",
-      //   "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3"
-      // },
-      // {
-      //   "chain": "base",
-      //   "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719"
-      // },
-      // {
-      //   "chain": "arbitrum",
-      //   "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb"
-      // }
     ]
   },
   "wormhole-debug": {
