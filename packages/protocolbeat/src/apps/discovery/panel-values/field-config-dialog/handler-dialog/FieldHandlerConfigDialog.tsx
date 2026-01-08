@@ -39,7 +39,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
 
   const editorKey = `handler-${context}-${fieldName}`
 
-  // TODO: Refac dirty files in code store
   // Not using useCodeStore since we're running in controlled mode
   const isDirty = handlerEditorContent !== currentlyConfiguredHandler
 

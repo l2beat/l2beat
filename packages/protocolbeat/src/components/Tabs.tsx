@@ -14,6 +14,8 @@ function TabsTrigger({
     <RadixTabs.Trigger
       className={cn(
         'flex-shrink-0 rounded-t-md border-coffee-400 border-x border-t border-b-none px-2 py-1 text-xs',
+        'lg:px-2 lg:py-1 lg:text-xs',
+        'px-1 py-0.5 text-2xs',
         'data-[state=active]:border-coffee-400 data-[state=active]:bg-coffee-400',
         'data-[state=inactive]:border-coffee-400/50 data-[state="inactive"]:bg-coffee-400/10',
         className,
@@ -46,7 +48,7 @@ function TabsList({
   return (
     <RadixTabs.List
       className={cn(
-        'flex border-coffee-400 border-b',
+        'flex overflow-x-clip border-coffee-400 border-b',
         align === 'left' ? 'justify-start' : 'justify-end',
         className,
       )}
