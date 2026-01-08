@@ -6,4 +6,4 @@ Welcome to the DeFiDisco documentation.
 
 - **[Developers](developers/)** - Architecture and contribution guidelines
 - **[Researchers](researchers/)** - Getting started with DeFi protocol analysis
-- **[L2BEAT Docs](l2beat/mdbook/)** - Original L2BEAT code walkthroughs and specs
+- **[L2BEAT Docs](https://github.com/l2beat/l2beat/blob/main/packages/config/README.md)** - Original L2BEAT documentation

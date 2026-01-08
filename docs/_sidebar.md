@@ -6,4 +6,4 @@
   - [Getting Started](researchers/getting-started.md)
   - [Methodology](researchers/methodology.md)
 - **L2BEAT Docs**
-  - [L2 Code Walkthroughs](l2beat/mdbook/)
+  - [L2BEAT Config Docs](https://github.com/l2beat/l2beat/blob/main/packages/config/README.md)
