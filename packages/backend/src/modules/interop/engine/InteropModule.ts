@@ -17,6 +17,7 @@ import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
+import { InteropTransferStream } from './stream/InteropTransferStream'
 
 export function createInteropModule({
   config,
@@ -51,6 +52,8 @@ export function createInteropModule({
     logger,
   )
 
+  const transferStream = new InteropTransferStream()
+
   const processors = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
@@ -74,6 +77,7 @@ export function createInteropModule({
     plugins.eventPlugins,
     config.interop.capture.chains.map((c) => c.name),
     logger,
+    transferStream,
   )
 
   const router = createInteropRouter(
@@ -82,6 +86,7 @@ export function createInteropModule({
     processors,
     syncersManager,
     logger.for('InteropRouter'),
+    transferStream,
   )
 
   const compareLoops = plugins.comparePlugins.map(

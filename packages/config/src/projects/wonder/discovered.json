@@ -1,7 +1,7 @@
 {
   "name": "wonder",
   "timestamp": 1753944481,
-  "configHash": "0x86e5e55daf5f50f11cf24c8e9eaff601322099d8846e596180636f6904d556e4",
+  "configHash": "0xadcb905987d076a10a2c9bf2923be1026d7095f53a2fd34cb2a75c80ab9053dd",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

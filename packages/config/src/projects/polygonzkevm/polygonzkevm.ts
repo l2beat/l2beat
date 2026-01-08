@@ -44,6 +44,44 @@ export const polygonzkevm: ScalingProject = agglayer({
   },
   discovery,
   associatedTokens: ['POL', 'MATIC'],
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'stateUpdates',
+        },
+        {
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x1489ed10',
+        functionSignature:
+          'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
+        sinceTimestamp: UnixTime(1707822059),
+        untilTimestamp: UnixTime(1764753203),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x519E42c24163192Dca44CD3fBDCEBF6be9130987'),
+        selector: '0xb910e0f9',
+        functionSignature:
+          'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
+        sinceTimestamp: UnixTime(1736943371),
+        untilTimestamp: UnixTime(1764753203),
+      },
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,

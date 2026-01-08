@@ -16,6 +16,7 @@ import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
 import { PluginsStatusTable } from './PluginsStatusTable'
+import { LiveTransfers } from './LiveTransfers'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -311,6 +312,7 @@ function MissingTokensTable(props: {
           <th>Address</th>
           <th>Count</th>
           <th>Plugins</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -336,6 +338,14 @@ function MissingTokensTable(props: {
               </td>
               <td>{t.count}</td>
               <td>{t.plugins.join(', ')}</td>
+              <td>
+                <a
+                  target="_blank"
+                  href={`https://tokens.l2beat.com/tokens/new?tab=deployed&chain=${encodeURIComponent(t.chain)}&address=${t.tokenAddress === 'native' || t.tokenAddress === Address32.ZERO ? 'native' : encodeURIComponent(address)}`}
+                >
+                  Add token
+                </a>
+              </td>
             </tr>
           )
         })}
@@ -374,6 +384,7 @@ function MainPageLayout(props: {
       <a href="/interop/configs" target="_blank">
         Automated configs
       </a>
+      <LiveTransfers />
       <DataTablePage
         showHome={false}
         tables={[

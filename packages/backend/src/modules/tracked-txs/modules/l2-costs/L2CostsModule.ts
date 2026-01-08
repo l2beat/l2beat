@@ -5,7 +5,7 @@ import { L2CostsUpdater } from './L2CostsUpdater'
 export function createL2CostsModule({
   config,
   logger,
-  peripherals,
+  db,
   providers,
 }: ModuleDependencies):
   | (ApplicationModule & { updater: L2CostsUpdater })
@@ -18,11 +18,7 @@ export function createL2CostsModule({
   logger = logger.tag({ feature: 'costs', module: 'costs' })
 
   assert(providers.blobPrice, 'Blob price provider is required')
-  const l2CostsUpdater = new L2CostsUpdater(
-    peripherals.database,
-    logger,
-    providers.blobPrice,
-  )
+  const l2CostsUpdater = new L2CostsUpdater(db, logger, providers.blobPrice)
 
   return {
     updater: l2CostsUpdater,

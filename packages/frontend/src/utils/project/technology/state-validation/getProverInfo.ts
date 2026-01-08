@@ -29,6 +29,7 @@ export function getProverInfo(
     contractUtils,
     tvs,
     allProjects,
+    projectId,
   )
 
   // take only trusted setups that are used in this project

@@ -158,6 +158,7 @@ export async function getZkCatalogProjectEntry(
     project,
     contractUtils,
     allProjects,
+    tvs,
   )
   sections.push({
     type: 'VerifiersSection',
@@ -171,6 +172,8 @@ export async function getZkCatalogProjectEntry(
   const programHashesSection = await getProgramHashesSection(
     project,
     allProjectsWithContracts,
+    allProjects,
+    tvs,
   )
   if (programHashesSection) {
     sections.push({

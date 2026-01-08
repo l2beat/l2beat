@@ -1,7 +1,7 @@
 {
   "name": "tradable",
   "timestamp": 1755162744,
-  "configHash": "0x45b32ed762d8029fec74708d115145941181d4d90a244af2b356bfcb15b4a085",
+  "configHash": "0xb8d482e8a708786df76769135752199f1fd14fa2172a57380dc11b735f65745b",
   "entries": [
     {
       "address": "zksync:0x00Ac919b47D88Daf465EA9b03FF3B1D197582CE0",
@@ -24,7 +24,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -35,17 +38,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -291,7 +300,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -302,17 +314,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -647,7 +665,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -658,17 +679,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -1045,12 +1072,16 @@
           [
             "2024-11-14T18:38:29.000Z",
             "0x8aecea8ab0e6a19a7ee5432f03c6125f8ff605589dfed56d9410aeef09abd982",
-            ["zksync:0x71B8397060d11f518A956A53e53C88F2036ee741"]
+            [
+              "zksync:0x71B8397060d11f518A956A53e53C88F2036ee741"
+            ]
           ],
           [
             "2024-11-15T22:03:27.000Z",
             "0xcd1c86b632ce2f144b02ab716d25940270d1befa9f9390617373e1613a1aef7a",
-            ["zksync:0x6C978532d5bFDCcf622303049922171DCCc58A05"]
+            [
+              "zksync:0x6C978532d5bFDCcf622303049922171DCCc58A05"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1298,7 +1329,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -1309,17 +1343,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -1504,7 +1544,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -1515,17 +1561,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -1579,8 +1631,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQJqfyZfvWNRWGP6qR51GJj5nF22fZYZqaMgfWgmgAWfq",
         "name": "Private Credit Direct Deal36766001",
-        "nav": { "value": 1000000, "timestamp": 1752600479, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752790453 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600479,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752790453
+        },
         "symbol": "PC367",
         "totalSize": 50000000000000,
         "totalSupply": 25384124630001,
@@ -1607,7 +1667,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -1618,17 +1684,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -1721,8 +1793,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWL2dosr4sV1eGAKrUYbjcZhNDh9JnPdhErMMZSuHTLwP",
         "name": "Private Credit Direct Deal0000077",
-        "nav": { "value": 1000000, "timestamp": 1754751567, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754872350 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751567,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754872350
+        },
         "symbol": "PC0000077",
         "totalSize": 100000000000000,
         "totalSupply": 31963470000003,
@@ -1749,7 +1829,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -1760,17 +1843,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -1954,7 +2043,9 @@
         "0xacd76117eb21f736961ade180c25f63d796bc2e83f43b82ee3ff585bb34ce6ed"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ],
       "sinceTimestamp": 1706644361,
       "sinceBlock": 25371957,
       "values": {
@@ -2017,7 +2108,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1731609458,
       "sinceBlock": 48944368,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "zksync:0x1E2f5e41Ea5dCB62c8303e240E1d513eD4eC3d74": ""
       }
@@ -2038,7 +2131,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -2049,17 +2148,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -2140,8 +2245,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmevvSuY7dmcxA18yWVAsaPrXzzGAweYQpGPV4z14GsCkg",
         "name": "Private Credit Direct Deal0000019",
-        "nav": { "value": 1000000, "timestamp": 1752601100, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601100 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601100,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601100
+        },
         "symbol": "PC0000019",
         "totalSize": 150000000000000,
         "totalSupply": 62500000000000,
@@ -2168,7 +2281,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -2179,17 +2295,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -2251,12 +2373,16 @@
           [
             "2024-11-14T18:38:07.000Z",
             "0xd422f31492f3533a7e3df5fe87a07b09c4a3f4e44477142f244d41708107627a",
-            ["zksync:0x04ACEf9f303875c1cb9046dFC0A47F9B87117A95"]
+            [
+              "zksync:0x04ACEf9f303875c1cb9046dFC0A47F9B87117A95"
+            ]
           ],
           [
             "2024-11-15T22:03:13.000Z",
             "0x2e19d14c0922a30d2adccf5202e889b1aaed6720cac55e13572cc802bbce619d",
-            ["zksync:0x51421EdC52C8A60cc6Ec767aa116D5687f30Db19"]
+            [
+              "zksync:0x51421EdC52C8A60cc6Ec767aa116D5687f30Db19"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -2331,7 +2457,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -2342,17 +2474,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -2439,8 +2577,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmUuZKDFqCcgRNu7oUDcCRXQNNguNcCQ9c7in3HB7xgVNd",
         "name": "Private Credit Direct Deal0000029",
-        "nav": { "value": 1000000, "timestamp": 1753536419, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537643 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753536419,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753537643
+        },
         "symbol": "PC000",
         "totalSize": 100000000000000,
         "totalSupply": 95900000000000,
@@ -2492,7 +2638,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -2503,17 +2652,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -2810,7 +2965,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -2821,17 +2982,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -2874,8 +3041,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmcK4P2p4DKFz6nTRVLHMkwNxCqs4iZvPMjAviVKnyWtLB",
         "name": "Private Credit Direct Deal1565464",
-        "nav": { "value": 1000000, "timestamp": 1753493350, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753493388 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753493350,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753493388
+        },
         "symbol": "PC156",
         "totalSize": 40000000000000,
         "totalSupply": 20529231440000,
@@ -2902,7 +3077,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -2913,17 +3094,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -3005,8 +3192,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/Qmeoxb4LU89a6vWfhLHeWyfCL6ArAqZP7AJVERDcJfzEdR",
         "name": "Private Credit Direct Deal0000083",
-        "nav": { "value": 1000000, "timestamp": 1754751478, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752279 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751478,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752279
+        },
         "symbol": "PC0000083",
         "totalSize": 100000000000000,
         "totalSupply": 3036530000001,
@@ -3028,7 +3223,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -3039,17 +3237,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -3514,7 +3718,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -3525,17 +3732,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -3949,7 +4162,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -3960,17 +4179,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4037,8 +4262,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmekcPCbmHj4bEQgAY2arWCVxY1qBDyAWjnT7YsYUWG4Hd",
         "name": "Private Credit Direct Deal0000101",
-        "nav": { "value": 1000000, "timestamp": 1754751613, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752239 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751613,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752239
+        },
         "symbol": "PC0000101",
         "totalSize": 88136981000000,
         "totalSupply": 62779395227597,
@@ -4060,7 +4293,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -4071,17 +4310,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4115,8 +4360,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmTbEYHLifvzpeZKqd6WBxb1zYFLQUftTNWkR9fkbuAuXq",
         "name": "Private Credit Direct Deal9868327516",
-        "nav": { "value": 1000000, "timestamp": 1754751703, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754872713 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751703,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754872713
+        },
         "symbol": "PC986",
         "totalSize": 50000000000000,
         "totalSupply": 12422901240004,
@@ -4143,7 +4396,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -4154,17 +4413,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4219,8 +4484,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmX5YL21uTFjnXuwo8fEAnNvCACZ76fKifoeychgp9EVfW",
         "name": "Private Credit Direct Deal0000091",
-        "nav": { "value": 1000000, "timestamp": 1754073955, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075600 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754073955,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075600
+        },
         "symbol": "PC000",
         "totalSize": 100000000000000,
         "totalSupply": 99656663000000,
@@ -4257,7 +4530,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -4268,17 +4547,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4337,8 +4622,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmVQFfvAxdeaPWDTQdVS9sYEd2uw7MsUtY8KLqtPpjhWkZ",
         "name": "Private Credit Direct Deal0002223",
-        "nav": { "value": 1000000, "timestamp": 1754751659, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752247 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751659,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752247
+        },
         "symbol": "PC000",
         "totalSize": 100000000000000,
         "totalSupply": 23000000000000,
@@ -4365,7 +4658,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4376,17 +4672,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4434,7 +4736,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -4445,17 +4753,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4559,8 +4873,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmYeoZGihNkX5kPTHNWin18wgXAHCnVLLCmGai6qUC8G5P",
         "name": "Private Credit Direct Deal0000111",
-        "nav": { "value": 1000000, "timestamp": 1752600386, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752600386 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600386,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752600386
+        },
         "symbol": "PC0000111",
         "totalSize": 50000000000000,
         "totalSupply": 5750000000000,
@@ -4582,7 +4904,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4593,17 +4921,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4636,8 +4970,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmYsP86fgy7VscoqGHaEg1bfuqNjFNMYYTb3KKmxdxc1eC",
         "name": "Private Credit Direct Deal0000113",
-        "nav": { "value": 1000000, "timestamp": 1752601683, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601683 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601683,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601683
+        },
         "symbol": "PC0000113",
         "totalSize": 200000000000000,
         "totalSupply": 0,
@@ -4674,7 +5016,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -4685,17 +5033,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4733,8 +5087,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmPhsNPcKYZQnp7Zp16amH6DnxLGJBj2YYvQPQnDTMfSbc",
         "name": "Private Credit Direct Deal0000061",
-        "nav": { "value": 1000000, "timestamp": 1752601055, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601055 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601055,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601055
+        },
         "symbol": "PC0000061",
         "totalSize": 100000000000000,
         "totalSupply": 0,
@@ -4756,7 +5118,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -4767,17 +5132,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4825,7 +5196,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -4836,17 +5213,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -4987,8 +5370,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmSUZ99m8vewtBm5Q4FTMy59Xd8kw7GhsxXnYPoVt8P5tX",
         "name": "Private Credit Direct Deal0000097",
-        "nav": { "value": 1000000, "timestamp": 1753536480, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537692 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753536480,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753537692
+        },
         "symbol": "PC0000097",
         "totalSize": 300000000000000,
         "totalSupply": 120999999999999,
@@ -5010,7 +5401,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5021,17 +5415,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -5328,7 +5728,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5339,17 +5745,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -5431,8 +5843,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmfHj8UwB7zcdW9BeA5cWmioohKo7j6uFTSWHbk1KsrQro",
         "name": "Private Credit Direct Deal0000023",
-        "nav": { "value": 1000000, "timestamp": 1752600652, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752600652 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600652,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752600652
+        },
         "symbol": "PC0000023",
         "totalSize": 114500000000000,
         "totalSupply": 114500000000000,
@@ -5474,7 +5894,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -5485,17 +5908,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -5825,7 +6254,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -5836,17 +6271,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -5896,8 +6337,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmXFhH7m8d3NU6PMAJXBoZ7ZnWAWSmE9T6gYLZKcL3tqRd",
         "name": "Private Credit Direct Deal0000053",
-        "nav": { "value": 1000000, "timestamp": 1752601325, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601325 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601325,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601325
+        },
         "symbol": "PC0000053",
         "totalSize": 200000000000000,
         "totalSupply": 102500000000000,
@@ -5919,7 +6368,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -5930,17 +6382,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -6209,7 +6667,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -6220,17 +6681,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -6443,7 +6910,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -6454,17 +6927,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -6518,8 +6997,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmX5VktKuppa7hcMi6qhpYMyUokimkh3Djo6sUbNvj12Cg",
         "name": "Private Credit Direct Deal188814458",
-        "nav": { "value": 1000000, "timestamp": 1754074111, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075585 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754074111,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075585
+        },
         "symbol": "PC188",
         "totalSize": 100000000000000,
         "totalSupply": 53450000000000,
@@ -6546,7 +7033,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -6557,17 +7050,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -6659,8 +7158,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWQdLrqMASvupRRBC4oTGgMACv9azpE1Hpe91mLXYpEyB",
         "name": "Private Credit Direct Deal0000033",
-        "nav": { "value": 1000000, "timestamp": 1754074635, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075593 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754074635,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075593
+        },
         "symbol": "PC0000033",
         "totalSize": 300000000000000,
         "totalSupply": 275000000000000,
@@ -6692,7 +7199,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -6703,17 +7213,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -7216,7 +7732,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -7227,17 +7746,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -7455,7 +7980,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -7466,17 +7997,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -7520,8 +8057,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmU8LfMyTpZvfjJACmKBNmcL9zM6grAJZMEGZS5vaTf4nd",
         "name": "Private Credit Direct Deal0000037",
-        "nav": { "value": 1000000, "timestamp": 1752600208, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752786489 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600208,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752786489
+        },
         "symbol": "PC0000037",
         "totalSize": 100000000000000,
         "totalSupply": 0,
@@ -7558,7 +8103,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -7569,17 +8117,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -7891,7 +8445,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -7902,17 +8459,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -8041,7 +8604,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -8052,17 +8618,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -8115,7 +8687,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -8126,17 +8701,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -8293,7 +8874,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -8304,17 +8888,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -8583,7 +9173,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -8594,17 +9187,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -8822,7 +9421,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -8833,17 +9435,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -9211,7 +9819,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -9222,17 +9836,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -9282,8 +9902,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmNqQ79irqQCwhcuJLn3mmM3wy6Vb6qmkLaGMLBaittkkv",
         "name": "Private Credit Direct Deal0000105",
-        "nav": { "value": 1000000, "timestamp": 1752600342, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752786770 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600342,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752786770
+        },
         "symbol": "PC0000105",
         "totalSize": 7500000000000,
         "totalSupply": 3792083320000,
@@ -9320,7 +9948,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -9331,17 +9965,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -9415,8 +10055,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWAsD5D39dzcQ3yjYVUXg5r3X6PTn39WVRxbwfS79Jzqx",
         "name": "Private Credit Direct Deal0000081",
-        "nav": { "value": 1000000, "timestamp": 1754751748, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754751748 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751748,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754751748
+        },
         "symbol": "PC0000081",
         "totalSize": 125000000000000,
         "totalSupply": 54322463100007,
@@ -9438,7 +10086,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -9449,17 +10100,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -9649,7 +10306,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -9660,17 +10320,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10051,7 +10717,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -10062,17 +10731,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10397,7 +11072,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -10408,17 +11089,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10456,8 +11143,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmPFtJXv1Bd387C2FboPq2ispg7i7BciG6etsPGj9GnZNh",
         "name": "Private Credit Direct Deal0000057",
-        "nav": { "value": 1000000, "timestamp": 1752601459, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601459 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601459,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601459
+        },
         "symbol": "PC0000057",
         "totalSize": 300000000000000,
         "totalSupply": 0,
@@ -10479,7 +11174,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -10490,17 +11191,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10600,8 +11307,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQVfojd5txdKoHgveYFDPMADt6PTiZb2tr4CGiGRFfSoa",
         "name": "Private Credit Direct Deal1475577896",
-        "nav": { "value": 1000000, "timestamp": 1753536525, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537584 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753536525,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753537584
+        },
         "symbol": "PC147",
         "totalSize": 168877161000000,
         "totalSupply": 168877161000000,
@@ -10623,7 +11338,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -10634,17 +11352,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10806,7 +11530,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -10817,17 +11547,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -10914,8 +11650,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQ3e2KAJSa5LjqJo2b3PwwU5GAv5EDfgHqSor7oRtr9Dz",
         "name": "Private Credit Direct Deal0000031",
-        "nav": { "value": 1000000, "timestamp": 1754751846, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752295 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751846,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752295
+        },
         "symbol": "PC0000031",
         "totalSize": 400000000000000,
         "totalSupply": 199500000000000,
@@ -10942,7 +11686,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -10953,17 +11703,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -11055,8 +11811,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmS1q3U7NmkKcsXBTjBXBbZ5hktCeeMoXxWAw8wqerYdEY",
         "name": "Private Credit Direct Deal0000023",
-        "nav": { "value": 1000000, "timestamp": 1752600741, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752600741 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600741,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752600741
+        },
         "symbol": "PC0000023",
         "totalSize": 150000000000000,
         "totalSupply": 75000000000000,
@@ -11078,7 +11842,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -11089,17 +11859,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -11208,8 +11984,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmT8t2tgGkh3hZZRUmPnrRmVjue5Q1KJt12tREm8LqriKD",
         "name": "Private Credit Direct Deal0000055",
-        "nav": { "value": 1000000, "timestamp": 1752601010, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752764539 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601010,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752764539
+        },
         "symbol": "PC0000055",
         "totalSize": 42951867113409,
         "totalSupply": 42951867113397,
@@ -11231,7 +12015,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -11242,17 +12029,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -11689,7 +12482,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -11700,17 +12496,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -11956,7 +12758,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -11967,17 +12775,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -12028,8 +12842,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmUc5G55dLAdG3K7YjFnznrLtQgjbsKGR18EwzBsH6CZa5",
         "name": "Private Credit Direct Deal0000011",
-        "nav": { "value": 1000000, "timestamp": 1752601593, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601593 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601593,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601593
+        },
         "symbol": "PC0000011",
         "totalSize": 125000000000000,
         "totalSupply": 7500000000000,
@@ -12051,7 +12873,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -12062,17 +12887,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -12272,7 +13103,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -12283,17 +13117,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -12539,7 +13379,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -12550,17 +13396,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -12647,8 +13499,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWWjipHS9ocGeAjSJMquou6w8qJR8ZZXws11rivSzZ4TR",
         "name": "Private Credit Direct Deal0000027",
-        "nav": { "value": 1000000, "timestamp": 1754073862, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075560 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754073862,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075560
+        },
         "symbol": "PC0000027",
         "totalSize": 100000000000000,
         "totalSupply": 21950000000000,
@@ -12670,7 +13530,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -12681,17 +13544,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -12960,7 +13829,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -12971,17 +13846,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -13041,8 +13922,16 @@
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/Qmad5MyJmrA633digyHKjK5dWqKgs99YA55Fy5kDFYT6oq",
         "name": "Private Credit Direct Deal2314254748",
-        "nav": { "value": 1000000, "timestamp": 1754074538, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075618 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754074538,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075618
+        },
         "symbol": "PC231",
         "totalSize": 182200000000000,
         "totalSupply": 76700520840000,
@@ -13061,7 +13950,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1731609472,
       "sinceBlock": 48944380,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "zksync:0xCd00FeF133fd9b01CD278B4f0FA78cB0C87C9a3c": ""
       }
@@ -13077,7 +13968,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -13088,17 +13982,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -13471,7 +14371,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -13482,17 +14388,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -13664,8 +14576,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmTq4AxWBrF7V1esUqRKZFkJx4tfWRim4h6fxHq1kSw7cB",
         "name": "Private Credit Direct Deal0000015",
-        "nav": { "value": 1000000, "timestamp": 1754074688, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754075569 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754074688,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754075569
+        },
         "symbol": "PC0000015",
         "totalSize": 350000000000000,
         "totalSupply": 106836997665287,
@@ -13684,7 +14604,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1731609443,
       "sinceBlock": 48944354,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "zksync:0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717": ""
       }
@@ -13700,7 +14622,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1753901543,
       "sinceBlock": 63546535,
       "values": {
@@ -13711,17 +14639,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -13781,8 +14715,16 @@
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWDnLbP5YhTwkbJDqatPteNWqtF3fZfX69qy9v67ywFN8",
         "name": "Private Credit Direct Deal0000098",
-        "nav": { "value": 1000000, "timestamp": 1754751794, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752287 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751794,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752287
+        },
         "symbol": "PC000",
         "totalSize": 100000000000000,
         "totalSupply": 37700000000000,
@@ -13804,7 +14746,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -13815,17 +14763,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -13869,8 +14823,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmRpcfRKGej3vfxkeLvkGS5Vhf3vYzpri7SaHwcJWwDo42",
         "name": "Private Credit Direct Deal0000045",
-        "nav": { "value": 1000000, "timestamp": 1752600921, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752600921 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752600921,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752600921
+        },
         "symbol": "PC0000045",
         "totalSize": 100000000000000,
         "totalSupply": 53000000000000,
@@ -13892,7 +14854,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -13903,17 +14868,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14258,7 +15229,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -14269,17 +15246,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14342,8 +15325,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmReUAYknTuC8qTCsCvpjVRQDgWM8gsEFuPhBeUzz4eZ4o",
         "name": "Private Credit Direct Deal0016245",
-        "nav": { "value": 1000000, "timestamp": 1752601638, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1752601638 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1752601638,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1752601638
+        },
         "symbol": "PC0016245",
         "totalSize": 100000000000000,
         "totalSupply": 10100000000000,
@@ -14365,7 +15356,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -14376,17 +15373,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14463,8 +15466,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmdgFGkuc9St18p7dhfzTwxxwotgVpsiT24UmaYg6ALhkg",
         "name": "Private Credit Direct Deal0000049",
-        "nav": { "value": 1000000, "timestamp": 1754751523, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754752271 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754751523,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754752271
+        },
         "symbol": "PC0000049",
         "totalSize": 100000000000000,
         "totalSupply": 33300000000000,
@@ -14496,7 +15507,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -14507,17 +15524,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14593,8 +15616,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/Qma8tinuxDKqMR95NF3bz9BAMr7nNMSMFYYk314kVftPMP",
         "name": "Private Credit Direct Deal3729409",
-        "nav": { "value": 1000000, "timestamp": 1753536675, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537633 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753536675,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753537633
+        },
         "symbol": "PC3729409",
         "totalSize": 100000000000000,
         "totalSupply": 48200000000000,
@@ -14616,7 +15647,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -14627,17 +15661,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14883,7 +15923,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -14894,17 +15940,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -14940,8 +15992,16 @@
         "maxHolders": 1000,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmS97zzqhoJ7SBAh7Ge7DdfEhWd7UEGwdMiq1xseRyCUaz",
         "name": "Private Credit Direct Deal97235924",
-        "nav": { "value": 1000000, "timestamp": 1755114593, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1755114593 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1755114593,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1755114593
+        },
         "symbol": "PC972",
         "totalSize": 15000000000000,
         "totalSupply": 11850000000000,
@@ -14978,7 +16038,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -14989,17 +16055,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -15118,8 +16190,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmQv3mEb35fh31QRhR7qLpDaAdT8ALCbK1BA4RzWC1xho9",
         "name": "Private Credit Direct Deal0000089",
-        "nav": { "value": 1000000, "timestamp": 1754074485, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1754074485 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1754074485,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1754074485
+        },
         "symbol": "PC0000089",
         "totalSize": 100000000000000,
         "totalSupply": 37000010692081,
@@ -15146,7 +16226,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -15157,17 +16240,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -15861,7 +16950,13 @@
         "0x02e86320e25274d2adc606682241567ea1e1014f415a5c58f6aedf5cf588c5bf"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["clock", "holders", "price", "totalSupply", "nav"],
+      "ignoreInWatchMode": [
+        "clock",
+        "holders",
+        "price",
+        "totalSupply",
+        "nav"
+      ],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -15872,17 +16967,23 @@
           [
             "2024-11-14T18:37:38.000Z",
             "0x80974b2a8d89b54b9a470c664f5c7f2b0caf3a30715ff9b8203951091479af8b",
-            ["zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"]
+            [
+              "zksync:0x3B740D716C794d61CaDdb33Ed5Ab9E459a2a3187"
+            ]
           ],
           [
             "2024-11-15T22:02:43.000Z",
             "0xaf2bced5a63a38d22b9d8071ae1dfa2db31bcf22affd769d721c0fbfdcc636ce",
-            ["zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"]
+            [
+              "zksync:0x9f8a1725CFDa4e7A028c3a16d9a8608A235468dE"
+            ]
           ],
           [
             "2025-07-15T20:36:52.000Z",
             "0xa6bee12d5579d35a7b99c6764ae431a468756b4e795eff79ef3f13d41cab15fd",
-            ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
+            [
+              "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -15974,8 +17075,16 @@
         "maxHolders": 50,
         "metadataURI": "https://ipfs.tradable.xyz/ipfs/QmWmZjhdA4Hn7RMVyyzXfSSK3oMCgmCRpoNDtswMUuLYPC",
         "name": "Private Credit Direct Deal0000085",
-        "nav": { "value": 1000000, "timestamp": 1753536374, "decimals": 6 },
-        "price": { "value": 1000000, "decimals": 6, "timestamp": 1753537617 },
+        "nav": {
+          "value": 1000000,
+          "timestamp": 1753536374,
+          "decimals": 6
+        },
+        "price": {
+          "value": 1000000,
+          "decimals": 6,
+          "timestamp": 1753537617
+        },
         "symbol": "PC0000085",
         "totalSize": 150000000000000,
         "totalSupply": 76550000000000,
@@ -16002,7 +17111,10 @@
         "0x91eeb8fcd4617b1dee8f518ded955a4d69f80b10cd679904149d7042987b5479"
       ],
       "proxyType": "Beacon proxy",
-      "ignoreInWatchMode": ["availableForInvestment", "previewPrincipalPayout"],
+      "ignoreInWatchMode": [
+        "availableForInvestment",
+        "previewPrincipalPayout"
+      ],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -16013,17 +17125,23 @@
           [
             "2024-11-14T18:37:52.000Z",
             "0x8dbd3c09c55b5f23889a187675dfc137a3c781a2e8177acb662183c858fa7766",
-            ["zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"]
+            [
+              "zksync:0xDC276D83dc5F32e6DaebCc18D093221FDac62e94"
+            ]
           ],
           [
             "2024-11-15T22:02:56.000Z",
             "0xaf05392fa126691802dc7c6e25105f7e9ae35ec226545e7bb03aa284d815d333",
-            ["zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"]
+            [
+              "zksync:0x39F1EdFf3F79821e7253673374226e2f07F82BDe"
+            ]
           ],
           [
             "2025-07-15T20:36:56.000Z",
             "0xbf2b6901b48286b7bc5611e4da4a7c389ec0ac8c618d95bc99996f5606bc3477",
-            ["zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"]
+            [
+              "zksync:0x14E6025079A15f03bb67A0dEA11621Dbb9237a47"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -16638,6 +17756,8 @@
     "tradable/DealManager": "0x97aad4d43c4d3012e4f422bd12a8407e28b602da351ab2be57ee9d27ac4912ba",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 64027305 },
+  "usedBlockNumbers": {
+    "zksync2": 64027305
+  },
   "permissionsConfigHash": "0x680101c7c14fce2188b4f839c2368f45e68518b0f44bf83b8d5158010803ec05"
 }

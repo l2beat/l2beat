@@ -6,9 +6,9 @@ import { EcosystemTokenIndexer } from './EcosystemTokenIndexer'
 export function createEcosystemsModule({
   config,
   logger,
-  peripherals,
   providers,
   clock,
+  db,
 }: ModuleDependencies): ApplicationModule | undefined {
   const ecosystemsConfig = config.ecosystems
   if (!ecosystemsConfig) {
@@ -24,9 +24,9 @@ export function createEcosystemsModule({
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const ecosystemTokenIndexer = new EcosystemTokenIndexer({
-    db: peripherals.database,
+    db,
     logger,
-    indexerService: new IndexerService(peripherals.database),
+    indexerService: new IndexerService(db),
     parents: [hourlyIndexer],
     configurations: ecosystemsConfig.tokens.map((token) => ({
       id: token.configurationId,

@@ -41,10 +41,10 @@ export function StageCell({
         !emergencyWarning && <StopwatchIcon className="mt-px md:mt-[3px]" />}
       {emergencyWarning && <EmergencyIcon className="mt-px md:mt-[3px]" />}
       {walkAway === 'passed' && (
-        <WalkAwayPassedIcon className="-mt-px size-5 md:size-6" />
+        <WalkAwayPassedIcon className="-mt-px size-5 fill-positive md:size-6" />
       )}
       {walkAway === 'not-passed' && (
-        <WalkAwayNotPassedIcon className="-mt-px size-5 md:size-6" />
+        <WalkAwayNotPassedIcon className="-mt-px size-5 fill-negative md:size-6" />
       )}
     </div>
   )

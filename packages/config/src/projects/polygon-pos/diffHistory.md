@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x2ec6c2e094d971ed4b842a427fab88097c3c03fb
+Generated with discovered.json: 0xb92c4864910fe157e8592ea57c81b1caecd7717c
+
+# Diff at Wed, 07 Jan 2026 14:42:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1767007913
+- current timestamp: 1767796862
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0x817c9843fe37ef352f3fdc5f83a759840d1dfb0d
 
 # Diff at Mon, 29 Dec 2025 11:33:00 GMT:
 

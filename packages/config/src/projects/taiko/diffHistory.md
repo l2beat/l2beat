@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x1ae97f80694bc71618aa24b1a55d25c432bd3f69
+Generated with discovered.json: 0xdf5ac5c47f1fe13609c81d625be6f43eb5e0a972
+
+# Diff at Wed, 07 Jan 2026 14:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1766409056
+- current timestamp: 1767795947
+
+## Description
+
+agent of one SC member updated. new proposal up targeting the gas config.
+
+## Watched changes
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.getEncryptionAgents.7:
+-        "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        14
++        15
+    }
+```
+
+Generated with discovered.json: 0x582a656024746d3b7ede216c73d218c0d437e05a
 
 # Diff at Mon, 22 Dec 2025 13:12:17 GMT:
 

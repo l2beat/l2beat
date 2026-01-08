@@ -1,7 +1,7 @@
 {
   "name": "hermez",
   "timestamp": 1765784148,
-  "configHash": "0x26e88bedfeceb6a05b03555b812bec62a3f7d64149c67b8a835b8290f2141d58",
+  "configHash": "0x2e189d8d6844ac641c74138bf78b380f1dc4cb759a58ff2517914e6f8d9930f4",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -52,7 +52,11 @@
         "BLOCKS_PER_SLOT": 40,
         "bootCoordinatorURL": "https://api.hermez.io",
         "genesisBlock": 12094000,
-        "getAllocationRatio": [4000, 4000, 2000],
+        "getAllocationRatio": [
+          4000,
+          4000,
+          2000
+        ],
         "getBootCoordinator": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
         "getClosedAuctionSlots": 2,
         "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -84,7 +88,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206720,
       "sinceBlock": 12373414,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
       }
@@ -136,7 +142,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206715,
       "sinceBlock": 12373413,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
       }
@@ -151,7 +159,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206929,
       "sinceBlock": 12373429,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
       }
@@ -244,7 +254,11 @@
         "BLOCKS_PER_SLOT": 40,
         "bootCoordinatorURL": "",
         "genesisBlock": 0,
-        "getAllocationRatio": [0, 0, 0],
+        "getAllocationRatio": [
+          0,
+          0,
+          0
+        ],
         "getBootCoordinator": "eth:0x0000000000000000000000000000000000000000",
         "getClosedAuctionSlots": 0,
         "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -278,7 +292,9 @@
           [
             "2021-05-13T08:02:37.000Z",
             "0x57ad65625027cd8324566421b6b838c4eccbc76dcad9c837d76beb841d5dc70c",
-            ["eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"]
+            [
+              "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -302,8 +318,16 @@
         "nextL1ToForgeQueue": 7626,
         "registerTokensCount": 33,
         "rollupVerifiers": [
-          ["eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2", 400, 32],
-          ["eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342", 2048, 32]
+          [
+            "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
+            400,
+            32
+          ],
+          [
+            "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
+            2048,
+            32
+          ]
         ],
         "rollupVerifiersLength": 2,
         "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
@@ -332,7 +356,9 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1616309707,
       "sinceBlock": 12080648,
       "values": {
@@ -745,6 +771,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24016547 },
+  "usedBlockNumbers": {
+    "ethereum": 24016547
+  },
   "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
 }

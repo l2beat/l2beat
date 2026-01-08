@@ -21,17 +21,6 @@ export class BlockscoutV2Client {
     this.logger = logger.for(this)
   }
 
-  static create(
-    services: { httpClient: HttpClient; logger: Logger },
-    options: { url: string },
-  ) {
-    return new BlockscoutV2Client(
-      services.httpClient,
-      options.url,
-      services.logger,
-    )
-  }
-
   async getInternalTransactions(
     address: EthereumAddress,
   ): Promise<BlockscoutInternalTransaction[]> {

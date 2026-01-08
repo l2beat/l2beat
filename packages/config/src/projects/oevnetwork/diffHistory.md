@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x354f960bafc7ba8437a48431ad567d93f304d6ff
+
+# Diff at Wed, 07 Jan 2026 16:19:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b319218f320edec871f10dbd490519684995e58e block: 1767628410
+- current timestamp: 1767802709
+
+## Description
+
+Stake requirement increased.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "800000000000000000"
++        "900000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x4f7d6bcaa88053fced14ac22ee9f0f580d6dee60
+
+# Diff at Mon, 05 Jan 2026 17:44:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1759830313
+- current timestamp: 1767628410
+
+## Description
+
+Stake requirement increased.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "800000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830313 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x937e404ba297fbfb94889f05b61e540e22850fd3
 
 # Diff at Tue, 07 Oct 2025 09:46:20 GMT:
