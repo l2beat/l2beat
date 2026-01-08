@@ -91,12 +91,6 @@ export class InteropEventStore implements InteropEventDb {
     this.eventDb.removeExpired(now)
     return count
   }
-
-  async deleteAllForPlugin(plugin: string) {
-    const count = await this.db.interopEvent.deleteAllForPlugin(plugin)
-    this.eventDb.removeForPlugin(plugin)
-    return count
-  }
 }
 
 function fromDbRecord(record: InteropEventRecord): InteropEvent {
