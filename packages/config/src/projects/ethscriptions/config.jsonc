@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ethscriptions",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A"
+  ],
+  "names": {
+    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A": "Rollup"
+  },
+  "overrides": {}
+}
