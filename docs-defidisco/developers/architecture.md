@@ -2,7 +2,7 @@
 
 We build on top of the existing architecture to add capabilities dedicated to DeFi monitoring and the complete granularity of a DeFi protocol's inventory assets.
 
-![DeFiDisco Architecture](../assets/DeFiDisco-architecture.png)
+![DeFiDisco Architecture](../assets/DeFiDisco-architecture.svg)
 
 The tool is enhanced at multiple levels to add and automate the analysis for DeFi protocols, in addition to the complete discovery of the protocol handled natively by L2Beat (discovery.json). This includes detection and analysis of function-level permissions (functions.json), a complete call graph and detection of external calls (call-graph-data.json), as well as tracking of funds and positions in protocols (funds-data.json). In addition to those elements, reviewers can "tag" contracts to specify elements useful to the review (stored in contracts-tag.json), as well as correct or specify function characteristics (stored in functions.json).
 
@@ -34,9 +34,9 @@ In addition to detecting permissions, the AI resolves the permission owner where
 
  - *$self* refers to the address of the current contract itself
  - *$self.fieldName* refers to a field of the contract containing the owner address (eg. $self.owner)
- - *$self.signers[0]* refers to the first entry of the array, which contains the address of an owner, it could also be used to refer all owners using $self.signers
+ - *$self.signers[0]* refers to the first entry of the array which contains the address of an owner, it could also be used to refer all owners using $self.signers
  - *$self.accessControl.ADMIN_ROLE.members* refers to all members of the role *ADMIN_ROLE* if the contract inherits OpenZeppelin's AccessControl's contract.
- - *@governor.fieldName* refers to a field in another contract. *governor* is the name of the field containing the contract address in the original contract. This syntax can be combined with any of the other above to reach specific data of the target contract.
+ - *@governor.fieldName* refers to a field in another contract. *governor* is the name of the field containing the contract address in the original contract. This syntax can be combined with any of the elements above to reach specific data of the target contract.
 
  This data is stored in `functions.json` for each project, it's grouped by contract. The data can be overriden manually by reviewers in the frontend.
 
