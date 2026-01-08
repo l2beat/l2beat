@@ -124,12 +124,12 @@ export const risc0: BaseProject = {
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
-            ),
-            chain: 'ethereum',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0x34Eda8BfFb539AeC33078819847B36D221c6641c',
+          //   ),
+          //   chain: 'ethereum',
+          // },
         ],
         verificationStatus: 'notVerified',
         description:

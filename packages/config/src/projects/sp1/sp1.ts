@@ -272,12 +272,12 @@ export const sp1: BaseProject = {
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
-            ),
-            chain: 'arbitrum',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+          //   ),
+          //   chain: 'arbitrum',
+          // },
           {
             address: EthereumAddress(
               '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
