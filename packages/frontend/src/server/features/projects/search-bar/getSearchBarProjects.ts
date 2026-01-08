@@ -35,9 +35,10 @@ export async function getSearchBarProjects(
     const matched = searchBarEntries.filter((entry) =>
       entry.projectAddresses?.includes(EthereumAddress(search)),
     )
-    logger.info('Search bar projects address-based result', {
+    logger.info('Search bar projects result', {
       search,
       projectIds: matched.map((r) => r.id),
+      type: 'address',
     })
     return matched.map(toSearchBarProject)
   }
@@ -54,6 +55,7 @@ export async function getSearchBarProjects(
   logger.info('Search bar projects result', {
     search,
     projectIds: result.map((r) => r.id),
+    type: 'name',
   })
   return result
 }
