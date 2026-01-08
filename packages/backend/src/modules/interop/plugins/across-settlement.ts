@@ -115,13 +115,6 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           const messageDelivered = parseMessageDelivered(log, [network.bridge])
           if (!messageDelivered) continue
 
-          // Filter out SequencerInbox batch submissions
-          if (
-            EthereumAddress(messageDelivered.inbox) === network.sequencerInbox
-          ) {
-            continue
-          }
-
           return [
             AcrossSettlementMessageDelivered.create(input, {
               chain: network.chain,
