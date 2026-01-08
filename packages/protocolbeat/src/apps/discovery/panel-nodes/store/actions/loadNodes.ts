@@ -6,6 +6,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
   NODE_WIDTH,
+  VALUE_SEPARATOR_HEIGHT,
 } from '../utils/constants'
 import {
   type NodeLocations,
@@ -41,11 +42,22 @@ export function loadNodes(
     const x = box?.x ?? 0
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
+    const addressFields = node.fields.filter((field) => field.type === 'address')
+    const valueFields = node.fields.filter((field) => field.type === 'value')
+    const visibleAddressCount = addressFields.filter(
+      (field) => !hiddenFields.includes(field.name),
+    ).length
+    const visibleValueCount = valueFields.filter(
+      (field) => !hiddenFields.includes(field.name),
+    ).length
+    const hasValueSection = valueFields.length > 0
     const hiddenFieldsHeight =
       hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
     const height =
       HEADER_HEIGHT +
-      (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
+      visibleAddressCount * FIELD_HEIGHT +
+      (hasValueSection ? VALUE_SEPARATOR_HEIGHT : 0) +
+      visibleValueCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
@@ -133,7 +145,7 @@ function createUnknownNodes(nodes: Node[]): Node[] {
 
   for (const node of nodes) {
     for (const field of node.fields) {
-      if (!knownIds.has(field.target)) {
+      if (field.type === 'address' && !knownIds.has(field.target)) {
         unknownIds.add(field.target)
       }
     }

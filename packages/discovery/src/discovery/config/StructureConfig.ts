@@ -42,6 +42,7 @@ export type ManualProxyType = v.infer<typeof ManualProxyType>
 export const ManualProxyType = v.enum([
   'new Arbitrum proxy',
   'call implementation proxy',
+  'simple target proxy',
   'zkSync Lite proxy',
   'zkLighter proxy',
   'zkSpace proxy',

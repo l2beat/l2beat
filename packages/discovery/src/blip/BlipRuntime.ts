@@ -201,6 +201,23 @@ export class BlipRuntime {
         assert(typeof copy === 'object')
         return Object.entries(copy) as ContractValue
       }
+      case 'from_entries': {
+        assert(Array.isArray(v), 'from_entries requires an array input')
+
+        const result: Record<string, ContractValue | undefined> = {}
+        for (const entry of v) {
+          assert(
+            Array.isArray(entry) && entry.length === 2,
+            'from_entries expects an array of [key, value] pairs',
+          )
+
+          const [key, value] = entry
+          assert(typeof key === 'string', 'from_entries keys must be strings')
+          result[key] = value
+        }
+
+        return result
+      }
       case 'length': {
         let result: number
         if (Array.isArray(v)) {

@@ -25,6 +25,7 @@ import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
+import { getSimpleTargetProxy } from './manual/SimpleTargetProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkLighterProxy } from './manual/ZkLighterProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
@@ -55,6 +56,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
+  'simple target proxy': getSimpleTargetProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
   'zkSpace proxy': getZkSpaceProxy,
   'Eternal Storage proxy': getEternalStorageProxy,
