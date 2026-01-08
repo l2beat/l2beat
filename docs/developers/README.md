@@ -2,5 +2,5 @@
 
 Documentation for developers working on DefidDisco.
 
-- [Architecture](architecture.md)
-- [Contributing](contributing.md)
+- [Architecture](developers/architecture.md)
+- [Contributing](developers/contributing.md)
