@@ -9,7 +9,7 @@ import {
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
-} from './elastic-search/ElasticSearchTransport'
+} from '@l2beat/backend-tools/elastic-search'
 
 let logger: Logger | undefined
 

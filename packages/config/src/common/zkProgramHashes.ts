@@ -305,6 +305,20 @@ fn main() {
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+  '0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
     description:

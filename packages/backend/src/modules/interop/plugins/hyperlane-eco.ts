@@ -3,6 +3,7 @@ import {
   Dispatch,
   HYPERLANE_NETWORKS,
   Process,
+  parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
@@ -31,8 +32,16 @@ const parseBatchSent = createEventParser(
   'event BatchSent(bytes32[] indexed _hashes, uint256 indexed _sourceChainID)',
 )
 
-const parseIntentProven = createEventParser(
+const parseIntentProvenSource = createEventParser(
+  'event IntentProven(bytes32 indexed intentHash, bytes32 indexed claimant)',
+)
+
+const parseIntentProvenDestinationLegacy = createEventParser(
   'event IntentProven(bytes32 indexed _hash, address indexed _claimant)',
+)
+
+const parseIntentProvenDestination = createEventParser(
+  'event IntentProven(bytes32 indexed intentHash, address indexed _claimant, uint64 destination)',
 )
 
 const BatchSentDispatch = createInteropEventType<{
@@ -46,23 +55,53 @@ const IntentProvenProcess = createInteropEventType<{
   recipient: Address32 // claimant
 }>('hyperlane-eco.IntentProvenProcess')
 
+function findParsedAround<T>(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  parse: (log: LogToCapture['txLogs'][number]) => T | undefined,
+): { parsed: T; index: number } | undefined {
+  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
+  if (startPos === -1) return
+
+  for (let offset = 0; offset < logs.length; offset++) {
+    const forward = startPos + offset
+    if (forward < logs.length) {
+      const parsed = parse(logs[forward])
+      if (parsed) return { parsed, index: forward }
+    }
+
+    if (offset === 0) continue
+    const backward = startPos - offset
+    if (backward >= 0) {
+      const parsed = parse(logs[backward])
+      if (parsed) return { parsed, index: backward }
+    }
+  }
+}
+
 export class HyperlaneEcoPlugin implements InteropPlugin {
   name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
-    if (batchSent) {
-      const nextnextLog = input.txLogs.find(
+    const intentProvenSource = parseIntentProvenSource(input.log, null)
+    if (batchSent || intentProvenSource) {
+      const dispatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 2,
+        input.log.logIndex!,
+        (log) => parseDispatch(log, null),
       )
-      const dispatchId = nextnextLog && parseDispatchId(nextnextLog, null)
+      if (!dispatch) return
+
+      const dispatchIdLog = input.txLogs[dispatch.index + 1]
+      const dispatchId = dispatchIdLog && parseDispatchId(dispatchIdLog, null)
       if (!dispatchId) return
 
       const $dstChain = findChain(
         HYPERLANE_NETWORKS,
         (x) => x.chainId,
-        Number(batchSent._sourceChainID), // intended
+        Number(dispatch.parsed.destination),
       )
 
       return [
@@ -73,32 +112,31 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
       ]
     }
 
-    const intentProven = parseIntentProven(input.log, null)
+    const intentProven =
+      parseIntentProvenDestinationLegacy(input.log, null) ??
+      parseIntentProvenDestination(input.log, null)
     if (intentProven) {
-      const previousLog = input.txLogs.find(
+      const processMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 1,
+        input.log.logIndex!,
+        (log) => parseProcess(log, null),
       )
-      const dispatchId = previousLog && parseProcessId(previousLog, null)
-      if (!dispatchId) return
+      if (!processMatch) return
 
-      const previouspreviousLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 2,
-      )
-      const process =
-        previouspreviousLog && parseProcess(previouspreviousLog, null)
-      if (!process) return
+      const processIdLog = input.txLogs[processMatch.index + 1]
+      const processId = processIdLog && parseProcessId(processIdLog, null)
+      if (!processId) return
 
       const $srcChain = findChain(
         HYPERLANE_NETWORKS,
         (x) => x.chainId,
-        Number(process.origin), // intended
+        Number(processMatch.parsed.origin), // intended
       )
 
       return [
         IntentProvenProcess.create(input, {
-          messageId: dispatchId.messageId,
+          messageId: processId.messageId,
           $srcChain,
           recipient: Address32.from(intentProven._claimant),
         }),

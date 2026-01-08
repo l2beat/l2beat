@@ -1362,8 +1362,16 @@
     ]
   },
   "hyperlane-eco": {
-    // 3 msgs, 3 'transfers'/intent settlements
+    // 4 msgs, 4 intent settlements via eco (2 in legacy format, 2 using new format)
     "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x935f522754446257fd4d2cb2473051a4e7649e62c2ff64a0986ee31b4aeb454c"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xf32dcd5c62a434a36a69403883f15b14bac26849f9b6baeab49ea17d5dfa1b51"
+      },
       {
         "chain": "ethereum",
         "tx": "0xd4cd1b60d6d5751f419b95a0586c202769aa05951b6fe9ddb5132a1b1d74aa68"
@@ -1373,12 +1381,12 @@
         "tx": "0xe9113abd9b70bdaeaec906aa89c8dab23c4212ac5717fbc0463467c336bbb375"
       },
       {
-        "chain": "arbitrum",
-        "tx": "0xa888a3621a61a8c022f8c5f119215d057f29298cbb4324d94c5a771f21fc881a"
+        "chain": "base",
+        "tx": "0x7e7e77dd70e340e4eb7c1ea47c0425cc24ef2d3831b53f61e79043aadab21091"
       },
       {
-        "chain": "base",
-        "tx": "0xaa6331e50456f6458cc1406e73879fc55dad4b27a89af405bcd7e3dc32d350dd"
+        "chain": "arbitrum",
+        "tx": "0x1ebc8a0672edd0439a326e07fa4226ccde11ef829fea1d66a161fe51e3733812"
       },
       {
         "chain": "arbitrum",
@@ -1481,5 +1489,51 @@
     ],
     "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
     "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+  },
+  "maker-bridge": {
+    "txs": [
+      // L1 -> L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x220b87040bc5cd8d8413b056266ab06ca995db04637807aef49812bff12e44c5"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x25b5d4efd5a628c33c207ad1af5800597b4be834c06424a7b49bfb17ef17591b"
+      },
+      // L2 -> L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0xf7ee3c2b162cbc91d16afdfc7870cb05f5fb51c27df974a234b273d84bead6e9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc6af3a5ad272e3883728515bf94067af55c3b0e002b6bb217bd86afca4a7068c"
+      }
+    ],
+    "events": [
+      "maker-bridge.DepositSentMessage",
+      "maker-bridge.DepositFinalized",
+      "maker-bridge.WithdrawalMessagePassed",
+      "maker-bridge.WithdrawalFinalized"
+    ],
+    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
+  },
+  "sky-bridge": {
+    "txs": [
+      // L1 -> L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x0f888ab424389272384c663b893f121b46c2e758b069aaade5bf2f88469af305"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4f628e8ce1a25a509e7ee27b052dede2dbf44b11ff89df499cace4e674ea28c4"
+      }
+    ],
+    "events": ["sky-bridge.DepositSentMessage", "sky-bridge.DepositFinalized"],
+    "messages": ["opstack.L1ToL2Message"],
+    "transfers": ["sky-bridge.L1ToL2Transfer"]
   }
 }

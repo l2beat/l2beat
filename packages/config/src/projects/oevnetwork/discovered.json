@@ -1,6 +1,6 @@
 {
   "name": "oevnetwork",
-  "timestamp": 1767628410,
+  "timestamp": 1767802709,
   "configHash": "0x6ecc4fe96c2391e025617ac7e6110dcaccbc064bef4ea923ff253d8edc580dcf",
   "entries": [
     {
@@ -354,7 +354,7 @@
         "challengeManager": "eth:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "800000000000000000",
+        "currentRequiredStake": "900000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 1220,
         "inbox": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
@@ -1512,6 +1512,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24169483 },
+  "usedBlockNumbers": { "ethereum": 24183949 },
   "permissionsConfigHash": "0x53673caa1b08f42a12a7d6c0999d1a66698cebb90084e45fe68b23a4745372d3"
 }
