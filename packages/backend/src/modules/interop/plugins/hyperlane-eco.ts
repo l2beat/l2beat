@@ -118,8 +118,10 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
     if (intentProven) {
       const processMatch = findParsedAround(
         input.txLogs,
+        // hack to support multicall situations like https://arbiscan.io/tx/0x8006690c841152e495e585bf22843c5ad31d284ce07338d3e7518db53fbf2abe#eventlog
+        // we start one index higher because we would otherwise find the wrong processId of the batch first
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex! - 1, 
         (log) => parseProcess(log, null),
       )
       if (!processMatch) return
