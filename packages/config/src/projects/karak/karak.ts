@@ -23,6 +23,9 @@ export const karak: ScalingProject = opStackL2({
     links: {
       websites: ['https://karak.network/'],
       bridges: ['https://k2bridge.karak.network/'],
+      documentation: [
+        'https://docs.opengdp.network/get-started/introduction/start-here',
+      ],
       explorers: ['https://explorer.karak.network/'],
       socialMedia: [
         'https://twitter.com/Karak_Network',
