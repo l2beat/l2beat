@@ -13,11 +13,13 @@ import {
 } from '../types'
 
 // ABI for decoding createRetryableTicket calldata (L1)
+const CREATE_RETRYABLE_TICKET_SELECTOR = '0x679b6ded'
 const createRetryableTicketAbi = parseAbi([
   'function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)',
 ])
 
 // ABI for decoding submitRetryable calldata (L2 sequencer internal call)
+const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
 const submitRetryableAbi = parseAbi([
   'function submitRetryable(bytes32 requestId, uint256 l1BaseFee, uint256 deposit, uint256 callvalue, uint256 gasFeeCap, uint64 gasLimit, uint256 maxSubmissionFee, address feeRefundAddress, address beneficiary, address retryTo, bytes retryData)',
 ])
@@ -174,7 +176,7 @@ export class OrbitStackPlugin implements InteropPlugin {
               typeof input.tx.data === 'string'
                 ? (input.tx.data as `0x${string}`)
                 : '0x'
-            try {
+            if (calldata.startsWith(CREATE_RETRYABLE_TICKET_SELECTOR)) {
               const decoded = decodeFunctionData({
                 abi: createRetryableTicketAbi,
                 data: calldata,
@@ -182,8 +184,6 @@ export class OrbitStackPlugin implements InteropPlugin {
               // data is the last param (bytes) - if empty, it's ETH-only
               const retryableData = decoded.args[7] as `0x${string}`
               isEthOnly = retryableData === '0x' || retryableData.length <= 2
-            } catch {
-              // Not a createRetryableTicket call or failed to decode
             }
           }
 
@@ -235,20 +235,18 @@ export class OrbitStackPlugin implements InteropPlugin {
             ? (input.tx.data as `0x${string}`)
             : '0x'
 
-        let messageNum = '0'
-        let callValue = 0n
-        try {
-          const decoded = decodeFunctionData({
-            abi: submitRetryableAbi,
-            data: calldata,
-          })
-          // requestId (bytes32) is the messageNum
-          messageNum = BigInt(decoded.args[0] as `0x${string}`).toString()
-          // callvalue is param 3
-          callValue = decoded.args[3] as bigint
-        } catch {
-          // Failed to decode - use defaults
+        if (!calldata.startsWith(SUBMIT_RETRYABLE_SELECTOR)) {
+          return
         }
+
+        const decoded = decodeFunctionData({
+          abi: submitRetryableAbi,
+          data: calldata,
+        })
+        // requestId (bytes32) is the messageNum
+        const messageNum = BigInt(decoded.args[0] as `0x${string}`).toString()
+        // callvalue is param 3
+        const callValue = decoded.args[3] as bigint
 
         return [
           RedeemScheduled.create(input, {
