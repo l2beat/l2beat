@@ -866,6 +866,7 @@
   },
   "across-settlement": {
     "txs": [
+      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
       {
         "chain": "ethereum",
         "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
@@ -877,13 +878,22 @@
       {
         "chain": "base",
         "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
     ],
     "events": [
       "across-settlement.SentMessage",
-      "across-settlement.SentMessage"
+      "across-settlement.SentMessage",
+      "across-settlement.MessageDelivered"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+    "messages": [
+      "opstack.L1ToL2Message",
+      "opstack.L1ToL2Message",
+      "orbitstack.L1ToL2Message"
+    ]
   },
   "world-id": {
     "txs": [
@@ -1196,27 +1206,57 @@
   },
   "hyperlane-mix": {
     "txs": [
+      // renzo price update
       {
-        "chain": "optimism",
-        "tx": "0x196da52c2139bc69199b3b4921b199ee10623b0fffb520102d4b038c28a4648b" // 1 dispatch message, merkly(? uses same event as hwr but not on destination)
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x7c0494779f339006aa5930eab84a7c70ecd22d54c1a48c952f0af1435c8db4f9" // single process message (destination event of above one)
+        "chain": "arbitrum",
+        "tx": "0x5727eea6424da4008348fb255e52ceb66dff4cdac3966d51ad8fa0af408e1c60"
       },
       {
         "chain": "base",
-        "tx": "0x297484366df26801ae4123266cd4f59f3de4cc26dbcc78179de54daefd42d8a3" // 1 dispatch message, 1 hwr
+        "tx": "0xb8d4628d39ae669e5e0726ab8c027c2eac952d684651d6c18e1015a1f5037fdb"
       },
+      // hwr and decent UTB swapper (batched by AA at origin)
       {
         "chain": "base",
-        "tx": "0xc431a37bc0700d893e1613c84775aa5ca79277cca533d8947a8be8733cfdf719" // 1 dispatch message, 1 hwr
+        "tx": "0xea16312fe577a4f03bd3d2ae7bf108f2a0a1f4b5ed87051316eb901dd6d26b25"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x64d3de3fda6a9df908cd77940c1c416f1df71f92fda9c99550529d0803055ceb" // 2x process message, 2x hwr received
+        "tx": "0x2bc03f10d6e44a4c8e5f261dba6f0e01dd564c1d4dc9cb93758956f489f2e539"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4690c8491055d6cd60f2e07f76330de3a8dc546be0c95d66e80c762fede67f9"
+      },
+      // ERA metaErc20 hub - not implemented yet
+      {
+        "chain": "ethereum",
+        "tx": "0xeffe52863003d08f66eb80b4841191a2a80ca2f5c07b5a999d6b27b66271d4c1"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfd7e7b55a60c5787ee429d9c25056212be388dad1daef7ba5730aec3f9f81647"
+      },
+      // cctpv1 via hyperlane
+      {
+        "chain": "ethereum",
+        "tx": "0x323eebc77516ba13ba5b48c5e8c04f1b2a8ba323c3d7c3a86be964883566bc2c"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd2562db8676570356c302a868e0c7ab12319e2a6e123e4268ed7e9a2cba8dc0a"
       }
-    ]
+    ],
+    "events": [
+      "hyperlane-decent.ReceivedFromBridge",
+      "hyperlane-hwr.TransferReceived",
+      "hyperlane-hwr.TransferSent",
+      "hyperlane-renzo.PriceUpdatedProcess",
+      "hyperlane.Dispatch",
+      "hyperlane.Process"
+    ],
+    "messages": ["hyperlane.Message"],
+    "transfers": ["hyperlaneHwr.Transfer"]
   },
   "wormhole-debug": {
     "txs": [
@@ -1362,7 +1402,7 @@
     ]
   },
   "hyperlane-eco": {
-    // 4 msgs, 4 intent settlements via eco (2 in legacy format, 2 using new format)
+    // 5 msgs, 6 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall)
     "txs": [
       {
         "chain": "ethereum",
@@ -1395,6 +1435,19 @@
       {
         "chain": "optimism",
         "tx": "0xb797cbc61f80cd79d92a7e11ad8e74900c87ebeba2650f622424096798f7d0c9"
+      },
+      // destination uses a multicall:
+      {
+        "chain": "arbitrum",
+        "tx": "0x8006690c841152e495e585bf22843c5ad31d284ce07338d3e7518db53fbf2abe"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0cc1658692b81d1e6b668c41c83d822e29467aad4d432ea4640528df7ab05dbd"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x8c59bafff27b859434e695278df565cb6cc894ba8b6655d55da6a924a1cd4015"
       }
     ]
   },

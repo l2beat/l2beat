@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xea3db0de3766b8869a95993ad06b31daaabe5b44
+
+# Diff at Thu, 08 Jan 2026 09:32:46 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f947128dbe4bb63e2c3d88369b2e928bfd40e541 block: 1767691305
+- current timestamp: 1767864703
+
+## Description
+
+Added two new EOAs to the network governor multisig (2/3 -> 3/5). Also registered LINK, UNI, AAVE, SKY, LDO l2 assets.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.l2AssetRegistrations.1:
++        "0x4c494e4b00000000000000000000000000000000000000000000000000000000"
+      values.l2AssetRegistrations.2:
++        "0x554e490000000000000000000000000000000000000000000000000000000000"
+      values.l2AssetRegistrations.3:
++        "0x4141564500000000000000000000000000000000000000000000000000000000"
+      values.l2AssetRegistrations.4:
++        "0x534b590000000000000000000000000000000000000000000000000000000000"
+      values.l2AssetRegistrations.5:
++        "0x4c444f0000000000000000000000000000000000000000000000000000000000"
+      values.registeredAssets.3:
++        {"assetIndex":5,"tokenAddress":"eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"}
+      values.registeredAssets.4:
++        {"assetIndex":6,"tokenAddress":"eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"}
+      values.registeredAssets.5:
++        {"assetIndex":7,"tokenAddress":"eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"}
+      values.registeredAssets.6:
++        {"assetIndex":8,"tokenAddress":"eth:0x56072C95FAA701256059aa122697B133aDEd9279"}
+      values.registeredAssets.7:
++        {"assetIndex":9,"tokenAddress":"eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"}
+    }
+```
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E"
+      values.$members.1:
++        "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x9df496e06a2ee70a50f8e449931c3d11fc6636c4
 
 # Diff at Tue, 06 Jan 2026 10:14:13 GMT:

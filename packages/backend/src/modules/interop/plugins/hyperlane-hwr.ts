@@ -8,6 +8,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { findParsedAround } from './hyperlane-eco'
 import {
   createEventParser,
   createInteropEventType,
@@ -34,8 +35,12 @@ const parseReceivedTransferRemote = createEventParser(
   'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
 )
 
-const parseTransfer = createEventParser(
+export const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+
+const parseDepositForBurn = createEventParser(
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
 )
 
 const HwrTransferSent = createInteropEventType<{
@@ -45,6 +50,7 @@ const HwrTransferSent = createInteropEventType<{
   recipient: Address32
   amount: bigint
   tokenAddress: Address32
+  cctp: boolean
 }>('hyperlane-hwr.TransferSent')
 
 const HwrTransferReceived = createInteropEventType<{
@@ -96,6 +102,26 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         }
       }
 
+      const depositForBurn = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log) => parseDepositForBurn(log, null),
+      )
+      if (depositForBurn) {
+        return [
+          HwrTransferSent.create(input, {
+            messageId,
+            $dstChain,
+            amount: depositForBurn.parsed.amount,
+            destination: Number(sentTransferRemote.destination),
+            recipient: Address32.from(depositForBurn.parsed.mintRecipient),
+            tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+            cctp: true,
+          }),
+        ]
+      }
+
       return [
         HwrTransferSent.create(input, {
           messageId,
@@ -104,6 +130,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           recipient: Address32.from(sentTransferRemote.recipient),
           amount: sentTransferRemote.amount,
           tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+          cctp: false,
         }),
       ]
     }
@@ -178,6 +205,17 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
     })
     if (!process) {
       return
+    }
+
+    if (hwrSent.args.cctp && event.args.tokenAddress === Address32.NATIVE) {
+      return [
+        Result.Message('hyperlane.Message', {
+          app: 'cctp',
+          srcEvent: hwrSent,
+          dstEvent: process,
+          extraEvents: [dispatch, event],
+        }),
+      ]
     }
 
     return [

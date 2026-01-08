@@ -638,6 +638,82 @@ describe(RealTimeLivenessProcessor.name, () => {
       expect(mockNotifier.anomalyOngoing).not.toHaveBeenCalled()
       expect(mockNotifier.anomalyRecovered).not.toHaveBeenCalled()
     })
+
+    it('should auto-recover when latestStat is stale', async () => {
+      const projectId = ProjectId('project-id')
+      const staleStatTimestamp =
+        UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+
+      const ongoingAnomaly: RealTimeAnomalyRecord = {
+        start: UnixTime.now() - 5 * UnixTime.HOUR,
+        projectId,
+        subtype: 'stateUpdates',
+        status: 'ongoing',
+        isApproved: false,
+      }
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getOngoingAnomalies: mockFn().resolvesTo([ongoingAnomaly]),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyAutoRecovered: mockFn().resolvesTo(undefined),
+      })
+
+      const config = createMockTrackedTxsConfig(projectId, [
+        {
+          type: 'liveness',
+          id: 'config-1',
+          projectId,
+          subtype: 'stateUpdates',
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer',
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+          },
+        },
+      ])
+
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          anomalyStats: mockObject<Database['anomalyStats']>({
+            getLatestStats: mockFn().resolvesTo([
+              {
+                timestamp: staleStatTimestamp,
+                projectId,
+                subtype: 'stateUpdates',
+                mean: 10,
+                stdDev: 20,
+              },
+            ]),
+          }),
+          realTimeLiveness: mockObject<Database['realTimeLiveness']>({
+            getLatestRecords: mockFn().resolvesTo([
+              { configurationId: 'config-1', timestamp: UnixTime.now() },
+            ]),
+          }),
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+        mockNotifier,
+      )
+
+      const block = mockObject<Block>({ number: 1, timestamp: UnixTime.now() })
+      await processor.checkForAnomalies(block)
+
+      expect(realTimeAnomaliesRepository.upsertMany).toHaveBeenCalledWith([
+        { ...ongoingAnomaly, status: 'recovered' },
+      ])
+      expect(mockNotifier.anomalyAutoRecovered).toHaveBeenCalledWith(
+        { ...ongoingAnomaly, status: 'recovered' },
+        block,
+      )
+    })
   })
 
   describe(
