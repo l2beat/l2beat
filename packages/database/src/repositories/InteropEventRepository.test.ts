@@ -350,6 +350,37 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(InteropEventRepository.prototype.deleteAllForPlugin.name, () => {
+    it('deletes events for the specified plugin', async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
+        event('plugin2', 'event3', 'withdraw', UnixTime(200), UnixTime(300)),
+      ])
+
+      const deleted = await repository.deleteAllForPlugin('plugin1')
+
+      expect(deleted).toEqual(2)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
+      expect(remaining[0]?.eventId).toEqual('event3')
+    })
+
+    it('returns 0 when no events match the plugin', async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+      ])
+
+      const deleted = await repository.deleteAllForPlugin('plugin2')
+
+      expect(deleted).toEqual(0)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
+    })
+  })
+
   describe('bigint handling in insertMany and getAll', () => {
     it('handles simple bigint value field', async () => {
       const record = event(

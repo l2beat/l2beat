@@ -212,6 +212,14 @@ export class InteropEventRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteAllForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropEvent')
+      .where('plugin', '=', plugin)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('InteropEvent').executeTakeFirst()
     return Number(result.numDeletedRows)
