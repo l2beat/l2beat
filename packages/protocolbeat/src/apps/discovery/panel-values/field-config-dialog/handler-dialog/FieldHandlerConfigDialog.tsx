@@ -87,8 +87,16 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
     }
   }
 
+  function onOpenChange(open: boolean) {
+    if (!open) {
+      setHandlerEditorContent(currentlyConfiguredHandler)
+      setSelectedHandler(detectHandler(currentlyConfiguredHandler))
+      setErrorMessage(undefined)
+    }
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>
         <div className="absolute top-0 right-0 hidden h-full w-full cursor-pointer items-center justify-center bg-coffee-700/50 group-hover:flex">
           <IconEdit className="size-4 text-coffee-200/80" />
