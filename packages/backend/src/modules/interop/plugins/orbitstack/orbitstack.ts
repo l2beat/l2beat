@@ -205,9 +205,7 @@ export class OrbitStackPlugin implements InteropPlugin {
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
       if (l2ToL1Tx) {
         // Check if this is an ETH-only withdrawal (callvalue > 0 AND no calldata)
-        const hasNoCalldata =
-          !l2ToL1Tx.data || l2ToL1Tx.data === '0x' || l2ToL1Tx.data.length <= 2
-        if (l2ToL1Tx.callvalue > 0n && hasNoCalldata) {
+        if (l2ToL1Tx.callvalue > 0n && l2ToL1Tx.data === '0x') {
           return [
             ETHOnlyWithdrawalL2ToL1Tx.create(input, {
               chain: network.chain,
