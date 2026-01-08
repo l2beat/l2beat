@@ -178,10 +178,12 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         if (wethWithdrawalLog) {
           // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
+          // Note: callvalue is 0 for WETH withdrawals as the value is in the token transfer
           return [
             L2ToL1Tx.create(input, {
               chain: network.chain,
               position: Number(l2ToL1Tx.position),
+              callvalue: l2ToL1Tx.callvalue,
             }),
           ]
         }

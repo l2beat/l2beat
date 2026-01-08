@@ -1083,7 +1083,7 @@
   },
   "orbitstack": {
     "txs": [
-      // arbitrum -> ethereum (data message)
+      // arbitrum -> ethereum (L2ToL1 message with calldata, no ETH)
       {
         "chain": "arbitrum",
         "tx": "0x3b8f7205e18ab5418b213020e0def446cf845dc7516bc276099869415e55566b"
@@ -1091,7 +1091,40 @@
       {
         "chain": "ethereum",
         "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+      },
+      // arbitrum -> ethereum (ETH-only withdrawal, no calldata)
+      {
+        "chain": "arbitrum",
+        "tx": "0x87fc7b834f3e746228c28bb06f5623e6d181ab6a9e5978af0127f534de5bfbe0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd52b879ab5d43ff1111c1f4b2eb0c40eedd2ef5674fce740e3a8f8afdd9d8b56"
+      },
+      // ethereum -> arbitrum (ETH-only deposit, no calldata)
+      {
+        "chain": "ethereum",
+        "tx": "0xad58fa2d5c88d4bde46877765b1111083bac521afd88d38c2ad6f42acd193307"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb12497a13c6cb72700c8233c037581b38c5c218dd6e1ed0899a5da641d1cdbf7"
       }
+    ],
+    "events": [
+      "orbitstack.L2ToL1Tx",
+      "orbitstack.L2ToL1TxETHOnlyWithdrawal",
+      "orbitstack.OutBoxTransactionExecuted",
+      "orbitstack.MessageDelivered",
+      "orbitstack.RedeemScheduled"
+    ],
+    "messages": [
+      "orbitstack.L2ToL1Message",
+      "orbitstack.L1ToL2Message"
+    ],
+    "transfers": [
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L1ToL2Transfer"
     ]
   },
   "orbitstack-standardgateway": {
