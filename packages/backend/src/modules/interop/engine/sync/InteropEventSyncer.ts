@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps, Database } from '@l2beat/database'
 import {
   type EthRpcClient,
+  getBlockNumberAtOrBefore,
   type RpcLog,
   toEVMLog,
   UpsertMap,
@@ -17,7 +18,6 @@ import {
 } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
-import { getBlockNumberAtOrBefore } from '../../../../peripherals/getBlockNumberAtOrBefore'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import type {
   InteropEvent,

@@ -16,8 +16,8 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropSyncersManager } from './sync/InteropSyncersManager'
 import { InteropTransferStream } from './stream/InteropTransferStream'
+import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
   config,

@@ -15,8 +15,8 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
-import { PluginsStatusTable } from './PluginsStatusTable'
 import { LiveTransfers } from './LiveTransfers'
+import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,

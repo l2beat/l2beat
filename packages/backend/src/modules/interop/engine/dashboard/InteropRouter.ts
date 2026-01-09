@@ -5,11 +5,11 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
-import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import type {
   InteropTransferStream,
   SerializableInteropTransfer,
 } from '../stream/InteropTransferStream'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
