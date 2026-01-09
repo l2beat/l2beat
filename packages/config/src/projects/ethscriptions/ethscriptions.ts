@@ -47,6 +47,7 @@ export const ethscriptions: ScalingProject = {
   capability: 'appchain',
   addedAt: UnixTime(1736331600), // 2025-01-08
   badges: [
+    BADGES.VM.AppChain,
     BADGES.Fork.FacetFork,
     BADGES.Other.BasedSequencing,
     BADGES.DA.EthereumCalldata,
