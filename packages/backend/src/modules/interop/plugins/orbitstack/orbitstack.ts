@@ -54,9 +54,9 @@ function getIsEthOnlyFromInbox(
   txLogs: LogToCapture['txLogs'],
   inboxAddress: EthereumAddress,
   messageDelivered: { kind: number; messageIndex: bigint },
-): boolean | undefined {
+): boolean {
   if (messageDelivered.kind !== L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX) {
-    return undefined
+    return false
   }
 
   // Find InboxMessageDelivered with matching messageNum
@@ -68,13 +68,13 @@ function getIsEthOnlyFromInbox(
     // Found it - extract data.length from packed retryable ticket params
     const packedData = parsed.data as `0x${string}`
     const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
-    if (packedData.length < dataLengthStart + 64) return undefined
+    if (packedData.length < dataLengthStart + 64) return false
 
     const dataLengthHex = packedData.slice(dataLengthStart, dataLengthStart + 64)
     return BigInt('0x' + dataLengthHex) === 0n
   }
 
-  return undefined
+  return false
 }
 
 // L2 -> L1 (Withdrawal) event types
