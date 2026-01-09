@@ -26,6 +26,10 @@ module.exports = {
         'spin-reverse': 'spin-reverse 1s linear infinite',
         breath: 'breath 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
+      fontSize: {
+        '2xs': '0.625rem',
+        '3xs': '0.5rem',
+      },
       keyframes: {
         'spin-reverse': {
           to: { transform: 'rotate(-360deg)' },
