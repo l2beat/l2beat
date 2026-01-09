@@ -48,6 +48,32 @@ export const base: ScalingProject = opStackL2({
       ],
     },
   },
+  interopConfig: {
+    name: 'Base Canonical',
+    bridgeType: 'canonical',
+    plugins: [
+      {
+        filterBy: 'chain',
+        plugin: 'opstack',
+      },
+      {
+        filterBy: 'chain',
+        plugin: 'opstack-standardbridge',
+      },
+      {
+        filterBy: 'chain',
+        plugin: 'beefy-bridge',
+      },
+      {
+        filterBy: 'chain',
+        plugin: 'maker-bridge',
+      },
+      {
+        filterBy: 'chain',
+        plugin: 'sorare-base',
+      },
+    ],
+  },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

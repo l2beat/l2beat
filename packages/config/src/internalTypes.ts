@@ -103,6 +103,8 @@ export interface ScalingProject {
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
+  /** Interop configuration */
+  interopConfig?: InteropConfig
 }
 
 export interface ProjectScalingConfig {
@@ -249,6 +251,7 @@ export interface Bridge {
   archivedAt?: UnixTime
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
+  interopConfig?: InteropConfig
   display: BridgeDisplay
   colors?: ProjectCustomColors
   config: BridgeConfig
@@ -278,4 +281,34 @@ export interface BridgeDisplay {
 export interface BridgeConfig {
   associatedTokens?: string[]
   escrows: ProjectEscrow[]
+}
+
+export interface InteropProtocol {
+  type: 'interopProtocol'
+  id: ProjectId
+  addedAt: UnixTime
+  interopConfig: InteropConfig
+}
+
+export interface InteropConfig {
+  name?: string
+  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  plugins: InteropPlugin[]
+}
+
+type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
+
+type ByChainPlugin = {
+  filterBy: 'chain'
+  plugin: string
+}
+
+type ByTokenIdPlugin = {
+  filterBy: 'abstractTokenId'
+  abstractTokenId: string
+  plugin: string
+}
+
+type PlainPlugin = {
+  plugin: string
 }
