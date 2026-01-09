@@ -149,6 +149,14 @@ function Group({
   const header =
     assignees.length > 0 ? `${name} :: ${assignees.join(' ')}` : name
 
+  const projectsWithChanges = projects.filter(
+    (p) => (p.changes.diff?.length ?? 0) > 0,
+  )
+  const changesText =
+    projectsWithChanges.length > 0
+      ? `Changes detected in ${projectsWithChanges.length} project${projectsWithChanges.length !== 1 ? 's' : ''}`
+      : 'No changes detected'
+
   return (
     <section
       style={{
@@ -161,36 +169,82 @@ function Group({
       }}
     >
       {!inlineLabel && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            gap: '12px',
-            textTransform: 'uppercase',
-            fontSize: '16px',
-            letterSpacing: '0.08em',
-            color: '#c6c2b8',
-            borderBottom: '1px solid #232733',
-            paddingBottom: '10px',
-            marginBottom: '14px',
-          }}
-        >
-          <span>{header}</span>
+        <details open className="group-details">
+          <summary
+            className="group-summary"
+            style={{
+              cursor: 'pointer',
+              listStyle: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '12px',
+              textTransform: 'uppercase',
+              fontSize: '16px',
+              letterSpacing: '0.08em',
+              color: '#c6c2b8',
+              borderBottom: '1px solid #232733',
+              paddingBottom: '10px',
+              marginBottom: '14px',
+              outline: 'none',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+              }}
+            >
+              <span
+                className="collapse-arrow"
+                style={{
+                  display: 'inline-block',
+                  fontSize: '12px',
+                }}
+              >
+                ▼
+              </span>
+              <span>{header}</span>
+            </div>
+            <span
+              style={{
+                fontSize: '12px',
+                color: projectsWithChanges.length > 0 ? '#ffb155' : '#6b7280',
+                fontWeight: projectsWithChanges.length > 0 ? 600 : 400,
+              }}
+            >
+              {changesText}
+            </span>
+          </summary>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {projects.map((project, index) => (
+              <ProjectRow
+                key={project.name}
+                project={project}
+                assignees={assignees}
+                inlineLabel={inlineLabel}
+                isFirst={index === 0}
+                hasHSC={projectsWithHighSeverityChanges.has(project.name)}
+              />
+            ))}
+          </div>
+        </details>
+      )}
+      {inlineLabel && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {projects.map((project, index) => (
+            <ProjectRow
+              key={project.name}
+              project={project}
+              assignees={assignees}
+              inlineLabel={inlineLabel}
+              isFirst={index === 0}
+              hasHSC={projectsWithHighSeverityChanges.has(project.name)}
+            />
+          ))}
         </div>
       )}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {projects.map((project, index) => (
-          <ProjectRow
-            key={project.name}
-            project={project}
-            assignees={assignees}
-            inlineLabel={inlineLabel}
-            isFirst={index === 0}
-            hasHSC={projectsWithHighSeverityChanges.has(project.name)}
-          />
-        ))}
-      </div>
     </section>
   )
 }

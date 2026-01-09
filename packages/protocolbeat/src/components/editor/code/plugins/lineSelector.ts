@@ -37,7 +37,7 @@ export class LineSelector implements EditorPlugin<ForType> {
     return { startLine, endLine, anchorLine: endLine }
   }
 
-  constructor(readonly editor: ToMonaco<'code'>) {}
+  constructor(readonly editor: ToMonaco<ForType>) {}
 
   activate() {
     this.setupLineSelectionHandlers()

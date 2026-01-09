@@ -1,5 +1,6 @@
 import { Button } from '../../../../components/Button'
 import { Dialog } from '../../../../components/Dialog'
+import { Tabs } from '../../../../components/Tabs'
 import { IconGear } from '../../../../icons/IconGear'
 import { useConfigModels } from '../../hooks/useConfigModels'
 import { useProjectData } from '../../hooks/useProjectData'
@@ -24,12 +25,13 @@ export function ContractConfigDialog() {
             {selected?.name ?? 'Unknown'}
           </span>
         </Dialog.Title>
-        <div className="grid grid-cols-2 gap-6">
-          {/* Config Column */}
-          <div className="space-y-2">
-            <h3 className="border-coffee-400/40 border-b">Config</h3>
-
-            <div className="w-full space-y-2">
+        <Tabs.Root>
+          <Tabs.List>
+            <Tabs.Trigger value="config">Config</Tabs.Trigger>
+            <Tabs.Trigger value="template">Template</Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="config">
+            <div className="space-y-2">
               <ConfigRow headline="Category">
                 <CategorySelect
                   category={models.configModel.category}
@@ -45,38 +47,36 @@ export function ContractConfigDialog() {
                 />
               </ConfigRow>
             </div>
-          </div>
-
-          {/* Template Column */}
-          <div className="space-y-2">
-            <h3 className="border-coffee-400/40 border-b">Template</h3>
-
-            {models.templateModel.hasTemplate ? (
-              <div className="w-full space-y-2">
-                <ConfigRow headline="Category">
-                  <CategorySelect
-                    category={models.templateModel.category}
-                    setCategory={(value) =>
-                      models.templateModel.setCategory(value)
-                    }
-                  />
-                </ConfigRow>
-                <ConfigRow headline="Description">
-                  <DescriptionEditor
-                    content={models.templateModel.description}
-                    setContent={(value) =>
-                      models.templateModel.setDescription(value)
-                    }
-                  />
-                </ConfigRow>
-              </div>
-            ) : (
-              <div className="text-coffee-300 text-sm italic">
-                No template available
-              </div>
-            )}
-          </div>
-        </div>
+          </Tabs.Content>
+          <Tabs.Content value="template">
+            <div className="space-y-2">
+              {models.templateModel.hasTemplate ? (
+                <>
+                  <ConfigRow headline="Category">
+                    <CategorySelect
+                      category={models.templateModel.category}
+                      setCategory={(value) =>
+                        models.templateModel.setCategory(value)
+                      }
+                    />
+                  </ConfigRow>
+                  <ConfigRow headline="Description">
+                    <DescriptionEditor
+                      content={models.templateModel.description}
+                      setContent={(value) =>
+                        models.templateModel.setDescription(value)
+                      }
+                    />
+                  </ConfigRow>
+                </>
+              ) : (
+                <div className="text-coffee-300 text-sm italic">
+                  No template available
+                </div>
+              )}
+            </div>
+          </Tabs.Content>
+        </Tabs.Root>
       </Dialog.Body>
     </Dialog.Root>
   )
