@@ -1154,7 +1154,10 @@
       "orbitstack.RedeemScheduled"
     ],
     "messages": [
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-standardgateway" },
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-standardgateway"
+      },
       { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
       { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
       { "type": "orbitstack.L1ToL2Message", "app": "unknown" }

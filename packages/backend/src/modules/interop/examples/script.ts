@@ -417,7 +417,8 @@ function checkTypedWithApp(
 ): boolean {
   for (const value of values) {
     const idx = expected.findIndex(
-      (e) => e.type === value.type && (e.app === undefined || e.app === value.app),
+      (e) =>
+        e.type === value.type && (e.app === undefined || e.app === value.app),
     )
     if (idx !== -1) {
       expected.splice(idx, 1)
