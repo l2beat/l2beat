@@ -420,6 +420,14 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
 `,
   milestones: [
     {
+      title: 'Starknet reverts 18mins of history',
+      url: 'https://www.starknet.io/blog/starknet-incident-report-january-5-2026/',
+      date: '2026-01-05T00:00:00.00Z',
+      description:
+        'Starknet experienced an outage during which block production was halted',
+      type: 'incident',
+    },
+    {
       title: 'Starknet upgrades its proving system to Stwo',
       url: 'https://etherscan.io/tx/0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797',
       date: '2025-10-19T00:00:00.00Z',
