@@ -64,6 +64,7 @@ function ChainSelectorButton({
       assert(chain, `Chain with id ${chainId} not found`)
       return {
         id: chainId as InteropChainId,
+        iconSlug: chain.iconSlug,
         name: chain.name,
         isSelected,
       }
@@ -84,7 +85,7 @@ function ChainSelectorButton({
             {selectedChains.map((chain, i) => (
               <img
                 key={chain.id}
-                src={`/icons/${chain.id}.png`}
+                src={`/icons/${chain.iconSlug}.png`}
                 alt={chain.name}
                 className="size-5"
                 style={{ zIndex: selectedChains.length - i }}
@@ -116,7 +117,12 @@ function ChainSelectorItem({
   chain,
   toggleSelected,
 }: {
-  chain: { id: InteropChainId; name: string; isSelected: boolean }
+  chain: {
+    id: InteropChainId
+    iconSlug: string
+    name: string
+    isSelected: boolean
+  }
   toggleSelected: (chainId: InteropChainId) => void
 }) {
   return (
@@ -127,7 +133,11 @@ function ChainSelectorItem({
       )}
       onClick={() => toggleSelected(chain.id)}
     >
-      <img src={`/icons/${chain.id}.png`} alt={chain.name} className="size-5" />
+      <img
+        src={`/icons/${chain.iconSlug}.png`}
+        alt={chain.name}
+        className="size-5"
+      />
       <div className="font-medium text-label-value-16 leading-none">
         {chain.name}
       </div>
