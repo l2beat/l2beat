@@ -16,7 +16,7 @@ export function TextArea({
         props.onKeyUp?.(e)
       }}
       className={cn(
-        'min-h-32 border border-coffee-400 bg-coffee-700 px-2 py-1 text-xs selection:bg-coffee-600 placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'min-h-24 border border-coffee-400 bg-coffee-700 px-2 py-1 text-xs selection:bg-coffee-600 placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       {...props}
