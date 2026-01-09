@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x7fe3d6d841f9404c1fe152c9b1ba7a1d7623354c
+Generated with discovered.json: 0xb5376b84e3b3e293ff130380d1c131897eedfc4a
 
-# Diff at Fri, 09 Jan 2026 11:08:17 GMT:
+# Diff at Fri, 09 Jan 2026 12:59:47 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1767956830
+- current timestamp: 1767963523
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery.
 
 ## Initial discovery
 

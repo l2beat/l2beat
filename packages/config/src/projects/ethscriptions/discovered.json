@@ -1,6 +1,6 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1767956830,
+  "timestamp": 1767963523,
   "configHash": "0x2e7dcb652947a49f4f639da1cc66505f11b81f2850406b5d26d3a7c81e91c3c1",
   "entries": [
     {
@@ -85,6 +85,7 @@
         {
           "permission": "propose",
           "from": "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
         }
       ]
@@ -595,6 +596,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24196720, "ethscriptions": 6766813 },
-  "permissionsConfigHash": "0xfbe3814532c0cfff5a48c5a890a488a1007d01fdbe356789aca79868da0d0092"
+  "usedBlockNumbers": { "ethereum": 24197275, "ethscriptions": 6767371 },
+  "permissionsConfigHash": "0x877df0a2b40a6f3d912564f178cfbd140f628eb1a3481c73468371f73db0a637"
 }
