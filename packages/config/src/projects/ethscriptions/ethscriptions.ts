@@ -93,6 +93,11 @@ export const ethscriptions: ScalingProject = {
     {
       rollupNodeLink:
         'https://github.com/ethscriptions-protocol/ethscriptions-node',
+      additionalConsiderations: {
+        short:
+          'Ethscriptions is an application-specific rollup designed exclusively for managing ethscriptions (NFT-like assets inscribed via Ethereum calldata). It provides cryptographic state and EVM compatibility for the ethscriptions protocol.',
+        long: 'The chain derives its state entirely from L1 ethscription activity and there is no general-purpose smart contract deployment. Users interact with ethscriptions (create, transfer, prove ownership) through a derivation pipeline that converts L1 calldata into canonical L2 state. The system intentionally has no canonical bridge; gas is minted algorithmically from L1 gas burned.',
+      },
     },
   ),
   discoveryInfo: getDiscoveryInfo([discovery]),
