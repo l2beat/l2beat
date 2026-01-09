@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
   createInteropEventType,
@@ -10,6 +11,18 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+
+// ABI for decoding createRetryableTicket calldata (L1)
+const CREATE_RETRYABLE_TICKET_SELECTOR = '0x679b6ded'
+const createRetryableTicketAbi = parseAbi([
+  'function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)',
+])
+
+// ABI for decoding submitRetryable calldata (L2 sequencer internal call)
+const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
+const submitRetryableAbi = parseAbi([
+  'function submitRetryable(bytes32 requestId, uint256 l1BaseFee, uint256 deposit, uint256 callvalue, uint256 gasFeeCap, uint64 gasLimit, uint256 maxSubmissionFee, address feeRefundAddress, address beneficiary, address retryTo, bytes retryData)',
+])
 
 // == L2->L1 messages ==
 
@@ -35,14 +48,9 @@ export const parseRedeemScheduled = createEventParser(
 export const L2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
+  amount?: bigint // ETH amount if callvalue > 0
+  isEthOnly?: boolean // true if ETH sent with no calldata
 }>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
-
-// L2 -> L1 ETH withdrawal initiation
-const ETHWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
-  chain: string
-  position: number
-  amount: bigint
-}>('orbitstack.L2ToL1TxETHWithdrawalInitiated', { ttl: 14 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
@@ -54,6 +62,7 @@ export const MessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
   txValue: bigint
+  isEthOnly?: boolean // true if ETH sent with no calldata (createRetryableTicket with empty data)
 }>('orbitstack.MessageDelivered')
 
 export const RedeemScheduled = createInteropEventType<{
@@ -153,11 +162,28 @@ export class OrbitStackPlugin implements InteropPlugin {
             return
           }
 
+          // Check if this is an ETH-only deposit (createRetryableTicket with empty data param)
+          let isEthOnly: boolean | undefined
+          const txValue = input.tx.value ?? 0n
+          if (txValue > 0n) {
+            const calldata = input.tx.data as `0x${string}`
+            if (calldata.startsWith(CREATE_RETRYABLE_TICKET_SELECTOR)) {
+              const decoded = decodeFunctionData({
+                abi: createRetryableTicketAbi,
+                data: calldata,
+              })
+              // data is the last param (bytes) - if empty, it's ETH-only
+              const retryableData = decoded.args[7] as `0x${string}`
+              isEthOnly = retryableData === '0x'
+            }
+          }
+
           return [
             MessageDelivered.create(input, {
               chain: networkForBridge.chain,
               messageNum: messageDelivered.messageIndex.toString(),
-              txValue: input.tx.value ?? 0n,
+              txValue,
+              isEthOnly: isEthOnly || undefined,
             }),
           ]
         }
@@ -169,20 +195,14 @@ export class OrbitStackPlugin implements InteropPlugin {
       // L2 -> L1 (Withdrawal initiation on L2)
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
       if (l2ToL1Tx) {
-        // Check if this is an ETH withdrawal (callvalue > 0)
-        if (l2ToL1Tx.callvalue > 0n) {
-          return [
-            ETHWithdrawalInitiatedL2ToL1Tx.create(input, {
-              chain: network.chain,
-              position: Number(l2ToL1Tx.position),
-              amount: l2ToL1Tx.callvalue,
-            }),
-          ]
-        }
+        const hasEth = l2ToL1Tx.callvalue > 0n
+        const hasNoCalldata = l2ToL1Tx.data === '0x'
         return [
           L2ToL1Tx.create(input, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
+            amount: hasEth ? l2ToL1Tx.callvalue : undefined,
+            isEthOnly: hasEth && hasNoCalldata ? true : undefined,
           }),
         ]
       }
@@ -192,29 +212,24 @@ export class OrbitStackPlugin implements InteropPlugin {
         network.arbRetryableTx,
       ])
       if (redeemScheduled) {
-        const calldata = input.tx.data ?? '0x'
-        // Extract messageNum from transaction calldata
-        // The calldata format is: selector (4 bytes) + messageNum (32 bytes) + ...
-        // messageNum is the first parameter after the function selector
-        const messageNumHex =
-          calldata.length >= 2 + 8 + 64
-            ? '0x' + calldata.slice(2 + 8, 2 + 8 + 64)
-            : '0x0'
-        const messageNum = BigInt(messageNumHex).toString()
+        const calldata = input.tx.data as `0x${string}`
+        if (!calldata.startsWith(SUBMIT_RETRYABLE_SELECTOR)) {
+          return
+        }
 
-        // Extract callValue (param 3) from calldata
-        // submitRetryable(bytes32,uint256,uint256,uint256,...)
-        // Offset: selector (2+8) + param0 (64) + param1 (64) + param2 (64) = 202
-        const callValueHex =
-          calldata.length >= 2 + 8 + 64 * 4
-            ? '0x' + calldata.slice(2 + 8 + 64 * 3, 2 + 8 + 64 * 4)
-            : '0x0'
-        const callValue = BigInt(callValueHex)
+        const decoded = decodeFunctionData({
+          abi: submitRetryableAbi,
+          data: calldata,
+        })
+        // requestId (bytes32) is the messageNum
+        const messageNum = BigInt(decoded.args[0] as `0x${string}`).toString()
+        // callvalue is param 3
+        const callValue = decoded.args[3] as bigint
 
         return [
           RedeemScheduled.create(input, {
             chain: network.chain,
-            messageNum: messageNum,
+            messageNum,
             retryTxHash: redeemScheduled.retryTxHash,
             ethAmount: callValue > 0n ? callValue : undefined,
           }),
@@ -227,45 +242,35 @@ export class OrbitStackPlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
-      // Check if this is an ETH withdrawal
-      const ethWithdrawalInitiated = db.find(ETHWithdrawalInitiatedL2ToL1Tx, {
-        chain: event.args.chain,
-        position: event.args.position,
-      })
-
-      if (ethWithdrawalInitiated) {
-        // This is an ETH withdrawal - create both Message and Transfer
-        return [
-          Result.Message('orbitstack.L2ToL1Message', {
-            app: 'orbitstack-eth',
-            srcEvent: ethWithdrawalInitiated,
-            dstEvent: event,
-          }),
-          Result.Transfer('orbitstack.L2ToL1Transfer', {
-            srcEvent: ethWithdrawalInitiated,
-            srcAmount: ethWithdrawalInitiated.args.amount,
-            srcTokenAddress: Address32.NATIVE,
-            dstEvent: event,
-            dstAmount: ethWithdrawalInitiated.args.amount,
-            dstTokenAddress: Address32.NATIVE,
-          }),
-        ]
-      }
-
-      // Not an ETH withdrawal - check for regular L2ToL1Tx
       const l2ToL1Tx = db.find(L2ToL1Tx, {
         chain: event.args.chain,
         position: event.args.position,
       })
       if (!l2ToL1Tx) return
 
-      return [
+      const results: MatchResult = [
         Result.Message('orbitstack.L2ToL1Message', {
-          app: 'unknown',
+          app: l2ToL1Tx.args.isEthOnly ? 'orbitstack-eth' : 'unknown',
           srcEvent: l2ToL1Tx,
           dstEvent: event,
         }),
       ]
+
+      // If ETH was sent, create a Transfer
+      if (l2ToL1Tx.args.amount) {
+        results.push(
+          Result.Transfer('orbitstack.L2ToL1Transfer', {
+            srcEvent: l2ToL1Tx,
+            srcAmount: l2ToL1Tx.args.amount,
+            srcTokenAddress: Address32.NATIVE,
+            dstEvent: event,
+            dstAmount: l2ToL1Tx.args.amount,
+            dstTokenAddress: Address32.NATIVE,
+          }),
+        )
+      }
+
+      return results
     }
 
     // L1 -> L2 message matching
@@ -276,19 +281,17 @@ export class OrbitStackPlugin implements InteropPlugin {
       })
       if (!messageDelivered) return
 
-      // Check if this is an ETH deposit (based on L2 callValue)
-      if (event.args.ethAmount) {
-        // Verify L1 has txValue
-        if (messageDelivered.args.txValue === 0n) {
-          return
-        }
+      const results: MatchResult = [
+        Result.Message('orbitstack.L1ToL2Message', {
+          app: messageDelivered.args.isEthOnly ? 'orbitstack-eth' : 'unknown',
+          srcEvent: messageDelivered,
+          dstEvent: event,
+        }),
+      ]
 
-        return [
-          Result.Message('orbitstack.L1ToL2Message', {
-            app: 'orbitstack-eth',
-            srcEvent: messageDelivered,
-            dstEvent: event,
-          }),
+      // If ETH was sent, always create a Transfer (regardless of calldata)
+      if (event.args.ethAmount && event.args.ethAmount > 0n) {
+        results.push(
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.args.txValue,
@@ -297,17 +300,10 @@ export class OrbitStackPlugin implements InteropPlugin {
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
           }),
-        ]
+        )
       }
 
-      // Regular message (not ETH deposit)
-      return [
-        Result.Message('orbitstack.L1ToL2Message', {
-          app: 'unknown',
-          srcEvent: messageDelivered,
-          dstEvent: event,
-        }),
-      ]
+      return results
     }
   }
 }
