@@ -7,6 +7,7 @@ import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -340,6 +341,7 @@ function Category() {
 
 function Description() {
   const { configModel, templateModel, isPending } = useConfigModels()
+  const { interpolateDescription } = useModelUtils()
   const description = configModel.description ?? templateModel.description
 
   if (isPending) {
@@ -356,7 +358,9 @@ function Description() {
 
   return (
     <WithHeadline headline="Description">
-      <p className="font-serif text-sm italic">{description}</p>
+      <p className="font-serif text-sm italic">
+        {interpolateDescription(description)}
+      </p>
     </WithHeadline>
   )
 }
