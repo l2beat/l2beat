@@ -1,4 +1,9 @@
-import { Address32, assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
@@ -79,7 +84,10 @@ function getIsEthOnlyFromInbox(
       'InboxMessageDelivered packed data too short',
     )
 
-    const dataLengthHex = packedData.slice(dataLengthStart, dataLengthStart + 64)
+    const dataLengthHex = packedData.slice(
+      dataLengthStart,
+      dataLengthStart + 64,
+    )
     return BigInt('0x' + dataLengthHex) === 0n
   }
 
