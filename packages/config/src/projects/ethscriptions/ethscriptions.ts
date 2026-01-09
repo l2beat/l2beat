@@ -5,7 +5,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
-  EXITS,
   OPERATOR,
   RISK_VIEW,
 } from '../../common'
