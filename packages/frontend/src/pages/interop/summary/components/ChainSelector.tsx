@@ -76,7 +76,9 @@ function ChainSelectorButton({
       <PopoverTrigger asChild>
         <div className="h-10 bg-white px-4 py-[7px]">
           <div className="font-semibold leading-none">
-            {selectedChains.length} selected chains
+            {selectedChains.length === allChains.length
+              ? 'All supported chains'
+              : `${selectedChains.length} selected chains`}
           </div>
           <div className="-space-x-2 flex items-center">
             {selectedChains.map((chain, i) => (
@@ -92,7 +94,7 @@ function ChainSelectorButton({
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className="!bg-surface-primary max-w-66 px-3.5 pb-3.5"
+        className="!bg-surface-primary max-w-95 p-4"
         align="start"
         side="bottom"
       >
