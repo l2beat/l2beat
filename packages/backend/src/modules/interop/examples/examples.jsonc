@@ -861,7 +861,10 @@
       "opstack.MessagePassed",
       "opstack.WithdrawalFinalized"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "unknown" },
+      { "type": "opstack.L2ToL1Message", "app": "unknown" }
+    ],
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement": {
@@ -890,9 +893,9 @@
       "across-settlement.MessageDelivered"
     ],
     "messages": [
-      "opstack.L1ToL2Message",
-      "opstack.L1ToL2Message",
-      "orbitstack.L1ToL2Message"
+      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
+      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
+      { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
   "world-id": {
@@ -907,7 +910,7 @@
       }
     ],
     "events": ["world-id.SentMessage"],
-    "messages": ["opstack.L1ToL2Message"]
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "world-id" }]
   },
   "lido-wsteth": {
     "txs": [
@@ -959,10 +962,10 @@
       "lido-wsteth.WithdrawalFinalized"
     ],
     "messages": [
-      "opstack.L1ToL2Message",
-      "opstack.L1ToL2Message",
-      "opstack.L2ToL1Message",
-      "opstack.L2ToL1Message"
+      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
+      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
+      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" },
+      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }
     ],
     "transfers": [
       "lido-wsteth.L1ToL2Transfer",
@@ -994,7 +997,7 @@
       "sorare-base.TransferRegisteredSentMessage",
       "sorare-base.FactRegisteredRelayedMessage"
     ],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare-base" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
   "beefy-bridge": {
@@ -1012,7 +1015,7 @@
       "beefy-bridge.BridgedOutSentMessage",
       "beefy-bridge.BridgedInRelayedMessage"
     ],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge": {
@@ -1089,6 +1092,16 @@
         "chain": "optimism",
         "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240"
       }
+    ],
+    "messages": [
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ]
   },
   "orbitstack": {
@@ -1141,10 +1154,13 @@
       "orbitstack.RedeemScheduled"
     ],
     "messages": [
-      "orbitstack.L2ToL1Message",
-      "orbitstack.L2ToL1Message",
-      "orbitstack.L1ToL2Message",
-      "orbitstack.L1ToL2Message"
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-standardgateway"
+      },
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
+      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+      { "type": "orbitstack.L1ToL2Message", "app": "unknown" }
     ],
     "transfers": [
       "orbitstack.L2ToL1Transfer",
@@ -1598,7 +1614,10 @@
       }
     ],
     "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
-    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "zklink-nova" },
+      { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
+    ]
   },
   "maker-bridge": {
     "txs": [
@@ -1627,7 +1646,10 @@
       "maker-bridge.WithdrawalMessagePassed",
       "maker-bridge.WithdrawalFinalized"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "maker-bridge" },
+      { "type": "opstack.L2ToL1Message", "app": "maker-bridge" }
+    ],
     "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
   },
   "sky-bridge": {
@@ -1643,7 +1665,7 @@
       }
     ],
     "events": ["sky-bridge.DepositSentMessage", "sky-bridge.DepositFinalized"],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
   }
 }
