@@ -1,5 +1,5 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
@@ -14,7 +14,6 @@ import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
-import { getInteropChains } from '../../../config/makeConfig'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { logToViemLog } from '../engine/capture/InteropBlockProcessor'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -267,12 +266,12 @@ async function runExample(example: Example): Promise<RunResult> {
   const transfers = result.transfers.map((u) => ({
     transfer: u,
     srcId: toDeployedId(
-      getInteropChains(),
+      INTEROP_CHAINS,
       u.src.event.ctx.chain,
       u.src.tokenAddress,
     ),
     dstId: toDeployedId(
-      getInteropChains(),
+      INTEROP_CHAINS,
       u.dst.event.ctx.chain,
       u.dst.tokenAddress,
     ),
