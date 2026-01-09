@@ -84,6 +84,18 @@ function Display({
 
   const contractConfigDialog = canModify && <ContractConfigDialog />
 
+  const fieldsFromSelected = 'fields' in selected ? selected.fields : []
+  const filteredIgnoredMethods = ignoredMethods
+    .filter(
+      (method) => !fieldsFromSelected.find((field) => field.name === method),
+    )
+    .map((method) => ({
+      name: method,
+      value: { type: 'empty' as const },
+    }))
+
+  const fields = [...fieldsFromSelected, ...filteredIgnoredMethods]
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
@@ -200,20 +212,11 @@ function Display({
           </ol>
         </Folder>
       )}
-      {'fields' in selected && selected.fields.length > 0 && (
+      {fields.length > 0 && (
         <Folder title="Fields">
           <ol>
-            {selected.fields.map((field, i) => (
+            {fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />
-            ))}
-            {ignoredMethods.map((method, i) => (
-              <FieldDisplay
-                key={i}
-                field={{
-                  name: method,
-                  value: { type: 'empty' },
-                }}
-              />
             ))}
           </ol>
         </Folder>
