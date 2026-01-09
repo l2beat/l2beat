@@ -1,4 +1,4 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
@@ -54,9 +54,10 @@ function getIsEthOnlyFromInbox(
   txLogs: LogToCapture['txLogs'],
   inboxAddress: EthereumAddress,
   messageDelivered: { kind: number; messageIndex: bigint },
-): boolean {
+): boolean | undefined {
+  // Only retryable tickets can be ETH-only deposits
   if (messageDelivered.kind !== L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX) {
-    return false
+    return undefined
   }
 
   // Find InboxMessageDelivered with matching messageNum
@@ -66,15 +67,24 @@ function getIsEthOnlyFromInbox(
     if (parsed?.messageNum !== messageDelivered.messageIndex) continue
 
     // Found it - extract data.length from packed retryable ticket params
-    const packedData = parsed.data as `0x${string}`
+    const packedData = parsed.data
+    assert(
+      typeof packedData === 'string' && packedData.startsWith('0x'),
+      'InboxMessageDelivered data is not a valid hex string',
+    )
+    // Position in hex string: skip "0x" (2 chars) + offset in bytes * 2 (hex encoding)
     const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
-    if (packedData.length < dataLengthStart + 64) return false
+    assert(
+      packedData.length >= dataLengthStart + 64,
+      'InboxMessageDelivered packed data too short',
+    )
 
     const dataLengthHex = packedData.slice(dataLengthStart, dataLengthStart + 64)
     return BigInt('0x' + dataLengthHex) === 0n
   }
 
-  return false
+  // For retryable tickets, we always expect to find the InboxMessageDelivered event
+  assert(false, 'InboxMessageDelivered event not found for retryable ticket')
 }
 
 // L2 -> L1 (Withdrawal) event types
