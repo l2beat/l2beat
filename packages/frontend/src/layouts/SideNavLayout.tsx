@@ -147,7 +147,7 @@ const groups = compact<NavGroup>([
       },
     ],
   },
-  {
+  !env.CLIENT_SIDE_INTEROP_ENABLED && {
     type: 'multiple',
     title: 'Bridges',
     match: 'bridges',
