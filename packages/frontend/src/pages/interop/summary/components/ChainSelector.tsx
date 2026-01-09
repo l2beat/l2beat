@@ -75,7 +75,7 @@ function ChainSelectorButton({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="h-10 bg-white px-4 py-[7px]">
+        <div className="h-10 bg-surface-primary px-4 py-[7px]">
           <div className="font-semibold leading-none">
             {selectedChains.length === allChains.length
               ? 'All supported chains'
