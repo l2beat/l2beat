@@ -344,4 +344,118 @@ describe(ParsedFilesManager.name, () => {
       })
     })
   })
+
+  describe('leading comments', () => {
+    it('does NOT include leading comments when includeAll is false (default)', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Test.sol',
+          content: `// SPDX-License-Identifier: MIT
+/// @title MyContract
+/// @notice This is a NatSpec comment
+contract MyContract { function f() public {} }`,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
+      const result = manager.findDeclaration('MyContract')
+
+      // Content should start with 'contract', not comments
+      expect(result.declaration.content.startsWith('contract')).toEqual(true)
+      expect(result.declaration.content).not.toInclude('/// @title')
+    })
+
+    it('includes leading single-line comments when includeAll is true', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Test.sol',
+          content: `// SPDX-License-Identifier: MIT
+/// @title MyContract
+/// @notice This is a NatSpec comment
+contract MyContract { function f() public {} }`,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
+      const result = manager.findDeclaration('MyContract')
+
+      // Content should include the NatSpec comments
+      expect(result.declaration.content).toInclude('/// @title MyContract')
+      expect(result.declaration.content).toInclude('/// @notice')
+      expect(result.declaration.content).toInclude('contract MyContract')
+    })
+
+    it('includes leading block comments when includeAll is true', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Test.sol',
+          content: `/**
+ * @title MyContract
+ * @notice Block comment style
+ */
+contract MyContract { function f() public {} }`,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
+      const result = manager.findDeclaration('MyContract')
+
+      // Content should include the block comment
+      expect(result.declaration.content).toInclude('/**')
+      expect(result.declaration.content).toInclude('@title MyContract')
+      expect(result.declaration.content).toInclude('*/')
+      expect(result.declaration.content).toInclude('contract MyContract')
+    })
+
+    it('does NOT attach same-line trailing comments from previous declaration', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Test.sol',
+          content: `contract First { } // trailing comment
+contract Second { function f() public {} }`,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
+      const result = manager.findDeclaration('Second')
+
+      // Second contract should NOT include the trailing comment from First
+      expect(result.declaration.content.startsWith('contract Second')).toEqual(
+        true,
+      )
+      expect(result.declaration.content).not.toInclude('trailing comment')
+    })
+
+    it('preserves comments for multiple declarations in same file', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Test.sol',
+          content: `/// @title First contract
+contract First { }
+
+/// @title Second contract
+contract Second { function f() public {} }`,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS, {
+        includeAll: true,
+      })
+
+      const first = manager.findDeclaration('First')
+      const second = manager.findDeclaration('Second')
+
+      expect(first.declaration.content).toInclude('/// @title First contract')
+      expect(first.declaration.content).not.toInclude('Second contract')
+
+      expect(second.declaration.content).toInclude('/// @title Second contract')
+      expect(second.declaration.content).not.toInclude('First contract')
+    })
+  })
 })

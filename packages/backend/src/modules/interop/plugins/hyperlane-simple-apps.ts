@@ -25,9 +25,8 @@ const parsePriceUpdated = createEventParser(
 const PriceUpdatedProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
-}>('hyperlane.PriceUpdatedProcess')
+}>('hyperlane-renzo.PriceUpdatedProcess')
 
-// ReceivedFromBridge (index_topic_1 bytes32 txId)
 const parseReceivedFromBridge = createEventParser(
   'event ReceivedFromBridge(bytes32 indexed txId)',
 )
@@ -35,7 +34,7 @@ const parseReceivedFromBridge = createEventParser(
 const ReceivedFromBridgeProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
-}>('hyperlane.ReceivedFromBridge')
+}>('hyperlane-decent.ReceivedFromBridge')
 
 export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
   name = 'hyperlane-simple-apps'
@@ -119,6 +118,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         }),
       ]
     }
+
     if (ReceivedFromBridgeProcess.checkType(incomingInteropEvent)) {
       const dispatch = db.find(Dispatch, {
         messageId: incomingInteropEvent.args.messageId,
