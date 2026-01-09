@@ -1,6 +1,6 @@
 # DeFiScan Endpoints Service
 
-DeFi position and balance analysis API service for DefidDisco.
+DeFi position and balance analysis API service for DeFiDisco.
 
 ## Features
 
@@ -42,9 +42,11 @@ pnpm start
 ## API Endpoints
 
 ### GET /health
+
 Health check endpoint
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -54,14 +56,17 @@ Health check endpoint
 ```
 
 ### GET /balances
+
 Get token balances for a contract
 
 **Query Parameters:**
+
 - `contract_address` (required): Contract address to query
 - `asset_addresses` (optional): Comma-separated list of token addresses
 - `chain_id` (optional): Blockchain identifier (defaults to 'eth' for Ethereum mainnet)
 
 **Example:**
+
 ```bash
 curl "http://localhost:3001/balances?contract_address=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
 # With chain ID
@@ -69,9 +74,11 @@ curl "http://localhost:3001/balances?contract_address=0xA0b86991c6218b36c1d19D4a
 ```
 
 ### GET /positions
+
 Get DeFi positions for an address (returns raw DeBank complex protocol data)
 
 **Query Parameters:**
+
 - `address` (required): Wallet or contract address to query
 - `chain_id` (optional): Blockchain identifier (defaults to 'eth' for Ethereum mainnet)
 
@@ -79,6 +86,7 @@ Get DeFi positions for an address (returns raw DeBank complex protocol data)
 Returns an array of DeBank complex protocol objects. The response structure may be customized in the future.
 
 **Example:**
+
 ```bash
 curl "http://localhost:3001/positions?address=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 # With chain ID

@@ -1,30 +1,29 @@
-import { useQueryClient } from '@tanstack/react-query'
-import ansiHTML from 'ansi-html'
-import { useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
-import { Checkbox } from '../../../components/Checkbox'
-import { usePanelStore } from '../store/panel-store'
-import { useTerminalStore } from './store'
-import { TerminalExtensions } from '../defidisco/TerminalExtensions'
-
+import { useQueryClient } from "@tanstack/react-query";
+import ansiHTML from "ansi-html";
+import { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { Checkbox } from "../../../components/Checkbox";
+import { usePanelStore } from "../store/panel-store";
+import { useTerminalStore } from "./store";
+import { TerminalExtensions } from "../defidisco/TerminalExtensions";
 
 ansiHTML.setColors({
-  reset: ['F0D8BD', '1D1816'], // [fg, bg]
-  black: '000000',
-  red: 'FB4A35',
-  green: '9DDE6C',
-  yellow: 'FABD30',
-  blue: '8B8BE8',
-  magenta: 'a73db5',
-  cyan: '1c92a8',
-  lightgrey: 'D3D3D3',
-  darkgrey: 'A9A9A9',
-})
+  reset: ["F0D8BD", "1D1816"], // [fg, bg]
+  black: "000000",
+  red: "FB4A35",
+  green: "9DDE6C",
+  yellow: "FABD30",
+  blue: "8B8BE8",
+  magenta: "a73db5",
+  cyan: "1c92a8",
+  lightgrey: "D3D3D3",
+  darkgrey: "A9A9A9",
+});
 
 export function TerminalPanel() {
-  const queryClient = useQueryClient()
-  const { project } = useParams()
-  const outputRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient();
+  const { project } = useParams();
+  const outputRef = useRef<HTMLDivElement>(null);
   const {
     output,
     command,
@@ -35,24 +34,24 @@ export function TerminalPanel() {
     clear,
     setDevMode,
     findMinters,
-    // generatePermissionsReport, // moved to DefidDisco extension
+    // generatePermissionsReport, // moved to DeFiDisco extension
     killCommand,
-  } = useTerminalStore()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  } = useTerminalStore();
+  const selectedAddress = usePanelStore((state) => state.selected);
 
   if (!project) {
-    throw new Error('Cannot use component outside of project page!')
+    throw new Error("Cannot use component outside of project page!");
   }
 
   useEffect(() => {
-    clear()
-  }, [])
+    clear();
+  }, []);
 
   useEffect(() => {
     if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
-  }, [output])
+  }, [output]);
 
   return (
     <div className="flex h-full flex-col p-2 text-sm">
@@ -78,12 +77,12 @@ export function TerminalPanel() {
             onClick={() => {
               discover(project).then(() => {
                 queryClient.invalidateQueries({
-                  queryKey: ['projects', project],
-                })
+                  queryKey: ["projects", project],
+                });
                 queryClient.invalidateQueries({
-                  queryKey: ['config-sync-status', project],
-                })
-              })
+                  queryKey: ["config-sync-status", project],
+                });
+              });
             }}
             disabled={command.inFlight}
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
@@ -94,7 +93,7 @@ export function TerminalPanel() {
           <button
             onClick={() => {
               if (selectedAddress !== undefined) {
-                matchFlat(project, selectedAddress)
+                matchFlat(project, selectedAddress);
               }
             }}
             disabled={command.inFlight}
@@ -105,7 +104,7 @@ export function TerminalPanel() {
           <button
             onClick={() => {
               if (selectedAddress !== undefined) {
-                matchProject(project, selectedAddress)
+                matchProject(project, selectedAddress);
               }
             }}
             disabled={command.inFlight}
@@ -115,7 +114,7 @@ export function TerminalPanel() {
           </button>
           <button
             onClick={() => {
-              downloadAllShapes()
+              downloadAllShapes();
             }}
             disabled={command.inFlight}
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
@@ -125,7 +124,7 @@ export function TerminalPanel() {
           <button
             onClick={() => {
               if (selectedAddress !== undefined) {
-                findMinters(selectedAddress)
+                findMinters(selectedAddress);
               }
             }}
             disabled={command.inFlight}
@@ -144,5 +143,5 @@ export function TerminalPanel() {
         }}
       />
     </div>
-  )
+  );
 }

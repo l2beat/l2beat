@@ -1,13 +1,16 @@
-import { Connection, type ConnectionProps } from '../panel-nodes/view/Connection'
+import {
+  Connection,
+  type ConnectionProps,
+} from "../panel-nodes/view/Connection";
 
 export interface ClickableConnectionProps extends ConnectionProps {
-  hasCallGraphData?: boolean
-  onClick?: (e: React.MouseEvent<SVGPathElement>) => void
+  hasCallGraphData?: boolean;
+  onClick?: (e: React.MouseEvent<SVGPathElement>) => void;
 }
 
 /**
  * Wrapper component that adds click functionality to Connection for edges with call graph data.
- * This follows the Minimal Integration Principle - keeping DefidDisco-specific code in /defidisco/.
+ * This follows the Minimal Integration Principle - keeping DeFiDisco-specific code in /defidisco/.
  */
 export function ClickableConnection({
   hasCallGraphData,
@@ -19,27 +22,27 @@ export function ClickableConnection({
 }: ClickableConnectionProps) {
   // Calculate the bezier curve path (same logic as Connection)
   const controlA = {
-    x: from.x + (from.direction === 'left' ? -50 : 50),
+    x: from.x + (from.direction === "left" ? -50 : 50),
     y: from.y,
-  }
+  };
 
   const controlB = {
-    x: to.x + (to.direction === 'left' ? -50 : 50),
+    x: to.x + (to.direction === "left" ? -50 : 50),
     y: to.y,
-  }
+  };
 
   const d = [
-    'M',
+    "M",
     from.x,
     from.y,
-    'C',
+    "C",
     controlA.x,
     controlA.y,
     controlB.x,
     controlB.y,
     to.x,
     to.y,
-  ].join(' ')
+  ].join(" ");
 
   return (
     <g>
@@ -60,7 +63,7 @@ export function ClickableConnection({
         <path
           d={d}
           strokeLinecap="round"
-          strokeDasharray={isDashed ? '5,5' : undefined}
+          strokeDasharray={isDashed ? "5,5" : undefined}
           className={toCallGraphStrokeClass(rest)}
           pointerEvents="none"
         />
@@ -68,7 +71,7 @@ export function ClickableConnection({
         <Connection from={from} to={to} isDashed={isDashed} {...rest} />
       )}
     </g>
-  )
+  );
 }
 
 /**
@@ -76,20 +79,20 @@ export function ClickableConnection({
  * Uses flashier cyan color to indicate interactivity.
  */
 function toCallGraphStrokeClass(
-  props: Pick<ConnectionProps, 'isHighlighted' | 'isDimmed' | 'isGrayedOut'>,
+  props: Pick<ConnectionProps, "isHighlighted" | "isDimmed" | "isGrayedOut">
 ) {
   if (props.isHighlighted) {
-    return 'stroke-[3] stroke-autumn-300'
+    return "stroke-[3] stroke-autumn-300";
   }
 
   if (props.isGrayedOut) {
-    return 'stroke-2 stroke-coffee-200/10'
+    return "stroke-2 stroke-coffee-200/10";
   }
 
   if (props.isDimmed) {
-    return 'stroke-2 stroke-coffee-400/30'
+    return "stroke-2 stroke-coffee-400/30";
   }
 
   // Flashy cyan color for edges with call graph data
-  return 'stroke-[3] stroke-aux-cyan'
+  return "stroke-[3] stroke-aux-cyan";
 }

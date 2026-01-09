@@ -1,17 +1,20 @@
-# DefidDisco Development Guide
+# DeFiDisco Development Guide
 
 ## L2BEAT Architecture Reference
 
 ### Core System Overview
-**L2BEAT** is a TypeScript monorepo for analyzing Ethereum Layer 2 protocols. **DefidDisco** is a fork enhanced for DeFi analysis.
+
+**L2BEAT** is a TypeScript monorepo for analyzing Ethereum Layer 2 protocols. **DeFiDisco** is a fork enhanced for DeFi analysis.
 
 **Key Packages:**
+
 - **`discovery`**: Core contract analysis engine (keep unchanged)
 - **`protocolbeat`**: React UI with Monaco editor
 - **`l2b`**: CLI tool and API server
 - **`config`**: Project configurations and results
 
 **Commands:**
+
 ```bash
 # Setup and run
 pnpm install && pnpm build:dependencies
@@ -22,7 +25,9 @@ git fetch upstream && git merge upstream/main
 ```
 
 ### Discovery System
+
 **Automated Analysis:** Discovery automatically analyzes any contract by:
+
 - Calling all view/pure functions with 0 parameters
 - Testing array functions with indices 0-4
 - Detecting proxy patterns and relationships
@@ -33,38 +38,46 @@ git fetch upstream && git merge upstream/main
 **Handler System:** Custom handlers in `packages/discovery/src/discovery/handlers/user/` for specialized analysis
 
 ### Data Flow
+
 1. **Config** (`config.jsonc`) → Discovery engine
 2. **Analysis** → Results in `discovered.json`
 3. **Backend** monitors changes → Frontend displays data
 
 ---
 
-## DefidDisco Architecture
+## DeFiDisco Architecture
 
 ### Minimal Integration Principle ⭐
+
 **Core Philosophy**: Minimize modifications to original L2BEAT files to ensure easy upstream merges
 
 ### Code Organization
-**DefidDisco folders** (keep all our code here):
+
+**DeFiDisco folders** (keep all our code here):
+
 - `packages/protocolbeat/src/defidisco/` - All UI components, extensions, icons
 - `packages/l2b/src/implementations/discovery-ui/defidisco/` - All backend modules
 - `packages/discovery/src/discovery/handlers/defidisco/` - Discovery handlers
 
 **Integration points** (minimal modifications only):
+
 - `ValuesPanel.tsx` - Single `<ValuesPanelExtensions>` line
 - `TerminalPanel.tsx` - Single `<TerminalExtensions>` line
 - `main.ts` - API endpoint registrations (unavoidable)
-- `api.ts` - DefidDisco API functions (unavoidable)
+- `api.ts` - DeFiDisco API functions (unavoidable)
 
 ### Repository Setup
+
 - **Fork**: `~/defidisco/` (complete L2BEAT fork)
 - **Why Fork**: Avoids dependency issues with unpublished internal packages
 - **Benefits**: Full toolchain access, easy upstream sync
 
-## DefidDisco Features
+## DeFiDisco Features
 
 ### AI-Based Permission Detection ✅
+
 **Manual Detection System**: AI-powered permission analysis with UI button
+
 - **File**: `/defidisco/aiPermissionDetection.ts` - OpenAI (GPT-4) and Claude (Sonnet 3.5) support
 - **UI**: "AI Permissions" button in `ValuesPanel.tsx` (once per contract, disabled if permissions exist)
 - **Config**: `.env` file with `AI_PROVIDER` (openai/claude) and `AI_API_KEY`
@@ -77,7 +90,9 @@ git fetch upstream && git merge upstream/main
 - **Prompt Engineering**: Instructs AI to identify owners with `sourceField` (e.g., "owner", "accessControl") and `dataPath` (e.g., "$self", "DEFAULT_ADMIN_ROLE")
 
 ### Interactive Permission Management ✅
+
 **UI System**: Complete permission management in `/defidisco/ValuesPanelExtensions.tsx`
+
 - **Data Structure**: Contract-grouped permissions for O(1) lookups (`contracts[address].functions[]`)
 - **Data Separation**: Discovered permissions vs user overrides (persistent)
 - **Four Attributes**: Checked (✓), Permission (🔒), Risk Score (⚡), Delay (⏱️)
@@ -85,20 +100,25 @@ git fetch upstream && git merge upstream/main
 - **Performance**: File caching, optimistic updates, debounced inputs, efficient contract-specific queries
 
 **Delay Field Feature**: Associate delays with permissioned functions
+
 - **UI**: Select contract + numeric field to specify delay reference
 - **Backend**: Resolves delay value from discovered.json in real-time
 - **Display**: Shows resolved delay in seconds, indicator icon (⏱️) in collapsed view
 - **Storage**: Delay reference stored in `permission-overrides.json` as `{ contractAddress, fieldName }`
 
 ### Permissions Report Generation ✅
+
 **Terminal Integration**: Button in `/defidisco/TerminalExtensions.tsx`
+
 - Generates markdown table from contract-grouped `permission-overrides.json`
 - Maps addresses to contract names, resolves owner definitions
 - Server-Sent Events API for real-time output
 - Efficiently processes contract-grouped data structure
 
 ### DeFiScan Panel ✅
+
 **Overview Panel**: Contract analysis dashboard in `/defidisco/DeFiScanPanel.tsx`
+
 - **Status Section**: Initial vs discovered contract counts, address type breakdown
 - **Contract Types**: Contracts, EOAs, Multisigs, External addresses
 - **Permissions Dashboard**: Shows permissioned functions count and review progress
@@ -106,7 +126,9 @@ git fetch upstream && git merge upstream/main
 - **Integration**: Registered in `ProjectPage.tsx` and `store.ts` following panel patterns
 
 ### External Contract Attributes ✅
+
 **Contract Tagging Enhancement**: Extended contract tags with centralization/mitigation attributes
+
 - **Data Structure**: `contract-tags.json` stores `centralization` (high/medium/low) and `mitigations` (complete/partial/none)
 - **UI Component**: `/defidisco/ExternalButton.tsx` with dropdown picker (ColorButton pattern)
 - **Features**:
@@ -118,7 +140,9 @@ git fetch upstream && git merge upstream/main
 - **Address Format**: Normalizes `eth:0x...` → `0x...` when comparing with tags
 
 ### AccessControl Role Support ✅
+
 **OpenZeppelin AccessControl Integration**: Full support for role-based access control
+
 - **Handler**: Use `accessControl` handler in templates or config overrides
   ```jsonc
   "fields": {
@@ -139,7 +163,9 @@ git fetch upstream && git merge upstream/main
 - **Display**: Shows all resolved addresses with click-to-select functionality
 
 ### Continuous Permission Monitoring ✅
+
 **Automated Change Detection**: Monitors permission changes alongside discovery updates
+
 - **Location**: `packages/backend/src/modules/update-monitor/defidisco/`
 - **Trigger**: Automatically runs when discovery detects changes (`diff.length > 0`)
 - **Components**:
@@ -164,19 +190,23 @@ git fetch upstream && git merge upstream/main
 - **Documentation**: See `packages/backend/src/modules/update-monitor/defidisco/README.md`
 
 ### Funds Tracking ✅
+
 **Contract Funds Data**: Fetches and displays token balances and DeFi positions for contracts
+
 - **Data Source**: Uses `defiscan-endpoints` service (calls DeBank API for balances/positions)
 - **Storage**: `funds-data.json` per project in `packages/config/src/projects/{project}/`
 - **UI Component**: `FundsSection.tsx` in DeFiScan panel (between V2 Scoring and Status of Review)
 - **Control Button**: `FundsTagsButton.tsx` - toggle "Fetch Balances" / "Fetch Positions" per contract
 
 **Enabling Funds Fetching**:
+
 1. Select contract(s) in the graph view
 2. Click "Funds" button in controls
 3. Check "Fetch Token Balances" and/or "Fetch DeFi Positions"
 4. In DeFiScan panel, click "Fetch Funds" button to retrieve data
 
 **Contract Tags Extension**:
+
 ```json
 {
   "contractAddress": "eth:0x...",
@@ -187,6 +217,7 @@ git fetch upstream && git merge upstream/main
 ```
 
 **Funds Data Structure** (`funds-data.json`):
+
 ```json
 {
   "version": "1.0",
@@ -213,6 +244,7 @@ git fetch upstream && git merge upstream/main
 ```
 
 **Running with Funds Support**:
+
 ```bash
 # Option 1: Start defiscan-endpoints separately
 cd ~/defidisco/packages/defiscan-endpoints && pnpm start
@@ -224,27 +256,33 @@ cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 ```
 
 **Environment Configuration** (defiscan-endpoints/.env):
+
 ```bash
 DEBANK_API_KEY=your-debank-api-key
 PORT=3001
 ```
 
 **API Endpoints**:
+
 - `GET /api/projects/:project/funds-data` - Get cached funds data
 - `POST /api/projects/:project/funds-data/fetch` - Trigger fetch (SSE for progress)
 
 **Files**:
+
 - Backend: `packages/l2b/src/implementations/discovery-ui/defidisco/fundsData.ts`
 - Frontend: `packages/protocolbeat/src/apps/discovery/defidisco/FundsSection.tsx`
 - Control: `packages/protocolbeat/src/apps/discovery/defidisco/FundsTagsButton.tsx`
 
 ### Call Graph Analysis ✅
+
 **External Call Detection**: Uses Slither to analyze which external contracts each function calls
+
 - **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts`
 - **Storage**: `call-graph-data.json` per project
 - **Tool**: Slither's `--print slithir` command (requires `~/.slither-venv/`)
 
 **How It Works**:
+
 1. Runs Slither on each non-external contract to get SlithIR output
 2. Parses output into structured representation (contracts → functions → calls)
 3. Starts from ABI functions only (public/external) to avoid library contamination
@@ -254,6 +292,7 @@ PORT=3001
 7. Classifies calls as view/write using target ABI or caller inference
 
 **Key Implementation Details**:
+
 - **ABI-driven parsing**: Only captures calls from the target contract's public interface
 - **Function overloading**: Merges calls from overloaded functions with same name
 - **View inference**: If caller is view/pure, external call must also be view
@@ -261,20 +300,23 @@ PORT=3001
 - **Deduplication**: Removes duplicate calls per caller function
 
 **Data Structure** (`call-graph-data.json`):
+
 ```json
 {
   "contracts": {
     "eth:0x...": {
-      "externalCalls": [{
-        "callerFunction": "deposit",
-        "storageVariable": "token",
-        "interfaceType": "IERC20",
-        "calledFunction": "transferFrom",
-        "resolvedAddress": "eth:0x...",
-        "resolvedContractName": "USDC",
-        "isViewCall": false,
-        "callerIsView": false
-      }]
+      "externalCalls": [
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x...",
+          "resolvedContractName": "USDC",
+          "isViewCall": false,
+          "callerIsView": false
+        }
+      ]
     }
   }
 }
@@ -285,29 +327,36 @@ PORT=3001
 ## Development Guidelines
 
 ### 🎯 Minimal Integration Principle
+
 **ALWAYS write new code in `/defidisco/` folders**
+
 - UI components → `packages/protocolbeat/src/defidisco/`
 - Backend modules → `packages/l2b/src/implementations/discovery-ui/defidisco/`
 - Discovery handlers → `packages/discovery/src/discovery/handlers/defidisco/`
 
 **Integration points should be minimal:**
+
 - Single import + single component usage in UI files
 - API functions in `api.ts` (unavoidable for frontend consumption)
 - Endpoint registration in `main.ts` (unavoidable for routing)
 
 ### Development Patterns
+
 **Handler Development:**
+
 1. Create in `/defidisco/` folder, register in main `index.ts`
 2. **Critical**: Run `pnpm run generate-schemas && pnpm build`
 3. Handler config must wrap in `"handler"` object
 
 **UI Development:**
+
 1. Create extension components in `/defidisco/`
 2. Use React Query with proper cache invalidation
 3. Implement optimistic updates with error rollback
 
 **Common Mistakes:**
-- ❌ Writing DefidDisco code in original L2BEAT files
+
+- ❌ Writing DeFiDisco code in original L2BEAT files
 - ❌ Not regenerating schemas after handler changes
 - ❌ Mixing discovered data with user data
 - ❌ Using non-existent hooks (check existing patterns in `/defidisco/` files)
@@ -316,6 +365,7 @@ PORT=3001
 - ❌ Forgetting to rebuild both `protocolbeat` AND `l2b` after backend changes
 
 **Proxy/Implementation Pattern:**
+
 - Proxy contracts contain **both** proxy and implementation ABIs in their `contract.abis[]` array
 - When rendering ABIs, each address gets a separate section (implementation functions shown under implementation address)
 - Fields are stored on the **proxy contract**, not implementations
@@ -323,6 +373,7 @@ PORT=3001
 - Backend converts all `contract.values` to `contract.fields[]` array, so always use fields (no need for values fallback)
 
 ### File Structure
+
 ```
 packages/
 ├── discovery/src/discovery/handlers/defidisco/
@@ -344,7 +395,9 @@ packages/
 ```
 
 ### Data Access Patterns
+
 **API Access**: For new components, follow existing patterns:
+
 - **Project Data**: Use `useQuery` with `getProject(project)` from `api.ts`
 - **Contract Tags**: Use `useContractTags(project)` hook for external address marking
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
@@ -356,6 +409,7 @@ packages/
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
 **Contract Tags Data Structure**:
+
 ```json
 {
   "version": "1.0",
@@ -371,12 +425,15 @@ packages/
   ]
 }
 ```
+
 - **File Location**: `packages/config/src/projects/{project}/contract-tags.json`
 - **Fields**: `isExternal` (boolean), `centralization` (high/medium/low), `mitigations` (complete/partial/none)
 - **Update Pattern**: Backend preserves existing attributes when updating individual fields
 
 ### Permission Overrides Data Structure ✅
+
 **Contract-Grouped Format**: Optimized for O(1) contract lookups and efficient data access
+
 ```json
 {
   "version": "1.0",
@@ -409,6 +466,7 @@ packages/
 ```
 
 **Owner Definitions**:
+
 - **Unified Path Expression**: Single path string that navigates any data structure
 - **Path Format**: `<contractRef>.<valuePath>`
   - `<contractRef>`: `$self` (current contract), `@fieldName` (follow address field), or `eth:0xAddress` (absolute)
@@ -439,23 +497,27 @@ packages/
   - Shows contract names with click-to-select functionality
 
 **Delay Field**:
+
 - Stores reference to numeric field (not the value itself)
 - Backend resolves value at runtime from discovered.json
 - Use `delay !== undefined` pattern (not `??`) to handle explicit clearing
 
 **Access Patterns**:
+
 - **Direct Contract Access**: `permissionOverrides.contracts[contractAddress]` - O(1) lookup
 - **Function Lookup**: `contracts[address].functions.find(f => f.functionName === name)` - O(n) only within contract
 - **Global Operations**: `Object.values(contracts).flatMap(c => c.functions)` when needed
 - **UI Components**: Use `getOverridesForContract(address)` helper for contract-specific data
 
 **Panel Development**: To add new panels:
+
 1. Add panel ID to `PANEL_IDS` in `store.ts`
 2. Register component in `PANELS` and `READONLY_PANELS` in `ProjectPage.tsx`
 3. Create panel component in `/defidisco/` folder following existing patterns
 4. Import and register in `ProjectPage.tsx` with single line addition
 
 **Important Notes**:
+
 - **Permission Owner System**: Uses generalized path expressions that work with **any** handler's data structure (ACL, AccessControl, custom handlers, future handlers). No special cases or hardcoded logic needed.
 - **Migration**: All existing permission-overrides.json files have been migrated to the new unified path format (one-off migration, October 2025).
 - **Score vs Impact Terminology**:

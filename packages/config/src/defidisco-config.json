@@ -1,8 +1,6 @@
 {
   "version": "1.0",
-  "description": "DefidDisco configuration for DeFi project filtering",
-  "defiProjects": [
-    "compound-v3", "uniswap-v2", "morpho", "lido", "liquity-v2"
-  ],
+  "description": "DeFiDisco configuration for DeFi project filtering",
+  "defiProjects": ["compound-v3", "uniswap-v2", "morpho", "lido", "liquity-v2"],
   "lastUpdated": "2025-09-23"
 }

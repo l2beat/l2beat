@@ -1,4 +1,4 @@
-# DefidDisco Permission Monitoring
+# DeFiDisco Permission Monitoring
 
 This module implements continuous monitoring of permission changes in DeFi protocols.
 
@@ -35,6 +35,7 @@ Discovery Update → Discovery Diff Detected → Store Discovery
 Main service class that orchestrates permission resolution and change detection.
 
 **Key Methods:**
+
 - `resolveAndCompare()`: Entry point called when discovery diff is detected
 - `resolveAllFunctions()`: Resolves all permissioned functions to owner addresses
 - `compareResolutions()`: Identifies ownership changes between resolutions
@@ -46,6 +47,7 @@ Only runs when `diff.length > 0` (actual discovery changes, not just timestamp)
 #### 2. Database Schema
 
 **PermissionResolution Table:**
+
 ```typescript
 {
   id: number              // Auto-increment
@@ -74,6 +76,7 @@ Only runs when `diff.length > 0` (actual discovery changes, not just timestamp)
 ```
 
 **UpdateDiff Table (enhanced):**
+
 ```typescript
 {
   projectId: string
@@ -98,11 +101,13 @@ Only runs when `diff.length > 0` (actual discovery changes, not just timestamp)
 Lightweight copy of the UI's resolution logic for backend use.
 
 **DiscoveredDataAccess:**
+
 - Navigates discovered.json structure
 - Resolves contract references ($self, @field, eth:0x...)
 - Handles nested paths with dot notation
 
 **Path Expression Support:**
+
 - `$self.owner` - Owner field in current contract
 - `@governor.signers[0]` - Follow address field, get first signer
 - `eth:0x123...acl.permissions` - Absolute contract reference
@@ -113,6 +118,7 @@ Lightweight copy of the UI's resolution logic for backend use.
 **notifyPermissionChanges()** method formats and sends Discord alerts.
 
 **Message Format:**
+
 ```
 🔒 **Permission Changes Detected: project-name**
 Timestamp: 2025-12-03T10:30:00.000Z
@@ -138,8 +144,8 @@ this.permissionResolver = new PermissionResolver(
   logger,
   configBasePath,
   (projectId, timestamp) =>
-    this.updateNotifier.notifyPermissionChanges(projectId, timestamp),
-)
+    this.updateNotifier.notifyPermissionChanges(projectId, timestamp)
+);
 ```
 
 Resolution is triggered after storing discovery:
@@ -150,8 +156,8 @@ if (diff.length > 0) {
   await this.permissionResolver.resolveAndCompare(
     projectConfig.name,
     discovery,
-    timestamp,
-  )
+    timestamp
+  );
 }
 ```
 
@@ -173,6 +179,7 @@ if (diff.length > 0) {
 ### Handling Resolution Errors
 
 When owner resolution fails:
+
 1. Error message is stored in `resolutionErrors` array
 2. Empty address list is used for that path
 3. All errors are displayed at end of Discord notification
@@ -183,11 +190,13 @@ When owner resolution fails:
 ### functions.json Structure
 
 Each project must have a `functions.json` file at:
+
 ```
 packages/config/src/projects/{project}/functions.json
 ```
 
 Required structure:
+
 ```json
 {
   "version": "1.0",
@@ -212,6 +221,7 @@ Required structure:
 ### Database Migration
 
 Run the migration to add required tables:
+
 ```bash
 # Migration file: 20251202000000_add_permission_monitoring
 # Tables: PermissionResolution, UpdateDiff.details
@@ -222,6 +232,7 @@ Run the migration to add required tables:
 ### Manual Testing
 
 1. **Create test project:**
+
    ```bash
    cd packages/config/src/projects
    mkdir test-permissions
@@ -230,12 +241,14 @@ Run the migration to add required tables:
 2. **Add functions.json with permissioned function**
 
 3. **Run discovery:**
+
    ```bash
    cd packages/l2b
    l2b discover test-permissions
    ```
 
 4. **Trigger UpdateMonitor:**
+
    - Wait for hourly run, or
    - Manually trigger via API/code
 
@@ -248,6 +261,7 @@ Run the migration to add required tables:
 ### Automated Tests
 
 See `PermissionResolver.test.ts` for unit tests covering:
+
 - File existence checks
 - Resolution logic
 - Change detection
@@ -272,6 +286,7 @@ ERROR: Failed to resolve permissions
 ### Database Queries
 
 **Check resolution history:**
+
 ```sql
 SELECT * FROM "PermissionResolution"
 WHERE "projectId" = 'compound-v3'
@@ -280,6 +295,7 @@ LIMIT 10;
 ```
 
 **Check permission changes:**
+
 ```sql
 SELECT * FROM "UpdateDiff"
 WHERE "projectId" = 'compound-v3'
@@ -288,6 +304,7 @@ ORDER BY "timestamp" DESC;
 ```
 
 **Get latest resolution blob:**
+
 ```sql
 SELECT "resolutionBlob"
 FROM "PermissionResolution"
@@ -321,6 +338,7 @@ LIMIT 1;
 ### Resolution Errors
 
 When path resolution fails:
+
 - Error is logged but does not stop processing
 - Other functions/paths continue to resolve
 - Error appears in Discord notification
@@ -359,7 +377,7 @@ When path resolution fails:
 
 ## References
 
-- [CLAUDE.md](../../../../../../CLAUDE.md) - DefidDisco architecture
+- [CLAUDE.md](../../../../../../CLAUDE.md) - DeFiDisco architecture
 - [UpdateMonitor.ts](../UpdateMonitor.ts) - Main discovery loop
 - [UpdateNotifier.ts](../UpdateNotifier.ts) - Discord notifications
 - [functions.json example](../../../../../../packages/config/src/projects/compound-v3/functions.json)
