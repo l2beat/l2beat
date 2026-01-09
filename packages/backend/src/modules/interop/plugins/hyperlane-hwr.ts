@@ -68,7 +68,22 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
-      const messageId = findDispatchMessageId(input, sentTransferRemote)
+      const senderAddress = input.log.address.toLowerCase()
+      const messageId = findMessageIdAround(input, (txLog, index) => {
+        const dispatch = parseDispatch(txLog, null)
+        if (!dispatch) return
+        if (dispatch.sender.toLowerCase() !== senderAddress) return
+        if (
+          Number(dispatch.destination) !==
+          Number(sentTransferRemote.destination)
+        )
+          return
+
+        const nextLog = input.txLogs[index + 1]
+        const dispatchId = nextLog && parseDispatchId(nextLog, null)
+        return dispatchId?.messageId
+      })
+      console.log('messageId', messageId)
       if (!messageId) return
 
       const $dstChain = findChain(
@@ -137,7 +152,18 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
 
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
-      const messageId = findProcessMessageId(input, receivedTransferRemote)
+      const recipientAddress = input.log.address.toLowerCase()
+      const messageId = findMessageIdAround(input, (txLog, index) => {
+        const process = parseProcess(txLog, null)
+        if (!process) return
+        if (process.recipient.toLowerCase() !== recipientAddress) return
+        if (Number(process.origin) !== Number(receivedTransferRemote.origin))
+          return
+
+        const nextLog = input.txLogs[index + 1]
+        const processId = nextLog && parseProcessId(nextLog, null)
+        return processId?.messageId
+      })
       if (!messageId) return
 
       const $srcChain = findChain(
@@ -236,59 +262,27 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 }
 
-export function findDispatchMessageId(
+export function findMessageIdAround(
   input: LogToCapture,
-  sentTransferRemote: NonNullable<ReturnType<typeof parseSentTransferRemote>>,
+  parse: (
+    log: LogToCapture['txLogs'][number],
+    index: number,
+  ) => `0x${string}` | undefined,
 ): `0x${string}` | undefined {
   const currentLogIndex = input.log.logIndex
   if (currentLogIndex == null) return
-  const senderAddress = input.log.address.toLowerCase()
+  const startPos = input.txLogs.findIndex(
+    (log) => log.logIndex === currentLogIndex,
+  )
+  if (startPos === -1) return
 
-  for (let i = input.txLogs.length - 1; i >= 0; i--) {
-    const txLog = input.txLogs[i]
-    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
-
-    const dispatch = parseDispatch(txLog, null)
-    if (!dispatch) continue
-    if (dispatch.sender.toLowerCase() !== senderAddress) return
-    // TODO: edge case logs
-    if (Number(dispatch.destination) !== Number(sentTransferRemote.destination))
-      return
-
-    const nextLog = input.txLogs[i + 1]
-    const dispatchId = nextLog && parseDispatchId(nextLog, null)
-    if (!dispatchId) continue
-    return dispatchId.messageId
+  for (let i = startPos - 1; i >= 0; i--) {
+    const messageId = parse(input.txLogs[i], i)
+    if (messageId) return messageId
   }
-  return
-}
 
-function findProcessMessageId(
-  input: LogToCapture,
-  receivedTransferRemote: NonNullable<
-    ReturnType<typeof parseReceivedTransferRemote>
-  >,
-): `0x${string}` | undefined {
-  const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return
-  const recipientAddress = input.log.address.toLowerCase()
-
-  for (let i = input.txLogs.length - 1; i >= 0; i--) {
-    const txLog = input.txLogs[i]
-    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
-
-    const process = parseProcess(txLog, null)
-    if (!process) continue
-    if (process.recipient.toLowerCase() !== recipientAddress) return
-    if (Number(process.origin) !== Number(receivedTransferRemote.origin)) return
-
-    const nextLog = input.txLogs.find(
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      (x) => x.logIndex === txLog.logIndex! + 1,
-    )
-    const processId = nextLog && parseProcessId(nextLog, null)
-    if (!processId) return
-    return processId.messageId
+  for (let i = startPos + 1; i < input.txLogs.length; i++) {
+    const messageId = parse(input.txLogs[i], i)
+    if (messageId) return messageId
   }
-  return
 }
