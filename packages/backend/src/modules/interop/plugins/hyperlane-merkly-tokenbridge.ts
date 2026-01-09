@@ -1,6 +1,6 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { Dispatch, Process } from './hyperlane'
-import { findDispatchMessageId, parseSentTransferRemote } from './hyperlane-hwr'
+import { Dispatch, Process, parseDispatch, parseDispatchId } from './hyperlane'
+import { findMessageIdAround, parseSentTransferRemote } from './hyperlane-hwr'
 import {
   createInteropEventType,
   defineNetworks,
@@ -78,7 +78,22 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
       network.address, // important to filter by emitter as this is the only distinction from other HWR
     ])
     if (sentTransferRemote) {
-      const messageId = findDispatchMessageId(input, sentTransferRemote)
+      const senderAddress = input.log.address.toLowerCase()
+      const messageId = findMessageIdAround(input, (txLog, index) => {
+        const dispatch = parseDispatch(txLog, null)
+        if (!dispatch) return
+        if (dispatch.sender.toLowerCase() !== senderAddress) return
+        // TODO: edge case logs
+        if (
+          Number(dispatch.destination) !==
+          Number(sentTransferRemote.destination)
+        )
+          return
+
+        const nextLog = input.txLogs[index + 1]
+        const dispatchId = nextLog && parseDispatchId(nextLog, null)
+        return dispatchId?.messageId
+      })
       if (!messageId) return
 
       const $dstChain = findChain(
