@@ -9,6 +9,7 @@ import type {
   Badge,
   BridgeCategory,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectBridgeRisks,
@@ -281,34 +282,4 @@ export interface BridgeDisplay {
 export interface BridgeConfig {
   associatedTokens?: string[]
   escrows: ProjectEscrow[]
-}
-
-export interface InteropProtocol {
-  type: 'interopProtocol'
-  id: ProjectId
-  addedAt: UnixTime
-  interopConfig: InteropConfig
-}
-
-export interface InteropConfig {
-  name?: string
-  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
-  plugins: InteropPlugin[]
-}
-
-type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
-
-type ByChainPlugin = {
-  filterBy: 'chain'
-  plugin: string
-}
-
-type ByTokenIdPlugin = {
-  filterBy: 'abstractTokenId'
-  abstractTokenId: string
-  plugin: string
-}
-
-type PlainPlugin = {
-  plugin: string
 }

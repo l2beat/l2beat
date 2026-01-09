@@ -1,12 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { InteropProtocol } from '../../internalTypes'
+import type { BaseProject } from '../../types'
 
 const ABSTRACT_TOKEN_ID = 'yoI9zn'
 
-export const usdt0: InteropProtocol = {
-  type: 'interopProtocol',
-  addedAt: UnixTime(1767959267),
+export const usdt0: BaseProject = {
   id: ProjectId('usdt0'),
+  slug: 'usdt0',
+  name: 'USDT0',
+  shortName: undefined,
+  addedAt: UnixTime(1767959267),
   interopConfig: {
     bridgeType: 'omnichain',
     plugins: [
@@ -22,4 +24,5 @@ export const usdt0: InteropProtocol = {
       },
     ],
   },
+  isInteropProtocol: true,
 }

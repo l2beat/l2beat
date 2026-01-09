@@ -31,7 +31,6 @@ import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
-  InteropConfig,
   Layer2TxConfig,
   ProjectScalingDisplay,
   ProjectScalingRiskView,
@@ -41,6 +40,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectCustomDa,

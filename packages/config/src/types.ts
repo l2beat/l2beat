@@ -102,6 +102,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // interop data
+  interopConfig?: InteropConfig
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -124,6 +127,7 @@ export interface BaseProject {
   isBridge?: true
   isScaling?: true
   isZkCatalog?: true
+  isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
@@ -1177,6 +1181,29 @@ export interface ProjectDiscoveryInfo {
   contractsDiscoDriven: boolean
   baseTimestamp: number | undefined
   hasDiscoUi: boolean
+}
+
+export interface InteropConfig {
+  name?: string
+  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  plugins: InteropPlugin[]
+}
+
+type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
+
+type ByChainPlugin = {
+  filterBy: 'chain'
+  plugin: string
+}
+
+type ByTokenIdPlugin = {
+  filterBy: 'abstractTokenId'
+  abstractTokenId: string
+  plugin: string
+}
+
+type PlainPlugin = {
+  plugin: string
 }
 // #endregion
 
