@@ -867,4 +867,22 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+  '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
+    title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
+    title: 'Range program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcacfe4637a160a34abbf755e4c297fef0acc2b85
+Generated with discovered.json: 0x7911ab097401d4a29eb9f342cbe44d8ceeb4f132
 
-# Diff at Thu, 08 Jan 2026 21:21:26 GMT:
+# Diff at Fri, 09 Jan 2026 10:11:01 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1767907143
+- current timestamp: 1767953398
 
 ## Description
 
@@ -67,18 +67,18 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract L2StandardBridge (ethscriptions:0x4200000000000000000000000000000000000010)
-    +++ description: None
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001)
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
 ```
 
 ```diff
 +   Status: CREATED
-    contract L2ToL1MessagePasser (ethscriptions:0x4200000000000000000000000000000000000016)
-    +++ description: None
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003)
+    +++ description: L2 predeploy that allows ethscription data (ownership, content, creator) to be proven from L2 to L1 via the L2ToL1MessagePasser.
 ```
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (ethscriptions:0x4200000000000000000000000000000000000018)
-    +++ description: None
+    contract L2ToL1MessagePasser (ethscr:0x4200000000000000000000000000000000000016)
+    +++ description: L2 predeploy for passing messages from L2 to L1. Used by the EthscriptionsProver for L2->L1 proving.
 ```

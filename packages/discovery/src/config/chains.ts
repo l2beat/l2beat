@@ -386,4 +386,14 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.jovay.io/l2/api',
     },
   },
+  {
+    name: 'ethscriptions',
+    chainId: 61166,
+    shortName: 'ethscr',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.ethscriptions.com/api',
+    },
+  },
 ] as const satisfies ChainConfig[]

@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1767907143,
-  "configHash": "0xd10de3afbad2249aaf8dd073ccf43b272d68bb347f4b96d00d39d5b4bfbb6fab",
+  "timestamp": 1767953398,
+  "configHash": "0x2e7dcb652947a49f4f639da1cc66505f11b81f2850406b5d26d3a7c81e91c3c1",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -221,7 +221,7 @@
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 10,
+        "getProposalsLength": 12,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1767709775,
@@ -318,77 +318,52 @@
       }
     },
     {
-      "name": "L2StandardBridge",
-      "address": "ethscriptions:0x4200000000000000000000000000000000000010",
+      "name": "Ethscriptions",
+      "address": "ethscr:0x3300000000000000000000000000000000000001",
       "type": "Contract",
       "sourceHashes": [
         "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
       ],
       "proxyType": "immutable",
+      "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": { "$immutable": true },
       "implementationNames": {
-        "ethscriptions:0x4200000000000000000000000000000000000010": "Proxy"
+        "ethscr:0x3300000000000000000000000000000000000001": "Proxy"
+      }
+    },
+    {
+      "name": "EthscriptionsProver",
+      "address": "ethscr:0x3300000000000000000000000000000000000003",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
+      ],
+      "proxyType": "immutable",
+      "description": "L2 predeploy that allows ethscription data (ownership, content, creator) to be proven from L2 to L1 via the L2ToL1MessagePasser.",
+      "sinceTimestamp": 1686755075,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver"
       }
     },
     {
       "name": "L2ToL1MessagePasser",
-      "address": "ethscriptions:0x4200000000000000000000000000000000000016",
+      "address": "ethscr:0x4200000000000000000000000000000000000016",
       "type": "Contract",
       "sourceHashes": [
-        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6",
-        "0xeae30ba6711a363cca12f4e057185a1206f3f1adb48c6917f1b8bb4bc5717e0d"
+        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
       ],
-      "proxyType": "EIP1967 proxy",
+      "proxyType": "immutable",
+      "description": "L2 predeploy for passing messages from L2 to L1. Used by the EthscriptionsProver for L2->L1 proving.",
+      "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
-      "values": {
-        "$admin": "ethscriptions:0x4200000000000000000000000000000000000018",
-        "$implementation": "ethscriptions:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631158"
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
-        "ethscriptions:0x4200000000000000000000000000000000000016": "Proxy",
-        "ethscriptions:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "ethscriptions:0x4200000000000000000000000000000000000018",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa30dbc60acedeaa7e8154c11b75935442af967787bea59f73fe85e96780a15e6",
-        "0xa30dbc60acedeaa7e8154c11b75935442af967787bea59f73fe85e96780a15e6"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "ethscriptions:0x4200000000000000000000000000000000000016",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethscriptions:0x4200000000000000000000000000000000000018",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1686755075,
-      "sinceBlock": 0,
-      "values": {
-        "$admin": "ethscriptions:0x4200000000000000000000000000000000000018",
-        "$implementation": "ethscriptions:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "owner": "ethscriptions:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
-      },
-      "implementationNames": {
-        "ethscriptions:0x4200000000000000000000000000000000000018": "ProxyAdmin",
-        "ethscriptions:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
+        "ethscr:0x4200000000000000000000000000000000000016": "Proxy"
       }
     }
   ],
@@ -582,7 +557,7 @@
       "function createEthscription(address to, string dataURI)",
       "function transferEthscription(address to, bytes32 ethscriptionId)"
     ],
-    "ethscriptions:0x4200000000000000000000000000000000000010": [
+    "ethscr:0x3300000000000000000000000000000000000001": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -592,7 +567,14 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) returns (bytes)"
     ],
-    "ethscriptions:0x4200000000000000000000000000000000000016": [
+    "ethscr:0x3300000000000000000000000000000000000003": [
+      "error OnlyEthscriptions()",
+      "error OnlyL1Block()",
+      "event EthscriptionDataProofSent(bytes32 indexed ethscriptionId, uint256 indexed l2BlockNumber, uint256 l2Timestamp)",
+      "function flushAllProofs()",
+      "function queueEthscription(bytes32 ethscriptionId)"
+    ],
+    "ethscr:0x4200000000000000000000000000000000000016": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -601,41 +583,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) returns (bytes)"
-    ],
-    "ethscriptions:0x4200000000000000000000000000000000000018": [
-      "constructor(address _owner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address _proxy, address _newAdmin)",
-      "function getProxyAdmin(address _proxy) view returns (address)",
-      "function getProxyImplementation(address _proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _proxy, address _implementation)",
-      "function upgradeAndCall(address _proxy, address _implementation, bytes _data)"
-    ],
-    "ethscriptions:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
-      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
-      "function MESSAGE_VERSION() view returns (uint16)",
-      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
-      "function messageNonce() view returns (uint256)",
-      "function sentMessages(bytes32) view returns (bool)"
-    ],
-    "ethscriptions:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
-      "constructor(address _owner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address _proxy, address _newAdmin)",
-      "function getProxyAdmin(address _proxy) view returns (address)",
-      "function getProxyImplementation(address _proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _proxy, address _implementation)",
-      "function upgradeAndCall(address _proxy, address _implementation, bytes _data)"
     ]
   },
   "usedTemplates": {
@@ -648,6 +595,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24192597, "ethscriptions": 6762673 },
-  "permissionsConfigHash": "0xe671ccc26096e905933f84dcf33523b4f738451e9ec3840b01ccbdc2f4ff6a39"
+  "usedBlockNumbers": { "ethereum": 24196434, "ethscriptions": 6766527 },
+  "permissionsConfigHash": "0xfbe3814532c0cfff5a48c5a890a488a1007d01fdbe356789aca79868da0d0092"
 }

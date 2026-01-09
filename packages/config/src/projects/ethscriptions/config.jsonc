@@ -3,10 +3,41 @@
   "name": "ethscriptions",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A"
+    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A",
+    "ethscr:0x4200000000000000000000000000000000000016",
+    "ethscr:0x3300000000000000000000000000000000000001",
+    "ethscr:0x3300000000000000000000000000000000000003"
   ],
   "names": {
-    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A": "Rollup"
+    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A": "Rollup",
+    "ethscr:0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
+    "ethscr:0x3300000000000000000000000000000000000001": "Ethscriptions",
+    "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver"
   },
-  "overrides": {}
+  "overrides": {
+    "ethscr:0x4200000000000000000000000000000000000018": {
+      "proxyType": "immutable",
+      "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys."
+    },
+    "ethscr:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x0000000000000000000000000000000000000000": {
+      "ignoreDiscovery": true
+    },
+    "ethscr:0x3300000000000000000000000000000000000001": {
+      "proxyType": "immutable",
+      "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "ignoreMethods": ["exists", "tokenIdToEthscriptionId"]
+    },
+    "ethscr:0x3300000000000000000000000000000000000003": {
+      "proxyType": "immutable",
+      "description": "L2 predeploy that allows ethscription data (ownership, content, creator) to be proven from L2 to L1 via the L2ToL1MessagePasser."
+    },
+    "ethscr:0x4200000000000000000000000000000000000016": {
+      "proxyType": "immutable",
+      "description": "L2 predeploy for passing messages from L2 to L1. Used by the EthscriptionsProver for L2->L1 proving.",
+      "ignoreInWatchMode": ["messageNonce"]
+    }
+  }
 }

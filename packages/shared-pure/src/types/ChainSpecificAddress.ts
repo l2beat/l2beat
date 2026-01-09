@@ -45,6 +45,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   gateway: 'gateway',
   ethereal: 'ethereal',
   jovay: 'jovay',
+  ethscr: 'ethscriptions',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
