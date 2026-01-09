@@ -246,7 +246,7 @@ export class OpStackPlugin implements InteropPlugin {
       // If ETH was sent via L2ToL1MessagePasser, also create a Transfer
       if (messagePassed.args.value > 0n) {
         results.push(
-          Result.Transfer('opstack-cdm.L2ToL1Transfer', {
+          Result.Transfer('opstack.L2ToL1Transfer', {
             srcEvent: messagePassed,
             srcAmount: messagePassed.args.value,
             srcTokenAddress: Address32.NATIVE,
@@ -279,7 +279,7 @@ export class OpStackPlugin implements InteropPlugin {
       // If ETH was sent via CrossDomainMessenger, also create a Transfer
       if (sentMessage.args.value > 0n) {
         results.push(
-          Result.Transfer('opstack-cdm.L1ToL2Transfer', {
+          Result.Transfer('opstack.L1ToL2Transfer', {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,

@@ -132,11 +132,11 @@ export function createInteropPlugins(
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
+      new AcrossSettlementPlugin(), // should be run before OrbitStack and OpStack
       new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
-      new AcrossSettlementPlugin(), // should be run before OpStack
       new ZklinkNovaPlugin(), // should be run before OpStack
       new WorldIdPlugin(), // should be run before OpStack
       new LidoWstethPlugin(), // should be run before OpStack
