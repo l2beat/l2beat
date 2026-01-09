@@ -44,7 +44,7 @@ ethscriptionsProgramHashes.push(
 export const ethscriptions: ScalingProject = {
   type: 'layer2',
   id: ProjectId('ethscriptions'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: UnixTime(1736331600), // 2025-01-08
   badges: [
     BADGES.Fork.FacetFork,
@@ -100,7 +100,7 @@ export const ethscriptions: ScalingProject = {
     slug: 'ethscriptions',
     description:
       'Ethscriptions is a based rollup that provides cryptographic state and EVM compatibility for ethscriptions. It uses a derivation pipeline to convert L1 ethscription activity into canonical L2 blocks.',
-    purposes: ['Universal'],
+    purposes: ['NFT'],
     links: {
       websites: ['https://ethscriptions.com/'],
       bridges: [],
