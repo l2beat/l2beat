@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 
-type InteropChainId = InteropChains[number]['id']
+export type InteropChainId = InteropChains[number]['id']
 interface InteropSelectedChainsContextType {
   selectedChains: {
     from: Record<InteropChainId, boolean>

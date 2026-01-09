@@ -3,6 +3,7 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { ChainSelector } from './components/ChainSelector'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
@@ -15,7 +16,7 @@ export function InteropSummaryPage({ ...props }: Props) {
       <SideNavLayout fullWidth>
         <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
         <InteropSelectedChainsProvider interopChains={props.interopChains}>
-          test
+          <ChainSelector chains={props.interopChains} />
         </InteropSelectedChainsProvider>
       </SideNavLayout>
     </AppLayout>
