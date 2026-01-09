@@ -12,11 +12,6 @@ import {
   Result,
 } from '../types'
 
-// ABI for decoding createRetryableTicket calldata (L1)
-const CREATE_RETRYABLE_TICKET_SELECTOR = '0x679b6ded'
-const createRetryableTicketAbi = parseAbi([
-  'function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)',
-])
 
 // ABI for decoding submitRetryable calldata (L2 sequencer internal call)
 const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
@@ -43,6 +38,16 @@ export const parseMessageDelivered = createEventParser(
 export const parseRedeemScheduled = createEventParser(
   'event RedeemScheduled(bytes32 indexed ticketId, bytes32 indexed retryTxHash, uint64 indexed sequenceNum, uint64 donatedGas, address gasDonor, uint256 maxRefund, uint256 submissionFeeRefund)',
 )
+
+export const parseInboxMessageDelivered = createEventParser(
+  'event InboxMessageDelivered(uint256 indexed messageNum, bytes data)',
+)
+
+// L1MessageType_submitRetryableTx = 9
+const L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX = 9
+
+// Offset of data.length in the packed retryable ticket message (8 * 32 bytes)
+const RETRYABLE_DATA_LENGTH_OFFSET = 256
 
 // L2 -> L1 (Withdrawal) event types
 export const L2ToL1Tx = createInteropEventType<{
@@ -80,6 +85,7 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
     // L1 -> L2 (Messages)
     bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
+    inbox: EthereumAddress('0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f'),
     sequencerInbox: EthereumAddress(
       '0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6',
     ),
@@ -162,19 +168,50 @@ export class OrbitStackPlugin implements InteropPlugin {
             return
           }
 
-          // Check if this is an ETH-only deposit (createRetryableTicket with empty data param)
+          // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
           let isEthOnly: boolean | undefined
           const txValue = input.tx.value ?? 0n
-          if (txValue > 0n) {
-            const calldata = input.tx.data as `0x${string}`
-            if (calldata.startsWith(CREATE_RETRYABLE_TICKET_SELECTOR)) {
-              const decoded = decodeFunctionData({
-                abi: createRetryableTicketAbi,
-                data: calldata,
-              })
-              // data is the last param (bytes) - if empty, it's ETH-only
-              const retryableData = decoded.args[7] as `0x${string}`
-              isEthOnly = retryableData === '0x'
+          if (
+            txValue > 0n &&
+            messageDelivered.kind === L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX
+          ) {
+            // Find and parse InboxMessageDelivered event with matching messageNum
+            let inboxParsed:
+              | ReturnType<typeof parseInboxMessageDelivered>
+              | undefined
+            for (const log of input.txLogs) {
+              if (EthereumAddress(log.address) !== networkForBridge.inbox) {
+                continue
+              }
+              const parsed = parseInboxMessageDelivered(log, [
+                networkForBridge.inbox,
+              ])
+              if (
+                parsed !== undefined &&
+                parsed.messageNum === messageDelivered.messageIndex
+              ) {
+                inboxParsed = parsed
+                break
+              }
+            }
+
+            if (inboxParsed) {
+              // The data field contains the packed retryable ticket params:
+              // abi.encodePacked(uint256(uint160(to)), l2CallValue, deposit, maxSubmissionCost,
+              //   uint256(uint160(excessFeeRefundAddress)), uint256(uint160(callValueRefundAddress)),
+              //   gasLimit, maxFeePerGas, data.length, data)
+              // Addresses are cast to uint256, so all 8 fields before data.length are 32 bytes each
+              // data.length is at byte offset 256 (8 * 32 bytes)
+              const packedData = inboxParsed.data as `0x${string}`
+              const minLength = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2 + 64
+              if (packedData.length >= minLength) {
+                const dataLengthHex = packedData.slice(
+                  2 + RETRYABLE_DATA_LENGTH_OFFSET * 2,
+                  2 + RETRYABLE_DATA_LENGTH_OFFSET * 2 + 64,
+                )
+                const dataLength = BigInt('0x' + dataLengthHex)
+                isEthOnly = dataLength === 0n
+              }
             }
           }
 
