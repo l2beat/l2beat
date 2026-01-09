@@ -48,15 +48,9 @@ export const parseRedeemScheduled = createEventParser(
 export const L2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
-  callvalue: bigint
+  amount?: bigint // ETH amount if callvalue > 0
+  isEthOnly?: boolean // true if ETH sent with no calldata
 }>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
-
-// L2 -> L1 ETH-only withdrawal initiation (no calldata)
-const ETHOnlyWithdrawalL2ToL1Tx = createInteropEventType<{
-  chain: string
-  position: number
-  amount: bigint
-}>('orbitstack.L2ToL1TxETHOnlyWithdrawal', { ttl: 14 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
@@ -201,21 +195,14 @@ export class OrbitStackPlugin implements InteropPlugin {
       // L2 -> L1 (Withdrawal initiation on L2)
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
       if (l2ToL1Tx) {
-        // Check if this is an ETH-only withdrawal (callvalue > 0 AND no calldata)
-        if (l2ToL1Tx.callvalue > 0n && l2ToL1Tx.data === '0x') {
-          return [
-            ETHOnlyWithdrawalL2ToL1Tx.create(input, {
-              chain: network.chain,
-              position: Number(l2ToL1Tx.position),
-              amount: l2ToL1Tx.callvalue,
-            }),
-          ]
-        }
+        const hasEth = l2ToL1Tx.callvalue > 0n
+        const hasNoCalldata = l2ToL1Tx.data === '0x'
         return [
           L2ToL1Tx.create(input, {
             chain: network.chain,
             position: Number(l2ToL1Tx.position),
-            callvalue: l2ToL1Tx.callvalue,
+            amount: hasEth ? l2ToL1Tx.callvalue : undefined,
+            isEthOnly: hasEth && hasNoCalldata ? true : undefined,
           }),
         ]
       }
@@ -255,56 +242,29 @@ export class OrbitStackPlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
-      // Check if this is an ETH-only withdrawal (ETH sent with no calldata)
-      const ethOnlyWithdrawal = db.find(ETHOnlyWithdrawalL2ToL1Tx, {
-        chain: event.args.chain,
-        position: event.args.position,
-      })
-
-      if (ethOnlyWithdrawal) {
-        // This is an ETH-only withdrawal - create both Message and Transfer
-        return [
-          Result.Message('orbitstack.L2ToL1Message', {
-            app: 'orbitstack-eth',
-            srcEvent: ethOnlyWithdrawal,
-            dstEvent: event,
-          }),
-          Result.Transfer('orbitstack.L2ToL1Transfer', {
-            srcEvent: ethOnlyWithdrawal,
-            srcAmount: ethOnlyWithdrawal.args.amount,
-            srcTokenAddress: Address32.NATIVE,
-            dstEvent: event,
-            dstAmount: ethOnlyWithdrawal.args.amount,
-            dstTokenAddress: Address32.NATIVE,
-          }),
-        ]
-      }
-
-      // Not an ETH-only withdrawal - check for regular L2ToL1Tx
       const l2ToL1Tx = db.find(L2ToL1Tx, {
         chain: event.args.chain,
         position: event.args.position,
       })
       if (!l2ToL1Tx) return
 
-      // Regular withdrawal with calldata - app is unknown
       const results: MatchResult = [
         Result.Message('orbitstack.L2ToL1Message', {
-          app: 'unknown',
+          app: l2ToL1Tx.args.isEthOnly ? 'orbitstack-eth' : 'unknown',
           srcEvent: l2ToL1Tx,
           dstEvent: event,
         }),
       ]
 
-      // If ETH was sent, always create a Transfer (regardless of calldata)
-      if (l2ToL1Tx.args.callvalue > 0n) {
+      // If ETH was sent, create a Transfer
+      if (l2ToL1Tx.args.amount) {
         results.push(
           Result.Transfer('orbitstack.L2ToL1Transfer', {
             srcEvent: l2ToL1Tx,
-            srcAmount: l2ToL1Tx.args.callvalue,
+            srcAmount: l2ToL1Tx.args.amount,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
-            dstAmount: l2ToL1Tx.args.callvalue,
+            dstAmount: l2ToL1Tx.args.amount,
             dstTokenAddress: Address32.NATIVE,
           }),
         )

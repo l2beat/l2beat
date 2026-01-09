@@ -1122,13 +1122,25 @@
     ],
     "events": [
       "orbitstack.L2ToL1Tx",
-      "orbitstack.L2ToL1TxETHOnlyWithdrawal",
+      "orbitstack.L2ToL1Tx",
+      "orbitstack.OutBoxTransactionExecuted",
       "orbitstack.OutBoxTransactionExecuted",
       "orbitstack.MessageDelivered",
+      "orbitstack.MessageDelivered",
+      "orbitstack.RedeemScheduled",
       "orbitstack.RedeemScheduled"
     ],
-    "messages": ["orbitstack.L2ToL1Message", "orbitstack.L1ToL2Message"],
-    "transfers": ["orbitstack.L2ToL1Transfer", "orbitstack.L1ToL2Transfer"]
+    "messages": [
+      "orbitstack.L2ToL1Message",
+      "orbitstack.L2ToL1Message",
+      "orbitstack.L1ToL2Message",
+      "orbitstack.L1ToL2Message"
+    ],
+    "transfers": [
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L1ToL2Transfer"
+    ]
   },
   "orbitstack-standardgateway": {
     "txs": [
