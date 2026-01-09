@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7911ab097401d4a29eb9f342cbe44d8ceeb4f132
+Generated with discovered.json: 0x7fe3d6d841f9404c1fe152c9b1ba7a1d7623354c
 
-# Diff at Fri, 09 Jan 2026 10:11:01 GMT:
+# Diff at Fri, 09 Jan 2026 11:08:17 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1767953398
+- current timestamp: 1767956830
 
 ## Description
 
@@ -44,7 +44,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Rollup (eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A)
-    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
 ```
 
 ```diff

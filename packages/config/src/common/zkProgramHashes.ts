@@ -871,8 +871,7 @@ Verify:
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
-    programUrl:
-      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
@@ -880,8 +879,7 @@ Verify:
     title: 'Range program of Ethscriptions ZK Fault Proofs',
     description:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
-    programUrl:
-      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },

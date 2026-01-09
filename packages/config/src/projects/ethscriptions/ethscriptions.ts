@@ -6,7 +6,6 @@ import {
   DA_MODES,
   DATA_ON_CHAIN,
   EXITS,
-  FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
 } from '../../common'
@@ -48,17 +47,18 @@ export const ethscriptions: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1736331600), // 2025-01-08
   badges: [
+    BADGES.Fork.FacetFork,
     BADGES.Other.BasedSequencing,
     BADGES.DA.EthereumCalldata,
     BADGES.VM.EVM,
   ],
   scopeOfAssessment: {
     inScope: [
-      'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
+      'Sequencing mechanism via L1 derivation pipeline and state validation mechanism via the Rollup proof system',
       'Upgradability of the Rollup contract',
     ],
     notInScope: [
-      'Bridge functionality is not yet assessed as no canonical bridge has been discovered',
+      'Bridge functionality - the system intentionally has no canonical bridge. Native gas tokens are minted algorithmically from L1 gas burn rather than through a bridge escrow',
       'The soundness of the ZK proof system of Rollup',
     ],
   },
@@ -203,7 +203,13 @@ export const ethscriptions: ScalingProject = {
   },
   technology: {
     operator: OPERATOR.DECENTRALIZED_OPERATOR,
-    forceTransactions: FORCE_TRANSACTIONS.CANONICAL_ORDERING('EOA inbox'),
+    forceTransactions: {
+      name: 'Users can force any transaction',
+      description:
+        'Because the system derives L2 state from all valid ethscription transactions on Ethereum L1, users can circumvent censorship by submitting any transaction with valid Data URI calldata. There is no specific inbox address required.',
+      risks: [],
+      references: [],
+    },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('optimistic', MAX_CHALLENGE_SECS),
@@ -216,12 +222,12 @@ export const ethscriptions: ScalingProject = {
     sequencing: {
       name: 'Based Sequencing',
       description:
-        'Ethscriptions uses a based sequencing model where transaction ordering is determined entirely by Ethereum L1. Users submit transactions to an immutable address on Ethereum with transaction information encoded as calldata. L2 blocks preserve the exact order in which Ethereum includes these transactions. Additionally, L1 smart contracts can create Ethscriptions transactions by emitting events with the Ethscriptions event signature.',
+        'Ethscriptions uses a based sequencing model where transaction ordering is determined entirely by Ethereum L1. Unlike traditional rollups, Ethscriptions does not use a batch inbox. Instead, it derives L2 blocks directly from L1 receipts and logs by monitoring all Ethereum transactions for valid Data URI calldata (ethscription creations) and ESIP protocol events (transfers). L2 blocks preserve the exact order in which Ethereum includes these transactions.',
       risks: [],
       references: [
         {
-          title: 'Ethscriptions Inbox Address - Etherscan',
-          url: 'https://etherscan.io/address/0x00000000000000000000000000000000000FacE7',
+          title: 'Ethscriptions Kona - GitHub',
+          url: 'https://github.com/ethscriptions-protocol/ethscriptions-kona',
         },
       ],
     },

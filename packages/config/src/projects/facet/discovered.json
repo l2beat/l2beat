@@ -165,7 +165,7 @@
         "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",

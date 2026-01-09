@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x83b5d7ab2a919789b800081207c1b03e252110e3
+
+# Diff at Fri, 09 Jan 2026 11:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dd6e980809c2759dbed94d65285ec8dc56d0e9c9 block: 1767717465
+- current timestamp: 1767717465
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767717465 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      description:
+-        "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system."
++        "Core rollup contract that manages the state of the rollup and its ZK fault proof system."
+    }
+```
+
 Generated with discovered.json: 0x03fdb537b5c34b130611311a139a3f72c06f05c7
 
 # Diff at Mon, 24 Nov 2025 11:36:54 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1767953398,
+  "timestamp": 1767956830,
   "configHash": "0x2e7dcb652947a49f4f639da1cc66505f11b81f2850406b5d26d3a7c81e91c3c1",
   "entries": [
     {
@@ -201,7 +201,7 @@
         "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -595,6 +595,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24196434, "ethscriptions": 6766527 },
+  "usedBlockNumbers": { "ethereum": 24196720, "ethscriptions": 6766813 },
   "permissionsConfigHash": "0xfbe3814532c0cfff5a48c5a890a488a1007d01fdbe356789aca79868da0d0092"
 }
