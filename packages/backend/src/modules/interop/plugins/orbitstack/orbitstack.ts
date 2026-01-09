@@ -12,7 +12,6 @@ import {
   Result,
 } from '../types'
 
-
 // ABI for decoding submitRetryable calldata (L2 sequencer internal call)
 const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
 const submitRetryableAbi = parseAbi([
