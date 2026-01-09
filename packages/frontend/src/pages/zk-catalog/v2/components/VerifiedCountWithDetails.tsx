@@ -94,7 +94,7 @@ export function CountWithAttesters({
         <TooltipTrigger>
           <Icon className="size-4" />
         </TooltipTrigger>
-        <TooltipContent>{`${typeToLabel(type)} verified`}</TooltipContent>
+        <TooltipContent>{typeToTooltip(type)}</TooltipContent>
       </Tooltip>
       {attesters && attesters.length > 0 && (
         <span className="font-medium text-label-value-14 text-secondary leading-none">
@@ -132,13 +132,13 @@ function typeToIcon(type: 'successful' | 'notVerified' | 'unsuccessful') {
   }
 }
 
-function typeToLabel(type: 'successful' | 'notVerified' | 'unsuccessful') {
+function typeToTooltip(type: 'successful' | 'notVerified' | 'unsuccessful') {
   switch (type) {
     case 'successful':
-      return 'Successfully'
+      return 'Successfully verified'
     case 'notVerified':
-      return 'Not'
+      return 'Not verified'
     case 'unsuccessful':
-      return 'Unsuccessfully'
+      return 'Verification unsuccessful'
   }
 }

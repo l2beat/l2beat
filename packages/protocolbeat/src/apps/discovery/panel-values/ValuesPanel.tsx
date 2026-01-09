@@ -143,7 +143,9 @@ function Display({
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
-                  <p className="text-aux-teal">{role}</p>
+                  <p key={role} className="text-aux-teal">
+                    {role}
+                  </p>
                 ))}
               </div>
             </WithHeadline>

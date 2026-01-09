@@ -861,11 +861,15 @@
       "opstack.MessagePassed",
       "opstack.WithdrawalFinalized"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
-    "transfers": ["opstack-cdm.L1ToL2Transfer", "opstack-cdm.L2ToL1Transfer"]
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "unknown" },
+      { "type": "opstack.L2ToL1Message", "app": "unknown" }
+    ],
+    "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement": {
     "txs": [
+      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
       {
         "chain": "ethereum",
         "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
@@ -877,13 +881,22 @@
       {
         "chain": "base",
         "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
     ],
     "events": [
       "across-settlement.SentMessage",
-      "across-settlement.SentMessage"
+      "across-settlement.SentMessage",
+      "across-settlement.MessageDelivered"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
+      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
+      { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
+    ]
   },
   "world-id": {
     "txs": [
@@ -897,7 +910,7 @@
       }
     ],
     "events": ["world-id.SentMessage"],
-    "messages": ["opstack.L1ToL2Message"]
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "world-id" }]
   },
   "lido-wsteth": {
     "txs": [
@@ -949,10 +962,10 @@
       "lido-wsteth.WithdrawalFinalized"
     ],
     "messages": [
-      "opstack.L1ToL2Message",
-      "opstack.L1ToL2Message",
-      "opstack.L2ToL1Message",
-      "opstack.L2ToL1Message"
+      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
+      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
+      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" },
+      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }
     ],
     "transfers": [
       "lido-wsteth.L1ToL2Transfer",
@@ -984,7 +997,7 @@
       "sorare-base.TransferRegisteredSentMessage",
       "sorare-base.FactRegisteredRelayedMessage"
     ],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare-base" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
   "beefy-bridge": {
@@ -1002,7 +1015,7 @@
       "beefy-bridge.BridgedOutSentMessage",
       "beefy-bridge.BridgedInRelayedMessage"
     ],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge": {
@@ -1079,11 +1092,21 @@
         "chain": "optimism",
         "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240"
       }
+    ],
+    "messages": [
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ]
   },
   "orbitstack": {
     "txs": [
-      // arbitrum -> ethereum (data message)
+      // arbitrum -> ethereum (L2ToL1 message with calldata, no ETH)
       {
         "chain": "arbitrum",
         "tx": "0x3b8f7205e18ab5418b213020e0def446cf845dc7516bc276099869415e55566b"
@@ -1091,7 +1114,58 @@
       {
         "chain": "ethereum",
         "tx": "0xf031b41688650d9cc8c2e02408376c60f43443e3bdc5d1219872da18fafcb9a2"
+      },
+      // arbitrum -> ethereum (ETH-only withdrawal, no calldata)
+      {
+        "chain": "arbitrum",
+        "tx": "0x87fc7b834f3e746228c28bb06f5623e6d181ab6a9e5978af0127f534de5bfbe0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd52b879ab5d43ff1111c1f4b2eb0c40eedd2ef5674fce740e3a8f8afdd9d8b56"
+      },
+      // ethereum -> arbitrum (ETH-only deposit, no calldata)
+      {
+        "chain": "ethereum",
+        "tx": "0xad58fa2d5c88d4bde46877765b1111083bac521afd88d38c2ad6f42acd193307"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xb12497a13c6cb72700c8233c037581b38c5c218dd6e1ed0899a5da641d1cdbf7"
+      },
+      // ethereum -> arbitrum (deposit with calldata via unknown gateway - not ETH-only)
+      {
+        "chain": "ethereum",
+        "tx": "0xe411110d6005c854c95d04b635a2dd572ff7309e11c58f002b945428e08309e5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa85c825b48fbd0158b2c43ea4dde4c2d8eafcda242ed9cee9430b8e8079a7e29"
       }
+    ],
+    "events": [
+      "orbitstack.L2ToL1Tx",
+      "orbitstack.L2ToL1Tx",
+      "orbitstack.OutBoxTransactionExecuted",
+      "orbitstack.OutBoxTransactionExecuted",
+      "orbitstack.MessageDelivered",
+      "orbitstack.MessageDelivered",
+      "orbitstack.RedeemScheduled",
+      "orbitstack.RedeemScheduled"
+    ],
+    "messages": [
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-standardgateway"
+      },
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
+      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+      { "type": "orbitstack.L1ToL2Message", "app": "unknown" }
+    ],
+    "transfers": [
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L1ToL2Transfer"
     ]
   },
   "orbitstack-standardgateway": {
@@ -1220,14 +1294,33 @@
       },
       // ERA metaErc20 hub - not implemented yet
       {
-        "chain": "optimism",
-        "tx": "0x68e40b00afb8b3b9d2f7737aad1131e6d8984ee5adc264589cf8bd95e7cd2357"
+        "chain": "ethereum",
+        "tx": "0xeffe52863003d08f66eb80b4841191a2a80ca2f5c07b5a999d6b27b66271d4c1"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xa447095a535fcfb2582655b3c481449e330e61f9cc83dacaa2aad4e0672f2b52"
+        "tx": "0xfd7e7b55a60c5787ee429d9c25056212be388dad1daef7ba5730aec3f9f81647"
+      },
+      // cctpv1 via hyperlane
+      {
+        "chain": "ethereum",
+        "tx": "0x323eebc77516ba13ba5b48c5e8c04f1b2a8ba323c3d7c3a86be964883566bc2c"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd2562db8676570356c302a868e0c7ab12319e2a6e123e4268ed7e9a2cba8dc0a"
       }
-    ]
+    ],
+    "events": [
+      "hyperlane-decent.ReceivedFromBridge",
+      "hyperlane-hwr.TransferReceived",
+      "hyperlane-hwr.TransferSent",
+      "hyperlane-renzo.PriceUpdatedProcess",
+      "hyperlane.Dispatch",
+      "hyperlane.Process"
+    ],
+    "messages": ["hyperlane.Message"],
+    "transfers": ["hyperlaneHwr.Transfer"]
   },
   "wormhole-debug": {
     "txs": [
@@ -1373,7 +1466,7 @@
     ]
   },
   "hyperlane-eco": {
-    // 5 msgs, 6 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall)
+    // 7 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall, 1 using hyperinstantfill path)
     "txs": [
       {
         "chain": "ethereum",
@@ -1407,7 +1500,7 @@
         "chain": "optimism",
         "tx": "0xb797cbc61f80cd79d92a7e11ad8e74900c87ebeba2650f622424096798f7d0c9"
       },
-      // destination uses a multicall:
+      // source uses a multicall:
       {
         "chain": "arbitrum",
         "tx": "0x8006690c841152e495e585bf22843c5ad31d284ce07338d3e7518db53fbf2abe"
@@ -1419,6 +1512,15 @@
       {
         "chain": "optimism",
         "tx": "0x8c59bafff27b859434e695278df565cb6cc894ba8b6655d55da6a924a1cd4015"
+      },
+      // hyperInstantFulfill
+      {
+        "chain": "optimism",
+        "tx": "0x8d263e0086df0e5a1f488d526d5e745afb368ce08ee985eff3fcc6a4c1276da8"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0dd91d7f510e68d0222b2bd5fc01a56b8ffa366bfcf95fbabd7e90e9b7e9ea57"
       }
     ]
   },
@@ -1512,7 +1614,10 @@
       }
     ],
     "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
-    "messages": ["opstack.L1ToL2Message", "opstack.L1ToL2Message"]
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "zklink-nova" },
+      { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
+    ]
   },
   "maker-bridge": {
     "txs": [
@@ -1541,7 +1646,10 @@
       "maker-bridge.WithdrawalMessagePassed",
       "maker-bridge.WithdrawalFinalized"
     ],
-    "messages": ["opstack.L1ToL2Message", "opstack.L2ToL1Message"],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "maker-bridge" },
+      { "type": "opstack.L2ToL1Message", "app": "maker-bridge" }
+    ],
     "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
   },
   "sky-bridge": {
@@ -1557,7 +1665,7 @@
       }
     ],
     "events": ["sky-bridge.DepositSentMessage", "sky-bridge.DepositFinalized"],
-    "messages": ["opstack.L1ToL2Message"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
   }
 }

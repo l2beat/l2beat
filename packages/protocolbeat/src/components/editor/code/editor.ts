@@ -8,10 +8,12 @@ import type { EditorFile } from '../store'
 
 export type EditorSupportedLanguage = 'solidity' | 'json'
 
+export type EditorContentCallback = (content: string) => void
+export type EditorSaveCallback = (content: string) => boolean
 export type EditorCallbacks = {
-  onSave?: (content: string) => string
-  onChange?: (content: string) => void
-  onLoad?: (content: string) => void
+  onSave?: EditorSaveCallback
+  onChange?: EditorContentCallback
+  onLoad?: EditorContentCallback
 }
 
 export class Editor extends EditorPluginStore<'code'> {
@@ -41,7 +43,7 @@ export class Editor extends EditorPluginStore<'code'> {
     })
   }
 
-  private createUri(file: EditorFile) {
+  public createUri(file: EditorFile) {
     return monaco.Uri.parse(`inmemory://${file.id}.${file.language}`)
   }
 

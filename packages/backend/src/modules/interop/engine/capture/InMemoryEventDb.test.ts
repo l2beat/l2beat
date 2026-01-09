@@ -91,6 +91,23 @@ describe(InMemoryEventDb.name, () => {
     expect(db.getEventCount()).toEqual(0)
   })
 
+  it('can remove events for a specific plugin', () => {
+    const db = new InMemoryEventDb()
+    const events = [
+      { ...EventA.mock({ a: 'one' }), plugin: 'plugin-a' },
+      { ...EventA.mock({ a: 'two' }), plugin: 'plugin-b' },
+      { ...EventB.mock({ b1: 'b1', b2: 1 }), plugin: 'plugin-a' },
+      { ...EventB.mock({ b1: 'b2', b2: 2 }), plugin: 'plugin-b' },
+    ]
+    events.forEach((e) => db.addEvent(e))
+
+    db.removeForPlugin('plugin-a')
+
+    expect(db.getEvents(EventA.type)).toEqual([events[1]])
+    expect(db.getEvents(EventB.type)).toEqual([events[3]])
+    expect(db.getEventCount()).toEqual(2)
+  })
+
   it('can remove multiple expired events leaving one', () => {
     const db = new InMemoryEventDb()
     const events = [

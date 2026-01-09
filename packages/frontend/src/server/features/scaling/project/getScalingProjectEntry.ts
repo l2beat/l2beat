@@ -21,6 +21,7 @@ import {
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -582,7 +583,11 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance,
+        content: linkAddresses(
+          project.scalingTechnology.upgradesAndGovernance,
+          project.contracts,
+          project.permissions,
+        ),
         diagram: getDiagramParams(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
