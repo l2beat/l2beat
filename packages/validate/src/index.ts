@@ -1,3 +1,4 @@
+export { fromJsonSchema, type JsonSchema } from './fromJsonSchema.js'
 export { toJsonSchema } from './schema.js'
 export {
   type Parser,

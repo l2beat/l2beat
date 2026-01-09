@@ -7,7 +7,7 @@ import {
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -45,7 +45,7 @@ export const AcrossFilledRelay = createInteropEventType<{
   amount: bigint
 }>('across.FilledRelay', { direction: 'incoming' })
 
-export class AcrossPlugin implements InteropPlugin {
+export class AcrossPlugin implements InteropPluginResyncable {
   name = 'across'
 
   constructor(private configs: InteropConfigStore) {}
@@ -54,8 +54,7 @@ export class AcrossPlugin implements InteropPlugin {
     const acrossNetworks = this.configs.get(AcrossConfig) ?? []
     const spokePoolAddresses = acrossNetworks
       // skip solana - non-EVM
-      // skip hyperevm - can't find proper chain prefix
-      .filter((network) => !['hyperevm', 'solana'].includes(network.chain))
+      .filter((network) => !['solana'].includes(network.chain))
       .map((network) =>
         ChainSpecificAddress.fromLong(network.chain, network.spokePool),
       )

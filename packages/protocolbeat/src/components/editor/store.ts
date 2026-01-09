@@ -20,6 +20,8 @@ interface CodeState {
   ranges: Record<string, Range>
   editors: Record<string, Editor>
   diffEditors: Record<string, DiffEditor>
+  // editorId -> fileId -> dirty
+  dirtyFiles: Record<string, Record<string, boolean>>
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
@@ -32,6 +34,10 @@ interface CodeState {
   showRange: (address: string, range: Range | undefined) => void
   resetRange: () => void
   getRange: (address: string) => Range | undefined
+
+  setDirtyFile: (editorId: string, fileId: string, dirty: boolean) => void
+  getIsDirtyFile: (editorId: string, fileId: string) => boolean
+  resetDirtyFiles: () => void
 }
 
 interface DiffSettings {
@@ -54,7 +60,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   ranges: {},
   editors: {},
   diffEditors: {},
-
+  dirtyFiles: {},
   setEditor: (editorId: string, editor: Editor) =>
     set((state) => ({
       editors: { ...state.editors, [editorId]: editor },
@@ -98,6 +104,17 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getRange: (address: string) => {
     return get().ranges[address]
   },
+  setDirtyFile: (editorId: string, fileId: string, dirty: boolean) =>
+    set((state) => ({
+      dirtyFiles: {
+        ...state.dirtyFiles,
+        [editorId]: { ...state.dirtyFiles[editorId], [fileId]: dirty },
+      },
+    })),
+  getIsDirtyFile: (editorId: string, fileId: string) => {
+    return get().dirtyFiles[editorId]?.[fileId] ?? false
+  },
+  resetDirtyFiles: () => set({ dirtyFiles: {} }),
 }))
 
 export const useDiffSettingsStore = create<DiffSettingsStore>((set) => ({

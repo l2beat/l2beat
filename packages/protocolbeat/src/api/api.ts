@@ -7,6 +7,7 @@ import type {
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
   ApiGlobalConfigSyncStatusResponse,
+  ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
@@ -223,6 +224,15 @@ export async function writeTemplateFile(templateId: string, content: string) {
   if (!res.ok) {
     throw new Error(res.statusText)
   }
+}
+
+export async function getHandlers(): Promise<ApiHandlersResponse> {
+  const res = await fetch('/api/handlers')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiHandlersResponse
 }
 
 export async function createShape(

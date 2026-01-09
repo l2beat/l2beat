@@ -3,9 +3,10 @@ import {
   ConfigWriter,
   getDiscoveryPaths,
   TemplateService,
+  UserHandlers,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { v as z } from '@l2beat/validate'
+import { toJsonSchema, v as z } from '@l2beat/validate'
 import express from 'express'
 import type { Server } from 'http'
 import path, { join } from 'path'
@@ -218,6 +219,19 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   if (!readonly) {
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+
+    app.get('/api/handlers', (_req, res) => {
+      res.json({
+        handlers: Object.entries(UserHandlers).map(([type, definition]) => ({
+          type,
+          schema: toJsonSchema(definition),
+          // TODO: add docs
+          docs: '',
+          // TODO: add examples
+          examples: [],
+        })),
+      })
+    })
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({

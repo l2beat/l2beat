@@ -1,0 +1,111 @@
+@reference "tailwindcss";
+
+.mdc {
+  @apply bg-coffee-800 p-2 text-xs;
+}
+
+.mdc h1,
+.mdc h2,
+.mdc h3,
+.mdc h4,
+.mdc h5,
+.mdc h6,
+.mdc hr,
+.mdc blockquote,
+.mdc p,
+.mdc ol,
+.mdc ul,
+.mdc dl,
+.mdc table,
+.mdc pre {
+  @apply mb-2;
+}
+
+.mdc ul p {
+  @apply mb-0;
+}
+
+.mdc > *:last-child {
+  @apply mb-0;
+}
+
+.mdc h1 {
+  @apply text-xl;
+}
+
+.mdc h2 {
+  @apply text-lg;
+}
+
+.mdc h3 {
+  @apply text-base;
+}
+
+.mdc hr {
+  @apply opacity-80 dark:opacity-50;
+}
+
+.mdc blockquote {
+  @apply border-l-2 border-coffee-400 py-1 pl-3;
+}
+
+.mdc ul {
+  @apply list-disc pl-4;
+}
+
+.mdc ol {
+  @apply list-decimal pl-4;
+}
+
+.mdc ul ul,
+.mdc ol ul,
+.mdc ul ol,
+.mdc ol ol {
+  @apply mb-0;
+}
+
+.mdc li {
+  @apply ml-2;
+}
+
+.mdc code {
+  @apply rounded bg-coffee-700 px-1 font-mono break-words;
+}
+
+.mdc pre {
+  @apply overflow-auto rounded bg-coffee-600 px-4 py-2 font-mono;
+}
+
+.mdc pre code {
+  @apply rounded-none bg-transparent px-0 py-0;
+}
+
+.mdc table {
+  @apply w-full;
+}
+
+.mdc table tr:not(:last-child) {
+  @apply border-b border-coffee-400;
+}
+
+.mdc table thead tr:first-child:last-child {
+  @apply border-b border-coffee-400;
+}
+
+.mdc table td {
+  @apply text-sm;
+}
+
+.mdc table th:not(:last-child),
+.mdc table td:not(:last-child) {
+  @apply border-r border-coffee-400 text-sm;
+}
+
+.mdc table th,
+.mdc table td {
+  @apply px-4 py-2;
+}
+
+.mdc img {
+  @apply dark:invert max-w-full align-[unset] my-4;
+}
