@@ -44,8 +44,7 @@ export function readJsonc(path: string): JSON {
   return parsed
 }
 
-// Expected message can be just a type string, or an object with type and optional app
-// Note: app matching only works for messages since InteropEvent and InteropTransfer don't have app field
+// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
 const ExpectedMessage = v.union([
   v.string(),
   v.object({
@@ -350,7 +349,6 @@ async function runExample(example: Example): Promise<RunResult> {
 
 type ExpectedMessageType = v.infer<typeof ExpectedMessage>
 
-// Normalize expected message to object form
 function normalizeExpectedMessage(item: ExpectedMessageType): {
   type: string
   app?: string
@@ -391,7 +389,6 @@ const PASS = '[\x1B[1;32mPASS\x1B[0m]'
 const XTRA = '[\x1B[1;34mXTRA\x1B[0m]'
 const FAIL = '[\x1B[1;31mFAIL\x1B[0m]'
 
-// Check events and transfers (no app field)
 function checkTypedSimple(
   name: string,
   expected: string[],
@@ -412,7 +409,6 @@ function checkTypedSimple(
   return expected.length === 0
 }
 
-// Check messages (with optional app field)
 function checkTypedWithApp(
   name: string,
   expected: { type: string; app?: string }[],
@@ -420,7 +416,6 @@ function checkTypedWithApp(
   verbose: boolean,
 ): boolean {
   for (const value of values) {
-    // Find a matching expected item (type must match, app must match if specified)
     const idx = expected.findIndex(
       (e) => e.type === value.type && (e.app === undefined || e.app === value.app),
     )
