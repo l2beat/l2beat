@@ -1450,7 +1450,7 @@
     ]
   },
   "hyperlane-eco": {
-    // 5 msgs, 6 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall)
+    // 7 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall, 1 using hyperinstantfill path)
     "txs": [
       {
         "chain": "ethereum",
@@ -1484,7 +1484,7 @@
         "chain": "optimism",
         "tx": "0xb797cbc61f80cd79d92a7e11ad8e74900c87ebeba2650f622424096798f7d0c9"
       },
-      // destination uses a multicall:
+      // source uses a multicall:
       {
         "chain": "arbitrum",
         "tx": "0x8006690c841152e495e585bf22843c5ad31d284ce07338d3e7518db53fbf2abe"
@@ -1496,6 +1496,15 @@
       {
         "chain": "optimism",
         "tx": "0x8c59bafff27b859434e695278df565cb6cc894ba8b6655d55da6a924a1cd4015"
+      },
+      // hyperInstantFulfill
+      {
+        "chain": "optimism",
+        "tx": "0x8d263e0086df0e5a1f488d526d5e745afb368ce08ee985eff3fcc6a4c1276da8"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0dd91d7f510e68d0222b2bd5fc01a56b8ffa366bfcf95fbabd7e90e9b7e9ea57"
       }
     ]
   },
