@@ -46,7 +46,36 @@ export const parseInboxMessageDelivered = createEventParser(
 const L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX = 9
 
 // Offset of data.length in the packed retryable ticket message (8 * 32 bytes)
+// Fields: to, l2CallValue, deposit, maxSubmissionCost, excessFeeRefundAddress,
+// callValueRefundAddress, gasLimit, maxFeePerGas (all uint256 due to address casting)
 const RETRYABLE_DATA_LENGTH_OFFSET = 256
+
+function getIsEthOnlyFromInbox(
+  txLogs: LogToCapture['txLogs'],
+  inboxAddress: EthereumAddress,
+  messageDelivered: { kind: number; messageIndex: bigint },
+): boolean | undefined {
+  if (messageDelivered.kind !== L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX) {
+    return undefined
+  }
+
+  // Find InboxMessageDelivered with matching messageNum
+  for (const log of txLogs) {
+    if (EthereumAddress(log.address) !== inboxAddress) continue
+    const parsed = parseInboxMessageDelivered(log, [inboxAddress])
+    if (parsed?.messageNum !== messageDelivered.messageIndex) continue
+
+    // Found it - extract data.length from packed retryable ticket params
+    const packedData = parsed.data as `0x${string}`
+    const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
+    if (packedData.length < dataLengthStart + 64) return undefined
+
+    const dataLengthHex = packedData.slice(dataLengthStart, dataLengthStart + 64)
+    return BigInt('0x' + dataLengthHex) === 0n
+  }
+
+  return undefined
+}
 
 // L2 -> L1 (Withdrawal) event types
 export const L2ToL1Tx = createInteropEventType<{
@@ -168,57 +197,17 @@ export class OrbitStackPlugin implements InteropPlugin {
           }
 
           // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
-          let isEthOnly: boolean | undefined
-          const txValue = input.tx.value ?? 0n
-          if (
-            txValue > 0n &&
-            messageDelivered.kind === L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX
-          ) {
-            // Find and parse InboxMessageDelivered event with matching messageNum
-            let inboxParsed:
-              | ReturnType<typeof parseInboxMessageDelivered>
-              | undefined
-            for (const log of input.txLogs) {
-              if (EthereumAddress(log.address) !== networkForBridge.inbox) {
-                continue
-              }
-              const parsed = parseInboxMessageDelivered(log, [
-                networkForBridge.inbox,
-              ])
-              if (
-                parsed !== undefined &&
-                parsed.messageNum === messageDelivered.messageIndex
-              ) {
-                inboxParsed = parsed
-                break
-              }
-            }
-
-            if (inboxParsed) {
-              // The data field contains the packed retryable ticket params:
-              // abi.encodePacked(uint256(uint160(to)), l2CallValue, deposit, maxSubmissionCost,
-              //   uint256(uint160(excessFeeRefundAddress)), uint256(uint160(callValueRefundAddress)),
-              //   gasLimit, maxFeePerGas, data.length, data)
-              // Addresses are cast to uint256, so all 8 fields before data.length are 32 bytes each
-              // data.length is at byte offset 256 (8 * 32 bytes)
-              const packedData = inboxParsed.data as `0x${string}`
-              const minLength = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2 + 64
-              if (packedData.length >= minLength) {
-                const dataLengthHex = packedData.slice(
-                  2 + RETRYABLE_DATA_LENGTH_OFFSET * 2,
-                  2 + RETRYABLE_DATA_LENGTH_OFFSET * 2 + 64,
-                )
-                const dataLength = BigInt('0x' + dataLengthHex)
-                isEthOnly = dataLength === 0n
-              }
-            }
-          }
+          const isEthOnly = getIsEthOnlyFromInbox(
+            input.txLogs,
+            networkForBridge.inbox,
+            messageDelivered,
+          )
 
           return [
             MessageDelivered.create(input, {
               chain: networkForBridge.chain,
               messageNum: messageDelivered.messageIndex.toString(),
-              txValue,
+              txValue: input.tx.value ?? 0n,
               isEthOnly: isEthOnly || undefined,
             }),
           ]
