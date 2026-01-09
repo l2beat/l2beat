@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode } from '../../../api/api'
 import type { ExternalCall } from '../../../api/types'
-import { usePanelStore } from '../store/panel-store'
-import { useMultiViewStore } from '../multi-view/store'
 import { useCodeStore } from '../../../components/editor/store'
-import { groupCallsByType, type BidirectionalCalls } from './useEdgeCallGraph'
+import { useMultiViewStore } from '../multi-view/store'
+import { usePanelStore } from '../store/panel-store'
+import { type BidirectionalCalls, groupCallsByType } from './useEdgeCallGraph'
 
 interface EdgeCallGraphPopupProps {
   sourceAddress: string
@@ -194,7 +194,7 @@ export function EdgeCallGraphPopup({
       style={style}
     >
       {/* Header */}
-      <div className="sticky top-0 border-b border-coffee-600 bg-coffee-700 p-2">
+      <div className="sticky top-0 border-coffee-600 border-b bg-coffee-700 p-2">
         <div className="flex items-center gap-2 text-xs">
           <span
             className="cursor-pointer truncate font-semibold text-aux-blue hover:underline"
@@ -212,9 +212,9 @@ export function EdgeCallGraphPopup({
             {targetName}
           </span>
         </div>
-        <div className="mt-1 text-xs text-coffee-400">
-          {totalCalls} call{totalCalls !== 1 ? 's' : ''} ({calls.outgoing.length}{' '}
-          outgoing, {calls.incoming.length} incoming)
+        <div className="mt-1 text-coffee-400 text-xs">
+          {totalCalls} call{totalCalls !== 1 ? 's' : ''} (
+          {calls.outgoing.length} outgoing, {calls.incoming.length} incoming)
         </div>
       </div>
 
@@ -223,7 +223,7 @@ export function EdgeCallGraphPopup({
         {/* Outgoing calls: source → target */}
         {calls.outgoing.length > 0 && (
           <div className="mb-3">
-            <div className="mb-1 text-xs font-semibold">
+            <div className="mb-1 font-semibold text-xs">
               <span className="text-aux-blue">{sourceName}</span>
               <span className="text-coffee-400"> → </span>
               <span className="text-aux-green">{targetName}</span>
@@ -232,7 +232,7 @@ export function EdgeCallGraphPopup({
             {/* Outgoing Writes */}
             {outgoing.writes.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-aux-orange">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-aux-orange text-xs">
                   <span className="text-base">→</span>
                   <span>Writes ({outgoing.writes.length})</span>
                 </div>
@@ -248,7 +248,7 @@ export function EdgeCallGraphPopup({
             {/* Outgoing Reads */}
             {outgoing.reads.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-aux-cyan">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-aux-cyan text-xs">
                   <span className="text-base">←</span>
                   <span>Reads ({outgoing.reads.length})</span>
                 </div>
@@ -264,7 +264,7 @@ export function EdgeCallGraphPopup({
             {/* Outgoing Unknown */}
             {outgoing.unknown.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-coffee-400">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-coffee-400 text-xs">
                   <span className="text-base">?</span>
                   <span>Unknown ({outgoing.unknown.length})</span>
                 </div>
@@ -282,7 +282,7 @@ export function EdgeCallGraphPopup({
         {/* Incoming calls: target → source */}
         {calls.incoming.length > 0 && (
           <div>
-            <div className="mb-1 text-xs font-semibold">
+            <div className="mb-1 font-semibold text-xs">
               <span className="text-aux-green">{targetName}</span>
               <span className="text-coffee-400"> → </span>
               <span className="text-aux-blue">{sourceName}</span>
@@ -291,7 +291,7 @@ export function EdgeCallGraphPopup({
             {/* Incoming Writes */}
             {incoming.writes.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-aux-orange">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-aux-orange text-xs">
                   <span className="text-base">→</span>
                   <span>Writes ({incoming.writes.length})</span>
                 </div>
@@ -307,7 +307,7 @@ export function EdgeCallGraphPopup({
             {/* Incoming Reads */}
             {incoming.reads.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-aux-cyan">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-aux-cyan text-xs">
                   <span className="text-base">←</span>
                   <span>Reads ({incoming.reads.length})</span>
                 </div>
@@ -323,7 +323,7 @@ export function EdgeCallGraphPopup({
             {/* Incoming Unknown */}
             {incoming.unknown.length > 0 && (
               <div className="mb-2">
-                <div className="mb-1 flex items-center gap-2 text-xs font-semibold text-coffee-400">
+                <div className="mb-1 flex items-center gap-2 font-semibold text-coffee-400 text-xs">
                   <span className="text-base">?</span>
                   <span>Unknown ({incoming.unknown.length})</span>
                 </div>

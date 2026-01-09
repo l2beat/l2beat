@@ -1,10 +1,8 @@
-import { DiscoveryPaths } from '@l2beat/discovery'
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
-import type {
-  ApiFunctionsResponse,
-} from './types'
 import { resolveOwnersFromDiscovered } from './functions'
+import type { ApiFunctionsResponse } from './types'
 
 export interface ReportEntry {
   contractName: string
@@ -30,9 +28,13 @@ export function generatePermissionsReport(
       const fileContent = fs.readFileSync(functionsPath, 'utf8')
       const data = JSON.parse(fileContent) as ApiFunctionsResponse
       functions = data.contracts
-      const totalFunctions = Object.values(functions).reduce((sum: number, contract: any) =>
-        sum + contract.functions.length, 0)
-      console.log(`Loaded ${totalFunctions} functions from ${Object.keys(functions).length} contracts`)
+      const totalFunctions = Object.values(functions).reduce(
+        (sum: number, contract: any) => sum + contract.functions.length,
+        0,
+      )
+      console.log(
+        `Loaded ${totalFunctions} functions from ${Object.keys(functions).length} contracts`,
+      )
     } catch (error) {
       console.error('Error parsing functions file:', error)
       throw new Error('Failed to parse functions file')
@@ -62,22 +64,30 @@ export function generatePermissionsReport(
   const reportEntries: ReportEntry[] = []
   let permissionedFunctionCount = 0
 
-  for (const [contractAddress, contractFunctions] of Object.entries(functions)) {
+  for (const [contractAddress, contractFunctions] of Object.entries(
+    functions,
+  )) {
     const contractName = getContractName(discoveredData, contractAddress)
 
     for (const func of (contractFunctions as any).functions) {
       if (func.isPermissioned) {
         permissionedFunctionCount++
-        const impact = func.description || func.reason || 'No description provided'
+        const impact =
+          func.description || func.reason || 'No description provided'
 
         // Resolve owners if owner definitions exist
         let owners: string[] = []
         if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
           try {
-            const resolved = resolveOwnersFromDiscovered(paths, project, contractAddress, func.ownerDefinitions)
+            const resolved = resolveOwnersFromDiscovered(
+              paths,
+              project,
+              contractAddress,
+              func.ownerDefinitions,
+            )
             owners = resolved
-              .filter(owner => owner.isResolved)
-              .map(owner => owner.address)
+              .filter((owner) => owner.isResolved)
+              .map((owner) => owner.address)
 
             // If no owners could be resolved, show the definition format
             if (owners.length === 0) {
@@ -86,7 +96,10 @@ export function generatePermissionsReport(
               })
             }
           } catch (error) {
-            console.warn(`Failed to resolve owners for ${func.functionName}:`, error)
+            console.warn(
+              `Failed to resolve owners for ${func.functionName}:`,
+              error,
+            )
             owners = ['Resolution failed']
           }
         } else {
@@ -120,8 +133,9 @@ function getContractName(discoveredData: any, contractAddress: string): string {
     return contractAddress
   }
 
-  const contract = discoveredData.entries.find((entry: any) =>
-    entry.type === 'Contract' && entry.address === contractAddress
+  const contract = discoveredData.entries.find(
+    (entry: any) =>
+      entry.type === 'Contract' && entry.address === contractAddress,
   )
 
   if (contract && contract.name) {
@@ -146,14 +160,16 @@ No permissioned functions found.
 |----------|----------|--------|-------|
 `
 
-  const rows = entries.map(entry => {
-    const contractName = entry.contractName.replace(/\|/g, '\\|')
-    const functionName = entry.functionName.replace(/\|/g, '\\|')
-    const impact = entry.impact.replace(/\|/g, '\\|')
-    const owners = entry.owners.join(', ').replace(/\|/g, '\\|')
+  const rows = entries
+    .map((entry) => {
+      const contractName = entry.contractName.replace(/\|/g, '\\|')
+      const functionName = entry.functionName.replace(/\|/g, '\\|')
+      const impact = entry.impact.replace(/\|/g, '\\|')
+      const owners = entry.owners.join(', ').replace(/\|/g, '\\|')
 
-    return `| ${contractName} | ${functionName} | ${impact} | ${owners} |`
-  }).join('\n')
+      return `| ${contractName} | ${functionName} | ${impact} | ${owners} |`
+    })
+    .join('\n')
 
   const footer = `
 
@@ -163,35 +179,17 @@ No permissioned functions found.
   return header + rows + footer
 }
 
-function getFunctionsPath(
-  paths: DiscoveryPaths,
-  project: string,
-): string {
-  return path.join(
-    paths.discovery,
-    project,
-    'functions.json',
-  )
+function getFunctionsPath(paths: DiscoveryPaths, project: string): string {
+  return path.join(paths.discovery, project, 'functions.json')
 }
 
-function getDiscoveredPath(
-  paths: DiscoveryPaths,
-  project: string,
-): string {
-  return path.join(
-    paths.discovery,
-    project,
-    'discovered.json',
-  )
+function getDiscoveredPath(paths: DiscoveryPaths, project: string): string {
+  return path.join(paths.discovery, project, 'discovered.json')
 }
 
 function getPermissionsReportPath(
   paths: DiscoveryPaths,
   project: string,
 ): string {
-  return path.join(
-    paths.discovery,
-    project,
-    'permissions.md',
-  )
+  return path.join(paths.discovery, project, 'permissions.md')
 }

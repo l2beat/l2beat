@@ -1,17 +1,18 @@
-import { DiscoveryPaths } from '@l2beat/discovery'
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
+import { getContractTags } from './contractTags'
 import type {
   ApiFundsDataResponse,
   ContractFundsData,
-  FundsTokenBalance,
-  FundsPositionProtocol,
   FundsPositionItem,
+  FundsPositionProtocol,
   FundsPositionToken,
+  FundsTokenBalance,
 } from './types'
-import { getContractTags } from './contractTags'
 
-const DEFISCAN_ENDPOINTS_URL = process.env.DEFISCAN_ENDPOINTS_URL || 'http://localhost:3001'
+const DEFISCAN_ENDPOINTS_URL =
+  process.env.DEFISCAN_ENDPOINTS_URL || 'http://localhost:3001'
 
 export function getFundsData(
   paths: DiscoveryPaths,
@@ -68,8 +69,8 @@ export function getContractsToFetch(
   const tags = getContractTags(paths, project)
 
   return tags.tags
-    .filter(tag => tag.fetchBalances || tag.fetchPositions)
-    .map(tag => ({
+    .filter((tag) => tag.fetchBalances || tag.fetchPositions)
+    .map((tag) => ({
       address: tag.contractAddress,
       fetchBalances: tag.fetchBalances ?? false,
       fetchPositions: tag.fetchPositions ?? false,
@@ -109,10 +110,12 @@ export async function fetchFundsForContract(
       const balancesResponse = await fetch(balancesUrl)
 
       if (!balancesResponse.ok) {
-        throw new Error(`Balances API returned ${balancesResponse.status}: ${balancesResponse.statusText}`)
+        throw new Error(
+          `Balances API returned ${balancesResponse.status}: ${balancesResponse.statusText}`,
+        )
       }
 
-      const balancesData = await balancesResponse.json() as {
+      const balancesData = (await balancesResponse.json()) as {
         contract_address: string
         balances: Array<{
           asset_address: string
@@ -131,14 +134,16 @@ export async function fetchFundsForContract(
       balancesCached = balancesData.cached
 
       result.balances = {
-        tokens: balancesData.balances.map((b): FundsTokenBalance => ({
-          assetAddress: b.asset_address,
-          symbol: b.symbol,
-          name: b.name,
-          balance: b.balance,
-          decimals: b.decimals,
-          usdValue: b.usd_value,
-        })),
+        tokens: balancesData.balances.map(
+          (b): FundsTokenBalance => ({
+            assetAddress: b.asset_address,
+            symbol: b.symbol,
+            name: b.name,
+            balance: b.balance,
+            decimals: b.decimals,
+            usdValue: b.usd_value,
+          }),
+        ),
         totalUsdValue: balancesData.total_usd_value,
         timestamp: balancesData.timestamp,
         source: balancesData.source,
@@ -153,10 +158,12 @@ export async function fetchFundsForContract(
       positionsCached = positionsResponse.headers.get('X-Cached') === 'true'
 
       if (!positionsResponse.ok) {
-        throw new Error(`Positions API returned ${positionsResponse.status}: ${positionsResponse.statusText}`)
+        throw new Error(
+          `Positions API returned ${positionsResponse.status}: ${positionsResponse.statusText}`,
+        )
       }
 
-      const positionsData = await positionsResponse.json() as Array<{
+      const positionsData = (await positionsResponse.json()) as Array<{
         id: string
         chain: string
         name: string
@@ -178,22 +185,29 @@ export async function fetchFundsForContract(
       }>
 
       const protocols: FundsPositionProtocol[] = positionsData.map((p) => {
-        const items: FundsPositionItem[] = p.portfolio_item_list.map((item) => ({
-          name: item.name,
-          stats: {
-            assetUsdValue: item.stats.asset_usd_value,
-            debtUsdValue: item.stats.debt_usd_value,
-            netUsdValue: item.stats.net_usd_value,
-          },
-          tokens: item.asset_token_list.map((t): FundsPositionToken => ({
-            symbol: t.symbol,
-            name: t.name,
-            amount: t.amount,
-            price: t.price,
-          })),
-        }))
+        const items: FundsPositionItem[] = p.portfolio_item_list.map(
+          (item) => ({
+            name: item.name,
+            stats: {
+              assetUsdValue: item.stats.asset_usd_value,
+              debtUsdValue: item.stats.debt_usd_value,
+              netUsdValue: item.stats.net_usd_value,
+            },
+            tokens: item.asset_token_list.map(
+              (t): FundsPositionToken => ({
+                symbol: t.symbol,
+                name: t.name,
+                amount: t.amount,
+                price: t.price,
+              }),
+            ),
+          }),
+        )
 
-        const protocolTotalUsd = items.reduce((sum, item) => sum + item.stats.netUsdValue, 0)
+        const protocolTotalUsd = items.reduce(
+          (sum, item) => sum + item.stats.netUsdValue,
+          0,
+        )
 
         return {
           id: p.id,
@@ -205,7 +219,10 @@ export async function fetchFundsForContract(
         }
       })
 
-      const totalPositionsUsd = protocols.reduce((sum, p) => sum + p.totalUsdValue, 0)
+      const totalPositionsUsd = protocols.reduce(
+        (sum, p) => sum + p.totalUsdValue,
+        0,
+      )
 
       result.positions = {
         protocols,
@@ -226,7 +243,7 @@ export async function fetchAllFundsForProject(
   paths: DiscoveryPaths,
   project: string,
   onProgress?: (message: string) => void,
-  forceRefresh: boolean = false,
+  forceRefresh = false,
 ): Promise<ApiFundsDataResponse> {
   const contractsToFetch = getContractsToFetch(paths, project)
   const existingData = getFundsData(paths, project)
@@ -236,7 +253,9 @@ export async function fetchAllFundsForProject(
     return existingData
   }
 
-  onProgress?.(`Found ${contractsToFetch.length} contracts to fetch funds for${forceRefresh ? ' (force refresh)' : ''}`)
+  onProgress?.(
+    `Found ${contractsToFetch.length} contracts to fetch funds for${forceRefresh ? ' (force refresh)' : ''}`,
+  )
 
   const contracts = { ...existingData.contracts }
   let fetchedFromApi = 0
@@ -245,7 +264,9 @@ export async function fetchAllFundsForProject(
   for (let i = 0; i < contractsToFetch.length; i++) {
     const contract = contractsToFetch[i]
 
-    onProgress?.(`[${i + 1}/${contractsToFetch.length}] Requesting ${contract.address}...`)
+    onProgress?.(
+      `[${i + 1}/${contractsToFetch.length}] Requesting ${contract.address}...`,
+    )
 
     const fetchResult = await fetchFundsForContract(contract.address, {
       fetchBalances: contract.fetchBalances,
@@ -272,15 +293,20 @@ export async function fetchAllFundsForProject(
 
     // Determine cache status for logging
     const balancesStatus = contract.fetchBalances
-      ? (fetchResult.balancesCached ? 'CACHED' : 'FETCHED')
+      ? fetchResult.balancesCached
+        ? 'CACHED'
+        : 'FETCHED'
       : 'N/A'
     const positionsStatus = contract.fetchPositions
-      ? (fetchResult.positionsCached ? 'CACHED' : 'FETCHED')
+      ? fetchResult.positionsCached
+        ? 'CACHED'
+        : 'FETCHED'
       : 'N/A'
 
     // Count based on whether any data was actually fetched from API
-    const anyFetched = (contract.fetchBalances && !fetchResult.balancesCached) ||
-                       (contract.fetchPositions && !fetchResult.positionsCached)
+    const anyFetched =
+      (contract.fetchBalances && !fetchResult.balancesCached) ||
+      (contract.fetchPositions && !fetchResult.positionsCached)
     if (anyFetched) {
       fetchedFromApi++
     } else {
@@ -292,11 +318,15 @@ export async function fetchAllFundsForProject(
     } else {
       const balanceValue = fetchResult.data.balances?.totalUsdValue ?? 0
       const positionsValue = fetchResult.data.positions?.totalUsdValue ?? 0
-      onProgress?.(`  Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`)
+      onProgress?.(
+        `  Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`,
+      )
     }
   }
 
-  onProgress?.(`Summary: ${fetchedFromApi} fetched from API, ${returnedFromCache} returned from cache`)
+  onProgress?.(
+    `Summary: ${fetchedFromApi} fetched from API, ${returnedFromCache} returned from cache`,
+  )
 
   const result: ApiFundsDataResponse = {
     version: '1.0',
@@ -315,11 +345,11 @@ export async function fetchFundsForSingleContract(
   project: string,
   contractAddress: string,
   onProgress?: (message: string) => void,
-  forceRefresh: boolean = false,
+  forceRefresh = false,
 ): Promise<ApiFundsDataResponse> {
   const tags = getContractTags(paths, project)
-  const tag = tags.tags.find(t =>
-    t.contractAddress.toLowerCase() === contractAddress.toLowerCase()
+  const tag = tags.tags.find(
+    (t) => t.contractAddress.toLowerCase() === contractAddress.toLowerCase(),
   )
 
   if (!tag || (!tag.fetchBalances && !tag.fetchPositions)) {
@@ -327,7 +357,9 @@ export async function fetchFundsForSingleContract(
     return getFundsData(paths, project)
   }
 
-  onProgress?.(`Requesting ${contractAddress}${forceRefresh ? ' (force refresh)' : ''}...`)
+  onProgress?.(
+    `Requesting ${contractAddress}${forceRefresh ? ' (force refresh)' : ''}...`,
+  )
 
   const fetchResult = await fetchFundsForContract(contractAddress, {
     fetchBalances: tag.fetchBalances,
@@ -342,7 +374,10 @@ export async function fetchFundsForSingleContract(
   let newContractData: ContractFundsData
   if (!fetchResult.data.error) {
     newContractData = fetchResult.data
-  } else if (existingContractData && (existingContractData.balances || existingContractData.positions)) {
+  } else if (
+    existingContractData &&
+    (existingContractData.balances || existingContractData.positions)
+  ) {
     // Preserve existing data but update the error field and timestamp
     newContractData = {
       ...existingContractData,
@@ -368,10 +403,14 @@ export async function fetchFundsForSingleContract(
 
   // Log cache status
   const balancesStatus = tag.fetchBalances
-    ? (fetchResult.balancesCached ? 'CACHED' : 'FETCHED')
+    ? fetchResult.balancesCached
+      ? 'CACHED'
+      : 'FETCHED'
     : 'N/A'
   const positionsStatus = tag.fetchPositions
-    ? (fetchResult.positionsCached ? 'CACHED' : 'FETCHED')
+    ? fetchResult.positionsCached
+      ? 'CACHED'
+      : 'FETCHED'
     : 'N/A'
 
   if (fetchResult.data.error) {
@@ -379,7 +418,9 @@ export async function fetchFundsForSingleContract(
   } else {
     const balanceValue = fetchResult.data.balances?.totalUsdValue ?? 0
     const positionsValue = fetchResult.data.positions?.totalUsdValue ?? 0
-    onProgress?.(`Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`)
+    onProgress?.(
+      `Balances: ${balancesStatus} ($${balanceValue.toLocaleString()}), Positions: ${positionsStatus} ($${positionsValue.toLocaleString()})`,
+    )
   }
 
   onProgress?.('Funds data saved successfully')

@@ -20,12 +20,7 @@ export function IconLockOpen(props: { className?: string }) {
         strokeWidth="1"
         fill="none"
       />
-      <circle
-        cx="8"
-        cy="10"
-        r="1"
-        fill="currentColor"
-      />
+      <circle cx="8" cy="10" r="1" fill="currentColor" />
     </Icon>
   )
 }

@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useUpdateContractTag, useContractTags } from '../../../hooks/useContractTags'
-import { useStore } from '../panel-nodes/store/store'
+import {
+  useContractTags,
+  useUpdateContractTag,
+} from '../../../hooks/useContractTags'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
+import { useStore } from '../panel-nodes/store/store'
 
 export function FundsTagsButton() {
   const { project } = useParams()
@@ -18,15 +21,19 @@ export function FundsTagsButton() {
   const updateContractTag = useUpdateContractTag(project)
   const { data: contractTags } = useContractTags(project)
 
-  const selectedNodes = nodes.filter(node => selected.includes(node.id))
+  const selectedNodes = nodes.filter((node) => selected.includes(node.id))
   const selectionExists = selected.length > 0
 
   // Get current funds settings for first selected node
   const getCurrentSettings = () => {
     if (selectedNodes.length > 0 && selectedNodes[0]) {
-      const normalizedNodeAddress = selectedNodes[0].address.toLowerCase().replace('eth:', '')
-      const tag = contractTags?.tags.find(tag =>
-        tag.contractAddress.toLowerCase().replace('eth:', '') === normalizedNodeAddress
+      const normalizedNodeAddress = selectedNodes[0].address
+        .toLowerCase()
+        .replace('eth:', '')
+      const tag = contractTags?.tags.find(
+        (tag) =>
+          tag.contractAddress.toLowerCase().replace('eth:', '') ===
+          normalizedNodeAddress,
       )
       return {
         fetchBalances: tag?.fetchBalances ?? false,
@@ -69,12 +76,12 @@ export function FundsTagsButton() {
     const newValue = !currentSettings.fetchBalances
 
     await Promise.all(
-      selectedNodes.map(node => {
+      selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
           contractAddress: node.address,
           fetchBalances: newValue,
         })
-      })
+      }),
     )
   }
 
@@ -82,20 +89,22 @@ export function FundsTagsButton() {
     const newValue = !currentSettings.fetchPositions
 
     await Promise.all(
-      selectedNodes.map(node => {
+      selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
           contractAddress: node.address,
           fetchPositions: newValue,
         })
-      })
+      }),
     )
   }
 
   // Count selected nodes that have funds fetching enabled
-  const fundsEnabledCount = selectedNodes.filter(node => {
+  const fundsEnabledCount = selectedNodes.filter((node) => {
     const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
-    const tag = contractTags?.tags.find(tag =>
-      tag.contractAddress.toLowerCase().replace('eth:', '') === normalizedNodeAddress
+    const tag = contractTags?.tags.find(
+      (tag) =>
+        tag.contractAddress.toLowerCase().replace('eth:', '') ===
+        normalizedNodeAddress,
     )
     return tag?.fetchBalances || tag?.fetchPositions
   }).length
@@ -111,38 +120,43 @@ export function FundsTagsButton() {
           className="-translate-x-1/2 absolute bottom-14 left-1/2 w-max"
         >
           <div className="flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-3 shadow-xl">
-            <div className="text-xs font-semibold text-coffee-300 mb-1">
+            <div className="mb-1 font-semibold text-coffee-300 text-xs">
               Funds Fetching Settings
             </div>
 
             <label
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-2"
               onClick={(e) => e.stopPropagation()}
             >
               <input
                 type="checkbox"
                 checked={currentSettings.fetchBalances}
                 onChange={handleToggleBalances}
-                className="w-4 h-4 accent-blue-500 cursor-pointer"
+                className="h-4 w-4 cursor-pointer accent-blue-500"
               />
-              <span className="text-xs text-coffee-200">Fetch Token Balances</span>
+              <span className="text-coffee-200 text-xs">
+                Fetch Token Balances
+              </span>
             </label>
 
             <label
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex cursor-pointer items-center gap-2"
               onClick={(e) => e.stopPropagation()}
             >
               <input
                 type="checkbox"
                 checked={currentSettings.fetchPositions}
                 onChange={handleTogglePositions}
-                className="w-4 h-4 accent-blue-500 cursor-pointer"
+                className="h-4 w-4 cursor-pointer accent-blue-500"
               />
-              <span className="text-xs text-coffee-200">Fetch DeFi Positions</span>
+              <span className="text-coffee-200 text-xs">
+                Fetch DeFi Positions
+              </span>
             </label>
 
-            <div className="text-xs text-coffee-500 mt-1">
-              Selected: {selectedNodes.length} contract{selectedNodes.length !== 1 ? 's' : ''}
+            <div className="mt-1 text-coffee-500 text-xs">
+              Selected: {selectedNodes.length} contract
+              {selectedNodes.length !== 1 ? 's' : ''}
             </div>
           </div>
         </div>

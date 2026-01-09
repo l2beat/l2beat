@@ -1,16 +1,16 @@
-import { useState, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getProject, getFunctions } from '../../../api/api'
-import { useContractTags } from '../../../hooks/useContractTags'
+import { useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { getFunctions, getProject } from '../../../api/api'
 import { Checkbox } from '../../../components/Checkbox'
-import { usePanelStore } from '../store/panel-store'
-import { ResultsSection } from './ResultsSection'
-import { UIContractDataAccess, resolvePathExpression } from './ownerResolution'
 import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
+import { useContractTags } from '../../../hooks/useContractTags'
+import { usePanelStore } from '../store/panel-store'
 import { FundsSection } from './FundsSection'
+import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
+import { ResultsSection } from './ResultsSection'
 
 export function DeFiScanPanel() {
   const { project } = useParams()
@@ -28,27 +28,36 @@ export function DeFiScanPanel() {
   const { data: contractTags } = useContractTags(project)
   const { data: functions } = useQuery({
     queryKey: ['functions', project],
-    queryFn: () => project ? getFunctions(project) : null,
+    queryFn: () => (project ? getFunctions(project) : null),
     enabled: !!project,
   })
 
   if (!response.data || !contractTags || !functions) {
-    return <div className="flex h-full w-full items-center justify-center">Loading...</div>
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        Loading...
+      </div>
+    )
   }
 
   // Filter out external contracts from functions data
   const filteredFunctions = {
     ...functions,
     contracts: Object.fromEntries(
-      Object.entries(functions.contracts || {}).filter(([contractAddress, _]) => {
-        // Normalize address format - remove 'eth:' prefix and convert to lowercase
-        const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
-        const tag = contractTags.tags.find((tag: any) =>
-          tag.contractAddress.toLowerCase() === normalizedAddress
-        )
-        return tag?.isExternal !== true
-      })
-    )
+      Object.entries(functions.contracts || {}).filter(
+        ([contractAddress, _]) => {
+          // Normalize address format - remove 'eth:' prefix and convert to lowercase
+          const normalizedAddress = contractAddress
+            .replace('eth:', '')
+            .toLowerCase()
+          const tag = contractTags.tags.find(
+            (tag: any) =>
+              tag.contractAddress.toLowerCase() === normalizedAddress,
+          )
+          return tag?.isExternal !== true
+        },
+      ),
+    ),
   }
 
   return (
@@ -82,7 +91,15 @@ export function DeFiScanPanel() {
   )
 }
 
-function StatusOfReviewSection({ projectData, contractTags, functions }: { projectData: any, contractTags: any, functions: any }) {
+function StatusOfReviewSection({
+  projectData,
+  contractTags,
+  functions,
+}: {
+  projectData: any
+  contractTags: any
+  functions: any
+}) {
   // Get all contracts from all entries
   const allContracts: any[] = []
   const initialContracts: any[] = []
@@ -131,15 +148,15 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
     contracts: 0,
     eoas: 0,
     multisigs: 0,
-    external: 0
+    external: 0,
   }
 
   allContracts.forEach((contract) => {
     // Check if contract is explicitly marked as external in contract tags
     // Both contracts and tags use 'eth:0x...' format - just normalize to lowercase
     const contractAddr = contract.address.toLowerCase()
-    const tag = contractTags.tags.find((tag: any) =>
-      tag.contractAddress.toLowerCase() === contractAddr
+    const tag = contractTags.tags.find(
+      (tag: any) => tag.contractAddress.toLowerCase() === contractAddr,
     )
     const isExternal = tag?.isExternal === true
 
@@ -174,8 +191,8 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
   let externalEoas = 0
   allEoas.forEach((eoa) => {
     const eoaAddress = eoa.address.replace('eth:', '').toLowerCase()
-    const tag = contractTags.tags.find((tag: any) =>
-      tag.contractAddress?.toLowerCase() === eoaAddress
+    const tag = contractTags.tags.find(
+      (tag: any) => tag.contractAddress?.toLowerCase() === eoaAddress,
     )
     if (tag?.isExternal === true) {
       externalEoas++
@@ -189,39 +206,74 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
 
   const totalInitial = initialContracts.length
   const totalDiscovered = allContracts.length - totalInitial
-  const totalNonExternal = contractCounts.contracts + contractCounts.eoas + contractCounts.multisigs
-
+  const totalNonExternal =
+    contractCounts.contracts + contractCounts.eoas + contractCounts.multisigs
 
   return (
     <div className="border-b border-b-coffee-600 pb-2">
-      <h2 className="p-2 font-bold text-2xl text-aux-blue">Status of the Review:</h2>
-      <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
-
+      <h2 className="p-2 font-bold text-2xl text-aux-blue">
+        Status of the Review:
+      </h2>
+      <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
         <div className="ml-2 flex flex-col gap-2 text-sm">
           <div className="flex gap-8">
-            <span className="font-semibold">Initial: <span className="text-aux-blue">{totalInitial} contracts</span></span>
-            <span className="font-semibold">Discovered: <span className="text-aux-green">{totalDiscovered} addresses</span></span>
+            <span className="font-semibold">
+              Initial:{' '}
+              <span className="text-aux-blue">{totalInitial} contracts</span>
+            </span>
+            <span className="font-semibold">
+              Discovered:{' '}
+              <span className="text-aux-green">
+                {totalDiscovered} addresses
+              </span>
+            </span>
           </div>
 
           <div className="mt-2">
-            <div className="font-semibold mb-1">Project Addresses:</div>
+            <div className="mb-1 font-semibold">Project Addresses:</div>
             <div className="ml-4 flex flex-col gap-1 text-xs">
-              <span>Contracts: <span className="text-aux-orange">{contractCounts.contracts}</span></span>
-              <span>EOAs: <span className="text-aux-cyan">{contractCounts.eoas}</span></span>
-              <span>Multisigs: <span className="text-aux-yellow">{contractCounts.multisigs}</span></span>
-              <span className="font-semibold">Total: <span className="text-white">{totalNonExternal}</span></span>
+              <span>
+                Contracts:{' '}
+                <span className="text-aux-orange">
+                  {contractCounts.contracts}
+                </span>
+              </span>
+              <span>
+                EOAs:{' '}
+                <span className="text-aux-cyan">{contractCounts.eoas}</span>
+              </span>
+              <span>
+                Multisigs:{' '}
+                <span className="text-aux-yellow">
+                  {contractCounts.multisigs}
+                </span>
+              </span>
+              <span className="font-semibold">
+                Total: <span className="text-white">{totalNonExternal}</span>
+              </span>
             </div>
           </div>
 
           <div className="mt-2">
-            <span className="font-semibold">External Addresses: <span className="text-aux-red">{contractCounts.external}</span></span>
+            <span className="font-semibold">
+              External Addresses:{' '}
+              <span className="text-aux-red">{contractCounts.external}</span>
+            </span>
           </div>
 
           <div className="mt-2">
-            <div className="font-semibold mb-1">Permissions:</div>
+            <div className="mb-1 font-semibold">Permissions:</div>
             <div className="ml-4 flex flex-col gap-1 text-xs">
-              <span>Permissioned functions: <span className="text-aux-red">{permissionedFunctions}</span></span>
-              <span>Progress: <span className="text-aux-orange">{checkedFunctions}/{permissionedFunctions} reviewed</span></span>
+              <span>
+                Permissioned functions:{' '}
+                <span className="text-aux-red">{permissionedFunctions}</span>
+              </span>
+              <span>
+                Progress:{' '}
+                <span className="text-aux-orange">
+                  {checkedFunctions}/{permissionedFunctions} reviewed
+                </span>
+              </span>
               <ContractsWithPermissionsTable
                 projectData={projectData}
                 functions={functions}
@@ -235,7 +287,10 @@ function StatusOfReviewSection({ projectData, contractTags, functions }: { proje
 }
 
 // Helper functions for contract data processing
-function resolveImplementationAddress(contractAddress: string, projectData: any): string {
+function resolveImplementationAddress(
+  contractAddress: string,
+  projectData: any,
+): string {
   // Try to find the contract entry in projectData
   for (const entry of projectData.entries || []) {
     if (entry.address === contractAddress) {
@@ -250,7 +305,9 @@ function resolveImplementationAddress(contractAddress: string, projectData: any)
   return contractAddress
 }
 
-function buildContractsList(projectData: any): Array<{ address: string; name: string; source: string }> {
+function buildContractsList(
+  projectData: any,
+): Array<{ address: string; name: string; source: string }> {
   if (!projectData?.entries) return []
 
   const contracts: Array<{ address: string; name: string; source: string }> = []
@@ -261,7 +318,7 @@ function buildContractsList(projectData: any): Array<{ address: string; name: st
       contracts.push({
         address: contract.address,
         name: contract.name || 'Unknown Contract',
-        source: 'initial'
+        source: 'initial',
       })
     })
 
@@ -270,7 +327,7 @@ function buildContractsList(projectData: any): Array<{ address: string; name: st
       contracts.push({
         address: contract.address,
         name: contract.name || 'Unknown Contract',
-        source: 'discovered'
+        source: 'discovered',
       })
     })
   })
@@ -278,24 +335,34 @@ function buildContractsList(projectData: any): Array<{ address: string; name: st
   return contracts
 }
 
-function getContractDisplayName(contract: { address: string; name: string }): string {
+function getContractDisplayName(contract: {
+  address: string
+  name: string
+}): string {
   const shortAddress = contract.address.replace('eth:', '').slice(0, 10)
   return `${contract.name} (${shortAddress}...)`
 }
 
-function findProxyForImplementation(implementationAddress: string, projectData: any): string | null {
+function findProxyForImplementation(
+  implementationAddress: string,
+  projectData: any,
+): string | null {
   // Find a proxy that uses this implementation address
   for (const entry of projectData.entries || []) {
     // Check initialContracts
     for (const contract of entry.initialContracts || []) {
-      const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+      const implField = contract.fields?.find(
+        (f: any) => f.name === '$implementation',
+      )
       if (implField?.value?.address === implementationAddress) {
         return contract.address
       }
     }
     // Check discoveredContracts
     for (const contract of entry.discoveredContracts || []) {
-      const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+      const implField = contract.fields?.find(
+        (f: any) => f.name === '$implementation',
+      )
       if (implField?.value?.address === implementationAddress) {
         return contract.address
       }
@@ -304,20 +371,27 @@ function findProxyForImplementation(implementationAddress: string, projectData: 
   return null
 }
 
-function getImplementationAddress(proxyAddress: string, projectData: any): string | null {
+function getImplementationAddress(
+  proxyAddress: string,
+  projectData: any,
+): string | null {
   // Find the implementation address for a given proxy address
   for (const entry of projectData.entries || []) {
     // Check initialContracts
     for (const contract of entry.initialContracts || []) {
       if (contract.address === proxyAddress) {
-        const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+        const implField = contract.fields?.find(
+          (f: any) => f.name === '$implementation',
+        )
         return implField?.value?.address || null
       }
     }
     // Check discoveredContracts
     for (const contract of entry.discoveredContracts || []) {
       if (contract.address === proxyAddress) {
-        const implField = contract.fields?.find((f: any) => f.name === '$implementation')
+        const implField = contract.fields?.find(
+          (f: any) => f.name === '$implementation',
+        )
         return implField?.value?.address || null
       }
     }
@@ -325,36 +399,57 @@ function getImplementationAddress(proxyAddress: string, projectData: any): strin
   return null
 }
 
-function buildContractsMap(projectData: any): Map<string, { address: string; name: string }> {
+function buildContractsMap(
+  projectData: any,
+): Map<string, { address: string; name: string }> {
   // Build a map of address -> contract info for O(1) lookups
   const map = new Map<string, { address: string; name: string }>()
   const allContracts = buildContractsList(projectData)
 
-  allContracts.forEach(contract => {
-    map.set(contract.address, { address: contract.address, name: contract.name })
+  allContracts.forEach((contract) => {
+    map.set(contract.address, {
+      address: contract.address,
+      name: contract.name,
+    })
   })
 
   return map
 }
 
-function ContractsWithPermissionsTable({ projectData, functions }: { projectData: any, functions: any }) {
+function ContractsWithPermissionsTable({
+  projectData,
+  functions,
+}: {
+  projectData: any
+  functions: any
+}) {
   const selectGlobal = usePanelStore((state) => state.select)
 
   // Build proxy type lookup map
-  const proxyTypeMap = useMemo(() => buildProxyTypeMap(projectData), [projectData])
+  const proxyTypeMap = useMemo(
+    () => buildProxyTypeMap(projectData),
+    [projectData],
+  )
 
   // Build list of contracts with permissions
   // Permissions can be stored under proxy addresses, implementation addresses, or both
-  const contractsMap = new Map<string, {
-    address: string
-    name: string
-    permissions: { checked: number; total: number }
-    owners: Set<string>
-  }>()
+  const contractsMap = new Map<
+    string,
+    {
+      address: string
+      name: string
+      permissions: { checked: number; total: number }
+      owners: Set<string>
+    }
+  >()
 
   // Create data access for owner resolution
-  const allContracts = projectData?.entries ?
-    projectData.entries.flatMap((e: any) => [...e.initialContracts, ...e.discoveredContracts]) : []
+  const allContracts = projectData?.entries
+    ? projectData.entries.flatMap((e: any) => [
+        ...e.initialContracts,
+        ...e.discoveredContracts,
+      ])
+    : []
   const dataAccess = new UIContractDataAccess(allContracts)
 
   if (functions.contracts) {
@@ -392,9 +487,15 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
               // Resolve owners for this function
               if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
                 func.ownerDefinitions.forEach((ownerDef: any) => {
-                  const result = resolvePathExpression(dataAccess, addr, ownerDef.path)
+                  const result = resolvePathExpression(
+                    dataAccess,
+                    addr,
+                    ownerDef.path,
+                  )
                   if (!result.error && result.addresses.length > 0) {
-                    result.addresses.forEach((ownerAddr: string) => owners.add(ownerAddr))
+                    result.addresses.forEach((ownerAddr: string) =>
+                      owners.add(ownerAddr),
+                    )
                   }
                 })
               }
@@ -421,15 +522,18 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
         const allOwners = new Set([...implData.owners, ...proxyData.owners])
 
         // Use proxy's name and address
-        const contractInfo = contractInfoMap.get(proxyAddr) || { address: proxyAddr, name: 'Unknown Contract' }
+        const contractInfo = contractInfoMap.get(proxyAddr) || {
+          address: proxyAddr,
+          name: 'Unknown Contract',
+        }
         contractsMap.set(proxyAddr, {
           address: proxyAddr,
           name: contractInfo.name,
           permissions: {
             checked: implData.checked + proxyData.checked,
-            total: implData.total + proxyData.total
+            total: implData.total + proxyData.total,
           },
-          owners: allOwners
+          owners: allOwners,
         })
       } else {
         // This is either a proxy or standalone contract
@@ -437,7 +541,10 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
         if (data.total === 0) return
 
         // Check if it's a proxy with an implementation
-        const implAddr = getImplementationAddress(permissionAddress, projectData)
+        const implAddr = getImplementationAddress(
+          permissionAddress,
+          projectData,
+        )
         if (implAddr && functions.contracts[implAddr]) {
           // Already handled in the implementation case above
           return
@@ -446,15 +553,21 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
         processed.add(permissionAddress)
 
         // For implementation-only contracts (no proxy), try to show proxy name if it exists
-        const proxyForImpl = findProxyForImplementation(permissionAddress, projectData)
+        const proxyForImpl = findProxyForImplementation(
+          permissionAddress,
+          projectData,
+        )
         const displayAddress = proxyForImpl || permissionAddress
-        const contractInfo = contractInfoMap.get(displayAddress) || { address: displayAddress, name: 'Unknown Contract' }
+        const contractInfo = contractInfoMap.get(displayAddress) || {
+          address: displayAddress,
+          name: 'Unknown Contract',
+        }
 
         contractsMap.set(displayAddress, {
           address: displayAddress,
           name: contractInfo.name,
           permissions: data,
-          owners: data.owners
+          owners: data.owners,
         })
       }
     })
@@ -482,14 +595,15 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
     <div className="mt-1">
       <div className="text-xs">
         {contractsWithPermissions.map((contract) => {
-          const isIncomplete = contract.permissions.checked < contract.permissions.total
+          const isIncomplete =
+            contract.permissions.checked < contract.permissions.total
           const ownerCount = contract.owners.size
           const ownersList = Array.from(contract.owners)
 
           return (
             <div
               key={contract.address}
-              className="cursor-pointer py-0.5 px-1 rounded hover:bg-coffee-500 transition-colors"
+              className="cursor-pointer rounded px-1 py-0.5 transition-colors hover:bg-coffee-500"
               onClick={() => handleContractClick(contract.address)}
             >
               <div className="flex justify-between">
@@ -497,17 +611,21 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
                   <span style={{ color: isIncomplete ? '#f87171' : 'white' }}>
                     {getContractDisplayName(contract)}
                   </span>
-                  <ProxyTypeTag proxyType={proxyTypeMap.get(contract.address.toLowerCase())} />
+                  <ProxyTypeTag
+                    proxyType={proxyTypeMap.get(contract.address.toLowerCase())}
+                  />
                 </span>
-                <span
-                  style={{ color: isIncomplete ? '#f87171' : 'white' }}
-                >
+                <span style={{ color: isIncomplete ? '#f87171' : 'white' }}>
                   ({contract.permissions.checked}/{contract.permissions.total})
                 </span>
               </div>
               {ownerCount > 0 && (
-                <div className="text-[10px] text-coffee-400 mt-0.5 ml-2">
-                  Owners: {ownersList.slice(0, 3).map(addr => getContractName(addr)).join(', ')}
+                <div className="mt-0.5 ml-2 text-[10px] text-coffee-400">
+                  Owners:{' '}
+                  {ownersList
+                    .slice(0, 3)
+                    .map((addr) => getContractName(addr))
+                    .join(', ')}
                   {ownerCount > 3 && ` +${ownerCount - 3} more`}
                 </div>
               )}
@@ -518,4 +636,3 @@ function ContractsWithPermissionsTable({ projectData, functions }: { projectData
     </div>
   )
 }
-

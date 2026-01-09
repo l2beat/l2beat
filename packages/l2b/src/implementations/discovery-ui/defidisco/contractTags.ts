@@ -1,4 +1,4 @@
-import { DiscoveryPaths } from '@l2beat/discovery'
+import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
 import type {
@@ -65,19 +65,29 @@ export function updateContractTag(
   })
 
   // Determine the new values for all tag fields
-  const existingTag = existingTagIndex >= 0 ? contractTags[existingTagIndex] : undefined
-  const newIsExternal = updateRequest.isExternal ?? existingTag?.isExternal ?? false
-  const newFetchBalances = updateRequest.fetchBalances ?? existingTag?.fetchBalances ?? false
-  const newFetchPositions = updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
-  const newCentralization = updateRequest.centralization !== undefined
-    ? updateRequest.centralization
-    : existingTag?.centralization
-  const newLikelihood = updateRequest.likelihood !== undefined
-    ? updateRequest.likelihood
-    : existingTag?.likelihood
+  const existingTag =
+    existingTagIndex >= 0 ? contractTags[existingTagIndex] : undefined
+  const newIsExternal =
+    updateRequest.isExternal ?? existingTag?.isExternal ?? false
+  const newFetchBalances =
+    updateRequest.fetchBalances ?? existingTag?.fetchBalances ?? false
+  const newFetchPositions =
+    updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
+  const newCentralization =
+    updateRequest.centralization !== undefined
+      ? updateRequest.centralization
+      : existingTag?.centralization
+  const newLikelihood =
+    updateRequest.likelihood !== undefined
+      ? updateRequest.likelihood
+      : existingTag?.likelihood
 
   // Check if any meaningful tag data exists (boolean fields true OR likelihood assigned)
-  const hasAnyTagData = newIsExternal || newFetchBalances || newFetchPositions || newLikelihood !== undefined
+  const hasAnyTagData =
+    newIsExternal ||
+    newFetchBalances ||
+    newFetchPositions ||
+    newLikelihood !== undefined
 
   if (hasAnyTagData) {
     // Create or update tag entry
@@ -118,13 +128,6 @@ export function updateContractTag(
   fs.writeFileSync(tagsPath, JSON.stringify(updatedData, null, 2))
 }
 
-function getContractTagsPath(
-  paths: DiscoveryPaths,
-  project: string,
-): string {
-  return path.join(
-    paths.discovery,
-    project,
-    'contract-tags.json',
-  )
+function getContractTagsPath(paths: DiscoveryPaths, project: string): string {
+  return path.join(paths.discovery, project, 'contract-tags.json')
 }

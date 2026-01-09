@@ -16,14 +16,14 @@
 // =============================================================================
 
 export interface ResolvedOwner {
-  addresses: string[];
-  structuredValue: any;
-  error?: string;
+  addresses: string[]
+  structuredValue: any
+  error?: string
 }
 
 export interface PathSegment {
-  type: "property" | "index";
-  value: string | number;
+  type: 'property' | 'index'
+  value: string | number
 }
 
 /**
@@ -34,19 +34,19 @@ export interface IContractDataAccess {
   /**
    * Find a contract by address (should handle proxy resolution)
    */
-  findContract(address: string): any;
+  findContract(address: string): any
 
   /**
    * Get a field value from a contract (for @ references)
    * Should return the address string if the field is an address type
    */
-  getFieldValue(contract: any, fieldName: string): any;
+  getFieldValue(contract: any, fieldName: string): any
 
   /**
    * Convert contract data to a plain values object for navigation
    * This handles the difference between discovered.json and API response formats
    */
-  getValuesObject(contract: any): any;
+  getValuesObject(contract: any): any
 }
 
 // =============================================================================
@@ -61,56 +61,56 @@ export interface IContractDataAccess {
  *   "accessControl.ADMIN.members" → [{type: 'property', value: 'accessControl'}, ...]
  */
 export function parseValuePath(path: string): PathSegment[] {
-  const segments: PathSegment[] = [];
-  let current = "";
-  let i = 0;
+  const segments: PathSegment[] = []
+  let current = ''
+  let i = 0
 
   while (i < path.length) {
-    const char = path[i]!;
+    const char = path[i]!
 
-    if (char === ".") {
+    if (char === '.') {
       // Property separator
       if (current) {
-        segments.push({ type: "property", value: current });
-        current = "";
+        segments.push({ type: 'property', value: current })
+        current = ''
       }
-      i++;
-    } else if (char === "[") {
+      i++
+    } else if (char === '[') {
       // Start of array index
       if (current) {
-        segments.push({ type: "property", value: current });
-        current = "";
+        segments.push({ type: 'property', value: current })
+        current = ''
       }
 
       // Find closing bracket
-      const closeIndex = path.indexOf("]", i);
+      const closeIndex = path.indexOf(']', i)
       if (closeIndex === -1) {
-        throw new Error(`Unclosed bracket in path: ${path}`);
+        throw new Error(`Unclosed bracket in path: ${path}`)
       }
 
-      const indexStr = path.substring(i + 1, closeIndex);
-      const index = parseInt(indexStr, 10);
+      const indexStr = path.substring(i + 1, closeIndex)
+      const index = Number.parseInt(indexStr, 10)
 
       if (isNaN(index)) {
         // Not a numeric index, treat as property key (e.g., [eth:0x123] or [ROLE])
-        segments.push({ type: "property", value: indexStr });
+        segments.push({ type: 'property', value: indexStr })
       } else {
-        segments.push({ type: "index", value: index });
+        segments.push({ type: 'index', value: index })
       }
 
-      i = closeIndex + 1;
+      i = closeIndex + 1
     } else {
-      current += char;
-      i++;
+      current += char
+      i++
     }
   }
 
   // Add final segment
   if (current) {
-    segments.push({ type: "property", value: current });
+    segments.push({ type: 'property', value: current })
   }
 
-  return segments;
+  return segments
 }
 
 /**
@@ -119,44 +119,44 @@ export function parseValuePath(path: string): PathSegment[] {
  */
 export function extractAddresses(value: any, path: string): string[] {
   // Single string address
-  if (typeof value === "string" && value.startsWith("eth:")) {
-    return [value];
+  if (typeof value === 'string' && value.startsWith('eth:')) {
+    return [value]
   }
 
   // Array - recursively extract from elements
   if (Array.isArray(value)) {
-    const addresses: string[] = [];
+    const addresses: string[] = []
     for (const element of value) {
-      if (typeof element === "string" && element.startsWith("eth:")) {
-        addresses.push(element);
-      } else if (typeof element === "object" && element !== null) {
+      if (typeof element === 'string' && element.startsWith('eth:')) {
+        addresses.push(element)
+      } else if (typeof element === 'object' && element !== null) {
         // Recursively extract from object elements
-        addresses.push(...extractAddresses(element, path));
+        addresses.push(...extractAddresses(element, path))
       }
     }
     if (addresses.length > 0) {
-      return addresses;
+      return addresses
     }
   }
 
   // Object - recursively extract addresses from all properties
-  if (typeof value === "object" && value !== null) {
-    const addresses: string[] = [];
+  if (typeof value === 'object' && value !== null) {
+    const addresses: string[] = []
     for (const key in value) {
-      const prop = value[key];
-      if (typeof prop === "string" && prop.startsWith("eth:")) {
-        addresses.push(prop);
-      } else if (typeof prop === "object" && prop !== null) {
+      const prop = value[key]
+      if (typeof prop === 'string' && prop.startsWith('eth:')) {
+        addresses.push(prop)
+      } else if (typeof prop === 'object' && prop !== null) {
         // Recursively extract from nested objects/arrays
-        addresses.push(...extractAddresses(prop, path));
+        addresses.push(...extractAddresses(prop, path))
       }
     }
     if (addresses.length > 0) {
-      return addresses;
+      return addresses
     }
   }
 
-  throw new Error(`Value at path "${path}" does not contain any addresses`);
+  throw new Error(`Value at path "${path}" does not contain any addresses`)
 }
 
 /**
@@ -172,60 +172,60 @@ export function extractAddresses(value: any, path: string): string[] {
 export function navigateValuePath(
   dataAccess: IContractDataAccess,
   contract: any,
-  valuePath: string
+  valuePath: string,
 ): { addresses: string[]; structuredValue: any } {
-  const valuesObject = dataAccess.getValuesObject(contract);
+  const valuesObject = dataAccess.getValuesObject(contract)
 
-  if (!valuesObject || typeof valuesObject !== "object") {
-    throw new Error("Contract has no values");
+  if (!valuesObject || typeof valuesObject !== 'object') {
+    throw new Error('Contract has no values')
   }
 
   // Parse and navigate the path
-  let currentValue: any = valuesObject;
-  const segments = parseValuePath(valuePath);
+  let currentValue: any = valuesObject
+  const segments = parseValuePath(valuePath)
 
   for (let i = 0; i < segments.length; i++) {
-    const segment = segments[i]!;
+    const segment = segments[i]!
 
-    if (segment.type === "property") {
+    if (segment.type === 'property') {
       // Navigate object property
-      if (typeof currentValue !== "object" || currentValue === null) {
+      if (typeof currentValue !== 'object' || currentValue === null) {
         throw new Error(
-          `Cannot access property "${segment.value}" on non-object at path segment ${i}`
-        );
+          `Cannot access property "${segment.value}" on non-object at path segment ${i}`,
+        )
       }
-      currentValue = currentValue[segment.value];
+      currentValue = currentValue[segment.value]
       if (currentValue === undefined) {
         const available = Object.keys(currentValue || {})
           .slice(0, 5)
-          .join(", ");
+          .join(', ')
         throw new Error(
-          `Property "${segment.value}" not found. Available: ${available}`
-        );
+          `Property "${segment.value}" not found. Available: ${available}`,
+        )
       }
-    } else if (segment.type === "index") {
+    } else if (segment.type === 'index') {
       // Navigate array index
       if (!Array.isArray(currentValue)) {
-        throw new Error(`Cannot index non-array at path segment ${i}`);
+        throw new Error(`Cannot index non-array at path segment ${i}`)
       }
-      const index = segment.value as number;
+      const index = segment.value as number
       if (index >= currentValue.length) {
         throw new Error(
-          `Index ${index} out of bounds (length: ${currentValue.length})`
-        );
+          `Index ${index} out of bounds (length: ${currentValue.length})`,
+        )
       }
-      currentValue = currentValue[index];
+      currentValue = currentValue[index]
     }
   }
 
   // Validate that the value contains addresses and extract them
-  const addresses = extractAddresses(currentValue, valuePath);
+  const addresses = extractAddresses(currentValue, valuePath)
 
   // Return both the extracted addresses and the structured value
   return {
     addresses,
     structuredValue: currentValue,
-  };
+  }
 }
 
 /**
@@ -241,82 +241,82 @@ export function navigateValuePath(
 export function resolvePathExpression(
   dataAccess: IContractDataAccess,
   currentContractAddress: string,
-  pathExpression: string
+  pathExpression: string,
 ): ResolvedOwner {
   try {
     // Special case: just "$self" means current contract is the owner
-    if (pathExpression === "$self") {
+    if (pathExpression === '$self') {
       return {
         addresses: [currentContractAddress],
         structuredValue: currentContractAddress,
-      };
+      }
     }
 
     // Split on first dot to separate contract ref from value path
-    const firstDotIndex = pathExpression.indexOf(".");
+    const firstDotIndex = pathExpression.indexOf('.')
 
     if (firstDotIndex === -1) {
       throw new Error(
-        `Invalid path expression "${pathExpression}": must include contract reference and value path`
-      );
+        `Invalid path expression "${pathExpression}": must include contract reference and value path`,
+      )
     }
 
-    const contractRef = pathExpression.substring(0, firstDotIndex);
-    const valuePath = pathExpression.substring(firstDotIndex + 1);
+    const contractRef = pathExpression.substring(0, firstDotIndex)
+    const valuePath = pathExpression.substring(firstDotIndex + 1)
 
     // Resolve contract reference to actual contract address
-    let targetContractAddress: string;
+    let targetContractAddress: string
 
-    if (contractRef === "$self") {
+    if (contractRef === '$self') {
       // Current contract
-      targetContractAddress = currentContractAddress;
-    } else if (contractRef.startsWith("@")) {
+      targetContractAddress = currentContractAddress
+    } else if (contractRef.startsWith('@')) {
       // Follow an address field in current contract
-      const fieldName = contractRef.substring(1); // Remove @ prefix
-      const currentContract = dataAccess.findContract(currentContractAddress);
+      const fieldName = contractRef.substring(1) // Remove @ prefix
+      const currentContract = dataAccess.findContract(currentContractAddress)
 
       if (!currentContract) {
-        throw new Error("Current contract not found");
+        throw new Error('Current contract not found')
       }
 
       targetContractAddress = dataAccess.getFieldValue(
         currentContract,
-        fieldName
-      );
+        fieldName,
+      )
 
       if (
         !targetContractAddress ||
-        typeof targetContractAddress !== "string" ||
-        !targetContractAddress.startsWith("eth:")
+        typeof targetContractAddress !== 'string' ||
+        !targetContractAddress.startsWith('eth:')
       ) {
         throw new Error(
-          `Field "${fieldName}" not found or is not an address in current contract`
-        );
+          `Field "${fieldName}" not found or is not an address in current contract`,
+        )
       }
-    } else if (contractRef.startsWith("eth:")) {
+    } else if (contractRef.startsWith('eth:')) {
       // Absolute contract address
-      targetContractAddress = contractRef;
+      targetContractAddress = contractRef
     } else {
       throw new Error(
-        `Invalid contract reference "${contractRef}": must be $self, @fieldName, or eth:0xAddress`
-      );
+        `Invalid contract reference "${contractRef}": must be $self, @fieldName, or eth:0xAddress`,
+      )
     }
 
     // Find target contract
-    const targetContract = dataAccess.findContract(targetContractAddress);
+    const targetContract = dataAccess.findContract(targetContractAddress)
 
     if (!targetContract) {
-      throw new Error(`Contract ${targetContractAddress} not found`);
+      throw new Error(`Contract ${targetContractAddress} not found`)
     }
 
     // Navigate value path in contract data
-    return navigateValuePath(dataAccess, targetContract, valuePath);
+    return navigateValuePath(dataAccess, targetContract, valuePath)
   } catch (error) {
     return {
       addresses: [],
       structuredValue: null,
-      error: error instanceof Error ? error.message : "Unknown error",
-    };
+      error: error instanceof Error ? error.message : 'Unknown error',
+    }
   }
 }
 
@@ -329,33 +329,32 @@ export function resolvePathExpression(
  */
 function convertFieldValueToPlainValue(fieldValue: any): any {
   if (!fieldValue || !fieldValue.type) {
-    return fieldValue;
+    return fieldValue
   }
 
   switch (fieldValue.type) {
-    case "address":
-      return fieldValue.address;
-    case "string":
-    case "number":
-    case "hex":
-      return fieldValue.value;
-    case "boolean":
-      return fieldValue.value;
-    case "array":
-      return fieldValue.values.map((v: any) =>
-        convertFieldValueToPlainValue(v)
-      );
-    case "object":
+    case 'address':
+      return fieldValue.address
+    case 'string':
+    case 'number':
+    case 'hex':
+      return fieldValue.value
+    case 'boolean':
+      return fieldValue.value
+    case 'array':
+      return fieldValue.values.map((v: any) => convertFieldValueToPlainValue(v))
+    case 'object': {
       // Object is stored as [[key, value], [key, value], ...]
-      const obj: any = {};
+      const obj: any = {}
       for (const [keyField, valueField] of fieldValue.values) {
-        const key = convertFieldValueToPlainValue(keyField);
-        const value = convertFieldValueToPlainValue(valueField);
-        obj[key] = value;
+        const key = convertFieldValueToPlainValue(keyField)
+        const value = convertFieldValueToPlainValue(valueField)
+        obj[key] = value
       }
-      return obj;
+      return obj
+    }
     default:
-      return fieldValue;
+      return fieldValue
   }
 }
 
@@ -365,18 +364,18 @@ function convertFieldValueToPlainValue(fieldValue: any): any {
  */
 function findContractForAddress(contracts: any[], address: string): any | null {
   // First try direct match
-  let contract = contracts.find((c) => c.address === address);
+  let contract = contracts.find((c) => c.address === address)
   if (contract) {
-    return contract;
+    return contract
   }
 
   // Not found directly - might be an implementation address
   // Find the proxy that has this address in its abis array
   contract = contracts.find((c) =>
-    c.abis?.some((abi: any) => abi.address === address)
-  );
+    c.abis?.some((abi: any) => abi.address === address),
+  )
 
-  return contract || null;
+  return contract || null
 }
 
 /**
@@ -386,38 +385,38 @@ export class UIContractDataAccess implements IContractDataAccess {
   constructor(private allContracts: any[]) {}
 
   findContract(address: string): any {
-    return findContractForAddress(this.allContracts, address);
+    return findContractForAddress(this.allContracts, address)
   }
 
   getFieldValue(contract: any, fieldName: string): any {
     if (!contract.fields || !Array.isArray(contract.fields)) {
-      throw new Error("Contract has no fields");
+      throw new Error('Contract has no fields')
     }
 
-    const field = contract.fields.find((f: any) => f.name === fieldName);
+    const field = contract.fields.find((f: any) => f.name === fieldName)
 
     if (!field) {
-      throw new Error(`Field "${fieldName}" not found in contract`);
+      throw new Error(`Field "${fieldName}" not found in contract`)
     }
 
-    if (field.value.type === "address") {
-      return field.value.address;
+    if (field.value.type === 'address') {
+      return field.value.address
     }
 
-    return convertFieldValueToPlainValue(field.value);
+    return convertFieldValueToPlainValue(field.value)
   }
 
   getValuesObject(contract: any): any {
     if (!contract.fields || !Array.isArray(contract.fields)) {
-      throw new Error("Contract has no fields");
+      throw new Error('Contract has no fields')
     }
 
     // Convert fields array to values object for easier navigation
-    const values: any = {};
+    const values: any = {}
     for (const field of contract.fields) {
-      values[field.name] = convertFieldValueToPlainValue(field.value);
+      values[field.name] = convertFieldValueToPlainValue(field.value)
     }
-    return values;
+    return values
   }
 }
 
@@ -433,55 +432,55 @@ export class DiscoveredDataAccess implements IContractDataAccess {
 
   findContract(address: string): any {
     if (!this.discovered.entries || !Array.isArray(this.discovered.entries)) {
-      throw new Error("No entries found in discovered data");
+      throw new Error('No entries found in discovered data')
     }
 
     const contract = this.discovered.entries.find(
-      (entry: any) => entry.type === "Contract" && entry.address === address
-    );
+      (entry: any) => entry.type === 'Contract' && entry.address === address,
+    )
 
     if (!contract) {
       const available = this.discovered.entries
-        .filter((e: any) => e.type === "Contract")
+        .filter((e: any) => e.type === 'Contract')
         .map((e: any) => e.address)
         .slice(0, 5)
-        .join(", ");
+        .join(', ')
       throw new Error(
-        `Contract ${address} not found. Available: ${available}...`
-      );
+        `Contract ${address} not found. Available: ${available}...`,
+      )
     }
 
-    return contract;
+    return contract
   }
 
   getFieldValue(contract: any, fieldName: string): any {
-    if (!contract.values || typeof contract.values !== "object") {
-      throw new Error("Contract has no values");
+    if (!contract.values || typeof contract.values !== 'object') {
+      throw new Error('Contract has no values')
     }
 
-    const value = contract.values[fieldName];
+    const value = contract.values[fieldName]
 
     if (value === undefined) {
-      throw new Error(`Field ${fieldName} not found in contract values`);
+      throw new Error(`Field ${fieldName} not found in contract values`)
     }
 
     // Handle string addresses (most common case)
-    if (typeof value === "string" && value.startsWith("eth:")) {
-      return value;
+    if (typeof value === 'string' && value.startsWith('eth:')) {
+      return value
     }
 
     // Handle complex field value objects
-    if (typeof value === "object" && value.type === "address") {
-      return value.address;
+    if (typeof value === 'object' && value.type === 'address') {
+      return value.address
     }
 
-    return value;
+    return value
   }
 
   getValuesObject(contract: any): any {
-    if (!contract.values || typeof contract.values !== "object") {
-      throw new Error("Contract has no values");
+    if (!contract.values || typeof contract.values !== 'object') {
+      throw new Error('Contract has no values')
     }
-    return contract.values;
+    return contract.values
   }
 }

@@ -1,12 +1,12 @@
-import type { OwnerDefinition } from './types'
-import OpenAI from 'openai'
 import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
+import type { OwnerDefinition } from './types'
 
 export interface AiDetectedPermission {
   functionName: string
   isPermissioned: boolean
   ownerDefinitions?: OwnerDefinition[]
-  sourceFile?: string  // Which source file this function was found in
+  sourceFile?: string // Which source file this function was found in
 }
 
 export interface AiDetectionResult {
@@ -105,13 +105,12 @@ Now analyze the following contract source code:`
 export async function detectPermissionsWithAI(
   sourceCode: string,
   apiKey: string,
-  provider: 'openai' | 'claude' = 'openai'
+  provider: 'openai' | 'claude' = 'openai',
 ): Promise<AiDetectionResult> {
   if (provider === 'openai') {
     return detectWithOpenAI(sourceCode, apiKey)
-  } else {
-    return detectWithClaude(sourceCode, apiKey)
   }
+  return detectWithClaude(sourceCode, apiKey)
 }
 
 /**
@@ -119,7 +118,7 @@ export async function detectPermissionsWithAI(
  */
 async function detectWithOpenAI(
   sourceCode: string,
-  apiKey: string
+  apiKey: string,
 ): Promise<AiDetectionResult> {
   const openai = new OpenAI({ apiKey })
 
@@ -128,12 +127,12 @@ async function detectWithOpenAI(
     messages: [
       {
         role: 'system',
-        content: AI_DETECTION_PROMPT
+        content: AI_DETECTION_PROMPT,
       },
       {
         role: 'user',
-        content: sourceCode
-      }
+        content: sourceCode,
+      },
     ],
     response_format: { type: 'json_object' },
     temperature: 0.1,
@@ -152,7 +151,7 @@ async function detectWithOpenAI(
  */
 async function detectWithClaude(
   sourceCode: string,
-  apiKey: string
+  apiKey: string,
 ): Promise<AiDetectionResult> {
   const anthropic = new Anthropic({ apiKey })
 
@@ -162,8 +161,8 @@ async function detectWithClaude(
     messages: [
       {
         role: 'user',
-        content: `${AI_DETECTION_PROMPT}\n\n${sourceCode}`
-      }
+        content: `${AI_DETECTION_PROMPT}\n\n${sourceCode}`,
+      },
     ],
     temperature: 0.1,
   })
@@ -201,17 +200,23 @@ function parseAiResponse(responseText: string): AiDetectionResult {
         throw new Error('Invalid function: missing functionName')
       }
       if (typeof func.isPermissioned !== 'boolean') {
-        throw new Error(`Invalid isPermissioned for ${func.functionName}: must be a boolean`)
+        throw new Error(
+          `Invalid isPermissioned for ${func.functionName}: must be a boolean`,
+        )
       }
 
       // Validate ownerDefinitions if present
       if (func.ownerDefinitions) {
         if (!Array.isArray(func.ownerDefinitions)) {
-          throw new Error(`ownerDefinitions must be an array for ${func.functionName}`)
+          throw new Error(
+            `ownerDefinitions must be an array for ${func.functionName}`,
+          )
         }
         for (const def of func.ownerDefinitions) {
           if (!def.path || typeof def.path !== 'string') {
-            throw new Error(`Invalid ownerDefinition for ${func.functionName}: missing or invalid path`)
+            throw new Error(
+              `Invalid ownerDefinition for ${func.functionName}: missing or invalid path`,
+            )
           }
         }
       }
@@ -220,7 +225,9 @@ function parseAiResponse(responseText: string): AiDetectionResult {
     return parsed as AiDetectionResult
   } catch (error) {
     console.error('Failed to parse AI response:', responseText)
-    throw new Error(`Failed to parse AI response: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(
+      `Failed to parse AI response: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    )
   }
 }
 
@@ -229,7 +236,10 @@ function parseAiResponse(responseText: string): AiDetectionResult {
  * Removes abstract contracts, interfaces, imports, and other non-essential content
  * Keeps comments as they help the AI understand the code
  */
-export function filterSourceCodeForAI(sourceCode: string, filename: string): string {
+export function filterSourceCodeForAI(
+  sourceCode: string,
+  filename: string,
+): string {
   // Skip files that are just interfaces or abstract contracts
   if (filename.startsWith('I') && filename.endsWith('.sol')) {
     // Interface files typically start with 'I' (e.g., IOwnable.sol)
@@ -252,7 +262,10 @@ export function filterSourceCodeForAI(sourceCode: string, filename: string): str
     }
 
     // Track abstract contracts, interfaces, and libraries
-    if (line.includes('abstract contract') || line.includes('abstract  contract')) {
+    if (
+      line.includes('abstract contract') ||
+      line.includes('abstract  contract')
+    ) {
       inAbstractContract = true
       contractBraceDepth = 0
     }
@@ -273,7 +286,7 @@ export function filterSourceCodeForAI(sourceCode: string, filename: string): str
       }
 
       // End of abstract/interface/library
-      if (contractBraceDepth === 0 && (line.includes('}'))) {
+      if (contractBraceDepth === 0 && line.includes('}')) {
         inAbstractContract = false
         inInterface = false
         inLibrary = false

@@ -1,10 +1,14 @@
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { getFundsData } from '../../../api/api'
+import type {
+  ContractFundsData,
+  FundsPositionProtocol,
+  FundsTokenBalance,
+} from '../../../api/types'
 import { Folder } from '../panel-values/Folder'
 import { PermissionsDisplay } from './PermissionsDisplay'
-import { getFundsData } from '../../../api/api'
-import type { ContractFundsData, FundsTokenBalance, FundsPositionProtocol } from '../../../api/types'
 
 interface Props {
   selected: any
@@ -38,10 +42,10 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
   return (
     <div className="px-2 py-2 text-xs">
       {fundsData.error && (
-        <div className="text-aux-red mb-2">Error: {fundsData.error}</div>
+        <div className="mb-2 text-aux-red">Error: {fundsData.error}</div>
       )}
 
-      <div className="text-coffee-500 mb-2">
+      <div className="mb-2 text-coffee-500">
         Last fetched: {formatTimestamp(fundsData.lastFetched)}
       </div>
 
@@ -53,7 +57,7 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
       {/* Balances Section */}
       {fundsData.balances && fundsData.balances.tokens.length > 0 && (
         <div className="mb-3">
-          <div className="text-aux-orange font-semibold mb-1">
+          <div className="mb-1 font-semibold text-aux-orange">
             Token Balances ({formatUsdValue(fundsData.balances.totalUsdValue)})
           </div>
           <div className="ml-2 flex flex-col gap-1">
@@ -64,9 +68,13 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
               .map((token, idx) => (
                 <TokenRow key={idx} token={token} />
               ))}
-            {fundsData.balances.tokens.filter((t) => t.usdValue > 0).length > 10 && (
+            {fundsData.balances.tokens.filter((t) => t.usdValue > 0).length >
+              10 && (
               <div className="text-coffee-500">
-                +{fundsData.balances.tokens.filter((t) => t.usdValue > 0).length - 10} more tokens
+                +
+                {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
+                  .length - 10}{' '}
+                more tokens
               </div>
             )}
           </div>
@@ -76,7 +84,7 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
       {/* Positions Section */}
       {fundsData.positions && fundsData.positions.protocols.length > 0 && (
         <div>
-          <div className="text-aux-orange font-semibold mb-1">
+          <div className="mb-1 font-semibold text-aux-orange">
             DeFi Positions ({formatUsdValue(fundsData.positions.totalUsdValue)})
           </div>
           <div className="ml-2 flex flex-col gap-2">
@@ -95,7 +103,8 @@ function ContractFundsDisplay({ fundsData }: { fundsData: ContractFundsData }) {
 }
 
 function TokenRow({ token }: { token: FundsTokenBalance }) {
-  const formattedBalance = parseFloat(token.balance) / Math.pow(10, token.decimals)
+  const formattedBalance =
+    Number.parseFloat(token.balance) / Math.pow(10, token.decimals)
   const displayBalance = formattedBalance.toLocaleString(undefined, {
     maximumFractionDigits: 4,
   })
@@ -116,18 +125,20 @@ function ProtocolRow({ protocol }: { protocol: FundsPositionProtocol }) {
   return (
     <div>
       <div
-        className="flex items-center justify-between cursor-pointer hover:text-coffee-200"
+        className="flex cursor-pointer items-center justify-between hover:text-coffee-200"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-2">
           <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
           <span className="text-coffee-300">{protocol.name}</span>
         </div>
-        <span className="text-aux-green">{formatUsdValue(protocol.totalUsdValue)}</span>
+        <span className="text-aux-green">
+          {formatUsdValue(protocol.totalUsdValue)}
+        </span>
       </div>
 
       {isExpanded && (
-        <div className="ml-4 mt-1 flex flex-col gap-1">
+        <div className="mt-1 ml-4 flex flex-col gap-1">
           {protocol.items.map((item, idx) => (
             <div key={idx} className="text-coffee-400">
               <div className="flex justify-between">
@@ -140,7 +151,10 @@ function ProtocolRow({ protocol }: { protocol: FundsPositionProtocol }) {
                 <div className="ml-2 text-coffee-500">
                   {item.tokens.map((t, tidx) => (
                     <span key={tidx}>
-                      {t.amount.toLocaleString(undefined, { maximumFractionDigits: 4 })} {t.symbol}
+                      {t.amount.toLocaleString(undefined, {
+                        maximumFractionDigits: 4,
+                      })}{' '}
+                      {t.symbol}
                       {tidx < item.tokens.length - 1 ? ', ' : ''}
                     </span>
                   ))}
@@ -159,7 +173,7 @@ function ContractFundsSection({ address }: { address: string }) {
 
   const { data: fundsData } = useQuery({
     queryKey: ['funds-data', project],
-    queryFn: () => project ? getFundsData(project) : null,
+    queryFn: () => (project ? getFundsData(project) : null),
     enabled: !!project,
   })
 

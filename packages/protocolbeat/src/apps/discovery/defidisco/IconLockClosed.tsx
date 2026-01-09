@@ -21,12 +21,7 @@ export function IconLockClosed(props: { className?: string }) {
         fill="currentColor"
         fillOpacity="0.1"
       />
-      <circle
-        cx="8"
-        cy="10"
-        r="1"
-        fill="currentColor"
-      />
+      <circle cx="8" cy="10" r="1" fill="currentColor" />
     </Icon>
   )
 }

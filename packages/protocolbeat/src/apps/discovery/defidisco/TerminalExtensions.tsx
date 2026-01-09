@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useTerminalStore } from '../panel-terminal/store'
 import { AIPermissionsScanDialog } from './AIPermissionsScanDialog'
 
@@ -9,7 +9,8 @@ interface Props {
 
 export function TerminalExtensions({ project }: Props) {
   const queryClient = useQueryClient()
-  const { generatePermissionsReport, fetchFunds, generateCallGraph, command } = useTerminalStore()
+  const { generatePermissionsReport, fetchFunds, generateCallGraph, command } =
+    useTerminalStore()
   const [showScanDialog, setShowScanDialog] = useState(false)
 
   return (

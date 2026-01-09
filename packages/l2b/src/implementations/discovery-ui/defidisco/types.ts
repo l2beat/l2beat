@@ -6,7 +6,18 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 export type Impact = 'low' | 'medium' | 'high' | 'critical'
 export type Likelihood = 'mitigated' | 'low' | 'medium' | 'high'
 export type Severity = 'informational' | 'low' | 'medium' | 'high' | 'critical'
-export type LetterGrade = 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC' | 'CC' | 'C' | 'D' | 'Unscored'
+export type LetterGrade =
+  | 'AAA'
+  | 'AA'
+  | 'A'
+  | 'BBB'
+  | 'BB'
+  | 'B'
+  | 'CCC'
+  | 'CC'
+  | 'C'
+  | 'D'
+  | 'Unscored'
 
 // Function detail for severity scoring breakdown
 export interface FunctionDetail {
@@ -44,7 +55,7 @@ export interface AdminDetail {
     contractName: string
     functionName: string
     impact: Impact
-    grade?: LetterGrade  // Only present if both impact and likelihood exist
+    grade?: LetterGrade // Only present if both impact and likelihood exist
   }[]
 }
 
@@ -277,7 +288,7 @@ export interface FunctionEntry {
 //   "eth:0x123...acl.permissions[eth:0x456][ROLE].entities" - absolute address for complex structures
 //   "$self" - current contract itself is the owner (shorthand for no value path)
 export interface OwnerDefinition {
-  path: string              // Unified path expression
+  path: string // Unified path expression
 }
 
 export interface ApiFunctionsUpdateRequest {
@@ -403,12 +414,12 @@ export interface ContractCallGraph {
 }
 
 export interface ExternalCall {
-  callerFunction: string      // "_sendBoldtoDepositor"
-  callerIsView?: boolean      // true if caller function is view/pure (infers external calls are also view)
-  storageVariable: string     // "boldToken"
-  interfaceType: string       // "IBoldToken"
-  calledFunction: string      // "returnFromPool"
-  resolvedAddress?: string    // "eth:0x6440f..." from discovered.json
+  callerFunction: string // "_sendBoldtoDepositor"
+  callerIsView?: boolean // true if caller function is view/pure (infers external calls are also view)
+  storageVariable: string // "boldToken"
+  interfaceType: string // "IBoldToken"
+  calledFunction: string // "returnFromPool"
+  resolvedAddress?: string // "eth:0x6440f..." from discovered.json
   resolvedContractName?: string
-  isViewCall?: boolean        // true if view/pure, false if state-changing, undefined if unknown
+  isViewCall?: boolean // true if view/pure, false if state-changing, undefined if unknown
 }

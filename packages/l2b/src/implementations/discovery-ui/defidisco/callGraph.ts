@@ -1,13 +1,17 @@
-import { DiscoveryPaths, ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  DiscoveryOutput,
+  DiscoveryPaths,
+} from '@l2beat/discovery'
+import { spawn } from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
-import { spawn } from 'child_process'
+import { getContractTags } from './contractTags'
 import type {
   ApiCallGraphResponse,
   ContractCallGraph,
   ExternalCall,
 } from './types'
-import { getContractTags } from './contractTags'
 
 // =============================================================================
 // Constants
@@ -25,7 +29,11 @@ interface ParsedFunction {
   contractName: string
   internalCalls: { contract: string; functionName: string }[]
   libraryCalls: { library: string; functionName: string }[]
-  highLevelCalls: { storageVariable: string; interfaceType: string; calledFunction: string }[]
+  highLevelCalls: {
+    storageVariable: string
+    interfaceType: string
+    calledFunction: string
+  }[]
 }
 
 interface ParsedContract {
@@ -101,10 +109,14 @@ export async function generateCallGraph(
   onProgress?: (message: string) => void,
 ): Promise<ApiCallGraphResponse> {
   // Get Etherscan API key from environment
-  const etherscanApiKey = process.env.ETHERSCAN_API_KEY_FOR_DISCOVERY || process.env.L2B_ETHERSCAN_API_KEY
+  const etherscanApiKey =
+    process.env.ETHERSCAN_API_KEY_FOR_DISCOVERY ||
+    process.env.L2B_ETHERSCAN_API_KEY
 
   if (!etherscanApiKey) {
-    throw new Error('ETHERSCAN_API_KEY_FOR_DISCOVERY or L2B_ETHERSCAN_API_KEY not configured in environment')
+    throw new Error(
+      'ETHERSCAN_API_KEY_FOR_DISCOVERY or L2B_ETHERSCAN_API_KEY not configured in environment',
+    )
   }
 
   // Load discovered.json once for all operations
@@ -128,7 +140,9 @@ export async function generateCallGraph(
 
   for (let i = 0; i < contracts.length; i++) {
     const contract = contracts[i]!
-    onProgress?.(`[${i + 1}/${contracts.length}] Analyzing ${contract.name} (${contract.address})...`)
+    onProgress?.(
+      `[${i + 1}/${contracts.length}] Analyzing ${contract.name} (${contract.address})...`,
+    )
 
     // Run slither on the contract
     const slitherResult = await runSlitherOnContract(
@@ -138,7 +152,9 @@ export async function generateCallGraph(
     )
 
     if (slitherResult.error === 'UNVERIFIED') {
-      onProgress?.(`  Skipping: Source code not available (unverified contract)`)
+      onProgress?.(
+        '  Skipping: Source code not available (unverified contract)',
+      )
       result[contract.address] = {
         address: contract.address,
         name: contract.name,
@@ -163,7 +179,10 @@ export async function generateCallGraph(
     }
 
     // Get ABI function names for this contract
-    const abiFunctionNames = getAbiFunctionNames(discovered.abis, contract.address)
+    const abiFunctionNames = getAbiFunctionNames(
+      discovered.abis,
+      contract.address,
+    )
 
     // Parse the slithir output using ABI-driven approach
     const externalCalls = parseSlithirForContract(
@@ -210,10 +229,14 @@ export async function generateCallGraph(
       }
     }
 
-    const resolvedCount = externalCalls.filter(c => c.resolvedAddress).length
-    const viewCount = externalCalls.filter(c => c.isViewCall === true).length
-    const writeCount = externalCalls.filter(c => c.isViewCall === false).length
-    onProgress?.(`  Found ${externalCalls.length} external calls (${resolvedCount} resolved, ${viewCount} reads, ${writeCount} writes)`)
+    const resolvedCount = externalCalls.filter((c) => c.resolvedAddress).length
+    const viewCount = externalCalls.filter((c) => c.isViewCall === true).length
+    const writeCount = externalCalls.filter(
+      (c) => c.isViewCall === false,
+    ).length
+    onProgress?.(
+      `  Found ${externalCalls.length} external calls (${resolvedCount} resolved, ${viewCount} reads, ${writeCount} writes)`,
+    )
 
     result[contract.address] = {
       address: contract.address,
@@ -224,16 +247,20 @@ export async function generateCallGraph(
   }
 
   // Calculate summary
-  const totalCalls = Object.values(result).reduce((sum, c) => sum + c.externalCalls.length, 0)
-  const resolvedCalls = Object.values(result).reduce(
-    (sum, c) => sum + c.externalCalls.filter(call => call.resolvedAddress).length,
-    0
+  const totalCalls = Object.values(result).reduce(
+    (sum, c) => sum + c.externalCalls.length,
+    0,
   )
-  const errorCount = Object.values(result).filter(c => c.error).length
-  const skippedCount = Object.values(result).filter(c => c.skipped).length
+  const resolvedCalls = Object.values(result).reduce(
+    (sum, c) =>
+      sum + c.externalCalls.filter((call) => call.resolvedAddress).length,
+    0,
+  )
+  const errorCount = Object.values(result).filter((c) => c.error).length
+  const skippedCount = Object.values(result).filter((c) => c.skipped).length
 
-  onProgress?.(``)
-  onProgress?.(`=== Summary ===`)
+  onProgress?.('')
+  onProgress?.('=== Summary ===')
   onProgress?.(`Contracts analyzed: ${contracts.length}`)
   onProgress?.(`Skipped (unverified): ${skippedCount}`)
   onProgress?.(`Errors: ${errorCount}`)
@@ -248,7 +275,7 @@ export async function generateCallGraph(
 
   // Save the result
   saveCallGraphData(paths, project, response)
-  onProgress?.(`Call graph data saved to call-graph-data.json`)
+  onProgress?.('Call graph data saved to call-graph-data.json')
 
   return response
 }
@@ -277,8 +304,8 @@ function getContractsToAnalyze(
   const tags = getContractTags(paths, project)
   const externalAddresses = new Set(
     tags.tags
-      .filter(tag => tag.isExternal)
-      .map(tag => tag.contractAddress.toLowerCase())
+      .filter((tag) => tag.isExternal)
+      .map((tag) => tag.contractAddress.toLowerCase()),
   )
 
   const contracts: { address: string; name: string }[] = []
@@ -309,7 +336,9 @@ function resolveStorageVariable(
 ): { address: string | undefined; name: string | undefined } {
   // Find the contract in discovered data
   const contract = discovered.entries.find(
-    (e) => e.address.toLowerCase() === contractAddress.toLowerCase() && e.type === 'Contract'
+    (e) =>
+      e.address.toLowerCase() === contractAddress.toLowerCase() &&
+      e.type === 'Contract',
   )
 
   if (!contract || !('values' in contract) || !contract.values) {
@@ -322,7 +351,7 @@ function resolveStorageVariable(
   if (typeof value === 'string' && value.startsWith('eth:')) {
     // Find the name of the resolved contract
     const resolvedContract = discovered.entries.find(
-      (e) => e.address.toLowerCase() === value.toLowerCase()
+      (e) => e.address.toLowerCase() === value.toLowerCase(),
     )
     return {
       address: value,
@@ -340,7 +369,10 @@ function resolveStorageVariable(
 /**
  * Get list of public function names from the contract's ABI
  */
-function getAbiFunctionNames(abis: Record<string, string[]>, contractAddress: string): string[] {
+function getAbiFunctionNames(
+  abis: Record<string, string[]>,
+  contractAddress: string,
+): string[] {
   const abi = abis[contractAddress]
   if (!abi) return []
 
@@ -362,10 +394,12 @@ function getAbiFunctionNames(abis: Record<string, string[]>, contractAddress: st
  */
 function isViewFunction(abiEntry: string): boolean {
   // ABI entries include "view" or "pure" keyword for read-only functions
-  return abiEntry.includes(' view ') ||
-         abiEntry.includes(' view)') ||
-         abiEntry.includes(' pure ') ||
-         abiEntry.includes(' pure)')
+  return (
+    abiEntry.includes(' view ') ||
+    abiEntry.includes(' view)') ||
+    abiEntry.includes(' pure ') ||
+    abiEntry.includes(' pure)')
+  )
 }
 
 /**
@@ -382,7 +416,7 @@ function findFunctionInAbi(
   // Find matching function entry - use regex with word boundary to avoid false positives
   // (e.g., searching for "transfer" shouldn't match "transferFrom")
   const funcRegex = new RegExp(`^function\\s+${functionName}\\(`)
-  const funcEntry = contractAbi.find(entry => funcRegex.test(entry))
+  const funcEntry = contractAbi.find((entry) => funcRegex.test(entry))
 
   if (!funcEntry) return { found: false }
 
@@ -460,7 +494,9 @@ function parseSlithirStructured(output: string): ParsedSlithir {
 
     // Parse LIBRARY_CALL: "TMP = LIBRARY_CALL, dest:LibName, function:LibName.funcName(params), arguments:[...]"
     if (line.includes('LIBRARY_CALL')) {
-      const libMatch = line.match(/LIBRARY_CALL,\s*dest:(\w+),\s*function:(\w+)\.(\w+)\(/)
+      const libMatch = line.match(
+        /LIBRARY_CALL,\s*dest:(\w+),\s*function:(\w+)\.(\w+)\(/,
+      )
       if (libMatch) {
         const [, library, , funcName] = libMatch
         currentFunction.libraryCalls.push({
@@ -473,7 +509,9 @@ function parseSlithirStructured(output: string): ParsedSlithir {
 
     // Parse HIGH_LEVEL_CALL: "TMP = HIGH_LEVEL_CALL, dest:varName(InterfaceType), function:methodName, arguments:[...]"
     if (line.includes('HIGH_LEVEL_CALL')) {
-      const hlcMatch = line.match(/HIGH_LEVEL_CALL,\s*dest:(\w+)\((\w+)\),\s*function:(\w+)/)
+      const hlcMatch = line.match(
+        /HIGH_LEVEL_CALL,\s*dest:(\w+)\((\w+)\),\s*function:(\w+)/,
+      )
       if (hlcMatch) {
         const [, storageVariable, interfaceType, calledFunction] = hlcMatch
         currentFunction.highLevelCalls.push({
@@ -498,7 +536,11 @@ function collectHighLevelCalls(
   functionName: string,
   visited: Set<string>,
   onProgress?: (message: string) => void,
-): { storageVariable: string; interfaceType: string; calledFunction: string }[] {
+): {
+  storageVariable: string
+  interfaceType: string
+  calledFunction: string
+}[] {
   const key = `${contractName}.${functionName}`
   if (visited.has(key)) return []
   visited.add(key)
@@ -509,29 +551,53 @@ function collectHighLevelCalls(
   const func = contract.functions.get(functionName)
   if (!func) return []
 
-  const calls: { storageVariable: string; interfaceType: string; calledFunction: string }[] = []
+  const calls: {
+    storageVariable: string
+    interfaceType: string
+    calledFunction: string
+  }[] = []
 
   // Collect direct HIGH_LEVEL_CALLs
   calls.push(...func.highLevelCalls)
 
   // Follow INTERNAL_CALLs
   for (const ic of func.internalCalls) {
-    calls.push(...collectHighLevelCalls(parsedSlithir, ic.contract, ic.functionName, visited, onProgress))
+    calls.push(
+      ...collectHighLevelCalls(
+        parsedSlithir,
+        ic.contract,
+        ic.functionName,
+        visited,
+        onProgress,
+      ),
+    )
   }
 
   // Follow LIBRARY_CALLs
   for (const lc of func.libraryCalls) {
     const libContract = parsedSlithir.contracts.get(lc.library)
     if (!libContract) {
-      onProgress?.(`    Warning: LIBRARY_CALL to ${lc.library}.${lc.functionName}() - library not found in slithir output`)
+      onProgress?.(
+        `    Warning: LIBRARY_CALL to ${lc.library}.${lc.functionName}() - library not found in slithir output`,
+      )
       continue
     }
     const libFunc = libContract.functions.get(lc.functionName)
     if (!libFunc) {
-      onProgress?.(`    Warning: LIBRARY_CALL to ${lc.library}.${lc.functionName}() - function not found in library`)
+      onProgress?.(
+        `    Warning: LIBRARY_CALL to ${lc.library}.${lc.functionName}() - function not found in library`,
+      )
       continue
     }
-    calls.push(...collectHighLevelCalls(parsedSlithir, lc.library, lc.functionName, visited, onProgress))
+    calls.push(
+      ...collectHighLevelCalls(
+        parsedSlithir,
+        lc.library,
+        lc.functionName,
+        visited,
+        onProgress,
+      ),
+    )
   }
 
   return calls
@@ -556,7 +622,13 @@ function parseSlithirForContract(
     if (funcName === 'constructor') continue
 
     const visited = new Set<string>()
-    const hlcs = collectHighLevelCalls(parsedSlithir, contractName, funcName, visited, onProgress)
+    const hlcs = collectHighLevelCalls(
+      parsedSlithir,
+      contractName,
+      funcName,
+      visited,
+      onProgress,
+    )
 
     // Deduplicate and add to result with the public function as the caller
     const seen = new Set<string>()
@@ -614,7 +686,13 @@ async function runSlitherOnContract(
 
     // Always fetch from Etherscan - the crytic-export cache format doesn't work with slither directly
     // Slither will use its own internal caching mechanism
-    const args = [cleanAddress, '--print', 'slithir', '--etherscan-apikey', etherscanApiKey]
+    const args = [
+      cleanAddress,
+      '--print',
+      'slithir',
+      '--etherscan-apikey',
+      etherscanApiKey,
+    ]
 
     const slither = spawn(SLITHER_PATH, args, { env })
 

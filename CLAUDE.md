@@ -532,3 +532,21 @@ packages/
   - Example conversion function in `DependencyInventoryModule.scoreToImpact()`
 
 **Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.
+
+---
+
+## Code Review Guidelines
+
+### Formatting and Linting Rules
+
+**CRITICAL: Reject PRs with formatting-only changes outside `/defidisco/` folders**
+
+This repository is a fork of L2BEAT. To maintain easy upstream merges:
+
+1. **DO NOT accept PRs that reformat L2BEAT code** - Changes to files outside `/defidisco/` folders should only contain functional changes, not formatting fixes
+2. **Formatting is only allowed in DefidDisco folders**:
+   - `packages/protocolbeat/src/apps/discovery/defidisco/`
+   - `packages/l2b/src/implementations/discovery-ui/defidisco/`
+   - `packages/discovery/src/discovery/handlers/defidisco/`
+3. **If a PR contains formatting changes to upstream files**, request that the author revert those changes before approval
+4. **Biome is configured project-wide** but should only be enforced on DefidDisco code to avoid massive diffs with upstream

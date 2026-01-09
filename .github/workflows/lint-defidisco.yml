@@ -1,0 +1,42 @@
+name: Lint DeFiDisco
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'packages/protocolbeat/src/apps/discovery/defidisco/**'
+      - 'packages/l2b/src/implementations/discovery-ui/defidisco/**'
+      - 'packages/discovery/src/discovery/handlers/defidisco/**'
+  push:
+    branches: [main, master]
+    paths:
+      - 'packages/protocolbeat/src/apps/discovery/defidisco/**'
+      - 'packages/l2b/src/implementations/discovery-ui/defidisco/**'
+      - 'packages/discovery/src/discovery/handlers/defidisco/**'
+
+jobs:
+  biome:
+    name: Biome Lint & Format (DeFiDisco only)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Biome format check on DeFiDisco folders
+        run: |
+          pnpm biome format --error-on-warnings \
+            packages/protocolbeat/src/apps/discovery/defidisco/ \
+            packages/l2b/src/implementations/discovery-ui/defidisco/ \
+            packages/discovery/src/discovery/handlers/defidisco/

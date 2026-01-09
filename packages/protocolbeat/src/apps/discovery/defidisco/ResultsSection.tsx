@@ -1,5 +1,5 @@
 import React from 'react'
-import type { OwnerDefinition, ApiAddressType } from '../../../api/types'
+import type { ApiAddressType, OwnerDefinition } from '../../../api/types'
 
 interface ResultsSectionProps {
   projectData: any
@@ -21,18 +21,24 @@ interface OwnerTypeStats {
   multisigs: number
 }
 
-export function ResultsSection({ projectData, permissionOverrides, contractTags }: ResultsSectionProps) {
+export function ResultsSection({
+  projectData,
+  permissionOverrides,
+  contractTags,
+}: ResultsSectionProps) {
   if (!projectData || !permissionOverrides) {
     return null
   }
 
-  const upgradeabilityStats = calculateUpgradeabilityStats(projectData, permissionOverrides)
+  const upgradeabilityStats = calculateUpgradeabilityStats(
+    projectData,
+    permissionOverrides,
+  )
 
   return (
     <div className="border-b border-b-coffee-600 pb-2">
       <h2 className="p-2 font-bold text-2xl text-aux-blue">Results:</h2>
-      <div className="mb-1 flex flex-col gap-4 border-l-4 border-transparent p-2 pl-1">
-
+      <div className="mb-1 flex flex-col gap-4 border-transparent border-l-4 p-2 pl-1">
         {/* Upgradeability Section */}
         <UpgradeabilitySection stats={upgradeabilityStats} />
 
@@ -41,7 +47,6 @@ export function ResultsSection({ projectData, permissionOverrides, contractTags 
 
         {/* Autonomy Section */}
         <AutonomySection />
-
       </div>
     </div>
   )
@@ -50,9 +55,10 @@ export function ResultsSection({ projectData, permissionOverrides, contractTags 
 function UpgradeabilitySection({ stats }: { stats: UpgradeabilityStats }) {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-aux-orange mb-2">Upgradeability</h3>
+      <h3 className="mb-2 font-semibold text-aux-orange text-lg">
+        Upgradeability
+      </h3>
       <div className="ml-4 flex flex-col gap-3 text-sm">
-
         <RiskLevelStats
           title="Critical Impact Functions"
           stats={stats.critical}
@@ -76,13 +82,16 @@ function UpgradeabilitySection({ stats }: { stats: UpgradeabilityStats }) {
           stats={stats.lowRisk}
           titleColor="text-aux-green"
         />
-
       </div>
     </div>
   )
 }
 
-function RiskLevelStats({ title, stats, titleColor }: {
+function RiskLevelStats({
+  title,
+  stats,
+  titleColor,
+}: {
   title: string
   stats: OwnerTypeStats
   titleColor: string
@@ -116,9 +125,10 @@ function RiskLevelStats({ title, stats, titleColor }: {
 function ExitWindowSection() {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-aux-pink mb-2">Exit Window</h3>
-      <div className="ml-4 text-sm text-coffee-300">
-        🚧 Coming soon! This section will analyze delays and timelocks on critical functions.
+      <h3 className="mb-2 font-semibold text-aux-pink text-lg">Exit Window</h3>
+      <div className="ml-4 text-coffee-300 text-sm">
+        🚧 Coming soon! This section will analyze delays and timelocks on
+        critical functions.
       </div>
     </div>
   )
@@ -127,9 +137,10 @@ function ExitWindowSection() {
 function AutonomySection() {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-aux-cyan mb-2">Autonomy</h3>
-      <div className="ml-4 text-sm text-coffee-300">
-        🚧 Coming soon! This section will evaluate the risk coming from external contracts.
+      <h3 className="mb-2 font-semibold text-aux-cyan text-lg">Autonomy</h3>
+      <div className="ml-4 text-coffee-300 text-sm">
+        🚧 Coming soon! This section will evaluate the risk coming from external
+        contracts.
       </div>
     </div>
   )
@@ -137,13 +148,13 @@ function AutonomySection() {
 
 function calculateUpgradeabilityStats(
   projectData: any,
-  permissionOverrides: any
+  permissionOverrides: any,
 ): UpgradeabilityStats {
   const stats: UpgradeabilityStats = {
     critical: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
     highRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
     mediumRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
-    lowRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 }
+    lowRisk: { totalFunctions: 0, contracts: 0, eoas: 0, multisigs: 0 },
   }
 
   if (!permissionOverrides.contracts) {
@@ -175,67 +186,80 @@ function calculateUpgradeabilityStats(
   })
 
   // Process each contract's functions
-  Object.entries(permissionOverrides.contracts).forEach(([, contractPermissions]: [string, any]) => {
-    contractPermissions.functions.forEach((func: any) => {
-      if (func.isPermissioned === true && func.score && func.score !== 'unscored') {
-        // Determine which risk category this function belongs to
-        let targetStats: OwnerTypeStats
-        switch (func.score) {
-          case 'critical':
-            targetStats = stats.critical
-            break
-          case 'high-risk':
-            targetStats = stats.highRisk
-            break
-          case 'medium-risk':
-            targetStats = stats.mediumRisk
-            break
-          case 'low-risk':
-            targetStats = stats.lowRisk
-            break
-          default:
-            return // Skip unscored functions
-        }
+  Object.entries(permissionOverrides.contracts).forEach(
+    ([, contractPermissions]: [string, any]) => {
+      contractPermissions.functions.forEach((func: any) => {
+        if (
+          func.isPermissioned === true &&
+          func.score &&
+          func.score !== 'unscored'
+        ) {
+          // Determine which risk category this function belongs to
+          let targetStats: OwnerTypeStats
+          switch (func.score) {
+            case 'critical':
+              targetStats = stats.critical
+              break
+            case 'high-risk':
+              targetStats = stats.highRisk
+              break
+            case 'medium-risk':
+              targetStats = stats.mediumRisk
+              break
+            case 'low-risk':
+              targetStats = stats.lowRisk
+              break
+            default:
+              return // Skip unscored functions
+          }
 
-        targetStats.totalFunctions++
+          targetStats.totalFunctions++
 
-        // Resolve owners for this function
-        if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
-          try {
-            // Note: This is a simplified version - in a real implementation,
-            // we'd need to make this async and handle the file system access properly
-            const ownerAddresses = getOwnerAddressesFromDefinitions(func.ownerDefinitions, projectData)
+          // Resolve owners for this function
+          if (func.ownerDefinitions && func.ownerDefinitions.length > 0) {
+            try {
+              // Note: This is a simplified version - in a real implementation,
+              // we'd need to make this async and handle the file system access properly
+              const ownerAddresses = getOwnerAddressesFromDefinitions(
+                func.ownerDefinitions,
+                projectData,
+              )
 
-            ownerAddresses.forEach(address => {
-              const normalizedAddr = address.replace('eth:', '').toLowerCase()
-              const addressType = addressTypeMap.get(normalizedAddr)
+              ownerAddresses.forEach((address) => {
+                const normalizedAddr = address.replace('eth:', '').toLowerCase()
+                const addressType = addressTypeMap.get(normalizedAddr)
 
-              if (addressType) {
-                switch (addressType) {
-                  case 'Contract':
-                  case 'Diamond':
-                  case 'Timelock':
-                  case 'Token':
-                  case 'Unverified':
-                    targetStats.contracts++
-                    break
-                  case 'EOA':
-                  case 'EOAPermissioned':
-                    targetStats.eoas++
-                    break
-                  case 'Multisig':
-                    targetStats.multisigs++
-                    break
+                if (addressType) {
+                  switch (addressType) {
+                    case 'Contract':
+                    case 'Diamond':
+                    case 'Timelock':
+                    case 'Token':
+                    case 'Unverified':
+                      targetStats.contracts++
+                      break
+                    case 'EOA':
+                    case 'EOAPermissioned':
+                      targetStats.eoas++
+                      break
+                    case 'Multisig':
+                      targetStats.multisigs++
+                      break
+                  }
                 }
-              }
-            })
-          } catch (error) {
-            console.warn('Error resolving owners for function:', func.functionName, error)
+              })
+            } catch (error) {
+              console.warn(
+                'Error resolving owners for function:',
+                func.functionName,
+                error,
+              )
+            }
           }
         }
-      }
-    })
-  })
+      })
+    },
+  )
 
   return stats
 }
@@ -245,7 +269,7 @@ function calculateUpgradeabilityStats(
 // The actual resolution happens in FunctionFolder.tsx
 function getOwnerAddressesFromDefinitions(
   ownerDefinitions: OwnerDefinition[],
-  projectData: any
+  projectData: any,
 ): string[] {
   const addresses: string[] = []
   // **TODO**

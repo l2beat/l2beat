@@ -29,7 +29,7 @@ export function ProxyTypeTag({ proxyType }: ProxyTypeTagProps) {
 
   return (
     <span
-      className="inline-block px-1.5 py-0.5 rounded border text-xs"
+      className="inline-block rounded border px-1.5 py-0.5 text-xs"
       style={styles}
     >
       {label}
