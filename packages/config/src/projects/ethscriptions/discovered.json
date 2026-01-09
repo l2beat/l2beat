@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1767963523,
-  "configHash": "0x2e7dcb652947a49f4f639da1cc66505f11b81f2850406b5d26d3a7c81e91c3c1",
+  "timestamp": 1767975171,
+  "configHash": "0x176a50f2ab5ef21b5e9f123bb9c80aac96ca570d94990bc52ac8ad87e00fddda",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -27,33 +27,6 @@
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
-      }
-    },
-    {
-      "name": "FacetSafeModule",
-      "address": "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
-      "type": "Contract",
-      "template": "facet/FacetSafeModule",
-      "sourceHashes": [
-        "0xe72f875e22302b6f4ba7cf79658f0038ab2f434e188a6a5cf5db5dc59475f168"
-      ],
-      "proxyType": "immutable",
-      "description": "Module that allows the Safe to send Facet transactions.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1733593847,
-      "sinceBlock": 21352215,
-      "values": {
-        "$immutable": true,
-        "facetProxyAddress": "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
-      },
-      "implementationNames": {
-        "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": "FacetSafeModule"
       }
     },
     {
@@ -222,7 +195,7 @@
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 12,
+        "getProposalsLength": 13,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1767709775,
@@ -248,75 +221,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "FacetSafeProxy",
-      "address": "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25",
-      "type": "Contract",
-      "template": "facet/FacetSafeProxy",
-      "sourceHashes": [
-        "0xeeb64378c57fe40198d92b6136616a0243788e51e4d363d57f38a4c6ad891ff8"
-      ],
-      "proxyType": "immutable",
-      "description": "Helper of the Safe Module that allows to send Facet transactions.",
-      "sinceTimestamp": 1733593775,
-      "sinceBlock": 21352209,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": "FacetSafeProxy"
-      }
-    },
-    {
       "address": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "EthscriptionsSafeModule",
-      "address": "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
-      "type": "Contract",
-      "template": "facet/EthscriptionsSafeModule",
-      "sourceHashes": [
-        "0x3b42bbbb2e985d16af9ccbee812a73e53882232fc47dab8cf43369b5b853df33"
-      ],
-      "proxyType": "immutable",
-      "description": "Module that allows the Safe to interact with Ethscriptions.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1697832707,
-      "sinceBlock": 18393837,
-      "values": {
-        "$immutable": true,
-        "ethscriptionsProxyAddress": "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095"
-      },
-      "implementationNames": {
-        "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": "EthscriptionsSafeModule"
-      }
-    },
-    {
       "address": "eth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "EthscriptionsSafeProxy",
-      "address": "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095",
-      "type": "Contract",
-      "template": "facet/EthscriptionsSafeProxy",
-      "sourceHashes": [
-        "0x09dadea0389245a8882bad041f0349cda9669a53f590677017514fdbe7ec0c8a"
-      ],
-      "proxyType": "immutable",
-      "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
-      "sinceTimestamp": 1697832623,
-      "sinceBlock": 18393830,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": "EthscriptionsSafeProxy"
-      }
     },
     {
       "name": "Ethscriptions",
@@ -342,7 +254,7 @@
         "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
       ],
       "proxyType": "immutable",
-      "description": "L2 predeploy that allows ethscription data (ownership, content, creator) to be proven from L2 to L1 via the L2ToL1MessagePasser.",
+      "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": { "$immutable": true },
@@ -358,7 +270,7 @@
         "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
       ],
       "proxyType": "immutable",
-      "description": "L2 predeploy for passing messages from L2 to L1. Used by the EthscriptionsProver for L2->L1 proving.",
+      "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -377,10 +289,6 @@
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
-    "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": [
-      "function facetProxyAddress() view returns (address)",
-      "function sendFacetTransaction(bytes to, uint256 value, uint256 gasLimit, bytes data)"
     ],
     "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
       "error InvalidProof()",
@@ -493,10 +401,6 @@
       "function version() view returns (string)",
       "function whitelistedProposer(address) view returns (bool)"
     ],
-    "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": [
-      "constructor()",
-      "function sendFacetTransaction(bytes to, uint256 value, uint256 gasLimit, bytes data)"
-    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -546,18 +450,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": [
-      "function createEthscription(address to, string dataURI)",
-      "function ethscriptionsProxyAddress() view returns (address)",
-      "function transferEthscription(address to, bytes32 ethscriptionId)"
-    ],
-    "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": [
-      "constructor()",
-      "event ethscriptions_protocol_CreateEthscription(address indexed initialOwner, string contentURI)",
-      "event ethscriptions_protocol_TransferEthscription(address indexed recipient, bytes32 indexed ethscriptionId)",
-      "function createEthscription(address to, string dataURI)",
-      "function transferEthscription(address to, bytes32 ethscriptionId)"
-    ],
     "ethscr:0x3300000000000000000000000000000000000001": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -587,15 +479,11 @@
     ]
   },
   "usedTemplates": {
-    "facet/EthscriptionsSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
-    "facet/EthscriptionsSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
-    "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24197275, "ethscriptions": 6767371 },
-  "permissionsConfigHash": "0x877df0a2b40a6f3d912564f178cfbd140f628eb1a3481c73468371f73db0a637"
+  "usedBlockNumbers": { "ethereum": 24198241, "ethscriptions": 6768342 },
+  "permissionsConfigHash": "0x8496066fc76dfc0fef6153c0a39895adedf4f7b898339c8ffdb41be95a4a970c"
 }

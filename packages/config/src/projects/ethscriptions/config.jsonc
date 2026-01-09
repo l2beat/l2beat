@@ -25,6 +25,18 @@
     "eth:0x0000000000000000000000000000000000000000": {
       "ignoreDiscovery": true
     },
+    "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": {
+      "ignoreDiscovery": true
+    },
     "ethscr:0x3300000000000000000000000000000000000001": {
       "proxyType": "immutable",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
@@ -32,11 +44,11 @@
     },
     "ethscr:0x3300000000000000000000000000000000000003": {
       "proxyType": "immutable",
-      "description": "L2 predeploy that allows ethscription data (ownership, content, creator) to be proven from L2 to L1 via the L2ToL1MessagePasser."
+      "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred."
     },
     "ethscr:0x4200000000000000000000000000000000000016": {
       "proxyType": "immutable",
-      "description": "L2 predeploy for passing messages from L2 to L1. Used by the EthscriptionsProver for L2->L1 proving.",
+      "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
       "ignoreInWatchMode": ["messageNonce"]
     }
   }

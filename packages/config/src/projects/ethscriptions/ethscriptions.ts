@@ -59,7 +59,7 @@ export const ethscriptions: ScalingProject = {
       'Upgradability of the Rollup contract',
     ],
     notInScope: [
-      'Bridge functionality - the system intentionally has no canonical bridge. Native gas tokens are minted algorithmically from L1 gas burn rather than through a bridge escrow',
+      'Bridge functionality - the system intentionally has no canonical bridge. Gas is free on the L2 as geth has been modified to not charge users for gas.',
       'The soundness of the ZK proof system of Rollup',
     ],
   },
@@ -96,7 +96,7 @@ export const ethscriptions: ScalingProject = {
       additionalConsiderations: {
         short:
           'Ethscriptions is an application-specific rollup designed exclusively for managing ethscriptions (NFT-like assets inscribed via Ethereum calldata). It provides cryptographic state and EVM compatibility for the ethscriptions protocol.',
-        long: 'The chain derives its state entirely from L1 ethscription activity and there is no general-purpose smart contract deployment. Users interact with ethscriptions (create, transfer, prove ownership) through a derivation pipeline that converts L1 calldata into canonical L2 state. The system intentionally has no canonical bridge; gas is minted algorithmically from L1 gas burned.',
+        long: 'The chain derives its state entirely from L1 ethscription activity and there is no general-purpose smart contract deployment. Users interact with ethscriptions (create, transfer) through a derivation pipeline that converts L1 calldata into canonical L2 state. The system intentionally has no canonical bridge; gas is free as geth has been modified to not charge users.',
       },
     },
   ),
@@ -218,11 +218,13 @@ export const ethscriptions: ScalingProject = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_MESSAGING('optimistic', MAX_CHALLENGE_SECS),
+        name: 'Regular exit',
         description:
-          EXITS.REGULAR_MESSAGING('optimistic', MAX_CHALLENGE_SECS)
-            .description +
-          ' The challenge period can be shortened if the block is proven by providing a ZK proof.',
+          'Whenever a user submits a valid ethscription transaction on the L1, the message is automatically processed on the L2 and sent to the L2ToL1MessagePasser with a snapshot of that ethscription state. When the block containing that transaction is settled, the user can submit an L1 transaction to prove the ethscription state. The process of block finalization takes a challenge period of ' +
+          Math.floor(MAX_CHALLENGE_SECS / 86400) +
+          ' days to complete. The challenge period can be shortened if the block is proven by providing a ZK proof.',
+        risks: [],
+        references: [],
       },
     ],
     sequencing: {
