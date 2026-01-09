@@ -25,11 +25,13 @@ const LOGO_LINK = '/scaling/summary'
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
+  fullWidth?: boolean
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
+  fullWidth = false,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const isMobile = useIsMobile()
@@ -58,7 +60,12 @@ export function SideNavLayout({
           )}
         >
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
-          <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-5 lg:pl-0">
+          <div
+            className={cn(
+              'mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
+              fullWidth && 'max-w-full',
+            )}
+          >
             {children}
             {whatsNew && isMobile && (
               <WhatsNewWidgetCloseable whatsNew={whatsNew} />
@@ -123,6 +130,20 @@ const groups = compact<NavGroup>([
       {
         title: 'Archived',
         href: '/scaling/archived',
+      },
+    ],
+  },
+  env.CLIENT_SIDE_INTEROP_ENABLED && {
+    type: 'multiple',
+    title: 'Interop',
+    match: 'interop',
+    icon: (
+      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+    links: [
+      {
+        title: 'Summary',
+        href: '/interop/summary',
       },
     ],
   },
