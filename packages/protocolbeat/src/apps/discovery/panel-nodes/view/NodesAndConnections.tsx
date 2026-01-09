@@ -1,9 +1,29 @@
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useParams } from 'react-router-dom'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
+import {
+  useEdgeCallGraph,
+  getEdgeCalls,
+  hasEdgeCalls,
+  type BidirectionalCalls,
+} from '../../defidisco/useEdgeCallGraph'
+import { EdgeCallGraphPopup } from '../../defidisco/EdgeCallGraphPopup'
+import { ClickableConnection } from '../../defidisco/ClickableConnection'
 import { useStore } from '../store/store'
-import { Connection } from './Connection'
 import { NodeView } from './NodeView'
 
+interface ClickedEdge {
+  sourceAddress: string
+  sourceName: string
+  targetAddress: string
+  targetName: string
+  calls: BidirectionalCalls
+  position: { x: number; y: number }
+}
+
 export function NodesAndConnections() {
+  const { project } = useParams()
   const nodes = useStore((s) => s.nodes)
   const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
@@ -14,6 +34,12 @@ export function NodesAndConnections() {
     (s) => s.markUnreachableEntries,
   )
   const visible = nodes.filter((n) => !hidden.includes(n.id))
+
+  // State for clicked edge popup
+  const [clickedEdge, setClickedEdge] = useState<ClickedEdge | null>(null)
+
+  // Fetch call graph data to determine which edges are clickable
+  const { edgeCallsMap } = useEdgeCallGraph(project ?? '')
 
   const connections = visible
     .flatMap((node) =>
@@ -35,24 +61,41 @@ export function NodesAndConnections() {
           markUnreachableEntries &&
           !(node.isReachable && targetNode?.isReachable)
 
+        // Check if this edge has call graph data (in either direction)
+        const calls = getEdgeCalls(edgeCallsMap, node.id, field.target)
+        const hasCallGraphData = hasEdgeCalls(edgeCallsMap, node.id, field.target)
+
         return {
           key: `${node.id}-${i}-${field.target}`,
+          sourceAddress: node.id,
+          sourceName: node.name,
+          targetAddress: field.target,
+          targetName: targetNode?.name ?? field.target,
           from: field.connection.from,
           to: field.connection.to,
           isHighlighted,
           isDashed,
           isDimmed,
           isGrayedOut,
+          hasCallGraphData,
+          calls,
         }
       }),
     )
     .filter(Boolean) as {
     key: string
+    sourceAddress: string
+    sourceName: string
+    targetAddress: string
+    targetName: string
     from: { x: number; y: number; direction: 'left' | 'right' }
     to: { x: number; y: number; direction: 'left' | 'right' }
     isHighlighted: boolean
     isDashed: boolean
     isDimmed: boolean
+    isGrayedOut?: boolean
+    hasCallGraphData: boolean
+    calls: BidirectionalCalls
   }[]
 
   let minX = Number.POSITIVE_INFINITY
@@ -70,16 +113,51 @@ export function NodesAndConnections() {
   const width = maxX - minX
   const height = maxY - minY
 
+  const handleEdgeClick = (
+    connection: (typeof connections)[number],
+    e: React.MouseEvent,
+  ) => {
+    e.stopPropagation()
+    setClickedEdge({
+      sourceAddress: connection.sourceAddress,
+      sourceName: connection.sourceName,
+      targetAddress: connection.targetAddress,
+      targetName: connection.targetName,
+      calls: connection.calls,
+      position: { x: e.clientX, y: e.clientY },
+    })
+  }
+
   return (
     <>
       <svg
         viewBox={`${minX} ${minY} ${width} ${height}`}
-        className="pointer-events-none absolute"
-        style={{ left: minX, top: minY, width, height }}
+        className="absolute"
+        style={{ left: minX, top: minY, width, height, pointerEvents: 'none' }}
         fill="none"
       >
-        {connections.map(({ key, ...rest }) => (
-          <Connection key={key} {...rest} />
+        {connections.map(({ key, sourceAddress, sourceName, targetAddress, targetName, calls, ...rest }) => (
+          <ClickableConnection
+            key={key}
+            {...rest}
+            onClick={
+              rest.hasCallGraphData
+                ? (e) =>
+                    handleEdgeClick(
+                      {
+                        key,
+                        sourceAddress,
+                        sourceName,
+                        targetAddress,
+                        targetName,
+                        calls,
+                        ...rest,
+                      },
+                      e,
+                    )
+                : undefined
+            }
+          />
         ))}
       </svg>
 
@@ -120,6 +198,21 @@ export function NodesAndConnections() {
           />
         )
       })}
+
+      {/* Edge call graph popup */}
+      {clickedEdge &&
+        createPortal(
+          <EdgeCallGraphPopup
+            sourceAddress={clickedEdge.sourceAddress}
+            sourceName={clickedEdge.sourceName}
+            targetAddress={clickedEdge.targetAddress}
+            targetName={clickedEdge.targetName}
+            calls={clickedEdge.calls}
+            position={clickedEdge.position}
+            onClose={() => setClickedEdge(null)}
+          />,
+          document.body,
+        )}
     </>
   )
 }

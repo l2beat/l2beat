@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-01-08T16:53:26.459Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-01-08T16:46:09.257Z"
+    }
+  ]
+}

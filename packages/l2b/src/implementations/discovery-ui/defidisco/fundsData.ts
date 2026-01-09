@@ -253,7 +253,22 @@ export async function fetchAllFundsForProject(
       forceRefresh,
     })
 
-    contracts[contract.address] = fetchResult.data
+    // Only update if we got valid data, preserve existing data on error
+    if (!fetchResult.data.error) {
+      contracts[contract.address] = fetchResult.data
+    } else {
+      // Preserve existing data but update the error field and timestamp
+      const existingData = contracts[contract.address]
+      if (existingData && (existingData.balances || existingData.positions)) {
+        contracts[contract.address] = {
+          ...existingData,
+          lastFetched: fetchResult.data.lastFetched,
+          error: fetchResult.data.error,
+        }
+      } else {
+        contracts[contract.address] = fetchResult.data
+      }
+    }
 
     // Determine cache status for logging
     const balancesStatus = contract.fetchBalances
@@ -321,9 +336,26 @@ export async function fetchFundsForSingleContract(
   })
 
   const existingData = getFundsData(paths, project)
+  const existingContractData = existingData.contracts[contractAddress]
+
+  // Only update if we got valid data, preserve existing data on error
+  let newContractData: ContractFundsData
+  if (!fetchResult.data.error) {
+    newContractData = fetchResult.data
+  } else if (existingContractData && (existingContractData.balances || existingContractData.positions)) {
+    // Preserve existing data but update the error field and timestamp
+    newContractData = {
+      ...existingContractData,
+      lastFetched: fetchResult.data.lastFetched,
+      error: fetchResult.data.error,
+    }
+  } else {
+    newContractData = fetchResult.data
+  }
+
   const contracts = {
     ...existingData.contracts,
-    [contractAddress]: fetchResult.data,
+    [contractAddress]: newContractData,
   }
 
   const result: ApiFundsDataResponse = {

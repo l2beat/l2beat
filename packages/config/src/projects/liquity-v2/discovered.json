@@ -1,7 +1,7 @@
 {
   "name": "liquity-v2",
-  "timestamp": 1765157363,
-  "configHash": "0x6ee3c9e1b9b430a86f2d25e0132f36e3f48fc49ebe8defc6eeac4d1239137df7",
+  "timestamp": 1767889765,
+  "configHash": "0x9dc8abdb7f2f3f9ff9c5358eed6cf31cbb4176b6e320094eb47eced9f696f4f7",
   "entries": [
     {
       "address": "eth:0x000000000017d2a7B863e9EBBe6F9ab7255EB7c5",
@@ -17,19 +17,6 @@
       "address": "eth:0x0000000000704F94cE2Fe636dAB92677a9745dc3",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "",
-      "address": "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1614146162,
-      "sinceBlock": 11918104,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa": ""
-      }
     },
     {
       "name": "SortedTroves",
@@ -61,7 +48,7 @@
           0,
           0
         ],
-        "getSize": 24,
+        "getSize": 27,
         "isBatchedNode": [false, false, false, false, false],
         "isEmpty": false,
         "NAME": "SortedTroves",
@@ -77,7 +64,7 @@
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false]
         ],
-        "size": 24,
+        "size": 27,
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
       },
       "errors": {
@@ -143,7 +130,7 @@
         "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "$members": [
           "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
-          "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+          "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
           "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
           "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
           "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
@@ -160,7 +147,7 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 1965,
+        "nonce": 1978,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -227,8 +214,8 @@
           "200000000000000000003",
           "200000000000000000004"
         ],
-        "getEntireSystemColl": "80162358520178490040630",
-        "getEntireSystemDebt": "36580225547261423123254914",
+        "getEntireSystemColl": "78295688045359011759093",
+        "getEntireSystemDebt": "35053586202751244296508749",
         "isOwner": false,
         "lqtyStaking": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
         "lqtyStakingAddress": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -273,19 +260,6 @@
       }
     },
     {
-      "name": "",
-      "address": "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1617007464,
-      "sinceBlock": 12133145,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb": ""
-      }
-    },
-    {
       "name": "DSProxyCache",
       "address": "eth:0x271293c67E2D3140a0E9381EfF1F9b01E07B0795",
       "type": "Contract",
@@ -301,30 +275,49 @@
       }
     },
     {
-      "name": "ConfirmedTransactionModule",
-      "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "name": "InstaIndex",
+      "address": "eth:0x2971AdFa57b20E5a416aE5a708A8655A9c74f723",
       "type": "Contract",
       "sourceHashes": [
-        "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
+        "0x0511ed98b45053c8665d6e61d7d827b9667ef1cdc7c05e424573e036b991ea0e"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1603267019,
-      "sinceBlock": 11098283,
+      "sinceTimestamp": 1585229168,
+      "sinceBlock": 9747241,
       "values": {
         "$immutable": true,
-        "manager": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-        "NAME": "Confirmed Transaction Module",
-        "VERSION": "0.1.0"
+        "account": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x939Daad09fC4A9B8f8A9352A485DAb2df4F4B3F8",
+          "eth:0xFE02a32Cbe0CB9ad9A945576A5bb53A3C123A3A3",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "check": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "connectors": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0xD6A602C01a023B98Ecfb29Df02FBA380d3B21E0c",
+          "eth:0x7D53E606308A2E0A1D396F30dc305cc7f8483436",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "list": "eth:0x4c8a1BEb8a87765788946D6B19C6C6355194AbEb",
+        "master": "eth:0x2386DC45AdDed673317eF068992F19421B481F4c",
+        "versionCount": 2
+      },
+      "errors": {
+        "account": "Processing error occurred.",
+        "check": "Processing error occurred.",
+        "connectors": "Processing error occurred."
       },
       "implementationNames": {
-        "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
+        "eth:0x2971AdFa57b20E5a416aE5a708A8655A9c74f723": "InstaIndex"
       }
     },
     {
@@ -354,7 +347,7 @@
       "address": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
       "type": "Contract",
       "sourceHashes": [
-        "0x081520fa71693f0e75717bd3be1e75f94f431514e00dbb1f4af99187887d900c"
+        "0x997f811eda290b6f34220418b15094d89382c0ce0974ddaa92ec0276b48ec7e1"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1747646807,
@@ -392,7 +385,7 @@
       "address": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
       "type": "Contract",
       "sourceHashes": [
-        "0x081520fa71693f0e75717bd3be1e75f94f431514e00dbb1f4af99187887d900c"
+        "0x997f811eda290b6f34220418b15094d89382c0ce0974ddaa92ec0276b48ec7e1"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1747646579,
@@ -427,8 +420,8 @@
         ],
         "BCR": "100000000000000000",
         "CCR": "1500000000000000000",
-        "getEntireBranchColl": "6694588608548679349623",
-        "getEntireBranchDebt": "10496159571145202632333570",
+        "getEntireBranchColl": "5659982911621459116481",
+        "getEntireBranchDebt": "9337626550679712301239062",
         "getInterestIndividualDelegateOf": [
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
@@ -480,27 +473,12 @@
       }
     },
     {
-      "address": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x44156552427c444c873067e593bB9721593B284f",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x44220c740b288403E75658ac693674C59e4aB895",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -519,7 +497,7 @@
         "DECIMAL_PRECISION": "1000000000000000000",
         "ETHUSD_TELLOR_REQ_ID": 1,
         "isOwner": false,
-        "lastGoodPrice": "3005450000000000000000",
+        "lastGoodPrice": "3089890000000000000000",
         "MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND": "500000000000000000",
         "MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES": "50000000000000000",
         "NAME": "PriceFeed",
@@ -550,14 +528,14 @@
         "activePoolAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
         "DECIMAL_PRECISION": "1000000000000000000",
-        "F_ETH": 185270297164076,
-        "F_LUSD": "601242870655854742481",
+        "F_ETH": 185312696805556,
+        "F_LUSD": "601243055115755398736",
         "isOwner": false,
         "lqtyToken": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
         "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
         "NAME": "LQTYStaking",
         "owner": "eth:0x0000000000000000000000000000000000000000",
-        "totalLQTYStaked": "54262751015023394412931498",
+        "totalLQTYStaked": "52934994272891242554992454",
         "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
       },
       "implementationNames": {
@@ -600,23 +578,23 @@
       "sinceBlock": 22516101,
       "values": {
         "$immutable": true,
-        "aggBatchManagementFees": "14985261361933414359",
-        "aggRecordedDebt": "29301089617807535400779206",
-        "aggWeightedBatchManagementFeeSum": "23996677168710370728813295000000000000000",
-        "aggWeightedDebtSum": "1118853057249615414677711626181000407655291",
+        "aggBatchManagementFees": "12612108211660208634",
+        "aggRecordedDebt": "25150749228991174302806740",
+        "aggWeightedBatchManagementFeeSum": "23690051058522512203098418000000000000000",
+        "aggWeightedDebtSum": "1251670875264886817704765362850869402660368",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-        "calcPendingAggBatchManagementFee": "36524622783425222",
-        "calcPendingAggInterest": "1702972689877649033",
-        "calcPendingSPYield": "1277229517408236774",
+        "calcPendingAggBatchManagementFee": "60874777320472802477",
+        "calcPendingAggInterest": "357688290458116438393",
+        "calcPendingSPYield": "268266217843587328794",
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "defaultPoolAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
-        "getBoldDebt": "29301106342566209995267820",
-        "getCollBalance": "25934897805245200236793",
+        "getBoldDebt": "25151180404167164552256244",
+        "getCollBalance": "25496181342780215977788",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
-        "lastAggBatchManagementFeesUpdateTime": 1765157315,
-        "lastAggUpdateTime": 1765157315,
+        "lastAggBatchManagementFeesUpdateTime": 1767808727,
+        "lastAggUpdateTime": 1767880751,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
@@ -647,11 +625,11 @@
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "collToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "currentScale": 0,
-        "getCollBalance": "16675984034961484398",
-        "getEntireBranchColl": "6694588608548679349623",
-        "getEntireBranchDebt": "10496159571145202632333570",
-        "getTotalBoldDeposits": "9559023998004045481196745",
-        "getYieldGainsOwed": "17739621340325977975857",
+        "getCollBalance": "11117048137926165179",
+        "getEntireBranchColl": "5659982911621459116481",
+        "getEntireBranchDebt": "9337626550679712301239062",
+        "getTotalBoldDeposits": "7893115117687308113021690",
+        "getYieldGainsOwed": "25374873389814576258313",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -659,7 +637,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["83921804727879664422377168025621602", 0, 0, 0, 0],
+        "scaleToB": ["88090682883291160949110841232029094", 0, 0, 0, 0],
         "scaleToS": ["16392861312881131483759987969575", 0, 0, 0, 0],
         "troveManager": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A"
       },
@@ -725,16 +703,16 @@
         "description": "ETH / USD",
         "getAnswer": [0, 0, 0, 0, 0],
         "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 309314331173,
-        "latestRound": "129127208515966883289",
+        "latestAnswer": 308989000000,
+        "latestRound": "129127208515966884540",
         "latestRoundData": {
-          "roundId": "129127208515966883289",
-          "answer": 309314331173,
-          "startedAt": 1765157297,
-          "updatedAt": 1765157315,
-          "answeredInRound": "129127208515966883289"
+          "roundId": "129127208515966884540",
+          "answer": 308989000000,
+          "startedAt": 1767887159,
+          "updatedAt": 1767887183,
+          "answeredInRound": "129127208515966884540"
         },
-        "latestTimestamp": 1765157315,
+        "latestTimestamp": 1767887183,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -768,31 +746,12 @@
         "permitTypeHash": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
         "symbol": "LUSD",
-        "totalSupply": "36580225547261423123254914",
+        "totalSupply": "35053586202751244296508749",
         "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
         "version": "1"
       },
       "implementationNames": {
         "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": "LUSDToken"
-      }
-    },
-    {
-      "name": "SimpleWriteAccessController",
-      "address": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x750ad9105ec5613ec9985b9d5d26452470adefa7bce8c1bb8e58738d9ea96d02"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1611152981,
-      "sinceBlock": 11692841,
-      "values": {
-        "$immutable": true,
-        "checkEnabled": true,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"
-      },
-      "implementationNames": {
-        "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6": "SimpleWriteAccessController"
       }
     },
     {
@@ -823,7 +782,7 @@
         "name": "BOLD Stablecoin",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "BOLD",
-        "totalSupply": "44740916149537822018764320"
+        "totalSupply": "39553294081739913889741160"
       },
       "implementationNames": {
         "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": "BoldToken"
@@ -873,11 +832,11 @@
         "currentScale": 0,
         "DECIMAL_PRECISION": "1000000000000000000",
         "defaultPool": "eth:0x0000000000000000000000000000000000000000",
-        "getETH": "638153868374347174379",
-        "getTotalLUSDDeposits": "15866181854005703532705610",
+        "getETH": "636551818011984239433",
+        "getTotalLUSDDeposits": "15050827826054936135949818",
         "isOwner": false,
         "lastETHError_Offset": "9314849123567685276614336",
-        "lastLQTYError": "4163575288921976950254191",
+        "lastLQTYError": "11234885881451074186081670",
         "lastLUSDLossError_Offset": "5900472414984220370247446",
         "LUSD_GAS_COMPENSATION": "200000000000000000000",
         "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
@@ -940,16 +899,6 @@
       "implementationNames": {
         "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D": "LQTYToken"
       }
-    },
-    {
-      "address": "eth:0x7034E17f11b382545FFd618620Ca72e271AEa5F6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x711cd20bF6b436ced327A8C65A14491aA04c2ca1",
@@ -1021,8 +970,8 @@
         ],
         "borrowerOperations": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
         "CCR": "1500000000000000000",
-        "getEntireBranchColl": "6694588608548679349623",
-        "getEntireBranchDebt": "10496159571145202632333570",
+        "getEntireBranchColl": "5659982911621459116481",
+        "getEntireBranchDebt": "9337626550679712301239062",
         "getLatestTroveData": [
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -1038,7 +987,7 @@
           "102247037494986730506041632222868001124387697185626929998095238518734059870154",
           "74281559837511991545039363478026157965600536673409982010149646900490664937910"
         ],
-        "getTroveIdsCount": 114,
+        "getTroveIdsCount": 106,
         "getTroveStatus": [0, 0, 0, 0, 0],
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
@@ -1193,7 +1142,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001135418438c3c1d8d85b16146a5897e051256020a899206f66046f9d741b6",
-          "epoch": 73562
+          "epoch": 88738
         },
         "linkAvailableForPayment": "961522046247033498119",
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -1227,28 +1176,28 @@
       "values": {
         "$immutable": true,
         "bold": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "boldAccrued": "12841723647623759435853",
+        "boldAccrued": "12573292967503455427620",
         "calculateVotingThreshold": [0, 0, 0, 0, 0],
-        "epoch": 31,
+        "epoch": 36,
         "EPOCH_DURATION": 604800,
         "EPOCH_START": 1746662400,
         "EPOCH_VOTING_CUTOFF": 518400,
-        "epochStart": 1764806400,
-        "getLatestVotingThreshold": "11814107010145680870493921135891",
+        "epochStart": 1767830400,
+        "getLatestVotingThreshold": "13623666908590327454824818392923",
         "getTotalVotesAndState": {
           "snapshot": {
-            "votes": "590705350507284043524696056794566",
-            "forEpoch": 30
+            "votes": "681183345429516372741240919646195",
+            "forEpoch": 35
           },
           "state": {
-            "countedVoteLQTY": "36030379688535477830956468",
-            "countedVoteOffset": "63000358188750857428853609097101518"
+            "countedVoteLQTY": "35561263125756768790024936",
+            "countedVoteOffset": "62185098682940860014723876059668756"
           },
           "shouldUpdate": false
         },
         "globalState": {
-          "countedVoteLQTY": "36030379688535477830956468",
-          "countedVoteOffset": "63000358188750857428853609097101518"
+          "countedVoteLQTY": "35561263125756768790024936",
+          "countedVoteOffset": "62185098682940860014723876059668756"
         },
         "isOwner": false,
         "lqty": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
@@ -1257,14 +1206,14 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "REGISTRATION_FEE": "100000000000000000000",
         "REGISTRATION_THRESHOLD_FACTOR": 100000000000000,
-        "secondsWithinEpoch": 350963,
+        "secondsWithinEpoch": 59363,
         "stakingV1": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
         "UNREGISTRATION_AFTER_EPOCHS": 4,
         "UNREGISTRATION_THRESHOLD_FACTOR": "1000000000000000001",
         "userProxyImplementation": "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2",
         "votesSnapshot": {
-          "votes": "590705350507284043524696056794566",
-          "forEpoch": 30
+          "votes": "681183345429516372741240919646195",
+          "forEpoch": 35
         },
         "VOTING_THRESHOLD_FACTOR": "20000000000000000"
       },
@@ -1272,11 +1221,6 @@
       "implementationNames": {
         "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1": "Governance"
       }
-    },
-    {
-      "address": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "FixedAssetReader",
@@ -1311,7 +1255,7 @@
         "borrowerOperationsAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
         "contains": [false, false, false, false, false],
         "getFirst": "69406497372752790287095306925191155570756713621942550424621261184562556006609",
-        "getLast": "99100127693964932356156991794593486162451662146297217308774157019553416555659",
+        "getLast": "48155643574682199246965747600986830151117553149983828519323299836183986087031",
         "getNext": [
           "69406497372752790287095306925191155570756713621942550424621261184562556006609",
           0,
@@ -1320,20 +1264,20 @@
           0
         ],
         "getPrev": [
-          "99100127693964932356156991794593486162451662146297217308774157019553416555659",
+          "48155643574682199246965747600986830151117553149983828519323299836183986087031",
           0,
           0,
           0,
           0
         ],
-        "getSize": 67,
+        "getSize": 61,
         "isBatchedNode": [false, false, false, false, false],
         "isEmpty": false,
         "NAME": "SortedTroves",
         "nodes": [
           [
             "69406497372752790287095306925191155570756713621942550424621261184562556006609",
-            "99100127693964932356156991794593486162451662146297217308774157019553416555659",
+            "48155643574682199246965747600986830151117553149983828519323299836183986087031",
             "eth:0x0000000000000000000000000000000000000000",
             false
           ],
@@ -1342,7 +1286,7 @@
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false]
         ],
-        "size": 67,
+        "size": 61,
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22"
       },
       "errors": {
@@ -1477,24 +1421,24 @@
         ],
         "getLastNewValueById": [
           [0, false],
-          [3068405000, true],
+          [3095315000, true],
           [0, false],
           [0, false],
           [0, false]
         ],
         "getNewCurrentVariables": {
-          "_c": "0xd8559ac3dc206e9130ce3da67774b5eaae32d2f688eaa3f85d00bbf628aa1b9c",
+          "_c": "0x8d1ed5a70af53d569e9c1f82dee78f15b181d0ed7703f0b97f86daa19c5f1970",
           "_r": [1, 1, 1, 1, 1],
           "_diff": 0,
           "_tip": 0
         },
-        "getNewValueCountbyRequestId": [0, 209708, 0, 0, 0],
+        "getNewValueCountbyRequestId": [0, 225087, 0, 0, 0],
         "name": "Tellor Tributes",
         "newValueTimestamps": [
           1614021064, 1614031551, 1614098551, 1614118070, 1614119565
         ],
         "symbol": "TRB",
-        "totalSupply": "2812205042785121189315113",
+        "totalSupply": "2821366731908415894910075",
         "verify": 9999
       },
       "errors": {
@@ -1539,6 +1483,32 @@
       "proxyType": "EOA"
     },
     {
+      "name": "InstaDefaultImplementation",
+      "address": "eth:0x8F4a8675Ea3a069D1D8280Bd19B802430f8F53be",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7e7c081bae473b02a824acbb3c184751c09c2f86d0c509282130f58993f9a187"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1722281735,
+      "sinceBlock": 20414351,
+      "values": {
+        "$immutable": true,
+        "CHAIN_ID": 1,
+        "DOMAIN_SEPARATOR_NAME": "DeFi-Smart-Account",
+        "DOMAIN_SEPARATOR_VERSION": "2.0.0",
+        "domainSeparatorV4": "0xfdc78a53978700ed21732153eb889b917f735b52b992ed118ec2848be5e2d6cf",
+        "EIP1271_TYPE_HASH": "0x2d3c4990a9a9ca11242cf609ddea09cce84986c44613521f3872771c0c524032",
+        "implementationVersion": 1,
+        "instaIndex": "eth:0x2971AdFa57b20E5a416aE5a708A8655A9c74f723",
+        "isBeta": false,
+        "version": 2
+      },
+      "implementationNames": {
+        "eth:0x8F4a8675Ea3a069D1D8280Bd19B802430f8F53be": "InstaDefaultImplementation"
+      }
+    },
+    {
       "name": "SortedTroves",
       "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
       "type": "Contract",
@@ -1553,12 +1523,12 @@
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
         "data": {
           "head": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
-          "tail": "eth:0x9B60A3B60cc6A8190F085a729B374Af9170A9f16",
+          "tail": "eth:0xD4caCac8791e8556862b2f644FB0782328dd910D",
           "maxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
           "size": 120
         },
         "getFirst": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
-        "getLast": "eth:0x9B60A3B60cc6A8190F085a729B374Af9170A9f16",
+        "getLast": "eth:0xD4caCac8791e8556862b2f644FB0782328dd910D",
         "getMaxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "getSize": 120,
         "isEmpty": false,
@@ -1584,23 +1554,23 @@
       "sinceBlock": 22516120,
       "values": {
         "$immutable": true,
-        "aggBatchManagementFees": "76210647043588922052",
-        "aggRecordedDebt": "4943683163167444008101142",
-        "aggWeightedBatchManagementFeeSum": "11875699953369966687829315500000000000000",
-        "aggWeightedDebtSum": "47251652745341468441219847878368942732890",
+        "aggBatchManagementFees": "29088407327922463343",
+        "aggRecordedDebt": "5065041436371597027689372",
+        "aggWeightedBatchManagementFeeSum": "11729346594480392936850225750000000000000",
+        "aggWeightedDebtSum": "47371776128426120769350598761367237082610",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-        "calcPendingAggBatchManagementFee": "51456847552900993408",
-        "calcPendingAggInterest": "71920323813305128",
-        "calcPendingSPYield": "53940242859978846",
+        "calcPendingAggBatchManagementFee": "3436680699296005541",
+        "calcPendingAggInterest": "13879858302468840561",
+        "calcPendingSPYield": "10409893726851630420",
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "defaultPoolAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
-        "getBoldDebt": "4943810902582364311321730",
-        "getCollBalance": "4497762311452550873822",
+        "getBoldDebt": "5065087841317926714998817",
+        "getCollBalance": "4246959822339412522278",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
-        "lastAggBatchManagementFeesUpdateTime": 1765020719,
-        "lastAggUpdateTime": 1765157315,
+        "lastAggBatchManagementFeesUpdateTime": 1767880523,
+        "lastAggUpdateTime": 1767880523,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
@@ -1608,19 +1578,6 @@
       },
       "implementationNames": {
         "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": "ActivePool"
-      }
-    },
-    {
-      "name": "",
-      "address": "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1614146886,
-      "sinceBlock": 11918152,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91": ""
       }
     },
     {
@@ -1639,11 +1596,11 @@
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "currentScale": 0,
-        "getCollBalance": "23455163211135991677",
-        "getEntireBranchColl": "25934897805245200236793",
-        "getEntireBranchDebt": "29301106342566209995267820",
-        "getTotalBoldDeposits": "20866472079616888424564748",
-        "getYieldGainsOwed": "29362086163467309746822",
+        "getCollBalance": "20743394629985611860",
+        "getEntireBranchColl": "25496181342780215977788",
+        "getEntireBranchDebt": "25151180404167164552256244",
+        "getTotalBoldDeposits": "19456452376323296032784164",
+        "getYieldGainsOwed": "46242456171390007118663",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -1651,7 +1608,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["45594225806957353172827056693106554", 0, 0, 0, 0],
+        "scaleToB": ["49647053777319381999186134640785186", 0, 0, 0, 0],
         "scaleToS": ["35438697625952148296012064478588", 0, 0, 0, 0],
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22"
       },
@@ -1664,6 +1621,11 @@
       }
     },
     {
+      "address": "eth:0x9569231212085570679307000500000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x98d87F3BF35B8D5685e1eDfAeb8BA2F7d0a7fB11",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1673,7 +1635,7 @@
       "address": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
       "type": "Contract",
       "sourceHashes": [
-        "0x081520fa71693f0e75717bd3be1e75f94f431514e00dbb1f4af99187887d900c"
+        "0x997f811eda290b6f34220418b15094d89382c0ce0974ddaa92ec0276b48ec7e1"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1747646339,
@@ -1685,11 +1647,6 @@
       "implementationNames": {
         "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12": "MetadataNFT"
       }
-    },
-    {
-      "address": "eth:0x9B60A3B60cc6A8190F085a729B374Af9170A9f16",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SimpleWriteAccessController",
@@ -1745,7 +1702,7 @@
         "borrowerOperationsAddress": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
         "contains": [false, false, false, false, false],
         "getFirst": "492270872291668257851957123016844884821368762214878526512702964905114187127",
-        "getLast": "68896488672316276834102841460992022989283114985149003584847239755647821489467",
+        "getLast": "78159833196847958977227438648061945847752731113647277737301785676172235902251",
         "getNext": [
           "492270872291668257851957123016844884821368762214878526512702964905114187127",
           0,
@@ -1754,20 +1711,20 @@
           0
         ],
         "getPrev": [
-          "68896488672316276834102841460992022989283114985149003584847239755647821489467",
+          "78159833196847958977227438648061945847752731113647277737301785676172235902251",
           0,
           0,
           0,
           0
         ],
-        "getSize": 103,
+        "getSize": 95,
         "isBatchedNode": [false, false, false, false, false],
         "isEmpty": false,
         "NAME": "SortedTroves",
         "nodes": [
           [
             "492270872291668257851957123016844884821368762214878526512702964905114187127",
-            "68896488672316276834102841460992022989283114985149003584847239755647821489467",
+            "78159833196847958977227438648061945847752731113647277737301785676172235902251",
             "eth:0x0000000000000000000000000000000000000000",
             false
           ],
@@ -1776,7 +1733,7 @@
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false]
         ],
-        "size": 103,
+        "size": 95,
         "troveManager": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A"
       },
       "errors": {
@@ -1812,8 +1769,8 @@
         ],
         "borrowerOperations": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "25934897805245200236793",
-        "getEntireBranchDebt": "29301106342566209995267820",
+        "getEntireBranchColl": "25496181342780215977788",
+        "getEntireBranchDebt": "25151180404167164552256244",
         "getLatestTroveData": [
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -1823,13 +1780,13 @@
         ],
         "getTroveAnnualInterestRate": [0, 0, 0, 0, 0],
         "getTroveFromTroveIdsArray": [
-          "75080400786146034963361558758793057444889329366712384848121031573176928283904",
+          "98138812059725758564609263565551065956967041398216672951730221074607548507060",
           "11159957542815582420488026697672994934488227070340527458817474573810738877248",
           "102570399347334904848277730749855536164897158539639787290331273088032008072627",
           "85095847953002077866710073802039317139485368761476694904929322343692967211708",
-          "50756158534842447364448641855355866851032878687209792111331563734926976716482"
+          "64132792319957114575712214153971317118152919325790102544335049443954963054513"
         ],
-        "getTroveIdsCount": 74,
+        "getTroveIdsCount": 69,
         "getTroveStatus": [0, 0, 0, 0, 0],
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
@@ -1927,7 +1884,7 @@
         "_100pct": "1000000000000000000",
         "$immutable": true,
         "activePool": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "baseRate": 568095522421726,
+        "baseRate": 1006988,
         "BETA": 2,
         "BOOTSTRAP_PERIOD": 1209600,
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
@@ -1938,13 +1895,13 @@
         "defaultPool": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
         "getBorrowingFee": [0, 0, 0, 0, 0],
         "getBorrowingFeeWithDecay": [0, 0, 0, 0, 0],
-        "getBorrowingRate": 5568095522421726,
-        "getBorrowingRateWithDecay": 5327228906757906,
-        "getEntireSystemColl": "80162358520178490040630",
-        "getEntireSystemDebt": "36580225547261423123254914",
+        "getBorrowingRate": 5000000001006988,
+        "getBorrowingRateWithDecay": 5000000000073559,
+        "getEntireSystemColl": "78295688045359011759093",
+        "getEntireSystemDebt": "35053586202751244296508749",
         "getRedemptionFeeWithDecay": [0, 0, 0, 0],
-        "getRedemptionRate": 5568095522421726,
-        "getRedemptionRateWithDecay": 5327228906757906,
+        "getRedemptionRate": 5000000001006988,
+        "getRedemptionRateWithDecay": 5000000000073559,
         "getTCR": [0, 0, 0, 0, 0],
         "getTroveFromTroveOwnersArray": [
           "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984",
@@ -1958,7 +1915,7 @@
         "L_ETH": 0,
         "L_LUSDDebt": 0,
         "lastETHError_Redistribution": 0,
-        "lastFeeOperationTime": 1765122983,
+        "lastFeeOperationTime": 1767726635,
         "lastLUSDDebtError_Redistribution": 0,
         "lqtyStaking": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
         "lqtyToken": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
@@ -1977,7 +1934,7 @@
         "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
         "stabilityPool": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
         "totalCollateralSnapshot": "80381242490914790439503",
-        "totalStakes": "80162358520178490040630",
+        "totalStakes": "78295688045359011759093",
         "totalStakesSnapshot": "80381242490914790439503",
         "TroveOwners": [
           "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984",
@@ -2039,8 +1996,8 @@
         ],
         "BCR": "100000000000000000",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "25934897805245200236793",
-        "getEntireBranchDebt": "29301106342566209995267820",
+        "getEntireBranchColl": "25496181342780215977788",
+        "getEntireBranchDebt": "25151180404167164552256244",
         "getInterestIndividualDelegateOf": [
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
@@ -2113,17 +2070,12 @@
       "sinceBlock": 12178590,
       "values": {
         "$immutable": true,
-        "getTellorCurrentValue": [[true, 3068405000, 1765155995]],
+        "getTellorCurrentValue": [[true, 3095315000, 1767888707]],
         "tellor": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0"
       },
       "implementationNames": {
         "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": "TellorCaller"
       }
-    },
-    {
-      "address": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "TroveManager",
@@ -2147,8 +2099,8 @@
         ],
         "borrowerOperations": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "4497762311452550873822",
-        "getEntireBranchDebt": "4943810902582364311321730",
+        "getEntireBranchColl": "4246959822339412522278",
+        "getEntireBranchDebt": "5065087841317926714998817",
         "getLatestTroveData": [
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -2164,7 +2116,7 @@
           "20327589420428593697524321351157856858342940161367227164292209048850566785776",
           "75612223830594747844811694143670180236762873742227582769905911215507573448955"
         ],
-        "getTroveIdsCount": 29,
+        "getTroveIdsCount": 32,
         "getTroveStatus": [0, 0, 0, 0, 0],
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
@@ -2249,16 +2201,6 @@
       }
     },
     {
-      "address": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafe",
       "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
       "type": "Contract",
@@ -2313,10 +2255,29 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2785053815110576816403554"
+        "totalSupply": "2588806649908121864025623"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
+      "name": "InstaImplementations",
+      "address": "eth:0xCBA828153d3a85b30B5b912e1f2daCac5816aE9D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf1c80f814f663b292d63b0fd7638fd723a904adbd8d732353aeec2171abb1915"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1616061232,
+      "sinceBlock": 12061939,
+      "values": {
+        "$immutable": true,
+        "defaultImplementation": "eth:0x8F4a8675Ea3a069D1D8280Bd19B802430f8F53be",
+        "instaIndex": "eth:0x2971AdFa57b20E5a416aE5a708A8655A9c74f723"
+      },
+      "implementationNames": {
+        "eth:0xCBA828153d3a85b30B5b912e1f2daCac5816aE9D": "InstaImplementations"
       }
     },
     {
@@ -2359,10 +2320,10 @@
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "currentScale": 0,
         "getCollBalance": 0,
-        "getEntireBranchColl": "4497762311452550873822",
-        "getEntireBranchDebt": "4943810902582364311321730",
-        "getTotalBoldDeposits": "2480924696193714441914330",
-        "getYieldGainsOwed": "4910613276262441222145",
+        "getEntireBranchColl": "4246959822339412522278",
+        "getEntireBranchDebt": "5065087841317926714998817",
+        "getTotalBoldDeposits": "2180403098123104991254949",
+        "getYieldGainsOwed": "4741249019405799978706",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -2370,7 +2331,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["36860476853596336522021529590977214", 0, 0, 0, 0],
+        "scaleToB": ["38225475671359528399022051689547103", 0, 0, 0, 0],
         "scaleToS": [0, 0, 0, 0, 0],
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
       },
@@ -2403,6 +2364,26 @@
       },
       "implementationNames": {
         "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0": "DefaultPool"
+      }
+    },
+    {
+      "name": "InstaAccountV2",
+      "address": "eth:0xD4caCac8791e8556862b2f644FB0782328dd910D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x14832005434a91e4fb089caa3a5f23e9269029541d002ee9cb809401a57105f4",
+        "0x14832005434a91e4fb089caa3a5f23e9269029541d002ee9cb809401a57105f4"
+      ],
+      "proxyType": "EIP1167 proxy",
+      "sinceTimestamp": 1767643763,
+      "sinceBlock": 24170757,
+      "values": {
+        "$implementation": "eth:0xFE02a32Cbe0CB9ad9A945576A5bb53A3C123A3A3",
+        "implementations": "eth:0xCBA828153d3a85b30B5b912e1f2daCac5816aE9D"
+      },
+      "implementationNames": {
+        "eth:0xD4caCac8791e8556862b2f644FB0782328dd910D": "InstaAccountV2",
+        "eth:0xFE02a32Cbe0CB9ad9A945576A5bb53A3C123A3A3": "InstaAccountV2"
       }
     },
     {
@@ -2450,16 +2431,11 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "SECONDS_IN_ONE_MINUTE": 60,
         "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-        "totalLQTYIssued": "30749573644876057376000000"
+        "totalLQTYIssued": "30823265530278927456000000"
       },
       "implementationNames": {
         "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": "CommunityIssuance"
       }
-    },
-    {
-      "address": "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDa70Aa8079148F0f78c86dfeC27e20329450Bf79",
@@ -2480,8 +2456,8 @@
         "$immutable": true,
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
         "defaultPoolAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "getETH": "80162358520178490040630",
-        "getLUSDDebt": "36580225547261423123254914",
+        "getETH": "78295688045359011759093",
+        "getLUSDDebt": "35053586202751244296508749",
         "isOwner": false,
         "NAME": "ActivePool",
         "owner": "eth:0x0000000000000000000000000000000000000000",
@@ -2573,8 +2549,8 @@
         ],
         "BCR": "100000000000000000",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "4497762311452550873822",
-        "getEntireBranchDebt": "4943810902582364311321730",
+        "getEntireBranchColl": "4246959822339412522278",
+        "getEntireBranchDebt": "5065087841317926714998817",
         "getInterestIndividualDelegateOf": [
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
           ["eth:0x0000000000000000000000000000000000000000", 0, 0, 0],
@@ -2637,23 +2613,23 @@
       "sinceBlock": 22516081,
       "values": {
         "$immutable": true,
-        "aggBatchManagementFees": "1812423158416900047",
-        "aggRecordedDebt": "10496143368562842609883972",
-        "aggWeightedBatchManagementFeeSum": "10756111710959503488617145000000000000000",
-        "aggWeightedDebtSum": "335840892488926971834258374102395582002131",
+        "aggBatchManagementFees": "313593840031904982",
+        "aggRecordedDebt": "9337503416377142559245048",
+        "aggWeightedBatchManagementFeeSum": "eth:0x9569231212085570679307000500000000000000",
+        "aggWeightedDebtSum": "339752005304882085136850175904070059542001",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-        "calcPendingAggBatchManagementFee": "13878985849263194951",
-        "calcPendingAggInterest": "511173352342354600",
-        "calcPendingSPYield": "383380014256765950",
+        "calcPendingAggBatchManagementFee": "3364524216121410696",
+        "calcPendingAggInterest": "119456184513588678336",
+        "calcPendingSPYield": "89592138385191508752",
         "collToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "defaultPoolAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
-        "getBoldDebt": "10496159571145202632333570",
-        "getCollBalance": "6694588608548679349623",
+        "getBoldDebt": "9337626550679712301239062",
+        "getCollBalance": "5659982911621459116481",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
-        "lastAggBatchManagementFeesUpdateTime": 1765116671,
-        "lastAggUpdateTime": 1765157315,
+        "lastAggBatchManagementFeesUpdateTime": 1767878675,
+        "lastAggUpdateTime": 1767878675,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
@@ -2708,16 +2684,16 @@
       "sinceBlock": 22516069,
       "values": {
         "$immutable": true,
-        "baseRate": 3139935979493927,
+        "baseRate": 916507145087885,
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "getEffectiveRedemptionFeeInBold": [0, 0, 0, 0, 0],
         "getRedemptionFeeWithDecay": [0, 0, 0, 0, 0],
-        "getRedemptionRate": 8139935979493927,
+        "getRedemptionRate": 5916507145087885,
         "getRedemptionRateForRedeemedAmount": [
-          8133896135468457, 8133896135468457, 8133896135468457,
-          8133896135468457, 8133896135468457
+          5002750028866270, 5002750028866270, 5002750028866270,
+          5002750028866270, 5002750028866270
         ],
-        "getRedemptionRateWithDecay": 8133896135468457,
+        "getRedemptionRateWithDecay": 5002750028866270,
         "getToken": [
           "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -2732,7 +2708,7 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
-        "lastFeeOperationTime": 1765157279,
+        "lastFeeOperationTime": 1767708719,
         "totalCollaterals": 3
       },
       "errors": {
@@ -2745,11 +2721,6 @@
       "implementationNames": {
         "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684": "CollateralRegistry"
       }
-    },
-    {
-      "address": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2876,24 +2847,26 @@
       "function write(bytes _code) returns (address target)",
       "function read(bytes _code) view returns (address)"
     ],
-    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": [
-      "event ChangedMasterCopy(address masterCopy)",
-      "event Confirmed(bytes32 indexed transactionHash, address indexed manager)",
-      "event Executed(bytes32 indexed transactionHash, address indexed executor)",
-      "event ExecutorUpdated(address indexed executor, bool allowed)",
-      "event Revoked(bytes32 indexed transactionHash, address indexed manager)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function changeMasterCopy(address _masterCopy)",
-      "function confirmTransaction(bytes32 transactionHash)",
-      "function executeTransaction(address to, uint256 value, bytes data, uint8 operation, bytes32 witness)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, bytes32 witness) pure returns (bytes32)",
-      "function getTransactionStatus(bytes32 transactionHash) view returns (bool confirmed, bool executed)",
-      "function isExecutor(address) view returns (bool)",
-      "function manager() view returns (address)",
-      "function revokeTransaction(bytes32 transactionHash)",
-      "function setExecutor(address executor, bool allowed)",
-      "function setup()"
+    "eth:0x2971AdFa57b20E5a416aE5a708A8655A9c74f723": [
+      "event LogAccountCreated(address sender, address indexed owner, address indexed account, address indexed origin)",
+      "event LogNewAccount(address indexed _newAccount, address indexed _connectors, address indexed _check)",
+      "event LogNewCheck(uint256 indexed accountVersion, address indexed check)",
+      "event LogNewMaster(address indexed master)",
+      "event LogUpdateMaster(address indexed master)",
+      "function account(uint256) view returns (address)",
+      "function addNewAccount(address _newAccount, address _connectors, address _check)",
+      "function build(address _owner, uint256 accountVersion, address _origin) returns (address _account)",
+      "function buildWithCast(address _owner, uint256 accountVersion, address[] _targets, bytes[] _datas, address _origin) payable returns (address _account)",
+      "function changeCheck(uint256 accountVersion, address _newCheck)",
+      "function changeMaster(address _newMaster)",
+      "function check(uint256) view returns (address)",
+      "function connectors(uint256) view returns (address)",
+      "function isClone(uint256 version, address query) view returns (bool result)",
+      "function list() view returns (address)",
+      "function master() view returns (address)",
+      "function setBasics(address _master, address _list, address _account, address _connectors)",
+      "function updateMaster()",
+      "function versionCount() view returns (uint256)"
     ],
     "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B": [
       "event LQTYTokenAddressSet(address _lqtyTokenAddress)",
@@ -3365,24 +3338,6 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function troveManagerAddress() view returns (address)",
       "function version() view returns (string)"
-    ],
-    "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6": [
-      "constructor()",
-      "event AddedAccess(address user)",
-      "event CheckAccessDisabled()",
-      "event CheckAccessEnabled()",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "event RemovedAccess(address user)",
-      "function acceptOwnership()",
-      "function addAccess(address _user)",
-      "function checkEnabled() view returns (bool)",
-      "function disableAccessCheck()",
-      "function enableAccessCheck()",
-      "function hasAccess(address _user, bytes) view returns (bool)",
-      "function owner() view returns (address)",
-      "function removeAccess(address _user)",
-      "function transferOwnership(address _to)"
     ],
     "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": [
       "constructor(address _owner)",
@@ -3886,6 +3841,34 @@
       "function sendETHToActivePool(uint256 _amount)",
       "function setAddresses(address _troveManagerAddress, address _activePoolAddress)",
       "function troveManagerAddress() view returns (address)"
+    ],
+    "eth:0x8F4a8675Ea3a069D1D8280Bd19B802430f8F53be": [
+      "constructor(address _instaIndex)",
+      "event LogBetaMode(bool indexed beta)",
+      "event LogDisableUser(address indexed user)",
+      "event LogEnableUser(address indexed user)",
+      "event LogRemoveSignedMessage(bytes32 indexed message)",
+      "event LogSignedMessage(bytes32 indexed message)",
+      "function CHAIN_ID() view returns (uint256)",
+      "function DOMAIN_SEPARATOR_NAME() view returns (string)",
+      "function DOMAIN_SEPARATOR_VERSION() view returns (string)",
+      "function EIP1271_TYPE_HASH() view returns (bytes32)",
+      "function disable(address user)",
+      "function domainSeparatorV4() view returns (bytes32)",
+      "function enable(address user)",
+      "function implementationVersion() view returns (uint256)",
+      "function instaIndex() view returns (address)",
+      "function isAuth(address user) view returns (bool)",
+      "function isBeta() view returns (bool)",
+      "function isSignedMessage(bytes32 message) view returns (bool)",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4 magicValue)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function removeSignedMessage(bytes32 message)",
+      "function signMessage(bytes32 message)",
+      "function toggleBeta()",
+      "function version() view returns (uint256)"
     ],
     "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": [
       "event BorrowerOperationsAddressChanged(address _borrowerOperationsAddress)",
@@ -4438,6 +4421,19 @@
       "event Deposit(address indexed dst, uint256 wad)",
       "event Withdrawal(address indexed src, uint256 wad)"
     ],
+    "eth:0xCBA828153d3a85b30B5b912e1f2daCac5816aE9D": [
+      "event LogAddImplementation(address indexed implementation, bytes4[] sigs)",
+      "event LogRemoveImplementation(address indexed implementation, bytes4[] sigs)",
+      "event LogSetDefaultImplementation(address indexed oldImplementation, address indexed newImplementation)",
+      "function addImplementation(address _implementation, bytes4[] _sigs)",
+      "function defaultImplementation() view returns (address)",
+      "function getImplementation(bytes4 _sig) view returns (address)",
+      "function getImplementationSigs(address _impl) view returns (bytes4[])",
+      "function getSigImplementation(bytes4 _sig) view returns (address)",
+      "function instaIndex() view returns (address)",
+      "function removeImplementation(address _implementation)",
+      "function setDefaultImplementation(address _defaultImplementation)"
+    ],
     "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": [
       "constructor(address _pointer, bytes4[] _sigs, tuple(uint128 start, uint128 end)[] _assets)",
       "function assets(bytes4) view returns (uint128 start, uint128 end)",
@@ -4554,6 +4550,10 @@
       "function receiveColl(uint256 _amount)",
       "function sendCollToActivePool(uint256 _amount)",
       "function troveManagerAddress() view returns (address)"
+    ],
+    "eth:0xD4caCac8791e8556862b2f644FB0782328dd910D": [
+      "constructor(address _implementations)",
+      "function implementations() view returns (address)"
     ],
     "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": [
       "constructor(address _addressesRegistry)",
@@ -4806,11 +4806,15 @@
       "function lastFeeOperationTime() view returns (uint256)",
       "function redeemCollateral(uint256 _boldAmount, uint256 _maxIterationsPerCollateral, uint256 _maxFeePercentage)",
       "function totalCollaterals() view returns (uint256)"
+    ],
+    "eth:0xFE02a32Cbe0CB9ad9A945576A5bb53A3C123A3A3": [
+      "constructor(address _implementations)",
+      "function implementations() view returns (address)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23964827 },
-  "permissionsConfigHash": "0x01d31c402e576dbb9377ae559e350d48ccf22d1e5ec47eed2548b87b80a7d5fd"
+  "usedBlockNumbers": { "ethereum": 24191153 },
+  "permissionsConfigHash": "0x4ca134f6d60e8f41afaf0544e592a8056535e9ecdeacaef20b2106083e4d160f"
 }

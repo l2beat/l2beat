@@ -30,9 +30,9 @@ interface TerminalState {
   discover: (project: string) => Promise<boolean>
   downloadAllShapes: () => void
   findMinters: (address: string) => void
-  generatePermissionsReport: (project: string) => void
-  fetchFunds: (project: string) => void
-  generateCallGraph: (project: string) => void
+  generatePermissionsReport: (project: string) => Promise<boolean>
+  fetchFunds: (project: string) => Promise<boolean>
+  generateCallGraph: (project: string) => Promise<boolean>
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -76,13 +76,13 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
     executeStreaming(get, set, () => executeFindMinters(address))
   },
   generatePermissionsReport: (project: string) => {
-    executeStreaming(set, () => executeGeneratePermissionsReport(project))
+    return executeStreaming(get, set, () => executeGeneratePermissionsReport(project))
   },
   fetchFunds: (project: string) => {
-    executeStreaming(set, () => executeFetchFunds(project))
+    return executeStreaming(get, set, () => executeFetchFunds(project))
   },
   generateCallGraph: (project: string) => {
-    executeStreaming(set, () => executeGenerateCallGraph(project))
+    return executeStreaming(get, set, () => executeGenerateCallGraph(project))
   },
 }))
 
@@ -122,6 +122,17 @@ function executeStreaming(
       stream.onmessage = (event) => {
         const encoded = event.data.toString()
         const text = encoded.replace(/\\n/g, '\n')
+
+        // Check for DONE message (used by some endpoints like funds-data/fetch)
+        if (text === 'DONE') {
+          stream?.close()
+          set((state) => ({
+            command: { ...state.command, stream: undefined, inFlight: false },
+          }))
+          resolve(true)
+          return
+        }
+
         const toAdd = text.endsWith('\n') ? text : text + '\n'
         set((state) => ({ output: state.output + toAdd }))
 

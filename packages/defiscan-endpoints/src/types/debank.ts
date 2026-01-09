@@ -1,10 +1,11 @@
 import { v } from '@l2beat/validate'
 
 // DeBank API documentation: https://docs.open.debank.com/
+// Note: Using v.object instead of v.strictObject to allow extra fields from the API
 
 // Token balance response schema
 export const DebankTokenBalanceListResponse = v.array(
-  v.strictObject({
+  v.object({
     id: v.string(),
     chain: v.string(),
     name: v.string(),
@@ -13,6 +14,7 @@ export const DebankTokenBalanceListResponse = v.array(
     optimized_symbol: v.union([v.string(), v.null()]).optional(),
     decimals: v.number(),
     logo_url: v.union([v.string(), v.null()]).optional(),
+    protocol_id: v.string().optional(),
     price: v.number(),
     amount: v.number(),
     raw_amount: v.number().optional(),
@@ -21,21 +23,21 @@ export const DebankTokenBalanceListResponse = v.array(
 
 // Complex protocol response schema
 export const DebankComplexProtocolListResponse = v.array(
-  v.strictObject({
+  v.object({
     id: v.string(),
     chain: v.string(),
     name: v.string(),
     site_url: v.string().optional(),
     logo_url: v.string().optional(),
     portfolio_item_list: v.array(
-      v.strictObject({
-        stats: v.strictObject({
+      v.object({
+        stats: v.object({
           asset_usd_value: v.number(),
           debt_usd_value: v.number(),
           net_usd_value: v.number(),
         }),
         asset_token_list: v.array(
-          v.strictObject({
+          v.object({
             id: v.string(),
             chain: v.string(),
             name: v.string(),

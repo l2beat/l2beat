@@ -29,6 +29,7 @@ It's possible to discover all projects that contain a given address by running `
 To run the discovery UI locally:
 
 - Ensure you have `l2b` installed, check the installation instructions above if you don't have it installed.
+- Navigate to the `packages/config` directory (where your `.env` file is located)
 - `l2b ui` # Will run the discovery UI on http://localhost:2021/ui
 
 # RPC configuration

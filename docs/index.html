@@ -14,16 +14,20 @@
 
     /* Cover page gradient */
     section.cover {
-      background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 50%, #FFFFFF 100%) !important;
+      background: linear-gradient(135deg, #8B5CF6 0%, #C4B5FD 50%, #ffffff 100%) !important;
     }
 
     section.cover .cover-main {
       background: transparent;
     }
 
-    section.cover h1 {
-      color: white;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    section.cover h1,
+    section.cover .cover-main h1,
+    section.cover h1 a,
+    section.cover h1 a span {
+      color: #5b1ebd !important;
+      font-weight: 700;
+      text-shadow: none;
     }
 
     section.cover blockquote {

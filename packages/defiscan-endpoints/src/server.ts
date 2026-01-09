@@ -20,7 +20,7 @@ async function main() {
   const env = getEnv()
 
   const logger = new Logger({
-    logLevel: config.logLevel as
+    level: config.logLevel as
       | 'DEBUG'
       | 'INFO'
       | 'WARN'

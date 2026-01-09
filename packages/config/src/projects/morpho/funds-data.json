@@ -1,0 +1,3552 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-01-08T16:53:44.311Z",
+  "contracts": {
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "lastFetched": "2026-01-08T16:53:44.297Z",
+      "balances": {
+        "tokens": [
+          {
+            "assetAddress": "0x0000000000c5dc95539589fbd24be07c6c14eca4",
+            "symbol": "CULT (cult.inc)",
+            "name": "Milady Cult Coin",
+            "balance": "4.032935375453098e+26",
+            "decimals": 18,
+            "usdValue": 142886.84859047356
+          },
+          {
+            "assetAddress": "0x0000206329b97db379d5e1bf586bbdb969c63274",
+            "symbol": "USDA (Angle USD)",
+            "name": "USDA",
+            "balance": "1.6894317080585118e+22",
+            "decimals": 18,
+            "usdValue": 16909.38252883983
+          },
+          {
+            "assetAddress": "0x00026e3311937bad48d9ab894c42134306e1698d",
+            "symbol": "PT-syrupUSDC-30OCT2025",
+            "name": "PT Syrup USDC 30OCT2025",
+            "balance": "7273241",
+            "decimals": 6,
+            "usdValue": 7.271786486884365
+          },
+          {
+            "assetAddress": "0x0022228a2cc5e7ef0274a7baa600d44da5ab5776",
+            "symbol": "stUSD",
+            "name": "Staked agUSD",
+            "balance": "2.816258478742742e+21",
+            "decimals": 18,
+            "usdValue": 3275.638536593536
+          },
+          {
+            "assetAddress": "0x004626a008b1acdc4c74ab51644093b155e59a23",
+            "symbol": "stEUR",
+            "name": "Staked agEUR",
+            "balance": "2500000000000000000",
+            "decimals": 18,
+            "usdValue": 3.187387505458055
+          },
+          {
+            "assetAddress": "0x004e9c3ef86bc1ca1f0bb5c7662861ee93350568",
+            "symbol": "uniBTC",
+            "name": "uniBTC",
+            "balance": "267979959",
+            "decimals": 8,
+            "usdValue": 241426.4898397208
+          },
+          {
+            "assetAddress": "0x007115416ab6c266329a03b09a8aa39ac2ef7d9d",
+            "symbol": "mBTC",
+            "name": "Midas BTC Yield Token",
+            "balance": "425600000000000",
+            "decimals": 18,
+            "usdValue": 39.8706336
+          },
+          {
+            "assetAddress": "0x00d0f0250364c431376cc64aadd3aa13c6a8998d",
+            "symbol": "SMEGMA",
+            "name": "Smegma Dyte by Matt Furie",
+            "balance": "1960430000000000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x0107006da856f5225ee585a2316a0339209f4439",
+            "symbol": "K",
+            "name": "Kinto",
+            "balance": "6000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x01710530df4cc033d2feb6d012ba4e5640c837bf",
+            "symbol": "⁬WE⁬⁪TH",
+            "name": "​Wr‌⁪⁢a⁪p⁡p⁬e⁫d Et⁠her⁫",
+            "balance": "2900000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x01995a697752266d8e748738aaa3f06464b8350b",
+            "symbol": "CANA",
+            "name": "CANA Holdings California Carbon Credits",
+            "balance": "1.00047e+21",
+            "decimals": 18,
+            "usdValue": 30406.1621698799
+          },
+          {
+            "assetAddress": "0x01ba69727e2860b37bc1a2bd56999c1afb4c15d8",
+            "symbol": "ynRWAx",
+            "name": "YieldNest RWA MAX",
+            "balance": "1706350928612280600",
+            "decimals": 18,
+            "usdValue": 1.7507709177086221
+          },
+          {
+            "assetAddress": "0x030b69280892c888670edcdcd8b69fd8026a0bf3",
+            "symbol": "mMEV",
+            "name": "Midas MEV",
+            "balance": "9.675665886690617e+23",
+            "decimals": 18,
+            "usdValue": 1064323.247535968
+          },
+          {
+            "assetAddress": "0x030db65619f1b43805f938373469b9a4953456a7",
+            "symbol": "$",
+            "name": "+ $50 000 FOR FREE E T H - B O N U S . C O M",
+            "balance": "5e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x0520930f21b14cafac7a27b102487bee7138a017",
+            "symbol": "BGBTC",
+            "name": "Bitget Wrapped BTC",
+            "balance": "1000",
+            "decimals": 8,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x056b269eb1f75477a8666ae8c7fe01b64dd55ecc",
+            "symbol": "USD3",
+            "name": "USD3",
+            "balance": "440000",
+            "decimals": 6,
+            "usdValue": 0.5089048064495251
+          },
+          {
+            "assetAddress": "0x05be1d4c307c19450a6fd7ce7307ce72a3829a60",
+            "symbol": "IMF",
+            "name": "International Meme Fund",
+            "balance": "2.894334198575336e+24",
+            "decimals": 18,
+            "usdValue": 56877.98154249392
+          },
+          {
+            "assetAddress": "0x06b964d96f5dcf7eae9d7c559b09edce244d4b8e",
+            "symbol": "USUALX",
+            "name": "USUALX",
+            "balance": "3.924675281811018e+24",
+            "decimals": 18,
+            "usdValue": 190071.5202359355
+          },
+          {
+            "assetAddress": "0x085780639cc2cacd35e474e71f4d000e2405d8f6",
+            "symbol": "fxUSD",
+            "name": "f(x) USD",
+            "balance": "1118522155000",
+            "decimals": 18,
+            "usdValue": 0.0000011190832299617617
+          },
+          {
+            "assetAddress": "0x09ad715db6904cea3b41768f9d6f73ed6e31f1e7",
+            "symbol": "MNT",
+            "name": "mano122",
+            "balance": "1e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x09d4214c03d01f49544c0448dbe3a27f768f2b34",
+            "symbol": "rUSD",
+            "name": "Reservoir Stablecoin",
+            "balance": "1.2002818717587779e+23",
+            "decimals": 18,
+            "usdValue": 120136.30985474706
+          },
+          {
+            "assetAddress": "0x0a2b94f6871c1d7a32fe58e1ab5e6dea2f114e56",
+            "symbol": "autoETH",
+            "name": "Tokemak autoETH",
+            "balance": "6972517957018426",
+            "decimals": 18,
+            "usdValue": 22.05569323039482
+          },
+          {
+            "assetAddress": "0x0bbe2b5fa5490f01b4427109f0b5571822616a78",
+            "symbol": "SPARK",
+            "name": "Illusion of Life",
+            "balance": "19504000000000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+            "symbol": "YFI",
+            "name": "yearn.finance",
+            "balance": "76701560715418160000",
+            "decimals": 18,
+            "usdValue": 271446.82337186486
+          },
+          {
+            "assetAddress": "0x0d86883faf4ffd7aeb116390af37746f45b6f378",
+            "symbol": "USD3",
+            "name": "Web 3 Dollar",
+            "balance": "14122415609741693000",
+            "decimals": 18,
+            "usdValue": 15.258810757090394
+          },
+          {
+            "assetAddress": "0x0e61e810f0918081cbfd2ac8c97e5866daf3f622",
+            "symbol": "n-PT-sUSDe-27NOV2025",
+            "name": "Notional PT sUSDe 27NOV2025",
+            "balance": "4.856483743515869e+25",
+            "decimals": 24,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x0ea1a65a2c255f24ee8d81ea6aac54decd9d269e",
+            "symbol": "stkcvxcrvUSDCWBTCWETH-morpho",
+            "name": "Staked TricryptoUSDC Convex Deposit Morpho",
+            "balance": "14426221788139316",
+            "decimals": 18,
+            "usdValue": 29.208496888685833
+          },
+          {
+            "assetAddress": "0x0f90a6962e86b5587b4c11ba2b9697dc3ba84800",
+            "symbol": "sUSDS+s",
+            "name": "Origami sUSDS + Sky Farms",
+            "balance": "1867657634962107400",
+            "decimals": 18,
+            "usdValue": 2.04879148846067
+          },
+          {
+            "assetAddress": "0x10a099baf814b5fda138c4e6b60ed42c0d975be8",
+            "symbol": "PT-wsrUSD-30OCT2025",
+            "name": "PT Wrapped Savings rUSD 30OCT2025",
+            "balance": "12581028745009207000",
+            "decimals": 18,
+            "usdValue": 12.630586847184068
+          },
+          {
+            "assetAddress": "0x10cbdae955725bac7bcc20335e304b4a48fd8919",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "849071398563646000",
+            "decimals": 18,
+            "usdValue": 2.0081728389574067
+          },
+          {
+            "assetAddress": "0x11105208abb3ce206922bf4cd6b2d5f98cac2f0d",
+            "symbol": "PT-ysUSDC-31JUL2025",
+            "name": "PT SuperUSDC 31JUL2025",
+            "balance": "5000000",
+            "decimals": 6,
+            "usdValue": 4.9990001026098145
+          },
+          {
+            "assetAddress": "0x1132065009850c72e27b7950c0f9285d1d103589",
+            "symbol": "PT-mMEV-31JUL2025",
+            "name": "PT Midas MEV 31JUL2025",
+            "balance": "2025167",
+            "decimals": 6,
+            "usdValue": 2.025168
+          },
+          {
+            "assetAddress": "0x1135b22d6e8fd0809392478eedcd8c107db6af9d",
+            "symbol": "PT-tUSDe-18DEC2025",
+            "name": "PT Terminal USDe 18DEC2025",
+            "balance": "164155608047306430",
+            "decimals": 18,
+            "usdValue": 0.16414814389180854
+          },
+          {
+            "assetAddress": "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055",
+            "symbol": "wstUSR",
+            "name": "Wrapped stUSR",
+            "balance": "1.0810529021929717e+23",
+            "decimals": 18,
+            "usdValue": 121914.93795002428
+          },
+          {
+            "assetAddress": "0x136471a34f6ef19fe571effc1ca711fdb8e49f2b",
+            "symbol": "USYC",
+            "name": "US Yield Coin",
+            "balance": "1500000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x14bdc3a3ae09f5518b923b69489cbcafb238e617",
+            "symbol": "PT-eUSDE-14AUG2025",
+            "name": "PT Ethereal eUSDE 14AUG2025",
+            "balance": "142696167908572990000",
+            "decimals": 18,
+            "usdValue": 142.6896795138182
+          },
+          {
+            "assetAddress": "0x14d60e7fdc0d71d8611742720e4c50e7a974020c",
+            "symbol": "USCC",
+            "name": "Superstate Crypto Carry Fund",
+            "balance": "1000000",
+            "decimals": 6,
+            "usdValue": 11.42991
+          },
+          {
+            "assetAddress": "0x154c5875b1b0db1794f88d003730dad160e6b38e",
+            "symbol": "!$ Claim $200K at ETH200k.com",
+            "name": "!$ Claim $200K at ETH200k.com",
+            "balance": "200",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x15700b564ca08d9439c58ca5053166e8317aa138",
+            "symbol": "deUSD",
+            "name": "Elixir deUSD",
+            "balance": "4.048471884479278e+21",
+            "decimals": 18,
+            "usdValue": 7.523315787646687
+          },
+          {
+            "assetAddress": "0x15fdf122152642048f797e57ca8fff8986192be5",
+            "symbol": "stakedao-crvUSDUSDC-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDC",
+            "balance": "980424512221230700",
+            "decimals": 18,
+            "usdValue": 1.003484347763134
+          },
+          {
+            "assetAddress": "0x16b907b5d1208ae6086de983a5ef45e7890ef272",
+            "symbol": "JUNFOX",
+            "name": "Juniper Foxx",
+            "balance": "141596000000000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x18084fba666a33d37592fa2633fd49a74dd93a88",
+            "symbol": "tBTC",
+            "name": "tBTC v2",
+            "balance": "67575489195077800000",
+            "decimals": 18,
+            "usdValue": 6009808.915886597
+          },
+          {
+            "assetAddress": "0x199cc8f0ac008bdc8cf0b1ccd5187f84e168c4d2",
+            "symbol": "zkBTC",
+            "name": "zero-knowledge proof BTC",
+            "balance": "54040000",
+            "decimals": 8,
+            "usdValue": 49167.07658202121
+          },
+          {
+            "assetAddress": "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+            "symbol": "EURA",
+            "name": "EURA (previously agEUR)",
+            "balance": "1050214763684577200",
+            "decimals": 18,
+            "usdValue": 1.2190075561432874
+          },
+          {
+            "assetAddress": "0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+            "symbol": "EURC",
+            "name": "Euro Coin",
+            "balance": "1313539099852",
+            "decimals": 6,
+            "usdValue": 1533046.7030310072
+          },
+          {
+            "assetAddress": "0x1b82bcbbef559f9968ccba757e1f207bec6f4a64",
+            "symbol": "$stLink rewards on stlink.fi",
+            "name": "! stlink.fi",
+            "balance": "75000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x1ce7d9942ff78c328a4181b9f3826fee6d845a97",
+            "symbol": "yUSD",
+            "name": "YieldFi yToken",
+            "balance": "20004317226032353000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x1d08e7adc263cfc70b1babe6dc5bb339c16eec52",
+            "symbol": "USD0USD0++",
+            "name": "USD0/USD0++",
+            "balance": "2.430359985791514e+24",
+            "decimals": 18,
+            "usdValue": 2360419.5943671935
+          },
+          {
+            "assetAddress": "0x1dc1b09d656c07404aa2747a9930c0b4d297b4f3",
+            "symbol": "PT-sw-xUSD(USDC)-2025/10/10",
+            "name": "Principal Token: sw-xUSD(USDC) 2025/10/10",
+            "balance": "1018475",
+            "decimals": 6,
+            "usdValue": 1.0169467491399715
+          },
+          {
+            "assetAddress": "0x1ee774b40eecef1ed4bb702c83a97dc949c900e5",
+            "symbol": "oBTC",
+            "name": "Optimex Collateral BTC",
+            "balance": "90000",
+            "decimals": 8,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x1f7aa7104db822987e1f44a66df709a8c4fb301a",
+            "symbol": "PT-sw-RLP-1750896023",
+            "name": "Principal Token: sw-RLP-1750896023",
+            "balance": "2384497741154446000",
+            "decimals": 18,
+            "usdValue": 2.3842163704209898
+          },
+          {
+            "assetAddress": "0x1f84a51296691320478c98b8d77f2bbd17d34350",
+            "symbol": "PT-USDe-5FEB2026",
+            "name": "PT Ethena USDe 5FEB2026",
+            "balance": "5244992776345368000",
+            "decimals": 18,
+            "usdValue": 5.226159596900972
+          },
+          {
+            "assetAddress": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+            "symbol": "UNI",
+            "name": "Uniswap",
+            "balance": "4.1607252971600583e+21",
+            "decimals": 18,
+            "usdValue": 22764.36491567118
+          },
+          {
+            "assetAddress": "0x1fb3c5c35d95f48e48ffc8e36bcce5cb5f29f57c",
+            "symbol": "PT-srUSDe-15JAN2026",
+            "name": "PT Strata Senior USDe 15JAN2026",
+            "balance": "7.067721312975446e+25",
+            "decimals": 18,
+            "usdValue": 70594464.31940182
+          },
+          {
+            "assetAddress": "0x1ff893c9071d04f8a965a90fcb0de22406a3eeaa",
+            "symbol": "PT-sBOLD-1765325646",
+            "name": "Principal Token: sBOLD-1765325646",
+            "balance": "159409018137775930000",
+            "decimals": 18,
+            "usdValue": 158.755275397922
+          },
+          {
+            "assetAddress": "0x2103e845c5e135493bb6c2a4f0b8651956ea8682",
+            "symbol": "XAUM",
+            "name": "Matrixdock Gold",
+            "balance": "100000000000",
+            "decimals": 18,
+            "usdValue": 0.0004417884642035522
+          },
+          {
+            "assetAddress": "0x21aace56a8f21210b7e76d8ef1a77253db85bf0a",
+            "symbol": "PT-fxSAVE-30OCT2025",
+            "name": "PT f(x) USD Saving 30OCT2025",
+            "balance": "2.0189570670551653e+21",
+            "decimals": 18,
+            "usdValue": 2026.1606615642913
+          },
+          {
+            "assetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+            "symbol": "WBTC",
+            "name": "Wrapped BTC",
+            "balance": "538994624782",
+            "decimals": 8,
+            "usdValue": 488948704.3736789
+          },
+          {
+            "assetAddress": "0x23346b04a7f55b8760e5860aa5a77383d63491cd",
+            "symbol": "ysyBOLD",
+            "name": "Staked yBOLD",
+            "balance": "996816849047343000",
+            "decimals": 18,
+            "usdValue": 1.043123001195768
+          },
+          {
+            "assetAddress": "0x2343f786fc8366f0fa7c9a80b43cda5731d9d1b4",
+            "symbol": "stakedao-crvUSDUSDT-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDT",
+            "balance": "981355750569511700",
+            "decimals": 18,
+            "usdValue": 1.0036159972714889
+          },
+          {
+            "assetAddress": "0x2371e134e3455e0593363cbf89d3b6cf53740618",
+            "symbol": "gtWETH",
+            "name": "Gauntlet WETH Prime",
+            "balance": "561443304218167",
+            "decimals": 18,
+            "usdValue": 1.8183538581365495
+          },
+          {
+            "assetAddress": "0x238a700ed6165261cf8b2e544ba797bc11e466ba",
+            "symbol": "mF-ONE",
+            "name": "Midas Fasanara ONE",
+            "balance": "5.1875512786167e+25",
+            "decimals": 18,
+            "usdValue": 54339790.717363454
+          },
+          {
+            "assetAddress": "0x23e0d07095daec91b6ae016ca9f08222dcc64c49",
+            "symbol": "PT-USR-4DEC2025",
+            "name": "PT Resolv USD 4DEC2025",
+            "balance": "762022852484450000000",
+            "decimals": 18,
+            "usdValue": 761.8163551121511
+          },
+          {
+            "assetAddress": "0x23e479ddcda990e8523494895759bd98cd2fdbf6",
+            "symbol": "PT-corn-SolvBTC.BBN-26DEC2024",
+            "name": "PT Corn SolvBTC Babylon 26DEC2024",
+            "balance": "125596",
+            "decimals": 8,
+            "usdValue": 113.06537451793399
+          },
+          {
+            "assetAddress": "0x23e60d1488525bf4685f53b3aa8e676c30321066",
+            "symbol": "PT-wstUSR-25SEP2025",
+            "name": "PT Wrapped stUSR 25SEP2025",
+            "balance": "7889430707928935000",
+            "decimals": 18,
+            "usdValue": 7.887292784237003
+          },
+          {
+            "assetAddress": "0x26d002eb062b36aecf478efbe309c942fd02d3d1",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "33912838234417084",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x270b7748cdf8243bfe68face7230ef0fce695389",
+            "symbol": "hETH",
+            "name": "Hinkal ETH",
+            "balance": "869195582271163",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x270d664d2fc7d962012a787aec8661ca83df24eb",
+            "symbol": "PT-USD0++-31OCT2024",
+            "name": "PT USD0++ 31OCT2024",
+            "balance": "7722427000000000000",
+            "decimals": 18,
+            "usdValue": 7.354183837952126
+          },
+          {
+            "assetAddress": "0x2716561755154eef59bc48eb13712510b27f167f",
+            "symbol": "n-LP-OETH-WETH",
+            "name": "Notional LP OETH/WETH",
+            "balance": "5.1305005978682774e+22",
+            "decimals": 24,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x271c616157e69a43b4977412a64183cf110edf16",
+            "symbol": "sUSP",
+            "name": "Pareto staked USP",
+            "balance": "1400000000000000000",
+            "decimals": 18,
+            "usdValue": 1.4985375677574915
+          },
+          {
+            "assetAddress": "0x27d796231d1ce3dc00ea25e7bb78be0b92895c5a",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.7025305038181722e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x294eecec65a0142e84aedfd8eb2fbea8c9a9fbad",
+            "symbol": "tacETH",
+            "name": "Turtle TAC ETH Vault",
+            "balance": "68048686687758110",
+            "decimals": 18,
+            "usdValue": 215.26481759914117
+          },
+          {
+            "assetAddress": "0x29fd7180e5cced14ad148c7997e6b6857a8be86e",
+            "symbol": "PT-RLP-9APR2026",
+            "name": "PT Resolv Liquidity Provider Token 9APR2026",
+            "balance": "14383205475",
+            "decimals": 6,
+            "usdValue": 14009.648217949936
+          },
+          {
+            "assetAddress": "0x2a78bdc6f09439b1910ceae6b653ca348e34dffb",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.6851550220244566e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2a8c22e3b10036f3aef5875d04f8441d4188b656",
+            "symbol": "mBASIS",
+            "name": "Midas Basis Trading Token",
+            "balance": "19282377098810225000",
+            "decimals": 18,
+            "usdValue": 22.560381205607964
+          },
+          {
+            "assetAddress": "0x2b23bf339f5cc3393a558373e0a73a576f0838d3",
+            "symbol": "SPK Genesis Rewards (https://spkprotocol.com)",
+            "name": "# SPK Genesis Rewards",
+            "balance": "82500000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2bb8f4d38161dcc000d3fae0fd05410ef474e594",
+            "symbol": "⁠WE﻿⁬TH",
+            "name": "⁪⁬W‍r⁪a⁣p‍‎ped Et‌he⁪r",
+            "balance": "2900000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2c84c0ad55d9cda95be48d1bb943ba1ff8e40a77",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "25995110737022264",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2ca5f2c4300450d53214b00546795c1c07b89acb",
+            "symbol": "PT-slvlUSD-25SEP2025",
+            "name": "PT Staked lvlUSD 25SEP2025",
+            "balance": "2.1444090466186455e+23",
+            "decimals": 18,
+            "usdValue": 214265.94730277994
+          },
+          {
+            "assetAddress": "0x2e3229674085f5490a4cc2558ab96aedc3ab25d1",
+            "symbol": "PT-mEDGE-30OCT2025",
+            "name": "PT Midas mEDGE 30OCT2025",
+            "balance": "2000000",
+            "decimals": 6,
+            "usdValue": 2
+          },
+          {
+            "assetAddress": "0x2ec5f3e6ef81117c159e7c79c436f474f08b94c3",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "6.024638271602211e+22",
+            "decimals": 18,
+            "usdValue": 130134.97783387515
+          },
+          {
+            "assetAddress": "0x3231cb76718cdef2155fc47b5286d82e6eda273f",
+            "symbol": "EURe(old)",
+            "name": "Monerium EUR emoney",
+            "balance": "1.1648374184448309e+21",
+            "decimals": 18,
+            "usdValue": 1364.0643846864473
+          },
+          {
+            "assetAddress": "0x340cb4bfb55c238e1bfbeab7f3563a2f0a082d75",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "29939107818407252",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3417c054742eb6889a30ad008afd226bd576024a",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "25995110737022264",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0",
+            "symbol": "bUSD0",
+            "name": "Bond USD0",
+            "balance": "4.9449933113168195e+22",
+            "decimals": 18,
+            "usdValue": 47134.99216531561
+          },
+          {
+            "assetAddress": "0x380c355faa9b6696c2434314f10f9a2ce451d15a",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "1943123663427625500",
+            "decimals": 18,
+            "usdValue": 4.21747205160206
+          },
+          {
+            "assetAddress": "0x3845badade8e6dff049820680d1f14bd3903a5d0",
+            "symbol": "SAND",
+            "name": "SAND",
+            "balance": "1",
+            "decimals": 18,
+            "usdValue": 1.1880000000000002e-19
+          },
+          {
+            "assetAddress": "0x386ae941d4262b0ee96354499df2ab8442734ec0",
+            "symbol": "PT-sUSDE-27FEB2025",
+            "name": "PT Ethena sUSDE 27FEB2025",
+            "balance": "165129593957541680000",
+            "decimals": 18,
+            "usdValue": 165.16079518111533
+          },
+          {
+            "assetAddress": "0x3928cbccc982efbadbc004977827325b0be4c346",
+            "symbol": "PT-sw-stkGHO-1759536005",
+            "name": "Principal Token: sw-stkGHO-1759536005",
+            "balance": "1008352956734313000",
+            "decimals": 18,
+            "usdValue": 1.0091651461025062
+          },
+          {
+            "assetAddress": "0x393c0cf85e5a60b730e705396f3bea71648fa3a0",
+            "symbol": "stakedao-crvUSDUSDC-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDC",
+            "balance": "1209843848080998700",
+            "decimals": 18,
+            "usdValue": 1.2382996851397075
+          },
+          {
+            "assetAddress": "0x39b8b6385416f4ca36a20319f70d28621895279d",
+            "symbol": "EURe",
+            "name": "Monerium EURe",
+            "balance": "1.1648374184448309e+21",
+            "decimals": 18,
+            "usdValue": 1359.6170113764736
+          },
+          {
+            "assetAddress": "0x3a70f0c696dcb3a4ab3833cd9726397dd61ac85e",
+            "symbol": "PT-RLP-4DEC2025",
+            "name": "PT Resolv Liquidity Provider Token 4DEC2025",
+            "balance": "5594012782",
+            "decimals": 6,
+            "usdValue": 5580.8794767117615
+          },
+          {
+            "assetAddress": "0x3b3fb9c57858ef816833dc91565efcd85d96f634",
+            "symbol": "PT-sUSDE-31JUL2025",
+            "name": "PT Ethena sUSDE 31JUL2025",
+            "balance": "2.719908198087623e+22",
+            "decimals": 18,
+            "usdValue": 27204.221245241537
+          },
+          {
+            "assetAddress": "0x3b9739ee0c3b5bd7b392a801deac1dc68cfb0c48",
+            "symbol": "PT-ysUSDC-1745107210",
+            "name": "Principal Token: ysUSDC-1745107210",
+            "balance": "1012",
+            "decimals": 6,
+            "usdValue": 0.001011906896
+          },
+          {
+            "assetAddress": "0x3bd0c522ea444ea2b3f28777e8c20248b6e33252",
+            "symbol": "PT-wsrUSD-31JUL2025",
+            "name": "PT Wrapped Savings rUSD 31JUL2025",
+            "balance": "14279424636711694000",
+            "decimals": 18,
+            "usdValue": 14.3356729133421
+          },
+          {
+            "assetAddress": "0x3ce8ec9f3d89ad0a2ddbcc3fdb8991bd241fc82e",
+            "symbol": "stkcvxcrvCRVUSDTBTCWSTETH-morpho",
+            "name": "Staked TricryptoLLAMA Convex Deposit Morpho",
+            "balance": "79286879096248960",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3db228fe836d99ccb25ec4dfdc80ed6d2cddcb4b",
+            "symbol": "ynUSDx",
+            "name": "ynUSD Max",
+            "balance": "3500000000000000000",
+            "decimals": 18,
+            "usdValue": 3.6588138390306018
+          },
+          {
+            "assetAddress": "0x3eaa0f0f0a5d3d595ae4e4b0d27f439d01c3e7b2",
+            "symbol": "PT-reUSD-25JUN2026",
+            "name": "PT reUSD 25JUN2026",
+            "balance": "47950242150353",
+            "decimals": 6,
+            "usdValue": 45771705.79007507
+          },
+          {
+            "assetAddress": "0x3ebfa39649efb8aa0b4e8dcccd25884d8223c1ee",
+            "symbol": "wbrUSDC",
+            "name": "Wrapped USDC+ DeFi Yield",
+            "balance": "2000000",
+            "decimals": 6,
+            "usdValue": 2.0648924031628466
+          },
+          {
+            "assetAddress": "0x3ecb96980b48ec2221e1eb27569dfeff3def186b",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.4595670358002387e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x407a56f0ed8a467547ffbe066071a4a698363901",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "22170933036251124",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x40b7b4ab1e95e28df06971581276966fdf95688e",
+            "symbol": "PT-beraSTONE-10APR2025",
+            "name": "PT Berachain STONE 10APR2025",
+            "balance": "308148914802154",
+            "decimals": 18,
+            "usdValue": 0.9559229322840704
+          },
+          {
+            "assetAddress": "0x41da1f315f829b061076a1f4a16a280ab7e7cbfa",
+            "symbol": "WBTC",
+            "name": "Wrapped BTC",
+            "balance": "7345441158586",
+            "decimals": 8,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x437cc33344a0b27a429f795ff6b469c72698b291",
+            "symbol": "wM",
+            "name": "WrappedM by M^0",
+            "balance": "7137461",
+            "decimals": 6,
+            "usdValue": 7.1457329005243775
+          },
+          {
+            "assetAddress": "0x44a7876ca99460ef3218bf08b5f52e2dbe199566",
+            "symbol": "PT-corn-eBTC-27MAR2025",
+            "name": "PT Corn ether.fi eBTC 27MAR2025",
+            "balance": "44068",
+            "decimals": 8,
+            "usdValue": 39.81239937279818
+          },
+          {
+            "assetAddress": "0x44e483ac56ba10b1c71b055442204a13b3b470cb",
+            "symbol": "$PENDLE airdrop at https://pamdle.finance",
+            "name": "$ Pamdle.finance Airdrop",
+            "balance": "2.635527582292989e+24",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x454bb3cb427b21e1c052a080e21a57753cd6969e",
+            "symbol": "AA_Re7WETH",
+            "name": "IdleCDO AA Tranche - Re7WETH",
+            "balance": "5000000000000000",
+            "decimals": 18,
+            "usdValue": 15.850688698240983
+          },
+          {
+            "assetAddress": "0x45804880de22913dafe09f4980848ece6ecbaf78",
+            "symbol": "PAXG",
+            "name": "Paxos Gold",
+            "balance": "522832683065095550000",
+            "decimals": 18,
+            "usdValue": 2335281.9467073064
+          },
+          {
+            "assetAddress": "0x4737d9b4592b40d51e110b94c9c043c6654067ae",
+            "symbol": "slvlUSD",
+            "name": "Staked lvlUSD",
+            "balance": "556876112725832800000",
+            "decimals": 18,
+            "usdValue": 639.7845942311205
+          },
+          {
+            "assetAddress": "0x4858023d51f308e9d25f13c1099b58b3702df868",
+            "symbol": "WBTC",
+            "name": "Wrapped BTC",
+            "balance": "7345441158586",
+            "decimals": 8,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x48f9e38f3070ad8945dfeae3fa70987722e3d89c",
+            "symbol": "iUSD",
+            "name": "infiniFi USD",
+            "balance": "7.753904190030917e+22",
+            "decimals": 18,
+            "usdValue": 77607.92473582923
+          },
+          {
+            "assetAddress": "0x4956b52ae2ff65d74ca2d61207523288e4528f96",
+            "symbol": "RLP",
+            "name": "Resolv Liquidity Provider Token",
+            "balance": "7.332334706878636e+25",
+            "decimals": 18,
+            "usdValue": 93631723.63588372
+          },
+          {
+            "assetAddress": "0x4a220e6096b25eadb88358cb44068a3248254675",
+            "symbol": "QNT",
+            "name": "Quant",
+            "balance": "64",
+            "decimals": 18,
+            "usdValue": 4.80512e-15
+          },
+          {
+            "assetAddress": "0x4a977653c58cfd82d42fd706cf68a0c1b6d0ca56",
+            "symbol": "PT-wstUSR-1750896030",
+            "name": "Principal Token: wstUSR-1750896030",
+            "balance": "21000000000000000",
+            "decimals": 18,
+            "usdValue": 0.020995338
+          },
+          {
+            "assetAddress": "0x4c6fdc0476b2fe0daff0b5824c3a918673d6014e",
+            "symbol": "$ EthAave.com - Visit to claim staking rewards",
+            "name": "$ EthAave.com",
+            "balance": "100",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4c9edd5852cd905f086c759e8383e09bff1e68b3",
+            "symbol": "USDe",
+            "name": "USDe",
+            "balance": "6.806155017839198e+23",
+            "decimals": 18,
+            "usdValue": 680636.7408683033
+          },
+          {
+            "assetAddress": "0x4d4062bad41e03b1cdee4c06263f96eb81832341",
+            "symbol": "PT-slvlUSD-29MAY2025",
+            "name": "PT Staked lvlUSD 29MAY2025",
+            "balance": "22064072321862066000",
+            "decimals": 18,
+            "usdValue": 22.04607075714114
+          },
+          {
+            "assetAddress": "0x4f2cef6f39114ade3d8af4020fa1de1d064cadaf",
+            "symbol": "HOKK",
+            "name": "Hokkaidu Inu",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0.00004355755044644043
+          },
+          {
+            "assetAddress": "0x4f43a17dd6531051af1b6e1a7c7eba1af16b275b",
+            "symbol": "bearx",
+            "name": "BearX Coin",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4f62a7a25a4fd6ae386e957284afb5fbf1e1f32c",
+            "symbol": "PT-SolvBTC.BBN-26JUN2025",
+            "name": "PT SolvBTC Babylon 26JUN2025",
+            "balance": "213",
+            "decimals": 8,
+            "usdValue": 0.19264783511419759
+          },
+          {
+            "assetAddress": "0x5085dd6fad07c12e38fae01bc2a4938d2c08b1bc",
+            "symbol": "aprUSR",
+            "name": "Apostro Resolv USR",
+            "balance": "11198781054973348000",
+            "decimals": 18,
+            "usdValue": 11.901699774201438
+          },
+          {
+            "assetAddress": "0x5086bf358635b81d8c47c66d1c8b9e567db70c72",
+            "symbol": "reUSD",
+            "name": "Re Protocol Deposit Token",
+            "balance": "4.388513069474585e+24",
+            "decimals": 18,
+            "usdValue": 4626866.564611018
+          },
+          {
+            "assetAddress": "0x50bd66d59911f5e086ec87ae43c811e0d059dd11",
+            "symbol": "sBOLD",
+            "name": "sBold",
+            "balance": "996257994800476000",
+            "decimals": 18,
+            "usdValue": 1.039520359820485
+          },
+          {
+            "assetAddress": "0x50d2c7992b802eef16c04feadab310f31866a545",
+            "symbol": "PT-eUSDE-29MAY2025",
+            "name": "PT Ethereal eUSDE 29MAY2025",
+            "balance": "3.7753786662285463e+22",
+            "decimals": 18,
+            "usdValue": 37752.06999760593
+          },
+          {
+            "assetAddress": "0x514910771af9ca656af840dff83e8264ecf986ca",
+            "symbol": "LINK",
+            "name": "ChainLink Token",
+            "balance": "1247175949050549500",
+            "decimals": 18,
+            "usdValue": 16.579457562386583
+          },
+          {
+            "assetAddress": "0x52317a47585a6acdfbd7a29b494c3e2baae96abc",
+            "symbol": "alphaMUSD",
+            "name": "Alpha MUSD",
+            "balance": "7.46860093205922e+23",
+            "decimals": 18,
+            "usdValue": 744998.3976588085
+          },
+          {
+            "assetAddress": "0x545a490f9ab534adf409a2e682bc4098f49952e3",
+            "symbol": "PT-cUSD-29JAN2026",
+            "name": "PT cap USD 29JAN2026",
+            "balance": "3.450884161726323e+25",
+            "decimals": 18,
+            "usdValue": 34343076.38231431
+          },
+          {
+            "assetAddress": "0x547213367cfb08ab418e7b54d7883b2c2aa27fd7",
+            "symbol": "sUSDz",
+            "name": "Staked USDz",
+            "balance": "26147878664235377000",
+            "decimals": 18,
+            "usdValue": 32.72641717131095
+          },
+          {
+            "assetAddress": "0x54bf2659b5cdfd86b75920e93c0844c0364f5166",
+            "symbol": "PT-sNUSD-5MAR2026",
+            "name": "PT Staked NUSD 5MAR2026",
+            "balance": "5.696781247943886e+24",
+            "decimals": 18,
+            "usdValue": 5581572.334312736
+          },
+          {
+            "assetAddress": "0x5510b080449d5e3bf345b6635ed40a35b36b081f",
+            "symbol": "PT-siUSD-8JAN2026",
+            "name": "PT Staked infiniFi USD 8JAN2026",
+            "balance": "5.071844381169299e+23",
+            "decimals": 18,
+            "usdValue": 507082.6183619125
+          },
+          {
+            "assetAddress": "0x570ec272f07c563860477dcafb04a04ffd2979a1",
+            "symbol": "Visit usdgift.net to claim rewards",
+            "name": "# usdgift.net",
+            "balance": "3999990000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x579a94807dd15ce2c519a4e4cd068b29bfc48401",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "25673235055508576",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
+            "symbol": "HQG",
+            "name": "环球股",
+            "balance": "1000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x57f5e098cad7a3d1eed53991d4d66c45c9af7812",
+            "symbol": "wUSDM",
+            "name": "Wrapped Mountain Protocol USD",
+            "balance": "14527229345552472000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x58d97b57bb95320f9a05dc918aef65434969c2b2",
+            "symbol": "MORPHO",
+            "name": "Morpho Token",
+            "balance": "42899855702009380000",
+            "decimals": 18,
+            "usdValue": 51.47553685684106
+          },
+          {
+            "assetAddress": "0x594daad7d77592a2b97b725a7ad59d7e188b5bfa",
+            "symbol": "APU (Apu Apustaja)",
+            "name": "Apu Apustaja",
+            "balance": "4.359592676670414e+26",
+            "decimals": 18,
+            "usdValue": 22322.500338330585
+          },
+          {
+            "assetAddress": "0x5a42864b14c0c8241ef5ab62dae975b163a2e0c1",
+            "symbol": "mHyperETH",
+            "name": "Midas Hyperithm ETH",
+            "balance": "990611767280061500000",
+            "decimals": 18,
+            "usdValue": 3126300.336294904
+          },
+          {
+            "assetAddress": "0x5a5b93f762739fa94f3ecc0b34af2e56702e7f70",
+            "symbol": "PT-USR-4SEP2025",
+            "name": "PT Resolv USD 4SEP2025",
+            "balance": "407409048237426370",
+            "decimals": 18,
+            "usdValue": 0.40729864617056244
+          },
+          {
+            "assetAddress": "0x5aa4afe7359d5a68d193f03e013d553deb7dbd1f",
+            "symbol": "PT-wsrUSD-26FEB2026",
+            "name": "PT Wrapped Savings rUSD 26FEB2026",
+            "balance": "2.2367256781982873e+22",
+            "decimals": 18,
+            "usdValue": 22222.80704161632
+          },
+          {
+            "assetAddress": "0x5bae9a5d67d1ca5b09b14c91935f635cfbf3b685",
+            "symbol": "PT-USD0++-27MAR2025",
+            "name": "PT USD0++ 27MAR2025",
+            "balance": "97000329797770310000",
+            "decimals": 18,
+            "usdValue": 92.3748787362818
+          },
+          {
+            "assetAddress": "0x5d4573aa9759870fd7ceb62a58f75a5f5559360a",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "4966846303063260000",
+            "decimals": 18,
+            "usdValue": 11.939604082863529
+          },
+          {
+            "assetAddress": "0x5d4a2233471a9eae441d7f1612460028b4d9a96e",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "16791055613209164",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5d71c40bb35b93350ecfdcd6f937052b7addd55f",
+            "symbol": "SCHIZZ",
+            "name": "Schizzo",
+            "balance": "200000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5de1b25d0a94549c9dace58777c385fa67aa846f",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "1351497514058912",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5f0e654410a281e7ed04c370b9d25d2a0286b935",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "2.1083242555729463e+24",
+            "decimals": 18,
+            "usdValue": 4292519.712446544
+          },
+          {
+            "assetAddress": "0x5f2f6324aa5590e408ba892e39cec4c0afb16068",
+            "symbol": "PT-iUSD-4SEP2025",
+            "name": "PT infiniFi USD 4SEP2025",
+            "balance": "2.5077090854786145e+21",
+            "decimals": 18,
+            "usdValue": 2507.174949963451
+          },
+          {
+            "assetAddress": "0x5f6d3fc8147ed50ffc13bccfeb342659bcb83853",
+            "symbol": "FNF",
+            "name": "Fidelity National Financial",
+            "balance": "1.32085e+23",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5f7827fdeb7c20b443265fc2f40845b715385ff2",
+            "symbol": "EURCV",
+            "name": "EUR CoinVertible",
+            "balance": "3.2408735199977e+24",
+            "decimals": 18,
+            "usdValue": 3781141.0960196652
+          },
+          {
+            "assetAddress": "0x5fa487bca6158c64046b2813623e20755091da0b",
+            "symbol": "thBILL",
+            "name": "Theo Short Duration US Treasury Fund",
+            "balance": "3504255145290",
+            "decimals": 6,
+            "usdValue": 3555512.3100205935
+          },
+          {
+            "assetAddress": "0x5fd13359ba15a84b76f7f87568309040176167cd",
+            "symbol": "amphrETH",
+            "name": "Amphor Restaked ETH",
+            "balance": "268136637589195420",
+            "decimals": 18,
+            "usdValue": 1023.2901906460662
+          },
+          {
+            "assetAddress": "0x6051c1354ccc51b4d561e43b02735deae64768b8",
+            "symbol": "yRise",
+            "name": "yRise.Finance",
+            "balance": "1000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x60c8a22c0e5ffe2410391782c9d666bf9edcaf2a",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "6814546104386693000",
+            "decimals": 18,
+            "usdValue": 14.426999412209991
+          },
+          {
+            "assetAddress": "0x611a8f2c674b5eb5cdf259c5e5077b183286ffe6",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "3.0920025200915e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x61da65f0534c6a4f4c9757f2979a923c08d6d2aa",
+            "symbol": "PT-mMEV-30OCT2025",
+            "name": "PT Midas MEV 30OCT2025",
+            "balance": "2049999",
+            "decimals": 6,
+            "usdValue": 2.05
+          },
+          {
+            "assetAddress": "0x64351fc9810adad17a690e4e1717df5e7e085160",
+            "symbol": "msETH",
+            "name": "Metronome Synth ETH",
+            "balance": "456547374675012000000",
+            "decimals": 18,
+            "usdValue": 1416207.8863807698
+          },
+          {
+            "assetAddress": "0x6440f144b7e50d6a8439336510312d2f54beb01d",
+            "symbol": "BOLD",
+            "name": "BOLD Stablecoin",
+            "balance": "1.0421238901900892e+21",
+            "decimals": 18,
+            "usdValue": 1042.903126444467
+          },
+          {
+            "assetAddress": "0x6503de9fe77d256d9d823f2d335ce83ece9e153f",
+            "symbol": "ctStableUSDT",
+            "name": "Stable USDT Pre-Deposit",
+            "balance": "12371373",
+            "decimals": 6,
+            "usdValue": 12.373874718056504
+          },
+          {
+            "assetAddress": "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb",
+            "symbol": "ynETHx",
+            "name": "ynETH MAX",
+            "balance": "3.7564048899482856e+21",
+            "decimals": 18,
+            "usdValue": 12498260.682165219
+          },
+          {
+            "assetAddress": "0x657e8c867d8b37dcc18fa4caead9c45eb088c642",
+            "symbol": "eBTC",
+            "name": "ether.fi BTC",
+            "balance": "205664",
+            "decimals": 8,
+            "usdValue": 187.1647505186415
+          },
+          {
+            "assetAddress": "0x6645aa5a6f4ff29b30d53a483a02acc2cb85b241",
+            "symbol": "PT-alUSD-23OCT2025",
+            "name": "PT Autonomous Liquidity USD 23OCT2025",
+            "balance": "490826",
+            "decimals": 6,
+            "usdValue": 0.49072805177667606
+          },
+          {
+            "assetAddress": "0x66a1e37c9b0eaddca17d3662d6c05f4decf3e110",
+            "symbol": "USR",
+            "name": "Resolv USD",
+            "balance": "1.5614853935269175e+23",
+            "decimals": 18,
+            "usdValue": 156278.10786154785
+          },
+          {
+            "assetAddress": "0x67aeeed39c1675e0df93ad8bab543b17992d433b",
+            "symbol": "PT-cUSDO-28MAY2026",
+            "name": "PT Compounding Open Dollar 28MAY2026",
+            "balance": "1031517796605866200",
+            "decimals": 18,
+            "usdValue": 1.011821273512757
+          },
+          {
+            "assetAddress": "0x67c2a8ac5dcde1b91299261fe16022b43d9df69f",
+            "symbol": "MT",
+            "name": "MyToken",
+            "balance": "1e+31",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x68749665ff8d2d112fa859aa293f07a622782f38",
+            "symbol": "XAUt",
+            "name": "Tether Gold",
+            "balance": "1966047972",
+            "decimals": 6,
+            "usdValue": 8792902.554274844
+          },
+          {
+            "assetAddress": "0x689435017b46dd058fec51ccade5c3b6b7c4dce5",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "30128495846254052",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x69000405f9dce69bd4cbf4f2865b79144a69bfe0",
+            "symbol": "USDz (MAHA)",
+            "name": "ZAI Stablecoin",
+            "balance": "9.9935e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x6958c870a6d9a7a7cca58fede8acfdf1280c12d5",
+            "symbol": "BEAN",
+            "name": "Killer Bean",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0.0022832650081399445
+          },
+          {
+            "assetAddress": "0x6967b9a8c0b14849cfe8f9e5732b401433fd2898",
+            "symbol": "NAKA",
+            "name": "Naka Go",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0.005209018328275982
+          },
+          {
+            "assetAddress": "0x699e04f98de2fc395a7dcbf36b48ec837a976490",
+            "symbol": "tacUSD",
+            "name": "Turtle TAC USD Vault",
+            "balance": "395485717",
+            "decimals": 6,
+            "usdValue": 402.22888504033136
+          },
+          {
+            "assetAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.021400947232043e+24",
+            "decimals": 18,
+            "usdValue": 1021400.9472320429
+          },
+          {
+            "assetAddress": "0x6bf340db729d82af1f6443a0ea0d79647b1c3ddf",
+            "symbol": "tacBTC",
+            "name": "Turtle TAC BTC Vault",
+            "balance": "39484",
+            "decimals": 8,
+            "usdValue": 35.55213823262764
+          },
+          {
+            "assetAddress": "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
+            "symbol": "PYUSD",
+            "name": "PayPal USD",
+            "balance": "27188367715242",
+            "decimals": 6,
+            "usdValue": 27185840.852712926
+          },
+          {
+            "assetAddress": "0x6ca4d5d2ecb72e3bbf17543b3367746b80d22694",
+            "symbol": "PT-LBTC-26JUN2025",
+            "name": "PT Lombard LBTC 26JUN2025",
+            "balance": "27936",
+            "decimals": 8,
+            "usdValue": 25.25032731871906
+          },
+          {
+            "assetAddress": "0x6ee2b5e19ecba773a352e5b21415dc419a700d1d",
+            "symbol": "PT-weETH-26DEC2024",
+            "name": "PT ether.fi weETH 26DEC2024",
+            "balance": "10000000000000000",
+            "decimals": 18,
+            "usdValue": 30.933212249874206
+          },
+          {
+            "assetAddress": "0x6f5ddb7689d7bd74d29b7d6a06cee8e39655a5dc",
+            "symbol": "PT-yvCurve-GHO-USR(GHOUSR)-2026/01/18",
+            "name": "Principal Token: yvCurve-GHO-USR(GHOUSR) 2026/01/18",
+            "balance": "1028783722126142000",
+            "decimals": 18,
+            "usdValue": 1.0345660239083383
+          },
+          {
+            "assetAddress": "0x70f20154efcf549aed4a223ba081324c8c58e103",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "16791055613209164",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7122985656e38bdc0302db86685bb972b145bd3c",
+            "symbol": "STONE",
+            "name": "StakeStone Ether",
+            "balance": "42877671590513020000",
+            "decimals": 18,
+            "usdValue": 141426.141664168
+          },
+          {
+            "assetAddress": "0x715da2abf0bf47b13963be8dc91d5dc2727a93e4",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "22831113907846124",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7204b7dbf9412567835633b6f00c3edc3a8d6330",
+            "symbol": "csUSDC",
+            "name": "Coinshift USDC",
+            "balance": "28269232742897930000",
+            "decimals": 18,
+            "usdValue": 29.93602244176609
+          },
+          {
+            "assetAddress": "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9",
+            "symbol": "BITCOIN (HPOS10I)",
+            "name": "HarryPotterObamaSonic10Inu",
+            "balance": "1813341149251923",
+            "decimals": 8,
+            "usdValue": 868500.1773403175
+          },
+          {
+            "assetAddress": "0x7309e1e2e74af170c69bde8fcb30397f8697d5ff",
+            "symbol": "wbravUSDC",
+            "name": "Wrapped Avant+ DeFi Yield",
+            "balance": "4273263764866",
+            "decimals": 6,
+            "usdValue": 4552298.350749387
+          },
+          {
+            "assetAddress": "0x734eec7930bc84ec5732022b9eb949a81fb89abe",
+            "symbol": "ETH0",
+            "name": "Usual ETH",
+            "balance": "224080682556205070000",
+            "decimals": 18,
+            "usdValue": 698280.6797651035
+          },
+          {
+            "assetAddress": "0x738d1115b90efa71ae468f1287fc864775e23a31",
+            "symbol": "srUSD",
+            "name": "Savings rUSD",
+            "balance": "4.7530959034662366e+23",
+            "decimals": 18,
+            "usdValue": 533842.9078813071
+          },
+          {
+            "assetAddress": "0x73a15fed60bf67631dc6cd7bc5b6e8da8190acf5",
+            "symbol": "USD0",
+            "name": "Usual USD",
+            "balance": "5.155198062752632e+22",
+            "decimals": 18,
+            "usdValue": 51558.786189887556
+          },
+          {
+            "assetAddress": "0x73e85bd3beb0463531d83783f7a0995e32dc0abb",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "2.694797457920725e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x742b4166878bfd339db65a29a17e49b81a6b6aac",
+            "symbol": "PT-RLP-4SEP2025",
+            "name": "PT Resolv Liquidity Provider Token 4SEP2025",
+            "balance": "2809568",
+            "decimals": 6,
+            "usdValue": 2.8029718559241776
+          },
+          {
+            "assetAddress": "0x76e222b07c53d28b89b0bac18602810fc22b49a8",
+            "symbol": "JOE(meme)",
+            "name": "Joe Coin",
+            "balance": "7.846040587732743e+24",
+            "decimals": 18,
+            "usdValue": 100641.39521610882
+          },
+          {
+            "assetAddress": "0x771c91e699b4b23420de3f81de2aa38c4041632b",
+            "symbol": "USDUUSDC",
+            "name": "USDU/USDC",
+            "balance": "9993989870463748000",
+            "decimals": 18,
+            "usdValue": 14.898021772026208
+          },
+          {
+            "assetAddress": "0x7743e50f534a7f9f1791dde7dcd89f7783eefc39",
+            "symbol": "fxSAVE",
+            "name": "f(x) USD Saving",
+            "balance": "3.098556389348499e+24",
+            "decimals": 18,
+            "usdValue": 3341946.685278139
+          },
+          {
+            "assetAddress": "0x7751e2f4b8ae93ef6b79d86419d42fe3295a4559",
+            "symbol": "wUSDL",
+            "name": "Wrapped USDL",
+            "balance": "9.613000583722154e+22",
+            "decimals": 18,
+            "usdValue": 100339.376506474
+          },
+          {
+            "assetAddress": "0x77b80f4ac4c6cbb4982689749177349cf1635115",
+            "symbol": "ezUSD",
+            "name": "ezUSD",
+            "balance": "1000000000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x78fc2c2ed1a4cdb5402365934ae5648adad094d0",
+            "symbol": "Re7WETH",
+            "name": "Re7 WETH",
+            "balance": "1471182955395301",
+            "decimals": 18,
+            "usdValue": 4.9030875835115095
+          },
+          {
+            "assetAddress": "0x7a56e1c57c7475ccf742a1832b028f0456652f97",
+            "symbol": "SolvBTC",
+            "name": "Solv BTC",
+            "balance": "67100358732561020000",
+            "decimals": 18,
+            "usdValue": 6098420.741823891
+          },
+          {
+            "assetAddress": "0x7b43e3875440b44613dc3bc08e7763e6da63c8f8",
+            "symbol": "USDR",
+            "name": "StablR USD",
+            "balance": "9537909158",
+            "decimals": 6,
+            "usdValue": 9518.8556842064
+          },
+          {
+            "assetAddress": "0x7bafb26a485bf7bb4b0d0b02996c79c5af6493bc",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "1419070158575440000",
+            "decimals": 18,
+            "usdValue": 4.038515987361059
+          },
+          {
+            "assetAddress": "0x7c1156e515aa1a2e851674120074968c905aaf37",
+            "symbol": "lvlUSD",
+            "name": "Level USD",
+            "balance": "1.3325020190748532e+21",
+            "decimals": 18,
+            "usdValue": 1332.8793448031472
+          },
+          {
+            "assetAddress": "0x7cf9dec92ca9fd46f8d86e7798b72624bc116c05",
+            "symbol": "mAPOLLO",
+            "name": "Midas Apollo Crypto",
+            "balance": "1.4552883726333678e+24",
+            "decimals": 18,
+            "usdValue": 1548416.6905506914
+          },
+          {
+            "assetAddress": "0x7f01d0fce9bc646389483384c41b4d71c7139f11",
+            "symbol": "PT-mEDGE-31JUL2025",
+            "name": "PT Midas mEDGE 31JUL2025",
+            "balance": "4357960",
+            "decimals": 6,
+            "usdValue": 4.35796
+          },
+          {
+            "assetAddress": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+            "symbol": "wstETH",
+            "name": "Wrapped liquid staked Ether 2.0",
+            "balance": "1.0298800595810984e+23",
+            "decimals": 18,
+            "usdValue": 393033257.92463607
+          },
+          {
+            "assetAddress": "0x7f723fee1e65a7d26be51a05af0b5efee4a7d5ae",
+            "symbol": "n-st-weETH",
+            "name": "Notional Staking weETH",
+            "balance": "4.870095183934355e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x80ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
+            "symbol": "syrupUSDC",
+            "name": "Syrup USDC",
+            "balance": "1815246853199",
+            "decimals": 6,
+            "usdValue": 2081811.7073094195
+          },
+          {
+            "assetAddress": "0x80e1048ede66ec4c364b4f22c8768fc657ff6a42",
+            "symbol": "upUSDC",
+            "name": "Upshift USDC",
+            "balance": "3824602276655",
+            "decimals": 6,
+            "usdValue": 4179925.475455314
+          },
+          {
+            "assetAddress": "0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
+            "symbol": "Neiro (neiroeth.io)",
+            "name": "Neiro",
+            "balance": "2121443677261420",
+            "decimals": 9,
+            "usdValue": 287.3071172115141
+          },
+          {
+            "assetAddress": "0x8209b01357946a64a0793e9773f6f3fe5a5f2526",
+            "symbol": "PT-DETH-29JAN2026",
+            "name": "PT Dialetic ETH 29JAN2026",
+            "balance": "164453777326257",
+            "decimals": 18,
+            "usdValue": 0.507623070827077
+          },
+          {
+            "assetAddress": "0x8236a87084f8b84306f72007f36f2618a5634494",
+            "symbol": "LBTC",
+            "name": "Lombard Staked Bitcoin",
+            "balance": "35428371648",
+            "decimals": 8,
+            "usdValue": 32291272.67109288
+          },
+          {
+            "assetAddress": "0x833adaef212c5cd3f78906b44bbfb18258f238f0",
+            "symbol": "bbqWSTETH",
+            "name": "Smokehouse WSTETH",
+            "balance": "1768222589985674",
+            "decimals": 18,
+            "usdValue": 6.815987450250379
+          },
+          {
+            "assetAddress": "0x83f20f44975d03b1b09e64809b757c47f942beea",
+            "symbol": "sDAI",
+            "name": "Savings Dai",
+            "balance": "1.0886711502820833e+21",
+            "decimals": 18,
+            "usdValue": 1274.3571779777658
+          },
+          {
+            "assetAddress": "0x8413d2a624a9fa8b6d3ec7b22cf7f62e55d6bc83",
+            "symbol": "BONDUSD",
+            "name": "Bond USD",
+            "balance": "1e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x853d955acef822db058eb8505911ed77f175b99e",
+            "symbol": "Legacy Frax Dollar",
+            "name": "Frax",
+            "balance": "942814669817286200000",
+            "decimals": 18,
+            "usdValue": 937.2585874398346
+          },
+          {
+            "assetAddress": "0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3",
+            "symbol": "OETH",
+            "name": "Origin Ether",
+            "balance": "814284055642708900000",
+            "decimals": 18,
+            "usdValue": 2535892.502126222
+          },
+          {
+            "assetAddress": "0x87c9053c819bb28e0d73d33059e1b3da80afb0cf",
+            "symbol": "mRe7YIELD",
+            "name": "Midas Re7 Yield",
+            "balance": "1.4958509582843472e+22",
+            "decimals": 18,
+            "usdValue": 16244.941406968012
+          },
+          {
+            "assetAddress": "0x88563b651abf39d5e24d8210bcab62014a504108",
+            "symbol": "HilBTC",
+            "name": "HilBTC",
+            "balance": "1000000000",
+            "decimals": 8,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x88594d0c5b95ac69c9049a82ab87d205e1bb6288",
+            "symbol": "Earn rewards at https://stlink.org",
+            "name": "stlink.org",
+            "balance": "4250000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x88887be419578051ff9f4eb6c858a951921d8888",
+            "symbol": "stcUSD",
+            "name": "Staked cap USD",
+            "balance": "2.503216592793737e+25",
+            "decimals": 18,
+            "usdValue": 26128978.313346013
+          },
+          {
+            "assetAddress": "0x888d534385a3727f3bbd2f4e8c3fc322a9cfdbd2",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "25723505280027812",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x896108a7eff862e8647d8355729491841727932e",
+            "symbol": "Visit liquid-eth.org claim rewards",
+            "name": "# liquid-eth.org",
+            "balance": "1700000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8a47b431a7d947c6a3ed6e42d501803615a97eaa",
+            "symbol": "PT-USDe-27MAR2025",
+            "name": "PT Ethena USDe 27MAR2025",
+            "balance": "2.0385358539613998e+21",
+            "decimals": 18,
+            "usdValue": 2038.4431617361204
+          },
+          {
+            "assetAddress": "0x8c1bed5b9a0928467c9b1341da1d7bd5e10b6549",
+            "symbol": "LsETH",
+            "name": "Liquid Staked ETH",
+            "balance": "2600001000000000",
+            "decimals": 18,
+            "usdValue": 8.91144679173058
+          },
+          {
+            "assetAddress": "0x8d7a9452361b465247ec613ac8cc20758ceae06f",
+            "symbol": "EDA",
+            "name": "EDA  TOKEN",
+            "balance": "800000000000000000",
+            "decimals": 18,
+            "usdValue": 0.00130322358475549
+          },
+          {
+            "assetAddress": "0x8db2350d78abc13f5673a411d4700bcf87864dde",
+            "symbol": "swBTC",
+            "name": "swBTC",
+            "balance": "12544016",
+            "decimals": 8,
+            "usdValue": 11379.298749541498
+          },
+          {
+            "assetAddress": "0x8ed97a637a790be1feff5e888d43629dc05408f6",
+            "symbol": "NPC (Non-Playable Coin)",
+            "name": "Non-Playable Coin",
+            "balance": "3.995734418573935e+22",
+            "decimals": 18,
+            "usdValue": 521.8676506438115
+          },
+          {
+            "assetAddress": "0x90455bd11ce8a67c57d467e634dc142b8e4105aa",
+            "symbol": "cUSDOUSDC",
+            "name": "cUSDO/USDC",
+            "balance": "756011835023261400000",
+            "decimals": 18,
+            "usdValue": 775.8055650613868
+          },
+          {
+            "assetAddress": "0x9079e3af3ee265c8c49a75670db2a02bbfb8e822",
+            "symbol": "PT-mHYPER-29JAN2026",
+            "name": "PT Midas Hyperithm 29JAN2026",
+            "balance": "84585067548",
+            "decimals": 6,
+            "usdValue": 84196.24915585786
+          },
+          {
+            "assetAddress": "0x90a2a4c76b5d8c0bc892a69ea28aa775a8f2dd48",
+            "symbol": "SPYx",
+            "name": "SP500 xStock",
+            "balance": "9999999999999998",
+            "decimals": 18,
+            "usdValue": 6.902099999999999
+          },
+          {
+            "assetAddress": "0x90d2af7d622ca3141efa4d8f1f24d86e5974cc8f",
+            "symbol": "eUSDe",
+            "name": "Ethereal Pre-deposit Vault",
+            "balance": "2.1424460768828257e+23",
+            "decimals": 18,
+            "usdValue": 214251.2933437555
+          },
+          {
+            "assetAddress": "0x910836b41791e07b4ac107c0dfbc41ffd07d2702",
+            "symbol": "TOKEN",
+            "name": "TOKEN",
+            "balance": "3000000000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x91094d333e018f81874d62e27522479bec131b5f",
+            "symbol": "wbrETH",
+            "name": "Wrapped ETH+ Alpha Yield",
+            "balance": "34198656312616144",
+            "decimals": 18,
+            "usdValue": 109.89475191550629
+          },
+          {
+            "assetAddress": "0x912456c3634cf194fe3ac35424b6a4ec29628f08",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x917459337caac939d41d7493b3999f571d20d667",
+            "symbol": "PT-USDe-31JUL2025",
+            "name": "PT Ethena USDe 31JUL2025",
+            "balance": "6.855143962119143e+22",
+            "decimals": 18,
+            "usdValue": 68548.32258723186
+          },
+          {
+            "assetAddress": "0x92640ef1dfff05725189ef03bbbd61734ec010fc",
+            "symbol": "reztoken.com",
+            "name": "$ reztoken.com",
+            "balance": "4000000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x92abcf6813150a9f78540caa4fee6115a713f505",
+            "symbol": "stakedao-crvUSDUSDT-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDT",
+            "balance": "10729365259043045000",
+            "decimals": 18,
+            "usdValue": 10.972741137243503
+          },
+          {
+            "assetAddress": "0x933b9ffee0ad3ef8e4dbb52688ea905826d73755",
+            "symbol": "PT-cUSDO-19JUN2025",
+            "name": "PT Compounding Open Dollar 19JUN2025",
+            "balance": "34184991541572927000",
+            "decimals": 18,
+            "usdValue": 34.166515566394416
+          },
+          {
+            "assetAddress": "0x94f31ac896c9823d81cf9c2c93feceed4923218f",
+            "symbol": "YFTE",
+            "name": "YfTether.io",
+            "balance": "15412848000000000",
+            "decimals": 18,
+            "usdValue": 0.01942382341035232
+          },
+          {
+            "assetAddress": "0x955e979d243907917fda6a3a811fb55c555b7dba",
+            "symbol": "PT-mAPOLLO-29JAN2026",
+            "name": "PT Midas Apollo Crypto 29JAN2026",
+            "balance": "1431000317029",
+            "decimals": 6,
+            "usdValue": 1422709.7150272331
+          },
+          {
+            "assetAddress": "0x95eef579155cd2c5510f312c8fa39208c3be01a8",
+            "symbol": "Re7USDT",
+            "name": "Re7 USDT",
+            "balance": "118663624202901900",
+            "decimals": 18,
+            "usdValue": 0.13540221146720346
+          },
+          {
+            "assetAddress": "0x960fce8724aa127184b6d13af41a711755236c77",
+            "symbol": "henlo",
+            "name": "henlo",
+            "balance": "5807481402576649000",
+            "decimals": 9,
+            "usdValue": 2.7142756717959675
+          },
+          {
+            "assetAddress": "0x968547d91681c8c9e135710fc94bc6c35e26607e",
+            "symbol": "PT-AIDaUSDT-30OCT2025",
+            "name": "PT AI Dollar Alpha USDT 30OCT2025",
+            "balance": "14052616",
+            "decimals": 6,
+            "usdValue": 14.03909049762616
+          },
+          {
+            "assetAddress": "0x97ad75064b20fb2b2447fed4fa953bf7f007a706",
+            "symbol": "beraSTONE",
+            "name": "Berachain STONE",
+            "balance": "31044651106618122000",
+            "decimals": 18,
+            "usdValue": 97240.39569521522
+          },
+          {
+            "assetAddress": "0x97ca796aed60a4e34a7d7878f399b51e8718fbf7",
+            "symbol": "PT-DUSD-29JAN2026",
+            "name": "PT Dialetic USD 29JAN2026",
+            "balance": "4229080047552",
+            "decimals": 6,
+            "usdValue": 4205882.013654499
+          },
+          {
+            "assetAddress": "0x97f7957f74b3ea8a372e1fa0a153bb9bd7b1ca61",
+            "symbol": "expVaultBTC",
+            "name": "Bitcoin Vault Experiment Token",
+            "balance": "90000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x99e05cdbeac5d91150935c59ff8e9ba9945d6884",
+            "symbol": "AA_GauntletTestUSDC",
+            "name": "Pareto AA Tranche - GauntletTestUSDC",
+            "balance": "17059716838030934000",
+            "decimals": 18,
+            "usdValue": 17.12764484550475
+          },
+          {
+            "assetAddress": "0x9ae3f5e7456fa060f3487c9db990f9d7dd678de8",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "37608119790766500",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9b5528528656dbc094765e2abb79f293c21191b9",
+            "symbol": "mHYPER",
+            "name": "Midas Hyperithm",
+            "balance": "4.879089126250494e+24",
+            "decimals": 18,
+            "usdValue": 5214997.930833457
+          },
+          {
+            "assetAddress": "0x9ba021b0a9b958b5e75ce9f6dff97c7ee52cb3e6",
+            "symbol": "apxETH",
+            "name": "Autocompounding Pirex Ether",
+            "balance": "6473234397214056000",
+            "decimals": 18,
+            "usdValue": 22286.828255357443
+          },
+          {
+            "assetAddress": "0x9bca74f805ab0a22ddd0886db0942199a0feba71",
+            "symbol": "PT-lvlUSD-29MAY2025",
+            "name": "PT Level USD 29MAY2025",
+            "balance": "1.1812916389481446e+21",
+            "decimals": 18,
+            "usdValue": 1180.3278505058931
+          },
+          {
+            "assetAddress": "0x9bf45ab47747f4b4dd09b3c2c73953484b4eb375",
+            "symbol": "PT-srUSDe-2APR2026",
+            "name": "PT Strata Senior USDe 2APR2026",
+            "balance": "2135871936567764500",
+            "decimals": 18,
+            "usdValue": 2.103933255666831
+          },
+          {
+            "assetAddress": "0x9db20ca3fe7ddbdd87717e4212cca06404faf06f",
+            "symbol": "Earn $ETHFI rewards at https://ethfi.world",
+            "name": "$ ethfi.world",
+            "balance": "8000000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9e1d136564f3f5898ca80866ec639336840df984",
+            "symbol": "ERC20",
+            "name": "Token",
+            "balance": "1.297478530240737e+75",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9e59a081320ddb046d74a106335ca6b84eadc067",
+            "symbol": "BIDEN",
+            "name": "Biden Coin",
+            "balance": "100000000000000000000",
+            "decimals": 18,
+            "usdValue": 0.00025259728690308014
+          },
+          {
+            "assetAddress": "0x9ebb9230276e858efb8209618055add25a2bf41b",
+            "symbol": "PT-slvlUSD(lvlUSD)-2026/01/18",
+            "name": "Principal Token: slvlUSD(lvlUSD) 2026/01/18",
+            "balance": "1046778943351135200",
+            "decimals": 18,
+            "usdValue": 1.0491672265274077
+          },
+          {
+            "assetAddress": "0x9f56094c450763769ba0ea9fe2876070c0fd5f77",
+            "symbol": "PT-sUSDE-25SEP2025",
+            "name": "PT Ethena sUSDE 25SEP2025",
+            "balance": "2.4372731124180243e+23",
+            "decimals": 18,
+            "usdValue": 243773.36349777185
+          },
+          {
+            "assetAddress": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+            "symbol": "MKR",
+            "name": "Maker",
+            "balance": "703697755353368400",
+            "decimals": 18,
+            "usdValue": 942.9268442632996
+          },
+          {
+            "assetAddress": "0xa0021ef8970104c2d008f38d92f115ad56a9b8e1",
+            "symbol": "PT-USDe-25JUL2024",
+            "name": "PT Ethena USDe 25JUL2024",
+            "balance": "48248309333194570000",
+            "decimals": 18,
+            "usdValue": 48.24611548256919
+          },
+          {
+            "assetAddress": "0xa046017cf0e0c6fc0708f8db6d2fc4848ba6dc8a",
+            "symbol": "SIMP",
+            "name": "Simpson",
+            "balance": "7831892433152722000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa0769f7a8fc65e47de93797b4e21c073c117fc80",
+            "symbol": "EUTBL",
+            "name": "Spiko EU T-Bills Money Market Fund",
+            "balance": "2862902277",
+            "decimals": 5,
+            "usdValue": 34927.4077794
+          },
+          {
+            "assetAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "129394945065525",
+            "decimals": 6,
+            "usdValue": 129511505.42040335
+          },
+          {
+            "assetAddress": "0xa0c5f9c82e7a67eb995da394bea78b056561eb11",
+            "symbol": "ERC20",
+            "name": "Token",
+            "balance": "1.297478530240737e+75",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f",
+            "symbol": "eUSD",
+            "name": "Electronic Dollar",
+            "balance": "3.4600385896964107e+24",
+            "decimals": 18,
+            "usdValue": 3463431.917506374
+          },
+          {
+            "assetAddress": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
+            "symbol": "rsETH",
+            "name": "rsETH",
+            "balance": "700660085395686800000",
+            "decimals": 18,
+            "usdValue": 2320858.3393443334
+          },
+          {
+            "assetAddress": "0xa19f6e0df08a7917f2f8a33db66d0af31ff5eca6",
+            "symbol": "mFARM",
+            "name": "Midas Farm Capital",
+            "balance": "810650185614772",
+            "decimals": 18,
+            "usdValue": 0.0008183593139063067
+          },
+          {
+            "assetAddress": "0xa28194de3de7166ee81c2e13c864b9c7cca1b8ef",
+            "symbol": "PT-AIDaUSDT-14AUG2025",
+            "name": "PT AI Dollar Alpha USDT 14AUG2025",
+            "balance": "1134043",
+            "decimals": 6,
+            "usdValue": 1.1329514949529298
+          },
+          {
+            "assetAddress": "0xa360ab2d8866be9f98f27331607ba70cec5ec433",
+            "symbol": "Visit website linkgift .org to claim rewards",
+            "name": "Visit website linkgift .org to claim rewards",
+            "balance": "126230000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa3931d71877c0e7a3148cb7eb4463524fec27fbd",
+            "symbol": "sUSDS",
+            "name": "Savings USDS",
+            "balance": "6.281497772005819e+25",
+            "decimals": 18,
+            "usdValue": 67981713.61442526
+          },
+          {
+            "assetAddress": "0xa4304072d94704b59a501c2dcf3eb37280b65ca7",
+            "symbol": "PWrUSDC-hyper",
+            "name": "Permissioned Wrapped Relend Network USDC - Hyper",
+            "balance": "65000000000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa5959e9412d27041194c3c3bcbe855face2864f7",
+            "symbol": "UNDG",
+            "name": "UniDexGas.com",
+            "balance": "291936000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa663b02cf0a4b149d2ad41910cb81e23e1c41c32",
+            "symbol": "sFRAX",
+            "name": "Staked FRAX",
+            "balance": "100000000000000000",
+            "decimals": 18,
+            "usdValue": 0.11485918733762475
+          },
+          {
+            "assetAddress": "0xa8164ab31d4c2420522e6b99b50cd65962908db6",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa849eaae994fb86afa73382e9bd88c2b6b18dc71",
+            "symbol": "MVL",
+            "name": "Mass Vehicle Ledger Token",
+            "balance": "1.5000377967278015e+26",
+            "decimals": 18,
+            "usdValue": 286045.11050533905
+          },
+          {
+            "assetAddress": "0xa8c8861b5ccf8cce0ade6811cd2a7a7d3222b0b8",
+            "symbol": "PT-wstUSR-27MAR2025",
+            "name": "PT Wrapped stUSR 27MAR2025",
+            "balance": "38554838345031620000",
+            "decimals": 18,
+            "usdValue": 38.54439053131882
+          },
+          {
+            "assetAddress": "0xaa6ee47aebaef8d0e159b6d0962acd82df335b0f",
+            "symbol": "PT-AIDaUSDC-30OCT2025",
+            "name": "PT AI Dollar Alpha USDC 30OCT2025",
+            "balance": "7435715",
+            "decimals": 6,
+            "usdValue": 7.434227857000001
+          },
+          {
+            "assetAddress": "0xaaee1a9723aadb7afa2810263653a34ba2c21c7a",
+            "symbol": "Mog",
+            "name": "Mog Coin",
+            "balance": "3.253107410956172e+30",
+            "decimals": 18,
+            "usdValue": 1017369.828130985
+          },
+          {
+            "assetAddress": "0xab025d7b57b0902a2797599f3eb07477400e62b0",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "89355001931003510000",
+            "decimals": 18,
+            "usdValue": 250.7079979459585
+          },
+          {
+            "assetAddress": "0xab365c0879024481e4ad3b47bd6fea9c10014fbc",
+            "symbol": "PT-sUSDf-25SEP2025",
+            "name": "PT Staked Falcon USD 25SEP2025",
+            "balance": "1e+21",
+            "decimals": 18,
+            "usdValue": 996.9045792
+          },
+          {
+            "assetAddress": "0xab5eb14c09d416f0ac63661e57edb7aecdb9befa",
+            "symbol": "msUSD",
+            "name": "Metronome Synth USD",
+            "balance": "5.0235358025688454e+23",
+            "decimals": 18,
+            "usdValue": 500708.1498808574
+          },
+          {
+            "assetAddress": "0xac904bafbb5fb04deb2b6198fdceede75a78ce5a",
+            "symbol": "stkcvxcrvUSDETHCRV-morpho",
+            "name": "Staked TriCRV Convex Deposit Morpho",
+            "balance": "362117960066588600000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xaca92e438df0b2401ff60da7e4337b687a2435da",
+            "symbol": "mUSD",
+            "name": "MetaMask USD",
+            "balance": "100",
+            "decimals": 6,
+            "usdValue": 0.00010008704093888135
+          },
+          {
+            "assetAddress": "0xad55aebc9b8c03fc43cd9f62260391c13c23e7c0",
+            "symbol": "cUSDO",
+            "name": "Compounding Open Dollar",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 1.0386553863800496
+          },
+          {
+            "assetAddress": "0xae4be3acd95b6a4ac5a0524ab95da90c721f6c83",
+            "symbol": "PT-USR-29MAY2025",
+            "name": "PT Resolv USD 29MAY2025",
+            "balance": "283139978718505380",
+            "decimals": 18,
+            "usdValue": 0.28306325180486036
+          },
+          {
+            "assetAddress": "0xae5099c39f023c91d3dd55244cafb36225b0850e",
+            "symbol": "PT-sUSDE-24OCT2024",
+            "name": "PT Ethena sUSDE 24OCT2024",
+            "balance": "86596131443708580000",
+            "decimals": 18,
+            "usdValue": 86.61249377582017
+          },
+          {
+            "assetAddress": "0xae78736cd615f374d3085123a210448e74fc6393",
+            "symbol": "rETH",
+            "name": "Rocket Pool ETH",
+            "balance": "12818114142539520",
+            "decimals": 18,
+            "usdValue": 46.14090244620242
+          },
+          {
+            "assetAddress": "0xaeb03ab1da96100ecc341471c45766d421fab1c7",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "37213498512391530",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xaf14d06a65c91541a5b2db627ecd1c92d7d9c48b",
+            "symbol": "n-st-sUSDe",
+            "name": "Notional Staking sUSDe",
+            "balance": "1.1040250126683231e+25",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb03eef386a61b5b462051636001485fffdd3d843",
+            "symbol": "AMERICA",
+            "name": "America Party",
+            "balance": "1.26828e+26",
+            "decimals": 18,
+            "usdValue": 13.051135957199422
+          },
+          {
+            "assetAddress": "0xb0ce26c88e4e7dca51968b6047f44646f5064278",
+            "symbol": "stkcvxcrvUSDTWBTCWETH-morpho",
+            "name": "Staked TricryptoUSDT Convex Deposit Morpho",
+            "balance": "21241843339518304",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb0f05e4de970a1aaf77f8c2f823953a367504ba9",
+            "symbol": "aUSDC",
+            "name": "Alpha USDC Core",
+            "balance": "250415696707682100",
+            "decimals": 18,
+            "usdValue": 0.26682921408119137
+          },
+          {
+            "assetAddress": "0xb10da2f9147f9cf2b8826877cd0c95c18a0f42dc",
+            "symbol": "PT-cUSDO-20NOV2025",
+            "name": "PT Compounding Open Dollar 20NOV2025",
+            "balance": "802341489805599200000",
+            "decimals": 18,
+            "usdValue": 801.9078480001796
+          },
+          {
+            "assetAddress": "0xb1e926428ebec4421cce1ec6d9ff65d27f4b4bb6",
+            "symbol": "PT-fxSAVE-30APR2026",
+            "name": "PT f(x) USD Saving 30APR2026",
+            "balance": "1037514625815398900",
+            "decimals": 18,
+            "usdValue": 1.0182147798470969
+          },
+          {
+            "assetAddress": "0xb44cdbef3145c1c1e772e8228e1154c80e70618e",
+            "symbol": "PT-iUSD-4DEC2025",
+            "name": "PT infiniFi USD 4DEC2025",
+            "balance": "3.758106334274038e+22",
+            "decimals": 18,
+            "usdValue": 37573.05867395914
+          },
+          {
+            "assetAddress": "0xb4b8925c4cbce692f37c9d946883f2e330a042a9",
+            "symbol": "PT-sdeUSD-1753142406",
+            "name": "Principal Token: sdeUSD-1753142406",
+            "balance": "517626849102467960000",
+            "decimals": 18,
+            "usdValue": 515.4076342598499
+          },
+          {
+            "assetAddress": "0xb5879522992cf7a20c8e8041ceeeb82697bd255c",
+            "symbol": "stakedao-crvUSDUSDC-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDC",
+            "balance": "980424512221230700",
+            "decimals": 18,
+            "usdValue": 1.003484347763134
+          },
+          {
+            "assetAddress": "0xb58e61c3098d85632df34eecfb899a1ed80921cb",
+            "symbol": "ZCHF",
+            "name": "Frankencoin",
+            "balance": "5.757359627939618e+22",
+            "decimals": 18,
+            "usdValue": 72108.49687910464
+          },
+          {
+            "assetAddress": "0xb5dfe4b1daa61b2be8c943f09d68dccd268cc23e",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "27638128968636544",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb7de5dfcb74d25c2f21841fbd6230355c50d9308",
+            "symbol": "PT-sUSDE-29MAY2025",
+            "name": "PT Ethena sUSDE 29MAY2025",
+            "balance": "209463542404060150000",
+            "decimals": 18,
+            "usdValue": 209.5031205236476
+          },
+          {
+            "assetAddress": "0xb802f872117c1c3abe9f752b0a03b097ce7e0f66",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb90b2a35c65dbc466b04240097ca756ad2005295",
+            "symbol": "BOBO (bobothebear.io)",
+            "name": "BOBO",
+            "balance": "1.0164914671837173e+28",
+            "decimals": 18,
+            "usdValue": 1674.8426526587664
+          },
+          {
+            "assetAddress": "0xb90d347e10a085b591955cbd0603ac7866fcadc8",
+            "symbol": "xCVX",
+            "name": "Leveraged CVX",
+            "balance": "9.331357223957875e+22",
+            "decimals": 18,
+            "usdValue": 63572.25518226652
+          },
+          {
+            "assetAddress": "0xbb51e2a15a9158ebe2b0ceb8678511e063ab7a55",
+            "symbol": "mEDGE",
+            "name": "Midas mEDGE",
+            "balance": "13192708986285360000",
+            "decimals": 18,
+            "usdValue": 14.353667377078471
+          },
+          {
+            "assetAddress": "0xbbac5b019876534c3c399f56e150684c5015f670",
+            "symbol": "# UsdcLB.com - Visit to claim bonus",
+            "name": "# UsdcLB.com",
+            "balance": "8271",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbc6736d346a5ebc0debc997397912cd9b8fae10a",
+            "symbol": "PT-USDe-25SEP2025",
+            "name": "PT Ethena USDe 25SEP2025",
+            "balance": "1.084191488296914e+22",
+            "decimals": 18,
+            "usdValue": 10841.42190109941
+          },
+          {
+            "assetAddress": "0xbdd81dc4b787747a981e0667019c1e01d7f1da81",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.1753982146184787e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbe53a109b494e5c9f97b9cd39fe969be68bf6204",
+            "symbol": "yvUSDC-1",
+            "name": "USDC-1 yVault",
+            "balance": "1001018",
+            "decimals": 6,
+            "usdValue": 1.0956262741327192
+          },
+          {
+            "assetAddress": "0xbe9895146f7af43049ca1c1ae358b0541ea49704",
+            "symbol": "cbETH",
+            "name": "Coinbase Wrapped Staked ETH",
+            "balance": "3607623025711876",
+            "decimals": 18,
+            "usdValue": 12.571844720000746
+          },
+          {
+            "assetAddress": "0xbef7e5cafef65dbe229757ae00c66eb259a2bb2e",
+            "symbol": "G21",
+            "name": "Genesis21",
+            "balance": "21000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+            "symbol": "ezETH",
+            "name": "Renzo Restaked ETH",
+            "balance": "15245461146593716000",
+            "decimals": 18,
+            "usdValue": 50817.94464266092
+          },
+          {
+            "assetAddress": "0xbf77c1fe593c18d34dea9c692fe64bccb2e27118",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "16791055613209164",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+            "symbol": "COMP",
+            "name": "Compound",
+            "balance": "4.959103188678156e+22",
+            "decimals": 18,
+            "usdValue": 1331519.206160085
+          },
+          {
+            "assetAddress": "0xc06a67f9fb4f45d1b8b2c7fd3bad944038a27a1e",
+            "symbol": "$ EthenaLP.com - Visit to claim bonus rewards",
+            "name": "$ EthenaLP.com",
+            "balance": "29176",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
+            "symbol": "USDtb",
+            "name": "USDtb",
+            "balance": "1.35535133999054e+23",
+            "decimals": 18,
+            "usdValue": 135630.3042262472
+          },
+          {
+            "assetAddress": "0xc26a6fa2c37b38e549a4a1807543801db684f99c",
+            "symbol": "AA_FalconXUSDC",
+            "name": "Pareto AA Tranche - FalconXUSDC",
+            "balance": "5.263556927634219e+25",
+            "decimals": 18,
+            "usdValue": 55441095.70962676
+          },
+          {
+            "assetAddress": "0xc3361f107c0b82864d5b100a2f3c3e0a1a3586da",
+            "symbol": "stakedao-PYcrvUSD",
+            "name": "Stake DAO pyUSD/crvUSD",
+            "balance": "996338705895986600",
+            "decimals": 18,
+            "usdValue": 1.003255612620176
+          },
+          {
+            "assetAddress": "0xc347584b415715b1b66774b2899fef2fd3b56d6e",
+            "symbol": "PT-staking-USDS-25SEP2025",
+            "name": "PT Staking USDS 25SEP2025",
+            "balance": "6077065501185587000",
+            "decimals": 18,
+            "usdValue": 6.075838480890243
+          },
+          {
+            "assetAddress": "0xc3c7e5e277d31cd24a3ac4cc9af3b6770f30ea33",
+            "symbol": "PT-stcUSD-29JAN2026",
+            "name": "PT Staked cap USD 29JAN2026",
+            "balance": "3.442308589133446e+25",
+            "decimals": 18,
+            "usdValue": 34268206.45339835
+          },
+          {
+            "assetAddress": "0xc4441c2be5d8fa8126822b9929ca0b81ea0de38e",
+            "symbol": "USUAL",
+            "name": "USUAL",
+            "balance": "2.5453529374103433e+23",
+            "decimals": 18,
+            "usdValue": 7126.988224748961
+          },
+          {
+            "assetAddress": "0xc58d044404d8b14e953c115e67823784dea53d8f",
+            "symbol": "jrUSDe",
+            "name": "Strata Junior USDe",
+            "balance": "2.2725206332667003e+24",
+            "decimals": 18,
+            "usdValue": 2328683.9820827884
+          },
+          {
+            "assetAddress": "0xc5d6a7b61d18afa11435a889557b068bb9f29930",
+            "symbol": "sUSDD",
+            "name": "Savings Usdd",
+            "balance": "1500000000000000000",
+            "decimals": 18,
+            "usdValue": 1.5460026883047386
+          },
+          {
+            "assetAddress": "0xc653f79de1274ee65674befda54986020d6f8fc1",
+            "symbol": "PT-EBTC-26JUN2025",
+            "name": "PT ether.fi eBTC 26JUN2025",
+            "balance": "4547",
+            "decimals": 8,
+            "usdValue": 4.107900970048863
+          },
+          {
+            "assetAddress": "0xc69ad9bab1dee23f4605a82b3354f8e40d1e5966",
+            "symbol": "PT-weETH-27JUN2024",
+            "name": "PT ether.fi weETH 27JUN2024",
+            "balance": "10000000000000000",
+            "decimals": 18,
+            "usdValue": 30.933212249874206
+          },
+          {
+            "assetAddress": "0xc824a08db624942c5e5f330d56530cd1598859fd",
+            "symbol": "hgETH",
+            "name": "High Growth ETH",
+            "balance": "1.6898051396305093e+21",
+            "decimals": 18,
+            "usdValue": 5775483.8639151575
+          },
+          {
+            "assetAddress": "0xc83e27f270cce0a3a3a29521173a83f402c1768b",
+            "symbol": "USDQ",
+            "name": "Quantoz USDQ",
+            "balance": "6602409387",
+            "decimals": 6,
+            "usdValue": 6595.467810862691
+          },
+          {
+            "assetAddress": "0xc8cf6d7991f15525488b2a83df53468d682ba4b0",
+            "symbol": "sUSDf",
+            "name": "Staked Falcon USD",
+            "balance": "5.263193473998776e+24",
+            "decimals": 18,
+            "usdValue": 5737399.590398814
+          },
+          {
+            "assetAddress": "0xca1906b60b89af9a2f0501ba80b29f3ae0852310",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xca2a7068e551d5c4482eb34880b194e4b945712f",
+            "symbol": "wbIB01",
+            "name": "Wrapped Backed IB01 $ Treasury Bond 0-1yr",
+            "balance": "9789883971861676000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcadcc16cc5da02e8de24a7a9d7c1ffede578fc14",
+            "symbol": "Visit website launchuni .org to claim rewards",
+            "name": "Visit website launchuni .org to claim rewards",
+            "balance": "427320000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcb95d32b87d2eceb196af2152147de371af3c7c9",
+            "symbol": "PT-reUSD-18DEC2025",
+            "name": "PT reUSD 18DEC2025",
+            "balance": "1083810",
+            "decimals": 6,
+            "usdValue": 1.083664193898719
+          },
+          {
+            "assetAddress": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+            "symbol": "cbBTC",
+            "name": "Coinbase Wrapped BTC",
+            "balance": "986671308750",
+            "decimals": 8,
+            "usdValue": 894103089.2366825
+          },
+          {
+            "assetAddress": "0xcce7d12f683c6dae700154f0badf779c0ba1f89a",
+            "symbol": "PT-syrupUSDC-28AUG2025",
+            "name": "PT Syrup USDC 28AUG2025",
+            "balance": "31103211",
+            "decimals": 6,
+            "usdValue": 31.096990935473357
+          },
+          {
+            "assetAddress": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
+            "symbol": "weETH",
+            "name": "EtherFi wrapped ETH",
+            "balance": "2.4668236708759594e+22",
+            "decimals": 18,
+            "usdValue": 83493095.45899129
+          },
+          {
+            "assetAddress": "0xcd9594cd25ed2a166362b6f76c523da08c4ef2e5",
+            "symbol": "ESTHER",
+            "name": "Esther the Wonder Pig",
+            "balance": "19304000000000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xce22b5fb17ccbc0c5d87dc2e0df47dd71e3adc0a",
+            "symbol": "sUSDu",
+            "name": "USDU Core",
+            "balance": "600000000000000000",
+            "decimals": 18,
+            "usdValue": 0.6006377512107892
+          },
+          {
+            "assetAddress": "0xce8e559ac89c2bdc97bdb5f58705c54db9cb77dc",
+            "symbol": "XPC",
+            "name": "XP.LEVANNA.S",
+            "balance": "5000000000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9",
+            "symbol": "PT-wstUSR-1740182579",
+            "name": "Principal Token: wstUSR-1740182579",
+            "balance": "9351701615355040000",
+            "decimals": 18,
+            "usdValue": 9.324628414554493
+          },
+          {
+            "assetAddress": "0xd057b3c39d563bb16b05a3eb8ca8a2fa43c8df49",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "16791055613209164",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd0609ac13000d88b0bebf5bb21074916edd92bb1",
+            "symbol": "PT-jrUSDe-2APR2026",
+            "name": "PT Strata Junior USDe 2APR2026",
+            "balance": "2146346920033629200",
+            "decimals": 18,
+            "usdValue": 2.0949183065559267
+          },
+          {
+            "assetAddress": "0xd09eb9099fac55edcbf4965e0a866779ca365a0c",
+            "symbol": "COLON (coloncoin.vip)",
+            "name": "Colon",
+            "balance": "10598651630",
+            "decimals": 9,
+            "usdValue": 0.0008729735912255898
+          },
+          {
+            "assetAddress": "0xd0a4b74a6b62aa2b6c02349463d9041606608f36",
+            "symbol": "PT-tUSDe-25SEP2025",
+            "name": "PT Terminal USDe 25SEP2025",
+            "balance": "13926262735187444000",
+            "decimals": 18,
+            "usdValue": 13.925629508020874
+          },
+          {
+            "assetAddress": "0xd17049ed25d8f99fe3bfd10cef2263da9995cfd8",
+            "symbol": "synUSD+",
+            "name": "Syntropia USDC",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 1.0477538943813984
+          },
+          {
+            "assetAddress": "0xd1a1984cc5cacbd36f6a511877d13662c950fd62",
+            "symbol": "PT-SolvBTC.BBN-27MAR2025",
+            "name": "PT SolvBTC Babylon 27MAR2025",
+            "balance": "5200",
+            "decimals": 8,
+            "usdValue": 4.681162348569287
+          },
+          {
+            "assetAddress": "0xd2e230f71ca8db211067bc4070a94d268b313fa3",
+            "symbol": "PT-alUSD-11DEC2025",
+            "name": "PT Autonomous Liquidity USD 11DEC2025",
+            "balance": "11849846",
+            "decimals": 6,
+            "usdValue": 11.847481269194455
+          },
+          {
+            "assetAddress": "0xd2fcf51823fa77aea830a5372ae8731313154419",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "7666815243330737",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd3fd63209fa2d55b07a0f6db36c2f43900be3094",
+            "symbol": "wsrUSD",
+            "name": "Wrapped Savings rUSD",
+            "balance": "4.635116778276794e+25",
+            "decimals": 18,
+            "usdValue": 49252910.30842187
+          },
+          {
+            "assetAddress": "0xd4419c2d3daa986dc30444fa333a846be44fd1eb",
+            "symbol": "ZIK",
+            "name": "ZIK coin",
+            "balance": "5e+21",
+            "decimals": 18,
+            "usdValue": 0.7588633702742343
+          },
+          {
+            "assetAddress": "0xd50da5f859811a91fd1876c9461fd39c23c747ad",
+            "symbol": "MC-USR",
+            "name": "MEV Capital Resolv USR",
+            "balance": "6.136428007693197e+23",
+            "decimals": 18,
+            "usdValue": 642588.7167666996
+          },
+          {
+            "assetAddress": "0xd7173026aceb6e3c654fcc9f4422fc022a4c78a6",
+            "symbol": "MT",
+            "name": "MyToken",
+            "balance": "4e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd7a7992989c5b20ef48452c96ac4c6b71a17d61e",
+            "symbol": "stakedao-PYcrvUSD",
+            "name": "Stake DAO pyUSD/crvUSD",
+            "balance": "996574325101955600",
+            "decimals": 18,
+            "usdValue": 1.0034928675711587
+          },
+          {
+            "assetAddress": "0xd8026a80fa81c47680aa9f948e558efb8dc1ef89",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd8c07379abf894a7b7ea5c9a0c608e7668b993fe",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "2437060423315280",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd9d920aa40f578ab794426f5c90f6c731d159def",
+            "symbol": "xSolvBTC",
+            "name": "xSolvBTC",
+            "balance": "1053688292685422",
+            "decimals": 18,
+            "usdValue": 95.76453331853187
+          },
+          {
+            "assetAddress": "0xda06ee2dacf9245aa80072a4407debdea0d7e341",
+            "symbol": "savETH",
+            "name": "Staked avETH",
+            "balance": "1.367383139601904e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "20036076721116",
+            "decimals": 6,
+            "usdValue": 20015239.20132604
+          },
+          {
+            "assetAddress": "0xdbdc1ef57537e34680b898e1febd3d68c7389bcb",
+            "symbol": "siUSD",
+            "name": "Staked infiniFi USD",
+            "balance": "6.7645555315056e+25",
+            "decimals": 18,
+            "usdValue": 71021538.10644157
+          },
+          {
+            "assetAddress": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+            "symbol": "USDS",
+            "name": "USDS Stablecoin",
+            "balance": "1.1562572596051512e+24",
+            "decimals": 18,
+            "usdValue": 1156257.2596051511
+          },
+          {
+            "assetAddress": "0xdcee70654261af21c44c093c300ed3bb97b78192",
+            "symbol": "WOETH",
+            "name": "Wrapped OETH",
+            "balance": "56454089819724690",
+            "decimals": 18,
+            "usdValue": 201.9384114833539
+          },
+          {
+            "assetAddress": "0xdcfdf8434e8fdfff2dd7dfc9299877e813348ee7",
+            "symbol": "PT-RUSD-30OCT2025",
+            "name": "PT Reservoir Protocol RUSD 30OCT2025",
+            "balance": "106772424534589460000",
+            "decimals": 18,
+            "usdValue": 107.19301097008147
+          },
+          {
+            "assetAddress": "0xdd3b11ef34cd511a2da159034a05fcb94d806686",
+            "symbol": "REKT",
+            "name": "Rekt",
+            "balance": "1.3347744308669872e+30",
+            "decimals": 18,
+            "usdValue": 385470.742630893
+          },
+          {
+            "assetAddress": "0xdd629e5241cbc5919847783e6c96b2de4754e438",
+            "symbol": "mTBILL",
+            "name": "mTBILL",
+            "balance": "7915372909386222000",
+            "decimals": 18,
+            "usdValue": 8.303226181946146
+          },
+          {
+            "assetAddress": "0xdde3ec717f220fc6a29d6a4be73f91da5b718e55",
+            "symbol": "USDU",
+            "name": "USDU",
+            "balance": "6.779879608470394e+22",
+            "decimals": 18,
+            "usdValue": 67834.05874890299
+          },
+          {
+            "assetAddress": "0xde17a000ba631c5d7c2bd9fb692efea52d90dee2",
+            "symbol": "USDN",
+            "name": "Ultimate Synthetic Delta Neutral",
+            "balance": "109189034034491920",
+            "decimals": 18,
+            "usdValue": 0.10940334092937258
+          },
+          {
+            "assetAddress": "0xde56173463d6461001b0891bc90db224965f5762",
+            "symbol": "MAGNUS",
+            "name": "Magnus the Therapy Dog",
+            "balance": "1205843000000000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe00bd3df25fb187d6abbb620b3dfd19839947b81",
+            "symbol": "PT-sUSDE-27MAR2025",
+            "name": "PT Ethena sUSDE 27MAR2025",
+            "balance": "543518662484939440000",
+            "decimals": 18,
+            "usdValue": 543.6213602927534
+          },
+          {
+            "assetAddress": "0xe08c45f3cfe70f4e03668dc6e84af842bee95a68",
+            "symbol": "PT-rsETH-26JUN2025",
+            "name": "PT Kelp rsETH 26JUN2025",
+            "balance": "2000000000000000",
+            "decimals": 18,
+            "usdValue": 6.188805198740002
+          },
+          {
+            "assetAddress": "0xe0f63a424a4439cbe457d80e4f4b51ad25b2c56c",
+            "symbol": "SPX",
+            "name": "SPX6900",
+            "balance": "262591229538933",
+            "decimals": 8,
+            "usdValue": 1558380.0635321673
+          },
+          {
+            "assetAddress": "0xe1b4d34e8754600962cd944b535180bd758e6c2e",
+            "symbol": "agETH",
+            "name": "Kelp Gain",
+            "balance": "458997653722517900000",
+            "decimals": 18,
+            "usdValue": 1511197.8579135959
+          },
+          {
+            "assetAddress": "0xe24a3dc889621612422a64e6388927901608b91d",
+            "symbol": "sUSN",
+            "name": "Staked USN",
+            "balance": "2.60376056287032e+24",
+            "decimals": 18,
+            "usdValue": 3003311.07802991
+          },
+          {
+            "assetAddress": "0xe2dd326281baba94e5854138ec20f4c2ce948646",
+            "symbol": "Earn $UNI airdrops at https://www.uniswaplabs.com",
+            "name": "# uniswaplabs.com",
+            "balance": "400000",
+            "decimals": 2,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe2fc85bfb48c4cf147921fbe110cf92ef9f26f94",
+            "symbol": "xUSD",
+            "name": "Staked Stream USD",
+            "balance": "1000000",
+            "decimals": 6,
+            "usdValue": 0.029179449528267107
+          },
+          {
+            "assetAddress": "0xe343089913d4c79dd188fb92751e92397071a21f",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "13140520350723486",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe43fe6b6a974525e460ff86cf37ee025dbbab2a2",
+            "symbol": "Visit website usdyield .io to claim rewards",
+            "name": "Visit website usdyield .io to claim rewards",
+            "balance": "3876230000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe4880249745eac5f1ed9d8f7df844792d560e750",
+            "symbol": "USTBL",
+            "name": "Spiko US T-Bills Money Market Fund",
+            "balance": "500000",
+            "decimals": 5,
+            "usdValue": 5.3549999999999995
+          },
+          {
+            "assetAddress": "0xe6a934089bbee34f832060ce98848359883749b3",
+            "symbol": "PT-sUSDE-27NOV2025",
+            "name": "PT Ethena sUSDE 27NOV2025",
+            "balance": "5.08668454820847e+23",
+            "decimals": 18,
+            "usdValue": 508764.5676847096
+          },
+          {
+            "assetAddress": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
+            "symbol": "ETH+",
+            "name": "ETHPlus",
+            "balance": "5.787171067055912e+21",
+            "decimals": 18,
+            "usdValue": 19269774.869153976
+          },
+          {
+            "assetAddress": "0xe74dd7525663193b5e5e596b581b5343735a585c",
+            "symbol": "USDCUSDU",
+            "name": "USDC/USDU",
+            "balance": "9997020584151964000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe7c3d8c9a439fede00d2600032d5db0be71c3c29",
+            "symbol": "JPYC",
+            "name": "JPY Coin",
+            "balance": "1.2019634288113482e+24",
+            "decimals": 18,
+            "usdValue": 7615.868658000177
+          },
+          {
+            "assetAddress": "0xe8483517077afa11a9b07f849cee2552f040d7b2",
+            "symbol": "PT-sUSDE-5FEB2026",
+            "name": "PT Ethena sUSDE 5FEB2026",
+            "balance": "1.0114727698760299e+21",
+            "decimals": 18,
+            "usdValue": 1007.5822218544071
+          },
+          {
+            "assetAddress": "0xea08ee742119ad545aaf2120601833d499ea4364",
+            "symbol": "$",
+            "name": "[E T H - B O N US ˳ N E T]",
+            "balance": "5e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xebc3554f3659e8425e1fb30e6f99ae08a03ee932",
+            "symbol": "stakedao-crvfrxUSD",
+            "name": "Stake DAO crvUSD/frxUSD",
+            "balance": "999320245105204200",
+            "decimals": 18,
+            "usdValue": 1.0031847968495822
+          },
+          {
+            "assetAddress": "0xec4402d1389e749c14a7caeef3e4c1f861e09bc8",
+            "symbol": "PT-iUSD-19FEB2026",
+            "name": "PT infiniFi USD 19FEB2026",
+            "balance": "1.461483169949862e+23",
+            "decimals": 18,
+            "usdValue": 145107.7298934434
+          },
+          {
+            "assetAddress": "0xec5a52c685cc3ad79a6a347abace330d69e0b1ed",
+            "symbol": "PT-LBTC-27MAR2025",
+            "name": "PT Lombard LBTC 27MAR2025",
+            "balance": "592085",
+            "decimals": 8,
+            "usdValue": 535.1447918711306
+          },
+          {
+            "assetAddress": "0xee9085fc268f6727d5d4293dbabccf901ffdcc29",
+            "symbol": "PT-sUSDE-26DEC2024",
+            "name": "PT Ethena sUSDE 26DEC2024",
+            "balance": "19117328634884780000",
+            "decimals": 18,
+            "usdValue": 19.120940852601617
+          },
+          {
+            "assetAddress": "0xeeaa924eb3667f30be02db9c55d87566a3f4df7a",
+            "symbol": "PT-RUSD-26FEB2026",
+            "name": "PT Reservoir Protocol RUSD 26FEB2026",
+            "balance": "12210165039431315000",
+            "decimals": 18,
+            "usdValue": 12.118396956777794
+          },
+          {
+            "assetAddress": "0xf10a134a987e22ffa9463570a6d1eb92a63fc178",
+            "symbol": "PT-csUSDL-31JUL2025",
+            "name": "PT Coinshift USDL 31JUL2025",
+            "balance": "6651656322387083000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xf169457f89beec726e0e9344a59c85328d285f2c",
+            "symbol": "stakedao-crvUSDUSDC-f",
+            "name": "Stake DAO Curve.fi Factory Plain Pool: crvUSD/USDC",
+            "balance": "981322791513870100",
+            "decimals": 18,
+            "usdValue": 1.0044037548147196
+          },
+          {
+            "assetAddress": "0xf1c9acdc66974dfb6decb12aa385b9cd01190e38",
+            "symbol": "osETH",
+            "name": "Staked ETH",
+            "balance": "4428231524648631300",
+            "decimals": 18,
+            "usdValue": 14567.758573719888
+          },
+          {
+            "assetAddress": "0xf3f491e5608f8b8a6fd9e9d66a4a4036d7fd282c",
+            "symbol": "PT-pUSDe-16OCT2025",
+            "name": "PT Strata Pre-deposit Receipt Token 16OCT2025",
+            "balance": "2879909695278178300",
+            "decimals": 18,
+            "usdValue": 2.879778745784334
+          },
+          {
+            "assetAddress": "0xf469fbd2abcd6b9de8e169d128226c0fc90a012e",
+            "symbol": "pumpBTC",
+            "name": "pumpBTC",
+            "balance": "1015900895",
+            "decimals": 8,
+            "usdValue": 921573.9889488025
+          },
+          {
+            "assetAddress": "0xf6b1117ec07684d3958cad8beb1b302bfd21103f",
+            "symbol": "TSLAon",
+            "name": "Tesla (Ondo Tokenized)",
+            "balance": "5500000000000000",
+            "decimals": 18,
+            "usdValue": 2.395855
+          },
+          {
+            "assetAddress": "0xf736acf34ff7cd9b3565b73a1f15e652859bf322",
+            "symbol": "PT-RUSD-31JUL2025",
+            "name": "PT Reservoir Protocol RUSD 31JUL2025",
+            "balance": "115165182357432800000",
+            "decimals": 18,
+            "usdValue": 115.61882864065275
+          },
+          {
+            "assetAddress": "0xf7d20c929cbd8babf1b209d5d2313cfbbfeb477f",
+            "symbol": "USDC.c",
+            "name": "USDC Bridged",
+            "balance": "7.5e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xf7daf52958690f1dc89cd377d638e9fc94e76acf",
+            "symbol": "stakedao-crvfrxUSD",
+            "name": "Stake DAO crvUSD/frxUSD",
+            "balance": "7.024787640836457e+23",
+            "decimals": 18,
+            "usdValue": 705195.376247189
+          },
+          {
+            "assetAddress": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+            "symbol": "crvUSD",
+            "name": "Curve.Fi USD Stablecoin",
+            "balance": "5.158594768932639e+21",
+            "decimals": 18,
+            "usdValue": 5160.996032176791
+          },
+          {
+            "assetAddress": "0xfa2b947eec368f42195f24f36d2af29f7c24cec2",
+            "symbol": "USDf",
+            "name": "Falcon USD",
+            "balance": "1.4874200810399903e+24",
+            "decimals": 18,
+            "usdValue": 1483520.1491128257
+          },
+          {
+            "assetAddress": "0xfae103dc9cf190ed75350761e95403b7b8afa6c0",
+            "symbol": "rswETH",
+            "name": "rswETH",
+            "balance": "690197337111961500000",
+            "decimals": 18,
+            "usdValue": 2273342.896108135
+          },
+          {
+            "assetAddress": "0xfba26f44459fb83d98c9a8c8fddca7cadca18a85",
+            "symbol": "PENDLE-LPT-WRAPPED",
+            "name": "Pendle Market Wrapped",
+            "balance": "138833177855806600000",
+            "decimals": 18,
+            "usdValue": 304.27010867506317
+          },
+          {
+            "assetAddress": "0xfbf3c16676055776ab9b286492d8f13e30e2e763",
+            "symbol": "yb-WBTC",
+            "name": "Yield Basis liquidity for WBTC",
+            "balance": "10586719346042",
+            "decimals": 18,
+            "usdValue": 0.9936814395046243
+          },
+          {
+            "assetAddress": "0xfceeb7586bab730fa400a5bf3fcf298d0db4c7e7",
+            "symbol": "PT-wstUSR-29JAN2026",
+            "name": "PT Wrapped stUSR 29JAN2026",
+            "balance": "1.6616692014139633e+22",
+            "decimals": 18,
+            "usdValue": 16559.039255757587
+          },
+          {
+            "assetAddress": "0xfe0ccc9942e98c963fe6b4e5194eb6e3baa4cb64",
+            "symbol": "sYUSD",
+            "name": "Staked YUSD",
+            "balance": "98077714317705380",
+            "decimals": 18,
+            "usdValue": 0.10112925597637638
+          },
+          {
+            "assetAddress": "0xfe72382695dc280e7392a0be795128a126e9b7ae",
+            "symbol": "PT-tETH-25SEP2025",
+            "name": "PT Terminal WETH 25SEP2025",
+            "balance": "10730775321506036",
+            "decimals": 18,
+            "usdValue": 33.20533904812373
+          },
+          {
+            "assetAddress": "0xfedc5f4a6c38211c1338aa411018dfaf26612c08",
+            "symbol": "SPYon",
+            "name": "SPDR S&P 500 ETF (Ondo Tokenized)",
+            "balance": "2000000000000000",
+            "decimals": 18,
+            "usdValue": 1.3850354342368947
+          },
+          {
+            "assetAddress": "0xffec096c087c13cc268497b89a613cace4df9a48",
+            "symbol": "PT-USDS-14AUG2025",
+            "name": "PT USDS Stablecoin 14AUG2025",
+            "balance": "738087300515707700000",
+            "decimals": 18,
+            "usdValue": 737.9382733088606
+          },
+          {
+            "assetAddress": "0x00000000efe302beaa2b3e6e1b18d08d69a9012a",
+            "symbol": "AUSD",
+            "name": "AUSD",
+            "balance": "1090821965747",
+            "decimals": 6,
+            "usdValue": 1091957.5168817353
+          },
+          {
+            "assetAddress": "0x0bffc1ae5e6391875205d1ce015819592109e25c",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "16791055613209164",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x0e397938c1aa0680954093495b70a9f5e2249aba",
+            "symbol": "QQQon",
+            "name": "Invesco QQQ (Ondo Tokenized)",
+            "balance": "2000000000000000",
+            "decimals": 18,
+            "usdValue": 1.2422511982217868
+          },
+          {
+            "assetAddress": "0x0ebf5374149f6c592d95d66ac893f8a788bcb9f1",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "13446673119795098",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x12b004719fb632f1e7c010c6f5d6009fb4258442",
+            "symbol": "liUSD-1w",
+            "name": "Locked iUSD - 1 weeks",
+            "balance": "4.999234862770753e+23",
+            "decimals": 18,
+            "usdValue": 576396.5143063987
+          },
+          {
+            "assetAddress": "0x19ebd191f7a24ece672ba13a302212b5ef7f35cb",
+            "symbol": "yUSD",
+            "name": "YieldFi yUSD",
+            "balance": "196393040845885770000",
+            "decimals": 18,
+            "usdValue": 195.58377570407774
+          },
+          {
+            "assetAddress": "0x2799d4f53a83f9648d0168e2ac439a1b12c6809f",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "21339876422259868",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x33cf519030235f75a13f29afcff5d6ff4fd10350",
+            "symbol": "PEPEBET",
+            "name": "PEPE.bet Token",
+            "balance": "31235698900000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x356b8d89c1e1239cbbb9de4815c39a1474d5ba7d",
+            "symbol": "syrupUSDT",
+            "name": "Syrup USDT",
+            "balance": "3603074",
+            "decimals": 6,
+            "usdValue": 3.998846538093455
+          },
+          {
+            "assetAddress": "0x37b52fd0fcfd2d7de01ec325014f4b46ebf7db53",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "6342771409016204",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x385e12cf4040543bc8c18e05c1298be5b04f3f5e",
+            "symbol": "stkcvx2BTC-f-morpho",
+            "name": "Staked Curve.fi Factory Plain Pool: tBTC/WBTC Convex Deposit Morpho",
+            "balance": "954157118598346",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3cef1afc0e8324b57293a6e7ce663781bbefbb79",
+            "symbol": "sUSDEsUSDS",
+            "name": "sUSDe/sUSDS",
+            "balance": "2974510912367038500",
+            "decimals": 18,
+            "usdValue": 3.129977861434532
+          },
+          {
+            "assetAddress": "0x45054c6753b4bce40c5d54418dabc20b070f85be",
+            "symbol": "AA_idle_Fasanara",
+            "name": "IdleCDO AA Tranche - idle_Fasanara",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 1.1331467761313576
+          },
+          {
+            "assetAddress": "0x46b962696a4cf5d56dc27f575e5523a13d686f9f",
+            "symbol": "Visit linkevent.net to claim rewards",
+            "name": "# linkevent.net",
+            "balance": "132840000",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4fbb350052bca5417566f188eb2ebce5b19bc964",
+            "symbol": "GRG",
+            "name": "Rigo Token",
+            "balance": "25000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5422374b27757da72d5265cc745ea906e0446634",
+            "symbol": "USDCV",
+            "name": "USD CoinVertible",
+            "balance": "7.747039190517462e+23",
+            "decimals": 18,
+            "usdValue": 775869.3606809847
+          },
+          {
+            "assetAddress": "0x5a5a1c436a68c297fd41229ea35b1117c73ba486",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "25995110737022264",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5c5b196abe0d54485975d1ec29617d42d9198326",
+            "symbol": "sdeUSD",
+            "name": "Staked deUSD",
+            "balance": "8.944788405981169e+24",
+            "decimals": 18,
+            "usdValue": 17795.163292620655
+          },
+          {
+            "assetAddress": "0x5ca7e00ab815aeac303fc1daf9eb82964a707c02",
+            "symbol": "USDC",
+            "name": "USDC USDC Steblekoin Token",
+            "balance": "6105510371492",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x62c6e813b9589c3631ba0cdb013acdb8544038b7",
+            "symbol": "PT-USDe-27NOV2025",
+            "name": "PT Ethena USDe 27NOV2025",
+            "balance": "11494691275817431000",
+            "decimals": 18,
+            "usdValue": 11.494168612205119
+          },
+          {
+            "assetAddress": "0x637f00cab9665cb07d91bfb9c6f3fa8fabfef8bc",
+            "symbol": "svZCHF",
+            "name": "SavingsVault ZCHF",
+            "balance": "1.2800335482584732e+23",
+            "decimals": 18,
+            "usdValue": 162426.7031048481
+          },
+          {
+            "assetAddress": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
+            "symbol": "PEPE",
+            "name": "Pepe",
+            "balance": "8.019114733990138e+29",
+            "decimals": 18,
+            "usdValue": 4917229.45145905
+          },
+          {
+            "assetAddress": "0x6dda7434ac4d29e303cb570d72d43f966f739375",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "7933665043280057",
+            "decimals": 6,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x6e43f6abce001c14c7115d20908d0c272338eaf1",
+            "symbol": "PT-agETH-26JUN2025",
+            "name": "PT Kelp Gain 26JUN2025",
+            "balance": "472128312574562600",
+            "decimals": 18,
+            "usdValue": 1438.9944256259118
+          },
+          {
+            "assetAddress": "0x7f53e9ee5cd3ea786c406b651f9d2ad194bbbdcb",
+            "symbol": "$ ETH35.com - Visit to claim bonus rewards",
+            "name": "$ ETH35.com",
+            "balance": "9283",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8464f6ecae1ea58ec816c13f964030eab8ec123a",
+            "symbol": "yETH",
+            "name": "YieldFi yETH",
+            "balance": "299134971347657540",
+            "decimals": 18,
+            "usdValue": 877.2272457316861
+          },
+          {
+            "assetAddress": "0x84d17ef6bec165484c320b852eeb294203e191be",
+            "symbol": "PT-tETH-29MAY2025",
+            "name": "PT Treehouse ETH 29MAY2025",
+            "balance": "30351121988301160",
+            "decimals": 18,
+            "usdValue": 93.34081144672288
+          },
+          {
+            "assetAddress": "0x921dd674e19d6918ab396775af71c664cf9e01d6",
+            "symbol": "DAI",
+            "name": "Dai Stablecoin",
+            "balance": "1.8728644946716618e+27",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+            "symbol": "SHIB",
+            "name": "SHIBA INU",
+            "balance": "3.887363896971515e+25",
+            "decimals": 18,
+            "usdValue": 339.36686820561323
+          },
+          {
+            "assetAddress": "0x9d39a5de30e57443bff2a8307a4256c8797a3497",
+            "symbol": "sUSDe",
+            "name": "Staked USDe",
+            "balance": "1.6619964305894476e+25",
+            "decimals": 18,
+            "usdValue": 20196048.07140644
+          },
+          {
+            "assetAddress": "0xa2a420230a5cb045db052e377d20b9c156805b95",
+            "symbol": "PT-staking-USDS-18DEC2025",
+            "name": "PT Staking USDS 18DEC2025",
+            "balance": "3000000000000000000",
+            "decimals": 18,
+            "usdValue": 2.99939427
+          },
+          {
+            "assetAddress": "0xb530a1b5259a71187f1d69acf0488f102637a3ed",
+            "symbol": "iFALC",
+            "name": "Leveraged sUSDf",
+            "balance": "100000000000000000000",
+            "decimals": 20,
+            "usdValue": 0.8760046021237775
+          },
+          {
+            "assetAddress": "0xbeefc011e94f43b8b7b455ebab290c7ab4e216f1",
+            "symbol": "csUSDL",
+            "name": "Coinshift USDL",
+            "balance": "301353546855194600000",
+            "decimals": 18,
+            "usdValue": 318.288480516924
+          },
+          {
+            "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "balance": "1.047102690536322e+22",
+            "decimals": 18,
+            "usdValue": 32611070.904332265
+          },
+          {
+            "assetAddress": "0xc8495eaff71d3a563b906295fcf2f685b1783085",
+            "symbol": "mHyperBTC",
+            "name": "Midas Hyperithm BTC",
+            "balance": "95083965695655350000",
+            "decimals": 18,
+            "usdValue": 8674249.137823293
+          },
+          {
+            "assetAddress": "0xd9a442856c234a39a81a089c06451ebaa4306a72",
+            "symbol": "pufETH",
+            "name": "pufETH",
+            "balance": "564612728150267000000",
+            "decimals": 18,
+            "usdValue": 1876605.6436628145
+          },
+          {
+            "assetAddress": "0xdcd0f5ab30856f28385f641580bbd85f88349124",
+            "symbol": "alUSD",
+            "name": "Autonomous Liquidity USD",
+            "balance": "1510000000000000000",
+            "decimals": 18,
+            "usdValue": 1.563313923132023
+          },
+          {
+            "assetAddress": "0xdd468a1ddc392dcdbef6db6e34e89aa338f9f186",
+            "symbol": "MUSD",
+            "name": "Mezo USD",
+            "balance": "2449049793900565500",
+            "decimals": 18,
+            "usdValue": 2.441887630833376
+          },
+          {
+            "assetAddress": "0xe4d30ccf87cb3e5e637b64a2ee21bd5d3901839a",
+            "symbol": "PT-mHYPER-20NOV2025",
+            "name": "PT Midas Hyperithm 20NOV2025",
+            "balance": "13462433984",
+            "decimals": 6,
+            "usdValue": 13459.741497203198
+          },
+          {
+            "assetAddress": "0xe8ef806c8aadc541408dcad36107c7d26a391712",
+            "symbol": "YT-eUSDE-14AUG2025",
+            "name": "YT Ethereal eUSDE 14AUG2025",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xec53bf9167f50cdeb3ae105f56099aaab9061f83",
+            "symbol": "EIGEN",
+            "name": "Eigen",
+            "balance": "264936742161667500000",
+            "decimals": 18,
+            "usdValue": 111.27343170790034
+          },
+          {
+            "assetAddress": "0xf696fe29ef85e892b5926313897d178288faa07e",
+            "symbol": "PT-USD0++-26JUN2025",
+            "name": "PT USD0++ 26JUN2025",
+            "balance": "1114250068735773000",
+            "decimals": 18,
+            "usdValue": 1.0611171652297482
+          },
+          {
+            "assetAddress": "0xf7906f274c174a52d444175729e3fa98f9bde285",
+            "symbol": "PT-ezETH-26DEC2024",
+            "name": "PT Renzo ezETH 26DEC2024",
+            "balance": "10000000000000000",
+            "decimals": 18,
+            "usdValue": 31.61062110190253
+          },
+          {
+            "assetAddress": "0xfc39ab5c0bbca06fd6984d924e187763045bb8fd",
+            "symbol": "WBTC",
+            "name": "Wrapped BTC",
+            "balance": "7345441158586",
+            "decimals": 8,
+            "usdValue": 0
+          }
+        ],
+        "totalUsdValue": 2903556014.97637,
+        "timestamp": "2026-01-08T16:52:49.206Z",
+        "source": "debank"
+      }
+    }
+  }
+}
