@@ -7,6 +7,7 @@ View the results of our work here: https://defiscan.info.
 ## Getting Started with DeFiDisco
 
 **For Researchers**: Want to analyze DeFi protocols? Start with our [Researcher Guide](docs/researchers/getting-started.md)
+
 **For Developers**: Contributing to the project? Check out our [Developer Documentation](docs/developers/README.md)
 
 ## L2BEAT 💓

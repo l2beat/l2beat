@@ -2,5 +2,5 @@
 
 Documentation for researchers analyzing DeFi protocols.
 
-- [Getting Started](getting-started.md)
-- [Methodology](methodology.md)
+- [Getting Started](researchers/getting-started.md)
+- [Methodology](researchers/methodology.md)
