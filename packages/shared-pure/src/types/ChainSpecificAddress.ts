@@ -50,6 +50,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   redstone: 'redstone',
   soneium: 'soneium',
   wc: 'worldchain',
+  'hype-evm': 'hyperevm',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

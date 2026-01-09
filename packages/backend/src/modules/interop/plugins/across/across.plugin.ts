@@ -54,8 +54,7 @@ export class AcrossPlugin implements InteropPluginResyncable {
     const acrossNetworks = this.configs.get(AcrossConfig) ?? []
     const spokePoolAddresses = acrossNetworks
       // skip solana - non-EVM
-      // skip hyperevm - can't find proper chain prefix
-      .filter((network) => !['hyperevm', 'solana'].includes(network.chain))
+      .filter((network) => !['solana'].includes(network.chain))
       .map((network) =>
         ChainSpecificAddress.fromLong(network.chain, network.spokePool),
       )
