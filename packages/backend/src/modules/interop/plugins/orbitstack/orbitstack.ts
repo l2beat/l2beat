@@ -281,12 +281,9 @@ export class OrbitStackPlugin implements InteropPlugin {
       })
       if (!messageDelivered) return
 
-      // Determine app based on whether this is ETH-only (no calldata) - detected on L1
-      const app = messageDelivered.args.isEthOnly ? 'orbitstack-eth' : 'unknown'
-
       const results: MatchResult = [
         Result.Message('orbitstack.L1ToL2Message', {
-          app,
+          app: messageDelivered.args.isEthOnly ? 'orbitstack-eth' : 'unknown',
           srcEvent: messageDelivered,
           dstEvent: event,
         }),
