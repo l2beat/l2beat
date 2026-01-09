@@ -192,6 +192,24 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['to_entries', [123, 'value']])).toBeFalsy() // Non-string key
     })
 
+    it('validates "from_entries" operation', () => {
+      expect(validateBlip(['from_entries'])).toBeTruthy() // Empty from_entries is valid
+      expect(validateBlip(['from_entries', 'prop'])).toBeFalsy() // String property not allowed
+      expect(validateBlip(['from_entries', ['key', 'value']])).toBeFalsy() // Key-value pair not allowed
+      expect(validateBlip(['from_entries', ['key', 123]])).toBeFalsy() // Key-value with number not allowed
+      expect(
+        validateBlip(['from_entries', ['key', ['get', 'prop']]]),
+      ).toBeFalsy() // Nested blip as value not allowed
+      expect(
+        validateBlip(['from_entries', 'prop1', ['key2', 'value2']]),
+      ).toBeFalsy() // Mixed string and pairs not allowed
+      expect(validateBlip(['from_entries', ['key']])).toBeFalsy() // Invalid pair (too short)
+      expect(
+        validateBlip(['from_entries', ['key', 'value', 'extra']]),
+      ).toBeFalsy() // Invalid pair (too long)
+      expect(validateBlip(['from_entries', [123, 'value']])).toBeFalsy() // Non-string key not allowed
+    })
+
     it('rejects unknown operations', () => {
       expect(validateBlip(['unknownOp', 123])).toBeFalsy()
       expect(validateBlip(['invalid', true, false])).toBeFalsy()

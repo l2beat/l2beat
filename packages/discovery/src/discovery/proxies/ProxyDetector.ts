@@ -11,6 +11,7 @@ import { detectEip897Proxy } from './auto/Eip897Proxy'
 import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
+import { detectFditProxy } from './auto/FDITProxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
 import { detectGnosisSafeZodiacModule } from './auto/GnosisSafeModule'
 import { detectPolygonProxy } from './auto/PolygonProxy'
@@ -25,6 +26,7 @@ import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
+import { getSimpleTargetProxy } from './manual/SimpleTargetProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkLighterProxy } from './manual/ZkLighterProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
@@ -48,6 +50,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
+  detectFditProxy,
   detectBeaconProxy,
   detectEip1167Proxy,
 ]
@@ -55,6 +58,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
+  'simple target proxy': getSimpleTargetProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
   'zkSpace proxy': getZkSpaceProxy,
   'Eternal Storage proxy': getEternalStorageProxy,
@@ -65,6 +69,7 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'Everclear proxy': getEverclearProxy,
   'TaikoFork proxy': gatTaikoForkProxy,
   'zkLighter proxy': getZkLighterProxy,
+  'FDIT proxy': detectFditProxy,
   immutable: getImmutableProxy,
 }
 

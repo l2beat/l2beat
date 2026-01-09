@@ -126,47 +126,62 @@ export class EtherscanClient implements IEtherscanClient {
   }
 
   async getContractSource(address: EthereumAddress): Promise<ContractSource> {
-    const response = await this.callWithRetries('contract', 'getsourcecode', {
-      address: address.toString(),
-    })
+    let attempts = 0
 
-    const sourceResponse = ContractSourceResult.parse(response)
+    while (true) {
+      const response = await this.callWithRetries('contract', 'getsourcecode', {
+        address: address.toString(),
+      })
 
-    const result = sourceResponse[0]
-    assert(result)
-    const isVerified = result.ABI !== 'Contract source code not verified'
+      const sourceResponse = ContractSourceResult.parse(response)
 
-    let files: Record<string, string> = {}
-    let remappings: string[] = []
-    let libraries: Record<string, EthereumAddress> = {}
-    const name = result.ContractName.trim()
-    const solidityVersion = result.CompilerVersion
-    const source = result.SourceCode
-
-    if (isVerified) {
-      try {
-        const decodedSource = decodeEtherscanSource(
-          name,
-          source,
-          solidityVersion,
-        )
-        files = Object.fromEntries(decodedSource.sources)
-        remappings = decodedSource.remappings
-        libraries = decodedSource.libraries
-      } catch (e) {
-        this.logger.error(e)
+      const result = sourceResponse[0]
+      assert(result)
+      if (result.ABI === 'Unknown Exception') {
+        attempts++
+        const retry = shouldRetry(attempts, result.ABI)
+        if (retry.shouldStop) {
+          throw new EtherscanError(result.ABI)
+        }
+        this.logger.warn('Retrying', { attempts, error: result.ABI })
+        await new Promise((resolve) => setTimeout(resolve, retry.executeAfter))
+        continue
       }
-    }
 
-    return {
-      name: this.parseContractName(name),
-      isVerified,
-      abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
-      solidityVersion,
-      constructorArguments: result.ConstructorArguments,
-      remappings,
-      libraries,
-      files,
+      const isVerified = result.ABI !== 'Contract source code not verified'
+
+      let files: Record<string, string> = {}
+      let remappings: string[] = []
+      let libraries: Record<string, EthereumAddress> = {}
+      const name = result.ContractName.trim()
+      const solidityVersion = result.CompilerVersion
+      const source = result.SourceCode
+
+      if (isVerified) {
+        try {
+          const decodedSource = decodeEtherscanSource(
+            name,
+            source,
+            solidityVersion,
+          )
+          files = Object.fromEntries(decodedSource.sources)
+          remappings = decodedSource.remappings
+          libraries = decodedSource.libraries
+        } catch (e) {
+          this.logger.error(e)
+        }
+      }
+
+      return {
+        name: this.parseContractName(name),
+        isVerified,
+        abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
+        solidityVersion,
+        constructorArguments: result.ConstructorArguments,
+        remappings,
+        libraries,
+        files,
+      }
     }
   }
 

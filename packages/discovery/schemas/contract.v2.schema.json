@@ -9,6 +9,7 @@
       "enum": [
         "new Arbitrum proxy",
         "call implementation proxy",
+        "simple target proxy",
         "zkSync Lite proxy",
         "zkLighter proxy",
         "zkSpace proxy",
@@ -19,6 +20,7 @@
         "LightLink proxy",
         "Everclear proxy",
         "TaikoFork proxy",
+        "FDIT proxy",
         "immutable"
       ]
     },
@@ -626,6 +628,11 @@
                   "pickChainAddress": { "type": "string" },
                   "ignoreRelative": { "type": "boolean" }
                 },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "securitizeRemoteBridge" } },
                 "required": ["type"]
               }
             ]
