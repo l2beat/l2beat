@@ -1,15 +1,22 @@
+import type { InteropChains } from '@l2beat/config'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
-interface Props extends AppLayoutProps {}
+interface Props extends AppLayoutProps {
+  interopChains: InteropChains
+}
 
 export function InteropSummaryPage({ ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout fullWidth>
         <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+        <InteropSelectedChainsProvider interopChains={props.interopChains}>
+          test
+        </InteropSelectedChainsProvider>
       </SideNavLayout>
     </AppLayout>
   )

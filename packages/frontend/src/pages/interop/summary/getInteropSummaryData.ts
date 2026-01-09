@@ -1,3 +1,4 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
@@ -26,6 +27,7 @@ export async function getInteropSummaryData(
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
+        interopChains: INTEROP_CHAINS,
       },
     },
   }

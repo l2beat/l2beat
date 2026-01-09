@@ -1,3 +1,4 @@
+export type InteropChains = typeof INTEROP_CHAINS
 export const INTEROP_CHAINS = [
   { id: 'ethereum', name: 'Ethereum', type: 'evm', display: 'ETH' },
   { id: 'arbitrum', name: 'Arbitrum', type: 'evm', display: 'ARB' },
