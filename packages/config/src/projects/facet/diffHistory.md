@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x83b5d7ab2a919789b800081207c1b03e252110e3
+Generated with discovered.json: 0xb1c63516b4066f066c874d995350efb2f76d1b1c
 
-# Diff at Fri, 09 Jan 2026 11:08:46 GMT:
+# Diff at Fri, 09 Jan 2026 13:09:04 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@dd6e980809c2759dbed94d65285ec8dc56d0e9c9 block: 1767717465
@@ -15,6 +15,14 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1767717465 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x615452db5467849689E98a8C5C242A96cF768a94) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout."
+    }
+```
 
 ```diff
     contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) {
