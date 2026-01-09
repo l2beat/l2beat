@@ -227,6 +227,12 @@ export interface InteropPluginResyncable extends InteropPlugin {
   capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
 }
 
+export function isPluginResyncable(
+  plugin: InteropPlugin,
+): plugin is InteropPluginResyncable {
+  return 'getDataRequests' in plugin
+}
+
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
   [T],
   ContractEventName<[T]>
