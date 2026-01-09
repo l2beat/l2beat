@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xde6bf0f8854ae2c8ab39933b320313e9c9896ee3
+
+# Diff at Fri, 09 Jan 2026 15:04:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1767802692
+- current timestamp: 1767971010
+
+## Description
+
+currentRequiredStake increased from 1.6 ETH to 1.9 ETH.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "1600000000000000000"
++        "1900000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x286907f965729f1ee938f15dd84a996f441c7e8a
 
 # Diff at Wed, 07 Jan 2026 16:19:28 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "winr",
-  "timestamp": 1765379816,
+  "timestamp": 1767971493,
   "configHash": "0x7ea72730fd9f131efb3d4e622c392462b86f36d7702fc17391a0553c3aa0f7a0",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -196,13 +196,13 @@
         "confirmPeriodBlocks": 300,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 14913,
+        "firstUnresolvedNode": 17315,
         "inbox": "arb1:0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746527,
-        "latestConfirmed": 14912,
-        "latestNodeCreated": 14912,
+        "latestConfirmed": 17314,
+        "latestNodeCreated": 17314,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d",
@@ -212,7 +212,7 @@
         "rollupEventInbox": "arb1:0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC",
         "sequencerInbox": "arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
         "setValidatorCount": 4,
-        "stakerCount": 1,
+        "stakerCount": 0,
         "stakeToken": "arb1:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -641,7 +641,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 111,
+        "nonce": 113,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -802,7 +802,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 32957,
+        "batchCount": 36049,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -848,7 +848,7 @@
         "rollup": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 5228,
+        "totalDelayedMessagesRead": 5266,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -899,7 +899,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 12067,
+        "nonce": 14469,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1283,7 +1283,7 @@
         "allowedOutboxList": [
           "arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d"
         ],
-        "delayedMessageCount": 5228,
+        "delayedMessageCount": 5266,
         "inboxHistory": [
           "arb1:0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
           "arb1:0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
@@ -1293,8 +1293,8 @@
         "outboxHistory": ["arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
         "rollup": "arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 32957,
-        "sequencerReportedSubMessageCount": 68631374
+        "sequencerMessageCount": 36049,
+        "sequencerReportedSubMessageCount": 69628651
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2043,6 +2043,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409202700 },
+  "usedBlockNumbers": { "arbitrum": 419580565 },
   "permissionsConfigHash": "0x15e91b40d27ba8f9e3ab2527d674d0be83021822a09d4c7abd0c759e826bd537"
 }
