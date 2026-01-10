@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
-import { getItemsToCapture } from '../capture/getItemsToCapture'
 import { CatchingUpState } from './CatchingUpState'
 import type {
   BlockProcessorState,
@@ -22,41 +21,35 @@ export class FollowingState implements BlockProcessorState {
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
     this.status = 'processing'
 
-    if ((await this.syncer.isResyncRequestedFrom()) !== undefined) {
-      // CatchingUp state takes care of resync requests
+    const resyncRequested =
+      (await this.syncer.isResyncRequestedFrom()) !== undefined
+    const lastSyncedRecord = resyncRequested
+      ? undefined
+      : await this.syncer.getLastSyncedRange()
+
+    const decision = decideFollowingAction({
+      resyncRequested,
+      lastSyncedRecord,
+      blockNumber: BigInt(block.number),
+      blockTimestamp: block.timestamp,
+    })
+
+    if (decision.type === 'catchUp') {
       return new CatchingUpState(this.syncer, this.logger)
     }
 
-    const lastSyncedRecord =
-      await this.syncer.db.interopPluginSyncedRange.findByPluginNameAndChain(
-        this.syncer.plugin.name,
-        this.syncer.chain,
-      )
-
-    let updatedSyncedRange: BlockRangeWithTimestamps
-    const blockNumber = BigInt(block.number)
-    if (lastSyncedRecord) {
-      if (lastSyncedRecord.toBlock < blockNumber - 1n) {
-        // We need to catch up first
-        return new CatchingUpState(this.syncer, this.logger)
-      }
-
-      if (lastSyncedRecord.toBlock >= blockNumber) {
-        return this // ignore and wait, we're already synced further than this block
-      }
-
-      updatedSyncedRange = {
-        fromBlock: lastSyncedRecord.fromBlock,
-        fromTimestamp: lastSyncedRecord.fromTimestamp,
-        toBlock: blockNumber,
-        toTimestamp: block.timestamp,
-      }
-    } else {
-      updatedSyncedRange = await this.bootstrapSyncedRange(block)
+    if (decision.type === 'ignore') {
+      this.status = 'idle'
+      return this
     }
 
+    const updatedSyncedRange =
+      decision.type === 'bootstrap'
+        ? await this.bootstrapSyncedRange(block)
+        : decision.updatedSyncedRange
+
     const interopEvents = []
-    const toCapture = getItemsToCapture(this.syncer.chain, block, logs)
+    const toCapture = this.syncer.getItemsToCapture(block, logs)
     for (const logToCapture of toCapture.logsToCapture) {
       const produced = this.syncer.captureLog(logToCapture)
       if (produced) {
@@ -70,6 +63,7 @@ export class FollowingState implements BlockProcessorState {
     )
 
     this.syncer.clearChainSyncError()
+    this.status = 'idle'
     return this
   }
 
@@ -78,11 +72,7 @@ export class FollowingState implements BlockProcessorState {
   private async bootstrapSyncedRange(
     incomingBlock: Block,
   ): Promise<BlockRangeWithTimestamps> {
-    const oldestEvent =
-      await this.syncer.db.interopEvent.getOldestEventForPluginAndChan(
-        this.syncer.plugin.name,
-        this.syncer.chain,
-      )
+    const oldestEvent = await this.syncer.getOldestEventForPluginAndChain()
     return oldestEvent
       ? {
           fromBlock: BigInt(oldestEvent.blockNumber),
@@ -96,5 +86,44 @@ export class FollowingState implements BlockProcessorState {
           toBlock: BigInt(incomingBlock.number),
           toTimestamp: UnixTime(incomingBlock.timestamp),
         }
+  }
+}
+
+export type FollowingDecision =
+  | { type: 'catchUp' }
+  | { type: 'ignore' }
+  | { type: 'bootstrap' }
+  | { type: 'process'; updatedSyncedRange: BlockRangeWithTimestamps }
+
+export function decideFollowingAction(params: {
+  resyncRequested: boolean
+  lastSyncedRecord?: BlockRangeWithTimestamps
+  blockNumber: bigint
+  blockTimestamp: UnixTime
+}): FollowingDecision {
+  if (params.resyncRequested) {
+    return { type: 'catchUp' } // CatchingUp state takes care of resync requests
+  }
+
+  if (!params.lastSyncedRecord) {
+    return { type: 'bootstrap' } // Looks like a first run ever, see if we already are synced
+  }
+
+  if (params.lastSyncedRecord.toBlock < params.blockNumber - 1n) {
+    return { type: 'catchUp' } // Catch up to the current block first
+  }
+
+  if (params.lastSyncedRecord.toBlock >= params.blockNumber) {
+    return { type: 'ignore' } // We're already synced futher, wait...
+  }
+
+  return {
+    type: 'process',
+    updatedSyncedRange: {
+      fromBlock: params.lastSyncedRecord.fromBlock,
+      fromTimestamp: params.lastSyncedRecord.fromTimestamp,
+      toBlock: params.blockNumber,
+      toTimestamp: params.blockTimestamp,
+    },
   }
 }

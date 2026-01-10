@@ -1,5 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BlockRangeWithTimestamps, Database } from '@l2beat/database'
+import type {
+  BlockRangeWithTimestamps,
+  Database,
+  InteropEventRecord,
+  InteropPluginSyncedRangeRecord,
+} from '@l2beat/database'
 import type { EthRpcClient } from '@l2beat/shared'
 import {
   type Block,
@@ -16,6 +21,7 @@ import type {
   LogToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { getItemsToCapture } from '../capture/getItemsToCapture'
 import { errorToString, toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
 
@@ -184,5 +190,25 @@ export class InteropEventSyncer extends TimeLoop {
     }
 
     return result
+  }
+
+  getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {
+    return this.db.interopPluginSyncedRange.findByPluginNameAndChain(
+      this.plugin.name,
+      this.chain,
+    )
+  }
+
+  getOldestEventForPluginAndChain(): Promise<
+    InteropEventRecord | undefined
+  > {
+    return this.db.interopEvent.getOldestEventForPluginAndChan(
+      this.plugin.name,
+      this.chain,
+    )
+  }
+
+  getItemsToCapture(block: Block, logs: Log[]) {
+    return getItemsToCapture(this.chain, block, logs)
   }
 }
