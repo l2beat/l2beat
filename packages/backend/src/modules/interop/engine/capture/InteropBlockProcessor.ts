@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
-import type { InteropEvent, InteropPlugin } from '../../plugins/types'
-import { isPluginResyncable } from '../sync/isPluginResyncable'
+import {
+  type InteropEvent,
+  type InteropPlugin,
+  isPluginResyncable,
+} from '../../plugins/types'
 import { getItemsToCapture } from './getItemsToCapture'
 import type { InteropEventStore } from './InteropEventStore'
 

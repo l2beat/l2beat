@@ -4,13 +4,13 @@ import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
-import type {
-  InteropPlugin,
-  InteropPluginResyncable,
+import {
+  type InteropPlugin,
+  type InteropPluginResyncable,
+  isPluginResyncable,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropEventSyncer } from './InteropEventSyncer'
-import { isPluginResyncable } from './isPluginResyncable'
 
 export type PluginSyncStatus = {
   pluginName: string

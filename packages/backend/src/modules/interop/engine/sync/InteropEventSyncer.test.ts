@@ -6,10 +6,9 @@ import type {
 } from '@l2beat/database'
 import type { RpcBlock, RpcLog } from '@l2beat/shared'
 import {
+  type Block,
   ChainSpecificAddress,
   EthereumAddress,
-  type Block,
-  type Log,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -21,15 +20,14 @@ import type {
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { toEventSelector } from '../utils'
+import { FollowingState } from './FollowingState'
 import {
-  buildLogQueryForPlugin,
   type BlockProcessorState,
+  buildLogQueryForPlugin,
+  InteropEventSyncer,
   type SyncerState,
   type TimeloopState,
-  InteropEventSyncer,
-  LogQuery,
 } from './InteropEventSyncer'
-import { FollowingState } from './FollowingState'
 
 describe(InteropEventSyncer.name, () => {
   describe('constructor', () => {
@@ -97,9 +95,8 @@ describe(InteropEventSyncer.name, () => {
     it('unpauses when switching to timeLoop state', async () => {
       const syncer = createSyncer()
       const { state: timeLoopState } = makeTimeLoopState()
-      const { state: blockProcessorState } = makeBlockProcessorState(
-        timeLoopState,
-      )
+      const { state: blockProcessorState } =
+        makeBlockProcessorState(timeLoopState)
       syncer.state = blockProcessorState
 
       await syncer.processNewestBlock(makeBlock(5), [])
@@ -282,9 +279,9 @@ describe(InteropEventSyncer.name, () => {
 
       const query = buildLogQueryForPlugin(plugin, 'ethereum')
 
-      expect(query.addresses.has(ChainSpecificAddress.address(ethAddress))).toEqual(
-        true,
-      )
+      expect(
+        query.addresses.has(ChainSpecificAddress.address(ethAddress)),
+      ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(query.isEmpty()).toEqual(false)
@@ -447,7 +444,9 @@ class TestSyncer extends InteropEventSyncer {
     return undefined
   }
 
-  protected override async runInTransaction<T>(fn: () => Promise<T>): Promise<T> {
+  protected override async runInTransaction<T>(
+    fn: () => Promise<T>,
+  ): Promise<T> {
     this.runInTransactionCalls++
     return await fn()
   }
@@ -468,11 +467,15 @@ function createSyncer(overrides: Partial<TestSyncer> = {}) {
   return syncer
 }
 
-function makePlugin(params: {
-  name?: string
-  dataRequests?: DataRequest[]
-  capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
-} = {}): InteropPluginResyncable {
+function makePlugin(
+  params: {
+    name?: string
+    dataRequests?: DataRequest[]
+    capture?: (
+      input: LogToCapture,
+    ) => Omit<InteropEvent, 'plugin'>[] | undefined
+  } = {},
+): InteropPluginResyncable {
   return {
     name: params.name ?? 'plugin',
     capture: params.capture ?? mockFn().returns(undefined),
@@ -480,7 +483,10 @@ function makePlugin(params: {
   }
 }
 
-function makeTimeLoopState(): { state: TimeloopState; run: ReturnType<typeof mockFn> } {
+function makeTimeLoopState(): {
+  state: TimeloopState
+  run: ReturnType<typeof mockFn>
+} {
   const run = mockFn<[], Promise<SyncerState>>()
   const state: TimeloopState = {
     type: 'timeLoop',
@@ -492,9 +498,7 @@ function makeTimeLoopState(): { state: TimeloopState; run: ReturnType<typeof moc
   return { state, run }
 }
 
-function makeBlockProcessorState(
-  resultState?: SyncerState,
-): {
+function makeBlockProcessorState(resultState?: SyncerState): {
   state: BlockProcessorState
   processNewestBlock: ReturnType<typeof mockFn>
 } {
