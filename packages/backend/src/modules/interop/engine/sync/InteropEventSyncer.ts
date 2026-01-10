@@ -20,8 +20,8 @@ import type {
   InteropPluginResyncable,
   LogToCapture,
 } from '../../plugins/types'
-import type { InteropEventStore } from '../capture/InteropEventStore'
 import { getItemsToCapture } from '../capture/getItemsToCapture'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
 

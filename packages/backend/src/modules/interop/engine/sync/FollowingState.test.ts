@@ -3,12 +3,12 @@ import type {
   BlockRangeWithTimestamps,
   InteropEventRecord,
 } from '@l2beat/database'
-import { UnixTime, type Block, type Log } from '@l2beat/shared-pure'
+import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
-import type { InteropEventSyncer } from './InteropEventSyncer'
 import { CatchingUpState } from './CatchingUpState'
 import { FollowingState } from './FollowingState'
+import type { InteropEventSyncer } from './InteropEventSyncer'
 
 const BLOCK = makeBlock(100, UnixTime(1_000))
 const LOGS: Log[] = [mockObject<Log>({})]
