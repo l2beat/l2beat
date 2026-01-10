@@ -33,6 +33,35 @@ export class LogQuery {
   }
 }
 
+export function buildLogQueryForPlugin(
+  plugin: InteropPluginResyncable,
+  chain: LongChainName,
+): LogQuery {
+  const result = new LogQuery()
+  const eventRequests = plugin
+    .getDataRequests()
+    .filter((r) => r.type === 'event')
+
+  for (const eventRequest of eventRequests) {
+    let addressesOnThisChain = 0
+    for (const address of eventRequest.addresses) {
+      if (ChainSpecificAddress.longChain(address) !== chain) {
+        continue
+      }
+      const ethAddress = ChainSpecificAddress.address(address)
+      result.addresses.add(ethAddress)
+      addressesOnThisChain++
+    }
+    if (addressesOnThisChain > 0) {
+      // TODO try also with `toEventSelector` straight from viem
+      const topic0 = toEventSelector(eventRequest.signature)
+      result.topic0s.add(topic0)
+    }
+  }
+
+  return result
+}
+
 export type SyncerState = TimeloopState | BlockProcessorState
 
 export interface TimeloopState {
@@ -67,7 +96,7 @@ export class InteropEventSyncer extends TimeLoop {
     this.state = new FollowingState(this, this.logger)
   }
 
-  private async triggerState<T extends SyncerState>(
+  protected async triggerState<T extends SyncerState>(
     state: T,
     fn: (state: T) => Promise<SyncerState>,
   ) {
@@ -123,7 +152,7 @@ export class InteropEventSyncer extends TimeLoop {
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
   ) {
-    await this.db.transaction(async () => {
+    await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.plugin.name,
@@ -167,29 +196,11 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   buildLogQuery() {
-    const result = new LogQuery()
-    const eventRequests = this.plugin
-      .getDataRequests()
-      .filter((r) => r.type === 'event')
+    return buildLogQueryForPlugin(this.plugin, this.chain)
+  }
 
-    for (const eventRequest of eventRequests) {
-      let addressesOnThisChain = 0
-      for (const address of eventRequest.addresses) {
-        if (ChainSpecificAddress.longChain(address) !== this.chain) {
-          continue
-        }
-        const ethAddress = ChainSpecificAddress.address(address)
-        result.addresses.add(ethAddress)
-        addressesOnThisChain++
-      }
-      if (addressesOnThisChain > 0) {
-        // TODO try also with `toEventSelector` straight from viem
-        const topic0 = toEventSelector(eventRequest.signature)
-        result.topic0s.add(topic0)
-      }
-    }
-
-    return result
+  protected runInTransaction<T>(fn: () => Promise<T>): Promise<T> {
+    return this.db.transaction(fn)
   }
 
   getBlockByNumber(blockNumber: bigint): Promise<RpcBlock | null> {
