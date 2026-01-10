@@ -5,7 +5,7 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { EthRpcClient } from '@l2beat/shared'
+import type { EthRpcClient, RpcBlock, RpcLog } from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -192,6 +192,19 @@ export class InteropEventSyncer extends TimeLoop {
     return result
   }
 
+  getBlockByNumber(blockNumber: bigint): Promise<RpcBlock | null> {
+    return this.rpcClient.getBlockByNumber(blockNumber, false)
+  }
+
+  getLogs(filter: {
+    fromBlock: bigint
+    toBlock: bigint
+    address: EthereumAddress[]
+    topics: string[][]
+  }): Promise<RpcLog[]> {
+    return this.rpcClient.getLogs(filter)
+  }
+
   getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {
     return this.db.interopPluginSyncedRange.findByPluginNameAndChain(
       this.plugin.name,
@@ -199,9 +212,7 @@ export class InteropEventSyncer extends TimeLoop {
     )
   }
 
-  getOldestEventForPluginAndChain(): Promise<
-    InteropEventRecord | undefined
-  > {
+  getOldestEventForPluginAndChain(): Promise<InteropEventRecord | undefined> {
     return this.db.interopEvent.getOldestEventForPluginAndChan(
       this.plugin.name,
       this.chain,
@@ -210,5 +221,21 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
+  }
+
+  async deleteAllClusterData() {
+    const pluginsToWipe =
+      this.clusterPlugins.length > 0 ? this.clusterPlugins : [this.plugin]
+
+    await this.db.transaction(async () => {
+      for (const plugin of pluginsToWipe) {
+        // Delete messages:
+        await this.db.interopMessage.deleteForPlugin(plugin.name)
+        // Delete transfers:
+        await this.db.interopTransfer.deleteForPlugin(plugin.name)
+        // Delete events:
+        await this.store.deleteAllForPlugin(plugin.name)
+      }
+    })
   }
 }

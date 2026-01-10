@@ -1,0 +1,284 @@
+import { Logger } from '@l2beat/backend-tools'
+import type { BlockRangeWithTimestamps } from '@l2beat/database'
+import type { RpcBlock, RpcLog } from '@l2beat/shared'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import type { InteropEvent } from '../../plugins/types'
+import type { InteropEventSyncer } from './InteropEventSyncer'
+import { LogQuery } from './InteropEventSyncer'
+import { CatchingUpState } from './CatchingUpState'
+import { FollowingState } from './FollowingState'
+
+const CHAIN = 'ethereum'
+const PLUGIN_NAME = 'mock-plugin'
+
+describe(CatchingUpState.name, () => {
+  describe(CatchingUpState.prototype.catchUp.name, () => {
+    it('waits when latest block number is missing', async () => {
+      const isResyncRequestedFrom = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        latestBlockNumber: undefined,
+        isResyncRequestedFrom,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for block number')
+      expect(isResyncRequestedFrom).not.toHaveBeenCalled()
+    })
+
+    it('resyncs from requested timestamp, clears flag and switches to following', async () => {
+      const deleteAllClusterData = mockFn().resolvesTo(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLogs = mockFn().resolvesTo([])
+      const setResyncRequestedFrom = mockFn().resolvesTo(undefined)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(5)),
+        deleteAllClusterData,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ toBlock: 3n }),
+        ),
+        buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+        saveProducedInteropEvents,
+        getLogs,
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setResyncRequestedFrom,
+          }),
+        }),
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(deleteAllClusterData).toHaveBeenCalled()
+      expect(getLogs).not.toHaveBeenCalled()
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
+        fromBlock: 5n,
+        fromTimestamp: UnixTime(5),
+        toBlock: 10n,
+        toTimestamp: UnixTime(10),
+      })
+      expect(setResyncRequestedFrom).toHaveBeenCalledWith(
+        PLUGIN_NAME,
+        CHAIN,
+        null,
+      )
+    })
+
+    it('switches to following when already synced to latest block', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLogs = mockFn().resolvesTo([])
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ toBlock: 10n }),
+        ),
+        saveProducedInteropEvents,
+        getLogs,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(saveProducedInteropEvents).not.toHaveBeenCalled()
+      expect(getLogs).not.toHaveBeenCalled()
+    })
+
+    it('syncs one range and switches to following at the tip', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 9n }),
+        ),
+        buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
+        fromBlock: 1n,
+        fromTimestamp: UnixTime(1),
+        toBlock: 10n,
+        toTimestamp: UnixTime(10),
+      })
+    })
+
+    it('syncs multiple ranges until the tip is reached', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLastSyncedRange = mockFn()
+        .resolvesToOnce(makeSyncedRange({ fromBlock: 1n, toBlock: 0n }))
+        .resolvesToOnce(makeSyncedRange({ fromBlock: 1n, toBlock: 10000n }))
+        .resolvesTo(makeSyncedRange({ fromBlock: 1n, toBlock: 10000n }))
+
+      const syncer = createSyncer({
+        latestBlockNumber: 20_000n,
+        getLastSyncedRange,
+        buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
+      expect(saveProducedInteropEvents).toHaveBeenNthCalledWith(1, [], {
+        fromBlock: 1n,
+        fromTimestamp: UnixTime(1),
+        toBlock: 10000n,
+        toTimestamp: UnixTime(10000),
+      })
+      expect(saveProducedInteropEvents).toHaveBeenNthCalledWith(2, [], {
+        fromBlock: 1n,
+        fromTimestamp: UnixTime(1),
+        toBlock: 20_000n,
+        toTimestamp: UnixTime(20_000),
+      })
+    })
+
+    it('captures logs, flattens events and saves them', async () => {
+      const eventA = mockObject<InteropEvent>({})
+      const eventB = mockObject<InteropEvent>({})
+      const eventC = mockObject<InteropEvent>({})
+      const captureLog = mockFn()
+        .returnsOnce([eventA])
+        .returnsOnce([eventB, eventC])
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({ txHash: '0xaaa', blockNumber: 2n, blockTimestamp: 2n }),
+        makeRpcLog({ txHash: '0xaaa', blockNumber: 2n, blockTimestamp: 2n }),
+      ])
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(makeNonEmptyLogQuery()),
+        getLogs,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(getLogs).toHaveBeenCalled()
+      expect(captureLog).toHaveBeenCalledTimes(2)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [eventA, eventB, eventC],
+        {
+          fromBlock: 1n,
+          fromTimestamp: UnixTime(1),
+          toBlock: 2n,
+          toTimestamp: UnixTime(2),
+        },
+      )
+    })
+
+    it('throws when no synced range and no resync timestamp', async () => {
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(undefined),
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await expect(async () => await state.catchUp()).toBeRejectedWith(
+        `Can't resync ${PLUGIN_NAME} plugin without "from" timestamp`,
+      )
+    })
+  })
+})
+
+function createSyncer(
+  overrides: Partial<InteropEventSyncer> = {},
+): InteropEventSyncer {
+  return mockObject<InteropEventSyncer>({
+    chain: CHAIN as InteropEventSyncer['chain'],
+    plugin: { name: PLUGIN_NAME } as InteropEventSyncer['plugin'],
+    clusterPlugins: [],
+    latestBlockNumber: 10n,
+    isResyncRequestedFrom: mockFn().resolvesTo(undefined),
+    deleteAllClusterData: mockFn().resolvesTo(undefined),
+    getLastSyncedRange: mockFn().resolvesTo(undefined),
+    getBlockByNumber: mockFn().executes((blockNumber: bigint) =>
+      makeRpcBlock(blockNumber),
+    ),
+    buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+    getLogs: mockFn().resolvesTo([]),
+    captureLog: mockFn().returns(undefined),
+    saveProducedInteropEvents: mockFn().resolvesTo(undefined),
+    db: mockObject<InteropEventSyncer['db']>({
+      interopPluginSyncState: mockObject<
+        InteropEventSyncer['db']['interopPluginSyncState']
+      >({
+        setResyncRequestedFrom: mockFn().resolvesTo(undefined),
+      }),
+    }),
+    ...overrides,
+  })
+}
+
+function makeEmptyLogQuery() {
+  return new LogQuery()
+}
+
+function makeNonEmptyLogQuery() {
+  const logQuery = new LogQuery()
+  logQuery.addresses.add(EthereumAddress.random())
+  logQuery.topic0s.add('0xabc')
+  return logQuery
+}
+
+function makeSyncedRange(
+  overrides: Partial<BlockRangeWithTimestamps> = {},
+): BlockRangeWithTimestamps {
+  return {
+    fromBlock: 1n,
+    fromTimestamp: UnixTime(1),
+    toBlock: 1n,
+    toTimestamp: UnixTime(1),
+    ...overrides,
+  }
+}
+
+function makeRpcBlock(blockNumber: bigint): RpcBlock {
+  return {
+    number: blockNumber,
+    timestamp: blockNumber,
+  } as RpcBlock
+}
+
+function makeRpcLog(params: {
+  txHash: string
+  blockNumber: bigint
+  blockTimestamp: bigint
+}): RpcLog {
+  return {
+    address: EthereumAddress.random(),
+    data: '0x',
+    topics: [],
+    logIndex: 0n,
+    transactionIndex: 0n,
+    transactionHash: params.txHash,
+    blockNumber: params.blockNumber,
+    blockTimestamp: params.blockTimestamp,
+    blockHash: ZERO_HASH,
+  }
+}
+
+const ZERO_HASH = `0x${'00'.repeat(32)}`

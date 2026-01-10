@@ -56,7 +56,7 @@ export class CatchingUpState implements TimeloopState {
       const resyncFrom = await this.syncer.isResyncRequestedFrom()
       if (resyncFrom !== undefined) {
         this.status = 'deleting all data for resync'
-        await this.deleteAllClusterData()
+        await this.syncer.deleteAllClusterData()
       }
 
       this.status = 'syncing'
@@ -71,6 +71,9 @@ export class CatchingUpState implements TimeloopState {
         if (resyncFrom) {
           await this.clearResyncRequestFlag()
         }
+      } else {
+        this.status = 'idle'
+        return new FollowingState(this.syncer, this.logger)
       }
 
       if (
@@ -114,7 +117,7 @@ export class CatchingUpState implements TimeloopState {
       topics: [logQuery.topic0s],
     })
 
-    const logs = await this.syncer.rpcClient.getLogs({
+    const logs = await this.syncer.getLogs({
       fromBlock: range.from,
       toBlock: range.to,
       address: Array.from(logQuery.addresses),
@@ -174,24 +177,6 @@ export class CatchingUpState implements TimeloopState {
     return interopEvents.flat()
   }
 
-  private async deleteAllClusterData() {
-    const pluginsToWipe =
-      this.syncer.clusterPlugins.length > 0
-        ? this.syncer.clusterPlugins
-        : [this.syncer.plugin]
-
-    await this.syncer.db.transaction(async () => {
-      for (const plugin of pluginsToWipe) {
-        // Delete messages:
-        await this.syncer.db.interopMessage.deleteForPlugin(plugin.name)
-        // Delete transfers:
-        await this.syncer.db.interopTransfer.deleteForPlugin(plugin.name)
-        // Delete events:
-        await this.syncer.store.deleteAllForPlugin(plugin.name)
-      }
-    })
-  }
-
   async clearResyncRequestFlag() {
     await this.syncer.db.interopPluginSyncState.setResyncRequestedFrom(
       this.syncer.plugin.name,
@@ -204,20 +189,15 @@ export class CatchingUpState implements TimeloopState {
     toBlockNumber: bigint,
     forcedFromTimestamp?: UnixTime,
   ): Promise<RangeData | undefined> {
-    const syncedRange =
-      await this.syncer.db.interopPluginSyncedRange.findByPluginNameAndChain(
-        this.syncer.plugin.name,
-        this.syncer.chain,
-      )
+    const syncedRange = await this.syncer.getLastSyncedRange()
 
-    const latestBlock = await this.syncer.rpcClient.getBlockByNumber(
-      toBlockNumber,
-      false,
-    )
+    const latestBlock = await this.syncer.getBlockByNumber(toBlockNumber)
     assert(latestBlock && !isNil(latestBlock.number))
 
-    if ((syncedRange?.toBlock ?? -1) >= latestBlock.number) {
-      return undefined // we're already at or after latest block
+    if (forcedFromTimestamp === undefined) {
+      if ((syncedRange?.toBlock ?? -1) >= latestBlock.number) {
+        return undefined // we're already at or after latest block
+      }
     }
 
     let nextFrom: bigint
@@ -229,10 +209,7 @@ export class CatchingUpState implements TimeloopState {
         forcedFromTimestamp,
         toBlockNumber,
       )
-      const fromBlock = await this.syncer.rpcClient.getBlockByNumber(
-        fullFrom,
-        false,
-      )
+      const fromBlock = await this.syncer.getBlockByNumber(fullFrom)
       assert(fromBlock)
       fullFromTimestamp = UnixTime(Number(fromBlock.timestamp))
       nextFrom = fullFrom
@@ -259,10 +236,7 @@ export class CatchingUpState implements TimeloopState {
       fullTo = nextTo
       fullToTimestamp = UnixTime(Number(latestBlock.timestamp))
     } else {
-      const toBlock = await this.syncer.rpcClient.getBlockByNumber(
-        nextTo,
-        false,
-      )
+      const toBlock = await this.syncer.getBlockByNumber(nextTo)
       assert(toBlock)
       fullTo = nextTo
       fullToTimestamp = UnixTime(Number(toBlock.timestamp))
@@ -290,10 +264,7 @@ export class CatchingUpState implements TimeloopState {
         1,
         Number(latestBlockNumber),
         async (number: number) => {
-          const block = await this.syncer.rpcClient.getBlockByNumber(
-            BigInt(number),
-            false,
-          )
+          const block = await this.syncer.getBlockByNumber(BigInt(number))
           assert(block)
           return { timestamp: Number(block.timestamp) }
         },
