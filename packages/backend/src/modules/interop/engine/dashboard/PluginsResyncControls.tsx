@@ -33,7 +33,7 @@ export function PluginsResyncControls(props: {
                   className="interop-resync-button"
                   data-plugin-name={pluginName}
                 >
-                  Wipe and resync 1d
+                  Wipe and resync 8d
                 </button>
               </td>
             </tr>
@@ -48,7 +48,7 @@ export function PluginsResyncControls(props: {
                 var nowSeconds = Math.floor(Date.now() / 1000);
                 return {
                   pluginName: pluginName,
-                  resyncRequestedFrom: { '*': nowSeconds - 86400 }
+                  resyncRequestedFrom: { '*': nowSeconds - 3600 * 24 * 8 }
                 };
               }
 

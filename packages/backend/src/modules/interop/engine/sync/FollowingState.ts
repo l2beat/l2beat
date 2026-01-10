@@ -20,8 +20,7 @@ export class FollowingState implements BlockProcessorState {
   ) {}
 
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
-    const blockNumber = BigInt(block.number)
-    this.syncer.latestBlockNumber = blockNumber
+    this.status = 'processing'
 
     if ((await this.syncer.isResyncRequestedFrom()) !== undefined) {
       // CatchingUp state takes care of resync requests
@@ -35,6 +34,7 @@ export class FollowingState implements BlockProcessorState {
       )
 
     let updatedSyncedRange: BlockRangeWithTimestamps
+    const blockNumber = BigInt(block.number)
     if (lastSyncedRecord) {
       if (lastSyncedRecord.toBlock < blockNumber - 1n) {
         // We need to catch up first
@@ -69,6 +69,7 @@ export class FollowingState implements BlockProcessorState {
       updatedSyncedRange,
     )
 
+    this.syncer.clearChainSyncError()
     return this
   }
 

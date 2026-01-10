@@ -155,7 +155,7 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode: syncer?.state.name,
+        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
@@ -176,7 +176,7 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: state.pluginName,
         chain: state.chain,
-        syncMode: syncer?.state.name,
+        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         lastError: state.lastError ?? undefined,
       })
     }
@@ -191,7 +191,7 @@ export class InteropSyncersManager {
         rows.push({
           pluginName: syncer.plugin.name,
           chain: syncer.chain,
-          syncMode: syncer.state.name,
+          syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         })
       }
     }

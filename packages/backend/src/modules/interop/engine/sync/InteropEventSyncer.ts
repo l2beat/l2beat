@@ -17,7 +17,7 @@ import type {
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
-import { CatchingUpState } from './CatchingUpState'
+import { FollowingState } from './FollowingState'
 
 export class LogQuery {
   topic0s = new Set<string>()
@@ -58,12 +58,16 @@ export class InteropEventSyncer extends TimeLoop {
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
-    this.state = new CatchingUpState(this, this.logger)
+    this.state = new FollowingState(this, this.logger)
   }
 
-  async triggerState(fn: () => Promise<SyncerState>) {
+  private async triggerState<T extends SyncerState>(
+    state: T,
+    fn: (state: T) => Promise<SyncerState>,
+  ) {
     try {
-      this.state = await fn()
+      this.clearChainSyncError()
+      this.state = await fn(state)
       if (this.state.type === 'timeLoop') {
         this.unpause()
       } else {
@@ -80,15 +84,19 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async run() {
-    if (this.state.type === 'timeLoop') {
-      await this.triggerState(this.state.run)
+    const state = this.state
+    if (state.type === 'timeLoop') {
+      await this.triggerState(state, (current) => current.run())
     }
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
-    if (this.state.type === 'blockProcessor') {
-      const fn = this.state.processNewestBlock(block, logs)
-      await this.triggerState(() => fn)
+    this.latestBlockNumber = BigInt(block.number)
+    const state = this.state
+    if (state.type === 'blockProcessor') {
+      await this.triggerState(state, (current) =>
+        current.processNewestBlock(block, logs),
+      )
     }
   }
 
