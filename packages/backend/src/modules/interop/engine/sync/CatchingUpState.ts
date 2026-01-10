@@ -188,10 +188,6 @@ export class CatchingUpState implements TimeloopState {
         await this.syncer.db.interopTransfer.deleteForPlugin(plugin.name)
         // Delete events:
         await this.syncer.store.deleteAllForPlugin(plugin.name)
-        // Delete synced range data:
-        await this.syncer.db.interopPluginSyncedRange.deleteByPluginName(
-          plugin.name,
-        )
       }
     })
   }
