@@ -4,6 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import { createTestApiServer } from '../../../../test/testApiServer'
+import type { InteropTransferStream } from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { createInteropRouter } from './InteropRouter'
 
@@ -54,6 +55,9 @@ describe(createInteropRouter.name, () => {
       const syncersManager = mockObject<InteropSyncersManager>({
         getPluginSyncStatuses: mockFn().resolvesTo([]),
       })
+      const transferStream = mockObject<InteropTransferStream>({
+        subscribe: mockFn().returns(() => {}),
+      })
 
       const router = createInteropRouter(
         db,
@@ -61,6 +65,7 @@ describe(createInteropRouter.name, () => {
         [],
         syncersManager,
         Logger.SILENT,
+        transferStream,
       )
       const api = createTestApiServer([router])
 

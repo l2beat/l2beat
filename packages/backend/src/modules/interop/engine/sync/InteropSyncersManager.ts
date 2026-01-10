@@ -9,13 +9,13 @@ import type {
   InteropPluginResyncable,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
-import { InteropEventSyncer, type SyncMode } from './InteropEventSyncer'
+import { InteropEventSyncer } from './InteropEventSyncer'
 import { isPluginResyncable } from './isPluginResyncable'
 
 export type PluginSyncStatus = {
   pluginName: string
   chain: string
-  syncMode?: SyncMode
+  syncMode?: string
   toBlock?: bigint
   toTimestamp?: number
   lastError?: string
@@ -155,7 +155,7 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode: syncer?.syncMode,
+        syncMode: syncer?.state.name,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
@@ -176,7 +176,7 @@ export class InteropSyncersManager {
       rows.push({
         pluginName: state.pluginName,
         chain: state.chain,
-        syncMode: syncer?.syncMode,
+        syncMode: syncer?.state.name,
         lastError: state.lastError ?? undefined,
       })
     }
@@ -191,7 +191,7 @@ export class InteropSyncersManager {
         rows.push({
           pluginName: syncer.plugin.name,
           chain: syncer.chain,
-          syncMode: syncer.syncMode,
+          syncMode: syncer.state.name,
         })
       }
     }
