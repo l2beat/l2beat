@@ -801,42 +801,21 @@
       "implementationNames": {
         "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb": "KailuaTreasury"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
-    },
-    {
-      "name": "L1StandardBridge",
-      "address": "eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
-      "type": "Contract",
-      "template": "opstack/L1StandardBridge_soon",
-      "sourceHashes": [
-        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x31171ab8eadf4234ec9b516f45a99b4ba57e9270edb7dd669d39db328abe95eb"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
-      "sinceTimestamp": 1735877327,
-      "sinceBlock": 21541469,
-      "values": {
-        "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "eth:0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "ERC20SharedDecimals": 9,
-        "l2TokenBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "messenger": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
-        "MESSENGER": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
-        "OTHER_BRIDGE": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "otherBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
-        "paused": false,
-        "superchainConfig": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
-        "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
-        "version": "2.2.0"
-      },
-      "implementationNames": {
-        "eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9": "L1ChugSplashProxy",
-        "eth:0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A": "L1StandardBridge"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
+      "$implementation": "eth:0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A",
+      "$pastUpgrades": [],
+      "$upgradeCount": 0,
+      "ERC20SharedDecimals": 9,
+      "l2TokenBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
+      "messenger": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+      "MESSENGER": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+      "OTHER_BRIDGE": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
+      "otherBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
+      "paused": false,
+      "superchainConfig": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+      "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+      "version": "2.2.0"
     },
     {
       "address": "eth:0xfF000000000000000000000000000000000000FF",
@@ -1424,7 +1403,7 @@
     "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
+    "opstack/L1StandardBridge": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
     "opstack/OptimismPortal2_soon": "0xf6734dbe323c5dbbc774eff181ffd1ab332f7ce3315bb86db8cb6179c940026b",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
