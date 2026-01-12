@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1767975171,
-  "configHash": "0x176a50f2ab5ef21b5e9f123bb9c80aac96ca570d94990bc52ac8ad87e00fddda",
+  "timestamp": 1768211188,
+  "configHash": "0xe13fb9b1a09c4c406f0ff0d9ce187337c42f2e5d2d76e85ec2cb8383236d4561",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -30,42 +30,31 @@
       }
     },
     {
-      "name": "SP1Verifier",
-      "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550083,
-      "sinceBlock": 22590749,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
-      }
-    },
-    {
       "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A",
+          "from": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
         }
       ]
     },
     {
+      "address": "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x77610267a344Eb39955c20908978830f61e2373C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SP1VerifierGateway",
-      "address": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
+      "address": "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
@@ -73,28 +62,20 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "sinceTimestamp": 1751301179,
-      "sinceBlock": 22818451,
+      "sinceTimestamp": 1767733343,
+      "sinceBlock": 24178194,
       "values": {
         "$immutable": true,
         "activeVerifiers": [
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
-          },
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
           }
         ],
         "allVerifiers": [
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
-          },
-          {
-            "selector": "0xa4594c59",
-            "verifier": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
           }
         ],
         "owner": "eth:0x0000000000000000000000000000000000000000"
@@ -108,18 +89,62 @@
         }
       },
       "implementationNames": {
-        "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
+        "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
       }
     },
     {
-      "address": "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x77610267a344Eb39955c20908978830f61e2373C",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "Rollup",
+      "address": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
+      "type": "Contract",
+      "template": "facet/Rollup",
+      "sourceHashes": [
+        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
+      ],
+      "proxyType": "immutable",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
+      "ignoreInWatchMode": [
+        "getProposalsLength",
+        "anchorL2BlockNumber",
+        "anchorProposalId",
+        "anchorRoot"
+      ],
+      "sinceTimestamp": 1767969599,
+      "sinceBlock": 24197780,
+      "values": {
+        "$immutable": true,
+        "AGG_VKEY": "0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd",
+        "anchorL2BlockNumber": 6765840,
+        "anchorProposalId": 0,
+        "anchorRoot": "0xd6d92a80e3ac563ab150dd0bc3a6845ba3d34edaff0ee65f442f55bddc2c3ca6",
+        "canonicalProposalFor": [],
+        "canonicalProposalIdFor": [],
+        "CHALLENGER_BOND": "10000000000000000000",
+        "computeL2Timestamp": [],
+        "FALLBACK_TIMEOUT_SECS": 1209600,
+        "getProposalsLength": 13,
+        "isInFallbackWindow": [],
+        "L2_BLOCK_TIME": 12,
+        "L2_START_TIMESTAMP": 1767945143,
+        "l2BlockAge": [],
+        "MAX_CHALLENGE_SECS": 604800,
+        "MAX_PROVE_SECS": 604800,
+        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "PROPOSAL_INTERVAL": 1800,
+        "PROPOSER_BOND": 500000000000000,
+        "RANGE_VKEY_COMMITMENT": "0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594",
+        "renouncedOwner": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001",
+        "ROLLUP_CONFIG_HASH": "0x09e306a5a6b6614b9355c8eadf93e569088433b29792b45236619e4637fa14ae",
+        "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
+        "VERIFIER": "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1",
+        "version": "1.0.0",
+        "whitelistedProposers": [
+          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+        ]
+      },
+      "implementationNames": {
+        "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b": "Rollup"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Facet Multisig",
@@ -134,7 +159,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A",
+          "from": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
           "description": "can set the whitelisted proposers.",
           "role": ".owner"
         }
@@ -165,60 +190,6 @@
         "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "name": "Rollup",
-      "address": "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A",
-      "type": "Contract",
-      "template": "facet/Rollup",
-      "sourceHashes": [
-        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
-      ],
-      "proxyType": "immutable",
-      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
-      "ignoreInWatchMode": [
-        "getProposalsLength",
-        "anchorL2BlockNumber",
-        "anchorProposalId",
-        "anchorRoot"
-      ],
-      "sinceTimestamp": 1767735587,
-      "sinceBlock": 24178380,
-      "values": {
-        "$immutable": true,
-        "AGG_VKEY": "0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd",
-        "anchorL2BlockNumber": 6746226,
-        "anchorProposalId": 0,
-        "anchorRoot": "0x71239ae97c86c15d45d1931d2708a2c9085631a364c832e628ff6e4af13ae805",
-        "canonicalProposalFor": [],
-        "canonicalProposalIdFor": [],
-        "CHALLENGER_BOND": "10000000000000000000",
-        "computeL2Timestamp": [],
-        "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 13,
-        "isInFallbackWindow": [],
-        "L2_BLOCK_TIME": 12,
-        "L2_START_TIMESTAMP": 1767709775,
-        "l2BlockAge": [],
-        "MAX_CHALLENGE_SECS": 604800,
-        "MAX_PROVE_SECS": 604800,
-        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
-        "PROPOSAL_INTERVAL": 1800,
-        "PROPOSER_BOND": 500000000000000,
-        "RANGE_VKEY_COMMITMENT": "0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594",
-        "renouncedOwner": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001",
-        "ROLLUP_CONFIG_HASH": "0x09e306a5a6b6614b9355c8eadf93e569088433b29792b45236619e4637fa14ae",
-        "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
-        "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
-        "version": "1.0.0",
-        "whitelistedProposers": [
-          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
-        ]
-      },
-      "implementationNames": {
-        "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A": "Rollup"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
@@ -290,20 +261,7 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
-    "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": [
+    "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -322,10 +280,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A": [
+    "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b": [
       "constructor(uint256 _challengeSecs, uint256 _proveSecs, uint256 _challengerBond, uint256 _proposerBond, uint256 _fallbackTimeout, uint256 _proposalInterval, bytes32 _startRoot, uint256 _startBlock, uint256 _l2StartTimestamp, uint256 _l2BlockTime, address _verifier, bytes32 _rollupHash, bytes32 _aggVkey, bytes32 _rangeCommit)",
       "error AlreadyChallenged()",
       "error AlreadyResolved()",
@@ -400,6 +355,9 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)",
       "function whitelistedProposer(address) view returns (bool)"
+    ],
+    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
+      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -484,6 +442,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24198241, "ethscriptions": 6768342 },
-  "permissionsConfigHash": "0x8496066fc76dfc0fef6153c0a39895adedf4f7b898339c8ffdb41be95a4a970c"
+  "usedBlockNumbers": { "ethereum": 24217826, "ethscriptions": 6788010 },
+  "permissionsConfigHash": "0x79df8f08549957361fb184d91be9482002586ea196a7aa63776914eb5eb22896"
 }

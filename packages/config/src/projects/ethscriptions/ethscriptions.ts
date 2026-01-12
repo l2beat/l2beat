@@ -130,7 +130,7 @@ export const ethscriptions: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A',
+            '0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b',
           ),
           selector: '0x45925013',
           functionSignature:
@@ -143,7 +143,7 @@ export const ethscriptions: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A',
+            '0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b',
           ),
           selector: '0x9eeeb214',
           functionSignature:
@@ -156,7 +156,7 @@ export const ethscriptions: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A',
+            '0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b',
           ),
           selector: '0x0075552a',
           functionSignature:
@@ -169,7 +169,7 @@ export const ethscriptions: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A',
+            '0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b',
           ),
           selector: '0x0062804e',
           functionSignature: 'function resolveProposal(uint256 id)',
@@ -303,7 +303,7 @@ export const ethscriptions: ScalingProject = {
   milestones: [
     {
       title: 'Rollup contract deployed',
-      url: 'https://etherscan.io/address/0xC437f0AbaF358Ac1baEFD7f9402Bb8839C1e795A',
+      url: 'https://etherscan.io/address/0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b',
       date: '2025-01-06T00:00:00Z',
       type: 'general',
       description:
