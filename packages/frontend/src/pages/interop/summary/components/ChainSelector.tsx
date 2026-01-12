@@ -19,6 +19,11 @@ export function ChainSelector({ chains }: Props) {
   const { selectedChains, toggleFrom, toggleTo, reset } =
     useInteropSelectedChains()
 
+  const isDirty =
+    Object.values(selectedChains.from).filter(Boolean).length !==
+      chains.length ||
+    Object.values(selectedChains.to).filter(Boolean).length !== chains.length
+
   return (
     <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2">
       <div className="flex items-center gap-[17px]">
@@ -39,12 +44,14 @@ export function ChainSelector({ chains }: Props) {
           />
         </div>
       </div>
-      <button
-        className="font-semibold text-base leading-[115%] underline"
-        onClick={reset}
-      >
-        Reset to default
-      </button>
+      {isDirty && (
+        <button
+          className="font-semibold text-base leading-[115%] underline"
+          onClick={reset}
+        >
+          Reset to default
+        </button>
+      )}
     </div>
   )
 }
@@ -77,9 +84,7 @@ function ChainSelectorButton({
       <PopoverTrigger asChild>
         <div className="h-10 bg-surface-primary px-4 py-[7px]">
           <div className="font-semibold leading-none">
-            {selectedChains.length === allChains.length
-              ? 'All supported chains'
-              : `${selectedChains.length} selected chains`}
+            {selectedChains.length} selected chains
           </div>
           <div className="-space-x-2 flex items-center">
             {selectedChains.map((chain, i) => (
