@@ -302,6 +302,7 @@ export class LidoWstethPlugin implements InteropPlugin {
           app: 'lido-wsteth',
           srcEvent: sentMessage,
           dstEvent: relayedMessage,
+          extraEvents: [depositSentMessage, event],
         }),
         Result.Transfer('lido-wsteth.L1ToL2Transfer', {
           srcEvent: depositSentMessage,
@@ -310,6 +311,7 @@ export class LidoWstethPlugin implements InteropPlugin {
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          extraEvents: [sentMessage, relayedMessage],
         }),
       ]
     }
@@ -342,6 +344,7 @@ export class LidoWstethPlugin implements InteropPlugin {
           app: 'lido-wsteth',
           srcEvent: messagePassed,
           dstEvent: withdrawalFinalized,
+          extraEvents: [withdrawalMessagePassed, event],
         }),
         Result.Transfer('lido-wsteth.L2ToL1Transfer', {
           srcEvent: withdrawalMessagePassed,
@@ -350,6 +353,7 @@ export class LidoWstethPlugin implements InteropPlugin {
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: L1_WSTETH,
+          extraEvents: [messagePassed, withdrawalFinalized],
         }),
       ]
     }
