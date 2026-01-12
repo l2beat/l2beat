@@ -30,7 +30,11 @@ export const fraxferry: Bridge = {
       documentation: ['https://docs.frax.com/'],
       bridges: ['https://mainnet.frax.com/tools/bridge/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
-      socialMedia: ['https://twitter.com/fraxfinance'],
+      socialMedia: [
+        'https://twitter.com/fraxfinance',
+        'https://t.me/fraxfinance',
+        'https://discord.com/invite/fraxfinance',
+      ],
     },
     description:
       'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains.',

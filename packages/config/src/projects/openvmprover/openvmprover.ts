@@ -114,6 +114,111 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         description:
           "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
       },
+      {
+        hash: '0xd20da378d89e8ff0cb8da8f2e3316b11a1da263111de94a6d2ab0bd9a69c0160',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x749fC77A1a131632a8b88e8703E489557660C75e',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0xdd4e59c1c10f04e88f31d9a6cc28e8915b18a3b9770454818f9332bf8c5bb86e',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0x84bee8abb47e23e48f2803a65467c82e2ce7241ee3a2166b0c50f1961afc5636',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0x4ec51340896884b1ee3cbbe582a591603fe6079a269658f5885598e9681b8da3',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0x2d16d04b31777cac46405a5f8db57df83992422fa9eba9eedd5b23567e1b92ac',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x03a72B00D036C479105fF98A1953b15d9c510110',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0x566598f3b1e7cc2f2eb7ee51aecdb6d7b2607ed3ecd7426e6bdfd40ea478c59f',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x2293cd12e8564e8219d314b075867c2f66ac6941',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
+      {
+        hash: '0xf4d2667a66e6ce10c953f77163ebb17a9e6add82a825e5aad4e55760dd1a5945',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+      },
     ],
   },
 }

@@ -1,6 +1,6 @@
 {
   "name": "superposition",
-  "timestamp": 1765379730,
+  "timestamp": 1768216345,
   "configHash": "0x62338da5d493e7fc626d34eebd6b3f8deca6589090d0541725e5bccfe0515cb2",
   "entries": [
     {
@@ -125,7 +125,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 7651,
+        "nonce": 7751,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -281,13 +281,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 7878,
+        "firstUnresolvedNode": 7978,
         "inbox": "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746472,
-        "latestConfirmed": 7877,
-        "latestNodeCreated": 7877,
+        "latestConfirmed": 7977,
+        "latestNodeCreated": 7977,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
@@ -792,7 +792,6 @@
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -802,8 +801,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 111,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 116,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1017,11 +1016,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Outbox",
       "address": "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
       "type": "Contract",
@@ -1231,7 +1225,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 10272,
+        "batchCount": 11154,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -1276,7 +1270,7 @@
         "rollup": "arb1:0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 47082,
+        "totalDelayedMessagesRead": 47979,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1367,7 +1361,7 @@
         "allowedOutboxList": [
           "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"
         ],
-        "delayedMessageCount": 47083,
+        "delayedMessageCount": 47980,
         "inboxHistory": [
           "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
           "arb1:0x31F535A566FE1Ef994858cf4D97b1207fC7388A8"
@@ -1375,8 +1369,8 @@
         "outboxHistory": ["arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"],
         "rollup": "arb1:0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
         "sequencerInbox": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
-        "sequencerMessageCount": 10272,
-        "sequencerReportedSubMessageCount": 2387546
+        "sequencerMessageCount": 11154,
+        "sequencerReportedSubMessageCount": 2492712
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2182,6 +2176,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409202356 },
-  "permissionsConfigHash": "0x41253683e8193650f1989944f5909ed582ae2fe6bdfdf9604b995a427b810104"
+  "usedBlockNumbers": { "arbitrum": 420558808 },
+  "permissionsConfigHash": "0xef3d1a31c4086d0ae2e07758aa34b3975356d9b18c78c7a1afb091f80dc8713b"
 }

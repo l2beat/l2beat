@@ -539,7 +539,14 @@ Verify:
       programUrl:
         'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator/main.cairo#L15',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout 9b4f27df41e8c45aeeb155d4fe84a1df18a8358a\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"aggregator_with_prefix"\` value of this file will be equivalent to dec value of the hash.
+      `,
     },
   '760308386675154762009993173725077399730170358078020153308029499928875469870':
     {
@@ -575,7 +582,14 @@ The output should be the aggregation program hash in dec.
         'Proves correct state transition for a range of consecutive Starknet transactions.',
       programUrl:
         'https://github.com/starkware-libs/sequencer/blob/9b4f27df41e8c45aeeb155d4fe84a1df18a8358a/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os.cairo#L69',
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout 9b4f27df41e8c45aeeb155d4fe84a1df18a8358a\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"os"\` value of this file will be equivalent to dec value of the hash.
+      `,
     },
   '793595346346724189681221050719974054861327641387231526786912662354259445535':
     {

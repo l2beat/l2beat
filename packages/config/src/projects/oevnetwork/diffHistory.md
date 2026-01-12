@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x090b9e0d6da86e97d683098d6eedb84152211c5c
+
+# Diff at Fri, 09 Jan 2026 15:08:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1767802709
+- current timestamp: 1767971183
+
+## Description
+
+currentRequiredStake increased from 0.9 ETH to 1.2 ETH. New executor EOA (0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C) added to UpgradeExecutor.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "900000000000000000"
++        "1200000000000000000"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C"
+      values.executors.1:
++        "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C"
+    }
+```
+
 Generated with discovered.json: 0x354f960bafc7ba8437a48431ad567d93f304d6ff
 
 # Diff at Wed, 07 Jan 2026 16:19:53 GMT:

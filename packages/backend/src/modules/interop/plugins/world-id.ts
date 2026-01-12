@@ -114,6 +114,7 @@ export class WorldIdPlugin implements InteropPlugin {
           app: 'world-id',
           srcEvent: sentMessage,
           dstEvent: event,
+          extraEvents: [worldIdEvent],
         }),
       ]
 
@@ -127,6 +128,7 @@ export class WorldIdPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [worldIdEvent],
           }),
         )
       }

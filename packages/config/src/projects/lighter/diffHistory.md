@@ -1,4 +1,53 @@
-Generated with discovered.json: 0xea3db0de3766b8869a95993ad06b31daaabe5b44
+Generated with discovered.json: 0xfb2f9ffa84ff99b36f4fe49452a08831bb500d6e
+
+# Diff at Mon, 12 Jan 2026 11:46:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1767970274
+- current timestamp: 1768216772
+
+## Description
+
+ZkLighterVerifier implementation upgraded. Sources have not been published yet.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        37
++        38
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x9fb19e3d933b1d83369c32b6e1ec0333c42f0f814ee9e9ec8e5e1efea520d374"
++        "0xcd42bf75a7fe0596b2df88cb9118f3e431864309a1a3c8987ea5e4c50acd0e09"
+      values.$implementation:
+-        "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2"
++        "eth:0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931"
+      values.getTarget:
+-        "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2"
++        "eth:0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931"
+      implementationNames.eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+Generated with discovered.json: 0x10ec99a3b2ed549870085e478f20f57c93d6fc07
 
 # Diff at Thu, 08 Jan 2026 09:32:46 GMT:
 

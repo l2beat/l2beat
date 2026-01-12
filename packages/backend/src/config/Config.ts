@@ -210,7 +210,7 @@ export interface InteropFeatureConfig {
   capture: {
     enabled: boolean
     chains: {
-      name: string
+      id: string
       type: 'evm'
     }[]
   }

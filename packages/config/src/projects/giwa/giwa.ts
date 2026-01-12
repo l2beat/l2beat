@@ -19,7 +19,7 @@ export const giwa: ScalingProject = upcomingL2({
       documentation: ['https://docs.giwa.io/'],
       repositories: ['https://github.com/giwa-io'],
       explorers: ['https://sepolia-explorer.giwa.io/'],
-      socialMedia: [],
+      socialMedia: ['https://x.com/giwachain'],
     },
   },
   proofSystem: {

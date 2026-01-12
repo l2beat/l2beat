@@ -93,12 +93,24 @@ export const lighter: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 21642011, // https://etherscan.io/tx/0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9
+        untilBlock: 24040916,
         inbox: EthereumAddress('0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7'),
         sequencers: [
           EthereumAddress('0xfDb36C132fA19f7774d72fA39c89272D1B954A41'),
           EthereumAddress('0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa'),
           EthereumAddress('0xfcB73F6405F6B9be91013d9477d81833a69C9c0D'),
           EthereumAddress('0x1c0F4f6daf0E0f32C5482672fa5342784915df21'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 24040917, // https://etherscan.io/tx/0x61f50fb26d996bc13b8f528e2d29e723b29e80f5ae11358ac7bded4f735611d3
+        inbox: EthereumAddress('0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7'),
+        sequencers: [
+          EthereumAddress('0x191fF0EC830F83916A427d169a234c33e48aA79f'),
+          EthereumAddress('0x750bdb90AC72A78308d21eAC78999bBAE31cd63d'),
+          EthereumAddress('0xC0D2853e06F1E145177D5ef08Ab065a76e14354C'),
         ],
       },
     ],
@@ -257,7 +269,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0x05f8176860955d94f974db0ce8bb4f160ae425a2#code#F1#L54',
+            url: 'https://etherscan.io/address/0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
