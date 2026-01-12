@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "degate3",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x54D7aE423Edb07282645e740C046B9373970a168"],
   "names": {

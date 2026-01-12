@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "thebinaryholdings",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xa641e14B685b5E652865e14A4fBc07e51371D124",

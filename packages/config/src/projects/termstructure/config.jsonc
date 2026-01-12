@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "termstructure",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9",

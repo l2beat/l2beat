@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zkspace",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"],
   "names": {

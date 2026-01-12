@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "honeypot",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",

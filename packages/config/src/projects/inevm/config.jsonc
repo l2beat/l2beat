@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "inevm",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",

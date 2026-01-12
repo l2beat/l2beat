@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "kinto",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
   "archived": true,

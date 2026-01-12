@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "dydx",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "maxDepth": 10,
   "initialAddresses": ["eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],

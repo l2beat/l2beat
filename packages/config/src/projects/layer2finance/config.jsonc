@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "layer2finance",
+  "isArchived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
