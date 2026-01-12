@@ -38,16 +38,16 @@ const ORBIT_BRIDGE_TO_NETWORK = new Map(
 )
 
 // L1 event: MessageRelayed from HubPool + SentMessage combined (OpStack)
-const AcrossSettlementSentMessage = createInteropEventType<{
+const AcrossSettlementRelayedMessageOP = createInteropEventType<{
   chain: string
   msgHash: string
-}>('across-settlement.SentMessage')
+}>('across-settlement.RelayedMessageOP')
 
 // L1 event: MessageRelayed from HubPool + MessageDelivered combined (OrbitStack)
-const AcrossSettlementMessageDelivered = createInteropEventType<{
+const AcrossSettlementRelayedMessageOrbit = createInteropEventType<{
   chain: string
   messageNum: string
-}>('across-settlement.MessageDelivered')
+}>('across-settlement.RelayedMessageOrbit')
 
 // Event parser for MessageRelayed from HubPool
 // event MessageRelayed(address target, bytes message)
@@ -100,7 +100,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           )
 
           return [
-            AcrossSettlementSentMessage.create(input, {
+            AcrossSettlementRelayedMessageOP.create(input, {
               chain: network.chain,
               msgHash,
             }),
@@ -116,7 +116,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           if (!messageDelivered) continue
 
           return [
-            AcrossSettlementMessageDelivered.create(input, {
+            AcrossSettlementRelayedMessageOrbit.create(input, {
               chain: network.chain,
               messageNum: messageDelivered.messageIndex.toString(),
             }),
@@ -133,8 +133,8 @@ export class AcrossSettlementPlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // OpStack matching
     if (RelayedMessage.checkType(event)) {
-      // Check if there's a corresponding AcrossSettlementSentMessage
-      const acrossEvent = db.find(AcrossSettlementSentMessage, {
+      // Check if there's a corresponding AcrossSettlementRelayedMessageOP
+      const acrossEvent = db.find(AcrossSettlementRelayedMessageOP, {
         msgHash: event.args.msgHash,
         chain: event.args.chain,
       })
@@ -152,6 +152,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           app: 'across-settlement',
           srcEvent: sentMessage,
           dstEvent: event,
+          extraEvents: [acrossEvent],
         }),
       ]
 
@@ -165,6 +166,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [acrossEvent],
           }),
         )
       }
@@ -174,8 +176,8 @@ export class AcrossSettlementPlugin implements InteropPlugin {
 
     // OrbitStack matching
     if (RedeemScheduled.checkType(event)) {
-      // Check if there's a corresponding AcrossSettlementMessageDelivered
-      const acrossEvent = db.find(AcrossSettlementMessageDelivered, {
+      // Check if there's a corresponding AcrossSettlementRelayedMessageOrbit
+      const acrossEvent = db.find(AcrossSettlementRelayedMessageOrbit, {
         messageNum: event.args.messageNum,
         chain: event.args.chain,
       })
@@ -193,6 +195,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           app: 'across-settlement',
           srcEvent: messageDelivered,
           dstEvent: event,
+          extraEvents: [acrossEvent],
         }),
       ]
 
@@ -206,6 +209,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [acrossEvent],
           }),
         )
       }
