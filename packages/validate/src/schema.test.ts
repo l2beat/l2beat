@@ -166,6 +166,27 @@ describe('toJsonSchema', () => {
     })
   })
 
+  it('strict object', () => {
+    const input = v.strictObject({
+      a: v.string(),
+      b: v.number().optional(),
+      c: v.boolean().default(false),
+      d: v.null().catch(null),
+    })
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'object',
+      properties: {
+        a: { type: 'string' },
+        b: { type: 'number' },
+        c: { type: 'boolean' },
+        d: { type: 'null' },
+      },
+      required: ['a'],
+      additionalProperties: false,
+    })
+  })
+
   it('record', () => {
     const input = v.record(v.string(), v.number())
     expect(toJsonSchema(input)).toEqual({

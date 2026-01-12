@@ -17,7 +17,11 @@ export const unite: ScalingProject = underReviewL3({
     stacks: ['Arbitrum'],
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
-      socialMedia: ['https://x.com/uniteio'],
+      socialMedia: [
+        'https://x.com/uniteio',
+        'https://t.me/uniteiotg',
+        'https://discord.com/invite/unite-io',
+      ],
       websites: ['https://unite.io/'],
       explorers: ['https://unite-mainnet.explorer.alchemy.com/'],
       bridges: [

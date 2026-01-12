@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import * as posix from 'path'
+import { findLeadingCommentStart } from './commentUtilities'
 import { getASTIdentifiers } from './getASTIdentifiers'
 import type { FlattenOptions } from './types'
 
@@ -40,7 +41,6 @@ export interface TopLevelDeclaration {
   type: DeclarationType
 
   ast: AST.ASTNode
-  byteRange: ByteRange
   content: string
 
   inheritsFrom: string[]
@@ -192,17 +192,19 @@ export class ParsedFilesManager {
         )
       }
 
+      // When includeAll is true, extend start backwards to include leading comments
+      const adjustedStart =
+        this.options.includeAll === true
+          ? findLeadingCommentStart(file.content, d.range[0])
+          : d.range[0]
+
       return {
         ast: d,
         name: d.name ?? '',
         type: getDeclarationType(d),
         inheritsFrom,
         dynamicReferences: [],
-        byteRange: {
-          start: d.range[0],
-          end: d.range[1],
-        },
-        content: file.content.slice(d.range[0], d.range[1] + 1),
+        content: file.content.slice(adjustedStart, d.range[1] + 1),
       }
     })
 

@@ -298,7 +298,19 @@ export function DeployedTokenForm({
                         )
                       ) : null}
                     </div>
-                    <FormMessage />
+                    {tokenDetails.data?.error?.type === 'already-exists' ? (
+                      <p className="text-destructive text-sm">
+                        {tokenDetails.data.error.message}.{' '}
+                        <Link
+                          to={`/tokens/${chainValue}/${field.value}`}
+                          className="underline hover:no-underline"
+                        >
+                          View
+                        </Link>
+                      </p>
+                    ) : (
+                      <FormMessage />
+                    )}
                   </FormItem>
                 )
               }}

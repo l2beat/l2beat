@@ -7,6 +7,7 @@ export const jsonDiagnostics: languages.json.DiagnosticsOptions = {
   validate: true,
   enableSchemaRequest: true,
   schemaValidation: 'error',
+  // TODO: Use editor.upsertJsonSchema() instead in respective editor components
   schemas: [
     {
       uri: 'inmemory:/discovery/schemas/contract.v2.schema.json',

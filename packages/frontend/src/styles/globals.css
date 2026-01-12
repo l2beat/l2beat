@@ -765,3 +765,23 @@
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
 }
+
+/* Theme toggle view transition */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  animation: reveal-from-circle 0.4s ease-in-out;
+  z-index: 2;
+}
+
+@keyframes reveal-from-circle {
+  from {
+    clip-path: circle(0 at var(--circle-x) var(--circle-y));
+  }
+  to {
+    clip-path: circle(var(--circle-radius) at var(--circle-x) var(--circle-y));
+  }
+}

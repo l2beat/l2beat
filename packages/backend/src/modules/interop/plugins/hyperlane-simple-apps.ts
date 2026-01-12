@@ -5,7 +5,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
-import { findParsedAround } from './hyperlane-eco'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -25,9 +25,8 @@ const parsePriceUpdated = createEventParser(
 const PriceUpdatedProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
-}>('hyperlane.PriceUpdatedProcess')
+}>('hyperlane-renzo.PriceUpdatedProcess')
 
-// ReceivedFromBridge (index_topic_1 bytes32 txId)
 const parseReceivedFromBridge = createEventParser(
   'event ReceivedFromBridge(bytes32 indexed txId)',
 )
@@ -35,7 +34,7 @@ const parseReceivedFromBridge = createEventParser(
 const ReceivedFromBridgeProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
-}>('hyperlane.ReceivedFromBridge')
+}>('hyperlane-decent.ReceivedFromBridge')
 
 export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
   name = 'hyperlane-simple-apps'
@@ -47,7 +46,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]
@@ -71,7 +70,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]
@@ -119,6 +118,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         }),
       ]
     }
+
     if (ReceivedFromBridgeProcess.checkType(incomingInteropEvent)) {
       const dispatch = db.find(Dispatch, {
         messageId: incomingInteropEvent.args.messageId,

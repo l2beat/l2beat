@@ -12,6 +12,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
@@ -45,6 +46,7 @@ export function createServerPageRouter(
 
   const routers = [
     createScalingRouter,
+    createInteropRouter,
     createBridgesRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,

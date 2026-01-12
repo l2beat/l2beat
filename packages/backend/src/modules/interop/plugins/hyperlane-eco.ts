@@ -8,6 +8,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -22,10 +23,19 @@ import {
 
 /**
  * INTENT SETTLEMENT PLUGIN (not fill)
- * This plugin tracks the 'Hyperprover' contract which *settles*
- * intents on the 'eco' protocol via the hyperlane message bridge.
+ * This plugin tracks Hyperlane Eco contracts which *settle*
+ * intents on the via the hyperlane message bridge.
  * 'proving' here just refers to messaging / settling
  * we are tracking the fill as the origin and the settlement as the destination
+ *
+ * there are 3 paths to settlement:
+ * 1. HyperBatched: Queues the proof to be sent later in a group (BatchSent event on old contract, IntentProven (source) on new)
+ * 2. HyperInstant: Immediately sends a message via Hyperlane to the Source Chain (HyperInstantFulfillment event on old contract, IntentProven (source) on new)
+ * 3. Storage: Relies on standard storage proofs (no message back needed)
+ *
+ * we only track 1 and 2 as hyperlane messages, and an old IntentProven
+ *
+ * the new 'portal' contract can also sent via other bridges than hyperlane
  */
 
 const parseBatchSent = createEventParser(
@@ -44,6 +54,10 @@ const parseIntentProvenDestination = createEventParser(
   'event IntentProven(bytes32 indexed intentHash, address indexed _claimant, uint64 destination)',
 )
 
+const parseHyperInstantFulfillment = createEventParser(
+  'event HyperInstantFulfillment(bytes32 indexed _hash, uint256 indexed _sourceChainID, address indexed _claimant)',
+)
+
 const BatchSentDispatch = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
@@ -55,42 +69,22 @@ const IntentProvenProcess = createInteropEventType<{
   recipient: Address32 // claimant
 }>('hyperlane-eco.IntentProvenProcess')
 
-export function findParsedAround<T>(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  parse: (log: LogToCapture['txLogs'][number]) => T | undefined,
-): { parsed: T; index: number } | undefined {
-  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
-  if (startPos === -1) return
-
-  for (let offset = 0; offset < logs.length; offset++) {
-    const forward = startPos + offset
-    if (forward < logs.length) {
-      const parsed = parse(logs[forward])
-      if (parsed) return { parsed, index: forward }
-    }
-
-    if (offset === 0) continue
-    const backward = startPos - offset
-    if (backward >= 0) {
-      const parsed = parse(logs[backward])
-      if (parsed) return { parsed, index: backward }
-    }
-  }
-}
-
 export class HyperlaneEcoPlugin implements InteropPlugin {
   name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)
+    const hyperInstantFulfillment = parseHyperInstantFulfillment(
+      input.log,
+      null,
+    )
     const intentProvenSource = parseIntentProvenSource(input.log, null)
-    if (batchSent || intentProvenSource) {
+    if (batchSent || intentProvenSource || hyperInstantFulfillment) {
       const dispatch = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseDispatch(log, null),
+        (log, _index) => parseDispatch(log, null),
       )
       if (!dispatch) return
 
@@ -122,7 +116,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         // we start one index higher because we would otherwise find the wrong processId of the batch first
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex! - 1,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!processMatch) return
 
