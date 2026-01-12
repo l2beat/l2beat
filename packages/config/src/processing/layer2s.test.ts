@@ -2,7 +2,6 @@ import {
   assert,
   assertUnreachable,
   ChainSpecificAddress,
-  EthereumAddress,
   notUndefined,
   ProjectId,
   UnixTime,
@@ -528,4 +527,3 @@ describe('layer2s', () => {
     }
   })
 })
-
