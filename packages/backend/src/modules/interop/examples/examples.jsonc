@@ -1266,6 +1266,14 @@
         "chain": "ethereum",
         "tx": "0x8cecd47d5698b9b0231ca98763a90e67d0f18cd1814906ad763089dd57cfbc4f"
       },
+      {
+        "chain": "arbitrum",
+        "tx": "0xcc2d7c12a188e802086d9375750a471099d76cb3f3bd5b061f58a6798a3295ed"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6528d44ba76c018bd4a75a6daba21ddb925b33f5b98d4e645e1b5cc923c961fb"
+      },
       // arbitrum -> ethereum (grt withdrawal)
       {
         "chain": "arbitrum",
@@ -1274,6 +1282,28 @@
       {
         "chain": "ethereum",
         "tx": "0xf88007f747c06c5ed5f8d4b7c08ca2f1a50a9933ce45e77427ab05127c22a7d7"
+      },
+      // ethereum -> arbitrum (wsteth deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0x9b2901f1f5b7630523c63cf51cf2ea15ac24c8e532087a19a11a986d4de5579a"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa40380ac8adc58123a38418abfb8552c40e902095ce776dd8af042d34f4963f9"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x84e788c20e054be3d2244b36cd32bca9c1c0472e618bcc1539fd1c5e2ac32c52"
+      },
+      // arbitrum -> ethereum (wsteth withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0x6e49a2e4291f6f1d9016caa299d8e6b9ac0f1c1d6e76ea5ba1afc085b7f4da9f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x5b3b56b8ec3e0fc60583e4c1dba1b25b0019bf348a423880a1d5c4b429eff2af"
       }
     ],
     "events": [
@@ -1291,7 +1321,14 @@
       "orbitstack-customgateway.WithdrawalFinalized",
       // grt deposit
       "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositFinalized",
       // grt withdrawal
+      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalFinalized",
+      // wsteth deposit
+      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositFinalized",
+      // wsteth withdrawal
       "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized"
     ],
@@ -1305,6 +1342,14 @@
         "app": "orbitstack-customgateway-lpt"
       },
       {
+        "type": "orbitstack.L1ToL2Message",
+        "app": "orbitstack-customgateway-grt"
+      },
+      {
+        "type": "orbitstack.L1ToL2Message",
+        "app": "orbitstack-customgateway-wsteth"
+      },
+      {
         "type": "orbitstack.L2ToL1Message",
         "app": "orbitstack-customgateway-dai"
       },
@@ -1315,11 +1360,18 @@
       {
         "type": "orbitstack.L2ToL1Message",
         "app": "orbitstack-customgateway-grt"
+      },
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-customgateway-wsteth"
       }
     ],
     "transfers": [
       "orbitstack.L1ToL2Transfer",
       "orbitstack.L1ToL2Transfer",
+      "orbitstack.L1ToL2Transfer",
+      "orbitstack.L1ToL2Transfer",
+      "orbitstack.L2ToL1Transfer",
       "orbitstack.L2ToL1Transfer",
       "orbitstack.L2ToL1Transfer",
       "orbitstack.L2ToL1Transfer"
