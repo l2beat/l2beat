@@ -42,7 +42,8 @@ export function createUpdateMonitorRouter(
 
   router.get('/status/discovery/:projectName.html.md', async (ctx) => {
     const projectName = ctx.params.projectName
-    const markdown = await updateMonitorController.getProjectMarkdown(projectName)
+    const markdown =
+      await updateMonitorController.getProjectMarkdown(projectName)
 
     if (markdown === null) {
       ctx.status = 404
