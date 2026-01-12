@@ -1296,11 +1296,26 @@
       "orbitstack-customgateway.WithdrawalFinalized"
     ],
     "messages": [
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-dai" },
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-lpt" },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-dai" },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-lpt" },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-grt" }
+      {
+        "type": "orbitstack.L1ToL2Message",
+        "app": "orbitstack-customgateway-dai"
+      },
+      {
+        "type": "orbitstack.L1ToL2Message",
+        "app": "orbitstack-customgateway-lpt"
+      },
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-customgateway-dai"
+      },
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-customgateway-lpt"
+      },
+      {
+        "type": "orbitstack.L2ToL1Message",
+        "app": "orbitstack-customgateway-grt"
+      }
     ],
     "transfers": [
       "orbitstack.L1ToL2Transfer",
