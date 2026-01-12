@@ -1260,6 +1260,20 @@
       {
         "chain": "ethereum",
         "tx": "0xf2d2bb22ba08ea15ba0d3059c3e616dea6050936e88b6cf6b34ef49545473d22"
+      },
+      // ethereum -> arbitrum (grt deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0x8cecd47d5698b9b0231ca98763a90e67d0f18cd1814906ad763089dd57cfbc4f"
+      },
+      // arbitrum -> ethereum (grt withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0x86f8f5c611dfa9c640a9da6b24ecc8097452ec377ca3ae060abfe697bd27321c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf88007f747c06c5ed5f8d4b7c08ca2f1a50a9933ce45e77427ab05127c22a7d7"
       }
     ],
     "events": [
@@ -1274,17 +1288,24 @@
       "orbitstack-customgateway.DepositFinalized",
       // lpt withdrawal
       "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalFinalized",
+      // grt deposit
+      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      // grt withdrawal
+      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized"
     ],
     "messages": [
       { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-dai" },
       { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-lpt" },
       { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-dai" },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-lpt" }
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-lpt" },
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-grt" }
     ],
     "transfers": [
       "orbitstack.L1ToL2Transfer",
       "orbitstack.L1ToL2Transfer",
+      "orbitstack.L2ToL1Transfer",
       "orbitstack.L2ToL1Transfer",
       "orbitstack.L2ToL1Transfer"
     ]

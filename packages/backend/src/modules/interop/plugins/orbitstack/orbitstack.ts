@@ -181,6 +181,15 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
           '0x6D2457a4ad276000A615295f7A80F79E48CcD318',
         ),
       },
+      {
+        key: 'grt',
+        l1Gateway: EthereumAddress(
+          '0x01cdc91b0a9ba741903aa3699bf4ce31d6c5cc06',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x65E1a5e8946e7E87d9774f5288f41c30a99fD302',
+        ),
+      },
     ],
   },
 ])
