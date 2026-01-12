@@ -1407,7 +1407,7 @@
     "transfers": ["hyperlaneHwr.Transfer"]
   },
   "hwr": {
-    // 2 hwr transfers, one is USDC via cctp
+    // 3 hwr transfers, one is USDC via cctp
     "txs": [
       {
         "chain": "base",
@@ -1424,6 +1424,14 @@
       {
         "chain": "optimism",
         "tx": "0xbc6a4ca0aa203d0f0b16b03f42504a0cbd7e62d5bf67caab3918df4750ab0694"
+      },
+      {
+        "chain": "base",
+        "tx": "0xa09a421c4e14c94f814f535c87643d5f467f253ee059c00dfd403ffc360805c7"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x99cc07d4031da67e058a9513a4677307c47a2921c573cafbb5eed22741f26b6b"
       }
     ]
   },

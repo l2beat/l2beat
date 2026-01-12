@@ -87,7 +87,6 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           return dispatchId?.messageId
         },
       )?.parsed
-      console.log('messageId', messageId)
       if (!messageId) return
 
       const $dstChain = findChain(
@@ -96,30 +95,19 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
-      let srcTokenAddress: Address32 | undefined
-
-      for (
-        let offset = 1;
+      const transferMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
           // compare amount to not match a rogue Transfer event
-          if (transfer.value === sentTransferRemote.amount) {
-            srcTokenAddress = Address32.from(precedingLog.address)
-            break
-          }
-        }
-      }
+          if (transfer.value !== sentTransferRemote.amount) return
+          return Address32.from(log.address)
+        },
+      )
+      const srcTokenAddress = transferMatch?.parsed
 
       const depositForBurn = findParsedAround(
         input.txLogs,
@@ -181,30 +169,19 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
-      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
-      let srcTokenAddress: Address32 | undefined
-
-      for (
-        let offset = 1;
+      const transferMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
           // compare amount to not match a rogue Transfer event
-          if (transfer.value === receivedTransferRemote.amount) {
-            srcTokenAddress = Address32.from(precedingLog.address)
-            break
-          }
-        }
-      }
+          if (transfer.value !== receivedTransferRemote.amount) return
+          return Address32.from(log.address)
+        },
+      )
+      const dstTokenAddress = transferMatch?.parsed
 
       return [
         HwrTransferReceived.create(input, {
@@ -213,7 +190,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           origin: Number(receivedTransferRemote.origin),
           recipient: Address32.from(receivedTransferRemote.recipient),
           amount: receivedTransferRemote.amount,
-          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+          tokenAddress: dstTokenAddress ?? Address32.NATIVE,
         }),
       ]
     }
@@ -274,10 +251,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
 export function findParsedAround<T>(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
-  parse: (
-    log: LogToCapture['txLogs'][number],
-    index: number,
-  ) => T | undefined,
+  parse: (log: LogToCapture['txLogs'][number], index: number) => T | undefined,
 ): { parsed: T; index: number } | undefined {
   const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
   if (startPos === -1) return
