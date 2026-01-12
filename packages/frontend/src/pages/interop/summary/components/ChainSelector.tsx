@@ -1,5 +1,4 @@
 import type { InteropChains } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import {
   Popover,
   PopoverContent,
@@ -20,9 +19,8 @@ export function ChainSelector({ chains }: Props) {
     useInteropSelectedChains()
 
   const isDirty =
-    Object.values(selectedChains.from).filter(Boolean).length !==
-      chains.length ||
-    Object.values(selectedChains.to).filter(Boolean).length !== chains.length
+    selectedChains.from.length !== chains.length ||
+    selectedChains.to.length !== chains.length
 
   return (
     <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2">
@@ -32,13 +30,13 @@ export function ChainSelector({ chains }: Props) {
         <div className="flex items-center gap-3">
           <div className="font-semibold">From</div>
           <ChainSelectorButton
-            chainsState={selectedChains.from}
+            selectedChains={selectedChains.from}
             allChains={chains}
             toggleSelected={toggleFrom}
           />
           <div className="font-semibold">to</div>
           <ChainSelectorButton
-            chainsState={selectedChains.to}
+            selectedChains={selectedChains.to}
             allChains={chains}
             toggleSelected={toggleTo}
           />
@@ -57,27 +55,20 @@ export function ChainSelector({ chains }: Props) {
 }
 
 function ChainSelectorButton({
-  chainsState,
+  selectedChains,
   allChains,
   toggleSelected,
 }: {
-  chainsState: Record<InteropChainId, boolean>
+  selectedChains: InteropChainId[]
   allChains: InteropChains
   toggleSelected: (chainId: InteropChainId) => void
 }) {
-  const chainsWithDetails = Object.entries(chainsState).map(
-    ([chainId, isSelected]) => {
-      const chain = allChains.find((chain) => chain.id === chainId)
-      assert(chain, `Chain with id ${chainId} not found`)
-      return {
-        id: chainId as InteropChainId,
-        iconSlug: chain.iconSlug,
-        name: chain.name,
-        isSelected,
-      }
-    },
-  )
-  const selectedChains = chainsWithDetails.filter((chain) => chain.isSelected)
+  const chainsWithDetails = allChains.map(({ id, iconSlug, name }) => ({
+    id,
+    iconSlug,
+    name,
+    isSelected: selectedChains.includes(id),
+  }))
 
   return (
     <Popover>
@@ -87,15 +78,17 @@ function ChainSelectorButton({
             {selectedChains.length} selected chains
           </div>
           <div className="-space-x-2 flex items-center">
-            {selectedChains.map((chain, i) => (
-              <img
-                key={chain.id}
-                src={`/icons/${chain.iconSlug}.png`}
-                alt={chain.name}
-                className="size-5"
-                style={{ zIndex: selectedChains.length - i }}
-              />
-            ))}
+            {chainsWithDetails
+              .filter((chain) => chain.isSelected)
+              .map((chain, i) => (
+                <img
+                  key={chain.id}
+                  src={`/icons/${chain.iconSlug}.png`}
+                  alt={chain.name}
+                  className="size-5"
+                  style={{ zIndex: selectedChains.length - i }}
+                />
+              ))}
           </div>
         </div>
       </PopoverTrigger>
