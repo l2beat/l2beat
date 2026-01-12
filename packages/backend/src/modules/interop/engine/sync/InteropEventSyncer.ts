@@ -224,7 +224,7 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   getOldestEventForPluginAndChain(): Promise<InteropEventRecord | undefined> {
-    return this.db.interopEvent.getOldestEventForPluginAndChan(
+    return this.db.interopEvent.getOldestEventForPluginAndChain(
       this.plugin.name,
       this.chain,
     )
