@@ -87,7 +87,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
   })
 
   describe(
-    InteropEventRepository.prototype.getOldestEventForPluginAndChan.name,
+    InteropEventRepository.prototype.getOldestEventForPluginAndChain.name,
     () => {
       it('returns the oldest event by timestamp for a plugin and chain', async () => {
         await repository.insertMany([
@@ -105,7 +105,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
           }),
         ])
 
-        const result = await repository.getOldestEventForPluginAndChan(
+        const result = await repository.getOldestEventForPluginAndChain(
           'plugin1',
           'chainA',
         )
@@ -123,7 +123,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
           }),
         ])
 
-        const result = await repository.getOldestEventForPluginAndChan(
+        const result = await repository.getOldestEventForPluginAndChain(
           'plugin1',
           'chainA',
         )

@@ -103,7 +103,7 @@ export class InteropEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getOldestEventForPluginAndChan(
+  async getOldestEventForPluginAndChain(
     plugin: string,
     chain: string,
   ): Promise<InteropEventRecord | undefined> {
