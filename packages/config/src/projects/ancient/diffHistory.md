@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x8be02dc0d3bbc62e397a6230de678e6f7e42581b
+
+# Diff at Mon, 12 Jan 2026 10:54:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1765959970
+- current timestamp: 1768215191
+
+## Description
+
+SuperchainConfig upgrade from v1.2.0 to v2.4.0. This upgrade transitions from a local fork of SuperchainConfig to the shared Superchain implementation, adding pauseExpiry and removing legacy GUARDIAN_SLOT/PAUSED_SLOT fields.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) {
+    +++ description: None
+      template:
+-        "opstack/SuperchainConfigFake"
+      sourceHashes.1:
+-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      description:
+-        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      values.$implementation:
+-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.1:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$pastUpgrades.2:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.GUARDIAN_SLOT:
+-        "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68"
+      values.PAUSED_SLOT:
+-        "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6"
+      values.version:
+-        "1.2.0"
++        "2.4.0"
+      values.initVersion:
++        2
+      values.pauseExpiry:
++        7884000
+      values.proxyAdmin:
++        "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+      category:
+-        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","role":".guardian"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 465 +++++++++++++++------
+ 1 file changed, 346 insertions(+), 119 deletions(-)
+```
+
 Generated with discovered.json: 0x37d76b741b399e51875b26c0366882258c79d28a
 
 # Diff at Wed, 17 Dec 2025 08:28:22 GMT:

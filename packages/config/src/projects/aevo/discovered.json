@@ -1,6 +1,6 @@
 {
   "name": "aevo",
-  "timestamp": 1765550068,
+  "timestamp": 1768215185,
   "configHash": "0x797e108b6ee5c166c34cf8bf43ea6b9f285012565cbaab2d1ea89092c2ff34e2",
   "entries": [
     {
@@ -12,37 +12,46 @@
       "name": "SuperchainConfig",
       "address": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "sinceTimestamp": 1750849619,
       "sinceBlock": 22781049,
       "values": {
         "$admin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
-        "$implementation": "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
+        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
         "$pastUpgrades": [
           [
             "2025-06-25T11:06:59.000Z",
             "0x63366bb4d9f073e6f0e1de8495baf47a7e1921c02049305253907db5ac6839ca",
             ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+          ],
+          [
+            "2026-01-12T08:51:11.000Z",
+            "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
+            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+          ],
+          [
+            "2026-01-12T08:51:11.000Z",
+            "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
+            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "guardian": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
+        "initVersion": 2,
         "paused": false,
-        "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
-        "version": "1.2.0"
+        "pauseExpiry": 7884000,
+        "proxyAdmin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
+        "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "version": "2.4.0"
       },
       "implementationNames": {
         "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": "Proxy",
-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": "SuperchainConfig"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -77,7 +86,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3362,
+        "gameCount": 4099,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C",
@@ -90,7 +99,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 3362,
+        "permissionedGamesTotal": 4099,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -189,7 +198,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644578",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644700",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -453,11 +462,6 @@
           "role": ".challenger"
         },
         {
-          "permission": "guard",
-          "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
-          "role": ".guardian"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x5c30F525Ca2F10377F352B349fca9a6b2AA1cA2E",
           "description": "can pull funds from the contract in case of emergency.",
@@ -595,7 +599,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 194,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -944,7 +948,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 821744,
-          "prevBlockNum": 23995301
+          "prevBlockNum": 24215761
         },
         "paused": false,
         "proofMaturityDelaySeconds": 3600,
@@ -1432,21 +1436,6 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
-    "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": [
-      "constructor()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(string identifier)",
-      "event Unpaused()",
-      "function GUARDIAN_SLOT() view returns (bytes32)",
-      "function PAUSED_SLOT() view returns (bytes32)",
-      "function guardian() view returns (address guardian_)",
-      "function initialize(address _guardian, bool _paused)",
-      "function pause(string _identifier)",
-      "function paused() view returns (bool paused_)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
     "eth:0x535fA600a9Cb3e0731a18B0C16b39ad461B63bDb": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1781,6 +1770,38 @@
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
     ],
+    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _guardian)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function unpause(address _identifier)",
+      "function version() view returns (string)"
+    ],
     "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1927,9 +1948,8 @@
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23997167 },
-  "permissionsConfigHash": "0xbb802a990ece97a0534dc4ff02dc0403ef608189afab435a3950cac4ffd249ab"
+  "usedBlockNumbers": { "ethereum": 24218159 },
+  "permissionsConfigHash": "0xe7c5f6d16d2e8035b364a0dbc6b27d718e0c3470cb821dbf1fc33aab788ad519"
 }
