@@ -101,7 +101,7 @@ export class InteropEventSyncer extends TimeLoop {
     fn: (state: T) => Promise<SyncerState>,
   ) {
     try {
-      this.clearChainSyncError()
+      await this.clearChainSyncError()
       this.state = await fn(state)
       if (this.state.type === 'timeLoop') {
         this.unpause()
