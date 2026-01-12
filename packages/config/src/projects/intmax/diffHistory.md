@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x5a5e21d1f702b4a978de82815108776870ac993a
+
+# Diff at Mon, 12 Jan 2026 11:20:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1767783841
+- current timestamp: 1768216753
+
+## Description
+
+PredicateServiceManager aggregator EOA (`0x38f6001e8ac11240f903CBa56aFF72A1425ae371`) revoked its EIP7702 delegation, returning to a standard EOA. Ownership of the PredicateServiceManager transferred back to a 4/4 multisig (`0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE`) from the previous EOA owner (3 new EOAs added).
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      unverified:
+-        true
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"}
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      values.owner:
+-        "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c"
++        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
+    }
+```
+
+```diff
+    EOA  (eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","description":"can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../intmax/.flat/GnosisSafe/GnosisSafe.sol         | 953 +++++++++++++++++++++
+ .../intmax/.flat/GnosisSafe/GnosisSafeProxy.p.sol  |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0xc8eaab8ca41d4a8d5ae89e50b5c0e6192aac7354
 
 # Diff at Wed, 07 Jan 2026 11:05:12 GMT:

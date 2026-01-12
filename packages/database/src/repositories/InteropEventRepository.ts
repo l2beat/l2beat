@@ -103,6 +103,22 @@ export class InteropEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getOldestEventForPluginAndChain(
+    plugin: string,
+    chain: string,
+  ): Promise<InteropEventRecord | undefined> {
+    const row = await this.db
+      .selectFrom('InteropEvent')
+      .where('plugin', '=', plugin)
+      .where('chain', '=', chain)
+      .selectAll()
+      .orderBy('timestamp', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getByType(
     type: string,
     options: {

@@ -874,9 +874,9 @@
       }
     ],
     "events": [
-      "across-settlement.SentMessage",
-      "across-settlement.SentMessage",
-      "across-settlement.MessageDelivered"
+      "across-settlement.RelayedMessageOP",
+      "across-settlement.RelayedMessageOP",
+      "across-settlement.RelayedMessageOrbit"
     ],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "across-settlement" },

@@ -6,6 +6,36 @@ import {
   InteropMessageRepository,
 } from './InteropMessageRepository'
 
+const makeRecord = (
+  baseTime: UnixTime,
+  overrides: Partial<InteropMessageRecord> = {},
+): InteropMessageRecord => {
+  const timestamp = overrides.timestamp ?? baseTime
+  const duration = overrides.duration ?? 100
+  const srcTime = overrides.srcTime ?? timestamp
+  const dstTime = overrides.dstTime ?? srcTime + duration
+
+  return {
+    plugin: 'plugin',
+    messageId: 'msg',
+    type: 'message',
+    app: 'app',
+    duration,
+    timestamp,
+    srcTime,
+    srcChain: 'ethereum',
+    srcTxHash: '0x123',
+    srcLogIndex: 0,
+    srcEventId: 'event1',
+    dstTime,
+    dstChain: 'arbitrum',
+    dstTxHash: '0x456',
+    dstLogIndex: 0,
+    dstEventId: 'event2',
+    ...overrides,
+  }
+}
+
 describeDatabase(InteropMessageRepository.name, (database) => {
   const repository = database.interopMessage
 
@@ -17,78 +47,35 @@ describeDatabase(InteropMessageRepository.name, (database) => {
     it('returns stats grouped by message type with multiple known apps', async () => {
       const now = UnixTime.now()
       const records: InteropMessageRecord[] = [
-        {
-          plugin: 'plugin',
+        makeRecord(now, {
           messageId: 'msg1',
-          type: 'message',
           app: 'arbitrum',
           duration: 100,
-          timestamp: now,
-          srcTime: now,
-          srcChain: 'ethereum',
-          srcTxHash: '0x123',
-          srcLogIndex: 0,
-          srcEventId: 'event1',
-          dstTime: now + 100,
           dstChain: 'arbitrum',
-          dstTxHash: '0x456',
-          dstLogIndex: 0,
-          dstEventId: 'event2',
-        },
-        {
-          plugin: 'plugin',
+        }),
+        makeRecord(now, {
           messageId: 'msg2',
-          type: 'message',
           app: 'optimism',
           duration: 200,
           timestamp: now + UnixTime.HOUR,
-          srcTime: now + UnixTime.HOUR,
-          srcChain: 'ethereum',
-          srcTxHash: '0x789',
-          srcLogIndex: 1,
-          srcEventId: 'event3',
-          dstTime: now + UnixTime.HOUR + 200,
           dstChain: 'optimism',
-          dstTxHash: '0xabc',
-          dstLogIndex: 1,
-          dstEventId: 'event4',
-        },
-        {
-          plugin: 'plugin',
+        }),
+        makeRecord(now, {
           messageId: 'msg3',
-          type: 'message',
           app: 'polygon',
           duration: 150,
           timestamp: now + UnixTime.MINUTE * 30,
-          srcTime: now + UnixTime.MINUTE * 30,
-          srcChain: 'ethereum',
-          srcTxHash: '0xdef',
-          srcLogIndex: 2,
-          srcEventId: 'event5',
-          dstTime: now + UnixTime.MINUTE * 30 + 150,
           dstChain: 'polygon',
-          dstTxHash: '0xghi',
-          dstLogIndex: 2,
-          dstEventId: 'event6',
-        },
-        {
-          plugin: 'plugin',
+        }),
+        makeRecord(now, {
           messageId: 'msg4',
           type: 'swap',
           app: 'arbitrum',
           duration: 300,
           timestamp: now + UnixTime.HOUR * 2,
-          srcTime: now + UnixTime.HOUR * 2,
           srcChain: 'arbitrum',
-          srcTxHash: '0xjkl',
-          srcLogIndex: 3,
-          srcEventId: 'event7',
-          dstTime: now + UnixTime.HOUR * 2 + 300,
           dstChain: 'ethereum',
-          dstTxHash: '0xmno',
-          dstLogIndex: 3,
-          dstEventId: 'event8',
-        },
+        }),
       ]
 
       await repository.insertMany(records)
@@ -110,6 +97,49 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       expect(swapStats.count).toEqual(1)
       expect(swapStats.knownAppCount).toEqual(1)
       expect(swapStats.avgDuration).toEqual(300)
+    })
+  })
+
+  describe(InteropMessageRepository.prototype.deleteForPlugin.name, () => {
+    it('deletes only records for the given plugin', async () => {
+      const now = UnixTime.now()
+      const records: InteropMessageRecord[] = [
+        makeRecord(now, {
+          plugin: 'plugin-a',
+          messageId: 'msg1',
+          app: 'app-a',
+          duration: 100,
+          dstChain: 'arbitrum',
+        }),
+        makeRecord(now, {
+          plugin: 'plugin-a',
+          messageId: 'msg2',
+          type: 'swap',
+          app: 'app-b',
+          duration: 200,
+          timestamp: now + UnixTime.MINUTE,
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+        }),
+        makeRecord(now, {
+          plugin: 'plugin-b',
+          messageId: 'msg3',
+          app: 'app-c',
+          duration: 150,
+          timestamp: now + UnixTime.HOUR,
+          dstChain: 'optimism',
+        }),
+      ]
+
+      await repository.insertMany(records)
+
+      const deleted = await repository.deleteForPlugin('plugin-a')
+      expect(deleted).toEqual(2)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
+      expect(remaining[0]?.plugin).toEqual('plugin-b')
+      expect(remaining[0]?.messageId).toEqual('msg3')
     })
   })
 })

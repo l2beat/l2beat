@@ -342,6 +342,7 @@ model InteropEvent {
   direction   String?
 
   @@id([eventId])
+  @@index([timestamp, plugin, chain])
   @@index([type, matched, unsupported, timestamp])
 }
 
@@ -514,4 +515,24 @@ model Chain {
   apis        Json?
 
   deployedTokens DeployedToken[]
+}
+
+model InteropPluginSyncState {
+  pluginName          String    @db.VarChar(255)
+  chain               String    @db.VarChar(255)
+  lastError           String?   @db.Text
+  resyncRequestedFrom DateTime? @db.Timestamp(6)
+
+  @@id([pluginName, chain])
+}
+
+model InteropPluginSyncedRange {
+  pluginName    String   @db.VarChar(255)
+  chain         String   @db.VarChar(255)
+  fromBlock     BigInt
+  fromTimestamp DateTime @db.Timestamp(6)
+  toBlock       BigInt
+  toTimestamp   DateTime @db.Timestamp(6)
+
+  @@id([pluginName, chain])
 }
