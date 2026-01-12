@@ -12,12 +12,8 @@ interface Props {
 }
 
 export function ChainSelector({ chains }: Props) {
-  const { selectedChains, toggleFrom, toggleTo, reset } =
+  const { selectedChains, toggleFrom, toggleTo, reset, isDirty } =
     useInteropSelectedChains()
-
-  const isDirty =
-    selectedChains.from.length !== chains.length ||
-    selectedChains.to.length !== chains.length
 
   return (
     <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2">
@@ -121,7 +117,7 @@ function ChainSelectorItem({
   toggleSelected: (chainId: string) => void
 }) {
   return (
-    <div
+    <button
       className={cn(
         'flex h-8 cursor-pointer select-none items-center gap-2 rounded-sm border border-divider bg-surface-secondary py-1.5 pr-3 pl-2 transition-all',
         chain.isSelected && 'border-brand bg-brand/15',
@@ -136,6 +132,6 @@ function ChainSelectorItem({
       <div className="font-medium text-label-value-16 leading-none">
         {chain.name}
       </div>
-    </div>
+    </button>
   )
 }

@@ -5,6 +5,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from 'react'
 
@@ -16,6 +17,7 @@ interface InteropSelectedChainsContextType {
   toggleFrom: (chainId: string) => void
   toggleTo: (chainId: string) => void
   reset: () => void
+  isDirty: boolean
 }
 
 const InteropSelectedChainsContext = createContext<
@@ -57,9 +59,16 @@ export function InteropSelectedChainsProvider({
     })
   }, [interopChains])
 
+  const isDirty = useMemo(() => {
+    return (
+      selectedChains.from.length !== interopChains.length ||
+      selectedChains.to.length !== interopChains.length
+    )
+  }, [selectedChains, interopChains])
+
   return (
     <InteropSelectedChainsContext.Provider
-      value={{ selectedChains, toggleFrom, toggleTo, reset }}
+      value={{ selectedChains, toggleFrom, toggleTo, reset, isDirty }}
     >
       {children}
     </InteropSelectedChainsContext.Provider>
