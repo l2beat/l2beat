@@ -147,6 +147,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       })
       if (!contractCallApproved) return
       const interchainTransfer = db.find(InterchainTransfer, {
+        // matching by our own ID because commandId, payload(hash) and 'txHash' are associated on axelar
         matchId: interchainTransferReceived.args.matchId,
       })
       if (!interchainTransfer) return
