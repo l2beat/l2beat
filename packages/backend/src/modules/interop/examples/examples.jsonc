@@ -1290,6 +1290,14 @@
       {
         "chain": "base",
         "tx": "0x1c507429b66a9f5cd19bfed62115a20d27456c3788d9dc2da11b65b387d7001f"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9268b52854b19313318b33da75fe578e5fc1897234e96a389f17eeda1b21114d"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x6a7ec913fd586cd44e9bc31e7106f883b620855d90424c6a712ede0b66c79af7"
       }
     ]
   },
