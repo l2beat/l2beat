@@ -1,13 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Block, Log } from '@l2beat/shared-pure'
-import type { Log as ViemLog } from 'viem'
 import type { BlockProcessor } from '../../../types'
-import type {
-  InteropEvent,
-  InteropPlugin,
-  LogToCapture,
-  TxToCapture,
+import {
+  type InteropEvent,
+  type InteropPlugin,
+  isPluginResyncable,
 } from '../../plugins/types'
+import { getItemsToCapture } from './getItemsToCapture'
 import type { InteropEventStore } from './InteropEventStore'
 
 export class InteropBlockProcessor implements BlockProcessor {
@@ -28,8 +27,12 @@ export class InteropBlockProcessor implements BlockProcessor {
     const events: InteropEvent[] = []
     const pluginEventCounts: Record<string, number> = {}
 
+    const nonResyncablePlugins = this.plugins.filter(
+      (p) => !isPluginResyncable(p),
+    )
+
     for (const txToCapture of toCapture.txsToCapture) {
-      for (const plugin of this.plugins) {
+      for (const plugin of nonResyncablePlugins) {
         try {
           const captured = plugin.captureTx?.(txToCapture)
           if (captured) {
@@ -49,7 +52,7 @@ export class InteropBlockProcessor implements BlockProcessor {
     }
 
     for (const logToDecode of toCapture.logsToCapture) {
-      for (const plugin of this.plugins) {
+      for (const plugin of nonResyncablePlugins) {
         try {
           const captured = plugin.capture?.(logToDecode)
           if (captured) {
@@ -88,42 +91,5 @@ export class InteropBlockProcessor implements BlockProcessor {
       logs: toCapture.logsToCapture.length,
       events: events.length,
     })
-  }
-}
-
-function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
-  const viemLogs = logs.map(logToViemLog)
-  const logsToCapture: LogToCapture[] = []
-  const txsToCapture = block.transactions
-    .filter((x) => !!x.hash) // TODO: why can this be missing!?
-    .map(
-      (tx): TxToCapture => ({
-        block,
-        tx,
-        chain,
-        txLogs: viemLogs.filter((log) => log.transactionHash === tx.hash),
-      }),
-    )
-  for (const tx of txsToCapture) {
-    for (const log of tx.txLogs) {
-      logsToCapture.push({ log, ...tx })
-    }
-  }
-  return { txsToCapture, logsToCapture }
-}
-
-export function logToViemLog(log: Log): ViemLog {
-  return {
-    blockNumber: BigInt(log.blockNumber),
-    transactionHash: log.transactionHash as `0x${string}`,
-    address: log.address as `0x${string}`,
-    topics: log.topics as [`0x${string}`, ...`0x${string}`[]] | [],
-    data: log.data as `0x${string}`,
-    logIndex: log.logIndex,
-
-    // Unsupported values for now
-    blockHash: 'UNSUPPORTED' as `0x${string}`,
-    transactionIndex: -1,
-    removed: false,
   }
 }
