@@ -1238,7 +1238,55 @@
       {
         "chain": "ethereum",
         "tx": "0x4f6ffd7cec7fe0b7c5fa414cb842750750e3cdd406cd27761d3095adbbc94b9b"
+      },
+      // ethereum -> arbitrum (lpt deposit)
+      {
+        "chain": "ethereum",
+        "tx": "0x57e7e16dcb16ce6cdc154f5caabd4521e9c9a9d32fd3d7dbed9eb49af69b2e37"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x890a387027dd9a92df185e0d6ad5abcd569b865b4e2c1f5278a576d2ef211102"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0b22f374bc4680807b520effc39e1cce19a9776d558243a61df662806bd25192"
+      },
+      // arbitrum -> ethereum (lpt withdrawal)
+      {
+        "chain": "arbitrum",
+        "tx": "0xea65c709dbffb38e1f9bb2f6421e1c1cdf324d9d0bae59f072ddf44bf706ef2b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf2d2bb22ba08ea15ba0d3059c3e616dea6050936e88b6cf6b34ef49545473d22"
       }
+    ],
+    "events": [
+      // dai deposit
+      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositFinalized",
+      // dai withdrawal
+      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalFinalized",
+      // lpt deposit
+      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositFinalized",
+      // lpt withdrawal
+      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalFinalized"
+    ],
+    "messages": [
+      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-dai" },
+      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-customgateway-lpt" },
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-dai" },
+      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-customgateway-lpt" }
+    ],
+    "transfers": [
+      "orbitstack.L1ToL2Transfer",
+      "orbitstack.L1ToL2Transfer",
+      "orbitstack.L2ToL1Transfer",
+      "orbitstack.L2ToL1Transfer"
     ]
   },
   "orbitstack-wethgateway": {
