@@ -92,7 +92,7 @@ describe('icons', () => {
     it('every interop chain has an icon', async () => {
       const icons = getIcons('../../static/icons')
       for (const chain of INTEROP_CHAINS) {
-        expect(icons).toInclude(chain.iconSlug)
+        expect(icons).toInclude(chain.iconSlug ?? chain.id)
       }
     })
   })

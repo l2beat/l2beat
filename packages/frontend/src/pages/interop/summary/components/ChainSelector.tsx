@@ -1,17 +1,14 @@
-import type { InteropChains } from '@l2beat/config'
+import type { InteropChain } from '@l2beat/config'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
 import { cn } from '~/utils/cn'
-import {
-  type InteropChainId,
-  useInteropSelectedChains,
-} from '../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 
 interface Props {
-  chains: InteropChains
+  chains: InteropChain[]
 }
 
 export function ChainSelector({ chains }: Props) {
@@ -59,13 +56,13 @@ function ChainSelectorButton({
   allChains,
   toggleSelected,
 }: {
-  selectedChains: InteropChainId[]
-  allChains: InteropChains
-  toggleSelected: (chainId: InteropChainId) => void
+  selectedChains: string[]
+  allChains: InteropChain[]
+  toggleSelected: (chainId: string) => void
 }) {
   const chainsWithDetails = allChains.map(({ id, iconSlug, name }) => ({
     id,
-    iconSlug,
+    iconSlug: iconSlug ?? id,
     name,
     isSelected: selectedChains.includes(id),
   }))
@@ -116,12 +113,12 @@ function ChainSelectorItem({
   toggleSelected,
 }: {
   chain: {
-    id: InteropChainId
+    id: string
     iconSlug: string
     name: string
     isSelected: boolean
   }
-  toggleSelected: (chainId: InteropChainId) => void
+  toggleSelected: (chainId: string) => void
 }) {
   return (
     <div

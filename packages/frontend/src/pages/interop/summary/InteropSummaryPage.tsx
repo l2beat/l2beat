@@ -1,4 +1,4 @@
-import type { InteropChains } from '@l2beat/config'
+import type { InteropChain } from '@l2beat/config'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -7,7 +7,7 @@ import { ChainSelector } from './components/ChainSelector'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
-  interopChains: InteropChains
+  interopChains: InteropChain[]
 }
 
 export function InteropSummaryPage({ ...props }: Props) {

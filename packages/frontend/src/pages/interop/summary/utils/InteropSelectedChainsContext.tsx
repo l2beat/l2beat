@@ -1,4 +1,4 @@
-import type { InteropChains } from '@l2beat/config'
+import type { InteropChain } from '@l2beat/config'
 import xor from 'lodash/xor'
 import {
   createContext,
@@ -8,14 +8,13 @@ import {
   useState,
 } from 'react'
 
-export type InteropChainId = InteropChains[number]['id']
 interface InteropSelectedChainsContextType {
   selectedChains: {
-    from: InteropChainId[]
-    to: InteropChainId[]
+    from: string[]
+    to: string[]
   }
-  toggleFrom: (chainId: InteropChainId) => void
-  toggleTo: (chainId: InteropChainId) => void
+  toggleFrom: (chainId: string) => void
+  toggleTo: (chainId: string) => void
   reset: () => void
 }
 
@@ -25,7 +24,7 @@ const InteropSelectedChainsContext = createContext<
 
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
-  interopChains: InteropChains
+  interopChains: InteropChain[]
 }
 
 export function InteropSelectedChainsProvider({
@@ -37,14 +36,14 @@ export function InteropSelectedChainsProvider({
     to: interopChains.map((chain) => chain.id),
   })
 
-  const toggleFrom = useCallback((chainId: InteropChainId) => {
+  const toggleFrom = useCallback((chainId: string) => {
     setSelectedChains((prev) => ({
       ...prev,
       from: xor(prev.from, [chainId]),
     }))
   }, [])
 
-  const toggleTo = useCallback((chainId: InteropChainId) => {
+  const toggleTo = useCallback((chainId: string) => {
     setSelectedChains((prev) => ({
       ...prev,
       to: xor(prev.to, [chainId]),

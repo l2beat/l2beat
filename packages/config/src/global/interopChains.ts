@@ -1,36 +1,38 @@
-export type InteropChains = typeof INTEROP_CHAINS
-export const INTEROP_CHAINS = [
+export interface InteropChain {
+  id: string
+  name: string
+  type: 'evm'
+  display: string
+  iconSlug?: string
+}
+
+export const INTEROP_CHAINS: InteropChain[] = [
   {
     id: 'ethereum',
-    iconSlug: 'ethereum',
     name: 'Ethereum',
     type: 'evm',
     display: 'ETH',
   },
   {
     id: 'arbitrum',
-    iconSlug: 'arbitrum',
     name: 'Arbitrum',
     type: 'evm',
     display: 'ARB',
   },
   {
     id: 'base',
-    iconSlug: 'base',
     name: 'Base',
     type: 'evm',
     display: 'BASE',
   },
   {
     id: 'optimism',
-    iconSlug: 'optimism',
     name: 'Optimism',
     type: 'evm',
     display: 'OP',
   },
   {
     id: 'apechain',
-    iconSlug: 'apechain',
     name: 'Apechain',
     type: 'evm',
     display: 'APE',
@@ -51,9 +53,8 @@ export const INTEROP_CHAINS = [
   },
   {
     id: 'abstract',
-    iconSlug: 'abstract',
     name: 'Abstract',
     type: 'evm',
     display: 'ABS',
   },
-] as const
+]
