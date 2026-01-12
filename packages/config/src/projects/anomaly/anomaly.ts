@@ -17,7 +17,11 @@ export const anomaly: ScalingProject = upcomingL3({
     links: {
       websites: ['https://anomalygames.ai/'],
       documentation: ['https://docs.anomalygames.ai/'],
-      socialMedia: ['https://twitter.com/anomalygamesinc'],
+      socialMedia: [
+        'https://twitter.com/anomalygamesinc',
+        'https://t.me/anomalygamesinc',
+        'https://discord.com/invite/theanomaly',
+      ],
     },
   },
   ecosystemInfo: {
