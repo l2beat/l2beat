@@ -52,7 +52,7 @@ export function TopPathsWidget({
             isOnlyPath={data.top3Paths.length === 1}
           />
         ))}
-        {data?.top3Paths.length === 1 && (
+        {data && data.top3Paths.length < 3 && (
           <button
             onClick={reset}
             className="flex h-full items-center justify-center text-label-value-14 text-link underline"
