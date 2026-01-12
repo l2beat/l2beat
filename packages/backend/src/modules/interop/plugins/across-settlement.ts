@@ -64,30 +64,35 @@ export class AcrossSettlementPlugin implements InteropPlugin {
       const messageRelayed = parseMessageRelayed(input.log, [HUB_POOL])
       if (messageRelayed) {
         const targetAddress = messageRelayed.target.toLowerCase()
+        const currentLogIndex = input.log.logIndex ?? -1
 
-        // Try OpStack: Find SentMessage from any known L1CrossDomainMessenger with matching target
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(log.address)
-          if (!network) continue
+        // The bridge event (SentMessage or MessageDelivered) is always at logIndex - 2
+        // Pattern: BridgeEvent (N-2) -> Extension (N-1) -> MessageRelayed (N)
+        const bridgeLog = input.txLogs.find(
+          (log) => log.logIndex === currentLogIndex - 2,
+        )
+        if (!bridgeLog) return
 
-          const sentMessage = parseSentMessage(log, [
-            network.l1CrossDomainMessenger,
+        // Try OpStack: Check if bridgeLog is a SentMessage from a known L1CrossDomainMessenger
+        const opNetwork = L1_CDM_TO_NETWORK.get(bridgeLog.address)
+        if (opNetwork) {
+          const sentMessage = parseSentMessage(bridgeLog, [
+            opNetwork.l1CrossDomainMessenger,
           ])
           if (
             !sentMessage ||
             sentMessage.target.toLowerCase() !== targetAddress
           )
-            continue
+            return
 
-          // Find SentMessageExtension1
-          const nextLog = input.txLogs.find(
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === log.logIndex! + 1,
+          // Find SentMessageExtension1 at logIndex - 1
+          const extensionLog = input.txLogs.find(
+            (log) => log.logIndex === currentLogIndex - 1,
           )
           const extension =
-            nextLog &&
-            parseSentMessageExtension1(nextLog, [
-              network.l1CrossDomainMessenger,
+            extensionLog &&
+            parseSentMessageExtension1(extensionLog, [
+              opNetwork.l1CrossDomainMessenger,
             ])
 
           const msgHash = hashCrossDomainMessageV1(
@@ -101,23 +106,23 @@ export class AcrossSettlementPlugin implements InteropPlugin {
 
           return [
             AcrossSettlementRelayedMessageOP.create(input, {
-              chain: network.chain,
+              chain: opNetwork.chain,
               msgHash,
             }),
           ]
         }
 
-        // Try OrbitStack: Find MessageDelivered from any known Arbitrum bridge
-        for (const log of input.txLogs) {
-          const network = ORBIT_BRIDGE_TO_NETWORK.get(log.address)
-          if (!network) continue
-
-          const messageDelivered = parseMessageDelivered(log, [network.bridge])
-          if (!messageDelivered) continue
+        // Try OrbitStack: Check if bridgeLog is a MessageDelivered from a known Arbitrum bridge
+        const orbitNetwork = ORBIT_BRIDGE_TO_NETWORK.get(bridgeLog.address)
+        if (orbitNetwork) {
+          const messageDelivered = parseMessageDelivered(bridgeLog, [
+            orbitNetwork.bridge,
+          ])
+          if (!messageDelivered) return
 
           return [
             AcrossSettlementRelayedMessageOrbit.create(input, {
-              chain: network.chain,
+              chain: orbitNetwork.chain,
               messageNum: messageDelivered.messageIndex.toString(),
             }),
           ]
