@@ -1,6 +1,8 @@
 import type { InteropChain } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import times from 'lodash/times'
 import uniq from 'lodash/uniq'
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
@@ -12,9 +14,9 @@ export function TopPathsWidget({
 }: {
   interopChains: InteropChain[]
 }) {
-  const { selectedChains, setPath } = useInteropSelectedChains()
+  const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
-  const { data } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
@@ -36,6 +38,10 @@ export function TopPathsWidget({
         Between {uniqChains.length} supported chains
       </div>
       <div className="mt-2 space-y-1.5">
+        {isLoading &&
+          times(3).map((index) => (
+            <Skeleton key={index} className="h-9.5 w-full" />
+          ))}
         {data?.top3Paths.map((path) => (
           <PathItem
             key={path.srcChain + path.dstChain}
@@ -43,8 +49,17 @@ export function TopPathsWidget({
             to={getChainDetails(path.dstChain)}
             volume={path.volume}
             setPath={setPath}
+            isOnlyPath={data.top3Paths.length === 1}
           />
         ))}
+        {data?.top3Paths.length === 1 && (
+          <button
+            onClick={reset}
+            className="flex h-full items-center justify-center text-label-value-14 text-link underline"
+          >
+            Reset chain selection to see more.
+          </button>
+        )}
       </div>
     </PrimaryCard>
   )
@@ -55,11 +70,13 @@ function PathItem({
   to,
   volume,
   setPath,
+  isOnlyPath,
 }: {
   from: { id: string; name: string; iconSlug: string }
   to: { id: string; name: string; iconSlug: string }
   volume: number
   setPath: (paths: { from: string; to: string }) => void
+  isOnlyPath: boolean
 }) {
   return (
     <div className="flex justify-between gap-1 rounded-lg border border-divider py-2 pr-4 pl-2.5">
@@ -86,12 +103,14 @@ function PathItem({
           {formatCurrency(volume, 'usd')}
         </div>
       </div>
-      <button
-        onClick={() => setPath({ from: from.id, to: to.id })}
-        className="text-label-value-14 text-link underline"
-      >
-        View path
-      </button>
+      {!isOnlyPath && (
+        <button
+          onClick={() => setPath({ from: from.id, to: to.id })}
+          className="text-label-value-14 text-link underline"
+        >
+          View path
+        </button>
+      )}
     </div>
   )
 }

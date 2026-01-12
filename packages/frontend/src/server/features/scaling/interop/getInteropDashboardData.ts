@@ -8,6 +8,7 @@ export type InteropDashboardData = {
 export async function getInteropDashboardData(
   params: InteropDashboardParams,
 ): Promise<InteropDashboardData> {
+  await Promise.resolve(new Promise((resolve) => setTimeout(resolve, 1000)))
   const records = await Promise.resolve(mockData)
 
   return {
