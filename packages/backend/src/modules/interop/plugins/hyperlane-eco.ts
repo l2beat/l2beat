@@ -8,6 +8,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -83,7 +84,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseDispatch(log, null),
+        (log, _index) => parseDispatch(log, null),
       )
       if (!dispatch) return
 
@@ -115,7 +116,7 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         // we start one index higher because we would otherwise find the wrong processId of the batch first
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex! - 1,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!processMatch) return
 
@@ -170,29 +171,5 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         extraEvents: [batchSentDispatch, event],
       }),
     ]
-  }
-}
-
-export function findParsedAround<T>(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  parse: (log: LogToCapture['txLogs'][number]) => T | undefined,
-): { parsed: T; index: number } | undefined {
-  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
-  if (startPos === -1) return
-
-  for (let offset = 0; offset < logs.length; offset++) {
-    const forward = startPos + offset
-    if (forward < logs.length) {
-      const parsed = parse(logs[forward])
-      if (parsed) return { parsed, index: forward }
-    }
-
-    if (offset === 0) continue
-    const backward = startPos - offset
-    if (backward >= 0) {
-      const parsed = parse(logs[backward])
-      if (parsed) return { parsed, index: backward }
-    }
   }
 }

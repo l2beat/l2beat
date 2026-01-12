@@ -8,7 +8,6 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
-import { findParsedAround } from './hyperlane-eco'
 import {
   createEventParser,
   createInteropEventType,
@@ -69,20 +68,25 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()
-      const messageId = findMessageIdAround(input, (txLog, index) => {
-        const dispatch = parseDispatch(txLog, null)
-        if (!dispatch) return
-        if (dispatch.sender.toLowerCase() !== senderAddress) return
-        if (
-          Number(dispatch.destination) !==
-          Number(sentTransferRemote.destination)
-        )
-          return
+      const messageId = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (txLog, index) => {
+          const dispatch = parseDispatch(txLog, null)
+          if (!dispatch) return
+          if (dispatch.sender.toLowerCase() !== senderAddress) return
+          if (
+            Number(dispatch.destination) !==
+            Number(sentTransferRemote.destination)
+          )
+            return
 
-        const nextLog = input.txLogs[index + 1]
-        const dispatchId = nextLog && parseDispatchId(nextLog, null)
-        return dispatchId?.messageId
-      })
+          const nextLog = input.txLogs[index + 1]
+          const dispatchId = nextLog && parseDispatchId(nextLog, null)
+          return dispatchId?.messageId
+        },
+      )?.parsed
       console.log('messageId', messageId)
       if (!messageId) return
 
@@ -121,7 +125,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseDepositForBurn(log, null),
+        (log, _index) => parseDepositForBurn(log, null),
       )
       if (depositForBurn) {
         return [
@@ -153,17 +157,22 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
       const recipientAddress = input.log.address.toLowerCase()
-      const messageId = findMessageIdAround(input, (txLog, index) => {
-        const process = parseProcess(txLog, null)
-        if (!process) return
-        if (process.recipient.toLowerCase() !== recipientAddress) return
-        if (Number(process.origin) !== Number(receivedTransferRemote.origin))
-          return
+      const messageId = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (txLog, index) => {
+          const process = parseProcess(txLog, null)
+          if (!process) return
+          if (process.recipient.toLowerCase() !== recipientAddress) return
+          if (Number(process.origin) !== Number(receivedTransferRemote.origin))
+            return
 
-        const nextLog = input.txLogs[index + 1]
-        const processId = nextLog && parseProcessId(nextLog, null)
-        return processId?.messageId
-      })
+          const nextLog = input.txLogs[index + 1]
+          const processId = nextLog && parseProcessId(nextLog, null)
+          return processId?.messageId
+        },
+      )?.parsed
       if (!messageId) return
 
       const $srcChain = findChain(
@@ -262,27 +271,29 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 }
 
-export function findMessageIdAround(
-  input: LogToCapture,
+export function findParsedAround<T>(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
   parse: (
     log: LogToCapture['txLogs'][number],
     index: number,
-  ) => `0x${string}` | undefined,
-): `0x${string}` | undefined {
-  const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return
-  const startPos = input.txLogs.findIndex(
-    (log) => log.logIndex === currentLogIndex,
-  )
+  ) => T | undefined,
+): { parsed: T; index: number } | undefined {
+  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
   if (startPos === -1) return
 
-  for (let i = startPos - 1; i >= 0; i--) {
-    const messageId = parse(input.txLogs[i], i)
-    if (messageId) return messageId
-  }
+  for (let offset = 0; offset < logs.length; offset++) {
+    const forward = startPos + offset
+    if (forward < logs.length) {
+      const parsed = parse(logs[forward], forward)
+      if (parsed) return { parsed, index: forward }
+    }
 
-  for (let i = startPos + 1; i < input.txLogs.length; i++) {
-    const messageId = parse(input.txLogs[i], i)
-    if (messageId) return messageId
+    if (offset === 0) continue
+    const backward = startPos - offset
+    if (backward >= 0) {
+      const parsed = parse(logs[backward], backward)
+      if (parsed) return { parsed, index: backward }
+    }
   }
 }

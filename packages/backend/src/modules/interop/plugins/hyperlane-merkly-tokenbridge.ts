@@ -1,6 +1,6 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { Dispatch, Process, parseDispatch, parseDispatchId } from './hyperlane'
-import { findMessageIdAround, parseSentTransferRemote } from './hyperlane-hwr'
+import { findParsedAround, parseSentTransferRemote } from './hyperlane-hwr'
 import {
   createInteropEventType,
   defineNetworks,
@@ -79,21 +79,26 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
     ])
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()
-      const messageId = findMessageIdAround(input, (txLog, index) => {
-        const dispatch = parseDispatch(txLog, null)
-        if (!dispatch) return
-        if (dispatch.sender.toLowerCase() !== senderAddress) return
-        // TODO: edge case logs
-        if (
-          Number(dispatch.destination) !==
-          Number(sentTransferRemote.destination)
-        )
-          return
+      const messageId = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (txLog, index) => {
+          const dispatch = parseDispatch(txLog, null)
+          if (!dispatch) return
+          if (dispatch.sender.toLowerCase() !== senderAddress) return
+          // TODO: edge case logs
+          if (
+            Number(dispatch.destination) !==
+            Number(sentTransferRemote.destination)
+          )
+            return
 
-        const nextLog = input.txLogs[index + 1]
-        const dispatchId = nextLog && parseDispatchId(nextLog, null)
-        return dispatchId?.messageId
-      })
+          const nextLog = input.txLogs[index + 1]
+          const dispatchId = nextLog && parseDispatchId(nextLog, null)
+          return dispatchId?.messageId
+        },
+      )?.parsed
       if (!messageId) return
 
       const $dstChain = findChain(
