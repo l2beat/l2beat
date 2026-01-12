@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8a9e51dffd6eea594c0249b8faced005103f63bc
+Generated with discovered.json: 0x1ee5a2e9d41024cc06e028c8d37d0eca093ba137
 
-# Diff at Mon, 12 Jan 2026 10:54:46 GMT:
+# Diff at Mon, 12 Jan 2026 12:54:24 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1765960454
-- current timestamp: 1768215221
+- comparing to: main@557c7b7c85b0fdc7328c16902e8eb6d003abcbf3 block: 1765960454
+- current timestamp: 1768222400
 
 ## Description
 
@@ -14,14 +14,16 @@ Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract i
 
 ```diff
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) {
-    +++ description: None
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
       template:
 -        "opstack/SuperchainConfigFake"
++        "opstack/SuperchainConfigFake_expiry"
       sourceHashes.1:
 -        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
 +        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       description:
 -        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched."
       values.$implementation:
 -        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
 +        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
@@ -43,6 +45,8 @@ Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract i
 +        2
       values.pauseExpiry:
 +        7884000
+      values.pauseExpiryFmt:
++        "3mo 1d"
       values.proxyAdmin:
 +        "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"
       values.proxyAdminOwner:
@@ -51,16 +55,14 @@ Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract i
 -        "SuperchainConfig"
       implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
 +        "SuperchainConfig"
-      category:
--        {"name":"Governance","priority":3}
-    }
-```
-
-```diff
-    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-    +++ description: None
-      receivedPermissions.1:
--        {"permission":"guard","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","role":".guardian"}
+      category.name:
+-        "Governance"
++        "Shared Infrastructure"
+      category.priority:
+-        3
++        4
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
     }
 ```
 
