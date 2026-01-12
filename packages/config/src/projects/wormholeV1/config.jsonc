@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "wormholeV1",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"]
 }

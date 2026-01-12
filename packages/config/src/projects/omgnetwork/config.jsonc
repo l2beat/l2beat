@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "omgnetwork",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac",

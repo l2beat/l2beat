@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "sollet",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xeae57ce9cc1984F202e15e038B964bb8bdF7229a"]
 }

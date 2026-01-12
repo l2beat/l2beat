@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gpt",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",

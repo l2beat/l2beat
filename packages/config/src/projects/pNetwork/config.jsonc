@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "pNetwork",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",

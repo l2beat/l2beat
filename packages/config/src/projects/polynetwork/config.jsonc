@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "polynetwork",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A"],
   "names": {

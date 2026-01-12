@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "nal",
-  "isArchived": true,
+  "archived": true,
   "import": ["../globalConfig.jsonc"]
 }
