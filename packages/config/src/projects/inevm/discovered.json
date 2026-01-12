@@ -1,6 +1,6 @@
 {
   "name": "inevm",
-  "timestamp": 1767971095,
+  "timestamp": 1768217087,
   "configHash": "0xfab425727e997fac4c926a24dbda9a77f7b293e4f094f50c3a00b614498d43ab",
   "entries": [
     {
@@ -399,7 +399,7 @@
         "challengeManager": "arb1:0x9Df55ed5546D9837E28f95f22daA66383957b16f",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "600000000000000000",
+        "currentRequiredStake": "800000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 16267,
         "inbox": "arb1:0x1c37A831e405e2F3dd76eb8C9ecE483370D53AfE",
@@ -1820,6 +1820,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 419578964 },
+  "usedBlockNumbers": { "arbitrum": 420561782 },
   "permissionsConfigHash": "0x88cde0f9d9215a23d1b78a9b80141d64a23850ac7470b3a86575e8d70798328a"
 }
