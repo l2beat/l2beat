@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2de06e22cd5291a7988a15bb7d60ef91466de270
 
 ## Description
 
-Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract is shared across Conduit OP Stack chains (separate from OP Mainnet's SuperchainConfig). The upgrade switches from a custom implementation to the standard SuperchainConfig implementation, adding pauseExpiry support. The GUARDIAN_SLOT() and PAUSED_SLOT() getter functions (which exposed internal storage slot locations) were removed, but guardian() and paused() functionality remains unchanged.
+Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract is shared across Conduit OP Stack chains (separate from OP Mainnet's SuperchainConfig). The upgrade adds pauseExpiry support. The GUARDIAN_SLOT() and PAUSED_SLOT() getter functions (which exposed internal storage slot locations) were removed, but guardian() and paused() functionality remains unchanged.
 
 ## Watched changes
 
