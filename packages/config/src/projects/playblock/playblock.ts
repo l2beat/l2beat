@@ -29,7 +29,10 @@ export const playblock: ScalingProject = orbitStackL3({
       websites: ['https://playnance.com/'],
       explorers: ['https://explorer.playblock.io/'],
       repositories: ['https://github.com/playnance-games/PlayBlock'],
-      socialMedia: ['https://twitter.com/Playnancetech'],
+      socialMedia: [
+        'https://twitter.com/Playnancetech',
+        'https://t.me/playnance_official',
+      ],
     },
   },
   // associatedTokens: ['PBG'],
