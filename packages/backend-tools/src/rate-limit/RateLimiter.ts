@@ -58,7 +58,7 @@ export class RateLimiter {
       return
     }
 
-    Promise.resolve(item())
+    item()
       .then((res) => item.resolve(res))
       .catch((err) => item.reject(err))
       .finally(() => this.execute())
