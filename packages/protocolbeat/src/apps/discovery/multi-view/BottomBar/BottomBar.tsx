@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../../config/readonly'
+import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
 import { useMultiViewStore } from '../store'
@@ -15,6 +16,7 @@ export function BottomBar() {
   const removePanel = useMultiViewStore((state) => state.removePanel)
   const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const { discover, killCommand } = useDiscoveryCommand()
+  const { altKey } = useIsomorphicKeys()
   const setOpen = useSearchStore((state) => state.setOpen)
 
   // By default when using bottom bar
@@ -59,8 +61,6 @@ export function BottomBar() {
       window.removeEventListener('keyup', onKeyUp)
     }
   }, [])
-
-  const altKey = navigator.platform.includes('Mac') ? 'Opt' : 'Alt'
 
   return (
     <div className="hidden h-8 select-none items-center justify-between border-coffee-600 border-t px-2 text-sm md:flex">

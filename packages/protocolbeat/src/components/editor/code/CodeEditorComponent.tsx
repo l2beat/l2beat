@@ -61,5 +61,12 @@ export function CodeEditorComponent({
     }
   }, [editorKey, setEditor, getEditor, removeEditor])
 
-  return <div className="h-full w-full" ref={monacoEl} />
+  return (
+    <div
+      className="h-full w-full"
+      ref={monacoEl}
+      onKeyDown={(event) => event.stopPropagation()}
+      onKeyUp={(event) => event.stopPropagation()}
+    />
+  )
 }

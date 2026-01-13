@@ -1,5 +1,13 @@
 // This file is duplicated in protocolbeat and l2b!
 
+export type json =
+  | string
+  | number
+  | boolean
+  | null
+  | json[]
+  | { [key: string]: json }
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -110,6 +118,15 @@ export type ApiCreateConfigFileResponse =
       error: string
     }
 
+export interface ApiHandlersResponse {
+  handlers: {
+    type: string
+    schema: json
+    docs: string
+    examples: string[]
+  }[]
+}
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
@@ -140,8 +157,6 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  handler?: { type: string } & Record<string, unknown>
-  description?: string
 }
 
 export type FieldValue =

@@ -3,6 +3,7 @@ import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
+  type ChainSpecificAddress,
   EthereumAddress,
   type Transaction,
   UnixTime,
@@ -203,8 +204,17 @@ export interface InteropEventDb {
   ): InteropEvent<T> | undefined
 }
 
+export type DataRequest = EventDataRequest
+
+interface EventDataRequest {
+  type: 'event'
+  signature: string
+  addresses: ChainSpecificAddress[]
+}
+
 export interface InteropPlugin {
   name: InteropPluginName
+  cluster?: string
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
@@ -212,6 +222,17 @@ export interface InteropPlugin {
     event: InteropEvent,
     db: InteropEventDb,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
+}
+
+export interface InteropPluginResyncable extends InteropPlugin {
+  getDataRequests: () => DataRequest[]
+  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
+}
+
+export function isPluginResyncable(
+  plugin: InteropPlugin,
+): plugin is InteropPluginResyncable {
+  return 'getDataRequests' in plugin
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<

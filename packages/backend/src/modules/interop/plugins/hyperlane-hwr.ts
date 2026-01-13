@@ -8,7 +8,6 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
-import { findParsedAround } from './hyperlane-eco'
 import {
   createEventParser,
   createInteropEventType,
@@ -68,7 +67,26 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
-      const messageId = findDispatchMessageId(input, sentTransferRemote)
+      const senderAddress = input.log.address.toLowerCase()
+      const messageId = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (txLog, index) => {
+          const dispatch = parseDispatch(txLog, null)
+          if (!dispatch) return
+          if (dispatch.sender.toLowerCase() !== senderAddress) return
+          if (
+            Number(dispatch.destination) !==
+            Number(sentTransferRemote.destination)
+          )
+            return
+
+          const nextLog = input.txLogs[index + 1]
+          const dispatchId = nextLog && parseDispatchId(nextLog, null)
+          return dispatchId?.messageId
+        },
+      )?.parsed
       if (!messageId) return
 
       const $dstChain = findChain(
@@ -77,36 +95,25 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
-      let srcTokenAddress: Address32 | undefined
-
-      for (
-        let offset = 1;
+      const transferMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
           // compare amount to not match a rogue Transfer event
-          if (transfer.value === sentTransferRemote.amount) {
-            srcTokenAddress = Address32.from(precedingLog.address)
-            break
-          }
-        }
-      }
+          if (transfer.value !== sentTransferRemote.amount) return
+          return Address32.from(log.address)
+        },
+      )
+      const srcTokenAddress = transferMatch?.parsed
 
       const depositForBurn = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseDepositForBurn(log, null),
+        (log, _index) => parseDepositForBurn(log, null),
       )
       if (depositForBurn) {
         return [
@@ -137,7 +144,23 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
 
     const receivedTransferRemote = parseReceivedTransferRemote(input.log, null)
     if (receivedTransferRemote) {
-      const messageId = findProcessMessageId(input, receivedTransferRemote)
+      const recipientAddress = input.log.address.toLowerCase()
+      const messageId = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (txLog, index) => {
+          const process = parseProcess(txLog, null)
+          if (!process) return
+          if (process.recipient.toLowerCase() !== recipientAddress) return
+          if (Number(process.origin) !== Number(receivedTransferRemote.origin))
+            return
+
+          const nextLog = input.txLogs[index + 1]
+          const processId = nextLog && parseProcessId(nextLog, null)
+          return processId?.messageId
+        },
+      )?.parsed
       if (!messageId) return
 
       const $srcChain = findChain(
@@ -146,30 +169,19 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
-      // Find Transfer event by searching through all preceding logs in the same tx in the worst case
-      let srcTokenAddress: Address32 | undefined
-
-      for (
-        let offset = 1;
+      const transferMatch = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
           // compare amount to not match a rogue Transfer event
-          if (transfer.value === receivedTransferRemote.amount) {
-            srcTokenAddress = Address32.from(precedingLog.address)
-            break
-          }
-        }
-      }
+          if (transfer.value !== receivedTransferRemote.amount) return
+          return Address32.from(log.address)
+        },
+      )
+      const dstTokenAddress = transferMatch?.parsed
 
       return [
         HwrTransferReceived.create(input, {
@@ -178,7 +190,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           origin: Number(receivedTransferRemote.origin),
           recipient: Address32.from(receivedTransferRemote.recipient),
           amount: receivedTransferRemote.amount,
-          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+          tokenAddress: dstTokenAddress ?? Address32.NATIVE,
         }),
       ]
     }
@@ -236,59 +248,26 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 }
 
-export function findDispatchMessageId(
-  input: LogToCapture,
-  sentTransferRemote: NonNullable<ReturnType<typeof parseSentTransferRemote>>,
-): `0x${string}` | undefined {
-  const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return
-  const senderAddress = input.log.address.toLowerCase()
+export function findParsedAround<T>(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  parse: (log: LogToCapture['txLogs'][number], index: number) => T | undefined,
+): { parsed: T; index: number } | undefined {
+  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
+  if (startPos === -1) return
 
-  for (let i = input.txLogs.length - 1; i >= 0; i--) {
-    const txLog = input.txLogs[i]
-    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
+  for (let offset = 0; offset < logs.length; offset++) {
+    const forward = startPos + offset
+    if (forward < logs.length) {
+      const parsed = parse(logs[forward], forward)
+      if (parsed) return { parsed, index: forward }
+    }
 
-    const dispatch = parseDispatch(txLog, null)
-    if (!dispatch) continue
-    if (dispatch.sender.toLowerCase() !== senderAddress) return
-    // TODO: edge case logs
-    if (Number(dispatch.destination) !== Number(sentTransferRemote.destination))
-      return
-
-    const nextLog = input.txLogs[i + 1]
-    const dispatchId = nextLog && parseDispatchId(nextLog, null)
-    if (!dispatchId) continue
-    return dispatchId.messageId
+    if (offset === 0) continue
+    const backward = startPos - offset
+    if (backward >= 0) {
+      const parsed = parse(logs[backward], backward)
+      if (parsed) return { parsed, index: backward }
+    }
   }
-  return
-}
-
-function findProcessMessageId(
-  input: LogToCapture,
-  receivedTransferRemote: NonNullable<
-    ReturnType<typeof parseReceivedTransferRemote>
-  >,
-): `0x${string}` | undefined {
-  const currentLogIndex = input.log.logIndex
-  if (currentLogIndex == null) return
-  const recipientAddress = input.log.address.toLowerCase()
-
-  for (let i = input.txLogs.length - 1; i >= 0; i--) {
-    const txLog = input.txLogs[i]
-    if (txLog.logIndex == null || txLog.logIndex >= currentLogIndex) continue
-
-    const process = parseProcess(txLog, null)
-    if (!process) continue
-    if (process.recipient.toLowerCase() !== recipientAddress) return
-    if (Number(process.origin) !== Number(receivedTransferRemote.origin)) return
-
-    const nextLog = input.txLogs.find(
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      (x) => x.logIndex === txLog.logIndex! + 1,
-    )
-    const processId = nextLog && parseProcessId(nextLog, null)
-    if (!processId) return
-    return processId.messageId
-  }
-  return
 }

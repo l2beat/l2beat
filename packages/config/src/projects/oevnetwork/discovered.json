@@ -1,6 +1,6 @@
 {
   "name": "oevnetwork",
-  "timestamp": 1767802709,
+  "timestamp": 1767971183,
   "configHash": "0x6ecc4fe96c2391e025617ac7e6110dcaccbc064bef4ea923ff253d8edc580dcf",
   "entries": [
     {
@@ -256,7 +256,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 45,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -354,7 +354,7 @@
         "challengeManager": "eth:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "900000000000000000",
+        "currentRequiredStake": "1200000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 1220,
         "inbox": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
@@ -498,13 +498,19 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["eth:0x2bf43034b9559643e986A2fE3cE015a18247b904"]
+            "members": [
+              "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904",
+              "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["eth:0x2bf43034b9559643e986A2fE3cE015a18247b904"]
+        "executors": [
+          "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904",
+          "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C"
+        ]
       },
       "implementationNames": {
         "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA": "TransparentUpgradeableProxy",
@@ -621,6 +627,101 @@
       "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x9f0566F2E8Ff51901DD0C0E7aad937A94931f75C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe4F99a0734C87C298d73C161F54874225E416997",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235" },
+            { "address": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA",
+          "role": ".executors"
+        }
+      ]
     },
     {
       "name": "OneStepProver0",
@@ -1512,6 +1613,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24183949 },
-  "permissionsConfigHash": "0x53673caa1b08f42a12a7d6c0999d1a66698cebb90084e45fe68b23a4745372d3"
+  "usedBlockNumbers": { "ethereum": 24197910 },
+  "permissionsConfigHash": "0xccdd2fc217793b12a5240b3c9d652334eb6e4098f8dfaac3ab183c79119a74d7"
 }

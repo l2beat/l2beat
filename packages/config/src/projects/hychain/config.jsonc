@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "hychain",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x73C6af7029E714DFf1F1554F88b79B335011Da68"],
   "names": {

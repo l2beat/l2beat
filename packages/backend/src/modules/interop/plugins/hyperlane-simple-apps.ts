@@ -5,7 +5,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
-import { findParsedAround } from './hyperlane-eco'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -46,7 +46,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]
@@ -70,7 +70,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log) => parseProcess(log, null),
+        (log, _index) => parseProcess(log, null),
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]

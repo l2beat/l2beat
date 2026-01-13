@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2fc072826ee51d7ebcf20c64b383c0efd16ee42c
+
+# Diff at Fri, 09 Jan 2026 15:12:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1765379816
+- current timestamp: 1767971493
+
+## Description
+
+stakerCount decreased from 1 to 0, no active validators on the chain.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0x36bb3f077bb8ab0b9ec2a87ee38a29105b4364ab
 
 # Diff at Mon, 05 Jan 2026 17:45:46 GMT:
@@ -3647,7 +3670,7 @@ Generated with discovered.json: 0x22efdea3d60bcbda8329bb4b1bd96720a6048916
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+stakerCount decreased from 1 to 0, indicating no active validators on the chain.
 
 ## Config/verification related changes
 

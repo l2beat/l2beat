@@ -296,6 +296,14 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropTransfer')
+      .where('plugin', '=', plugin)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db
       .deleteFrom('InteropTransfer')

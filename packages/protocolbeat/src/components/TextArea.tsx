@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import type { TextareaHTMLAttributes } from 'react'
+import { cn } from '../utils/cn'
 
 export function TextArea({
   className,
@@ -15,8 +15,8 @@ export function TextArea({
         e.stopPropagation()
         props.onKeyUp?.(e)
       }}
-      className={clsx(
-        'border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+      className={cn(
+        'min-h-24 border border-coffee-400 bg-coffee-700 px-2 py-1 text-xs selection:bg-coffee-600 placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       {...props}

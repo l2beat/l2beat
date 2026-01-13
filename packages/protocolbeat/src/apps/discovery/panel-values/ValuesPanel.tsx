@@ -7,6 +7,7 @@ import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -84,6 +85,18 @@ function Display({
 
   const contractConfigDialog = canModify && <ContractConfigDialog />
 
+  const fieldsFromSelected = 'fields' in selected ? selected.fields : []
+  const filteredIgnoredMethods = ignoredMethods
+    .filter(
+      (method) => !fieldsFromSelected.find((field) => field.name === method),
+    )
+    .map((method) => ({
+      name: method,
+      value: { type: 'empty' as const },
+    }))
+
+  const fields = [...fieldsFromSelected, ...filteredIgnoredMethods]
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
@@ -142,7 +155,9 @@ function Display({
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
-                  <p className="text-aux-teal">{role}</p>
+                  <p key={role} className="text-aux-teal">
+                    {role}
+                  </p>
                 ))}
               </div>
             </WithHeadline>
@@ -198,20 +213,11 @@ function Display({
           </ol>
         </Folder>
       )}
-      {'fields' in selected && selected.fields.length > 0 && (
+      {fields.length > 0 && (
         <Folder title="Fields">
           <ol>
-            {selected.fields.map((field, i) => (
+            {fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />
-            ))}
-            {ignoredMethods.map((method, i) => (
-              <FieldDisplay
-                key={i}
-                field={{
-                  name: method,
-                  value: { type: 'empty' },
-                }}
-              />
             ))}
           </ol>
         </Folder>
@@ -335,6 +341,7 @@ function Category() {
 
 function Description() {
   const { configModel, templateModel, isPending } = useConfigModels()
+  const { interpolateDescription } = useModelUtils()
   const description = configModel.description ?? templateModel.description
 
   if (isPending) {
@@ -351,7 +358,9 @@ function Description() {
 
   return (
     <WithHeadline headline="Description">
-      <p className="font-serif text-sm italic">{description}</p>
+      <p className="font-serif text-sm italic">
+        {interpolateDescription(description)}
+      </p>
     </WithHeadline>
   )
 }

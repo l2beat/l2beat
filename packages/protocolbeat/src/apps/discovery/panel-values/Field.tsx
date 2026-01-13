@@ -50,6 +50,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         ? () => templateModel.setFieldSeverity(field.name, undefined)
         : undefined,
     },
+    {
+      tag: `handler:${templateModel.getFieldHandler(field.name)?.type ?? 'NONE'}`,
+      isActive: templateModel.getFieldHandler(field.name)?.type,
+      onClick: undefined,
+    },
   ]
 
   const configTags = [
@@ -81,20 +86,17 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         ? () => configModel.setFieldSeverity(field.name, undefined)
         : undefined,
     },
+    {
+      tag: `handler:${configModel.getFieldHandler(field.name)?.type ?? 'NONE'}`,
+      isActive: configModel.getFieldHandler(field.name)?.type,
+      onClick: undefined,
+    },
   ] as const
 
-  const legacyTags = getLegacyTags(field)
   return (
     <li className="group/field truncate text-sm">
       <div className="flex h-fit flex-wrap items-center gap-2 px-4 py-1 font-bold text-xs">
-        <div className="flex flex-wrap items-center gap-1">
-          {field.name}
-          {legacyTags.map((x, i) => (
-            <FieldTag key={i} source="legacy">
-              {x}
-            </FieldTag>
-          ))}
-        </div>
+        <div className="flex flex-wrap items-center gap-1">{field.name}</div>
         {templateTags
           .filter((x) => x.isActive)
           .map((x, i) => (
@@ -130,15 +132,6 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
       </div>
     </li>
   )
-}
-
-function getLegacyTags(field: Field) {
-  const tags: string[] = []
-  if (field.handler) {
-    tags.push(`handler:${field.handler.type}`)
-  }
-
-  return tags
 }
 
 function canModifyField(field: Field) {

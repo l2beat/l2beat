@@ -1,4 +1,5 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export interface SerializableInteropTransfer
   extends Omit<InteropTransferRecord, 'srcRawAmount' | 'dstRawAmount'> {
@@ -23,6 +24,45 @@ export class InteropTransferStream {
   // Evenly dispatches events across the `periodMs` period
   // to prevent ugly events bursts every few seconds
   publishBulk(transfers: InteropTransferRecord[], periodMs: number) {
+    if (transfers.length > 10) {
+      this.dispatch([
+        {
+          plugin: 'WARNING',
+          transferId: 'too many events',
+          type: 'too many events',
+          duration: undefined,
+          timestamp: UnixTime(100),
+          srcTime: undefined,
+          srcChain: undefined,
+          srcTxHash: undefined,
+          srcLogIndex: undefined,
+          srcEventId: undefined,
+          srcTokenAddress: undefined,
+          srcRawAmount: undefined,
+          srcWasBurned: undefined,
+          srcSymbol: undefined,
+          srcAbstractTokenId: undefined,
+          srcAmount: undefined,
+          srcPrice: undefined,
+          srcValueUsd: undefined,
+          dstTime: undefined,
+          dstChain: undefined,
+          dstTxHash: undefined,
+          dstLogIndex: undefined,
+          dstEventId: undefined,
+          dstTokenAddress: undefined,
+          dstRawAmount: undefined,
+          dstWasMinted: undefined,
+          dstSymbol: undefined,
+          dstAbstractTokenId: undefined,
+          dstAmount: undefined,
+          dstPrice: undefined,
+          dstValueUsd: undefined,
+          isProcessed: false,
+        },
+      ])
+      return
+    }
     if (transfers.length === 0) return
     const serialized = transfers.map(toSerializableTransfer)
     const safePeriodMs = Number.isFinite(periodMs) ? Math.max(periodMs, 0) : 0

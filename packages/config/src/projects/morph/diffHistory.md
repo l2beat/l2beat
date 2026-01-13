@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x452d1b0cd68967ba7aa0ebd572e66d10b2b200ae
+
+# Diff at Tue, 13 Jan 2026 10:04:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a46446671a6651652c41a6bfafe0384889dca127 block: 1767796750
+- current timestamp: 1768298606
+
+## Description
+
+Deployed an SP1 verifier with a new guest zk program. The verifier itself is the same. I did not manage to regenerate the program hash.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.0.verifier:
+-        "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423"
++        "eth:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70"
+      values.latestVerifier.0.startBatchIndex:
+-        45847
++        47944
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70)
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+## Source code changes
+
+```diff
+...0x045d4BC73Bd1918192f34e98532A5272Ef620423.sol} |    0
+ ...:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70.sol | 1409 ++++++++++++++++++++
+ 2 files changed, 1409 insertions(+)
+```
+
 Generated with discovered.json: 0x741156517f7726a565415c80ec3b2cc0eddb9d8f
 
 # Diff at Wed, 07 Jan 2026 14:40:16 GMT:

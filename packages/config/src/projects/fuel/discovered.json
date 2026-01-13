@@ -1,6 +1,6 @@
 {
   "name": "fuel",
-  "timestamp": 1761051768,
+  "timestamp": 1767971446,
   "configHash": "0xb6d6727829e7245bc4444784756e2b3de12a753724a568d8ade284b5840f018f",
   "entries": [
     {
@@ -29,15 +29,14 @@
           "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7",
           "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
           "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2",
-          "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6",
           "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
         ],
-        "$threshold": 8,
+        "$threshold": 7,
         "domainSeparator": "0x28903eeea49a6c98614f0cf994eddf5eb5b63ffc10fb7f4277c1b7859b6f877a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "8 of 11 (73%)",
-        "nonce": 46,
+        "multisigThreshold": "7 of 10 (70%)",
+        "nonce": 48,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -81,7 +80,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -277,15 +276,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "738077800000000000",
-        "currentPeriodEnd": 1761283763,
+        "currentPeriodAmount": "268649919000000000",
+        "currentPeriodEnd": 1768400771,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 249400,
+        "getNextOutgoingMessageNonce": 249702,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -294,7 +293,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "1782413374617000000000",
+        "totalDeposited": "1637207904230000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -714,6 +713,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23626107 },
-  "permissionsConfigHash": "0x93cb22fa6e3657d0a98ae9a74d0f547a69226fb1237fe2cdbc7aefa545d6f6c2"
+  "usedBlockNumbers": { "ethereum": 24197931 },
+  "permissionsConfigHash": "0xf4eceed8c1d8ff189154fbbd3d50d56873c10d71e60a7d4d5f7825d86d3aa99d"
 }

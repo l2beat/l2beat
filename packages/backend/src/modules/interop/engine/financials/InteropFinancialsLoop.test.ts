@@ -179,9 +179,9 @@ describe(InteropFinancialsLoop.name, () => {
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+          { id: 'base', type: 'evm' as const },
         ],
         db,
         tokenDb,
@@ -308,8 +308,8 @@ describe(InteropFinancialsLoop.name, () => {
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
         ],
         db,
         tokenDb,

@@ -42,18 +42,17 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
+// https://docs.axelar.dev/resources/contract-addresses/mainnet/
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
-  { axelarChainName: 'Arbitrum', chain: 'arbitrum' },
+  { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'base', chain: 'base' },
   { axelarChainName: 'mantle', chain: 'mantle' },
-  // { axelarChainName: 'immutable', chain: 'immutable' },
-  // { axelarChainName: 'Fantom', chain: 'fantom' },
   { axelarChainName: 'binance', chain: 'bsc' },
-  // { axelarChainName: 'centrifuge', chain: 'centrifuge' },
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
+  { axelarChainName: 'Polygon', chain: 'polygonpos' },
 ])
 
 export const ContractCall = createInteropEventType<{

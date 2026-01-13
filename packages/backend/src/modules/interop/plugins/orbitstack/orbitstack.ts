@@ -1,4 +1,9 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
@@ -11,12 +16,6 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-
-// ABI for decoding createRetryableTicket calldata (L1)
-const CREATE_RETRYABLE_TICKET_SELECTOR = '0x679b6ded'
-const createRetryableTicketAbi = parseAbi([
-  'function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data)',
-])
 
 // ABI for decoding submitRetryable calldata (L2 sequencer internal call)
 const SUBMIT_RETRYABLE_SELECTOR = '0xc9f95d32'
@@ -43,6 +42,58 @@ export const parseMessageDelivered = createEventParser(
 export const parseRedeemScheduled = createEventParser(
   'event RedeemScheduled(bytes32 indexed ticketId, bytes32 indexed retryTxHash, uint64 indexed sequenceNum, uint64 donatedGas, address gasDonor, uint256 maxRefund, uint256 submissionFeeRefund)',
 )
+
+export const parseInboxMessageDelivered = createEventParser(
+  'event InboxMessageDelivered(uint256 indexed messageNum, bytes data)',
+)
+
+// L1MessageType_submitRetryableTx = 9
+const L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX = 9
+
+// Offset of data.length in the packed retryable ticket message (8 * 32 bytes)
+// Fields: to, l2CallValue, deposit, maxSubmissionCost, excessFeeRefundAddress,
+// callValueRefundAddress, gasLimit, maxFeePerGas (all uint256 due to address casting)
+const RETRYABLE_DATA_LENGTH_OFFSET = 256
+
+function getIsEthOnlyFromInbox(
+  txLogs: LogToCapture['txLogs'],
+  inboxAddress: EthereumAddress,
+  messageDelivered: { kind: number; messageIndex: bigint },
+): boolean | undefined {
+  // Only retryable tickets can be ETH-only deposits
+  if (messageDelivered.kind !== L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX) {
+    return undefined
+  }
+
+  // Find InboxMessageDelivered with matching messageNum
+  for (const log of txLogs) {
+    if (EthereumAddress(log.address) !== inboxAddress) continue
+    const parsed = parseInboxMessageDelivered(log, [inboxAddress])
+    if (parsed?.messageNum !== messageDelivered.messageIndex) continue
+
+    // Found it - extract data.length from packed retryable ticket params
+    const packedData = parsed.data
+    assert(
+      typeof packedData === 'string' && packedData.startsWith('0x'),
+      'InboxMessageDelivered data is not a valid hex string',
+    )
+    // Position in hex string: skip "0x" (2 chars) + offset in bytes * 2 (hex encoding)
+    const dataLengthStart = 2 + RETRYABLE_DATA_LENGTH_OFFSET * 2
+    assert(
+      packedData.length >= dataLengthStart + 64,
+      'InboxMessageDelivered packed data too short',
+    )
+
+    const dataLengthHex = packedData.slice(
+      dataLengthStart,
+      dataLengthStart + 64,
+    )
+    return BigInt('0x' + dataLengthHex) === 0n
+  }
+
+  // For retryable tickets, we always expect to find the InboxMessageDelivered event
+  assert(false, 'InboxMessageDelivered event not found for retryable ticket')
+}
 
 // L2 -> L1 (Withdrawal) event types
 export const L2ToL1Tx = createInteropEventType<{
@@ -80,6 +131,7 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
     // L1 -> L2 (Messages)
     bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
+    inbox: EthereumAddress('0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f'),
     sequencerInbox: EthereumAddress(
       '0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6',
     ),
@@ -118,6 +170,33 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
         ),
         l2Gateway: EthereumAddress(
           '0x467194771dae2967aef3ecbedd3bf9a310c76c65',
+        ),
+      },
+      {
+        key: 'lpt',
+        l1Gateway: EthereumAddress(
+          '0x6142f1c8bbf02e6a6bd074e8d564c9a5420a0676',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x6D2457a4ad276000A615295f7A80F79E48CcD318',
+        ),
+      },
+      {
+        key: 'grt',
+        l1Gateway: EthereumAddress(
+          '0x01cdc91b0a9ba741903aa3699bf4ce31d6c5cc06',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x65E1a5e8946e7E87d9774f5288f41c30a99fD302',
+        ),
+      },
+      {
+        key: 'wsteth',
+        l1Gateway: EthereumAddress(
+          '0x0f25c1dc2a9922304f2eac71dca9b07e310e8e5a',
+        ),
+        l2Gateway: EthereumAddress(
+          '0x07d4692291b9e30e326fd31706f686f83f331b82',
         ),
       },
     ],
@@ -162,27 +241,18 @@ export class OrbitStackPlugin implements InteropPlugin {
             return
           }
 
-          // Check if this is an ETH-only deposit (createRetryableTicket with empty data param)
-          let isEthOnly: boolean | undefined
-          const txValue = input.tx.value ?? 0n
-          if (txValue > 0n) {
-            const calldata = input.tx.data as `0x${string}`
-            if (calldata.startsWith(CREATE_RETRYABLE_TICKET_SELECTOR)) {
-              const decoded = decodeFunctionData({
-                abi: createRetryableTicketAbi,
-                data: calldata,
-              })
-              // data is the last param (bytes) - if empty, it's ETH-only
-              const retryableData = decoded.args[7] as `0x${string}`
-              isEthOnly = retryableData === '0x'
-            }
-          }
+          // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
+          const isEthOnly = getIsEthOnlyFromInbox(
+            input.txLogs,
+            networkForBridge.inbox,
+            messageDelivered,
+          )
 
           return [
             MessageDelivered.create(input, {
               chain: networkForBridge.chain,
               messageNum: messageDelivered.messageIndex.toString(),
-              txValue,
+              txValue: input.tx.value ?? 0n,
               isEthOnly: isEthOnly || undefined,
             }),
           ]

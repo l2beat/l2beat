@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x744e88dee42613259a38b995040082731330f7b8
+
+# Diff at Fri, 09 Jan 2026 14:57:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1767802030
+- current timestamp: 1767970592
+
+## Description
+
+SystemConfig updated: gas limit doubled from 30M to 60M, and EIP-1559 parameters configured (denominator: 250, elasticity: 12).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        12
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
 Generated with discovered.json: 0xa92dd7e64fcb119f6131ff31ddf1da55586d9397
 
 # Diff at Wed, 07 Jan 2026 16:08:15 GMT:
