@@ -191,10 +191,10 @@ To receive the original locked token back, a user would have to return to the ma
     bridgeType: 'omnichain',
     plugins: [
       {
-        plugin: 'layerzero',
+        plugin: 'layerzero-v2',
       },
       {
-        plugin: 'layerzero-v2',
+        plugin: 'layerzero-v2-ofts',
       },
     ],
   },

@@ -54,22 +54,27 @@ export const base: ScalingProject = opStackL2({
     plugins: [
       {
         filterBy: 'chain',
+        chain: 'base',
         plugin: 'opstack',
       },
       {
         filterBy: 'chain',
+        chain: 'base',
         plugin: 'opstack-standardbridge',
       },
       {
         filterBy: 'chain',
+        chain: 'base',
         plugin: 'beefy-bridge',
       },
       {
         filterBy: 'chain',
+        chain: 'base',
         plugin: 'maker-bridge',
       },
       {
         filterBy: 'chain',
+        chain: 'base',
         plugin: 'sorare-base',
       },
     ],

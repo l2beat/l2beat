@@ -1,4 +1,5 @@
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
+import type { InteropConfig } from '@l2beat/shared-pure'
 import {
   type ChainId,
   type ChainSpecificAddress,
@@ -1183,28 +1184,6 @@ export interface ProjectDiscoveryInfo {
   hasDiscoUi: boolean
 }
 
-export interface InteropConfig {
-  name?: string
-  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
-  plugins: InteropPlugin[]
-}
-
-type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
-
-type ByChainPlugin = {
-  filterBy: 'chain'
-  plugin: string
-}
-
-type ByTokenIdPlugin = {
-  filterBy: 'abstractTokenId'
-  abstractTokenId: string
-  plugin: string
-}
-
-type PlainPlugin = {
-  plugin: string
-}
 // #endregion
 
 // #region TVS
