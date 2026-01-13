@@ -7,7 +7,11 @@ export type InteropPathData = {
 }
 
 export function getTopPaths(
-  records: InteropPathData[],
+  records: {
+    srcChain: string
+    dstChain: string
+    srcValueUsd: number | null
+  }[],
   from: string[],
   to: string[],
 ): InteropPathData[] {
@@ -18,7 +22,8 @@ export function getTopPaths(
       continue
     }
     const key = `${record.srcChain}::${record.dstChain}`
-    map.set(key, (map.get(key) ?? 0) + record.volume)
+    const current = map.get(key) ?? 0
+    map.set(key, current + (record.srcValueUsd ?? 0))
   }
 
   return Array.from(map.entries())
