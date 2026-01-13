@@ -893,6 +893,9 @@ Verify:
     description:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
     programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
     title: 'Morph Guest program (v0.4.9 release)',
     description:
