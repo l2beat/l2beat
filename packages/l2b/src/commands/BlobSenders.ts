@@ -3,10 +3,13 @@ import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { command, flag, number, option } from 'cmd-ts'
 import { getBlobSenders } from '../implementations/blob-senders/getBlobSenders'
 import {
+  getContractInfo,
+  getMappingStats,
   getProjectByReceiver,
   getReceiverName,
-} from '../implementations/blob-senders/getReceiverMapping'
-import { getSequencerMappingExtended } from '../implementations/blob-senders/getSequencerMapping'
+  getSequencerMapping,
+  initMappings,
+} from '../implementations/blob-senders/loadDiscoveryMappings'
 import { HttpUrl } from './types'
 
 export const BlobSenders = command({
@@ -43,19 +46,26 @@ export const BlobSenders = command({
     console.log(`Scanning last ${args.blockCount} blocks for blob senders...`)
     console.log(`RPC: ${args.rpcUrl.slice(0, 50)}...\n`)
 
-    // Load sequencer mapping from discovered.json files
+    // Load all mappings in a single pass
     const paths = getDiscoveryPaths()
-    const projectsPath = paths.discovery
-    console.log('Loading sequencer mapping from discovery...')
-    const sequencerMapping = getSequencerMappingExtended(projectsPath)
-    console.log(`Found ${sequencerMapping.size} known sequencer addresses\n`)
+    console.log('Loading mappings from discovery...')
+    initMappings(paths.discovery)
+    const stats = getMappingStats()
+    console.log(
+      `Found ${stats.sequencers} sequencers, ${stats.receivers} inboxes, ${stats.contracts} contracts\n`,
+    )
+
+    const sequencerMapping = getSequencerMapping()
 
     const senders = await getBlobSenders(
       args.rpcUrl,
       args.blockCount,
       (current, total, count) => {
-        const pct = ((current / total) * 100).toFixed(1)
-        process.stdout.write(`\rProgress: ${pct}% | Unique senders: ${count}`)
+        const pct = current / total
+        const width = 30
+        const filled = Math.round(pct * width)
+        const bar = '█'.repeat(filled) + '░'.repeat(width - filled)
+        process.stdout.write(`\r[${bar}] ${(pct * 100).toFixed(0).padStart(3)}% | Senders: ${count}`)
       },
     )
 
@@ -68,43 +78,49 @@ export const BlobSenders = command({
 
     // Enrich with project names (check sender first, then receiver)
     const enriched = senders.map((s) => {
+      const mainReceiver = [...s.receivers.entries()].sort(
+        (a, b) => b[1] - a[1],
+      )[0]?.[0]
+
       const senderInfo = sequencerMapping.get(s.address)
+      const isKnownInbox = mainReceiver ? getProjectByReceiver(mainReceiver) : undefined
+      const receiverName = mainReceiver ? getReceiverName(mainReceiver) : undefined
+      const contractInfo = mainReceiver ? getContractInfo(mainReceiver) : undefined
+
+      // Determine receiver display: inbox > contract name > Multicall3 > address
+      const getReceiverDisplay = (showInbox: boolean) => {
+        if (showInbox && isKnownInbox) return 'inbox'
+        if (contractInfo) return contractInfo.name
+        if (receiverName) return receiverName
+        return mainReceiver ?? ''
+      }
+
       if (senderInfo) {
         return {
           ...s,
           project: senderInfo.project,
           role: senderInfo.role ?? '',
+          receiver: getReceiverDisplay(true),
           source: 'sender',
         }
       }
 
       // Try to identify by receiver address
-      const mainReceiver = [...s.receivers.entries()].sort(
-        (a, b) => b[1] - a[1],
-      )[0]?.[0]
-      if (mainReceiver) {
-        const receiverProject = getProjectByReceiver(mainReceiver)
-        if (receiverProject) {
-          return {
-            ...s,
-            project: receiverProject,
-            role: `-> ${mainReceiver.slice(0, 10)}...`,
-            source: 'receiver',
-          }
+      if (isKnownInbox) {
+        return {
+          ...s,
+          project: isKnownInbox,
+          role: '(by inbox)',
+          receiver: 'inbox',
+          source: 'receiver',
         }
       }
-
-      // Check if receiver has a known name (like Multicall3)
-      const receiverName = mainReceiver ? getReceiverName(mainReceiver) : undefined
 
       return {
         ...s,
         project: '???',
-        role: receiverName
-          ? `-> ${receiverName}`
-          : mainReceiver
-            ? `-> ${mainReceiver.slice(0, 10)}...`
-            : '',
+        role: '',
+        receiver: getReceiverDisplay(false),
         source: 'unknown',
       }
     })
@@ -119,13 +135,13 @@ export const BlobSenders = command({
       return
     }
 
-    const headers = ['Project', 'Address', 'Blobs', 'Txs', 'Receiver/Role']
+    const headers = ['Project', 'Address', 'Blobs', 'Txs', 'Receiver']
     const rows = filtered.map((s) => [
-      s.project.slice(0, 20),
+      s.project.slice(0, 15),
       s.address,
       s.blobCount.toString(),
       s.txCount.toString(),
-      s.role.slice(0, 18),
+      s.receiver,
     ])
 
     console.log(formatAsAsciiTable(headers, rows))
