@@ -45,7 +45,7 @@ export function createInteropModule({
 
   const syncersManager = new InteropSyncersManager(
     plugins.eventPlugins,
-    config.interop.capture.chains.map((c) => c.name as LongChainName),
+    config.interop.capture.chains.map((c) => c.id as LongChainName),
     config.chainConfig,
     eventStore,
     db,
@@ -65,7 +65,7 @@ export function createInteropModule({
       )
       blockProcessors.push(processor)
       blockProcessors.push(
-        syncersManager.getBlockProcessor(chain.name as LongChainName),
+        syncersManager.getBlockProcessor(chain.id as LongChainName),
       )
       processors.push(processor)
     }
