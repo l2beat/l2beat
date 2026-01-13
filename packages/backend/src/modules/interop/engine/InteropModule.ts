@@ -45,7 +45,7 @@ export function createInteropModule({
 
   const syncersManager = new InteropSyncersManager(
     plugins.eventPlugins,
-    config.interop.capture.chains.map((c) => c.name as LongChainName),
+    config.interop.capture.chains.map((c) => c.id as LongChainName),
     config.chainConfig,
     eventStore,
     db,
@@ -140,13 +140,12 @@ export function createInteropModule({
 
     if (config.interop && config.interop.matching) {
       matcher.start()
-      // TODO: AA debug
-      // await relayRootIndexer.start()
-      // await relayIndexer.start()
+      await relayRootIndexer.start()
+      await relayIndexer.start()
     }
     if (config.interop && config.interop.compare.enabled) {
       for (const compareLoop of compareLoops) {
-        // compareLoop.start()
+        compareLoop.start()
       }
     }
     if (config.interop && config.interop.cleaner) {

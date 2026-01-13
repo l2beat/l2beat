@@ -101,7 +101,7 @@ export class InteropEventSyncer extends TimeLoop {
     fn: (state: T) => Promise<SyncerState>,
   ) {
     try {
-      this.clearChainSyncError()
+      await this.clearChainSyncError()
       this.state = await fn(state)
       if (this.state.type === 'timeLoop') {
         this.unpause()
@@ -224,7 +224,7 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   getOldestEventForPluginAndChain(): Promise<InteropEventRecord | undefined> {
-    return this.db.interopEvent.getOldestEventForPluginAndChan(
+    return this.db.interopEvent.getOldestEventForPluginAndChain(
       this.plugin.name,
       this.chain,
     )
