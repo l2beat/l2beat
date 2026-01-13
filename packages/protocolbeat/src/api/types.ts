@@ -269,3 +269,52 @@ export interface UpgradeabilityActor {
   name: string
   delay: string
 }
+
+// Overspecification detection types
+export interface OverspecifiedResult {
+  ignoreInWatchMode: string[]
+  ignoreMethods: string[]
+  ignoreRelatives: string[]
+}
+
+export interface ApiCheckConfigOverspecificationRequest {
+  project: string
+  address: string
+  ignoreInWatchMode?: string[]
+  ignoreMethods?: string[]
+  ignoreRelatives?: string[]
+}
+
+export interface ApiCheckConfigOverspecificationResponse {
+  overspecified: OverspecifiedResult
+}
+
+export interface ApiCheckAllConfigOverridesResponse {
+  results: {
+    address: string
+    overspecified: OverspecifiedResult
+  }[]
+}
+
+export interface ApiCheckTemplateOverspecificationRequest {
+  templateId: string
+  ignoreInWatchMode?: string[]
+  ignoreMethods?: string[]
+  ignoreRelatives?: string[]
+}
+
+export interface ApiCheckTemplateOverspecificationResponse {
+  overspecified: OverspecifiedResult
+}
+
+export interface ApiCheckTemplateFileResponse {
+  templateId: string
+  overspecified: OverspecifiedResult
+}
+
+export interface ApiCheckAllTemplatesResponse {
+  results: {
+    templateId: string
+    overspecified: OverspecifiedResult
+  }[]
+}
