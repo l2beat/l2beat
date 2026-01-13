@@ -152,6 +152,7 @@
         {
           "permission": "propose",
           "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
         }
       ]
@@ -165,7 +166,7 @@
         "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -832,5 +833,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 24176875, "facet": 2822743 },
-  "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
+  "permissionsConfigHash": "0x804277fe3ef466ad4a6f1643551094a2daca80f97376fbc270e197e312316767"
 }

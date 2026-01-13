@@ -1,0 +1,447 @@
+{
+  "name": "ethscriptions",
+  "timestamp": 1768211188,
+  "configHash": "0xe13fb9b1a09c4c406f0ff0d9ce187337c42f2e5d2d76e85ec2cb8383236d4561",
+  "entries": [
+    {
+      "address": "eth:0x00000000000000000000000000000000000FacE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
+          "role": ".whitelistedProposers"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x77610267a344Eb39955c20908978830f61e2373C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "sinceTimestamp": 1767733343,
+      "sinceBlock": 24178194,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          }
+        ],
+        "owner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
+      }
+    },
+    {
+      "name": "Rollup",
+      "address": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
+      "type": "Contract",
+      "template": "facet/Rollup",
+      "sourceHashes": [
+        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
+      ],
+      "proxyType": "immutable",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
+      "ignoreInWatchMode": [
+        "getProposalsLength",
+        "anchorL2BlockNumber",
+        "anchorProposalId",
+        "anchorRoot"
+      ],
+      "sinceTimestamp": 1767969599,
+      "sinceBlock": 24197780,
+      "values": {
+        "$immutable": true,
+        "AGG_VKEY": "0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd",
+        "anchorL2BlockNumber": 6765840,
+        "anchorProposalId": 0,
+        "anchorRoot": "0xd6d92a80e3ac563ab150dd0bc3a6845ba3d34edaff0ee65f442f55bddc2c3ca6",
+        "canonicalProposalFor": [],
+        "canonicalProposalIdFor": [],
+        "CHALLENGER_BOND": "10000000000000000000",
+        "computeL2Timestamp": [],
+        "FALLBACK_TIMEOUT_SECS": 1209600,
+        "getProposalsLength": 13,
+        "isInFallbackWindow": [],
+        "L2_BLOCK_TIME": 12,
+        "L2_START_TIMESTAMP": 1767945143,
+        "l2BlockAge": [],
+        "MAX_CHALLENGE_SECS": 604800,
+        "MAX_PROVE_SECS": 604800,
+        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "PROPOSAL_INTERVAL": 1800,
+        "PROPOSER_BOND": 500000000000000,
+        "RANGE_VKEY_COMMITMENT": "0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594",
+        "renouncedOwner": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001",
+        "ROLLUP_CONFIG_HASH": "0x09e306a5a6b6614b9355c8eadf93e569088433b29792b45236619e4637fa14ae",
+        "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
+        "VERIFIER": "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1",
+        "version": "1.0.0",
+        "whitelistedProposers": [
+          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+        ]
+      },
+      "implementationNames": {
+        "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b": "Rollup"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Facet Multisig",
+      "address": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
+          "description": "can set the whitelisted proposers.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1701094787,
+      "sinceBlock": 18663532,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x77610267a344Eb39955c20908978830f61e2373C",
+          "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
+          "eth:0x75deB70b12689e9CaeF4b316eDD04F213Af06127"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x4a566a7839f4fa7ba86474f484e7e11b96ee4927109cfcfdddad250cd7a3fec3",
+        "getChainId": 1,
+        "GnosisSafe_modules": [
+          "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+        ],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 327,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Ethscriptions",
+      "address": "ethscr:0x3300000000000000000000000000000000000001",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+      ],
+      "proxyType": "immutable",
+      "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "sinceTimestamp": 1686755075,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethscr:0x3300000000000000000000000000000000000001": "Proxy"
+      }
+    },
+    {
+      "name": "EthscriptionsProver",
+      "address": "ethscr:0x3300000000000000000000000000000000000003",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
+      ],
+      "proxyType": "immutable",
+      "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      "sinceTimestamp": 1686755075,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver"
+      }
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "ethscr:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+      ],
+      "proxyType": "immutable",
+      "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
+      "ignoreInWatchMode": ["messageNonce"],
+      "sinceTimestamp": 1686755075,
+      "sinceBlock": 0,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethscr:0x4200000000000000000000000000000000000016": "Proxy"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b": [
+      "constructor(uint256 _challengeSecs, uint256 _proveSecs, uint256 _challengerBond, uint256 _proposerBond, uint256 _fallbackTimeout, uint256 _proposalInterval, bytes32 _startRoot, uint256 _startBlock, uint256 _l2StartTimestamp, uint256 _l2BlockTime, address _verifier, bytes32 _rollupHash, bytes32 _aggVkey, bytes32 _rangeCommit)",
+      "error AlreadyChallenged()",
+      "error AlreadyResolved()",
+      "error BadAuth()",
+      "error BadCadence()",
+      "error BlockAlreadyProven()",
+      "error GameNotOver()",
+      "error GameOver()",
+      "error IncorrectBondAmount()",
+      "error InvalidL2BlockNumber()",
+      "error InvalidParentGame()",
+      "error L1BlockHashNotAvailable()",
+      "error L1BlockHashNotCheckpointed()",
+      "error NoCanonicalProposal()",
+      "error NoCredit()",
+      "error ParentGameNotResolved()",
+      "error ProposingBackwards()",
+      "error ProposingFutureBlock()",
+      "error TransferFailed()",
+      "event AnchorUpdated(uint256 indexed proposalId, bytes32 root, uint256 l2BlockNumber)",
+      "event BlockProven(uint256 indexed l2BlockNumber, bytes32 root, address indexed prover)",
+      "event L1BlockHashCheckpointed(uint256 indexed l1BlockNumber, bytes32 blockHash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalChallenged(uint256 indexed proposalId, address indexed challenger)",
+      "event ProposalClosed(uint256 indexed proposalId)",
+      "event ProposalProven(uint256 indexed proposalId, address indexed prover)",
+      "event ProposalResolved(uint256 indexed proposalId, uint8 status)",
+      "event ProposalSubmitted(uint256 indexed proposalId, uint256 indexed parentId, address indexed proposer, bytes32 root, uint256 l2BlockNumber)",
+      "event ProposerPermissionUpdated(address indexed proposer, bool allowed)",
+      "function AGG_VKEY() view returns (bytes32)",
+      "function CHALLENGER_BOND() view returns (uint256)",
+      "function FALLBACK_TIMEOUT_SECS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function L2_START_TIMESTAMP() view returns (uint256)",
+      "function MAX_CHALLENGE_SECS() view returns (uint256)",
+      "function MAX_PROVE_SECS() view returns (uint256)",
+      "function PROPOSAL_INTERVAL() view returns (uint256)",
+      "function PROPOSER_BOND() view returns (uint256)",
+      "function RANGE_VKEY_COMMITMENT() view returns (bytes32)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function VERIFIER() view returns (address)",
+      "function anchorL2BlockNumber() view returns (uint256)",
+      "function anchorProposalId() view returns (uint256)",
+      "function anchorRoot() view returns (bytes32)",
+      "function canonicalProposalFor(uint256 l2BlockNumber) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function canonicalProposalIdFor(uint256 l2BlockNumber) view returns (uint256)",
+      "function challengeProposal(uint256 id) payable",
+      "function checkpointL1BlockHash(uint256 l1BlockNumber)",
+      "function claimCredit(address recipient)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function credit(address) view returns (uint256)",
+      "function gameOver(uint256 proposalId) view returns (bool)",
+      "function getAnchorRoot() view returns (bytes32, uint256)",
+      "function getProposal(uint256 id) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function getProposals(uint256[] ids) view returns (tuple(bytes32 rootClaim, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint32 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover)[] out)",
+      "function getProposalsLength() view returns (uint256)",
+      "function isInFallbackWindow(uint256 l2BlockNumber) view returns (bool)",
+      "function isResolvable(uint256 proposalId) view returns (bool)",
+      "function isWhitelistedProposer(address proposer) view returns (bool)",
+      "function l1BlockHashes(uint256) view returns (bytes32)",
+      "function l2BlockAge(uint256 l2BlockNumber) view returns (uint256)",
+      "function latestProposals(uint256 count) view returns (uint256[] ids)",
+      "function needsDefense(uint256 proposalId) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proposalIsCanonical(uint256 proposalId) view returns (bool)",
+      "function proveBlock(uint256 l2BlockNumber, bytes32 root, uint256 l1BlockNumber, bytes proof)",
+      "function proveProposal(uint256 id, uint256 l1BlockNumber, bytes proof)",
+      "function renounceOwnership()",
+      "function resolveProposal(uint256 id)",
+      "function setProposer(address proposer, bool allowed)",
+      "function submitProposal(bytes32 root, uint256 l2BlockNumber, uint256 parentId) payable returns (uint256 proposalId)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)",
+      "function whitelistedProposer(address) view returns (bool)"
+    ],
+    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "ethscr:0x3300000000000000000000000000000000000001": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) returns (bytes)"
+    ],
+    "ethscr:0x3300000000000000000000000000000000000003": [
+      "error OnlyEthscriptions()",
+      "error OnlyL1Block()",
+      "event EthscriptionDataProofSent(bytes32 indexed ethscriptionId, uint256 indexed l2BlockNumber, uint256 l2Timestamp)",
+      "function flushAllProofs()",
+      "function queueEthscription(bytes32 ethscriptionId)"
+    ],
+    "ethscr:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) returns (bytes)"
+    ]
+  },
+  "usedTemplates": {
+    "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
+  },
+  "usedBlockNumbers": { "ethereum": 24217826, "ethscriptions": 6788010 },
+  "permissionsConfigHash": "0x79df8f08549957361fb184d91be9482002586ea196a7aa63776914eb5eb22896"
+}

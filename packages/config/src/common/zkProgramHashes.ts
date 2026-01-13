@@ -326,7 +326,6 @@ fn main() {
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
-
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
@@ -878,6 +877,22 @@ Verify:
     title: 'Morph Guest Program (zkEVM Executor)',
     description:
       'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
+    title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
+    title: 'Range program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
