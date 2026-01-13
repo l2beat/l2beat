@@ -255,6 +255,13 @@ export const ethscriptions: ScalingProject = {
           },
         ],
       },
+      {
+        name: 'No direct L2 transactions and free gas',
+        description:
+          'Unlike traditional rollups, users do not submit transactions directly to the L2. All user interactions occur on Ethereum L1 through standard ethscription operations (creating via Data URIs in calldata or transferring via ESIP events). The L2 derives its state entirely from this L1 activity through the derivation pipeline. Consequently, there is no gas paid by users on the L2 - geth has been modified to execute derived transactions without charging gas fees. Users only pay L1 gas costs for their Ethereum transactions.',
+        risks: [],
+        references: [],
+      },
     ],
   },
   stateValidation: {
