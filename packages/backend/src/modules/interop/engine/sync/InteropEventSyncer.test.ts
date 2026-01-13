@@ -384,7 +384,7 @@ describe(InteropEventSyncer.name, () => {
             findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
           }),
           interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
-            getOldestEventForPluginAndChan: mockFn().resolvesTo(oldestEvent),
+            getOldestEventForPluginAndChain: mockFn().resolvesTo(oldestEvent),
           }),
         }),
       })
@@ -644,7 +644,7 @@ function mockDb(): InteropEventSyncer['db'] {
       findByPluginNameAndChain: mockFn().resolvesTo(undefined),
     }),
     interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
-      getOldestEventForPluginAndChan: mockFn().resolvesTo(
+      getOldestEventForPluginAndChain: mockFn().resolvesTo(
         makeInteropEventRecord(),
       ),
     }),

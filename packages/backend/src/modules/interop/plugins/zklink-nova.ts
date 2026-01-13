@@ -125,6 +125,7 @@ export class ZklinkNovaPlugin implements InteropPlugin {
           app: 'zklink-nova',
           srcEvent: sentMessage,
           dstEvent: event,
+          extraEvents: [zklinkEvent],
         }),
       ]
 
@@ -138,6 +139,7 @@ export class ZklinkNovaPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [zklinkEvent],
           }),
         )
       }

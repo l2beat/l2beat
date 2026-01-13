@@ -47,7 +47,9 @@ export class WsBlockNumberIndexer extends RootIndexer {
       // Schedule reconnect
       this.reconnectTimeout = setTimeout(() => {
         this.logger.info('Attempting to reconnect...')
-        this.initialize()
+        this.initialize().catch((error) => {
+          this.logger.error('Failed to reinitialize', error)
+        })
       }, 5000)
     })
 

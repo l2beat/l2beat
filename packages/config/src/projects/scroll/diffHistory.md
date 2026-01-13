@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xc041eb4811dd20ed554903f04315c38a8fad6bb5
+
+# Diff at Thu, 08 Jan 2026 16:08:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cf8d792e29ae826d4bd19d06725ac7de8582e2c2 block: 1766408981
+- current timestamp: 1766408981
+
+## Description
+
+Removed old verifiers from spam because they can still be used and thus are referenced in zk catalog.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766408981 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (eth:0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (eth:0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0x7c28ecd3279e4e4a9b5f6a12510209c76b1e59dd
 
 # Diff at Mon, 22 Dec 2025 13:11:12 GMT:

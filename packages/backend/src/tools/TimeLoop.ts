@@ -54,7 +54,7 @@ export abstract class TimeLoop {
   }
 
   private startLoop() {
-    this.loopBody()
+    void this.loopBody()
     this.intervalHandle = setInterval(
       () => this.loopBody(),
       this.options.intervalMs,

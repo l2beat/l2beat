@@ -35,7 +35,6 @@ export class CatchingUpState implements TimeloopState {
   type = 'timeLoop' as const
   name = 'catchingUp'
   status = 'starting'
-  working = false
 
   constructor(
     private readonly syncer: InteropEventSyncer,
