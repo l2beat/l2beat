@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "adi",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "adi-ADI",
+      "priceId": "adi-token",
+      "symbol": "ADI",
+      "name": "ADI",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68846/large/ADI_Token-min.png?1765296433",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8B1484d57abBE239bB280661377363b03c89CaEa",
+        "chain": "ethereum",
+        "escrowAddress": "0x0A0F8912162Ff83A036883dbaDA42efF647a3065",
+        "decimals": 18,
+        "sinceTimestamp": 1765238400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

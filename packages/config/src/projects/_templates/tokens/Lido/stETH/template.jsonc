@@ -4,7 +4,8 @@
   "ignoreMethods": [
     "getPooledEthByShares",
     "getSharesByPooledEth",
-    "getTotalELRewardsCollected"
+    "getTotalELRewardsCollected",
+    "getPooledEthBySharesRoundUp"
   ],
   "ignoreInWatchMode": [
     "getFeeDistribution",
@@ -15,6 +16,9 @@
     "getStakeLimitFullInfo",
     "getTotalPooledEther",
     "getTotalShares",
-    "getCurrentStakeLimit"
+    "getCurrentStakeLimit",
+    "getExternalEther",
+    "getExternalShares",
+    "getMaxMintableExternalShares"
   ]
 }

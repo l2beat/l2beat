@@ -1,11 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import type {
-  BeaconChainBlob,
-  BeaconChainClient,
-  EVMLog,
-  RpcClient,
-} from '../../clients'
+import type { BeaconChainBlob, BeaconChainClient, EVMLog } from '../../clients'
+import type { IRpcClient } from '../../clients2'
 import type { DaBlobProvider } from './DaProvider'
 import type { EthereumBlob } from './types'
 
@@ -15,7 +11,7 @@ export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
     private readonly beaconChainClient: BeaconChainClient,
-    private readonly rpcClient: RpcClient,
+    private readonly rpcClient: IRpcClient,
     readonly daLayer: string,
   ) {}
 

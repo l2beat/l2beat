@@ -32,6 +32,25 @@ describe(InMemoryEventDb.name, () => {
     expect(db.find(EventA, { a: 'four' })).toEqual(undefined)
   })
 
+  it('can find a new event after the first query', () => {
+    // This is a test to prevent a bug that occured before.
+    // A dynamic index (called Lookup) was constructed during
+    // the first query. But that index was not updated with
+    // new events later.
+    const db = new InMemoryEventDb()
+
+    const eventA1 = EventA.mock({ a: 'one' })
+    db.addEvent(eventA1)
+    // Here the index (Lookup) is constructed for EventA
+    expect(db.find(EventA, { a: 'one' })).toEqual(eventA1)
+
+    const eventA2 = EventA.mock({ a: 'two' })
+    // This call should update the index of EventA
+    db.addEvent(eventA2)
+    // so that it can be found later:
+    expect(db.find(EventA, { a: 'two' })).toEqual(eventA2)
+  })
+
   it('can remove an event', () => {
     const db = new InMemoryEventDb()
     const events = [
@@ -70,6 +89,23 @@ describe(InMemoryEventDb.name, () => {
 
     expect(db.getEvents(EventA.type)).toEqual([])
     expect(db.getEventCount()).toEqual(0)
+  })
+
+  it('can remove events for a specific plugin', () => {
+    const db = new InMemoryEventDb()
+    const events = [
+      { ...EventA.mock({ a: 'one' }), plugin: 'plugin-a' },
+      { ...EventA.mock({ a: 'two' }), plugin: 'plugin-b' },
+      { ...EventB.mock({ b1: 'b1', b2: 1 }), plugin: 'plugin-a' },
+      { ...EventB.mock({ b1: 'b2', b2: 2 }), plugin: 'plugin-b' },
+    ]
+    events.forEach((e) => db.addEvent(e))
+
+    db.removeForPlugin('plugin-a')
+
+    expect(db.getEvents(EventA.type)).toEqual([events[1]])
+    expect(db.getEvents(EventB.type)).toEqual([events[3]])
+    expect(db.getEventCount()).toEqual(2)
   })
 
   it('can remove multiple expired events leaving one', () => {

@@ -1,5 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
@@ -12,9 +14,15 @@ interface Props {
 
 export function ScalingDaTable({ entries, hideType }: Props) {
   const { sorting, setSorting } = useTableSorting()
+
+  const columns = useMemo(
+    () => getScalingDataAvailabilityColumns(hideType),
+    [hideType],
+  )
+
   const table = useTable({
     data: entries,
-    columns: getScalingDataAvailabilityColumns(hideType),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -29,5 +37,10 @@ export function ScalingDaTable({ entries, hideType }: Props) {
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }

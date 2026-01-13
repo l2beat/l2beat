@@ -12,11 +12,12 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const chainId = 388
-const trackedTxsSince = UnixTime(1742983103)
 const v26UpgradeTS = UnixTime(1742983103)
+const v292UpgradeTS = UnixTime(1765445075)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1723680000), // 2024-08-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
@@ -31,6 +32,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       bridges: ['https://zkevm.cronos.org/bridge'],
       documentation: ['https://docs-zkevm.cronos.org/'],
       explorers: ['https://explorer.zkevm.cronos.org/'],
+      repositories: ['https://github.com/cronos-labs'],
       socialMedia: [
         'https://x.com/cronos_chain',
         'https://discord.com/invite/cronos',
@@ -56,7 +58,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       },
     ],
   },
-  diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
@@ -75,7 +76,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A#code#F1#L50',
+          url: 'https://etherscan.io/address/0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691#code#F1#L60',
         },
       ],
     },
@@ -104,56 +105,12 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       query: {
         formula: 'sharedBridge',
         firstParameter: chainId,
-        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
-        selector: '0x6edd4f12',
-        functionSignature:
-          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-        sinceTimestamp: trackedTxsSince,
-        untilTimestamp: v26UpgradeTS,
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'proofSubmissions' },
-        { type: 'l2costs', subtype: 'proofSubmissions' },
-      ],
-      query: {
-        formula: 'sharedBridge',
-        firstParameter: chainId,
-        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
-        selector: '0xc37533bb',
-        functionSignature:
-          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
-        sinceTimestamp: trackedTxsSince,
-        untilTimestamp: v26UpgradeTS,
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'sharedBridge',
-        firstParameter: chainId,
-        address: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
-        selector: '0x6f497ac6',
-        functionSignature:
-          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
-        sinceTimestamp: trackedTxsSince,
-        untilTimestamp: v26UpgradeTS,
-      },
-    },
-    {
-      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
-      query: {
-        formula: 'sharedBridge',
-        firstParameter: chainId,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
         selector: '0x98f81962',
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v292UpgradeTS,
       },
     },
     {
@@ -169,6 +126,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v292UpgradeTS,
       },
     },
     {
@@ -184,6 +142,55 @@ export const cronoszkevm: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v292UpgradeTS,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc',
+        ), // cronos diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v292UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc',
+        ), // cronos diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: v292UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc',
+        ), // cronos diamond on ethereum
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v292UpgradeTS,
       },
     },
   ],

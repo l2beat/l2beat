@@ -1,0 +1,11 @@
+{
+  "Lighter.sol": {
+    "hash": "0x016ec5f80bfe1e98a099c8e237105be90b1da112de262adc17dcec715a4ee173",
+    "address": [
+      "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
+      "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 23981955
+  }
+}

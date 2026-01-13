@@ -1,5 +1,6 @@
 import {
   assert,
+  assertUnreachable,
   ChainSpecificAddress,
   type EthereumAddress,
   formatJson,
@@ -33,6 +34,31 @@ import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
+
+export type RefreshReason =
+  | {
+      type: 'TEMPLATE_NO_LONGER_MATCHES'
+      contract: string
+      template: string
+    }
+  | {
+      type: 'TEMPLATE_MATCH_CHANGED'
+      contract: string
+      oldTemplate: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'NEW_TEMPLATE_MATCH'
+      contract: string
+      newTemplates: string[]
+    }
+  | {
+      type: 'CONFIG_CHANGED'
+    }
+  | {
+      type: 'TEMPLATE_CONFIG_CHANGED'
+      templates: string[]
+    }
 
 export interface ShapeCriteria {
   validAddresses?: string[]
@@ -234,8 +260,28 @@ export class TemplateService {
     return result
   }
 
-  // returns reason or undefined
-  discoveryNeedsRefresh(discovery: DiscoveryOutput, config: ConfigRegistry) {
+  formatReason(reason: RefreshReason): string {
+    switch (reason.type) {
+      case 'TEMPLATE_NO_LONGER_MATCHES':
+        return `A contract "${reason.contract}" with template "${reason.template}", no longer matches any template`
+      case 'TEMPLATE_MATCH_CHANGED':
+        return `A contract "${reason.contract}" matches a different template: "${reason.oldTemplate} -> ${reason.newTemplates.join(', ')}"`
+      case 'NEW_TEMPLATE_MATCH':
+        return `A contract "${reason.contract}" without template now matches: "${reason.newTemplates.join(', ')}"`
+      case 'CONFIG_CHANGED':
+        return 'project config or used template has changed'
+      case 'TEMPLATE_CONFIG_CHANGED':
+        return `template configs has changed: ${reason.templates.join(', ')}`
+      default:
+        assertUnreachable(reason)
+    }
+  }
+
+  discoveryNeedsRefresh(
+    discovery: DiscoveryOutput,
+    config: ConfigRegistry,
+  ): RefreshReason[] {
+    const reasons: RefreshReason[] = []
     const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 
@@ -269,19 +315,35 @@ export class TemplateService {
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
         if (matchingTemplates.length === 0) {
-          return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
+          reasons.push({
+            type: 'TEMPLATE_NO_LONGER_MATCHES',
+            contract: contract.name ?? contract.address,
+            template: contract.template,
+          })
         }
+
         if (contract.template !== matchingTemplates[0]) {
-          return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
+          reasons.push({
+            type: 'TEMPLATE_MATCH_CHANGED',
+            contract: contract.name ?? contract.address,
+            oldTemplate: contract.template,
+            newTemplates: matchingTemplates,
+          })
         }
       } else if (matchingTemplates.length > 0) {
-        return `A contract "${contract.name}" without template now matches: "${matchingTemplates.join(', ')}"`
+        reasons.push({
+          type: 'NEW_TEMPLATE_MATCH',
+          contract: contract.name ?? contract.address,
+          newTemplates: matchingTemplates,
+        })
       }
     }
 
     const structureHash = generateStructureHash(config.structure)
     if (discovery.configHash !== structureHash) {
-      return 'project config or used template has changed'
+      reasons.push({
+        type: 'CONFIG_CHANGED',
+      })
     }
 
     const outdatedTemplates = []
@@ -294,8 +356,13 @@ export class TemplateService {
     }
 
     if (outdatedTemplates.length > 0) {
-      return `template configs has changed: ${outdatedTemplates.join(', ')}`
+      reasons.push({
+        type: 'TEMPLATE_CONFIG_CHANGED',
+        templates: outdatedTemplates,
+      })
     }
+
+    return reasons
   }
 
   ensureTemplateExists(templateId: string) {

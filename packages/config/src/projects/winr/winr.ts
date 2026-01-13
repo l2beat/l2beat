@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('winr')
 
 export const winr: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1734307200), // 2024-12-16T00:00:00Z
+  archivedAt: UnixTime(1767866966),
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
@@ -27,7 +28,11 @@ export const winr: ScalingProject = orbitStackL3({
       bridges: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
-      socialMedia: ['https://x.com/WINRProtocol'],
+      socialMedia: [
+        'https://x.com/WINRProtocol',
+        'https://t.me/WINRProtocol',
+        'https://discord.com/invite/winrprotocol',
+      ],
     },
   },
   chainConfig: {

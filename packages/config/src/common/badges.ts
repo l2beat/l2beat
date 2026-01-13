@@ -211,6 +211,17 @@ export const badges = [
     },
   },
   {
+    id: 'EigenDAVerifier',
+    type: BadgeType.DA,
+    name: 'EigenDA with DA Verifier',
+    description:
+      'This project uses EigenDA and integrates the DACert Verifier to validate DA commitments.',
+    action: {
+      type: 'publicDaHighlight',
+      slug: 'eigendaverifier',
+    },
+  },
+  {
     id: 'NearDA',
     type: BadgeType.DA,
     name: 'NearDA',
@@ -536,7 +547,7 @@ export const badges = [
     id: 'LoopringFork',
     type: BadgeType.Fork,
     name: 'Fork of Loopring',
-    description: 'The project is fork of Loopring',
+    description: 'The project is a fork of Loopring',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -547,7 +558,7 @@ export const badges = [
     id: 'OVM',
     type: BadgeType.Fork,
     name: 'Fork of OVM',
-    description: 'The project is fork of the Optimistic Virtual Machine',
+    description: 'The project is a fork of the Optimistic Virtual Machine',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -558,7 +569,7 @@ export const badges = [
     id: 'ZKsyncLiteFork',
     type: BadgeType.Fork,
     name: 'Fork of ZKsync Lite',
-    description: 'The project is fork of ZKsync Lite',
+    description: 'The project is a fork of ZKsync Lite',
     action: {
       type: 'scalingFilter',
       id: 'stack',
@@ -569,11 +580,22 @@ export const badges = [
     id: 'TaikoFork',
     type: BadgeType.Fork,
     name: 'Fork of Taiko',
-    description: 'The project is fork of Taiko',
+    description: 'The project is a fork of Taiko',
     action: {
       type: 'scalingFilter',
       id: 'stack',
       value: 'Taiko',
+    },
+  },
+  {
+    id: 'FacetFork',
+    type: BadgeType.Fork,
+    name: 'Fork of Facet',
+    description: 'The project is a fork of Facet',
+    action: {
+      type: 'scalingFilter',
+      id: 'stack',
+      value: 'Facet',
     },
   },
   //L3 host chains

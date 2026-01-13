@@ -1,11 +1,11 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
   MulticallV3Client,
-  RpcClient,
+  RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
@@ -14,7 +14,6 @@ import { boolean, command, flag, positional, run, string } from 'cmd-ts'
 import { readFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
-import { getInteropChains } from '../../../config/makeConfig'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { logToViemLog } from '../engine/capture/InteropBlockProcessor'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -44,6 +43,15 @@ export function readJsonc(path: string): JSON {
   return parsed
 }
 
+// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
+const ExpectedMessage = v.union([
+  v.string(),
+  v.object({
+    type: v.string(),
+    app: v.string().optional(),
+  }),
+])
+
 type Example = v.infer<typeof Example>
 const Example = v.object({
   loadConfigs: v.array(v.string()).optional(),
@@ -54,7 +62,7 @@ const Example = v.object({
     }),
   ),
   events: v.array(v.string()).optional(),
-  messages: v.array(v.string()).optional(),
+  messages: v.array(ExpectedMessage).optional(),
   transfers: v.array(v.string()).optional(),
 })
 
@@ -155,7 +163,7 @@ async function runExample(example: Example): Promise<RunResult> {
         multicallConfig.batchSize,
       )
     }
-    return new RpcClient({
+    return RpcClientCompat.create({
       url: env.string(`${chain.toUpperCase()}_RPC_URL`),
       chain: chain,
       http,
@@ -267,12 +275,12 @@ async function runExample(example: Example): Promise<RunResult> {
   const transfers = result.transfers.map((u) => ({
     transfer: u,
     srcId: toDeployedId(
-      getInteropChains(),
+      INTEROP_CHAINS,
       u.src.event.ctx.chain,
       u.src.tokenAddress,
     ),
     dstId: toDeployedId(
-      getInteropChains(),
+      INTEROP_CHAINS,
       u.dst.event.ctx.chain,
       u.dst.tokenAddress,
     ),
@@ -338,24 +346,36 @@ async function runExample(example: Example): Promise<RunResult> {
   }
 }
 
+type ExpectedMessageType = v.infer<typeof ExpectedMessage>
+
+function normalizeExpectedMessage(item: ExpectedMessageType): {
+  type: string
+  app?: string
+} {
+  if (typeof item === 'string') {
+    return { type: item }
+  }
+  return item
+}
+
 function checkExample(
   example: Example,
   result: RunResult,
   verbose: boolean,
 ): boolean {
-  const eventsOk = checkTyped(
+  const eventsOk = checkTypedSimple(
     'Event   ',
     [...(example.events ?? [])],
     result.events,
     verbose,
   )
-  const messagesOk = checkTyped(
+  const messagesOk = checkTypedWithApp(
     'Message ',
-    [...(example.messages ?? [])],
+    [...(example.messages ?? [])].map(normalizeExpectedMessage),
     result.messages,
     verbose,
   )
-  const transfersOk = checkTyped(
+  const transfersOk = checkTypedSimple(
     'Transfer',
     [...(example.transfers ?? [])],
     result.transfers,
@@ -368,7 +388,7 @@ const PASS = '[\x1B[1;32mPASS\x1B[0m]'
 const XTRA = '[\x1B[1;34mXTRA\x1B[0m]'
 const FAIL = '[\x1B[1;31mFAIL\x1B[0m]'
 
-function checkTyped(
+function checkTypedSimple(
   name: string,
   expected: string[],
   values: { type: string }[],
@@ -384,6 +404,35 @@ function checkTyped(
   }
   for (const type of expected) {
     console.log(FAIL, name, type)
+  }
+  return expected.length === 0
+}
+
+function checkTypedWithApp(
+  name: string,
+  expected: { type: string; app?: string }[],
+  values: { type: string; app?: string }[],
+  verbose: boolean,
+): boolean {
+  for (const value of values) {
+    const idx = expected.findIndex(
+      (e) =>
+        e.type === value.type && (e.app === undefined || e.app === value.app),
+    )
+    if (idx !== -1) {
+      expected.splice(idx, 1)
+    }
+    const tag = idx !== -1 ? PASS : XTRA
+    const display = verbose
+      ? value
+      : value.app
+        ? `${value.type} (app: ${value.app})`
+        : value.type
+    console.log(tag, name, display)
+  }
+  for (const exp of expected) {
+    const display = exp.app ? `${exp.type} (app: ${exp.app})` : exp.type
+    console.log(FAIL, name, display)
   }
   return expected.length === 0
 }

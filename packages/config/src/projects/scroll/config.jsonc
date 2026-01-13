@@ -64,6 +64,7 @@
     "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": "ZkEvmVerifierPostEuclid-2",
     "eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582": "PlonkVerifierPostEuclid",
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "PlonkVerifierPostEuclid-2",
+    "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "PlonkVerifierGalileo",
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufETHEscrow",
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow",
@@ -130,31 +131,31 @@
       }
     },
     "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
-      "category": "spam",
+      // "category": "spam",
       "manualSourcePaths": {
         "eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
       }
     },
     "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941": {
-      "category": "spam",
+      // "category": "spam",
       "manualSourcePaths": {
         "eth:0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
       }
     },
     "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": {
-      "category": "spam",
+      // "category": "spam",
       "manualSourcePaths": {
         "eth:0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
       }
     },
     "eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
-      "category": "spam",
+      // "category": "spam",
       "manualSourcePaths": {
         "eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
       }
     },
     "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
-      "category": "spam",
+      // "category": "spam",
       "manualSourcePaths": {
         "eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }
@@ -162,6 +163,11 @@
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
       "manualSourcePaths": {
         "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
+      }
+    },
+    "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": {
+      "manualSourcePaths": {
+        "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/v0.7.1/verifier/verifier.bin"
       }
     },
     "eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": { "category": "spam" },

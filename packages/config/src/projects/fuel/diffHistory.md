@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x3fc3d4f97060980d6ab4f4c4e2e9a59e1cafa682
+Generated with discovered.json: 0x0216b08c27dde8dfd308491a9017f4d96b304287
+
+# Diff at Fri, 09 Jan 2026 15:11:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1761051768
+- current timestamp: 1767971446
+
+## Description
+
+Security Council member removed (0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6), threshold reduced from 8/11 (73%) to 7/10 (70%).
+
+## Watched changes
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      values.$members.9:
+-        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+      values.$threshold:
+-        8
++        7
+      values.multisigThreshold:
+-        "8 of 11 (73%)"
++        "7 of 10 (70%)"
+    }
+```
+
+Generated with discovered.json: 0x88e08a4cef7852ad536bf992b19147a8a36bd940
 
 # Diff at Tue, 21 Oct 2025 13:03:58 GMT:
 

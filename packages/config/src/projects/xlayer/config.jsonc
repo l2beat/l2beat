@@ -13,6 +13,15 @@
   "overrides": {
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
       "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions."
+    },
+    "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
     }
   }
 }

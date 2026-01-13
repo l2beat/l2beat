@@ -14,9 +14,14 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  WALK_AWAY_NOT_PASSED_PROJECTS,
+  WALK_AWAY_PASSED_PROJECTS,
+} from '~/consts/walkAwayProjects'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
@@ -52,6 +57,7 @@ import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
 
 export interface ProjectScalingEntry {
+  id: ProjectId
   type: 'layer3' | 'layer2'
   name: string
   shortName: string | undefined
@@ -265,6 +271,7 @@ export async function getScalingProjectEntry(
   )
 
   const common = {
+    id: project.id,
     type: project.scalingInfo.layer,
     name: project.name,
     shortName: project.shortName,
@@ -525,6 +532,11 @@ export async function getScalingProjectEntry(
             : undefined,
         scopeOfAssessment: project.scalingInfo.scopeOfAssessment,
         emergencyWarning: project.statuses.emergencyWarning,
+        walkAway: WALK_AWAY_PASSED_PROJECTS.includes(project.id)
+          ? 'passed'
+          : WALK_AWAY_NOT_PASSED_PROJECTS.includes(project.id)
+            ? 'not-passed'
+            : undefined,
       },
     })
   }
@@ -571,7 +583,11 @@ export async function getScalingProjectEntry(
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.scalingTechnology.upgradesAndGovernance,
+        content: linkAddresses(
+          project.scalingTechnology.upgradesAndGovernance,
+          project.contracts,
+          project.permissions,
+        ),
         diagram: getDiagramParams(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,

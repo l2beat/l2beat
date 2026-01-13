@@ -35,7 +35,6 @@ export const omni: Bridge = {
         'https://bridge.gnosischain.com/bridge-explorer',
         'https://gnosisscan.io/',
         'https://gnosis.blockscout.com/',
-        'https://gnosischa.in/',
         'https://xdai.tokenview.io/',
       ],
       socialMedia: [

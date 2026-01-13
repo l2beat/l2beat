@@ -1,82 +1,8 @@
 {
   "name": "soon",
-  "timestamp": 1760436956,
-  "configHash": "0x3b9f74169c79de589dc0fa1995e058e44defb12cf5624193e9b5073fd2cb4805",
+  "timestamp": 1765554035,
+  "configHash": "0x01f6fd21ecaccba5c489841d3323008b6a5ba32d3d18cd5e28c4c4c681c3b0a1",
   "entries": [
-    {
-      "name": "L2OutputOracle",
-      "address": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-      "type": "Contract",
-      "template": "opstack/L2OutputOracle_soon",
-      "sourceHashes": [
-        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x61e72134169ef064707afe9b40515ed8ef072661ac812a38c32b2782fcd67e58"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "sinceTimestamp": 1735877387,
-      "sinceBlock": 21541474,
-      "values": {
-        "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "eth:0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F",
-        "$pastUpgrades": [
-          [
-            "2025-01-03T04:15:23.000Z",
-            "0xe4431d061b75e4acc45b425b8f5ccfb214f723db5d79bea73f4fd4fac6529e42",
-            ["eth:0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE"]
-          ],
-          [
-            "2025-02-21T11:11:23.000Z",
-            "0x85ae39c842797b6560c6dc220ef962770829eae91b47fd766f02c9b6e5e5c7bd",
-            ["eth:0x3131933F07dC5822ced67416F3744B2C0D0D22B2"]
-          ],
-          [
-            "2025-04-08T08:05:11.000Z",
-            "0xcb1f3a1d4b660d563fcf62e0a5298e23a24e5b3022caa1295e66fb5342a8a860",
-            ["eth:0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "challenger": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-        "CHALLENGER": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-        "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 86400,
-        "finalizationPeriodSeconds": 86400,
-        "L2_BLOCK_TIME": 2,
-        "l2BlockTime": 2,
-        "latestBlockNumber": 4385000,
-        "latestOutputIndex": 876,
-        "nextBlockNumber": 4390000,
-        "nextOutputIndex": 877,
-        "proposer": "eth:0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-        "PROPOSER": "eth:0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-        "startingBlockNumber": 0,
-        "startingTimestamp": 0,
-        "SUBMISSION_INTERVAL": 5000,
-        "submissionInterval": 5000,
-        "version": "1.8.0"
-      },
-      "fieldMeta": {
-        "FINALIZATION_PERIOD_SECONDS": {
-          "severity": "HIGH",
-          "description": "Challenge period (Number of seconds until a state root is finalized)."
-        },
-        "proposer": { "severity": "HIGH" },
-        "challenger": { "severity": "HIGH" },
-        "deletedOutputs": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448": "Proxy",
-        "eth:0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F": "L2OutputOracle"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
     {
       "name": "SystemConfig",
       "address": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
@@ -186,13 +112,39 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "OptimismPortal",
+      "name": "RiscZeroVerifier",
+      "address": "eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1765180643,
+      "sinceBlock": 23966746,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6": ""
+      }
+    },
+    {
+      "name": "PermissionedDisputeGame",
+      "address": "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1735877819,
+      "sinceBlock": 21541510,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087": ""
+      }
+    },
+    {
+      "name": "OptimismPortal2",
       "address": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
       "type": "Contract",
-      "template": "opstack/OptimismPortal_soon",
+      "template": "opstack/OptimismPortal2_soon",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
+        "0x110afdef90725a52a9718b18c76ee94eedc98dbaa26f8818c43489caa0c4096d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
@@ -201,7 +153,7 @@
       "sinceBlock": 21541467,
       "values": {
         "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA",
+        "$implementation": "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7",
         "$pastUpgrades": [
           [
             "2025-01-03T04:13:23.000Z",
@@ -212,12 +164,18 @@
             "2025-02-12T03:13:59.000Z",
             "0x171143120577a3f09614a4054f56a007ccc92e1ab16a0dedb844b9559872a51b",
             ["eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"]
+          ],
+          [
+            "2025-12-08T07:12:35.000Z",
+            "0xd73f4c3b5fed189876a719ed9a80e649b30e2eabba32d6e642deab3bc7f1e149",
+            ["eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
+        "disputeGameFactory": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
+        "disputeGameFinalityDelaySeconds": 28800,
         "frozenWithdrawals": [],
         "guardian": "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-        "l2Oracle": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "MIN_BRIDGE_VALUE": "0.001",
         "params": {
@@ -226,20 +184,101 @@
           "prevBlockNum": 21827670
         },
         "paused": false,
+        "proofMaturityDelaySeconds": 28800,
+        "RespectedGameString": "KailuaGame",
+        "respectedGameType": 2000,
+        "respectedGameTypeUpdatedAt": 1765180799,
         "superchainConfig": "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "systemConfig": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
-        "version": "2.8.1-beta.1"
+        "version": "3.11.0-beta.2"
       },
       "fieldMeta": {
         "MIN_BRIDGE_VALUE": { "description": "Minimum deposit value." },
-        "frozenWithdrawals": { "description": "Lists all frozen withdrawals." }
+        "frozenWithdrawals": { "description": "Lists all frozen withdrawals." },
+        "respectedGameType": { "severity": "HIGH" },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
       },
       "implementationNames": {
         "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07": "Proxy",
-        "eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA": "OptimismPortal"
+        "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7": "OptimismPortal2"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "usedTypes": [
+        { "typeCaster": "Undecimal", "arg": { "decimals": 18 } },
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "2000": "KailuaGame"
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "KailuaGame",
+      "address": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
+      "type": "Contract",
+      "template": "risc0/KailuaGame",
+      "sourceHashes": [
+        "0xbf453d00f5e94a4688e269a30c6e5666cb18400a5ae67b17d1cd94fb227c391a"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+      "sinceTimestamp": 1765180763,
+      "sinceBlock": 23966756,
+      "values": {
+        "$immutable": true,
+        "blobsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "childCount": 0,
+        "children": [],
+        "contenderDuplicates": [],
+        "contenderIndex": 0,
+        "createdAt": 0,
+        "DISPUTE_GAME_FACTORY": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
+        "duplicationCounter": 0,
+        "extraData": "0x000000000000000000000000000000000000000000000000",
+        "FPVM_IMAGE_ID": "0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf",
+        "GAME_TYPE": 2000,
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 2000,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x000000000000000000000000000000000000000000000000"
+        },
+        "gameIndex": 0,
+        "gameType": 2000,
+        "GENESIS_TIME_STAMP": 0,
+        "KAILUA_TREASURY": "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb",
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "L2_BLOCK_TIME": 0,
+        "l2BlockNumber": 0,
+        "MAX_CLOCK_DURATION": 64800,
+        "opponentIndex": 0,
+        "OPTIMISM_PORTAL": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+        "OUTPUT_BLOCK_SPAN": 50,
+        "parentGame": "eth:0xb48fD65128db67E9920b829261Fd9042FFb5343E",
+        "parentGameIndex": 0,
+        "PROPOSAL_BLOBS": 1,
+        "PROPOSAL_OUTPUT_COUNT": 100,
+        "proposalBlobHashes": [],
+        "proposer": "eth:0x0000000000000000000000000000000000000000",
+        "resolvedAt": 0,
+        "RISC_ZERO_VERIFIER": "eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6",
+        "ROLLUP_CONFIG_HASH": "0xd8ddd2f8e55e22bb4897d3d600e310085aba5f4365f84cac1ce8810ddc78b11c",
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "signature": "0x66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "status": 0,
+        "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "0.1.0",
+        "wasRespectedGameTypeWhenCreated": false
+      },
+      "implementationNames": {
+        "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32": "KailuaGame"
+      }
     },
     {
       "address": "eth:0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
@@ -250,23 +289,6 @@
       "address": "eth:0x7b12Dc6d2b7F13d1283E9CCe9eC818C09CB02432",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": ".proposer"
-        },
-        {
-          "permission": "propose",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": ".PROPOSER"
-        }
-      ]
     },
     {
       "address": "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51",
@@ -352,11 +374,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
           "from": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
           "role": "admin"
         },
@@ -373,6 +390,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
           "role": "admin"
         },
         {
@@ -421,6 +443,19 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "FaultDisputeGame",
+      "address": "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1735877795,
+      "sinceBlock": 21541508,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e": ""
+      }
+    },
+    {
       "address": "eth:0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
       "type": "EOA",
       "proxyType": "EOA",
@@ -459,7 +494,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669017",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669042",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -483,6 +518,62 @@
         "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "DisputeGameFactory",
+      "address": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
+      "type": "Contract",
+      "template": "opstack/DisputeGameFactory",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
+      "ignoreInWatchMode": ["gameCount"],
+      "sinceTimestamp": 1735877375,
+      "sinceBlock": 21541473,
+      "values": {
+        "$admin": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
+        "$implementation": "eth:0xF4Ebf91489d508Ad5330a330c2d961F9aF6FA5B5",
+        "$pastUpgrades": [
+          [
+            "2025-01-03T04:15:47.000Z",
+            "0x1c6d1fa315bfd4ffcba3a5353ef8018bbd64de4bbe8dba4aa93727b23e0d790b",
+            ["eth:0xF4Ebf91489d508Ad5330a330c2d961F9aF6FA5B5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "game2000": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
+        "game42": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 10,
+        "gameImpls": [
+          "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e",
+          "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "initBondGame42": 0,
+        "initBonds": [0, 0, 0, 0, 0],
+        "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+        "permissionedGamesTotal": 0,
+        "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
+        "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2": "Proxy",
+        "eth:0xF4Ebf91489d508Ad5330a330c2d961F9aF6FA5B5": "DisputeGameFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SuperchainConfig",
@@ -542,22 +633,6 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "description": "change the finalization period (challenge period).",
-          "role": ".challenger"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
@@ -568,14 +643,6 @@
           "from": "eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
           "description": "set and change address mappings.",
           "role": ".owner",
-          "via": [
-            { "address": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
-          "role": "admin",
           "via": [
             { "address": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
           ]
@@ -607,6 +674,14 @@
         {
           "permission": "upgrade",
           "from": "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
           "role": "admin",
           "via": [
             { "address": "eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
@@ -654,13 +729,79 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "name": "KailuaTreasury",
+      "address": "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb",
+      "type": "Contract",
+      "template": "risc0/KailuaTreasury_soon",
+      "sourceHashes": [
+        "0x81207087384c13355df32b8597b7fff27ebc2f9943c46f62de7bd8546af54f77"
+      ],
+      "proxyType": "immutable",
+      "description": "Entrypoint for state root proposals. Manages bonds (currently 0.01 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
+      "ignoreInWatchMode": ["lastResolved"],
+      "sinceTimestamp": 1765180691,
+      "sinceBlock": 23966750,
+      "values": {
+        "$immutable": true,
+        "blobsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "childCount": 0,
+        "children": [],
+        "contenderDuplicates": [],
+        "contenderIndex": 0,
+        "createdAt": 0,
+        "DISPUTE_GAME_FACTORY": "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2",
+        "extraData": "0x00000000000000000000000000000000000000000000000000000000",
+        "FPVM_IMAGE_ID": "0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf",
+        "GAME_TYPE": 2000,
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 2000,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x00000000000000000000000000000000000000000000000000000000"
+        },
+        "gameIndex": 0,
+        "gameType": 2000,
+        "isProposing": false,
+        "KAILUA_TREASURY": "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb",
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "L2_BLOCK_NUMBER": 4850000,
+        "l2BlockNumber": 0,
+        "lastResolved": "eth:0xe82bDAD39AEc07a7e0f8e004bc506c2Bb13DeA13",
+        "opponentIndex": 0,
+        "OPTIMISM_PORTAL": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+        "OUTPUT_BLOCK_SPAN": 50,
+        "parentGame": "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb",
+        "participationBond": "10000000000000000",
+        "participationBondFmt": "0.01",
+        "PROPOSAL_BLOBS": 1,
+        "PROPOSAL_OUTPUT_COUNT": 100,
+        "proposalBlobHashes": [],
+        "proposer": "eth:0x0000000000000000000000000000000000000000",
+        "resolvedAt": 0,
+        "RISC_ZERO_VERIFIER": "eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6",
+        "ROLLUP_CONFIG_HASH": "0xd8ddd2f8e55e22bb4897d3d600e310085aba5f4365f84cac1ce8810ddc78b11c",
+        "ROOT_CLAIM": "0x8f27a49b99183ba89d0e716522cd855910ecf28970aac6ceaa72e006a0f57b08",
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "signature": "0x66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "status": 0,
+        "treasuryAddress": "eth:0x0000000000000000000000000000000000000000",
+        "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "version": "0.1.0",
+        "wasRespectedGameTypeWhenCreated": false
+      },
+      "implementationNames": {
+        "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb": "KailuaTreasury"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "L1StandardBridge",
@@ -704,16 +845,6 @@
     }
   ],
   "abis": {
-    "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
     "eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -724,85 +855,71 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F": [
-      "constructor()",
-      "event ChallengerUpdated(address indexed oldChallenger, address indexed newChallenger)",
-      "event FinalizationPeriodUpdated(uint256 oldPeriod, uint256 newPeriod)",
-      "event Initialized(uint8 version)",
-      "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
-      "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
-      "event ProposerUpdated(address indexed oldProposer, address indexed newProposer)",
-      "function CHALLENGER() view returns (address)",
-      "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
-      "function L2_BLOCK_TIME() view returns (uint256)",
-      "function PROPOSER() view returns (address)",
-      "function SUBMISSION_INTERVAL() view returns (uint256)",
-      "function challenger() view returns (address)",
-      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
-      "function deleteL2Outputs(uint256 _l2OutputIndex)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function getL2Output(uint256 _l2OutputIndex) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputAfter(uint256 _l2BlockNumber) view returns (tuple(bytes32 outputRoot, uint128 timestamp, uint128 l2BlockNumber))",
-      "function getL2OutputIndexAfter(uint256 _l2BlockNumber) view returns (uint256)",
-      "function initialize(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
-      "function l2BlockTime() view returns (uint256)",
-      "function latestBlockNumber() view returns (uint256)",
-      "function latestOutputIndex() view returns (uint256)",
-      "function nextBlockNumber() view returns (uint256)",
-      "function nextOutputIndex() view returns (uint256)",
-      "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber) payable",
-      "function proposer() view returns (address)",
-      "function startingBlockNumber() view returns (uint256)",
-      "function startingTimestamp() view returns (uint256)",
-      "function submissionInterval() view returns (uint256)",
-      "function updateChallenger(address newChallenger)",
-      "function updateFinalizationPeriod(uint256 newFinalizationPeriod)",
-      "function updateProposer(address newProposer)",
-      "function version() view returns (string)"
-    ],
-    "eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA": [
-      "constructor()",
+    "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7": [
+      "constructor(uint256 _proofMaturityDelaySeconds, uint256 _disputeGameFinalityDelaySeconds)",
+      "error AlreadyFinalized()",
       "error BadTarget()",
+      "error Blacklisted()",
       "error CallPaused()",
       "error ContentLengthMismatch()",
       "error EmptyItem()",
       "error GasEstimation()",
       "error InvalidDataRemainder()",
+      "error InvalidDisputeGame()",
+      "error InvalidGameType()",
       "error InvalidHeader()",
+      "error InvalidMerkleProof()",
+      "error InvalidProof()",
       "error LargeCalldata()",
       "error NoValue()",
       "error NonReentrant()",
       "error NotAllow()",
       "error OutOfGas()",
+      "error ProposalNotValidated()",
       "error SmallGasLimit()",
       "error TransferFailed()",
+      "error Unauthorized()",
       "error UnexpectedList()",
       "error UnexpectedString()",
+      "error Unproven()",
       "error ValueHaveDust()",
       "error ValueTooLow()",
+      "event DisputeGameBlacklisted(address indexed disputeGame)",
       "event Initialized(uint8 version)",
+      "event RespectedGameTypeSet(uint32 indexed newGameType, uint64 indexed updatedAt)",
       "event TransactionDeposited(address indexed from, bytes32 indexed to, uint256 indexed version, bytes opaqueData)",
       "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
       "event WithdrawalFrozenStateUpdated(bytes32 indexed withdrawalHash, bool frozen)",
       "event WithdrawalProven(bytes32 indexed withdrawalHash, bytes32 indexed from, address indexed to)",
+      "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
       "function MIN_BRIDGE_VALUE() view returns (uint256)",
       "function balance() view returns (uint256)",
+      "function blacklistDisputeGame(address _disputeGame)",
+      "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
       "function depositERC20Transaction(bytes32, uint256, uint256, uint64, bool, bytes) pure",
       "function depositTransaction(bytes32 _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function disputeGameBlacklist(address) view returns (bool)",
+      "function disputeGameFactory() view returns (address)",
+      "function disputeGameFinalityDelaySeconds() view returns (uint256)",
       "function donateETH() payable",
       "function finalizeWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
       "function finalizedWithdrawals(bytes32) view returns (bool)",
       "function frozenWithdrawals(bytes32) view returns (bool)",
       "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
+      "function initialize(address _disputeGameFactory, address _systemConfig, address _superchainConfig, uint32 _initialRespectedGameType)",
       "function l2Sender() view returns (bytes32)",
       "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function numProofSubmitters(bytes32 _withdrawalHash) view returns (uint256)",
       "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function paused() view returns (bool)",
+      "function proofMaturityDelaySeconds() view returns (uint256)",
+      "function proofSubmitters(bytes32, uint256) view returns (address)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _disputeGameIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32, address) view returns (address disputeGameProxy, uint64 timestamp)",
+      "function respectedGameType() view returns (uint32)",
+      "function respectedGameTypeUpdatedAt() view returns (uint64)",
+      "function setRespectedGameType(uint32 _gameType)",
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
       "function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen)",
@@ -890,6 +1007,83 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
+    "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32": [
+      "constructor(address _kailuaTreasury, uint256 _genesisTimeStamp, uint256 _l2BlockTime, uint64 _maxClockDuration)",
+      "error AlreadyInitialized()",
+      "error AlreadyProven()",
+      "error BadExtraData()",
+      "error Blacklisted(address source, address expected)",
+      "error BlobHashMissing(uint256 index, uint256 count)",
+      "error BlockNumberMismatch(uint256 anchored, uint256 initialized)",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error GameNotInProgress()",
+      "error GameNotResolved()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidDuplicationCounter()",
+      "error InvalidParent()",
+      "error NoConflict()",
+      "error NotProposed()",
+      "error NotProven()",
+      "error OutOfOrderResolution()",
+      "error ProvenFaulty()",
+      "error UnknownGame()",
+      "event Proven(bytes32 indexed signature, uint8 indexed status)",
+      "event Resolved(uint8 indexed status)",
+      "function DISPUTE_GAME_FACTORY() view returns (address)",
+      "function FPVM_IMAGE_ID() view returns (bytes32)",
+      "function GAME_TYPE() view returns (uint32)",
+      "function GENESIS_TIME_STAMP() view returns (uint256)",
+      "function KAILUA_TREASURY() view returns (address)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function MAX_CLOCK_DURATION() view returns (uint64)",
+      "function OPTIMISM_PORTAL() view returns (address)",
+      "function OUTPUT_BLOCK_SPAN() view returns (uint64)",
+      "function PROPOSAL_BLOBS() view returns (uint64)",
+      "function PROPOSAL_OUTPUT_COUNT() view returns (uint64)",
+      "function RISC_ZERO_VERIFIER() view returns (address)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function appendChild()",
+      "function blobsHash() view returns (bytes32 blobsHash_)",
+      "function childCount() view returns (uint256 count_)",
+      "function children(uint256) view returns (address)",
+      "function contenderDuplicates(uint256) view returns (uint64)",
+      "function contenderIndex() view returns (uint64)",
+      "function createdAt() view returns (uint64)",
+      "function duplicationCounter() pure returns (uint64 duplicationCounter_)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameIndex() view returns (uint256)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 asOfTimestamp) view returns (uint64 duration_)",
+      "function initialize() payable",
+      "function isViableSignature(bytes32 childSignature) view returns (bool isViableSignature_)",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function opponentIndex() view returns (uint64)",
+      "function parentGame() view returns (address parentGame_)",
+      "function parentGameIndex() pure returns (uint64 parentGameIndex_)",
+      "function proofStatus(bytes32) view returns (uint8)",
+      "function proposalBlobHashes(uint256) view returns (bytes32)",
+      "function proposer() view returns (address proposer_)",
+      "function proveOutputFault(address[2] prHs, uint64[2] co, bytes encodedSeal, bytes32[2] ac, uint256 proposedOutputFe, bytes[][2] kzgCommitmentsProofs)",
+      "function proveTrailFault(address payoutRecipient, uint64[2] co, uint256 proposedOutputFe, bytes blobCommitment, bytes kzgProof)",
+      "function proveValidity(address payoutRecipient, address l1HeadSource, uint64 childIndex, bytes encodedSeal)",
+      "function provenAt(bytes32) view returns (uint64)",
+      "function prover(bytes32) view returns (address)",
+      "function pruneChildren(uint256 stepLimit) returns (address)",
+      "function resolve() returns (uint8 status_)",
+      "function resolvedAt() view returns (uint64)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function signature() view returns (bytes32 signature_)",
+      "function status() view returns (uint8)",
+      "function validChildSignature() view returns (bytes32)",
+      "function verifyIntermediateOutput(uint64 outputNumber, uint256 outputFe, bytes blobCommitment, bytes kzgProof) returns (bool success)",
+      "function version() view returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
+    ],
     "eth:0x6846B4E0b9992E154fE7d315667B1e385445C503": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -966,6 +1160,16 @@
     "eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6": [
       "constructor(address _addressManager, string _implementationName)"
     ],
+    "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -978,6 +1182,104 @@
     ],
     "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb": [
+      "constructor(address _verifierContract, bytes32 _imageId, bytes32 _configHash, uint64 _proposalOutputCount, uint64 _outputBlockSpan, uint32 _gameType, address _optimismPortal, bytes32 _rootClaim, uint64 _l2BlockNumber)",
+      "error AlreadyEliminated()",
+      "error AlreadyInitialized()",
+      "error AlreadyProven()",
+      "error BadAuth()",
+      "error BadExtraData()",
+      "error Blacklisted(address source, address expected)",
+      "error BlockNumberMismatch(uint256 anchored, uint256 initialized)",
+      "error BondTransferFailed()",
+      "error ClaimAlreadyResolved()",
+      "error GameNotInProgress()",
+      "error GameNotResolved()",
+      "error IncorrectBondAmount()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidParent()",
+      "error NoConflict()",
+      "error NoCreditToClaim()",
+      "error NotProposed()",
+      "error NotProven()",
+      "error OnlyVanguard()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "error UnknownGame()",
+      "event BondUpdated(uint256 amount)",
+      "event Proven(bytes32 indexed signature, uint8 indexed status)",
+      "event Resolved(uint8 indexed status)",
+      "event VanguardAdded(address indexed vanguard)",
+      "event VanguardRemoved(address indexed vanguard)",
+      "function DISPUTE_GAME_FACTORY() view returns (address)",
+      "function FPVM_IMAGE_ID() view returns (bytes32)",
+      "function GAME_TYPE() view returns (uint32)",
+      "function KAILUA_TREASURY() view returns (address)",
+      "function L2_BLOCK_NUMBER() view returns (uint64)",
+      "function OPTIMISM_PORTAL() view returns (address)",
+      "function OUTPUT_BLOCK_SPAN() view returns (uint64)",
+      "function PROPOSAL_BLOBS() view returns (uint64)",
+      "function PROPOSAL_OUTPUT_COUNT() view returns (uint64)",
+      "function RISC_ZERO_VERIFIER() view returns (address)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function ROOT_CLAIM() view returns (bytes32)",
+      "function appendChild()",
+      "function assignVanguard(address _vanguard)",
+      "function blobsHash() view returns (bytes32 blobsHash_)",
+      "function childCount() view returns (uint256 count_)",
+      "function children(uint256) view returns (address)",
+      "function claimEliminationBonds(uint256 claims)",
+      "function claimProposerBond()",
+      "function contenderDuplicates(uint256) view returns (uint64)",
+      "function contenderIndex() view returns (uint64)",
+      "function createdAt() view returns (uint64)",
+      "function eliminate(address _child, address prover)",
+      "function eliminationRound(address) view returns (uint256)",
+      "function eliminations(address, uint256) view returns (address)",
+      "function eliminationsPaid(address) view returns (uint256)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameIndex() view returns (uint256)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256) pure returns (uint64 duration_)",
+      "function initialize() payable",
+      "function isProposing() view returns (bool)",
+      "function isViableSignature(bytes32 childSignature) view returns (bool isViableSignature_)",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function lastProposal(address) view returns (address)",
+      "function lastResolved() view returns (address)",
+      "function opponentIndex() view returns (uint64)",
+      "function paidBonds(address) view returns (uint256)",
+      "function parentGame() view returns (address parentGame_)",
+      "function participationBond() view returns (uint256)",
+      "function proofStatus(bytes32) view returns (uint8)",
+      "function proposalBlobHashes(uint256) view returns (bytes32)",
+      "function propose(bytes32 _rootClaim, bytes _extraData) payable returns (address tournament)",
+      "function proposer() view returns (address proposer_)",
+      "function proposerOf(address) view returns (address)",
+      "function proveOutputFault(address[2] prHs, uint64[2] co, bytes encodedSeal, bytes32[2] ac, uint256 proposedOutputFe, bytes[][2] kzgCommitmentsProofs)",
+      "function proveTrailFault(address payoutRecipient, uint64[2] co, uint256 proposedOutputFe, bytes blobCommitment, bytes kzgProof)",
+      "function proveValidity(address payoutRecipient, address l1HeadSource, uint64 childIndex, bytes encodedSeal)",
+      "function provenAt(bytes32) view returns (uint64)",
+      "function prover(bytes32) view returns (address)",
+      "function pruneChildren(uint256 stepLimit) returns (address)",
+      "function removeVanguard(address _vanguard)",
+      "function resolve() returns (uint8 status_)",
+      "function resolvedAt() view returns (uint64)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function setParticipationBond(uint256 amount)",
+      "function signature() view returns (bytes32 signature_)",
+      "function status() view returns (uint8)",
+      "function treasuryAddress() pure returns (address treasuryAddress_)",
+      "function updateLastResolved()",
+      "function validChildSignature() view returns (bytes32)",
+      "function vanguards(address) view returns (bool)",
+      "function verifyIntermediateOutput(uint64, uint256, bytes, bytes) pure returns (bool success)",
+      "function version() view returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -1087,20 +1389,48 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0xF4Ebf91489d508Ad5330a330c2d961F9aF6FA5B5": [
+      "constructor()",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error IncorrectBondAmount()",
+      "error NoImplementation(uint32 gameType)",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initialize(address _owner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
-    "opstack/L2OutputOracle_soon": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
-    "opstack/OptimismPortal_soon": "0x501665d0286b3d5ec36d23208700c4c03246a24a07ae843b04971530af9ec17b",
+    "opstack/OptimismPortal2_soon": "0xf6734dbe323c5dbbc774eff181ffd1ab332f7ce3315bb86db8cb6179c940026b",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
+    "risc0/KailuaTreasury_soon": "0xf44268b8e01e5036fb2fc2a573c604cad73f80450b22966e227dc0f37bb903b6"
   },
-  "usedBlockNumbers": { "ethereum": 23575285 },
-  "permissionsConfigHash": "0x763b8619edf458a4148bda3231acbfdbc1e21c4f2a6f04326ce45bc5228866d0"
+  "usedBlockNumbers": { "ethereum": 23997492 },
+  "permissionsConfigHash": "0xa936f68315d80f3176f8eb05b56de1fd9c084c5a67769c770d92a8a2b7c34a35"
 }

@@ -1,6 +1,19 @@
 {
   "ethereum": [
     {
+      "symbol": "LIT",
+      "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2"
+    },
+    {
+      "symbol": "CAPX",
+      "address": "0x833E53F1e2D320e0768671Dee5CEc88b2d93330F"
+    },
+    {
+      "symbol": "ADI",
+      "address": "0x8b1484d57abbe239bb280661377363b03c89caea",
+      "coingeckoId": "adi-token"
+    },
+    {
       "symbol": "vPHA",
       "address": "0x21d6eC8fc14CaAcc55aFA23cBa66798DAB3a0ec0",
       "coingeckoId": "pha"
@@ -2626,7 +2639,6 @@
       "source": "native",
       "supply": "circulatingSupply"
     },
-
     {
       "symbol": "NRN",
       "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
@@ -6973,6 +6985,26 @@
     }
   ],
   "soneium": [
+    {
+      "symbol": "LOOT",
+      "address": "0x9317841C2e9F6BCb44119C184152cfb1EF79034a",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "KYO",
+      "address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDSC",
       "address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",

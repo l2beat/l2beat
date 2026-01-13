@@ -78,6 +78,19 @@ export class InMemoryEventDb implements InteropEventDb {
     }
   }
 
+  removeForPlugin(plugin: string) {
+    for (const store of this.stores) {
+      const pluginEvents = store.getAll().filter((e) => e.plugin === plugin)
+      // Side note: don't interate `store.getAll()` in a loop below because
+      // you would be modifying it while iterating.
+      for (const event of pluginEvents) {
+        if (store.remove(event)) {
+          this.count -= 1
+        }
+      }
+    }
+  }
+
   find<T>(
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
@@ -174,6 +187,9 @@ class EventTypeStore<T> {
   add(event: InteropEvent<T>) {
     this.all.push(event)
     this.indices.set(event, this.all.length - 1)
+    for (const lookup of this.lookups) {
+      lookup.addEvent(event)
+    }
     this.siftUp(this.all.length - 1)
   }
 

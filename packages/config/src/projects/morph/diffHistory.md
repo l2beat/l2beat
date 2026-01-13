@@ -1,3 +1,302 @@
+Generated with discovered.json: 0x741156517f7726a565415c80ec3b2cc0eddb9d8f
+
+# Diff at Wed, 07 Jan 2026 14:40:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1767365287
+- current timestamp: 1767796750
+
+## Description
+
+bond reset after previous challenges are resolved.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.
+      values.proveRemaining:
+-        "2103000000000000000"
++        0
+    }
+```
+
+Generated with discovered.json: 0x17a963741b7d391b574019955603cf4fe451a4f6
+
+# Diff at Fri, 02 Jan 2026 14:50:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@63d6f7b34cc0a3146481ad41c65884bbecb3bc4b block: 1767086336
+- current timestamp: 1767365287
+
+## Description
+
+Config: fully templatize morph disco incl. permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767086336 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      description:
+-        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented)."
++        "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented)."
+      template:
++        "morph/L1Staking"
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984","description":"can send gasless transactions to L2 (L2 gas fee waived).","role":".whitelisted"}]
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      template:
++        "morph/L1ETHGateway"
+    }
+```
+
+```diff
+    EOA  (eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose state roots"
++        "Actors allowed to commit transaction batches and propose and prove state roots"
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      template:
++        "morph/L1MessageQueueWithGasPriceOracle"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      template:
++        "morph/L1StandardERC20Gateway"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      description:
+-        "Used to update the verifier and keep track of current and old versions."
++        "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch."
+      values.legacyVerifiersLength:
+-        [1,1]
+      template:
++        "morph/MultipleVersionRollupVerifier"
+    }
+```
+
+```diff
+    EOA  (eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose state roots"
++        "Actors allowed to commit transaction batches and propose and prove state roots"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) {
+    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
+      description:
+-        "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway."
++        "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow."
+      template:
++        "morph/L1GatewayRouter"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.
+      name:
+-        "MorphRollup"
++        "Rollup"
+      description:
+-        "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist."
+      template:
++        "morph/MorphRollup"
+    }
+```
+
+```diff
+    EOA  (eth:0x76F91869161dC4348230D5F60883Dd17462035f4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose state roots"
++        "Actors allowed to commit transaction batches and propose and prove state roots"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7","description":"whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.","role":".owner"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1","description":"register new verifiers to be used starting from a given L2 batch index.","role":".owner"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a","description":"manage token to escrow mapping and (un-)register escrows.","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60","description":"can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.","role":".owner"}
+      receivedPermissions.1.description:
+-        "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
++        "pause and unpause, update the fee vault."
+      receivedPermissions.1.from:
+-        "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
++        "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7"
+      receivedPermissions.2.description:
+-        "can pause and unpause"
++        "manage the whitelist."
+      receivedPermissions.2.from:
+-        "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7"
++        "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
+    }
+```
+
+```diff
+    EOA  (eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose state roots"
++        "Actors allowed to commit transaction batches and propose and prove state roots"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: true.
+      description:
+-        "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true."
++        "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: true."
+      template:
++        "morph/EnforcedTxGateway"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      template:
++        "morph/L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    EOA  (eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Actors allowed to commit transaction batches and propose state roots"
++        "Actors allowed to commit transaction batches and propose and prove state roots"
+    }
+```
+
+```diff
+    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) {
+    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
+      description:
+-        "Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1."
++        "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas."
+      values.whitelisted:
++        ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
+      template:
++        "morph/Whitelist"
+    }
+```
+
+Generated with discovered.json: 0xc8359820c62ccbc6c3b0ab68b9060fc4b0d9ad43
+
+# Diff at Tue, 30 Dec 2025 09:36:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2aabbed9e63a26852d81ab1dd3b3ffb7ad2417d9 block: 1766409308
+- current timestamp: 1767086336
+
+## Description
+
+add verifier template description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766409308 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423) {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      template:
++        "morph/ZkEvmVerifierV1"
+      description:
++        "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs."
+    }
+```
+
+Generated with discovered.json: 0x289be4763ca53294dcd911ca30afab503ce4a62e
+
+# Diff at Mon, 22 Dec 2025 13:16:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784209
+- current timestamp: 1766409308
+
+## Description
+
+challengers added and challenge resolved.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      values.challengers.36:
++        "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e"
+      values.challengers.37:
++        "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442"
+      values.proveRemaining:
+-        "1503000000000000000"
++        "2103000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xeaa84ac11a5bb336786b858b3efc28acc55c464d
+
+# Diff at Mon, 15 Dec 2025 07:37:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1764602402
+- current timestamp: 1765784209
+
+## Description
+
+challenger added + challenge made and resolved.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      values.challengers.35:
++        "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497"
+      values.proveRemaining:
+-        "903000000000000000"
++        "1503000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xf261729c11c937790cd954fb18a5bd2f8c76ae40
 
 # Diff at Mon, 01 Dec 2025 15:21:11 GMT:

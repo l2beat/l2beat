@@ -83,10 +83,10 @@ export const columns = [
   }),
   columnHelper.display({
     id: 'contract',
-    header: 'Contract',
+    header: 'Token Contract',
     cell: (ctx) => {
       const { address } = ctx.row.original
-      if (!address) return '-'
+      if (!address) return <div className="font-medium text-xs">Native</div>
 
       if (address === 'multiple')
         return <div className="font-medium text-xs">Multiple</div>

@@ -1,8 +1,13 @@
 {
   "name": "intmax",
-  "timestamp": 1763637734,
-  "configHash": "0x6b82cbb74882682b00cd46b12f5936f3fe78edfeba89fc469426d203ebe4b918",
+  "timestamp": 1768216753,
+  "configHash": "0x5f968f2838793a96ae19b6ee0af31bf4fa3637236814e79ce8144481e8142ef4",
   "entries": [
+    {
+      "address": "eth:0x110b66ea6F97c0391eEfFDd19CD0cFd73e9871fA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "PredicatePermitter",
       "address": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
@@ -91,31 +96,7 @@
     {
       "address": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "type": "EOA",
-      "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0x7cf15dd1293c71ee6a4c120c19c7a2943ac93931c9c12066915c2efedf0f9e1c",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
-      }
+      "proxyType": "EOA"
     },
     {
       "name": "Contribution",
@@ -144,7 +125,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 21,
+        "getCurrentPeriod": 29,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -196,6 +177,59 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GnosisSafe",
+      "address": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1762283363,
+      "sinceBlock": 23727944,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xa283Ad6f064227944061442Ba4975aad315985e5",
+          "eth:0x949A718aca94eB060aBB4C59B05995e257666F7F",
+          "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
+          "eth:0x110b66ea6F97c0391eEfFDd19CD0cFd73e9871fA"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfc030b5e742b338845f50173e30aa77912a234fb6b304cbafe55cd8ccb40e44b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 14,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x949A718aca94eB060aBB4C59B05995e257666F7F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa283Ad6f064227944061442Ba4975aad315985e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "INTMAX Multisig 1",
       "address": "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
       "type": "Contract",
@@ -215,15 +249,14 @@
           "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
           "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
           "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
-          "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
           "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x6db3783ecadbc6eb1fce1c7ef4b11829d3a3816c83d50584788361d18881b60a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -246,22 +279,6 @@
     },
     {
       "address": "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea" }
-          ]
-        }
-      ]
-    },
-    {
-      "address": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -301,7 +318,6 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
-          "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
           "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",
           "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
           "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D"
@@ -310,8 +326,8 @@
         "domainSeparator": "0xe5ed4b04915a7a7780d4b0883fc23c2e4cd46001417c16e98d6b179b5c963bfc",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 3,
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -376,8 +392,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 36630,
-        "getLastRelayedDepositId": 36619,
+        "getLastDepositId": 59679,
+        "getLastRelayedDepositId": 59673,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -496,7 +512,8 @@
           "x-aztec-identity-006",
           "x-aztec-identity-007",
           "x-aztec-aml-007",
-          "x-aztec-aml-008"
+          "x-aztec-aml-008",
+          "x-aztec-identity-008"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -514,7 +531,7 @@
           "eth:0x28c4E42b2A0F3Daa4bfd1dC8A2CEDaE99C567b1E",
           "eth:0x5f936C12E43181662e85814b0cFd10334A33E5A1"
         ],
-        "owner": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
+        "owner": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "permissionedOperators": [],
         "socialGraphIDs": [
@@ -533,15 +550,7 @@
     {
       "address": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
-          "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -586,14 +595,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 36619,
-        "depositTreeRoot": "0xc8de7f5e73322f03710f2b9318139ecf5af0f7e58acdc7de64ef743f71401f28",
+        "depositIndex": 59673,
+        "depositTreeRoot": "0xd0d829c2492fcc47f46510ea087b3a322d55d1c498d253aa2436be1b4eeabc38",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 40877,
+        "getLatestBlockNumber": 74264,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 36619,
+        "lastProcessedDepositId": 59673,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -667,11 +676,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 152,
+        "getCurrentPeriod": 205,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 9704,
+        "nullifierNonce": 15580,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -716,7 +725,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 21,
+        "getCurrentPeriod": 29,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -827,15 +836,14 @@
           "scr:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
           "scr:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
           "scr:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
-          "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
           "scr:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x4db1e4418a9b6ed07308019a0c67daff2d0416170282addc343f8b514f9a4cf6",
         "getChainId": 534352,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -845,11 +853,6 @@
     },
     {
       "address": "scr:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1007,58 +1010,6 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
-    ],
     "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E": [
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
@@ -1136,6 +1087,9 @@
       "function transferOwnership(address newOwner)",
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function validateSignatures(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task, address[] signerAddresses, bytes[] signatures) returns (bool isVerified)"
+    ],
+    "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE": [
+      "constructor(address _singleton)"
     ],
     "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
       "constructor(address _singleton)"
@@ -1242,6 +1196,55 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawCollectedFees(address recipient, uint32[] tokenIndices)",
       "function withdrawalFeeRatio(uint32) view returns (uint256)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea": [
       "constructor(address _singleton)"
@@ -1628,6 +1631,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 23839923, "scroll": 25145749 },
-  "permissionsConfigHash": "0x7e39f4d3ceb549cd0249f3f4190f76e5d102fcbc76491de255fe5f8966bbbe0e"
+  "usedBlockNumbers": { "ethereum": 24218288, "scroll": 27958415 },
+  "permissionsConfigHash": "0x1b7d05b0567dc33db4c67007d4e85f1e845d84535fd64b002bdf93d672e0d69e"
 }

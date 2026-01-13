@@ -1,6 +1,7 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'
@@ -19,9 +20,11 @@ export function BridgesArchivedTable({ entries, isOthers }: Props) {
     [entries, filterEntries],
   )
 
+  const columns = useMemo(() => getBridgesArchivedColumns(isOthers), [isOthers])
+
   const activeTable = useTable({
     data: filteredEntries,
-    columns: getBridgesArchivedColumns(isOthers),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -38,5 +41,10 @@ export function BridgesArchivedTable({ entries, isOthers }: Props) {
     },
   })
 
-  return <BasicTable table={activeTable} />
+  return (
+    <>
+      <ColumnsControls columns={activeTable.getAllColumns()} />
+      <BasicTable table={activeTable} />
+    </>
+  )
 }

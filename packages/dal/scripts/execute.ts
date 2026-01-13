@@ -22,7 +22,7 @@ async function main() {
     const result = await queryExecutor.execute(
       {
         name: 'getSummedByTimestampTvsValuesQuery',
-        args: [rollups, [to, to - UnixTime.DAY * 30], true, false, false],
+        args: [rollups, [to, to - UnixTime.DAY * 30], true, false, true],
       },
       10,
     )

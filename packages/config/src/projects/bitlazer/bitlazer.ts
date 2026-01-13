@@ -7,6 +7,7 @@ export const bitlazer: ScalingProject = underReviewL3({
   id: 'bitlazer',
   capability: 'universal',
   addedAt: UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
+  archivedAt: UnixTime(1766143183),
   hostChain: ProjectId('arbitrum'),
   badges: [
     BADGES.RaaS.Caldera,

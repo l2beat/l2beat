@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartRange } from '~/utils/range/range'
@@ -18,17 +17,14 @@ import { TvsChartUnitControls } from './TvsChartUnitControls'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
 
 export function BridgesTvsChart() {
-  const [unit, setUnit] = useLocalStorage<ChartUnit>(
-    'bridges-summary-unit',
-    'usd',
-  )
+  const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(

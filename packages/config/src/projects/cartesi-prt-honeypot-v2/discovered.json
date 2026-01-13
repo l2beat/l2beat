@@ -1,7 +1,7 @@
 {
   "name": "cartesi-prt-honeypot-v2",
-  "timestamp": 1763109405,
-  "configHash": "0x35e5569caf8d204dfe642daa1340186cbf26489c0f145e357c45ebf39353c555",
+  "timestamp": 1765380759,
+  "configHash": "0x2eccff7414a86002679b0f77264daf75f9992ae086871fcf36ae71edec1a1f55",
   "entries": [
     {
       "name": "MiddleTournament",
@@ -209,15 +209,15 @@
       "values": {
         "$implementation": "eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53",
         "arbitrationResult": [
-          false,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
+          true,
+          "0xb24767473a260dd656044e7302fc47c52e2d93ce0f3ffb58668b6dcc95e11880",
+          "0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609"
         ],
         "bondValue": "232198050000000000",
         "bondValueFmt": "0.23219805",
-        "isClosed": false,
-        "isFinished": false,
-        "timeFinished": [false, 0],
+        "isClosed": true,
+        "isFinished": true,
+        "timeFinished": [true, 23801750],
         "tournamentArguments": {
           "commitmentArgs": {
             "initialHash": "0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609",
@@ -352,15 +352,15 @@
         "$immutable": true,
         "canSettle": {
           "isFinished": false,
-          "epochNumber": 0,
+          "epochNumber": 4,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getApplicationContract": "eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998",
         "getCurrentSealedEpoch": {
-          "epochNumber": 0,
-          "inputIndexLowerBound": 0,
-          "inputIndexUpperBound": 0,
-          "tournament": "eth:0xA2835312696Afa86c969e40831857dbB1412627f"
+          "epochNumber": 4,
+          "inputIndexLowerBound": 1,
+          "inputIndexUpperBound": 1,
+          "tournament": "eth:0x3fd36d25c4515B8bE331DE689A5e65D2318DdeA3"
         },
         "getDeploymentBlockNumber": 23751050,
         "getInputBox": "eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac",
@@ -825,6 +825,6 @@
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23796277 },
+  "usedBlockNumbers": { "ethereum": 23983224 },
   "permissionsConfigHash": "0xb74b86ac9276383afaab7b494020f9d9ec8d483519b16e24e5a40b58fa09ed70"
 }

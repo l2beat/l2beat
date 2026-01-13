@@ -3,8 +3,11 @@ import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
+  ApiGlobalConfigSyncStatusResponse,
+  ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
@@ -145,6 +148,26 @@ export async function readConfigFile(
   return data as ApiConfigFileResponse
 }
 
+export async function getConfigSyncStatus(
+  project: string,
+): Promise<ApiConfigSyncStatusResponse> {
+  const res = await fetch(`/api/config/sync-status/${project}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiConfigSyncStatusResponse
+}
+
+export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncStatusResponse> {
+  const res = await fetch('/api/config/sync-status')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiGlobalConfigSyncStatusResponse
+}
+
 export async function createConfigFile(
   project: string,
   type: 'project' | 'token',
@@ -201,6 +224,15 @@ export async function writeTemplateFile(templateId: string, content: string) {
   if (!res.ok) {
     throw new Error(res.statusText)
   }
+}
+
+export async function getHandlers(): Promise<ApiHandlersResponse> {
+  const res = await fetch('/api/handlers')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiHandlersResponse
 }
 
 export async function createShape(

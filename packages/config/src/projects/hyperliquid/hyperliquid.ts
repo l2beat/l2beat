@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  type EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -30,7 +25,7 @@ const lockerThreshold = discovery.getContractValue<number>(
   'lockerThreshold',
 )
 
-const lockerSetSize = discovery.getContractValue<EthereumAddress[]>(
+const lockerSetSize = discovery.getContractValue<ChainSpecificAddress[]>(
   'HyperliquidBridge',
   'lockers',
 ).length
@@ -49,9 +44,13 @@ export const hyperliquid: Bridge = {
       websites: ['https://hyperfoundation.org/'],
       explorers: ['https://app.hyperliquid.xyz/explorer'],
       bridges: ['https://app.hyperliquid.xyz/trade'],
-      socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
       repositories: ['https://github.com/hyperliquid-dex'],
+      socialMedia: [
+        'https://x.com/HyperliquidX',
+        'https://discord.com/invite/hyperliquid',
+        'https://t.me/hyperliquid_announcements',
+      ],
     },
   },
   config: {

@@ -29,7 +29,6 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import type { AbstractToken, DeployedToken } from '~/mock/types'
 import { api } from '~/react-query/trpc'
-import { getDeployedTokenDisplayId } from '~/utils/getDisplayId'
 import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
 
 export function SearchPage() {
@@ -246,7 +245,7 @@ function DeployedTokensTable({
             (chain) => chain.name === token.chain,
           )?.explorerUrl
           return (
-            <TableRow key={getDeployedTokenDisplayId(token)}>
+            <TableRow key={`${token.chain}+${token.address}`}>
               <TableCell>
                 <Link
                   to={`/tokens/${token.chain}/${token.address}`}

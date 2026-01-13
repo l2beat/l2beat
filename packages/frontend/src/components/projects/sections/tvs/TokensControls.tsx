@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import { TokenCombobox } from '~/components/TokenCombobox'
-import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
+import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/ExcludeRwaRestrictedTokensCheckbox'
 import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 
@@ -10,17 +10,17 @@ export function TokensControls({
 }: {
   tokens: ProjectToken[] | undefined
 }) {
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { selectedToken, setSelectedToken } = useSelectedTokenContext()
   const filteredTokens = useMemo(
     () =>
       tokens?.filter((token) => {
-        if (!includeRwaRestrictedTokens) {
+        if (excludeRwaRestrictedTokens) {
           return token.category !== 'rwaRestricted'
         }
         return true
       }),
-    [tokens, includeRwaRestrictedTokens],
+    [tokens, excludeRwaRestrictedTokens],
   )
 
   return (
@@ -30,7 +30,7 @@ export function TokensControls({
         value={selectedToken}
         setValue={setSelectedToken}
       />
-      <IncludeRwaRestrictedTokensCheckbox />
+      <ExcludeRwaRestrictedTokensCheckbox />
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -55,6 +56,11 @@ function Display({
   blockNumber: number
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
+  const templateIgnoredMethods = templateModel.ignoreMethods ?? []
+  const configIgnoredMethods = configModel.ignoreMethods ?? []
+  const ignoredMethods = [
+    ...new Set(configIgnoredMethods.concat(templateIgnoredMethods)),
+  ]
   const chain = selected.chain
 
   const addresses = getAddressesToCopy(selected)
@@ -78,6 +84,18 @@ function Display({
   )
 
   const contractConfigDialog = canModify && <ContractConfigDialog />
+
+  const fieldsFromSelected = 'fields' in selected ? selected.fields : []
+  const filteredIgnoredMethods = ignoredMethods
+    .filter(
+      (method) => !fieldsFromSelected.find((field) => field.name === method),
+    )
+    .map((method) => ({
+      name: method,
+      value: { type: 'empty' as const },
+    }))
+
+  const fields = [...fieldsFromSelected, ...filteredIgnoredMethods]
 
   return (
     <>
@@ -137,18 +155,16 @@ function Display({
             <WithHeadline headline="Roles">
               <div className="flex gap-1">
                 {selected.roles.map((role) => (
-                  <p className="text-aux-teal">{role}</p>
+                  <p key={role} className="text-aux-teal">
+                    {role}
+                  </p>
                 ))}
               </div>
             </WithHeadline>
           </div>
         )}
 
-        {selected.description && (
-          <WithHeadline headline="Description">
-            <p className="font-serif text-sm italic">{selected.description}</p>
-          </WithHeadline>
-        )}
+        <Description />
         {selected.isReachable && (
           <WithHeadline headline="Reachable">
             <p className="text-aux-teal">Yes</p>
@@ -159,18 +175,7 @@ function Display({
             <p className="text-coffee-200/40">No</p>
           </WithHeadline>
         )}
-        {(configModel.category || templateModel.category) && (
-          <WithHeadline headline="Category">
-            <div className="flex items-center gap-1">
-              {configModel.category && (
-                <FieldTag source="config">{configModel.category}</FieldTag>
-              )}
-              {templateModel.category && (
-                <FieldTag source="template">{templateModel.category}</FieldTag>
-              )}
-            </div>
-          </WithHeadline>
-        )}
+        <Category />
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>
@@ -208,10 +213,10 @@ function Display({
           </ol>
         </Folder>
       )}
-      {'fields' in selected && selected.fields.length > 0 && (
+      {fields.length > 0 && (
         <Folder title="Fields">
           <ol>
-            {selected.fields.map((field, i) => (
+            {fields.map((field, i) => (
               <FieldDisplay key={i} field={field} />
             ))}
           </ol>
@@ -302,4 +307,64 @@ function WithHeadline(props: { headline: string; children: React.ReactNode }) {
       {props.children}
     </div>
   )
+}
+
+function Category() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const category = configModel.category ?? templateModel.category
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Category">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!category) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Category">
+      <div className="flex items-center gap-1">
+        {configModel.category && (
+          <FieldTag source="config">{configModel.category}</FieldTag>
+        )}
+        {templateModel.category && (
+          <FieldTag source="template">{templateModel.category}</FieldTag>
+        )}
+      </div>
+    </WithHeadline>
+  )
+}
+
+function Description() {
+  const { configModel, templateModel, isPending } = useConfigModels()
+  const { interpolateDescription } = useModelUtils()
+  const description = configModel.description ?? templateModel.description
+
+  if (isPending) {
+    return (
+      <WithHeadline headline="Description">
+        <SkeletonLine />
+      </WithHeadline>
+    )
+  }
+
+  if (!description) {
+    return null
+  }
+
+  return (
+    <WithHeadline headline="Description">
+      <p className="font-serif text-sm italic">
+        {interpolateDescription(description)}
+      </p>
+    </WithHeadline>
+  )
+}
+
+function SkeletonLine() {
+  return <div className="h-3 w-full animate-breath rounded bg-coffee-400/50" />
 }

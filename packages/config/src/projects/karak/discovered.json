@@ -1,7 +1,7 @@
 {
   "name": "karak",
-  "timestamp": 1764334235,
-  "configHash": "0x3335462f9b5d257039876400b2604a86976ee6d7fdb6ee174c55a4268d92f487",
+  "timestamp": 1765535115,
+  "configHash": "0xfe20d67ced1a80a854e121c74a14f6354cc694609d57ec71133d87a5eec4acc6",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -45,10 +45,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 30463200,
-        "latestOutputIndex": 4230,
-        "nextBlockNumber": 30470400,
-        "nextOutputIndex": 4231,
+        "latestBlockNumber": 31068000,
+        "latestOutputIndex": 4314,
+        "nextBlockNumber": 31075200,
+        "nextOutputIndex": 4315,
         "proposer": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "PROPOSER": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "startingBlockNumber": 0,
@@ -270,7 +270,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -340,7 +340,7 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
-          "isUsingCelestia": false,
+          "isUsingCelestia": true,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
@@ -470,7 +470,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644792",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644794",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -565,7 +565,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 23771571
+          "prevBlockNum": 23979269
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
@@ -984,6 +984,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23897284 },
+  "usedBlockNumbers": { "ethereum": 23995938 },
   "permissionsConfigHash": "0xa553ee5088a454f944efcbf48c118529f8c52ed73b21e3f0c7d174f0bf8d9256"
 }

@@ -15,10 +15,11 @@ const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
 
 const bridge = discovery.getContract('L1NativeTokenVault')
-const diamond = discovery.getContract('AbstractZkEvm')
+const diamond = discovery.getContract('Diamond')
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
+  chainId,
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -57,7 +58,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  diamondContract: discovery.getContract('AbstractZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,

@@ -1,7 +1,7 @@
 {
   "name": "hychain",
-  "timestamp": 1747829483,
-  "configHash": "0x850333c3fb6869d3d0a28659874592f4c1065488b36c060bea831519cf6588e0",
+  "timestamp": 1767971010,
+  "configHash": "0x353b45b9358bb31a2a205992d612f4cfcbe3c224472f211458f047ca9cfc9542",
   "entries": [
     {
       "name": "Outbox",
@@ -222,7 +222,7 @@
           "eth:0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048"
         ],
         "allowedOutboxList": ["eth:0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"],
-        "delayedMessageCount": 16290,
+        "delayedMessageCount": 18978,
         "inboxHistory": [
           "eth:0xD6c596b7ca17870DD50D322393deCE6C2085a116",
           "eth:0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048"
@@ -232,8 +232,8 @@
         "outboxHistory": ["eth:0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd"],
         "rollup": "eth:0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerInbox": "eth:0xaF5800ADF22301968613c37DA9C3C2a486eA915A",
-        "sequencerMessageCount": 10821,
-        "sequencerReportedSubMessageCount": 4461984
+        "sequencerMessageCount": 14719,
+        "sequencerReportedSubMessageCount": 5162265
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -529,15 +529,15 @@
         "challengeManager": "eth:0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "100000000000000000",
+        "currentRequiredStake": "1900000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1976,
+        "firstUnresolvedNode": 2747,
         "inbox": "eth:0xD6c596b7ca17870DD50D322393deCE6C2085a116",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19366386,
-        "latestConfirmed": 1975,
-        "latestNodeCreated": 2000,
+        "latestConfirmed": 2746,
+        "latestNodeCreated": 2756,
         "loserStakeEscrow": "eth:0x42875471D43d54B538B333F041E75a9a45Bf3Aa0",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd",
@@ -611,6 +611,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -664,7 +665,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 10821,
+        "batchCount": 14719,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xC1d59449a546bA80d332De629724df8e9A9e9584"],
         "bridge": "eth:0x73C6af7029E714DFf1F1554F88b79B335011Da68",
@@ -694,7 +695,7 @@
         "rollup": "eth:0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 16290,
+        "totalDelayedMessagesRead": 18612,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1530,6 +1531,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22531183 },
+  "usedBlockNumbers": { "ethereum": 24197895 },
   "permissionsConfigHash": "0xd9d59e33040f0b89a34465cf6f805c6f32960520b80dca88c902606e496819db"
 }

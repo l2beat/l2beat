@@ -1,10 +1,7 @@
 import clsx from 'clsx'
-import type { ButtonHTMLAttributes } from 'react'
+import type { HTMLAttributes } from 'react'
 
-export function Loader({
-  children,
-  ...props
-}: ButtonHTMLAttributes<HTMLDivElement>) {
+export function Loader({ children, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}

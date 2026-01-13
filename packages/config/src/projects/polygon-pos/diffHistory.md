@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xb92c4864910fe157e8592ea57c81b1caecd7717c
+
+# Diff at Wed, 07 Jan 2026 14:42:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1767007913
+- current timestamp: 1767796862
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0x817c9843fe37ef352f3fdc5f83a759840d1dfb0d
+
+# Diff at Mon, 29 Dec 2025 11:33:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1766409364
+- current timestamp: 1767007913
+
+## Description
+
+Added validator.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
+Generated with discovered.json: 0x598209d4b60851a69f816e46bb1417a8c45f97a8
+
+# Diff at Mon, 22 Dec 2025 13:17:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765784278
+- current timestamp: 1766409364
+
+## Description
+
++1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
+Generated with discovered.json: 0xd9e08989fb8a83873d878b314c683d87371baa01
+
+# Diff at Mon, 15 Dec 2025 07:39:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1765280918
+- current timestamp: 1765784278
+
+## Description
+
+sub ms change.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
++        "eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC"
+    }
+```
+
 Generated with discovered.json: 0x8220aab2e8f3cdc50fbb378f98aa2277eccbfd3f
 
 # Diff at Tue, 09 Dec 2025 11:49:51 GMT:

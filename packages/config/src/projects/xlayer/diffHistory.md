@@ -1,4 +1,63 @@
-Generated with discovered.json: 0x886687eb1f64c74a58cdf6a708947645627ced7f
+Generated with discovered.json: 0x0b907d154e8769bd7ae9bc6fc0d883cd5ddfcadc
+
+# Diff at Mon, 29 Dec 2025 10:14:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1765461274
+- current timestamp: 1767003202
+
+## Description
+
+Rotated batcher address.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d"
++        "eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459"
+    }
+```
+
+Generated with discovered.json: 0x35aec606f1bf653110095fa92d32c417480edf34
+
+# Diff at Fri, 12 Dec 2025 16:20:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765461274
+- current timestamp: 1765461274
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765461274 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x26009ef7cf751c84029aec48e4558c937bc6afe8
 
 # Diff at Wed, 10 Dec 2025 09:17:01 GMT:
 

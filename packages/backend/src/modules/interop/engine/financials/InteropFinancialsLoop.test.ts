@@ -62,7 +62,7 @@ describe(InteropFinancialsLoop.name, () => {
     it('calculates financials and updates transfers records', async () => {
       const srcToken1 = DeployedTokenId.from(
         'ethereum',
-        EthereumAddress.random(),
+        '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
       )
       const dstToken1 = DeployedTokenId.from(
         'arbitrum',
@@ -128,7 +128,7 @@ describe(InteropFinancialsLoop.name, () => {
         {
           deployedToken: {
             chain: 'ethereum',
-            address: DeployedTokenId.address(srcToken1),
+            address: DeployedTokenId.address(srcToken1).toLowerCase(), // addresses in TokenDB are lowercase
             symbol: 'ETH',
             decimals: 18,
           },
@@ -179,9 +179,9 @@ describe(InteropFinancialsLoop.name, () => {
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+          { id: 'base', type: 'evm' as const },
         ],
         db,
         tokenDb,
@@ -308,8 +308,8 @@ describe(InteropFinancialsLoop.name, () => {
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
         ],
         db,
         tokenDb,

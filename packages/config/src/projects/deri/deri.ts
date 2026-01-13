@@ -23,6 +23,7 @@ export const deri = orbitStackL3({
       documentation: ['https://docs.deri.io/'],
       explorers: ['https://explorer-dchain.deri.io/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],
+      bridges: ['https://deri.io/#/bridge'],
       socialMedia: [
         'https://twitter.com/DeriProtocol',
         'https://t.me/DeriProtocol',

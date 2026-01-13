@@ -1,3 +1,198 @@
+Generated with discovered.json: 0xc041eb4811dd20ed554903f04315c38a8fad6bb5
+
+# Diff at Thu, 08 Jan 2026 16:08:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cf8d792e29ae826d4bd19d06725ac7de8582e2c2 block: 1766408981
+- current timestamp: 1766408981
+
+## Description
+
+Removed old verifiers from spam because they can still be used and thus are referenced in zk catalog.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766408981 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (eth:0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (eth:0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x7c28ecd3279e4e4a9b5f6a12510209c76b1e59dd
+
+# Diff at Mon, 22 Dec 2025 13:11:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765815217
+- current timestamp: 1766408981
+
+## Description
+
+ms changes.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 1 (eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
++        "eth:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "scr:0xd33b8405635fE0Bd91aD1483778Bc5c053D8177f"
++        "scr:0x6aE9233a6a66B5E4bEFB7f3d6bBAd07873b1664b"
+    }
+```
+
+Generated with discovered.json: 0x567c1823b2a5b7d61feaa88d9c83d47e26551e74
+
+# Diff at Mon, 15 Dec 2025 16:14:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c617e27cd7f65519be3bc9bb0e27c564ec208785 block: 1765195735
+- current timestamp: 1765815217
+
+## Description
+
+Galileo protocol upgrade new verifiers
+(https://gov.scroll.io/proposals/72907322044331380548190357610154468026012921395152333929550231764240959817459)
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.8:
++        {"startBatchIndex":0,"verifier":"eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5"}
+      values.latestVerifier.9:
++        {"startBatchIndex":0,"verifier":"eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"}
+      values.legacyVerifiersLength.7:
++        0
+      values.legacyVerifiersLength.8:
++        0
+      values.verifierVersions.8:
++        9
+      values.verifierVersions.9:
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierGalileo (eth:0x749fC77A1a131632a8b88e8703E489557660C75e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5.sol} |   0
+ ...:0x4F438522956c8826B9e29B4c775b2d8a6a803181.sol | 107 +++++++++++++++++++++
+ ...:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485.sol | 107 +++++++++++++++++++++
+ 3 files changed, 214 insertions(+)
+```
+
 Generated with discovered.json: 0xbe7d80075c21f9f1fb91802e776ebe39e44711af
 
 # Diff at Mon, 08 Dec 2025 12:10:06 GMT:

@@ -54,7 +54,10 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
-      <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
+      <li
+        key={chain}
+        className={clsx(!props.first && 'border-t border-t-coffee-600')}
+      >
         <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
           <button
             onClick={() => setOpen((open) => !open)}

@@ -1,7 +1,7 @@
 {
   "name": "jovay",
   "timestamp": 1762443722,
-  "configHash": "0x622125b51a6406eeab9b446ee191c7ffd1aee4ed5e967718f5fbc7970a548154",
+  "configHash": "0x81e0bd7020fa7519e8264de66319184b8f53b723994303a54089c169cbc6e064",
   "entries": [
     {
       "name": "DcapAttestationRouter",

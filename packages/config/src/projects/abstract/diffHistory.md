@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xeadf7381cbfdb0332860cfead19b5c235a8d5a56
+
+# Diff at Mon, 29 Dec 2025 10:17:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1763546038
+- current timestamp: 1767003412
+
+## Description
+
+EOA upgraded to Metamask 7702 Delegator.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x277D26a45Add5775F21256159F089769892CEa5B","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x0c280748f58a36c72c3712dc2b0ca44220e01b7e3ce53a9439b40060839f257e","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0x05a2a658e91c49414c4db61fe9a3207654eb3d9d
+
+# Diff at Wed, 17 Dec 2025 14:34:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1763546038
+- current timestamp: 1763546038
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763546038 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "AbstractZkEvm"
++        "Diamond"
+    }
+```
+
 Generated with discovered.json: 0x96a6a301eadd93003cfcff11e51c8b1850962089
 
 # Diff at Wed, 19 Nov 2025 10:28:26 GMT:

@@ -71,7 +71,7 @@ export function createPublicApiRouter() {
         type: TvsProjectFilterType.optional(),
         projectIds: v.string().optional(),
         excludeAssociatedTokens: v.string().optional(),
-        includeRwaRestrictedTokens: v.string().optional(),
+        excludeRwaRestrictedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
@@ -80,7 +80,7 @@ export function createPublicApiRouter() {
         type,
         projectIds,
         excludeAssociatedTokens,
-        includeRwaRestrictedTokens,
+        excludeRwaRestrictedTokens,
       } = req.query
 
       const data = await getScalingTvsApiData({
@@ -88,7 +88,7 @@ export function createPublicApiRouter() {
         type: type ?? 'layer2',
         projectIds: projectIds?.split(',') ?? [],
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
-        includeRwaRestrictedTokens: includeRwaRestrictedTokens === 'true',
+        excludeRwaRestrictedTokens: excludeRwaRestrictedTokens !== 'false',
       })
       res.json(data)
     },
@@ -101,19 +101,19 @@ export function createPublicApiRouter() {
       query: v.object({
         range: TvsRangeSchema.optional(),
         excludeAssociatedTokens: v.string().optional(),
-        includeRwaRestrictedTokens: v.string().optional(),
+        excludeRwaRestrictedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
       const { slug } = req.params
-      const { range, excludeAssociatedTokens, includeRwaRestrictedTokens } =
+      const { range, excludeAssociatedTokens, excludeRwaRestrictedTokens } =
         req.query
 
       const data = await getScalingTvsProjectApiData({
         slug,
         range: optionToRange(range ?? '30d'),
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
-        includeRwaRestrictedTokens: includeRwaRestrictedTokens === 'true',
+        excludeRwaRestrictedTokens: excludeRwaRestrictedTokens !== 'false',
       })
       res.json(data)
     },

@@ -1,6 +1,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
 import { IconClose } from '../icons/IconClose'
+import { cn } from '../utils/cn'
 
 export const Dialog = {
   Root: DialogRoot,
@@ -44,30 +45,51 @@ function DialogDescription({
   )
 }
 
-function DialogBody({ children, ...props }: RadixDialog.DialogContentProps) {
+export function DialogOverlay({
+  children,
+  ...props
+}: RadixDialog.DialogOverlayProps) {
   return (
     <RadixDialog.Portal>
-      <RadixDialog.Overlay className="fixed inset-0 z-20 data-[state=open]:bg-coffee-900/60" />
+      <RadixDialog.Overlay
+        className="fixed inset-0 z-20 data-[state=open]:bg-coffee-900/60"
+        {...props}
+      />
+      {children}
+    </RadixDialog.Portal>
+  )
+}
+
+function DialogBody({
+  children,
+  className,
+  noCloseButton,
+  ...props
+}: RadixDialog.DialogContentProps & { noCloseButton?: boolean }) {
+  return (
+    <DialogOverlay>
       <RadixDialog.Content
-        className={clsx(
+        className={cn(
           '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-[25] max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-6 shadow-[var(--shadow-6)] focus:outline-none',
-          props.className,
+          className,
         )}
         {...props}
         aria-describedby={undefined}
       >
         {children}
 
-        <Dialog.Close asChild>
-          <button
-            className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
-            aria-label="Close"
-          >
-            <IconClose className="stroke-coffee-200" />
-          </button>
-        </Dialog.Close>
+        {!noCloseButton && (
+          <Dialog.Close asChild>
+            <button
+              className="absolute top-2.5 right-2.5 inline-flex cursor-pointer appearance-none items-center justify-center rounded-full focus:outline-none"
+              aria-label="Close"
+            >
+              <IconClose className="stroke-coffee-200" />
+            </button>
+          </Dialog.Close>
+        )}
       </RadixDialog.Content>
-    </RadixDialog.Portal>
+    </DialogOverlay>
   )
 }
 

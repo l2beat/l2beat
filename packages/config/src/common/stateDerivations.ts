@@ -3,6 +3,7 @@ import type { ProjectScalingStateDerivation } from '../types'
 type SupportedOPStackChains =
   | 'OP_MAINNET'
   | 'BASE'
+  | 'BOB'
   | 'ZORA'
   | 'PGN'
   | 'MODE'
@@ -86,6 +87,10 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   METAL: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/metal.toml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/metal.json.zst',
+  ],
+  BOB: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/bob.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/bob.json.zst',
   ],
   SUPERSEED: [
     'https://api.conduit.xyz/file/v1/optimism/rollup/superseed-mainnet-0',

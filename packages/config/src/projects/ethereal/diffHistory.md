@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x12387dfcfb9ad7ef2bc20eb6be57d936d1bc0e20
+
+# Diff at Mon, 05 Jan 2026 17:44:16 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1766406768
+- current timestamp: 1767629465
+
+## Description
+
+Refresh discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766406768 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xd5cb05378f867813bf7b6309a9765f00b7648fd0
+
+# Diff at Wed, 10 Dec 2025 12:08:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1761222332
+- current timestamp: 1765368374
+
+## Description
+
+Conduit multisig added member.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0xb64578924648dc2093bf307f6fc2ec1029124322
 
 # Diff at Tue, 04 Nov 2025 11:32:38 GMT:

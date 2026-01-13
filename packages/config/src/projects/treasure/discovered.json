@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "timestamp": 1753944354,
-  "configHash": "0x20fdd2fa015c11ccb572ebb3f10659f8778822ff7a30df872847680d42d20f29",
+  "configHash": "0xbfe10a34dd18e18ae901b3659a728e90b6a292a589aa4817fb11745497f69ff9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -159,7 +159,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "TreasureZkEvm",
+      "name": "Diamond",
       "address": "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -990,5 +990,5 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23037387 },
-  "permissionsConfigHash": "0xb806d51dc100fb079ad76fdb09a33b0136418ab3f9e586e63901d2e997e34972"
+  "permissionsConfigHash": "0xc47388647444bb075090143c10a967ff3f5d047e56e66f4379bd04240bc5cd5c"
 }

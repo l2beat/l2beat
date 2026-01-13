@@ -1,5 +1,6 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTable } from '~/hooks/useTable'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import { customColumns, publicColumns } from './columns'
@@ -23,5 +24,10 @@ export function DaRiskTable({
     },
   })
 
-  return <BasicTable table={table} />
+  return (
+    <>
+      <ColumnsControls columns={table.getAllColumns()} />
+      <BasicTable table={table} />
+    </>
+  )
 }

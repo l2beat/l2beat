@@ -42,7 +42,6 @@ describe(RpcClient.name, () => {
         hash: '0xabcdef',
         number: 100,
         logsBloom: `0x${'0'.repeat(512)}`,
-        //@ts-expect-error type issue
         parentBeaconBlockRoot: '0x123',
       })
 

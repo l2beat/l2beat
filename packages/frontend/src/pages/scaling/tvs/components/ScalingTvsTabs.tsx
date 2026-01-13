@@ -20,6 +20,8 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { DisplayControls } from '~/components/table/display/DisplayControls'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -35,6 +37,7 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
+  const { display, setDisplay } = useTvsDisplayControlsContext()
   const [breakdownType, setBreakdownType] = useState<
     'bridgeType' | 'assetCategory'
   >('bridgeType')
@@ -53,14 +56,19 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <TableFilters
-        entries={[
-          ...props.rollups,
-          ...props.validiumsAndOptimiums,
-          ...props.others,
-          ...props.notReviewed,
-        ]}
-      />
+      <div className="flex items-center justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+            ...props.notReviewed,
+          ]}
+        />
+        <div className="max-md:mt-4 max-md:mr-4">
+          <DisplayControls display={display} setDisplay={setDisplay} />
+        </div>
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

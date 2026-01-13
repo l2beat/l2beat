@@ -12,13 +12,13 @@ import type {
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
   BlockTimestampConfig,
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
-import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 
@@ -53,6 +53,7 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly newClientsEnabled: boolean
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -106,11 +107,7 @@ export interface TrackedTxProject {
 
 export interface TrackedTxsConfig {
   readonly projects: TrackedTxProject[]
-  readonly bigQuery: {
-    readonly clientEmail: string
-    readonly privateKey: string
-    readonly projectId: string
-  }
+  readonly duneApiKey: string
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
@@ -213,7 +210,7 @@ export interface InteropFeatureConfig {
   capture: {
     enabled: boolean
     chains: {
-      name: string
+      id: string
       type: 'evm'
     }[]
   }

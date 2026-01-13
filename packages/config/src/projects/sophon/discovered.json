@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "timestamp": 1763548305,
-  "configHash": "0x79b8d67a6ee8a5bb0474cfba1c5f6189ad7ea3b2dbd01df1d7a0364dafce02e4",
+  "configHash": "0xfb4a6d5f3e6c1079e43782fa7eb6b301e5aad4b674286f91e5e4f326085bcb34",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
     {
@@ -10,7 +10,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SophonZkEvm",
+      "name": "Diamond",
       "address": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -1403,5 +1403,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 23832552 },
-  "permissionsConfigHash": "0xb289dc7b234de415a2cbed6560b5b24a5a6a098cf90c2807e9575b869a61b7e0"
+  "permissionsConfigHash": "0x47712e4e76a217075afad34d255dee43b2235de932dc48978e366ebf55a2621d"
 }

@@ -1,4 +1,138 @@
-Generated with discovered.json: 0x6832b3ba03276ed9385875896500e63ce76c4a4e
+Generated with discovered.json: 0xfc655f6a48129a305577088407de1a26697802b3
+
+# Diff at Mon, 12 Jan 2026 12:54:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@557c7b7c85b0fdc7328c16902e8eb6d003abcbf3 block: 1765960170
+- current timestamp: 1768222390
+
+## Description
+
+Conduit's shared SuperchainConfig upgrade from v1.2.0 to v2.4.0. This contract is shared across Conduit OP Stack chains (separate from OP Mainnet's SuperchainConfig). The upgrade adds pauseExpiry support. The GUARDIAN_SLOT() and PAUSED_SLOT() getter functions (which exposed internal storage slot locations) were removed, but guardian() and paused() functionality remains unchanged.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      template:
+-        "opstack/SuperchainConfigFake"
++        "opstack/SuperchainConfigFake_expiry"
+      sourceHashes.1:
+-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      description:
+-        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched."
+      values.$implementation:
+-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.1:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$pastUpgrades.2:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.GUARDIAN_SLOT:
+-        "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68"
+      values.PAUSED_SLOT:
+-        "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6"
+      values.version:
+-        "1.2.0"
++        "2.4.0"
+      values.initVersion:
++        2
+      values.pauseExpiry:
++        7884000
+      values.pauseExpiryFmt:
++        "3mo 1d"
+      values.proxyAdmin:
++        "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+      category.name:
+-        "Governance"
++        "Shared Infrastructure"
+      category.priority:
+-        3
++        4
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 465 +++++++++++++++------
+ 1 file changed, 346 insertions(+), 119 deletions(-)
+```
+
+Generated with discovered.json: 0x385c286e4b94b0bab77eab56d652301b7060fe40
+
+# Diff at Wed, 17 Dec 2025 08:31:21 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@8e3e624ee8b25c3a6106ebb6a5295b78f99241f8 block: 1765550831
+- current timestamp: 1765960170
+
+## Description
+
+gas pricing changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        8208
++        32832
+    }
+```
+
+Generated with discovered.json: 0x666a68c6bbdec9f8ce92a4d20b57891fcd6aced1
+
+# Diff at Fri, 12 Dec 2025 16:20:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764933743
+- current timestamp: 1765550831
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933743 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xb04d9d5b1dad5f1d215aa9293322516878fe63a6
 
 # Diff at Fri, 05 Dec 2025 11:23:47 GMT:
 

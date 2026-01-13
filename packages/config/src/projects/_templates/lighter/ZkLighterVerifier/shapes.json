@@ -3,5 +3,23 @@
     "hash": "0x5191196a6fb417df695e41cac070ffb36ce01a4c49b7d89ad809fea72e6e18c4",
     "address": "eth:0x9a3Cc15b31Aec100d0C49B16cC401eaEf5A0A500",
     "blockNumber": 23495073
+  },
+  "ZkLighterVerifierWithSpot.sol": {
+    "hash": "0x24b1700e66c7f9f26c170bb95a058d86a9579ecb84f8c3159cb71a1c46e7e008",
+    "address": "eth:0x7ddAD28962571F77fE5E9cB2fE74A896300EEed4",
+    "chain": "ethereum",
+    "blockNumber": 23981955
+  },
+  "ZkLighterVerifier_v0.0.1": {
+    "hash": "0x9fb19e3d933b1d83369c32b6e1ec0333c42f0f814ee9e9ec8e5e1efea520d374",
+    "address": "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2",
+    "chain": "ethereum",
+    "blockNumber": 24174705
+  },
+  "ZkLighterVerifier_v0.0.2": {
+    "hash": "0xcd42bf75a7fe0596b2df88cb9118f3e431864309a1a3c8987ea5e4c50acd0e09",
+    "address": "eth:0xd42b2D9eFD409c2a3074AE4f874F3f42389DB931",
+    "chain": "ethereum",
+    "blockNumber": 24218289
   }
 }

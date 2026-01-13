@@ -13,13 +13,13 @@
   ],
   "names": {
     "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
-    "eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161": "StaticAggregationIsm_default",
+    "eth:0xa64c7503edCCa2085FB0535739bed4C062d09Eee": "StaticAggregationIsm_default",
     "eth:0xfE7990a48Eb8d74407fF258e874040738F8602EB": "StaticAggregationIsm_eclipse",
     "eth:0x23BB2C56F6767B4E2fD882c62097Ce91Ab3F6724": "StaticMessageIdMultisigIsm",
     "eth:0x17d9C293Bc6EBeDE84BB1F1de9061C2df10B622c": "StaticMerkleRootMultisigIsm"
   },
   "overrides": {
-    "eth:0xf5b0e5Dbc75982a44025253612F98fbab146D161": {
+    "eth:0xa64c7503edCCa2085FB0535739bed4C062d09Eee": {
       // StaticAggregationIsm_default
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the [{{modules}}] ISM contracts successfully verify a message.",
       "fields": {

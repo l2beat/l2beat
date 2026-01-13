@@ -5,7 +5,7 @@ import type {
   Project,
   TvsToken,
 } from '@l2beat/config'
-import type { RpcClient } from '@l2beat/shared'
+import type { IRpcClient } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -14,14 +14,14 @@ import {
   TokenId,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
-import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
-import type { MulticallRequest } from '../../../../peripherals/multicall/types'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import type { LocalStorage } from '../LocalStorage'
 import { createEscrowToken } from '../legacyConfig/mapLegacyConfig'
 import type { LegacyEscrow } from '../legacyConfig/types'
 import { isEmptyAddress } from './isEmptyAddress'
+import { MulticallClient } from './multicall/MulticallClient'
+import { toMulticallConfigEntry } from './multicall/MulticallConfig'
+import type { MulticallRequest } from './multicall/types'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -38,7 +38,7 @@ export async function getAggLayerTokens(
   associatedTokens: string[],
   escrow: LegacyEscrow & { sharedEscrow: AggLayerEscrow },
   chainOfL1Escrow: ChainConfig,
-  rpcClient: RpcClient,
+  rpcClient: IRpcClient,
   localStorage: LocalStorage,
   logger: Logger,
 ): Promise<TvsToken[]> {

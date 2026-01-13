@@ -1,10 +1,11 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "lachain",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x742A28e22277945BBAAa34810393bf6e8512576C"],
   "sharedModules": ["shared-zk-stack"],
-  "names": { "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": "zkVmDiamond" },
+  "names": { "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": "Diamond" },
   "overrides": {
     "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": {
       "fields": {

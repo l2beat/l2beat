@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
+  "ignoreMethods": [
+    "getCrossDomainMessage",
+    "isMessageDropped",
+    "isMessageSkipped",
+    "messageQueue"
+  ],
+  "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
+  "owner": {
+    "permissions": [
+      {
+        "type": "interact",
+        "description": "manage L2 base fee, max gas limit and set the whitelist checker contract."
+      }
+    ]
+  }
+}

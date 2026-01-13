@@ -8,7 +8,7 @@ import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { IncludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/IncludeRwaRestrictedTokensCheckbox'
+import { ExcludeRwaRestrictedTokensCheckbox } from '~/pages/scaling/components/ExcludeRwaRestrictedTokensCheckbox'
 import {
   ScalingRwaRestrictedTokensContextProvider,
   useScalingRwaRestrictedTokensContext,
@@ -66,7 +66,7 @@ export function ZkCatalogTvsSection({
             projectsForTvs={projectsForTvs}
           />
           <div className="flex justify-end">
-            <IncludeRwaRestrictedTokensCheckbox />
+            <ExcludeRwaRestrictedTokensCheckbox />
           </div>
           <TvsProjectStats tvsInfo={tvsInfo} projectsForTvs={projectsForTvs} />
         </TvsChartControlsContextProvider>
@@ -85,13 +85,13 @@ function ChartControls({
   }[]
 }) {
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
 
   const { data } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const timeRange = useMemo(
@@ -123,12 +123,12 @@ function TvsProjectStats({
   tvsInfo: ProjectTvsInfo | undefined
   projectsForTvs: ProjectWithRanges[]
 }) {
-  const { includeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
     projects: projectsForTvs,
     range: optionToRange('7d'),
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens,
   })
 
   const stats = getStats(data)

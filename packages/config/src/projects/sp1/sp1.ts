@@ -24,7 +24,10 @@ export const sp1: BaseProject = {
       websites: ['https://www.succinct.xyz'],
       documentation: ['https://docs.succinct.xyz/docs/sp1/introduction'],
       repositories: ['https://github.com/succinctlabs/sp1'],
-      socialMedia: ['https://x.com/SuccinctLabs'],
+      socialMedia: [
+        'https://x.com/SuccinctLabs',
+        'https://discord.com/invite/succinctlabs',
+      ],
     },
     badges: [],
   },
@@ -190,6 +193,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('omni'),
         sinceTimestamp: UnixTime(1748856160),
       },
+      {
+        projectId: ProjectId('morph'),
+        sinceTimestamp: UnixTime(1737359447),
+      },
       // archived projects
       {
         projectId: ProjectId('gpt'),
@@ -211,6 +218,10 @@ export const sp1: BaseProject = {
         projectId: ProjectId('haust'),
         sinceTimestamp: UnixTime(1756808195),
       },
+      {
+        projectId: ProjectId('celo'),
+        sinceTimestamp: UnixTime(1765324800),
+      },
     ],
     verifierHashes: [
       {
@@ -230,28 +241,63 @@ export const sp1: BaseProject = {
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
-      },
-      {
-        hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
-            ),
-            chain: 'ethereum',
-          },
-        ],
         verificationStatus: 'successful',
-        verificationSteps: `
-      - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-      - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-      - Make sure that you have [go lang installed](https://go.dev/doc/install).
-      - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-      `,
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The regeneration process consumed around 50 GiB of memory on the peak. Also, due to some os indeterminism, 
+the sp1 repo must be cloned into \`/home/aurel/dev/sp1-wip/\` directory, so we recommend creating \`aurel\` user on an Ubuntu 24.04 machine.
+
+1. Create a new \`aurel\` user on a linux os and login as this user.
+2. Install necessary dependencies: rust, sp1 toolkit, go.
+
+\`\`\`
+sudo apt update
+sudo apt install build-essential golang-go
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+cargo install --debug --locked cargo-make
+
+curl -L https://sp1up.succinct.xyz/ | bash
+sp1up
+\`\`\`
+
+3. Clone sp1 repo in the correct directory, set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
+
+\`\`\`
+mkdir -p dev/sp1-wip/
+cd dev/sp1-wip/
+git clone https://github.com/succinctlabs/sp1.git
+cd sp1/crates/prover
+git checkout v5.0.0   # commit should be 38f0f143dece864e8bffafad64196a924f190336
+export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
+
+make build-circuits
+\`\`\`
+      
+The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
+        `,
       },
+      // {
+      //   hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   verificationSteps: `
+      // - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+      // - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+      // - Make sure that you have [go lang installed](https://go.dev/doc/install).
+      // - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+      // `,
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      // },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
@@ -262,17 +308,30 @@ export const sp1: BaseProject = {
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
-            ),
-            chain: 'arbitrum',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+          //   ),
+          //   chain: 'arbitrum',
+          // },
           {
             address: EthereumAddress(
               '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
             ),
             chain: 'gnosis',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
+            ),
+            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

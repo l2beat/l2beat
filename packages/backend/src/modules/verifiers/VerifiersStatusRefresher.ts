@@ -2,15 +2,13 @@ import type { Logger } from '@l2beat/backend-tools'
 
 import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { BlockscoutV2Client } from '@l2beat/shared'
+import { BlockscoutV2Client, HttpClient } from '@l2beat/shared'
 import { assert, type ChainId, UnixTime } from '@l2beat/shared-pure'
-import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export type VerifiersStatusRefresherDeps = {
   db: Database
-  peripherals: Peripherals
   clock: Clock
   logger: Logger
   verifiers: OnchainVerifier[]
@@ -78,8 +76,10 @@ export class VerifiersStatusRefresher {
         `Blockscout API URL is not configured for chain ${chainId}`,
       )
     }
-    return this.$.peripherals.getClient(BlockscoutV2Client, {
-      url: blockscoutV2.url,
-    })
+    return new BlockscoutV2Client(
+      new HttpClient(),
+      blockscoutV2.url,
+      this.logger,
+    )
   }
 }

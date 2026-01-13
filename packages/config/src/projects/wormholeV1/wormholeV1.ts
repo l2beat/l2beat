@@ -15,6 +15,7 @@ export const wormholeV1: Bridge = {
     description: 'First version of the Wormhole bridge.',
     links: {
       websites: ['https://wormhole.com/'],
+      documentation: ['https://wormhole.com/docs/'],
     },
     category: 'Token Bridge',
   },

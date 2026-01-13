@@ -1,7 +1,7 @@
-type Network = { name: string; display: string }
+type Network = { id: string; display: string }
 
 export function generateNetworkPairs(
-  networks: Network[],
+  networks: readonly Network[],
 ): [Network, Network][] {
   const pairs: [Network, Network][] = []
 

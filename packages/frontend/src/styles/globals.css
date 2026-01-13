@@ -40,6 +40,7 @@
   --brand: #9621bf;
   --background: #e6e7ec;
   --surface-primary: #fafafa;
+  --surface-primary-hover: #e6ecef;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
   --surface-info: #ccdbff;
@@ -110,6 +111,7 @@
   --brand: #db8bf7;
   --background: #000000;
   --surface-primary: #17191f;
+  --surface-primary-hover: #2b303b;
   --surface-secondary: #3b3f45;
   --surface-tertiary: #484d54;
   --surface-info: #26374f;
@@ -435,6 +437,7 @@
   --color-brand: var(--brand);
   --color-background: var(--background);
   --color-surface-primary: var(--surface-primary);
+  --color-surface-primary-hover: var(--surface-primary-hover);
   --color-surface-secondary: var(--surface-secondary);
   --color-surface-tertiary: var(--surface-tertiary);
   --color-surface-info: var(--surface-info);
@@ -761,4 +764,24 @@
   }
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
+}
+
+/* Theme toggle view transition */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  animation: reveal-from-circle 0.4s ease-in-out;
+  z-index: 2;
+}
+
+@keyframes reveal-from-circle {
+  from {
+    clip-path: circle(0 at var(--circle-x) var(--circle-y));
+  }
+  to {
+    clip-path: circle(var(--circle-radius) at var(--circle-x) var(--circle-y));
+  }
 }

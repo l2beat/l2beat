@@ -47,9 +47,9 @@ export const sonicgateway: Bridge = {
     links: {
       websites: ['https://gateway.soniclabs.com/'],
       documentation: ['https://docs.soniclabs.com/sonic/sonic-gateway'],
-      explorers: [],
+      explorers: ['https://sonicscan.org'],
       bridges: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
-      repositories: [],
+      repositories: ['https://github.com/Fantom-Foundation'],
       socialMedia: [
         'https://x.com/SonicLabs',
         'https://t.me/SonicAnnouncements',

@@ -2,5 +2,16 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "r0ar",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e"]
+  "initialAddresses": ["eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e"],
+  "overrides": {
+    "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }

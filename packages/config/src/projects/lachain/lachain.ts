@@ -8,6 +8,7 @@ const chainId = 2904
 const genesisTimestamp = UnixTime(1744817872) // 2025-04-16T17:00:00Z
 
 export const lachain: ScalingProject = zkStackL2({
+  chainId,
   addedAt: UnixTime(1740072754), // 2025-01-20T17:32:34Z
   archivedAt: UnixTime(1760947223),
   display: {
@@ -87,7 +88,6 @@ export const lachain: ScalingProject = zkStackL2({
     },
   ],
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   usesEthereumBlobs: true,
   // gas token LAC not on coingecko, no significant other TVS or activity
   // nonTemplateEscrows: [

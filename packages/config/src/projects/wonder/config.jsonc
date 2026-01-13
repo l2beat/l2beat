@@ -1,24 +1,15 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "wonder",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92": "zkVmDiamond",
+    "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92": "Diamond",
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "overrides": {
-    "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": {
-      "fields": {
-        "validators": {
-          "handler": {
-            "type": "hardcoded",
-            "value": ["eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
-          }
-        }
-      }
-    },
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       "fields": {
         "validatorsVTL": {

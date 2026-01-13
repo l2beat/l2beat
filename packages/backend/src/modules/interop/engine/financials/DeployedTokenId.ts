@@ -7,7 +7,8 @@ export function DeployedTokenId(id: string) {
 }
 
 DeployedTokenId.from = function from(chain: string, address: string) {
-  return `${chain}+${address}` as DeployedTokenId
+  // Addresses of DeployedTokens in TokenDB are always lowercase
+  return `${chain}+${address.toLowerCase()}` as DeployedTokenId
 }
 
 DeployedTokenId.chain = function chain(id: DeployedTokenId) {

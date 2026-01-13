@@ -18,7 +18,7 @@
     "db:migrate": "cd ../database && pnpm db:migrate",
     "run-kroma-propose-script": "ts-node ./discovery/kroma/ethereum/script-ts/propose.ts",
     "start": "node -r source-map-support/register build/src/index.js",
-    "start:dev": "pnpm build:dependencies && source .env && PRISMA_DB_URL=$LOCAL_DB_URL pnpm db:migrate && ts-node-dev --respawn --transpile-only src/index.ts",
+    "start:dev": "pnpm build:dependencies && . ./.env && PRISMA_DB_URL=$LOCAL_DB_URL pnpm db:migrate && ts-node-dev --respawn --transpile-only src/index.ts",
     "start:dev-pure": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:profile": "node --inspect -r esbuild-register src/index.ts",
     "test": "./scripts/run_tests.sh",
@@ -39,8 +39,6 @@
     "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
-    "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
@@ -68,7 +66,6 @@
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
     "source-map-support": "^0.5.21",
-    "uuid": "^9.0.1",
     "viem": "^2.31.6",
     "ws": "^8.18.2"
   },
@@ -85,7 +82,6 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/supertest": "^2.0.12",
-    "@types/uuid": "^9.0.8",
     "cmd-ts": "^0.13.0",
     "jsonc-parser": "^3.2.0",
     "supertest": "^6.2.3",

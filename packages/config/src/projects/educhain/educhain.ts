@@ -38,6 +38,7 @@ export const educhain: ScalingProject = orbitStackL3({
         'https://youtube.com/@OpenCampusxyz',
         'https://t.me/OpenCampusTG',
         'https://linkedin.com/company/opencampus-xyz',
+        'https://discord.com/invite/opencampus',
       ],
     },
   },

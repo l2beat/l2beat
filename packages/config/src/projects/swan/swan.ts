@@ -32,7 +32,7 @@ export const swan: ScalingProject = opStackL2({
       socialMedia: [
         'https://x.com/swan_chain',
         // 'https://t.me/swan_chain/', fails tests
-        'https://discord.gg/swanchain',
+        'https://discord.com/invite/2Fqbs9JhEg',
         'https://linkedin.com/company/swancloud',
         'https://swanchain.medium.com/',
       ],

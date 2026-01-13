@@ -5,7 +5,7 @@ import {
   ProjectService,
   type TvsToken,
 } from '@l2beat/config'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { HttpClient, RpcClientCompat } from '@l2beat/shared'
 import {
   assert,
   type LegacyToken,
@@ -207,7 +207,7 @@ function generateConfigForProject(
 
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
-    ? new RpcClient({
+    ? RpcClientCompat.create({
         http: new HttpClient(),
         callsPerMinute: env.integer(
           `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,

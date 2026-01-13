@@ -3,9 +3,10 @@ import {
   ConfigWriter,
   getDiscoveryPaths,
   TemplateService,
+  UserHandlers,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { v as z } from '@l2beat/validate'
+import { toJsonSchema, v as z } from '@l2beat/validate'
 import express from 'express'
 import type { Server } from 'http'
 import path, { join } from 'path'
@@ -153,6 +154,49 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   })
 
+  app.get('/api/config/sync-status/:project', (req, res) => {
+    const query = projectParamsSchema.safeParse(req.params)
+    if (!query.success) {
+      res.status(400).json({ errors: query.message })
+      return
+    }
+    const { project } = query.data
+
+    templateService.reload()
+
+    const discovery = configReader.readDiscovery(project)
+    const config = configReader.readConfig(project)
+
+    res.json({
+      reasons: templateService.discoveryNeedsRefresh(discovery, config),
+    })
+  })
+
+  app.get('/api/config/sync-status', (_, res) => {
+    templateService.reload()
+    const allProjects = configReader.readAllDiscoveredProjects()
+
+    const reasons = allProjects.flatMap((project) => {
+      const discovery = configReader.readDiscovery(project)
+      const config = configReader.readConfig(project)
+
+      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
+
+      if (reasons.length === 0) {
+        return []
+      }
+
+      return {
+        project,
+        reasons,
+      }
+    })
+
+    res.json({
+      reasons,
+    })
+  })
+
   app.get('/api/config-files/:project', (req, res) => {
     const query = projectParamsSchema.safeParse(req.params)
 
@@ -161,10 +205,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       return
     }
 
-    const config: string = configReader.readRawConfigAsText(query.data.project)
+    const configText = configReader.readRawConfigAsText(query.data.project)
 
     res.json({
-      config,
+      config: configText,
     })
   })
 
@@ -174,7 +218,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
-    attachConfigRouter(app, configReader, configWriter)
+    attachConfigRouter(app, configReader, configWriter, templateService)
+
+    app.get('/api/handlers', (_req, res) => {
+      res.json({
+        handlers: Object.entries(UserHandlers).map(([type, definition]) => ({
+          type,
+          schema: toJsonSchema(definition),
+          // TODO: add docs
+          docs: '',
+          // TODO: add examples
+          examples: [],
+        })),
+      })
+    })
 
     app.get('/api/projects/:project/codeSearch', (req, res) => {
       const paramsValidation = projectSearchTermParamsSchema.safeParse({

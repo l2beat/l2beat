@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+  "ignoreMethods": ["getStakers", "stakerSet"],
+  "fields": {
+    "getActiveStakers": {
+      "permissions": [
+        {
+          "type": "sequence",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots"
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config."
+        }
+      ]
+    }
+  }
+}

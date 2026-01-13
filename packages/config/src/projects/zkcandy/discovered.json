@@ -1,7 +1,7 @@
 {
   "name": "zkcandy",
-  "timestamp": 1764668728,
-  "configHash": "0x70902c55eb19067baef9ad6b8d5875388358d22a7e52a4ad5cc384be603bc8ef",
+  "timestamp": 1765463883,
+  "configHash": "0x0fb99e4de7dba5be44dad22a4fe32f6e2a77557010847bf0a9f91083cac9d51b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -50,11 +50,6 @@
         {
           "permission": "validateZkStack",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -218,8 +213,6 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "eth:0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70",
-          "eth:0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D",
           "eth:0x174FaD6bA367F6445057e278f30d4AFfFb305444",
           "eth:0xF10A8594e18ae4018384Ce27e5A7c9993637f5aC"
         ]
@@ -274,7 +267,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -315,11 +308,6 @@
         {
           "permission": "validateZkStack",
           "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -376,7 +364,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkCandyZkEvm",
+      "name": "Diamond",
       "address": "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
@@ -586,7 +574,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 6332,
+        "getFirstUnprocessedPriorityTx": 6336,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -595,20 +583,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0xb6828942cba5817e476ea1e85b52f62c69394df0677df47b16abd9c646f57512",
+        "getPriorityTreeRoot": "0x75cbc26d25464ddd14d9459281e5965928288d76cca68627137c895b127cd67d",
         "getPriorityTreeStartIndex": 56,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 4664,
-        "getTotalBatchesExecuted": 4663,
-        "getTotalBatchesVerified": 4664,
-        "getTotalBlocksCommitted": 4664,
-        "getTotalBlocksExecuted": 4663,
-        "getTotalBlocksVerified": 4664,
-        "getTotalPriorityTxs": 6332,
+        "getTotalBatchesCommitted": 4701,
+        "getTotalBatchesExecuted": 4701,
+        "getTotalBatchesVerified": 4701,
+        "getTotalBlocksCommitted": 4701,
+        "getTotalBlocksExecuted": 4701,
+        "getTotalBlocksVerified": 4701,
+        "getTotalPriorityTxs": 6336,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -1113,6 +1101,6 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23924970 },
-  "permissionsConfigHash": "0x381279f4a603304dd72aa8abfb31f6824c46bad56a300fb8689751220fdd9ea1"
+  "usedBlockNumbers": { "ethereum": 23990081 },
+  "permissionsConfigHash": "0x8929958a2dd01826f664ec857148decdf131f99b9b65743fc033550d4e26a50f"
 }

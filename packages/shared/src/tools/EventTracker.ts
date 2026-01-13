@@ -7,7 +7,6 @@ interface Event<T extends string> {
 
 export class EventTracker<T extends string> {
   private events: Event<T>[] = []
-  pruningIntervalId?: NodeJS.Timer
 
   constructor(private readonly historySize = ONE_HOUR) {
     this.enablePruning()

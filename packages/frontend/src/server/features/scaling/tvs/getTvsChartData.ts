@@ -19,7 +19,7 @@ export const TvsChartDataParams = v.object({
   range: ChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
-  includeRwaRestrictedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
 })
 
 export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
@@ -48,14 +48,14 @@ export type TvsChartData = {
 export async function getTvsChart({
   range,
   excludeAssociatedTokens,
-  includeRwaRestrictedTokens,
+  excludeRwaRestrictedTokens,
   filter,
 }: TvsChartDataParams): Promise<TvsChartData> {
   if (env.MOCK) {
     return getMockTvsChartData({
       range,
       excludeAssociatedTokens,
-      includeRwaRestrictedTokens,
+      excludeRwaRestrictedTokens,
       filter,
     })
   }
@@ -79,7 +79,7 @@ export async function getTvsChart({
       {
         forSummary,
         excludeAssociatedTokens,
-        includeRwaRestrictedTokens,
+        excludeRwaRestrictedTokens,
       },
     ),
   ])
