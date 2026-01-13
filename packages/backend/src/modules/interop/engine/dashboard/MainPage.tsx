@@ -11,10 +11,12 @@ import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories
 import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
 import { LiveTransfers } from './LiveTransfers'
+import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -353,6 +355,7 @@ function MainPageLayout(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  pluginSyncStatuses: PluginSyncStatus[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -427,6 +430,7 @@ function MainPageLayout(props: {
               </div>
             ))}
             <ProcessorsStatusTable processors={props.status} />
+            <PluginsStatusTable pluginSyncStatuses={props.pluginSyncStatuses} />
           </>
         }
       />
@@ -441,6 +445,7 @@ export function renderMainPage(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  pluginSyncStatuses: PluginSyncStatus[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)
