@@ -1,10 +1,16 @@
 name: Smoke Test (MQ)
 
 on:
-  merge_group:
+  pull_request:
+  merge_group: {}
 
 jobs:
   config-smoke-test:
+    if: >
+      ${{
+        github.event_name == 'merge_group' ||
+        (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+      }}
     name: Config smoke test
     runs-on: ubuntu-latest
     timeout-minutes: 10
