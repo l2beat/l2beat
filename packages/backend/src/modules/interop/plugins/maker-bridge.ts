@@ -92,7 +92,7 @@ const parseMessagePassed = createEventParser(
 )
 
 export class MakerBridgePlugin implements InteropPlugin {
-  name = 'maker-bridge'
+  readonly name = 'maker-bridge'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

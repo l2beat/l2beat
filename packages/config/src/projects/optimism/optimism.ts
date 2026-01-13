@@ -54,6 +54,37 @@ export const optimism: ScalingProject = opStackL2({
       ],
     },
   },
+  interopConfig: {
+    name: 'OP Canonical',
+    bridgeType: 'canonical',
+    plugins: [
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'opstack',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'opstack-standardbridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'beefy-bridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'maker-bridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'sorare-base',
+      },
+    ],
+  },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
   nonTemplateExcludedTokens: ['rsETH'],

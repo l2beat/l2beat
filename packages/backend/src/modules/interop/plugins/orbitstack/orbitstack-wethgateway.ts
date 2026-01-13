@@ -73,7 +73,7 @@ const parseWethWithdrawalFinalized = createEventParser(
 )
 
 export class OrbitStackWethGatewayPlugin implements InteropPlugin {
-  name = 'orbitstack-wethgateway'
+  readonly name = 'orbitstack-wethgateway'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

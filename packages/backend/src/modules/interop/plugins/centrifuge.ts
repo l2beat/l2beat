@@ -71,7 +71,7 @@ export const HandleProof = createInteropEventType<{
 }>('centrifuge.HandleProof')
 
 export class CentriFugePlugin implements InteropPlugin {
-  name = 'centrifuge'
+  readonly name = 'centrifuge'
 
   capture(input: LogToCapture) {
     const parsedSendPayload = parseSendPayload(input.log, null)

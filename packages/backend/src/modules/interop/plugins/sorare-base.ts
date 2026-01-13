@@ -56,7 +56,7 @@ const parseFactRegistered = createEventParser(
 )
 
 export class SorareBasePlugin implements InteropPlugin {
-  name = 'sorare-base'
+  readonly name = 'sorare-base'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

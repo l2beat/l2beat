@@ -72,7 +72,7 @@ const SrcEscrowCreated = createInteropEventType<{
 }>('oneinch-fusion-plus.SrcEscrowCreated')
 
 export class OneinchFusionPlusPlugin implements InteropPlugin {
-  name = 'oneinch-fusion-plus'
+  readonly name = 'oneinch-fusion-plus'
 
   capture(input: LogToCapture) {
     const network = ONEINCH_FUSIONPLUS_NETWORKS.find(

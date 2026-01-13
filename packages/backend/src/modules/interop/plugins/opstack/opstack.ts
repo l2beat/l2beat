@@ -131,7 +131,7 @@ export const OPSTACK_NETWORKS = defineNetworks('opstack', [
 ])
 
 export class OpStackPlugin implements InteropPlugin {
-  name = 'opstack'
+  readonly name = 'opstack'
 
   capture(input: LogToCapture) {
     // get L1 side events

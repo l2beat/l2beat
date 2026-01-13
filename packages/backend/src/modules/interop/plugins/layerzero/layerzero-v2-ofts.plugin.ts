@@ -54,7 +54,7 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
 }>('layerzero-v2.PacketOFTDelivered')
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
-  name = 'layerzero-v2-ofts'
+  readonly name = 'layerzero-v2-ofts'
 
   constructor(private configs: InteropConfigStore) {}
 

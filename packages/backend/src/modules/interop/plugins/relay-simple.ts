@@ -85,7 +85,7 @@ const RelayApprovalProxy = EthereumAddress(
 )
 
 export class RelaySimplePlugIn implements InteropPlugin {
-  name = 'relay-simple'
+  readonly name = 'relay-simple'
 
   captureTx(input: TxToCapture) {
     if (input.tx.to === RelaySolver) {

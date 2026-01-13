@@ -41,7 +41,7 @@ const parseMessageForwarded = createEventParser(
 )
 
 export class ZklinkNovaPlugin implements InteropPlugin {
-  name = 'zklink-nova'
+  readonly name = 'zklink-nova'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

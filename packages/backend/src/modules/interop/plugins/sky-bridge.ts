@@ -85,7 +85,7 @@ const parseMessagePassed = createEventParser(
 )
 
 export class SkyBridgePlugin implements InteropPlugin {
-  name = 'sky-bridge'
+  readonly name = 'sky-bridge'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
