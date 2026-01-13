@@ -1,5 +1,15 @@
 import { providers } from 'ethers'
 
+interface RpcBlock {
+  number: string
+  transactions: Array<{
+    type: string
+    from: string
+    to?: string
+    blobVersionedHashes?: string[]
+  }>
+}
+
 export interface BlobSender {
   address: string
   txCount: number
@@ -23,7 +33,7 @@ export async function getBlobSenders(
 
   for (let start = fromBlock; start <= latestBlock; start += batchSize) {
     const end = Math.min(start + batchSize - 1, latestBlock)
-    const blockPromises: Promise<any>[] = []
+    const blockPromises: Promise<RpcBlock | null>[] = []
 
     for (let blockNum = start; blockNum <= end; blockNum++) {
       blockPromises.push(
@@ -45,7 +55,7 @@ export async function getBlobSenders(
 
         const from = tx.from.toLowerCase()
         const to = tx.to?.toLowerCase() ?? ''
-        const blockNum = parseInt(block.number, 16)
+        const blockNum = Number.parseInt(block.number, 16)
         const blobCount = tx.blobVersionedHashes?.length ?? 0
 
         const existing = senders.get(from)

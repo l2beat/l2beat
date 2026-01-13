@@ -65,7 +65,9 @@ export const BlobSenders = command({
         const width = 30
         const filled = Math.round(pct * width)
         const bar = '█'.repeat(filled) + '░'.repeat(width - filled)
-        process.stdout.write(`\r[${bar}] ${(pct * 100).toFixed(0).padStart(3)}% | Senders: ${count}`)
+        process.stdout.write(
+          `\r[${bar}] ${(pct * 100).toFixed(0).padStart(3)}% | Senders: ${count}`,
+        )
       },
     )
 
@@ -83,9 +85,15 @@ export const BlobSenders = command({
       )[0]?.[0]
 
       const senderInfo = sequencerMapping.get(s.address)
-      const isKnownInbox = mainReceiver ? getProjectByReceiver(mainReceiver) : undefined
-      const receiverName = mainReceiver ? getReceiverName(mainReceiver) : undefined
-      const contractInfo = mainReceiver ? getContractInfo(mainReceiver) : undefined
+      const isKnownInbox = mainReceiver
+        ? getProjectByReceiver(mainReceiver)
+        : undefined
+      const receiverName = mainReceiver
+        ? getReceiverName(mainReceiver)
+        : undefined
+      const contractInfo = mainReceiver
+        ? getContractInfo(mainReceiver)
+        : undefined
 
       // Determine receiver display: inbox > contract name > Multicall3 > address
       const getReceiverDisplay = (showInbox: boolean) => {

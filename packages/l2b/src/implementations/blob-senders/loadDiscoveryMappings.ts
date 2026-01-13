@@ -43,6 +43,9 @@ const SEQUENCER_VALUE_FIELDS = [
   'Sequencer',
   'operator',
   'Operator',
+  // Kailua/dispute game fields
+  'proposer',
+  'vanguard',
 ]
 
 // Array value fields that contain multiple sequencer addresses
@@ -63,8 +66,13 @@ const INBOX_FIELDS = [
   'BATCH_INBOX',
 ]
 
-// Known non-L2 contracts that receive blobs
-export const NON_L2_RECEIVERS: Record<string, string> = {
+// Known non-L2 contracts that receive blobs (auto-dismissed as not L2s)
+// Note: Keep this minimal - only add contracts that are DEFINITIVELY not L2-related
+export const NON_L2_RECEIVERS: Record<string, string> = {}
+
+// Well-known contracts for display labeling only (NOT auto-dismissed)
+// These still require investigation as some L2s may use them
+export const KNOWN_UTILITY_CONTRACTS: Record<string, string> = {
   '0xca11bde05977b3631167028862be2a173976ca11': 'Multicall3',
 }
 
@@ -291,8 +299,12 @@ export function getProjectByReceiver(receiver: string): string | undefined {
 
 export function getReceiverName(receiver: string): string | undefined {
   const lower = receiver.toLowerCase()
-  const project = cachedMappings?.receivers?.[lower] ?? STATIC_RECEIVER_MAPPING[lower]
+  const project =
+    cachedMappings?.receivers?.[lower] ?? STATIC_RECEIVER_MAPPING[lower]
   if (project) return project
+  // Check utility contracts for display labeling (but these are NOT auto-dismissed)
+  const utilityName = KNOWN_UTILITY_CONTRACTS[lower]
+  if (utilityName) return utilityName
   return NON_L2_RECEIVERS[lower]
 }
 
@@ -304,10 +316,15 @@ export function getContractInfo(address: string): ContractInfo | undefined {
   return cachedMappings?.contracts.get(address.toLowerCase())
 }
 
-export function getMappingStats(): { sequencers: number; receivers: number; contracts: number } {
+export function getMappingStats(): {
+  sequencers: number
+  receivers: number
+  contracts: number
+} {
   return {
     sequencers: cachedMappings?.sequencers.size ?? 0,
-    receivers: Object.keys(cachedMappings?.receivers ?? STATIC_RECEIVER_MAPPING).length,
+    receivers: Object.keys(cachedMappings?.receivers ?? STATIC_RECEIVER_MAPPING)
+      .length,
     contracts: cachedMappings?.contracts.size ?? 0,
   }
 }
