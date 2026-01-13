@@ -35,6 +35,9 @@ const SEQUENCER_PERMISSIONS = [
   'propose',
 ]
 
+// Roles that indicate validator/sequencer activity (for 'interact' permissions)
+const VALIDATOR_ROLES = ['.validatorVTL', '.validators']
+
 // Value fields that contain sequencer/batcher addresses
 const SEQUENCER_VALUE_FIELDS = [
   'batcherHash',
@@ -139,8 +142,11 @@ export function loadDiscoveryMappings(projectsPath: string): DiscoveryMappings {
         // Extract sequencers from permissions (eth: addresses only)
         if (entry.address?.startsWith('eth:')) {
           const sequencerPerms = entry.receivedPermissions?.filter(
-            (p: { permission: string }) =>
-              SEQUENCER_PERMISSIONS.includes(p.permission),
+            (p: { permission: string; role?: string }) =>
+              SEQUENCER_PERMISSIONS.includes(p.permission) ||
+              (p.permission === 'interact' &&
+                p.role &&
+                VALIDATOR_ROLES.includes(p.role)),
           )
           if (sequencerPerms && sequencerPerms.length > 0) {
             const address = normalizeAddress(entry.address)
