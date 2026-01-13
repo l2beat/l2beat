@@ -1,4 +1,4 @@
-name: Smoke Test (MQ)
+name: Smoke Test
 
 on:
   pull_request:
