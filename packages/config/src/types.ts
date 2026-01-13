@@ -1,5 +1,4 @@
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
-import type { InteropConfig } from '@l2beat/shared-pure'
 import {
   type ChainId,
   type ChainSpecificAddress,
@@ -1184,6 +1183,81 @@ export interface ProjectDiscoveryInfo {
   hasDiscoUi: boolean
 }
 
+export type InteropPluginName =
+  | 'across'
+  | 'across-settlement'
+  | 'allbridge'
+  | 'aori'
+  | 'axelar'
+  | 'axelar-its'
+  | 'beefy-bridge'
+  | 'ccip'
+  | 'cctp-v1'
+  | 'cctp-v2'
+  | 'celer'
+  | 'centrifuge'
+  | 'circle-gateway'
+  | 'debridge'
+  | 'debridge-dln'
+  | 'gaszip'
+  | 'hyperlane'
+  | 'hyperlane-eco'
+  | 'hyperlane-hwr'
+  | 'hyperlane-merkly-tokenbridge'
+  | 'hyperlane-simple-apps'
+  | 'layerzero-v1'
+  | 'layerzero-v2'
+  | 'layerzero-v2-ofts'
+  | 'lido-wsteth'
+  | 'maker-bridge'
+  | 'mayan-forwarder'
+  | 'mayan-mctp'
+  | 'mayan-mctp-fast'
+  | 'mayan-swift'
+  | 'oneinch-fusion-plus'
+  | 'opstack'
+  | 'opstack-standardbridge'
+  | 'orbitstack'
+  | 'orbitstack-customgateway'
+  | 'orbitstack-standardgateway'
+  | 'orbitstack-wethgateway'
+  | 'relay'
+  | 'relay-simple'
+  | 'sky-bridge'
+  | 'sorare-base'
+  | 'squid-coral'
+  | 'stargate'
+  | 'superform'
+  | 'world-id'
+  | 'wormhole'
+  | 'wormhole-ntt'
+  | 'wormhole-relayer'
+  | 'wormhole-token-bridge'
+  | 'zklink-nova'
+
+export interface InteropConfig {
+  name?: string
+  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  plugins: InteropPlugin[]
+}
+
+type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
+
+type ByChainPlugin = {
+  filterBy: 'chain'
+  chain: string
+  plugin: InteropPluginName
+}
+
+type ByTokenIdPlugin = {
+  filterBy: 'abstractTokenId'
+  abstractTokenId: string
+  plugin: InteropPluginName
+}
+
+type PlainPlugin = {
+  plugin: InteropPluginName
+}
 // #endregion
 
 // #region TVS
