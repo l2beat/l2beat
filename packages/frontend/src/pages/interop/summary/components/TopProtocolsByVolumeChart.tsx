@@ -22,11 +22,11 @@ export function TopProtocolsByVolumeChart({
   const { width } = useWindowSize()
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
-      acc[protocol.protocolId] = {
+      acc[protocol.protocolName] = {
         label:
-          protocol.protocolId === 'others'
+          protocol.protocolName === 'Others'
             ? `Others (${protocol.othersCount ?? 0})`
-            : protocol.protocolId,
+            : protocol.protocolName,
         color: protocol.color,
         indicatorType: { shape: 'square' },
       }
@@ -36,7 +36,7 @@ export function TopProtocolsByVolumeChart({
 
   const chartData = useMemo(() => {
     return protocols.map((protocol) => ({
-      name: protocol.protocolId,
+      name: protocol.protocolName,
       value: protocol.volume,
       fill: protocol.color,
     }))

@@ -1,5 +1,8 @@
+import type { Project } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+
 export type InteropProtocolData = {
-  protocolId: string
+  protocolName: string
   volume: number
   share: number
 }
@@ -14,6 +17,7 @@ export function getTopProtocols(
   }[],
   from: string[],
   to: string[],
+  interopProjects: Project<'interopConfig'>[],
 ): InteropProtocolData[] {
   const map = new Map<string, number>()
 
@@ -35,6 +39,13 @@ export function getTopProtocols(
   return Array.from(map.entries())
     .toSorted((a, b) => b[1] - a[1])
     .map(([key, volume]): InteropProtocolData => {
-      return { protocolId: key, volume, share: (volume / totalVolume) * 100 }
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+
+      return {
+        protocolName: project?.interopConfig.name ?? project.name,
+        volume,
+        share: (volume / totalVolume) * 100,
+      }
     })
 }

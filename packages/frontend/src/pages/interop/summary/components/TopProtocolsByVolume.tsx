@@ -1,18 +1,16 @@
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 
-export type DisplayProtocol = {
-  protocolId: string
-  volume: number
-  share: number
-  othersCount?: number
+export type DisplayProtocol = InteropProtocolData & {
   color: string
+  othersCount?: number
 }
 
 export function TopProtocolsByVolume() {
@@ -40,7 +38,7 @@ export function TopProtocolsByVolume() {
     return [
       ...top5,
       {
-        protocolId: 'others',
+        protocolName: 'Others',
         volume: othersVolume,
         share: othersShare,
         othersCount: others.length,
@@ -70,15 +68,15 @@ export function TopProtocolsByVolume() {
         <table className="mt-2 border-separate border-spacing-y-1">
           <tbody>
             {withColors.map((protocol) => (
-              <tr key={protocol.protocolId}>
+              <tr key={protocol.protocolName}>
                 <td className="flex items-center gap-1 font-medium text-2xs">
                   <div
                     className="size-3 rounded-xs"
                     style={{ backgroundColor: protocol.color }}
                   />
-                  {protocol.protocolId === 'others'
+                  {protocol.protocolName === 'Others'
                     ? `Others (${protocol.othersCount ?? 0})`
-                    : protocol.protocolId}
+                    : protocol.protocolName}
                 </td>
                 <td className="px-2 font-medium text-2xs text-secondary">
                   {protocol.share.toFixed(2)}%
