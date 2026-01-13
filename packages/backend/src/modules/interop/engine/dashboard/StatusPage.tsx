@@ -5,7 +5,10 @@ import { DataTablePage } from './DataTablePage'
 import { PluginsResyncControls } from './PluginsResyncControls'
 import { PluginsStatusTable } from './PluginsStatusTable'
 
-function StatusPageLayout(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
+function StatusPageLayout(props: {
+  pluginSyncStatuses: PluginSyncStatus[]
+  showResyncControls: boolean
+}) {
   const tableId = 'pluginsStatusTable'
   const statusTable = (
     <PluginsStatusTable
@@ -33,9 +36,11 @@ function StatusPageLayout(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
       ]}
       footer={
         <>
-          <PluginsResyncControls
-            pluginSyncStatuses={props.pluginSyncStatuses}
-          />
+          {props.showResyncControls ? (
+            <PluginsResyncControls
+              pluginSyncStatuses={props.pluginSyncStatuses}
+            />
+          ) : null}
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -53,6 +58,7 @@ function StatusPageLayout(props: { pluginSyncStatuses: PluginSyncStatus[] }) {
 
 export function renderStatusPage(props: {
   pluginSyncStatuses: PluginSyncStatus[]
+  showResyncControls: boolean
 }) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<StatusPageLayout {...props} />)

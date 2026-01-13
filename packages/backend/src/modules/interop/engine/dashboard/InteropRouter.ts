@@ -66,8 +66,9 @@ export function createInteropRouter(
 
   router.get('/interop/status', async (ctx) => {
     const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
+    const showResyncControls = ctx.query.showResync !== undefined
 
-    ctx.body = renderStatusPage({ pluginSyncStatuses })
+    ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
   })
 
   router.get('/interop/memory', (ctx) => {
