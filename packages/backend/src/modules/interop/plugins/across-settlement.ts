@@ -38,16 +38,16 @@ const ORBIT_BRIDGE_TO_NETWORK = new Map(
 )
 
 // L1 event: MessageRelayed from HubPool + SentMessage combined (OpStack)
-const AcrossSettlementSentMessage = createInteropEventType<{
+const AcrossSettlementRelayedMessageOP = createInteropEventType<{
   chain: string
   msgHash: string
-}>('across-settlement.SentMessage')
+}>('across-settlement.RelayedMessageOP')
 
 // L1 event: MessageRelayed from HubPool + MessageDelivered combined (OrbitStack)
-const AcrossSettlementMessageDelivered = createInteropEventType<{
+const AcrossSettlementRelayedMessageOrbit = createInteropEventType<{
   chain: string
   messageNum: string
-}>('across-settlement.MessageDelivered')
+}>('across-settlement.RelayedMessageOrbit')
 
 // Event parser for MessageRelayed from HubPool
 // event MessageRelayed(address target, bytes message)
@@ -64,30 +64,35 @@ export class AcrossSettlementPlugin implements InteropPlugin {
       const messageRelayed = parseMessageRelayed(input.log, [HUB_POOL])
       if (messageRelayed) {
         const targetAddress = messageRelayed.target.toLowerCase()
+        const currentLogIndex = input.log.logIndex ?? -1
 
-        // Try OpStack: Find SentMessage from any known L1CrossDomainMessenger with matching target
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(log.address)
-          if (!network) continue
+        // The bridge event (SentMessage or MessageDelivered) is always at logIndex - 2
+        // Pattern: BridgeEvent (N-2) -> Extension (N-1) -> MessageRelayed (N)
+        const bridgeLog = input.txLogs.find(
+          (log) => log.logIndex === currentLogIndex - 2,
+        )
+        if (!bridgeLog) return
 
-          const sentMessage = parseSentMessage(log, [
-            network.l1CrossDomainMessenger,
+        // Try OpStack: Check if bridgeLog is a SentMessage from a known L1CrossDomainMessenger
+        const opNetwork = L1_CDM_TO_NETWORK.get(bridgeLog.address)
+        if (opNetwork) {
+          const sentMessage = parseSentMessage(bridgeLog, [
+            opNetwork.l1CrossDomainMessenger,
           ])
           if (
             !sentMessage ||
             sentMessage.target.toLowerCase() !== targetAddress
           )
-            continue
+            return
 
-          // Find SentMessageExtension1
-          const nextLog = input.txLogs.find(
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === log.logIndex! + 1,
+          // Find SentMessageExtension1 at logIndex - 1
+          const extensionLog = input.txLogs.find(
+            (log) => log.logIndex === currentLogIndex - 1,
           )
           const extension =
-            nextLog &&
-            parseSentMessageExtension1(nextLog, [
-              network.l1CrossDomainMessenger,
+            extensionLog &&
+            parseSentMessageExtension1(extensionLog, [
+              opNetwork.l1CrossDomainMessenger,
             ])
 
           const msgHash = hashCrossDomainMessageV1(
@@ -100,24 +105,24 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           )
 
           return [
-            AcrossSettlementSentMessage.create(input, {
-              chain: network.chain,
+            AcrossSettlementRelayedMessageOP.create(input, {
+              chain: opNetwork.chain,
               msgHash,
             }),
           ]
         }
 
-        // Try OrbitStack: Find MessageDelivered from any known Arbitrum bridge
-        for (const log of input.txLogs) {
-          const network = ORBIT_BRIDGE_TO_NETWORK.get(log.address)
-          if (!network) continue
-
-          const messageDelivered = parseMessageDelivered(log, [network.bridge])
-          if (!messageDelivered) continue
+        // Try OrbitStack: Check if bridgeLog is a MessageDelivered from a known Arbitrum bridge
+        const orbitNetwork = ORBIT_BRIDGE_TO_NETWORK.get(bridgeLog.address)
+        if (orbitNetwork) {
+          const messageDelivered = parseMessageDelivered(bridgeLog, [
+            orbitNetwork.bridge,
+          ])
+          if (!messageDelivered) return
 
           return [
-            AcrossSettlementMessageDelivered.create(input, {
-              chain: network.chain,
+            AcrossSettlementRelayedMessageOrbit.create(input, {
+              chain: orbitNetwork.chain,
               messageNum: messageDelivered.messageIndex.toString(),
             }),
           ]
@@ -133,8 +138,8 @@ export class AcrossSettlementPlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // OpStack matching
     if (RelayedMessage.checkType(event)) {
-      // Check if there's a corresponding AcrossSettlementSentMessage
-      const acrossEvent = db.find(AcrossSettlementSentMessage, {
+      // Check if there's a corresponding AcrossSettlementRelayedMessageOP
+      const acrossEvent = db.find(AcrossSettlementRelayedMessageOP, {
         msgHash: event.args.msgHash,
         chain: event.args.chain,
       })
@@ -152,6 +157,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           app: 'across-settlement',
           srcEvent: sentMessage,
           dstEvent: event,
+          extraEvents: [acrossEvent],
         }),
       ]
 
@@ -165,6 +171,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [acrossEvent],
           }),
         )
       }
@@ -174,8 +181,8 @@ export class AcrossSettlementPlugin implements InteropPlugin {
 
     // OrbitStack matching
     if (RedeemScheduled.checkType(event)) {
-      // Check if there's a corresponding AcrossSettlementMessageDelivered
-      const acrossEvent = db.find(AcrossSettlementMessageDelivered, {
+      // Check if there's a corresponding AcrossSettlementRelayedMessageOrbit
+      const acrossEvent = db.find(AcrossSettlementRelayedMessageOrbit, {
         messageNum: event.args.messageNum,
         chain: event.args.chain,
       })
@@ -193,6 +200,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
           app: 'across-settlement',
           srcEvent: messageDelivered,
           dstEvent: event,
+          extraEvents: [acrossEvent],
         }),
       ]
 
@@ -206,6 +214,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
             dstEvent: event,
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
+            extraEvents: [acrossEvent],
           }),
         )
       }

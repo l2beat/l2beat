@@ -29,6 +29,7 @@ const DepositInitiatedMessageDelivered = createInteropEventType<{
   messageNum: string
   l1Token: Address32
   amount: bigint
+  gatewayKey: string
 }>('orbitstack-customgateway.MessageDeliveredDepositInitiated')
 
 const parseDepositInitiated = createEventParser(
@@ -40,6 +41,7 @@ const DepositFinalized = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  gatewayKey: string
 }>('orbitstack-customgateway.DepositFinalized')
 
 const parseDepositFinalized = createEventParser(
@@ -54,6 +56,7 @@ const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
   amount: bigint
+  gatewayKey: string
 }>('orbitstack-customgateway.L2ToL1TxWithdrawalInitiated', {
   ttl: 14 * UnixTime.DAY,
 })
@@ -67,6 +70,7 @@ const WithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
   position: number
   l1Token: Address32
   amount: bigint
+  gatewayKey: string
 }>('orbitstack-customgateway.WithdrawalFinalized')
 
 const parseWithdrawalFinalized = createEventParser(
@@ -117,6 +121,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
                 messageNum: messageDelivered.messageIndex.toString(),
                 l1Token: Address32.from(depositInitiated._l1Token),
                 amount: depositInitiated._amount,
+                gatewayKey: gateway.key,
               }),
             ]
           }
@@ -143,6 +148,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
                 position: Number(outBoxTx.transactionIndex),
                 l1Token: Address32.from(withdrawalFinalized.l1Token),
                 amount: withdrawalFinalized._amount,
+                gatewayKey: gateway.key,
               }),
             ]
           }
@@ -174,6 +180,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
             l1Token: Address32.from(depositFinalized.l1Token),
             l2Token,
             amount: depositFinalized.amount,
+            gatewayKey: gateway.key,
           }),
         ]
       }
@@ -208,6 +215,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
             l1Token: Address32.from(withdrawalInitiated.l1Token),
             l2Token,
             amount: withdrawalInitiated._amount,
+            gatewayKey: gateway.key,
           }),
         ]
       }
@@ -236,9 +244,10 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       })
       if (!outBoxTransactionExecuted) return
 
+      const appName = `orbitstack-customgateway-${event.args.gatewayKey}`
       return [
         Result.Message('orbitstack.L2ToL1Message', {
-          app: 'orbitstack-customgateway',
+          app: appName,
           srcEvent: l2ToL1Tx,
           dstEvent: outBoxTransactionExecuted,
         }),
@@ -272,9 +281,10 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       })
       if (!depositInitiated) return
 
+      const appName = `orbitstack-customgateway-${event.args.gatewayKey}`
       return [
         Result.Message('orbitstack.L1ToL2Message', {
-          app: 'orbitstack-customgateway',
+          app: appName,
           srcEvent: messageDelivered,
           dstEvent: redeemScheduled,
         }),

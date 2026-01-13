@@ -58,7 +58,7 @@ export function createInteropModule({
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
-        chain.name,
+        chain.id,
         plugins.eventPlugins,
         eventStore,
         logger,
@@ -75,7 +75,7 @@ export function createInteropModule({
     eventStore,
     db,
     plugins.eventPlugins,
-    config.interop.capture.chains.map((c) => c.name),
+    config.interop.capture.chains.map((c) => c.id),
     logger,
     transferStream,
   )
@@ -122,7 +122,7 @@ export function createInteropModule({
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
-    config.interop.capture.chains.map((c) => c.name),
+    config.interop.capture.chains.map((c) => c.id),
     relayApiClient,
     db,
     eventStore,

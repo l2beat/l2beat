@@ -136,12 +136,12 @@ export const boojum: BaseProject = {
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
-            ),
-            chain: 'zksync',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0x3CFB3a80Af42cBE4d82C14301690A62D53e870a5',
+          //   ),
+          //   chain: 'zksync',
+          // },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
@@ -269,12 +269,12 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
-            ),
-            chain: 'zksync',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0x92A9Fd0E84354213D9c3d33128eDd6Ea55ee0717',
+          //   ),
+          //   chain: 'zksync',
+          // },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
@@ -424,12 +424,12 @@ The output of the last command will contain the required \`snark_wrapper\` value
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
-            ),
-            chain: 'gateway',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
+          //   ),
+          //   chain: 'gateway',
+          // },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
@@ -533,12 +533,12 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
             ),
             chain: 'ethereum',
           },
-          {
-            address: EthereumAddress(
-              '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
-            ),
-            chain: 'gateway',
-          },
+          // {
+          //   address: EthereumAddress(
+          //     '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
+          //   ),
+          //   chain: 'gateway',
+          // },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

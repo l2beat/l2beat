@@ -435,6 +435,33 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example <name> --simpl
 NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example all
 ```
 
+## Adding OrbitStack Custom Gateways
+
+For Arbitrum custom token gateways, add to `customGateways` in `orbitstack/orbitstack.ts`:
+
+```typescript
+{
+  key: 'mytoken',  // App name: orbitstack-customgateway-mytoken
+  l1Gateway: EthereumAddress('0x...'),  // Emits DepositInitiated on L1
+  l2Gateway: EthereumAddress('0x...'),  // Emits WithdrawalInitiated on L2
+},
+```
+
+**Finding gateway addresses:** L1 gateway emits `DepositInitiated`, L2 gateway emits `WithdrawalInitiated`.
+
+**Example transactions needed:**
+- Deposit: L1 tx + L2 RedeemScheduled tx + L2 DepositFinalized tx (get via `retryTxHash` in RedeemScheduled event)
+- Withdrawal: L2 tx + L1 finalization tx
+
+**Find L2 tx from L1:** `SELECT "dstTxHash" FROM "InteropMessage" WHERE "srcTxHash" LIKE '%<L1_TX>%'`
+
+Add txs to `examples.jsonc` under `orbitstack-customgateway` with expected events/messages/transfers, then test:
+```bash
+NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example orbitstack-customgateway --simple
+```
+
+**Supported gateways:** DAI, LPT, GRT, wstETH, Custom (see `orbitstack.ts` for addresses)
+
 ## Reference Plugins
 
 - **Simple**: `sorare-base.ts` - Single app on OpStack with unique L2 event
@@ -442,3 +469,4 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example all
 - **Bidirectional**: `maker-bridge.ts`, `sky-bridge.ts`, `lido-wsteth.ts` - L1→L2 deposits and L2→L1 withdrawals with transfers
 - **Standard**: `opstack-standardbridge.ts` - Token bridge with multiple event types
 - **Complex**: `layerzero/layerzero-v2.plugin.ts` - Config-based multi-chain
+- **Config-based**: `orbitstack/orbitstack-customgateway.ts` - Add new token gateways via configuration

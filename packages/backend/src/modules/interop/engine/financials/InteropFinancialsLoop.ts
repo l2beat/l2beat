@@ -22,7 +22,7 @@ export type TokenInfos = Map<
 
 export class InteropFinancialsLoop extends TimeLoop {
   constructor(
-    private chains: { name: string; type: 'evm' }[],
+    private chains: { id: string; type: 'evm' }[],
     private db: Database,
     private tokenDbClient: TokenDbClient,
     protected logger: Logger,
@@ -248,7 +248,7 @@ export async function getTokenInfos(
 }
 
 export function toDeployedId(
-  chains: { name: string; type: 'evm' }[],
+  chains: readonly { id: string; type: 'evm' }[],
   chain: string | undefined,
   address: string | undefined,
 ) {
@@ -264,7 +264,7 @@ export function toDeployedId(
     return
   }
 
-  const chainConfig = chains.find((c) => c.name === chain)
+  const chainConfig = chains.find((c) => c.id === chain)
   if (!chainConfig) return
 
   switch (chainConfig.type) {

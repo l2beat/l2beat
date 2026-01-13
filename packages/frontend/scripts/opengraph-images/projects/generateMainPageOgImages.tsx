@@ -43,6 +43,10 @@ const mainPages: MainPage[] = [
     title: 'Archived',
   },
   {
+    type: 'interop',
+    title: 'Summary',
+  },
+  {
     type: 'bridges',
     title: 'Summary',
   },
