@@ -51,7 +51,7 @@ export const socket: Bridge = {
     },
   },
   technology: {
-    destination: ['Ethereum', 'Reya', 'Lyra', 'Kinto', 'Polynomial', 'Blast'],
+    destination: ['Ethereum', 'Reya', 'Lyra', 'Kinto', 'Polynomial', 'Blast', 'Zora'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
