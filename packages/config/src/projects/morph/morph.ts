@@ -294,12 +294,22 @@ export const morph: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: [
-      ZK_PROGRAM_HASHES(
-        discovery.getContractValue('ZkEvmVerifierV1', 'programVkey'),
-      ),
-    ],
+    zkProgramHashes: getMorphVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getMorphVKeys(): string[] {
+  const vkeys: string[] = []
+  const latestVerifier = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+
+  for (const { verifier } of latestVerifier) {
+    const vkey = discovery.getContractValue<string>(verifier, 'programVkey')
+    vkeys.push(vkey)
+  }
+
+  return vkeys
 }

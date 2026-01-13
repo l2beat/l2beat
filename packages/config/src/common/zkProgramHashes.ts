@@ -881,4 +881,13 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+  '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
+    title: 'Morph Guest program (v0.4.9 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.4.9/prover/bin/client',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
 }
