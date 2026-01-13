@@ -111,7 +111,7 @@ export const Claimed = createInteropEventType<{
 }>('debridge.Claimed')
 
 export class DeBridgePlugin implements InteropPlugin {
-  name = 'debridge'
+  readonly name = 'debridge'
 
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)

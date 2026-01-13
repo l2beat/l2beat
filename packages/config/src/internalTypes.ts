@@ -9,6 +9,7 @@ import type {
   Badge,
   BridgeCategory,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectBridgeRisks,
@@ -103,6 +104,8 @@ export interface ScalingProject {
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
+  /** Interop configuration */
+  interopConfig?: InteropConfig
 }
 
 export interface ProjectScalingConfig {
@@ -249,6 +252,7 @@ export interface Bridge {
   archivedAt?: UnixTime
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
+  interopConfig?: InteropConfig
   display: BridgeDisplay
   colors?: ProjectCustomColors
   config: BridgeConfig

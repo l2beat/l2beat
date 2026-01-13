@@ -69,7 +69,7 @@ export const CelerRelay = createInteropEventType<{
 }>('celer.Relay')
 
 export class CelerPlugIn implements InteropPlugin {
-  name = 'celer'
+  readonly name = 'celer'
 
   capture(input: LogToCapture) {
     const parsed = parseMessage(input.log, null)

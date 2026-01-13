@@ -20,7 +20,7 @@ export const LogMessagePublished = createInteropEventType<{
 }>('wormhole.LogMessagePublished')
 
 export class WormholePlugin implements InteropPlugin {
-  name = 'wormhole'
+  readonly name = 'wormhole'
 
   constructor(private configs: InteropConfigStore) {}
 

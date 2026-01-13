@@ -42,7 +42,7 @@ export const OrderFulfilled = createInteropEventType<{
 }>('mayan-swift.OrderFulfilled')
 
 export class MayanSwiftPlugin implements InteropPlugin {
-  name = 'mayan-swift'
+  readonly name = 'mayan-swift'
 
   constructor(private configs: InteropConfigStore) {}
 

@@ -159,8 +159,10 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
+    interopConfig: p.interopConfig,
     // tags
     isScaling: true,
+    isInteropProtocol: p.interopConfig ? true : undefined,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
@@ -292,9 +294,11 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     tvsConfig,
     chainConfig: p.chainConfig,
+    interopConfig: p.interopConfig,
     milestones: p.milestones,
     // tags
     isBridge: true,
+    isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     escrows: p.config.escrows,

@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { InteropPluginName } from '@l2beat/config'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
@@ -10,7 +11,7 @@ import type { InteropEventSyncer } from './InteropEventSyncer'
 import { LogQuery } from './InteropEventSyncer'
 
 const CHAIN = 'ethereum'
-const PLUGIN_NAME = 'mock-plugin'
+const PLUGIN_NAME = 'mock-plugin' as InteropPluginName
 
 describe(CatchingUpState.name, () => {
   describe(CatchingUpState.prototype.catchUp.name, () => {

@@ -119,7 +119,7 @@ const ETHBridgeFinalizedWithdrawalFinalized = createInteropEventType<{
 }>('opstack.WithdrawalFinalizedETHBridgeFinalized')
 
 export class OpStackStandardBridgePlugin implements InteropPlugin {
-  name = 'opstack-standardbridge'
+  readonly name = 'opstack-standardbridge'
 
   capture(input: LogToCapture) {
     if (input.chain !== 'ethereum') {

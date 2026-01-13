@@ -115,7 +115,7 @@ const parseMessagePassed = createEventParser(
 )
 
 export class LidoWstethPlugin implements InteropPlugin {
-  name = 'lido-wsteth'
+  readonly name = 'lido-wsteth'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

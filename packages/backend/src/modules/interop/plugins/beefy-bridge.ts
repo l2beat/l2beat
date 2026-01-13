@@ -67,7 +67,7 @@ const parseBridgedIn = createEventParser(
 )
 
 export class BeefyBridgePlugin implements InteropPlugin {
-  name = 'beefy-bridge'
+  readonly name = 'beefy-bridge'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

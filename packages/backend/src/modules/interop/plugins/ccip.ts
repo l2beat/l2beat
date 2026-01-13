@@ -124,7 +124,7 @@ const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
 ])
 
 export class CCIPPlugIn implements InteropPlugin {
-  name = 'ccip'
+  readonly name = 'ccip'
 
   capture(input: LogToCapture) {
     const network = CCIP_NETWORKS.find((x) => x.chain === input.chain)

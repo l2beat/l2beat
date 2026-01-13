@@ -98,7 +98,7 @@ export const CCTPv2MessageReceived = createInteropEventType<{
 }>('cctp-v2.MessageReceived')
 
 export class CCTPV2Plugin implements InteropPlugin {
-  name = 'cctp-v2'
+  readonly name = 'cctp-v2'
 
   constructor(private configs: InteropConfigStore) {}
 

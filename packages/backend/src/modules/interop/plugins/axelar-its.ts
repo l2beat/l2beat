@@ -60,7 +60,7 @@ export const InterchainTransferReceived = createInteropEventType<{
 }>('axelar-its.InterchainTransferReceived')
 
 export class AxelarITSPlugin implements InteropPlugin {
-  name = 'axelar-its'
+  readonly name = 'axelar-its'
 
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)

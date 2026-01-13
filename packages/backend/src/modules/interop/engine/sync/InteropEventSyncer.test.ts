@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { InteropPluginName } from '@l2beat/config'
 import type {
   BlockRangeWithTimestamps,
   InteropEventRecord,
@@ -147,7 +148,9 @@ describe(InteropEventSyncer.name, () => {
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(capture).toHaveBeenCalled()
-      expect(result).toEqual([{ ...event, plugin: 'base' }])
+      expect(result).toEqual([
+        { ...event, plugin: 'base' as InteropPluginName },
+      ])
     })
 
     it('captures using first plugin in cluster that produces', () => {
@@ -167,7 +170,9 @@ describe(InteropEventSyncer.name, () => {
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
-      expect(result).toEqual([{ ...event, plugin: 'base' }])
+      expect(result).toEqual([
+        { ...event, plugin: 'base' as InteropPluginName },
+      ])
     })
 
     it('returns undefined when no plugin produces', () => {
@@ -318,7 +323,7 @@ describe(InteropEventSyncer.name, () => {
       const deleteEvents = mockFn().resolvesTo(undefined)
       const transaction = mockFn().executes(async (cb) => await cb())
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base' }),
+        plugin: makePlugin({ name: 'base' as InteropPluginName }),
         clusterPlugins: [makePlugin({ name: 'a' }), makePlugin({ name: 'b' })],
         db: mockObject<InteropEventSyncer['db']>({
           transaction,
@@ -348,7 +353,7 @@ describe(InteropEventSyncer.name, () => {
       const deleteEvents = mockFn().resolvesTo(undefined)
       const transaction = mockFn().executes(async (cb) => await cb())
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base' }),
+        plugin: makePlugin({ name: 'base' as InteropPluginName }),
         clusterPlugins: [],
         db: mockObject<InteropEventSyncer['db']>({
           transaction,
@@ -453,7 +458,7 @@ class TestSyncer extends InteropEventSyncer {
 }
 
 function createSyncer(overrides: Partial<TestSyncer> = {}) {
-  const plugin = makePlugin({ name: 'base' })
+  const plugin = makePlugin({ name: 'base' as InteropPluginName })
   const syncer = new TestSyncer(
     'ethereum',
     plugin,
@@ -477,7 +482,7 @@ function makePlugin(
   } = {},
 ): InteropPluginResyncable {
   return {
-    name: params.name ?? 'plugin',
+    name: (params.name as InteropPluginName) ?? ('plugin' as InteropPluginName),
     capture: params.capture ?? mockFn().returns(undefined),
     getDataRequests: () => params.dataRequests ?? [],
   }

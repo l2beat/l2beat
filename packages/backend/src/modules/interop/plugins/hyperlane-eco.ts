@@ -70,7 +70,7 @@ const IntentProvenProcess = createInteropEventType<{
 }>('hyperlane-eco.IntentProvenProcess')
 
 export class HyperlaneEcoPlugin implements InteropPlugin {
-  name = 'hyperlane-eco'
+  readonly name = 'hyperlane-eco'
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)

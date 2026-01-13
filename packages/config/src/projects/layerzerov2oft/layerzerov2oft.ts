@@ -187,6 +187,17 @@ To receive the original locked token back, a user would have to return to the ma
       ],
     },
   },
+  interopConfig: {
+    bridgeType: 'omnichain',
+    plugins: [
+      {
+        plugin: 'layerzero-v2',
+      },
+      {
+        plugin: 'layerzero-v2-ofts',
+      },
+    ],
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

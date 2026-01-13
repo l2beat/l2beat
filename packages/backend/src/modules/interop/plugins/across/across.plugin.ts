@@ -46,7 +46,7 @@ export const AcrossFilledRelay = createInteropEventType<{
 }>('across.FilledRelay', { direction: 'incoming' })
 
 export class AcrossPlugin implements InteropPluginResyncable {
-  name = 'across'
+  readonly name = 'across'
 
   constructor(private configs: InteropConfigStore) {}
 
