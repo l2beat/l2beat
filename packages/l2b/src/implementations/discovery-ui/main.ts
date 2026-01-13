@@ -76,10 +76,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const diffoveryController = new DiffoveryController()
-  const overspecificationService = new OverspecificationService(
-    configReader,
-    templateService,
-  )
+  const overspecificationService = new OverspecificationService(configReader)
 
   app.use(express.json())
 
