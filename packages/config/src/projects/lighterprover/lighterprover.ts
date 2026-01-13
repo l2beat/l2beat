@@ -104,24 +104,6 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
-        verificationSteps:
-          'Jan 12 2026: At the moment of writing, Lighter team has not published the sources of this verifier so it cannot be regenerated.',
-        description:
-          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      },
-      {
-        // ZKLighterVerifier
-        hash: '0x9e4384e13903411340a32aba01d77482c0d2d7b8ae91ef4fcc8725db2a85683b',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x05F8176860955D94F974dB0CE8BB4F160AE425a2',
-            ),
-            chain: 'ethereum',
-          },
-        ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: `
@@ -145,7 +127,7 @@ go version
 \`\`\`
 git clone https://github.com/elliottech/lighter-prover.git
 cd lighter-prover
-git checkout d0ff2304aea516b22f3a5223881006b6a9af1cc9
+git checkout e39d2818cf817a7b37a249296b7cc00110681a38
 chmod +x build_circuits.sh
 ./build_circuits.sh
 \`\`\`
@@ -155,6 +137,51 @@ The script will generate the \`final::....sol\` file that contains the verifier 
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
+      //       {
+      //         // ZKLighterVerifier
+      //         hash: '0x9e4384e13903411340a32aba01d77482c0d2d7b8ae91ef4fcc8725db2a85683b',
+      //         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //         knownDeployments: [
+      //           {
+      //             address: EthereumAddress(
+      //               '0x05F8176860955D94F974dB0CE8BB4F160AE425a2',
+      //             ),
+      //             chain: 'ethereum',
+      //           },
+      //         ],
+      //         verificationStatus: 'successful',
+      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //         verificationSteps: `
+      // The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+      // The steps below are for Ubuntu 24.04 OS.
+
+      // 1. Install rust, gcc, go.
+
+      // \`\`\`
+      // curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      // . .cargo/env
+
+      // sudo apt update
+      // sudo apt install build-essential golang-go
+      // go version
+      // \`\`\`
+
+      // 2. Run the correct version of the script to regenerate the keys.
+
+      // \`\`\`
+      // git clone https://github.com/elliottech/lighter-prover.git
+      // cd lighter-prover
+      // git checkout d0ff2304aea516b22f3a5223881006b6a9af1cc9
+      // chmod +x build_circuits.sh
+      // ./build_circuits.sh
+      // \`\`\`
+
+      // The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+      //         `,
+      //         description:
+      //           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
+      //       },
       {
         // DesertVerifier
         hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',
