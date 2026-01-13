@@ -5,6 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
 import { TopPathsWidget } from './components/TopPathsWidget'
+import { TopProtocolsByVolume } from './components/TopProtocolsByVolume'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
@@ -20,6 +21,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
           <ChainSelector chains={interopChains} />
           <div className="mt-5 grid grid-cols-2 gap-5 xl:grid-cols-3">
             <TopPathsWidget interopChains={interopChains} />
+            <TopProtocolsByVolume />
           </div>
         </InteropSelectedChainsProvider>
       </SideNavLayout>

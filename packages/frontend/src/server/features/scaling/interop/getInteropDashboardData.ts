@@ -1,9 +1,14 @@
 import type { InteropDashboardParams } from './types'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
+import {
+  getTopProtocols,
+  type InteropProtocolData,
+} from './utils/getTopProtocols'
 import { interopMockData } from './utils/mockData'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
+  topProtocols: InteropProtocolData[]
 }
 
 export async function getInteropDashboardData(
@@ -14,5 +19,6 @@ export async function getInteropDashboardData(
 
   return {
     top3Paths: getTopPaths(records, params.from, params.to),
+    topProtocols: getTopProtocols(records, params.from, params.to),
   }
 }
