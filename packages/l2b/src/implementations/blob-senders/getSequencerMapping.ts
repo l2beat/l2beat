@@ -24,6 +24,37 @@ interface DiscoveryOutput {
   entries: DiscoveryEntry[]
 }
 
+// Permission types that indicate blob-posting/sequencing roles
+const SEQUENCER_PERMISSIONS = [
+  'sequence',
+  'operateStarknet',
+  'operateStarkEx',
+  'operateLinea',
+  'validate',
+  'validateZkStack',
+  'propose', // some rollups use proposers to post data
+]
+
+// Value fields that contain sequencer/batcher addresses
+const SEQUENCER_VALUE_FIELDS = [
+  'batcherHash',
+  'BATCHER',
+  'batcher',
+  'sequencer',
+  'Sequencer',
+  'operator',
+  'Operator',
+]
+
+// Array value fields that contain multiple sequencer addresses
+const SEQUENCER_ARRAY_FIELDS = [
+  'batchPosters',
+  'sequencers',
+  'operators',
+  'batchers',
+  'validators',
+]
+
 function findDiscoveredJsonFiles(dir: string): string[] {
   const results: string[] = []
 
@@ -49,6 +80,18 @@ function findDiscoveredJsonFiles(dir: string): string[] {
   return results
 }
 
+function normalizeAddress(address: string): string | null {
+  // Handle eth: prefixed addresses
+  if (address.startsWith('eth:')) {
+    return address.replace('eth:', '').toLowerCase()
+  }
+  // Handle raw addresses
+  if (address.startsWith('0x') && address.length === 42) {
+    return address.toLowerCase()
+  }
+  return null
+}
+
 export function getSequencerMapping(projectsPath: string): SequencerMapping {
   const mapping: SequencerMapping = new Map()
   const files = findDiscoveredJsonFiles(projectsPath)
@@ -63,17 +106,20 @@ export function getSequencerMapping(projectsPath: string): SequencerMapping {
         // Only consider eth: addresses (Ethereum mainnet)
         if (!entry.address?.startsWith('eth:')) continue
 
-        const sequencePerms = entry.receivedPermissions?.filter(
-          (p) => p.permission === 'sequence',
+        // Check for sequencer-related permissions
+        const sequencerPerms = entry.receivedPermissions?.filter((p) =>
+          SEQUENCER_PERMISSIONS.includes(p.permission),
         )
 
-        if (sequencePerms && sequencePerms.length > 0) {
-          const address = entry.address.replace('eth:', '').toLowerCase()
-          mapping.set(address, {
-            project: projectName,
-            name: entry.name,
-            role: sequencePerms[0].role,
-          })
+        if (sequencerPerms && sequencerPerms.length > 0) {
+          const address = normalizeAddress(entry.address)
+          if (address && !mapping.has(address)) {
+            mapping.set(address, {
+              project: projectName,
+              name: entry.name,
+              role: sequencerPerms[0].role || sequencerPerms[0].permission,
+            })
+          }
         }
       }
     } catch {
@@ -84,7 +130,6 @@ export function getSequencerMapping(projectsPath: string): SequencerMapping {
   return mapping
 }
 
-// Also extract batcher addresses from contract values (batcherHash, sequencer, etc.)
 export function getSequencerMappingExtended(
   projectsPath: string,
 ): SequencerMapping {
@@ -101,20 +146,12 @@ export function getSequencerMappingExtended(
         const values = (entry as any).values
         if (!values) continue
 
-        // Check for common batcher/sequencer value fields
-        const batcherFields = [
-          'batcherHash',
-          'BATCHER',
-          'batcher',
-          'sequencer',
-          'Sequencer',
-        ]
-
-        for (const field of batcherFields) {
+        // Check for single-value sequencer fields
+        for (const field of SEQUENCER_VALUE_FIELDS) {
           const value = values[field]
-          if (typeof value === 'string' && value.startsWith('eth:')) {
-            const address = value.replace('eth:', '').toLowerCase()
-            if (!mapping.has(address)) {
+          if (typeof value === 'string') {
+            const address = normalizeAddress(value)
+            if (address && !mapping.has(address)) {
               mapping.set(address, {
                 project: projectName,
                 name: `${field} (from ${entry.name || entry.address})`,
@@ -124,18 +161,20 @@ export function getSequencerMappingExtended(
           }
         }
 
-        // Check batchPosters array (Arbitrum)
-        const batchPosters = values.batchPosters
-        if (Array.isArray(batchPosters)) {
-          for (const poster of batchPosters) {
-            if (typeof poster === 'string' && poster.startsWith('eth:')) {
-              const address = poster.replace('eth:', '').toLowerCase()
-              if (!mapping.has(address)) {
-                mapping.set(address, {
-                  project: projectName,
-                  name: `BatchPoster (from ${entry.name || entry.address})`,
-                  role: '.batchPosters',
-                })
+        // Check for array sequencer fields
+        for (const field of SEQUENCER_ARRAY_FIELDS) {
+          const arr = values[field]
+          if (Array.isArray(arr)) {
+            for (const item of arr) {
+              if (typeof item === 'string') {
+                const address = normalizeAddress(item)
+                if (address && !mapping.has(address)) {
+                  mapping.set(address, {
+                    project: projectName,
+                    name: `${field} (from ${entry.name || entry.address})`,
+                    role: `.${field}`,
+                  })
+                }
               }
             }
           }

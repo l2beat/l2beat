@@ -2,6 +2,10 @@ import { getDiscoveryPaths } from '@l2beat/discovery'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { command, flag, number, option } from 'cmd-ts'
 import { getBlobSenders } from '../implementations/blob-senders/getBlobSenders'
+import {
+  getProjectByReceiver,
+  getReceiverName,
+} from '../implementations/blob-senders/getReceiverMapping'
 import { getSequencerMappingExtended } from '../implementations/blob-senders/getSequencerMapping'
 import { HttpUrl } from './types'
 
@@ -62,13 +66,46 @@ export const BlobSenders = command({
       return
     }
 
-    // Enrich with project names
+    // Enrich with project names (check sender first, then receiver)
     const enriched = senders.map((s) => {
-      const info = sequencerMapping.get(s.address)
+      const senderInfo = sequencerMapping.get(s.address)
+      if (senderInfo) {
+        return {
+          ...s,
+          project: senderInfo.project,
+          role: senderInfo.role ?? '',
+          source: 'sender',
+        }
+      }
+
+      // Try to identify by receiver address
+      const mainReceiver = [...s.receivers.entries()].sort(
+        (a, b) => b[1] - a[1],
+      )[0]?.[0]
+      if (mainReceiver) {
+        const receiverProject = getProjectByReceiver(mainReceiver)
+        if (receiverProject) {
+          return {
+            ...s,
+            project: receiverProject,
+            role: `-> ${mainReceiver.slice(0, 10)}...`,
+            source: 'receiver',
+          }
+        }
+      }
+
+      // Check if receiver has a known name (like Multicall3)
+      const receiverName = mainReceiver ? getReceiverName(mainReceiver) : undefined
+
       return {
         ...s,
-        project: info?.project ?? '???',
-        role: info?.role ?? '',
+        project: '???',
+        role: receiverName
+          ? `-> ${receiverName}`
+          : mainReceiver
+            ? `-> ${mainReceiver.slice(0, 10)}...`
+            : '',
+        source: 'unknown',
       }
     })
 
@@ -82,19 +119,13 @@ export const BlobSenders = command({
       return
     }
 
-    const headers = [
-      'Project',
-      'Address',
-      'Blobs',
-      'Txs',
-      'Role',
-    ]
+    const headers = ['Project', 'Address', 'Blobs', 'Txs', 'Receiver/Role']
     const rows = filtered.map((s) => [
       s.project.slice(0, 20),
       s.address,
       s.blobCount.toString(),
       s.txCount.toString(),
-      s.role.slice(0, 15),
+      s.role.slice(0, 18),
     ])
 
     console.log(formatAsAsciiTable(headers, rows))

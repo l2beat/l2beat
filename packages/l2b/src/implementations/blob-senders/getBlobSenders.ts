@@ -6,6 +6,7 @@ export interface BlobSender {
   blobCount: number
   firstBlock: number
   lastBlock: number
+  receivers: Map<string, number> // to address -> count
 }
 
 export async function getBlobSenders(
@@ -43,6 +44,7 @@ export async function getBlobSenders(
         if (tx.type !== '0x3') continue
 
         const from = tx.from.toLowerCase()
+        const to = tx.to?.toLowerCase() ?? ''
         const blockNum = parseInt(block.number, 16)
         const blobCount = tx.blobVersionedHashes?.length ?? 0
 
@@ -52,13 +54,17 @@ export async function getBlobSenders(
           existing.blobCount += blobCount
           existing.firstBlock = Math.min(existing.firstBlock, blockNum)
           existing.lastBlock = Math.max(existing.lastBlock, blockNum)
+          existing.receivers.set(to, (existing.receivers.get(to) ?? 0) + 1)
         } else {
+          const receivers = new Map<string, number>()
+          receivers.set(to, 1)
           senders.set(from, {
             address: from,
             txCount: 1,
             blobCount,
             firstBlock: blockNum,
             lastBlock: blockNum,
+            receivers,
           })
         }
       }
