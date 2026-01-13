@@ -1,4 +1,5 @@
 import type { InteropChain } from '@l2beat/config'
+import { pluralize } from '@l2beat/shared-pure'
 import {
   Popover,
   PopoverContent,
@@ -68,7 +69,8 @@ function ChainSelectorButton({
       <PopoverTrigger asChild>
         <div className="h-10 bg-surface-primary px-4 py-[7px]">
           <div className="font-semibold leading-none">
-            {selectedChains.length} selected chains
+            {selectedChains.length} selected{' '}
+            {pluralize(selectedChains.length, 'chain')}
           </div>
           <div className="-space-x-2 flex items-center">
             {chainsWithDetails
