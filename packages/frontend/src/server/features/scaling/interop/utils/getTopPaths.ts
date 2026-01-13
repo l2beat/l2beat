@@ -11,6 +11,7 @@ export function getTopPaths(
     srcChain: string
     dstChain: string
     srcValueUsd: number | null
+    dstValueUsd: number | null
   }[],
   from: string[],
   to: string[],
@@ -23,7 +24,7 @@ export function getTopPaths(
     }
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
-    map.set(key, current + (record.srcValueUsd ?? 0))
+    map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))
   }
 
   return Array.from(map.entries())
