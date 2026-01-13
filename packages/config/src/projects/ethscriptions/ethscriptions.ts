@@ -305,6 +305,10 @@ export const ethscriptions: ScalingProject = {
         url: 'https://mainnet.ethscriptions.com/',
         callsPerMinute: 300,
       },
+      {
+        type: 'blockscout',
+        url: 'https://explorer.ethscriptions.com/api',
+      },
     ],
   },
   milestones: [
