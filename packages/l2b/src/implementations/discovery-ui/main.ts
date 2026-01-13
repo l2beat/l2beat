@@ -2,6 +2,7 @@ import {
   ConfigReader,
   ConfigWriter,
   getDiscoveryPaths,
+  OverspecificationService,
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
@@ -18,6 +19,7 @@ import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { attachOverspecificationRouter } from './overspecification/router'
 import { searchCode } from './searchCode'
 import {
   attachTemplateRouter,
@@ -74,6 +76,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const diffoveryController = new DiffoveryController()
+  const overspecificationService = new OverspecificationService(
+    configReader,
+    templateService,
+  )
 
   app.use(express.json())
 
@@ -215,6 +221,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
+  attachOverspecificationRouter(app, overspecificationService)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)

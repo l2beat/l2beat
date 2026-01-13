@@ -32,6 +32,7 @@ export {
   getDiscoveryPaths,
 } from './discovery/config/getDiscoveryPaths'
 export { hashJsonStable } from './discovery/config/hashJsonStable'
+export { OverspecificationService } from './discovery/config/OverspecificationService'
 export {
   BasePermissionEntries,
   Permission,
