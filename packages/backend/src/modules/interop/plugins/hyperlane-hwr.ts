@@ -62,7 +62,7 @@ const HwrTransferReceived = createInteropEventType<{
 }>('hyperlane-hwr.TransferReceived')
 
 export class HyperlaneHwrPlugin implements InteropPlugin {
-  name = 'hyperlane-hwr'
+  readonly name = 'hyperlane-hwr'
 
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)

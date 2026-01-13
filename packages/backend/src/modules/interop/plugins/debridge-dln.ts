@@ -93,7 +93,7 @@ export const LogFulfilledOrder = createInteropEventType<{
 }>('debridge-dln.FulfilledOrder')
 
 export class DeBridgeDlnPlugin implements InteropPlugin {
-  name = 'debridge-dln'
+  readonly name = 'debridge-dln'
 
   capture(input: LogToCapture) {
     const logOrderCreated = parseCreatedOrder(input.log, null)

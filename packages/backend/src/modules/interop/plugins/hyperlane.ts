@@ -50,7 +50,7 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
 ])
 
 export class HyperlanePlugIn implements InteropPlugin {
-  name = 'hyperlane'
+  readonly name = 'hyperlane'
 
   capture(input: LogToCapture) {
     const process = parseProcess(input.log, null)

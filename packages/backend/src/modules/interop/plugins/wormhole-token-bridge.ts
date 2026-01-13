@@ -32,7 +32,7 @@ export const TransferRedeemed = createInteropEventType<{
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements InteropPlugin {
-  name = 'wormhole-token-bridge'
+  readonly name = 'wormhole-token-bridge'
 
   constructor(private configs: InteropConfigStore) {}
 

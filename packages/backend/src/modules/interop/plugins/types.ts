@@ -213,7 +213,7 @@ interface EventDataRequest {
 }
 
 export interface InteropPlugin {
-  name: InteropPluginName
+  readonly name: InteropPluginName
   cluster?: string
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
