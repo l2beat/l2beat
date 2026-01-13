@@ -121,8 +121,6 @@ const ETHBridgeFinalizedWithdrawalFinalized = createInteropEventType<{
 export class OpStackStandardBridgePlugin implements InteropPlugin {
   name = 'opstack-standardbridge'
 
-  constructor(readonly cluster?: string) {}
-
   capture(input: LogToCapture) {
     if (input.chain !== 'ethereum') {
       // L2 -> L1 ERC20 withdrawal initiated
