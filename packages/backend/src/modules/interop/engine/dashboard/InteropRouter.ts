@@ -9,15 +9,18 @@ import type {
   InteropTransferStream,
   SerializableInteropTransfer,
 } from '../stream/InteropTransferStream'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
+import { renderStatusPage } from './StatusPage'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
+  syncersManager: InteropSyncersManager,
   logger: Logger,
   transferStream: InteropTransferStream,
 ) {
@@ -33,6 +36,8 @@ export function createInteropRouter(
         getTransfersStats(db),
         db.interopTransfer.getMissingTokensInfo(),
         db.interopMessage.getUniqueAppsPerPlugin(),
+        db.interopPluginSyncedRange.getAll(),
+        db.interopPluginSyncState.getAll(),
       ])
 
     const routerDuration = performance.now() - routerStart
@@ -48,6 +53,7 @@ export function createInteropRouter(
       status: getProcessorsStatus(processors),
       missingTokens,
       uniqueApps,
+      pluginSyncStatuses: await syncersManager.getPluginSyncStatuses(),
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
@@ -56,6 +62,12 @@ export function createInteropRouter(
     const configs = await db.interopConfig.getAllLatest()
 
     ctx.body = configs
+  })
+
+  router.get('/interop/status', async (ctx) => {
+    const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
+
+    ctx.body = renderStatusPage({ pluginSyncStatuses })
   })
 
   router.get('/interop/memory', (ctx) => {
@@ -86,6 +98,50 @@ export function createInteropRouter(
       'old-unmatched',
     ]),
     type: v.string(),
+  })
+
+  const ResyncRequest = v.object({
+    pluginName: v.string(),
+    resyncRequestedFrom: v.record(
+      v.string(),
+      v.number().check((value) => {
+        try {
+          UnixTime(value)
+          return true
+        } catch (error) {
+          return error instanceof Error ? error.message : 'Invalid timestamp'
+        }
+      }),
+    ),
+  })
+
+  router.post('/interop/resync', async (ctx) => {
+    const payload = ResyncRequest.validate(ctx.request.body)
+    const { pluginName, resyncRequestedFrom } = payload
+
+    const defaultFrom = resyncRequestedFrom['*']
+    const existingChains = (
+      await db.interopPluginSyncState.findByPluginName(pluginName)
+    ).map((r) => r.chain)
+
+    const updatedChains = new Set<string>()
+    await db.transaction(async () => {
+      for (const chain of existingChains) {
+        const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
+        if (resyncFrom) {
+          await db.interopPluginSyncState.setResyncRequestedFrom(
+            pluginName,
+            chain,
+            resyncFrom,
+          )
+          updatedChains.add(chain)
+        }
+      }
+    })
+
+    ctx.body = {
+      updatedChains: Array.from(updatedChains),
+    }
   })
 
   router.get('/interop/events/:kind/:type', async (ctx) => {

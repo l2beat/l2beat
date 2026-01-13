@@ -84,6 +84,7 @@ export function createInteropModule({
     db,
     config.interop,
     processors,
+    syncersManager,
     logger.for('InteropRouter'),
     transferStream,
   )
