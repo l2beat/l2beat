@@ -326,7 +326,6 @@ fn main() {
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
-
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
