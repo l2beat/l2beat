@@ -38,7 +38,7 @@ export const near: Bridge = {
       repositories: ['https://github.com/aurora-is-near/rainbow-bridge'],
       socialMedia: [
         'https://twitter.com/auroraisnear',
-        'https://t.me/cryptonear'
+        'https://t.me/cryptonear',
       ],
     },
     description:
