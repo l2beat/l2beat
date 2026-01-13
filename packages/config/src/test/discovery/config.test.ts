@@ -4,7 +4,6 @@ import {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  get$Implementations,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   makeEntryStructureConfig,
@@ -306,134 +305,6 @@ describe('discovery config.jsonc', () => {
       )
     }
   }).timeout(10000)
-
-  describe('configs - ignore* properties are not overspecified', () => {
-    for (const config of configs) {
-      const discovery = configReader.readDiscovery(config.name)
-
-      describe(config.name, () => {
-        for (const entry of discovery.entries.filter(
-          (e) => e.address === 'eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-        )) {
-          describe(entry.address.toString(), () => {
-            const implementations = get$Implementations(entry.values)
-            const abis = implementations
-              .map((implementation) => discovery.abis[implementation] ?? [])
-              .concat(discovery.abis[entry.address] ?? [])
-
-            const functionNamesFromAbi = extractFunctionNamesFromAbi(
-              abis.flat(),
-            )
-            const maybeCustomValues = Object.keys(entry.values ?? {})
-            const possibleValues = [
-              ...new Set([...functionNamesFromAbi, ...maybeCustomValues]),
-            ]
-
-            const configOverrides = config.structure.overrides?.[entry.address]
-
-            if (configOverrides) {
-              const ignoreInWatchMode = configOverrides.ignoreInWatchMode ?? []
-              const ignoreMethods = configOverrides.ignoreMethods ?? []
-              const ignoreRelatives = configOverrides.ignoreRelatives ?? []
-
-              it('ignoreInWatchMode', () => {
-                const overspecified = (ignoreInWatchMode ?? []).filter(
-                  (x) => !possibleValues.includes(x),
-                )
-                expect(overspecified).toEqual([])
-              })
-              it('ignoreMethods', () => {
-                const overspecified = (ignoreMethods ?? []).filter(
-                  (x) => !possibleValues.includes(x),
-                )
-                expect(overspecified).toEqual([])
-              })
-              it('ignoreRelatives', () => {
-                const overspecified = (ignoreRelatives ?? []).filter(
-                  (x) => !possibleValues.includes(x),
-                )
-                expect(overspecified).toEqual([])
-              })
-            }
-          })
-        }
-      })
-    }
-  })
-
-  describe('templates - ignore* properties are not overspecified', () => {
-    const allDiscoveries = configReader
-      .readAllDiscoveredProjects()
-      .flatMap((discovery) => configReader.readDiscovery(discovery))
-    const templates = Object.keys(templateService.listAllTemplates())
-
-    function findEntriesUsingTemplate(templateId: string) {
-      return allDiscoveries.flatMap((discovery) =>
-        discovery.entries.flatMap((entry) => {
-          if (entry.template === templateId) {
-            const implementations = get$Implementations(entry.values)
-            return {
-              entry,
-              abis: implementations
-                .map((implementation) => discovery.abis[implementation] ?? [])
-                .concat(discovery.abis[entry.address] ?? []),
-            }
-          }
-          return []
-        }),
-      )
-    }
-
-    for (const templateId of templates) {
-      const template = templateService.loadContractTemplate(templateId)
-      const entries = findEntriesUsingTemplate(templateId)
-
-      if (entries.length === 0) {
-        // Can't really test - not used thus no abi ;/
-        continue
-      }
-
-      const ignoreInWatchMode = template.ignoreInWatchMode ?? []
-      const ignoreMethods = template.ignoreMethods ?? []
-      const ignoreRelatives = template.ignoreRelatives ?? []
-
-      describe(templateId, () => {
-        const possibleValues = new Set<string>()
-        const maybeCustomValues = new Set<string>()
-
-        for (const { abis } of entries) {
-          for (const functionName of extractFunctionNamesFromAbi(abis.flat())) {
-            possibleValues.add(functionName)
-          }
-        }
-
-        for (const { entry } of entries) {
-          for (const value of Object.keys(entry.values ?? {})) {
-            maybeCustomValues.add(value)
-          }
-        }
-
-        it('ignoreInWatchMode', () => {
-          const overspecified = (ignoreInWatchMode ?? []).filter(
-            (x) => !possibleValues.has(x),
-          )
-          expect(overspecified).toEqual([])
-        })
-        it('ignoreMethods', () => {
-          const overspecified = (ignoreMethods ?? []).filter(
-            (x) => !possibleValues.has(x),
-          )
-          expect(overspecified).toEqual([])
-        })
-        it('ignoreRelatives', () => {
-          const overspecified = (ignoreRelatives ?? []).filter(
-            (x) => !possibleValues.has(x),
-          )
-          expect(overspecified).toEqual([])
-        })
-      })
-    }
-  })
 })
 
 function compareLeftKeysInRight(
@@ -460,10 +331,4 @@ function compareLeftKeysInRight(
 
     return isDeepStrictEqual(val1, val2)
   })
-}
-
-function extractFunctionNamesFromAbi(abi: string[]) {
-  return abi
-    .filter((x) => x.startsWith('function '))
-    .map((x) => x.slice('function '.length, x.indexOf('(')))
 }

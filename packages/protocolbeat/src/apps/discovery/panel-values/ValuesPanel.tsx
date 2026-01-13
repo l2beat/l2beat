@@ -8,6 +8,7 @@ import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
 import { useConfigModels } from '../hooks/useConfigModels'
 import { useModelUtils } from '../hooks/useModelUtils'
+import { useOverspecControl } from '../hooks/useOverspecControl'
 import { useProjectData } from '../hooks/useProjectData'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -56,6 +57,7 @@ function Display({
   blockNumber: number
 }) {
   const { configModel, templateModel, canModify } = useConfigModels()
+  const _overspec = useOverspecControl()
   const templateIgnoredMethods = templateModel.ignoreMethods ?? []
   const configIgnoredMethods = configModel.ignoreMethods ?? []
   const ignoredMethods = [
@@ -216,8 +218,8 @@ function Display({
       {fields.length > 0 && (
         <Folder title="Fields">
           <ol>
-            {fields.map((field, i) => (
-              <FieldDisplay key={i} field={field} />
+            {fields.map((field) => (
+              <FieldDisplay key={field.name} field={field} />
             ))}
           </ol>
         </Folder>

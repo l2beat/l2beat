@@ -1,10 +1,7 @@
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
-  ApiCheckAllConfigOverridesResponse,
-  ApiCheckAllTemplatesResponse,
   ApiCheckConfigOverspecificationRequest,
   ApiCheckConfigOverspecificationResponse,
-  ApiCheckTemplateFileResponse,
   ApiCheckTemplateOverspecificationRequest,
   ApiCheckTemplateOverspecificationResponse,
   ApiCodeResponse,
@@ -284,9 +281,6 @@ export function executeFindMinters(address: string): EventSource {
   return new EventSource(`/api/terminal/find-minters?${params}`)
 }
 
-/**
- * Check if provided methods are overspecified for a specific config override.
- */
 export async function checkConfigOverspecification(
   request: ApiCheckConfigOverspecificationRequest,
 ): Promise<ApiCheckConfigOverspecificationResponse> {
@@ -306,25 +300,6 @@ export async function checkConfigOverspecification(
   return data as ApiCheckConfigOverspecificationResponse
 }
 
-/**
- * Check all config overrides in a project for overspecification.
- */
-export async function checkAllConfigOverrides(
-  project: string,
-): Promise<ApiCheckAllConfigOverridesResponse> {
-  const res = await fetch(`/api/overspecification/check-config/${project}`)
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  const data = await res.json()
-  return data as ApiCheckAllConfigOverridesResponse
-}
-
-/**
- * Check if provided methods are overspecified for a template.
- */
 export async function checkTemplateOverspecification(
   request: ApiCheckTemplateOverspecificationRequest,
 ): Promise<ApiCheckTemplateOverspecificationResponse> {
@@ -342,36 +317,4 @@ export async function checkTemplateOverspecification(
 
   const data = await res.json()
   return data as ApiCheckTemplateOverspecificationResponse
-}
-
-/**
- * Check a template file's current ignore* properties for overspecification.
- */
-export async function checkTemplateFile(
-  templateId: string,
-): Promise<ApiCheckTemplateFileResponse> {
-  const res = await fetch(
-    `/api/overspecification/check-template/${encodeURIComponent(templateId)}`,
-  )
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  const data = await res.json()
-  return data as ApiCheckTemplateFileResponse
-}
-
-/**
- * Check all templates for overspecification.
- */
-export async function checkAllTemplates(): Promise<ApiCheckAllTemplatesResponse> {
-  const res = await fetch('/api/overspecification/check-all-templates')
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  const data = await res.json()
-  return data as ApiCheckAllTemplatesResponse
 }

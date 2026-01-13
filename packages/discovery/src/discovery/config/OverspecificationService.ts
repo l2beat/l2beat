@@ -1,5 +1,4 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { TemplateService } from '../analysis/TemplateService'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { get$Implementations } from '../utils/extractors'
 import type { ConfigReader } from './ConfigReader'
@@ -21,10 +20,7 @@ export interface TemplateOverspecificationResult {
 }
 
 export class OverspecificationService {
-  constructor(
-    private readonly configReader: ConfigReader,
-    private readonly templateService: TemplateService,
-  ) {}
+  constructor(private readonly configReader: ConfigReader) {}
 
   checkConfigOverspecification(
     projectName: string,
@@ -62,53 +58,6 @@ export class OverspecificationService {
     }
   }
 
-  checkAllConfigOverrides(
-    projectName: string,
-  ): ConfigOverspecificationResult[] {
-    const config = this.configReader.readConfig(projectName)
-    const discovery = this.configReader.readDiscovery(projectName)
-    const results: ConfigOverspecificationResult[] = []
-
-    const overrides = config.structure.overrides ?? {}
-
-    for (const [address, override] of Object.entries(overrides)) {
-      const entry = discovery.entries.find(
-        (e) => e.address.toString() === address,
-      )
-      if (!entry) continue
-
-      const possibleValues = this.getPossibleValuesForEntry(entry, discovery)
-
-      const overspecified: OverspecifiedResult = {
-        ignoreInWatchMode: this.filterOverspecified(
-          override.ignoreInWatchMode ?? [],
-          possibleValues,
-        ),
-        ignoreMethods: this.filterOverspecified(
-          override.ignoreMethods ?? [],
-          possibleValues,
-        ),
-        ignoreRelatives: this.filterOverspecified(
-          override.ignoreRelatives ?? [],
-          possibleValues,
-        ),
-      }
-
-      if (
-        overspecified.ignoreInWatchMode.length > 0 ||
-        overspecified.ignoreMethods.length > 0 ||
-        overspecified.ignoreRelatives.length > 0
-      ) {
-        results.push({
-          address,
-          overspecified,
-        })
-      }
-    }
-
-    return results
-  }
-
   checkTemplateOverspecification(
     templateId: string,
     providedMethods: {
@@ -133,50 +82,6 @@ export class OverspecificationService {
         possibleValues,
       ),
     }
-  }
-
-  checkTemplateFile(templateId: string): TemplateOverspecificationResult {
-    const template = this.templateService.loadContractTemplate(templateId)
-    const possibleValues = this.getPossibleValuesForTemplate(templateId)
-
-    const overspecified: OverspecifiedResult = {
-      ignoreInWatchMode: this.filterOverspecified(
-        template.ignoreInWatchMode ?? [],
-        possibleValues,
-      ),
-      ignoreMethods: this.filterOverspecified(
-        template.ignoreMethods ?? [],
-        possibleValues,
-      ),
-      ignoreRelatives: this.filterOverspecified(
-        template.ignoreRelatives ?? [],
-        possibleValues,
-      ),
-    }
-
-    return {
-      templateId,
-      overspecified,
-    }
-  }
-
-  checkAllTemplates(): TemplateOverspecificationResult[] {
-    const templates = Object.keys(this.templateService.listAllTemplates())
-    const results: TemplateOverspecificationResult[] = []
-
-    for (const templateId of templates) {
-      const result = this.checkTemplateFile(templateId)
-
-      if (
-        result.overspecified.ignoreInWatchMode.length > 0 ||
-        result.overspecified.ignoreMethods.length > 0 ||
-        result.overspecified.ignoreRelatives.length > 0
-      ) {
-        results.push(result)
-      }
-    }
-
-    return results
   }
 
   private getPossibleValuesForEntry(

@@ -289,13 +289,6 @@ export interface ApiCheckConfigOverspecificationResponse {
   overspecified: OverspecifiedResult
 }
 
-export interface ApiCheckAllConfigOverridesResponse {
-  results: {
-    address: string
-    overspecified: OverspecifiedResult
-  }[]
-}
-
 export interface ApiCheckTemplateOverspecificationRequest {
   templateId: string
   ignoreInWatchMode?: string[]
@@ -305,16 +298,4 @@ export interface ApiCheckTemplateOverspecificationRequest {
 
 export interface ApiCheckTemplateOverspecificationResponse {
   overspecified: OverspecifiedResult
-}
-
-export interface ApiCheckTemplateFileResponse {
-  templateId: string
-  overspecified: OverspecifiedResult
-}
-
-export interface ApiCheckAllTemplatesResponse {
-  results: {
-    templateId: string
-    overspecified: OverspecifiedResult
-  }[]
 }

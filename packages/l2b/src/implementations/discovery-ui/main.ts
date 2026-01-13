@@ -221,11 +221,11 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.use(express.static(STATIC_ROOT))
 
   attachDiffoveryRouter(app, diffoveryController)
-  attachOverspecificationRouter(app, overspecificationService)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
+    attachOverspecificationRouter(app, overspecificationService)
 
     app.get('/api/handlers', (_req, res) => {
       res.json({

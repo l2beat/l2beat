@@ -106,7 +106,7 @@ export function FieldConfigDialog(props: Props) {
                   <IgnoreOption
                     checked={configIgnoreRelatives ?? false}
                     onClick={() =>
-                      models.configModel.toggleIgnoreMethods(fieldName)
+                      models.configModel.toggleIgnoreRelatives(fieldName)
                     }
                   >
                     Ignore Relatives
