@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProtocolsPieChart } from '../../charts/ProtocolsPieChart'
+import { ProtocolsPieChart } from './ProtocolsPieChart'
 import type { DisplayProtocol } from './TopProtocolsWidget'
 
 export function TopProtocolsByVolumeChart({
   protocols,
+  isLoading,
 }: {
   protocols: DisplayProtocol[]
+  isLoading: boolean
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -40,6 +42,7 @@ export function TopProtocolsByVolumeChart({
     <ProtocolsPieChart
       chartMeta={chartMeta}
       chartData={chartData}
+      isLoading={isLoading}
       center={{
         label: 'Volume',
         value: formatCurrency(totalVolume, 'usd', {

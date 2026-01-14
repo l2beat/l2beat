@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { formatNumber } from '~/utils/number-format/formatNumber'
-import { ProtocolsPieChart } from '../../charts/ProtocolsPieChart'
+import { ProtocolsPieChart } from './ProtocolsPieChart'
 import type { DisplayProtocol } from './TopProtocolsWidget'
 
 export function TopProtocolsByTransfersChart({
   protocols,
+  isLoading,
 }: {
   protocols: DisplayProtocol[]
+  isLoading: boolean
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -41,6 +43,7 @@ export function TopProtocolsByTransfersChart({
     <ProtocolsPieChart
       chartMeta={chartMeta}
       chartData={chartData}
+      isLoading={isLoading}
       center={{
         label: 'Transfers',
         value: formatNumber(totalTransfers),

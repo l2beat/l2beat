@@ -88,7 +88,7 @@ export function TopProtocolsWidget({
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
           Between {uniqChains.length} supported chains
         </div>
-        <table className="mt-2 w-full border-separate border-spacing-y-1">
+        <table className="mt-2 w-full border-separate border-spacing-y-1 pr-1">
           <tbody>
             {isLoading || protocolsWithColors.length === 0
               ? times(5).map((index) => (
@@ -123,9 +123,15 @@ export function TopProtocolsWidget({
         </table>
       </div>
       {metricType === 'volume' ? (
-        <TopProtocolsByVolumeChart protocols={protocolsWithColors} />
+        <TopProtocolsByVolumeChart
+          protocols={protocolsWithColors}
+          isLoading={isLoading}
+        />
       ) : (
-        <TopProtocolsByTransfersChart protocols={protocolsWithColors} />
+        <TopProtocolsByTransfersChart
+          protocols={protocolsWithColors}
+          isLoading={isLoading}
+        />
       )}
     </PrimaryCard>
   )

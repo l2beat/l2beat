@@ -8,6 +8,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { Skeleton } from '~/components/core/Skeleton'
 import { useWindowSize } from '~/hooks/useWindowSize'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -16,6 +17,7 @@ export function ProtocolsPieChart({
   chartMeta,
   chartData,
   center,
+  isLoading,
 }: {
   chartMeta: ChartMeta
   chartData: { name: string; value: number; fill: string }[]
@@ -23,9 +25,24 @@ export function ProtocolsPieChart({
     label: string
     value: string | number
   }
+  isLoading: boolean
 }) {
   const { width } = useWindowSize()
   const isEdgeCaseBreakpoint = width && width >= 1440 && width < 1600
+
+  if (isLoading && width) {
+    return (
+      <div className="flex h-full items-center">
+        <Skeleton
+          className="rounded-full"
+          style={{
+            width: (isEdgeCaseBreakpoint ? 55 : 82) * 2,
+            height: (isEdgeCaseBreakpoint ? 55 : 82) * 2,
+          }}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-full items-center">
