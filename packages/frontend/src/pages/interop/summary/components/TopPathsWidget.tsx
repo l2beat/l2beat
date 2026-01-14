@@ -93,7 +93,7 @@ function PathItem({
             alt={from.name}
             className="size-5"
           />
-          <div className="@max-[470px]:hidden font-medium text-label-value-15">
+          <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {from.name}
           </div>
           <ArrowRightIcon className="size-5 fill-brand" />
@@ -102,7 +102,7 @@ function PathItem({
             alt={to.name}
             className="size-5"
           />
-          <div className="@max-[470px]:hidden font-medium text-label-value-15">
+          <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {to.name}
           </div>
         </div>
