@@ -25,6 +25,24 @@
   },
   "ccip": {
     "txs": [
+      // Arbitrum → Base (old Minted event format)
+      {
+        "chain": "arbitrum",
+        "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
+      },
+      {
+        "chain": "base",
+        "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
+      },
+      // Arbitrum → Ethereum (old Minted event format)
+      {
+        "chain": "arbitrum",
+        "tx": "0x9e6ea796ee5b851f57643669dd24fe68948b752d7369ebce6cbd1901c2e19349"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7c86a861a08dde62ac6a9de69467fcdb32db8f502caab15ea91b41f4d83da1fa"
+      },
       // Base → Ethereum (has Released event)
       {
         "chain": "base",
@@ -47,14 +65,25 @@
     "events": [
       "ccip.CCIPSendRequested",
       "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
       "ccip.ExecutionStateChanged",
       "ccip.ExecutionStateChanged"
     ],
     "messages": [
       { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
       { "type": "ccip.Message", "app": "CCIP Token Transfer" }
     ],
-    "transfers": ["ccip.Transfer", "ccip.Transfer"]
+    "transfers": [
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer"
+    ]
   },
   "celer": {
     "txs": [
