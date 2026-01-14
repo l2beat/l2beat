@@ -209,6 +209,7 @@ describe('toJsonSchema', () => {
       propertyNames: {
         type: 'string',
         pattern: '\\d+(\\.\\d*)?',
+        description: undefined,
       },
       additionalProperties: {
         type: 'number',
@@ -223,6 +224,7 @@ describe('toJsonSchema', () => {
       type: 'object',
       propertyNames: {
         enum: ['a', 'b'],
+        description: undefined,
       },
       additionalProperties: {
         type: 'number',
@@ -334,6 +336,108 @@ describe('toJsonSchema', () => {
         },
       },
       $ref: '#/definitions/A',
+    })
+  })
+
+  it('description on primitive', () => {
+    const input = v.string().describe('A string value')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'string',
+      description: 'A string value',
+    })
+  })
+
+  it('description on object', () => {
+    const input = v
+      .object({
+        name: v.string().describe('The name field'),
+        age: v.number().describe('The age in years'),
+      })
+      .describe('A person object')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'object',
+      description: 'A person object',
+      properties: {
+        name: { type: 'string', description: 'The name field' },
+        age: { type: 'number', description: 'The age in years' },
+      },
+      required: ['name', 'age'],
+    })
+  })
+
+  it('description on array', () => {
+    const input = v
+      .array(v.string().describe('Item value'))
+      .describe('List of items')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'array',
+      description: 'List of items',
+      items: { type: 'string', description: 'Item value' },
+    })
+  })
+
+  it('description on union', () => {
+    const input = v
+      .union([
+        v.string().describe('Text value'),
+        v.number().describe('Numeric value'),
+      ])
+      .describe('Either text or number')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      description: 'Either text or number',
+      anyOf: [
+        { type: 'string', description: 'Text value' },
+        { type: 'number', description: 'Numeric value' },
+      ],
+    })
+  })
+
+  it('description with optional', () => {
+    const input = v.string().describe('An optional string').optional()
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'string',
+      description: 'An optional string',
+    })
+  })
+
+  it('description on optional chained', () => {
+    const input = v.string().optional().describe('Description after optional')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'string',
+      description: 'Description after optional',
+    })
+  })
+
+  it('description with default', () => {
+    const input = v.string().describe('A string with default').default('hello')
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'string',
+      description: 'A string with default',
+    })
+  })
+
+  it('description in object with optional fields', () => {
+    const input = v.object({
+      required: v.string().describe('Required field'),
+      optional: v.string().describe('Optional field').optional(),
+      withDefault: v.number().describe('Field with default').default(42),
+    })
+    expect(toJsonSchema(input)).toEqual({
+      $schema: SCHEMA_VERSION,
+      type: 'object',
+      properties: {
+        required: { type: 'string', description: 'Required field' },
+        optional: { type: 'string', description: 'Optional field' },
+        withDefault: { type: 'number', description: 'Field with default' },
+      },
+      required: ['required'],
     })
   })
 })

@@ -16,26 +16,48 @@ import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
 
+const DEFAULT_MAX_LENGTH = 100
+
 export type ArrayHandlerDefinition = v.infer<typeof ArrayHandlerDefinition>
 export const ArrayHandlerDefinition = v.strictObject({
-  type: v.literal('array'),
-  indices: v.union([v.array(v.number()), v.string()]).optional(),
-  method: v.string().optional(),
+  type: v.literal('array').describe('The type of the array'),
+  indices: v
+    .union([v.array(v.number()), v.string()])
+    .optional()
+    .describe(
+      'An array of numbers, e.g. `[1,3,5]` a reference to another field, e.g. `{{ value }}` that will be used as indices to access a given array',
+    ),
+  method: v
+    .string()
+    .optional()
+    .describe(
+      'Name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format',
+    ),
   length: v
     .union([v.number().check((v) => Number.isInteger(v) && v >= 0), Reference])
-    .optional(),
+    .optional()
+    .describe(
+      'A number, e.g. `3` or a reference to another field, e.g. `{{ value }}` that will be used to determine the number of calls. If this is not provided the method is called until it reverts',
+    ),
   maxLength: v
     .number()
     .check((v) => Number.isInteger(v) && v >= 0)
-    .optional(),
+    .optional()
+    .describe(
+      `A guard against infinite loops. Prevents the method to be called an excessive number of times. Defaults to ${DEFAULT_MAX_LENGTH}`,
+    ),
   startIndex: v
     .number()
     .check((v) => Number.isInteger(v) && v >= 0)
-    .optional(),
-  ignoreRelative: v.boolean().optional(),
+    .optional()
+    .describe('The index of the first element to be read. Defaults to `0`'),
+  ignoreRelative: v
+    .boolean()
+    .optional()
+    .describe(
+      "If set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.",
+    ),
 })
-
-const DEFAULT_MAX_LENGTH = 100
 
 export class ArrayHandler implements Handler {
   readonly dependencies: string[] = []
