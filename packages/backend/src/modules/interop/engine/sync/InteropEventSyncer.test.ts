@@ -13,11 +13,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type {
-  DataRequest,
-  InteropEvent,
-  InteropPluginResyncable,
-  LogToCapture,
+import {
+  createEventParser,
+  type DataRequest,
+  type InteropEvent,
+  type InteropPluginResyncable,
+  type LogToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { toEventSelector } from '../utils'
@@ -264,6 +265,7 @@ describe(InteropEventSyncer.name, () => {
   describe(buildLogQueryForPlugin.name, () => {
     it('includes only addresses on the target chain and their topics', () => {
       const signature = 'event Transfer(address,address,uint256)'
+      const parser = createEventParser(signature)
       const ethAddress = ChainSpecificAddress.fromLong(
         'ethereum',
         EthereumAddress.random(),
@@ -276,8 +278,9 @@ describe(InteropEventSyncer.name, () => {
         dataRequests: [
           {
             type: 'event',
-            signature,
+            signature: parser,
             addresses: [ethAddress, arbAddress],
+            captureFn: (_log) => {},
           },
         ],
       })
@@ -294,6 +297,7 @@ describe(InteropEventSyncer.name, () => {
 
     it('is empty when no addresses match the chain', () => {
       const signature = 'event Transfer(address,address,uint256)'
+      const parser = createEventParser(signature)
       const arbAddress = ChainSpecificAddress.fromLong(
         'arbitrum',
         EthereumAddress.random(),
@@ -302,8 +306,9 @@ describe(InteropEventSyncer.name, () => {
         dataRequests: [
           {
             type: 'event',
-            signature,
+            signature: parser,
             addresses: [arbAddress],
+            captureFn: (_log) => {},
           },
         ],
       })

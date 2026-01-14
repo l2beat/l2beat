@@ -1,6 +1,7 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
+  createEventDataRequest,
   createEventParser,
   createInteropEventType,
   type DataRequest,
@@ -60,21 +61,24 @@ export class AcrossPlugin implements InteropPluginResyncable {
       )
 
     return [
-      {
+      createEventDataRequest({
         type: 'event',
-        signature: fundsDepositedLog,
+        signature: parseFundsDeposited,
         addresses: spokePoolAddresses,
-      },
-      {
+        captureFn: (_log) => {},
+      }),
+      createEventDataRequest({
         type: 'event',
-        signature: filledRelayLog,
+        signature: parseFilledRelay,
         addresses: spokePoolAddresses,
-      },
-      {
+        captureFn: (_log) => {},
+      }),
+      createEventDataRequest({
         type: 'event',
-        signature: filledV3RelayLog,
+        signature: parseFilledV3Relay,
         addresses: spokePoolAddresses,
-      },
+        captureFn: (_log) => {},
+      }),
     ]
   }
 

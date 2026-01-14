@@ -206,10 +206,17 @@ export interface InteropEventDb {
 
 export type DataRequest = EventDataRequest
 
-interface EventDataRequest {
+interface EventDataRequest<TParser extends EventParser = EventParser> {
   type: 'event'
-  signature: string
+  signature: TParser
   addresses: ChainSpecificAddress[]
+  captureFn: (log: ParsedEventFromParser<TParser>) => void
+}
+
+export function createEventDataRequest<TParser extends EventParser>(
+  request: EventDataRequest<TParser>,
+): EventDataRequest<TParser> {
+  return request
 }
 
 export interface InteropPlugin {
@@ -240,12 +247,23 @@ export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
   ContractEventName<[T]>
 >['args']
 
-export function createEventParser<T extends `event ${string}(${string}`>(
-  eventSignature: T,
-): (
+export type EventParser<
+  T extends `event ${string}(${string}` = `event ${string}(${string}`,
+> = ((
   log: Log,
   addressWhitelist: EthereumAddress[] | null,
-) => ParsedEvent<ParseAbiItem<T>> | undefined {
+) => ParsedEvent<ParseAbiItem<T>> | undefined) & {
+  signature: T
+  topic0?: string
+}
+
+export type ParsedEventFromParser<T extends EventParser> = NonNullable<
+  ReturnType<T>
+>
+
+export function createEventParser<T extends `event ${string}(${string}`>(
+  eventSignature: T,
+): EventParser<T> {
   const eventName = eventSignature.slice(
     'event '.length,
     eventSignature.indexOf('('),
@@ -254,7 +272,7 @@ export function createEventParser<T extends `event ${string}(${string}`>(
   // biome-ignore lint/suspicious/noExplicitAny: Viem types are hell
   const topic0 = encodeEventTopics({ abi, eventName } as any)[0]
 
-  return function parseEvent(
+  const parseEvent = function parseEvent(
     log: Log,
     addressWhitelist: EthereumAddress[] | null,
   ): ParsedEvent<ParseAbiItem<T>> | undefined {
@@ -278,6 +296,11 @@ export function createEventParser<T extends `event ${string}(${string}`>(
       return undefined
     }
   }
+
+  return Object.assign(parseEvent, {
+    signature: eventSignature,
+    topic0,
+  })
 }
 
 export const Result = { Ignore, Message, Transfer }

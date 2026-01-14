@@ -54,8 +54,12 @@ export function buildLogQueryForPlugin(
     }
     if (addressesOnThisChain > 0) {
       // TODO try also with `toEventSelector` straight from viem
-      const topic0 = toEventSelector(eventRequest.signature)
-      result.topic0s.add(topic0)
+      const topic0 =
+        eventRequest.signature.topic0 ??
+        toEventSelector(eventRequest.signature.signature)
+      if (topic0) {
+        result.topic0s.add(topic0)
+      }
     }
   }
 
