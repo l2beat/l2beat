@@ -206,58 +206,69 @@ export interface InteropEventDb {
 
 export type EventSignature = `event ${string}(${string}`
 
-export type ParsedEventFromSignature<TSignature extends EventSignature> =
-  ParsedEvent<ParseAbiItem<TSignature>>
+export type ParsedEvent<TSignature extends EventSignature> =
+  ParsedEventFromAbi<ParseAbiItem<TSignature>>
 
-export type TxEventsContainer<TSignatures extends readonly EventSignature[]> = {
+export type TxEvents<TSignatures extends readonly EventSignature[]> = {
   get<S extends TSignatures[number]>(
     signature: S,
-  ): ParsedEventFromSignature<S>[]
+  ): ParsedEvent<S>[]
 }
 
-export type EventDataRequest<TSignature extends EventSignature = EventSignature> = {
+type EventDataRequestBase<TSignature extends EventSignature = EventSignature> = {
   type: 'event'
   signature: TSignature
   addresses: ChainSpecificAddress[]
+}
+
+type EventDataRequestWithoutTx<
+  TSignature extends EventSignature = EventSignature,
+> = EventDataRequestBase<TSignature> & {
+  includeTxEvents?: undefined
   captureFn(
-    log: ParsedEventFromSignature<TSignature>,
+    log: ParsedEvent<TSignature>,
     context: LogToCapture,
   ): Omit<InteropEvent, 'plugin'>[] | undefined
 }
 
-export type EventWithTxLogsDataRequest<
+type EventDataRequestWithTx<
   TSignature extends EventSignature = EventSignature,
   TTxSignatures extends readonly EventSignature[] = readonly EventSignature[],
-> = {
-  type: 'eventWithTxLogs'
-  signature: TSignature
-  addresses: ChainSpecificAddress[]
+> = EventDataRequestBase<TSignature> & {
   includeTxEvents: TTxSignatures
   captureFn(
-    log: ParsedEventFromSignature<TSignature>,
-    txEvents: TxEventsContainer<TTxSignatures>,
+    log: ParsedEvent<TSignature>,
+    txEvents: TxEvents<TTxSignatures>,
     context: LogToCapture,
   ): Omit<InteropEvent, 'plugin'>[] | undefined
 }
 
-export type DataRequest = EventDataRequest | EventWithTxLogsDataRequest
+export type EventDataRequest<
+  TSignature extends EventSignature = EventSignature,
+  TTxSignatures extends readonly EventSignature[] = readonly EventSignature[],
+> =
+  | EventDataRequestWithoutTx<TSignature>
+  | EventDataRequestWithTx<TSignature, TTxSignatures>
+
+export type DataRequest = EventDataRequest
+
+type EventDataRequestInput =
+  | Omit<EventDataRequestWithoutTx, 'type'>
+  | Omit<EventDataRequestWithTx, 'type'>
 
 export function eventDataRequest<TSignature extends EventSignature>(
-  request: Omit<EventDataRequest<TSignature>, 'type'>,
-): EventDataRequest<TSignature> {
-  return { type: 'event', ...request }
-}
-
-export function eventWithTxLogsDataRequest<
+  request: Omit<EventDataRequestWithoutTx<TSignature>, 'type'>,
+): EventDataRequestWithoutTx<TSignature>
+export function eventDataRequest<
   TSignature extends EventSignature,
   const TTxSignatures extends readonly EventSignature[],
 >(
-  request: Omit<
-    EventWithTxLogsDataRequest<TSignature, TTxSignatures>,
-    'type'
-  >,
-): EventWithTxLogsDataRequest<TSignature, TTxSignatures> {
-  return { type: 'eventWithTxLogs', ...request }
+  request: Omit<EventDataRequestWithTx<TSignature, TTxSignatures>, 'type'>,
+): EventDataRequestWithTx<TSignature, TTxSignatures>
+export function eventDataRequest(
+  request: EventDataRequestInput,
+): EventDataRequest {
+  return { type: 'event', ...request }
 }
 
 export interface InteropPlugin {
@@ -282,7 +293,7 @@ export function isPluginResyncable(
   return 'getDataRequests' in plugin
 }
 
-export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
+export type ParsedEventFromAbi<T extends Abi[number]> = DecodeEventLogReturnType<
   [T],
   ContractEventName<[T]>
 >['args']
@@ -292,7 +303,7 @@ export type EventParser<
 > = ((
   log: Log,
   addressWhitelist: EthereumAddress[] | null,
-) => ParsedEvent<ParseAbiItem<T>> | undefined) & {
+) => ParsedEventFromAbi<ParseAbiItem<T>> | undefined) & {
   signature: T
   topic0?: string
 }
@@ -315,7 +326,7 @@ export function createEventParser<T extends EventSignature>(
   const parseEvent = function parseEvent(
     log: Log,
     addressWhitelist: EthereumAddress[] | null,
-  ): ParsedEvent<ParseAbiItem<T>> | undefined {
+  ): ParsedEventFromAbi<ParseAbiItem<T>> | undefined {
     if (!topic0 || log.topics?.[0] !== topic0) return undefined
     if (
       addressWhitelist &&
@@ -331,7 +342,7 @@ export function createEventParser<T extends EventSignature>(
         data: log.data,
         topics: log.topics,
       })
-      return args as ParsedEvent<ParseAbiItem<T>>
+      return args as ParsedEventFromAbi<ParseAbiItem<T>>
     } catch {
       return undefined
     }

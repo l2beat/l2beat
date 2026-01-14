@@ -4,21 +4,21 @@ import {
   createInteropEventType,
   type DataRequest,
   eventDataRequest,
-  eventWithTxLogsDataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
-  type ParsedEventFromSignature,
+  type ParsedEvent,
   Result,
-  type TxEventsContainer,
+  type TxEvents,
 } from '../types'
 import { AcrossConfig } from './across.config'
 
 const fundsDepositedLog =
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)'
+type ParsedFundsDepositedLog = ParsedEvent<typeof fundsDepositedLog>
 
 export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
@@ -60,30 +60,30 @@ export class AcrossPlugin implements InteropPluginResyncable {
       )
 
     return [
-      eventWithTxLogsDataRequest({
+      eventDataRequest({
         signature: fundsDepositedLog,
         addresses: spokePoolAddresses,
         includeTxEvents: [filledV3RelayLog],
-        captureFn: this.captureFundsDepositedWithTx,
+        captureFn: this.captureFundsDepositedWithTx.bind(this),
       }),
       eventDataRequest({
         signature: filledRelayLog,
         addresses: spokePoolAddresses,
-        captureFn: this.captureFilledRelay,
+        captureFn: this.captureFilledRelay.bind(this),
       }),
       eventDataRequest({
         signature: filledV3RelayLog,
         addresses: spokePoolAddresses,
-        captureFn: this.captureFilledV3Relay,
+        captureFn: this.captureFilledV3Relay.bind(this),
       }),
     ]
   }
 
-  private captureFundsDepositedWithTx = (
-    log: ParsedEventFromSignature<typeof fundsDepositedLog>,
-    _txEvents: TxEventsContainer<[typeof filledV3RelayLog]>,
+  private captureFundsDepositedWithTx(
+    log: ParsedEvent<typeof fundsDepositedLog>,
+    _txEvents: TxEvents<[typeof filledV3RelayLog]>,
     input: LogToCapture,
-  ) => {
+  ) {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 
@@ -106,10 +106,10 @@ export class AcrossPlugin implements InteropPluginResyncable {
     ]
   }
 
-  private captureFilledRelay = (
-    log: ParsedEventFromSignature<typeof filledRelayLog>,
+  private captureFilledRelay (
+    log: ParsedEvent<typeof filledRelayLog>,
     input: LogToCapture,
-  ) => {
+  ) {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 
@@ -132,10 +132,10 @@ export class AcrossPlugin implements InteropPluginResyncable {
     ]
   }
 
-  private captureFilledV3Relay = (
-    log: ParsedEventFromSignature<typeof filledV3RelayLog>,
+  private captureFilledV3Relay (
+    log: ParsedEvent<typeof filledV3RelayLog>,
     input: LogToCapture,
-  ) => {
+  ) {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 

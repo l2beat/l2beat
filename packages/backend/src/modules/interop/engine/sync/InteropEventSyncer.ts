@@ -21,8 +21,8 @@ import {
   type InteropEvent,
   type InteropPluginResyncable,
   type LogToCapture,
-  type ParsedEventFromSignature,
-  type TxEventsContainer,
+  type ParsedEvent,
+  type TxEvents,
 } from '../../plugins/types'
 import { getItemsToCapture } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -44,7 +44,7 @@ export function buildLogQueryForPlugin(
   const result = new LogQuery()
   const eventRequests = plugin
     .getDataRequests()
-    .filter((r) => r.type === 'event' || r.type === 'eventWithTxLogs')
+    .filter((r) => r.type === 'event')
 
   for (const eventRequest of eventRequests) {
     let addressesOnThisChain = 0
@@ -59,9 +59,7 @@ export function buildLogQueryForPlugin(
     if (addressesOnThisChain > 0) {
       const signatures = [
         eventRequest.signature,
-        ...(eventRequest.type === 'eventWithTxLogs'
-          ? eventRequest.includeTxEvents
-          : []),
+        ...(eventRequest.includeTxEvents ?? []),
       ]
       for (const signature of signatures) {
         // TODO try also with `toEventSelector` straight from viem
@@ -188,7 +186,7 @@ export class InteropEventSyncer extends TimeLoop {
       const parsed = parser(logToCapture.log, addressesOnThisChain)
       if (!parsed) continue
 
-      if (request.type === 'event') {
+      if (request.includeTxEvents === undefined) {
         return request.captureFn(parsed, logToCapture)
       }
 
@@ -208,10 +206,10 @@ export class InteropEventSyncer extends TimeLoop {
       const txEvents = {
         get: <S extends (typeof request.includeTxEvents)[number]>(
           signature: S,
-        ): ParsedEventFromSignature<S>[] => {
-          return (txEventsBySignature.get(signature) ?? []) as ParsedEventFromSignature<S>[]
+        ): ParsedEvent<S>[] => {
+          return (txEventsBySignature.get(signature) ?? []) as ParsedEvent<S>[]
         },
-      } as TxEventsContainer<typeof request.includeTxEvents>
+      } as TxEvents<typeof request.includeTxEvents>
 
       return request.captureFn(parsed, txEvents, logToCapture)
     }

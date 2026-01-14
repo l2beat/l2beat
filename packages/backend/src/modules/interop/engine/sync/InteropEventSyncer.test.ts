@@ -374,7 +374,7 @@ describe(InteropEventSyncer.name, () => {
       const plugin = makePlugin({
         dataRequests: [
           {
-            type: 'eventWithTxLogs',
+            type: 'event',
             signature,
             includeTxEvents: [includeSignature],
             addresses: [ethAddress],
