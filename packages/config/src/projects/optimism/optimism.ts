@@ -19,6 +19,13 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
+  nonTemplateProgramHashes: [
+    {
+      hash: '0x0075c7ec424df1386508596dc886e528c733a5f2c7728e7a81ad7676495ff31c',
+      title: 'Aggregation program of OP Succinct FDP',
+      verificationStatus: 'successful',
+    },
+  ],
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',

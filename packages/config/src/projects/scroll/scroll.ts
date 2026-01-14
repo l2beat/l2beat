@@ -22,9 +22,9 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -636,7 +636,7 @@ export const scroll: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: getScrollVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: getScrollVKeys().map((el) => PROGRAM_HASHES(el)),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
