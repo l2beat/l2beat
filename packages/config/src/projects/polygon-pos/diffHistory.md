@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x36c75c26f1691d801fc8a3402cffbe4defa113b5
+
+# Diff at Wed, 14 Jan 2026 06:29:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767796862
+- current timestamp: 1768372119
+
+## Description
+
+Two members added to mapper multisig, vali added.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
+      values.$members.1:
++        "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0xb92c4864910fe157e8592ea57c81b1caecd7717c
 
 # Diff at Wed, 07 Jan 2026 14:42:22 GMT:
