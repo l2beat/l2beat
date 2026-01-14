@@ -6,13 +6,29 @@ import { TopProtocolsByVolume } from './TopProtocolsByVolume'
 export function CombinedProtocolsWidget() {
   const [view, setView] = useState<'volume' | 'transfers'>('volume')
   return (
-    <div className="relative xl:hidden">
-      {view === 'volume' ? (
-        <TopProtocolsByVolume />
-      ) : (
-        <TopProtocolsByTransfers />
-      )}
-      <div className="absolute right-[50%] bottom-2 flex">
+    <div className="relative overflow-hidden xl:hidden">
+      <div className="relative h-full">
+        {/* Animated widgets - both always in DOM */}
+        <div
+          className={cn(
+            'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
+            view === 'volume' ? 'translate-x-0' : '-translate-x-full',
+            view === 'volume' ? 'z-10' : 'z-0',
+          )}
+        >
+          <TopProtocolsByVolume />
+        </div>
+        <div
+          className={cn(
+            'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
+            view === 'transfers' ? 'translate-x-0' : 'translate-x-full',
+            view === 'transfers' ? 'z-10' : 'z-0',
+          )}
+        >
+          <TopProtocolsByTransfers />
+        </div>
+      </div>
+      <div className={cn('absolute right-[50%] bottom-2 flex', 'z-20')}>
         <div
           className="flex size-4 cursor-pointer items-center justify-center"
           onClick={() => setView('volume')}
