@@ -99,6 +99,25 @@
     },
     {
       "mode": "auto",
+      "id": "lighter-SKY",
+      "priceId": "sky",
+      "symbol": "SKY",
+      "name": "SKY Governance Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+        "decimals": 18,
+        "sinceTimestamp": 1737090335
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lighter-UNI",
       "priceId": "uniswap",
       "symbol": "UNI",
