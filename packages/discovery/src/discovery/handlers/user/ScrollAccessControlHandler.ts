@@ -242,7 +242,10 @@ function parseRoleLog(
   } as const
 }
 
-export const ScrollAccessControlHandlerBundle = declareHandler('scrollAccessControl', {
-  clazz: ScrollAccessControlHandler,
-  definition: ScrollAccessControlHandlerDefinition,
-})
+export const ScrollAccessControlHandlerBundle = declareHandler(
+  'scrollAccessControl',
+  {
+    clazz: ScrollAccessControlHandler,
+    definition: ScrollAccessControlHandlerDefinition,
+  },
+)

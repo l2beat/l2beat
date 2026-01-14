@@ -115,7 +115,10 @@ function isNotChainSpecificAddress<T extends object>(
   return typeof value !== 'string'
 }
 
-export const LayerZeroMultisigHandlerBundle = declareHandler('layerZeroMultisig', {
-  clazz: LayerZeroMultisigHandler,
-  definition: LayerZeroMultisigHandlerDefinition,
-})
+export const LayerZeroMultisigHandlerBundle = declareHandler(
+  'layerZeroMultisig',
+  {
+    clazz: LayerZeroMultisigHandler,
+    definition: LayerZeroMultisigHandlerDefinition,
+  },
+)

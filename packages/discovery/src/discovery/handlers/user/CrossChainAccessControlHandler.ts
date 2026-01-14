@@ -263,7 +263,10 @@ function parseRoleLog(
   } as const
 }
 
-export const CrossChainAccessControlHandlerBundle = declareHandler('crossChainAccessControl', {
-  clazz: CrossChainAccessControlHandler,
-  definition: CrossChainAccessControlHandlerDefinition,
-})
+export const CrossChainAccessControlHandlerBundle = declareHandler(
+  'crossChainAccessControl',
+  {
+    clazz: CrossChainAccessControlHandler,
+    definition: CrossChainAccessControlHandlerDefinition,
+  },
+)

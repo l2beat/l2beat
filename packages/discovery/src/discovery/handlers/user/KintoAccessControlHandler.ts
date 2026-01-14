@@ -374,7 +374,7 @@ function parseTargetLog(
         selector: event.args.selector,
         role: event.args.roleId.toHexString(),
       } as const
-      default:
+    default:
       return {
         type: 'TargetAdminDelayUpdated',
         target: ChainSpecificAddress.fromLong(longChain, event.args.target),
@@ -384,7 +384,10 @@ function parseTargetLog(
   }
 }
 
-export const KintoAccessControlHandlerBundle = declareHandler('kintoAccessControl', {
-  clazz: KintoAccessControlHandler,
-  definition: KintoAccessControlHandlerDefinition,
-})
+export const KintoAccessControlHandlerBundle = declareHandler(
+  'kintoAccessControl',
+  {
+    clazz: KintoAccessControlHandler,
+    definition: KintoAccessControlHandlerDefinition,
+  },
+)

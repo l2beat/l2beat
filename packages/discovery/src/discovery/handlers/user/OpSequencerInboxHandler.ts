@@ -103,7 +103,10 @@ export class OpStackSequencerInboxHandler implements Handler {
   }
 }
 
-export const OpStackSequencerInboxHandlerBundle = declareHandler('opStackSequencerInbox', {
-  clazz: OpStackSequencerInboxHandler,
-  definition: OpStackSequencerInboxHandlerDefinition,
-})
+export const OpStackSequencerInboxHandlerBundle = declareHandler(
+  'opStackSequencerInbox',
+  {
+    clazz: OpStackSequencerInboxHandler,
+    definition: OpStackSequencerInboxHandlerDefinition,
+  },
+)

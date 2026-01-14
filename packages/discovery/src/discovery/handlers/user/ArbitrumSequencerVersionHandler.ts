@@ -223,7 +223,10 @@ export class ArbitrumSequencerVersionHandler implements Handler {
   }
 }
 
-export const ArbitrumSequencerVersionHandlerBundle = declareHandler('arbitrumSequencerVersion', {
-  clazz: ArbitrumSequencerVersionHandler,
-  definition: ArbitrumSequencerVersionDefinition,
-})
+export const ArbitrumSequencerVersionHandlerBundle = declareHandler(
+  'arbitrumSequencerVersion',
+  {
+    clazz: ArbitrumSequencerVersionHandler,
+    definition: ArbitrumSequencerVersionDefinition,
+  },
+)

@@ -289,7 +289,10 @@ function getSighash(data: string): string {
   return Bytes.fromHex(data).toString().slice(0, 10)
 }
 
-export const ArbitrumScheduledTransactionsHandlerBundle = declareHandler('arbitrumScheduledTransactions', {
-  clazz: ArbitrumScheduledTransactionsHandler,
-  definition: ArbitrumScheduledTransactionsHandlerDefinition,
-})
+export const ArbitrumScheduledTransactionsHandlerBundle = declareHandler(
+  'arbitrumScheduledTransactions',
+  {
+    clazz: ArbitrumScheduledTransactionsHandler,
+    definition: ArbitrumScheduledTransactionsHandlerDefinition,
+  },
+)
