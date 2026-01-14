@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "SKY",
+      "address": "0x56072C95FAA701256059aa122697B133aDEd9279"
+    },
+    {
       "symbol": "LIT",
       "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2"
     },

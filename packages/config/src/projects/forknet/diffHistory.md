@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x36fae4976f4a4fccb1418c7490e7ae0c52dc9f84
+
+# Diff at Wed, 14 Jan 2026 05:59:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1764933637
+- current timestamp: 1768370289
+
+## Description
+
+SuperchainConfig upgrade (new known version, still fake).
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) {
+    +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
+      template:
+-        "opstack/SuperchainConfigFake"
++        "opstack/SuperchainConfigFake_expiry"
+      sourceHashes.1:
+-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
++        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
+      values.$implementation:
+-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.1:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$pastUpgrades.2:
++        ["2026-01-12T08:51:11.000Z","0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.GUARDIAN_SLOT:
+-        "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68"
+      values.PAUSED_SLOT:
+-        "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6"
+      values.version:
+-        "1.2.0"
++        "2.4.0"
+      values.initVersion:
++        2
+      values.pauseExpiry:
++        7884000
+      values.pauseExpiryFmt:
++        "3mo 1d"
+      values.proxyAdmin:
++        "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 465 +++++++++++++++------
+ 1 file changed, 346 insertions(+), 119 deletions(-)
+```
+
 Generated with discovered.json: 0x51ae10a285c2f9e0b1788b4d3d04b56710ba5095
 
 # Diff at Wed, 17 Dec 2025 10:37:11 GMT:

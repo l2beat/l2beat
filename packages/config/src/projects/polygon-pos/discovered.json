@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1767796862,
+  "timestamp": 1768372119,
   "configHash": "0x6e415e01070626095a4349f2876188545236a3cfb8ecf78a8c17f1e8d4a41f84",
   "entries": [
     {
@@ -146,7 +146,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3128979,
+        "counter": 3131588,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -436,6 +436,8 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
+          "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4",
           "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34",
           "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
           "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac",
@@ -449,8 +451,8 @@
         "domainSeparator": "0x9fb8e0882de32a1835200cbaef3ed35f229a6bc7877fba2e41395056ca241987",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 793,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 794,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -513,7 +515,7 @@
         ],
         "symbol": "MV",
         "tokenURI": ["", "", "", ""],
-        "totalSupply": 134
+        "totalSupply": 135
       },
       "implementationNames": {
         "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
@@ -668,13 +670,13 @@
         "CHECKPOINT_REWARD": "37108000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 95064,
-        "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3496521301200489891081698738",
+        "currentEpoch": 95426,
+        "currentValidatorSetSize": 105,
+        "currentValidatorSetTotalStake": "3485974623009845131854429666",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 95064,
+        "epoch": 95426,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -688,7 +690,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 193,
+        "NFTCounter": 194,
         "owner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -702,20 +704,20 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3365363965257947672216180",
+        "rewardPerStake": "3370745017241981504930077",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "12045939209428901681108",
+        "totalHeimdallFee": "12046939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "152486841321488829113832962",
-        "totalStaked": "12139181490862037204222311",
+        "totalRewardsLiquidated": "153049691957429988084259322",
+        "totalStaked": "12244375498574853391069477",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3496521301200489891081698738",
-          "stakerCount": 104
+          "amount": "3485974623009845131854429666",
+          "stakerCount": 105
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -748,6 +750,11 @@
     },
     {
       "address": "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -945,7 +952,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 950640000,
+        "_nextHeaderBlock": 954260000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -954,8 +961,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 950630000,
-        "getLastChildBlock": 81336997,
+        "currentHeaderBlock": 954250000,
+        "getLastChildBlock": 81625253,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1139,7 +1146,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1587,6 +1594,11 @@
         "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68": "ChainExitERC1155PredicateProxy",
         "eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f": "ChainExitERC1155Predicate"
       }
+    },
+    {
+      "address": "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ExitNFT",
@@ -3130,6 +3142,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24183462 },
-  "permissionsConfigHash": "0x897748f5f3579352d895814fea4d9f79ee15ebd8737ce6725d5a5b3f3d63dc37"
+  "usedBlockNumbers": { "ethereum": 24231153 },
+  "permissionsConfigHash": "0x94ca04e14155381a7f5d80aed78bffd8279f966413d9e6bc5ad2fd04436f191f"
 }

@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1764933637,
+  "timestamp": 1768370289,
   "configHash": "0xd87b65f00e9561bf059a9fe2c8810e19413e85b31b9f3e0da089ee6fb80a4abb",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -71,10 +71,10 @@
       "name": "SuperchainConfig",
       "address": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigFake",
+      "template": "opstack/SuperchainConfigFake_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",
@@ -82,24 +82,38 @@
       "sinceBlock": 22781049,
       "values": {
         "$admin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
-        "$implementation": "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
+        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
         "$pastUpgrades": [
           [
             "2025-06-25T11:06:59.000Z",
             "0x63366bb4d9f073e6f0e1de8495baf47a7e1921c02049305253907db5ac6839ca",
             ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+          ],
+          [
+            "2026-01-12T08:51:11.000Z",
+            "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
+            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+          ],
+          [
+            "2026-01-12T08:51:11.000Z",
+            "0x00b0d87bdd24f6273dabd8cb118814977b0e80773f88cb5baabb50463252d744",
+            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "guardian": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
+        "initVersion": 2,
         "paused": false,
-        "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
-        "version": "1.2.0"
+        "pauseExpiry": 7884000,
+        "pauseExpiryFmt": "3mo 1d",
+        "proxyAdmin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
+        "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "version": "2.4.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": "Proxy",
-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": "SuperchainConfig"
+        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
@@ -421,7 +435,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 193,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1537,21 +1551,6 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
-    "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": [
-      "constructor()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(string identifier)",
-      "event Unpaused()",
-      "function GUARDIAN_SLOT() view returns (bytes32)",
-      "function PAUSED_SLOT() view returns (bytes32)",
-      "function guardian() view returns (address guardian_)",
-      "function initialize(address _guardian, bool _paused)",
-      "function pause(string _identifier)",
-      "function paused() view returns (bool paused_)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
     "eth:0x514795090ceA49c14f65b45c4403A36b3576AE03": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1775,6 +1774,38 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _guardian)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function unpause(address _identifier)",
+      "function version() view returns (string)"
     ],
     "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": [
       "constructor(address _owner)",
@@ -2025,11 +2056,11 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772",
     "polygon-cdk/PermissionedDisputeGameUnused": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3"
   },
-  "usedBlockNumbers": { "ethereum": 23946416 },
+  "usedBlockNumbers": { "ethereum": 24231000 },
   "permissionsConfigHash": "0x5dcbdd4df0caa4342fe538b9a5aab9cd0a6cd36e876993fc45c32491ae206b1e"
 }
