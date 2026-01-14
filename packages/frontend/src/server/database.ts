@@ -44,8 +44,8 @@ function createConnectionTag() {
           : 'dev'
   const base = `FE-${suffix}`
 
-  if (env.HEROKU_APP_NAME) {
-    return `${base}-${env.HEROKU_APP_NAME}`
+  if (env.COOLIFY_RESOURCE_UUID) {
+    return `${base}-${env.COOLIFY_RESOURCE_UUID}`
   }
 
   return base
