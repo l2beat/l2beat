@@ -61,22 +61,44 @@ const parseExecutionStateChanged = createEventParser(
   'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)',
 )
 
-// TokenPool events emitted when tokens are released or minted on destination chain
-// These are more reliable than Transfer events as they're CCIP-specific and avoid
-// capturing internal mint operations (e.g., USDC burn/mint pattern)
+/*
+TokenPool events emitted when tokens are released or minted on destination chain.
+These are more reliable than Transfer events as they're CCIP-specific and avoid
+capturing internal mint operations (e.g., USDC burn/mint pattern).
 
-// Newer CCIP TokenPool event
+CCIP v1.6.1+ (ReleasedOrMinted - unified event):
+  https://docs.chain.link/ccip/api-reference/evm/v1.6.1/token-pool#releasedorminted
+  event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)
+  - Token address is included in event data
+  - `sender` is the offRamp address (msg.sender calling the pool)
+
+CCIP v1.5.x - v1.6.0 (Released/Minted - separate events):
+  https://docs.chain.link/ccip/api-reference/evm/v1.6.0/token-pool#minted
+  https://docs.chain.link/ccip/api-reference/evm/v1.5.1/token-pool
+  event Released(address indexed sender, address indexed recipient, uint256 amount)
+  event Minted(address indexed sender, address indexed recipient, uint256 amount)
+  - Token address must be extracted from the preceding Transfer event
+  - Event order: Transfer -> Released/Minted -> ExecutionStateChanged
+  - `sender` is the offRamp address
+*/
+
+// v1.6.1+ TokenPool event (has token address in event data)
 const parseReleasedOrMinted = createEventParser(
-  'event ReleasedOrMinted(uint64 indexed srcChainSelector, address token, address offRamp, address recipient, uint256 amount)',
+  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)',
 )
 
-// Older CCIP TokenPool event (still used by some pools)
+// v1.5.x - v1.6.0 TokenPool events (token address from preceding Transfer event)
 const parseReleased = createEventParser(
   'event Released(address indexed sender, address indexed recipient, uint256 amount)',
 )
 
 const parseMinted = createEventParser(
   'event Minted(address indexed sender, address indexed recipient, uint256 amount)',
+)
+
+// Standard ERC20 Transfer event to extract token address for v1.5 events
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
 export const CCIPSendRequested = createInteropEventType<{
@@ -138,6 +160,27 @@ const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
   },
 ])
 
+/**
+ * Find the token address from the Transfer event immediately preceding a Released/Minted event.
+ * In v1.5 TokenPools, the event order is: Transfer -> Released/Minted
+ */
+function findPrecedingTransferToken(
+  logs: LogToCapture['txLogs'],
+  currentIndex: number,
+  amount: bigint,
+): string | undefined {
+  // Look backwards from the current log to find a matching Transfer event
+  for (let j = currentIndex - 1; j >= 0; j--) {
+    const prevLog = logs[j]
+    const transfer = parseTransfer(prevLog, null)
+    if (transfer && transfer.value === amount) {
+      // The token address is the contract that emitted the Transfer event
+      return prevLog.address
+    }
+  }
+  return undefined
+}
+
 export class CCIPPlugIn implements InteropPlugin {
   readonly name = 'ccip'
 
@@ -168,13 +211,16 @@ export class CCIPPlugIn implements InteropPlugin {
 
       // Collect token release/mint events from TokenPools in the same transaction
       // These are emitted in the same order as tokenAmounts[] in the source message
-      // Support multiple event formats: ReleasedOrMinted (new), Released, Minted (old)
+      // Support multiple event formats: ReleasedOrMinted (v1.6+), Released/Minted (v1.5)
       const dstTokens: { address: Address32; amount: bigint }[] = []
-      for (const log of input.txLogs) {
-        // Only look at logs before ExecutionStateChanged
-        if ((log.logIndex ?? 0) >= (input.log.logIndex ?? 0)) continue
+      const logsBeforeExecution = input.txLogs.filter(
+        (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+      )
 
-        // Try newer ReleasedOrMinted event (has token address in event data)
+      for (let i = 0; i < logsBeforeExecution.length; i++) {
+        const log = logsBeforeExecution[i]
+
+        // Try v1.6+ ReleasedOrMinted event (has token address in event data)
         const releasedOrMinted = parseReleasedOrMinted(log, null)
         if (releasedOrMinted) {
           dstTokens.push({
@@ -184,23 +230,39 @@ export class CCIPPlugIn implements InteropPlugin {
           continue
         }
 
-        // Try older Released event (token address is log.address)
+        // Try v1.5 Released event (token address from preceding Transfer event)
         const released = parseReleased(log, null)
         if (released) {
-          dstTokens.push({
-            address: Address32.from(log.address),
-            amount: released.amount,
-          })
+          // Find the Transfer event immediately before this Released event
+          const tokenAddress = findPrecedingTransferToken(
+            logsBeforeExecution,
+            i,
+            released.amount,
+          )
+          if (tokenAddress) {
+            dstTokens.push({
+              address: Address32.from(tokenAddress),
+              amount: released.amount,
+            })
+          }
           continue
         }
 
-        // Try older Minted event (token address is log.address)
+        // Try v1.5 Minted event (token address from preceding Transfer event)
         const minted = parseMinted(log, null)
         if (minted) {
-          dstTokens.push({
-            address: Address32.from(log.address),
-            amount: minted.amount,
-          })
+          // Find the Transfer event immediately before this Minted event
+          const tokenAddress = findPrecedingTransferToken(
+            logsBeforeExecution,
+            i,
+            minted.amount,
+          )
+          if (tokenAddress) {
+            dstTokens.push({
+              address: Address32.from(tokenAddress),
+              amount: minted.amount,
+            })
+          }
         }
       }
 
