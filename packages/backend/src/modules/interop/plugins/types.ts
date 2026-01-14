@@ -3,7 +3,7 @@ import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   type Transaction,
   UnixTime,
@@ -244,7 +244,7 @@ export function createEventParser<T extends `event ${string}(${string}`>(
   eventSignature: T,
 ): (
   log: Log,
-  addressWhitelist: EthereumAddress[] | null,
+  addressWhitelist: (EthereumAddress | ChainSpecificAddress)[] | null,
 ) => ParsedEvent<ParseAbiItem<T>> | undefined {
   const eventName = eventSignature.slice(
     'event '.length,
@@ -256,12 +256,15 @@ export function createEventParser<T extends `event ${string}(${string}`>(
 
   return function parseEvent(
     log: Log,
-    addressWhitelist: EthereumAddress[] | null,
+    addressWhitelist: (EthereumAddress | ChainSpecificAddress)[] | null,
   ): ParsedEvent<ParseAbiItem<T>> | undefined {
+    const ethereumAddresses = addressWhitelist?.map((a) =>
+      ChainSpecificAddress.check(a) ? ChainSpecificAddress.address(a) : a,
+    )
     if (!topic0 || log.topics?.[0] !== topic0) return undefined
     if (
-      addressWhitelist &&
-      !addressWhitelist.includes(EthereumAddress(log.address))
+      ethereumAddresses &&
+      !ethereumAddresses.includes(EthereumAddress(log.address))
     ) {
       return
     }

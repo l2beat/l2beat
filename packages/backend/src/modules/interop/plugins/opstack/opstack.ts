@@ -180,7 +180,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
 
       // check if this is an L2->*L1* message
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
-        ChainSpecificAddress.address(network.optimismPortal),
+        network.optimismPortal,
       ])
       if (withdrawalFinalized) {
         return [
@@ -193,7 +193,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
 
       // check if this is an *L1*->L2 message
       const sentMessage = parseSentMessage(input.log, [
-        ChainSpecificAddress.address(network.l1CrossDomainMessenger),
+        network.l1CrossDomainMessenger,
       ])
       if (sentMessage) {
         // see if we have SentMessageExtension1 event in the same tx
@@ -204,7 +204,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
         const extension =
           nextLog &&
           parseSentMessageExtension1(nextLog, [
-            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
+            network.l1CrossDomainMessenger,
           ])
 
         // Calculate the message hash using the same method as the contract
@@ -232,7 +232,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
       if (!network) return
       // check if this is an *L2*->L1 message
       const messagePassed = parseMessagePassed(input.log, [
-        ChainSpecificAddress.address(network.l2ToL1MessagePasser),
+        network.l2ToL1MessagePasser,
       ])
       if (messagePassed) {
         return [
@@ -245,7 +245,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
       }
       // otherwise check if this is an L1->*L2* message
       const relayedMessage = parseRelayedMessage(input.log, [
-        ChainSpecificAddress.address(network.l2CrossDomainMessenger),
+        network.l2CrossDomainMessenger,
       ])
       if (relayedMessage) {
         return [
