@@ -5,10 +5,10 @@ import type { InteropProtocolData } from '~/server/features/scaling/interop/util
 import { api } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 
-export type DisplayProtocol = InteropProtocolData & {
+export type DisplayVolumeProtocol = Omit<InteropProtocolData, 'transfers'> & {
   color: string
   othersCount?: number
 }
@@ -24,6 +24,8 @@ export function TopProtocolsByVolume() {
   const protocolsWithOthers = useMemo(() => {
     if (!data?.topProtocols) return []
 
+    data.topProtocols.sort((a, b) => b.volume.value - a.volume.value)
+
     const top5 = data.topProtocols.slice(0, 5)
     const others = data.topProtocols.slice(5)
 
@@ -31,16 +33,21 @@ export function TopProtocolsByVolume() {
       return top5
     }
 
-    const totalVolume = data.topProtocols.reduce((sum, p) => sum + p.volume, 0)
-    const othersVolume = others.reduce((sum, p) => sum + p.volume, 0)
+    const totalVolume = data.topProtocols.reduce(
+      (sum, p) => sum + p.volume.value,
+      0,
+    )
+    const othersVolume = others.reduce((sum, p) => sum + p.volume.value, 0)
     const othersShare = (othersVolume / totalVolume) * 100
 
     return [
       ...top5,
       {
         protocolName: 'Others',
-        volume: othersVolume,
-        share: othersShare,
+        volume: {
+          value: othersVolume,
+          share: othersShare,
+        },
         othersCount: others.length,
       },
     ]
@@ -51,7 +58,7 @@ export function TopProtocolsByVolume() {
     [protocolsWithOthers.length],
   )
 
-  const protocolsWithColors: DisplayProtocol[] = protocolsWithOthers.map(
+  const protocolsWithColors: DisplayVolumeProtocol[] = protocolsWithOthers.map(
     (protocol, index) => ({
       ...protocol,
       color: colors[index] ?? '#000000',
@@ -59,7 +66,7 @@ export function TopProtocolsByVolume() {
   )
 
   return (
-    <PrimaryCard className="flex items-start justify-between">
+    <PrimaryCard className="flex h-full items-start justify-between">
       <div>
         <h2 className="font-bold text-heading-20">Last 24 hours volume</h2>
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
@@ -79,10 +86,10 @@ export function TopProtocolsByVolume() {
                     : protocol.protocolName}
                 </td>
                 <td className="px-2 font-medium text-2xs text-secondary">
-                  {protocol.share.toFixed(2)}%
+                  {protocol.volume.share.toFixed(2)}%
                 </td>
                 <td className="font-medium text-2xs">
-                  {formatCurrency(protocol.volume, 'usd')}
+                  {formatCurrency(protocol.volume.value, 'usd')}
                 </td>
               </tr>
             ))}

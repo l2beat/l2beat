@@ -3,8 +3,14 @@ import { assert } from '@l2beat/shared-pure'
 
 export type InteropProtocolData = {
   protocolName: string
-  volume: number
-  share: number
+  volume: {
+    value: number
+    share: number
+  }
+  transfers: {
+    value: number
+    share: number
+  }
 }
 
 export function getTopProtocols(
@@ -14,38 +20,46 @@ export function getTopProtocols(
     dstChain: string
     srcValueUsd: number | null
     dstValueUsd: number | null
+    transferCount: number
   }[],
   from: string[],
   to: string[],
   interopProjects: Project<'interopConfig'>[],
 ): InteropProtocolData[] {
-  const map = new Map<string, number>()
+  const map = new Map<string, { volume: number; transfers: number }>()
 
   for (const record of records) {
     if (!from.includes(record.srcChain) || !to.includes(record.dstChain)) {
       continue
     }
-    const currentVolume = map.get(record.id) ?? 0
-    map.set(
-      record.id,
-      currentVolume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-    )
+    const currentVolume = map.get(record.id) ?? { volume: 0, transfers: 0 }
+    map.set(record.id, {
+      volume:
+        currentVolume.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      transfers: currentVolume.transfers + (record.transferCount ?? 0),
+    })
   }
 
-  const totalVolume = Array.from(map.values()).reduce((a, b) => a + b, 0)
+  const totalVolume = Array.from(map.values()).reduce((a, b) => a + b.volume, 0)
+  const totalTransfers = Array.from(map.values()).reduce(
+    (a, b) => a + b.transfers,
+    0,
+  )
 
-  if (totalVolume === 0) return []
+  return Array.from(map.entries()).map(([key, data]): InteropProtocolData => {
+    const project = interopProjects.find((p) => p.id === key)
+    assert(project, `Project not found: ${key}`)
 
-  return Array.from(map.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .map(([key, volume]): InteropProtocolData => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
-
-      return {
-        protocolName: project?.interopConfig.name ?? project.name,
-        volume,
-        share: (volume / totalVolume) * 100,
-      }
-    })
+    return {
+      protocolName: project?.interopConfig.name ?? project.name,
+      volume: {
+        value: data.volume,
+        share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,
+      },
+      transfers: {
+        value: data.transfers,
+        share: totalTransfers > 0 ? (data.transfers / totalTransfers) * 100 : 0,
+      },
+    }
+  })
 }

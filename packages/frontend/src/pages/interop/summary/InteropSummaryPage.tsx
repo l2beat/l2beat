@@ -4,8 +4,10 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
-import { TopPathsWidget } from './components/TopPathsWidget'
-import { TopProtocolsByVolume } from './components/TopProtocolsByVolume'
+import { CombinedProtocolsWidget } from './components/widgets/CombinedProtocolsWidget'
+import { TopPathsWidget } from './components/widgets/TopPathsWidget'
+import { TopProtocolsByTransfers } from './components/widgets/TopProtocolsByTransfers'
+import { TopProtocolsByVolume } from './components/widgets/TopProtocolsByVolume'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
@@ -21,7 +23,13 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
           <ChainSelector chains={interopChains} />
           <div className="mt-5 grid grid-cols-2 gap-5 xl:grid-cols-3">
             <TopPathsWidget interopChains={interopChains} />
-            <TopProtocolsByVolume />
+            <div className="h-full max-xl:hidden">
+              <TopProtocolsByVolume />
+            </div>
+            <div className="h-full max-xl:hidden">
+              <TopProtocolsByTransfers />
+            </div>
+            <CombinedProtocolsWidget />
           </div>
         </InteropSelectedChainsProvider>
       </SideNavLayout>

@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { ProtocolsPieChart } from './charts/ProtocolsPieChart'
-import type { DisplayProtocol } from './TopProtocolsByVolume'
+import { ProtocolsPieChart } from '../charts/ProtocolsPieChart'
+import type { DisplayVolumeProtocol } from './TopProtocolsByVolume'
 
 export function TopProtocolsByVolumeChart({
   protocols,
 }: {
-  protocols: DisplayProtocol[]
+  protocols: DisplayVolumeProtocol[]
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -26,13 +26,13 @@ export function TopProtocolsByVolumeChart({
   const chartData = useMemo(() => {
     return protocols.map((protocol) => ({
       name: protocol.protocolName,
-      value: protocol.volume,
+      value: protocol.volume.value,
       fill: protocol.color,
     }))
   }, [protocols])
 
   const totalVolume = useMemo(
-    () => protocols.reduce((acc, protocol) => acc + protocol.volume, 0),
+    () => protocols.reduce((acc, protocol) => acc + protocol.volume.value, 0),
     [protocols],
   )
 
