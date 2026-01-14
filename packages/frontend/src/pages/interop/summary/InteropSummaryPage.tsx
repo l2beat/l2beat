@@ -21,7 +21,10 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
         <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
         <InteropSelectedChainsProvider interopChains={interopChains}>
           <ChainSelector chains={interopChains} />
-          <div className="mt-5 grid grid-cols-2 gap-5 xl:grid-cols-3">
+          <div
+            className="mt-5 grid grid-cols-2 gap-5 xl:grid-cols-3"
+            data-hide-overflow-x
+          >
             <TopPathsWidget interopChains={interopChains} />
             <div className="h-full max-xl:hidden">
               <TopProtocolsByVolume />
