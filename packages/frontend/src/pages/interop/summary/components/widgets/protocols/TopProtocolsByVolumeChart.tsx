@@ -7,9 +7,11 @@ import type { DisplayProtocol } from './TopProtocolsWidget'
 export function TopProtocolsByVolumeChart({
   protocols,
   isLoading,
+  containerWidth,
 }: {
   protocols: DisplayProtocol[]
   isLoading: boolean
+  containerWidth: number | undefined
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -43,6 +45,7 @@ export function TopProtocolsByVolumeChart({
       chartMeta={chartMeta}
       chartData={chartData}
       isLoading={isLoading}
+      containerWidth={containerWidth}
       center={{
         label: 'Volume',
         value: formatCurrency(totalVolume, 'usd', {

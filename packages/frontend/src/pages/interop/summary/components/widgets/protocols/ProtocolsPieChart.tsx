@@ -9,7 +9,6 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useWindowSize } from '~/hooks/useWindowSize'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
@@ -18,6 +17,7 @@ export function ProtocolsPieChart({
   chartData,
   center,
   isLoading,
+  containerWidth,
 }: {
   chartMeta: ChartMeta
   chartData: { name: string; value: number; fill: string }[]
@@ -26,18 +26,18 @@ export function ProtocolsPieChart({
     value: string | number
   }
   isLoading: boolean
+  containerWidth: number | undefined
 }) {
-  const { width } = useWindowSize()
-  const isEdgeCaseBreakpoint = width && width >= 1440 && width < 1600
+  const showSmallerChart = containerWidth && containerWidth < 373
 
-  if (isLoading && width) {
+  if (isLoading && containerWidth) {
     return (
       <div className="flex h-full items-center">
         <Skeleton
           className="rounded-full"
           style={{
-            width: (isEdgeCaseBreakpoint ? 55 : 82) * 2,
-            height: (isEdgeCaseBreakpoint ? 55 : 82) * 2,
+            width: (showSmallerChart ? 55 : 82) * 2,
+            height: (showSmallerChart ? 55 : 82) * 2,
           }}
         />
       </div>
@@ -47,10 +47,13 @@ export function ProtocolsPieChart({
   return (
     <div className="flex h-full items-center">
       <SimpleChartContainer
-        height={isEdgeCaseBreakpoint ? 110 : 164}
+        height={showSmallerChart ? 110 : 164}
         width="100%"
         meta={chartMeta}
-        className="aspect-square min-h-41 [@media(min-width:1440px)]:h-[110px] [@media(min-width:1440px)]:min-h-[110px] [@media(min-width:1600px)]:min-h-41"
+        className={cn(
+          'aspect-square h-41 min-h-41',
+          showSmallerChart && 'h-[110px] min-h-[110px]',
+        )}
       >
         <PieChart>
           <ChartTooltip cursor={false} content={<CustomTooltip />} />
@@ -59,8 +62,8 @@ export function ProtocolsPieChart({
             dataKey="value"
             nameKey="name"
             isAnimationActive={false}
-            innerRadius={isEdgeCaseBreakpoint ? 35 : 54}
-            outerRadius={isEdgeCaseBreakpoint ? 55 : 82}
+            innerRadius={showSmallerChart ? 35 : 54}
+            outerRadius={showSmallerChart ? 55 : 82}
           >
             <Label
               content={() => {
@@ -70,7 +73,7 @@ export function ProtocolsPieChart({
                       x="50%"
                       y="50%"
                       className="fill-secondary font-medium text-2xs leading-none"
-                      dy={isEdgeCaseBreakpoint ? -9 : -16}
+                      dy={showSmallerChart ? -9 : -16}
                     >
                       {center.label}
                     </tspan>
@@ -79,7 +82,7 @@ export function ProtocolsPieChart({
                       y="50%"
                       className={cn(
                         'fill-primary font-semibold text-2xl leading-none',
-                        isEdgeCaseBreakpoint && 'text-sm',
+                        showSmallerChart && 'text-sm',
                       )}
                       dy={9}
                     >

@@ -7,9 +7,11 @@ import type { DisplayProtocol } from './TopProtocolsWidget'
 export function TopProtocolsByTransfersChart({
   protocols,
   isLoading,
+  containerWidth,
 }: {
   protocols: DisplayProtocol[]
   isLoading: boolean
+  containerWidth: number | undefined
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -44,6 +46,7 @@ export function TopProtocolsByTransfersChart({
       chartMeta={chartMeta}
       chartData={chartData}
       isLoading={isLoading}
+      containerWidth={containerWidth}
       center={{
         label: 'Transfers',
         value: formatNumber(totalTransfers),

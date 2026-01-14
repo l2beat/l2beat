@@ -1,8 +1,9 @@
 import times from 'lodash/times'
 import uniq from 'lodash/uniq'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
@@ -27,11 +28,14 @@ export function TopProtocolsWidget({
   formatValue,
 }: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
-  const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { width } = useResizeObserver({ ref: containerRef })
+
+  const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
   const protocolsWithOthers = useMemo(() => {
     if (!data?.topProtocols) return []
@@ -82,7 +86,10 @@ export function TopProtocolsWidget({
   )
 
   return (
-    <PrimaryCard className="flex h-full items-start justify-between">
+    <PrimaryCard
+      className="@container flex h-full items-start justify-between"
+      ref={containerRef}
+    >
       <div className="flex-1">
         <h2 className="font-bold text-heading-20">{heading}</h2>
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
@@ -112,7 +119,7 @@ export function TopProtocolsWidget({
                       : protocol.protocolName}
                   </td>
                   <td className="px-2 font-medium text-2xs text-secondary">
-                    {protocol[metricType].share.toFixed(2)}%
+                    {protocol[metricType].share.toFixed(1)}%
                   </td>
                   <td className="font-medium text-2xs">
                     {formatValue(protocol[metricType].value)}
@@ -126,11 +133,13 @@ export function TopProtocolsWidget({
         <TopProtocolsByVolumeChart
           protocols={protocolsWithColors}
           isLoading={isLoading}
+          containerWidth={width}
         />
       ) : (
         <TopProtocolsByTransfersChart
           protocols={protocolsWithColors}
           isLoading={isLoading}
+          containerWidth={width}
         />
       )}
     </PrimaryCard>
