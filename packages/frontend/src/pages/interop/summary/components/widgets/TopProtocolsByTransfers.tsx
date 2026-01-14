@@ -1,5 +1,7 @@
+import times from 'lodash/times'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
@@ -16,7 +18,7 @@ export type DisplayProtocolTransfer = Omit<InteropProtocolData, 'volume'> & {
 export function TopProtocolsByTransfers() {
   const { selectedChains } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
-  const { data } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
@@ -69,32 +71,42 @@ export function TopProtocolsByTransfers() {
 
   return (
     <PrimaryCard className="flex h-full items-start justify-between">
-      <div>
-        <h2 className="font-bold text-heading-20">Last 24 hours transfers</h2>
+      <div className="flex-1">
+        <h2 className="font-bold text-heading-20">Last 24 hours volume</h2>
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
           Between {uniqChains.length} supported chains
         </div>
-        <table className="mt-2 border-separate border-spacing-y-1">
+        <table className="mt-2 w-full border-separate border-spacing-y-1">
           <tbody>
-            {protocolsWithColors.map((protocol) => (
-              <tr key={protocol.protocolName}>
-                <td className="flex items-center gap-1 font-medium text-2xs">
-                  <div
-                    className="size-3 rounded-xs"
-                    style={{ backgroundColor: protocol.color }}
-                  />
-                  {protocol.protocolName === 'Others'
-                    ? `Others (${protocol.othersCount ?? 0})`
-                    : protocol.protocolName}
-                </td>
-                <td className="px-2 font-medium text-2xs text-secondary">
-                  {protocol.transfers.share.toFixed(2)}%
-                </td>
-                <td className="font-medium text-2xs">
-                  {formatNumber(protocol.transfers.value)}
-                </td>
-              </tr>
-            ))}
+            {isLoading || protocolsWithColors.length === 0
+              ? times(5).map((index) => (
+                  <tr key={index}>
+                    <td colSpan={3}>
+                      <Skeleton className="h-4 w-full" />
+                    </td>
+                  </tr>
+                ))
+              : null}
+            {protocolsWithColors.length > 0 &&
+              protocolsWithColors.map((protocol) => (
+                <tr key={protocol.protocolName}>
+                  <td className="flex items-center gap-1 font-medium text-2xs">
+                    <div
+                      className="size-3 rounded-xs"
+                      style={{ backgroundColor: protocol.color }}
+                    />
+                    {protocol.protocolName === 'Others'
+                      ? `Others (${protocol.othersCount ?? 0})`
+                      : protocol.protocolName}
+                  </td>
+                  <td className="px-2 font-medium text-2xs text-secondary">
+                    {protocol.transfers.share.toFixed(2)}%
+                  </td>
+                  <td className="font-medium text-2xs">
+                    {formatNumber(protocol.transfers.value)}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
