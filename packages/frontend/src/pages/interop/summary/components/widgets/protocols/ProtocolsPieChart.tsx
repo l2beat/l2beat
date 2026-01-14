@@ -70,7 +70,7 @@ export function ProtocolsPieChart({
                       x="50%"
                       y="50%"
                       className="fill-secondary font-medium text-2xs leading-none"
-                      dy={-12}
+                      dy={isEdgeCaseBreakpoint ? -9 : -16}
                     >
                       {center.label}
                     </tspan>
@@ -78,7 +78,7 @@ export function ProtocolsPieChart({
                       x="50%"
                       y="50%"
                       className={cn(
-                        'fill-primary font-semibold text-xl leading-none',
+                        'fill-primary font-semibold text-2xl leading-none',
                         isEdgeCaseBreakpoint && 'text-sm',
                       )}
                       dy={9}
