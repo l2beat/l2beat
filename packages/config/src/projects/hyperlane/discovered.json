@@ -1,6 +1,6 @@
 {
   "name": "hyperlane",
-  "timestamp": 1767794027,
+  "timestamp": 1768370832,
   "configHash": "0x994e71aadc1560a476190f718d9f6875f37560bd36ba96f6fd664a61e2d85705",
   "entries": [
     {
@@ -201,7 +201,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 74,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -903,7 +903,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 267,
+        "nonce": 268,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1001,7 +1001,7 @@
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals": 0,
         "domains": [1408864445, 1399811149, 10, 130, 137, 8453, 42161],
-        "feeRecipient": "eth:0xA4083FC009A39FC43A341a7D676C8Eb17D3fe3a1",
+        "feeRecipient": "eth:0xcf4ecA86606372B975FaF04a97e8eE3AfeA5a02D",
         "hook": "eth:0x0000000000000000000000000000000000000000",
         "interchainSecurityModule": "eth:0x0000000000000000000000000000000000000000",
         "localDomain": 1,
@@ -1643,6 +1643,6 @@
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 24183227 },
+  "usedBlockNumbers": { "ethereum": 24231046 },
   "permissionsConfigHash": "0xf2c0ec8b35e82e6dbc47beb5e068f6bd4b8e81cdd36d89cb78dadeaa02c8367a"
 }
