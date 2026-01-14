@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
   getReferencedName,
@@ -237,3 +237,24 @@ export function getArrayFragment(
   json.outputs = [JSON.parse(wrapped.format(FormatTypes.json))]
   return FunctionFragment.from(json)
 }
+
+export const ArrayHandlerBundle = declareHandler(
+  'array',
+  {
+    clazz: ArrayHandler,
+    definition: ArrayHandlerDefinition,
+  },
+  {
+    description: 'Array handler',
+    examples: [
+      `{
+        "indices": [0, 1, 2],
+        "method": "getArray",
+        "length": 3,
+        "maxLength": 100,
+        "startIndex": 0,
+        "ignoreRelative": false,
+      }`,
+    ],
+  },
+)

@@ -10,7 +10,7 @@ import type { ContractValue } from '../../output/types'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
 import type { IProvider } from '../../provider/IProvider'
 import { prefixAddresses } from '../../utils/prefixAddresses'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 import { toEventFragment } from '../utils/toEventFragment'
@@ -337,3 +337,8 @@ function isNumber(str: string): boolean {
   const num = Number(trimmed)
   return !isNaN(num) && isFinite(num)
 }
+
+export const EventHandlerBundle = declareHandler('event', {
+  clazz: EventHandler,
+  definition: EventHandlerDefinition,
+})

@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -72,3 +72,11 @@ export class StarkWareGovernanceHandler implements Handler {
     return { field: this.field, value: filtered }
   }
 }
+
+export const StarkWareGovernanceHandlerBundle = declareHandler(
+  'starkWareGovernance',
+  {
+    clazz: StarkWareGovernanceHandler,
+    definition: StarkWareGovernanceHandlerDefinition,
+  },
+)

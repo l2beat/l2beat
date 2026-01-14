@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type KintoAccessControlHandlerDefinition = v.infer<
   typeof KintoAccessControlHandlerDefinition
@@ -374,7 +374,7 @@ function parseTargetLog(
         selector: event.args.selector,
         role: event.args.roleId.toHexString(),
       } as const
-    default:
+      default:
       return {
         type: 'TargetAdminDelayUpdated',
         target: ChainSpecificAddress.fromLong(longChain, event.args.target),
@@ -383,3 +383,8 @@ function parseTargetLog(
       } as const
   }
 }
+
+export const KintoAccessControlHandlerBundle = declareHandler('kintoAccessControl', {
+  clazz: KintoAccessControlHandler,
+  definition: KintoAccessControlHandlerDefinition,
+})

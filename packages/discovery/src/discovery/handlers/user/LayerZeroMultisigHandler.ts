@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 import { toEventFragment } from '../utils/toEventFragment'
 import { ConstructorArgsHandler } from './ConstructorArgsHandler'
@@ -114,3 +114,8 @@ function isNotChainSpecificAddress<T extends object>(
 ): value is T {
   return typeof value !== 'string'
 }
+
+export const LayerZeroMultisigHandlerBundle = declareHandler('layerZeroMultisig', {
+  clazz: LayerZeroMultisigHandler,
+  definition: LayerZeroMultisigHandlerDefinition,
+})

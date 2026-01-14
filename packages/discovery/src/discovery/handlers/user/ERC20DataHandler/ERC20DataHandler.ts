@@ -6,7 +6,7 @@ import {
 import { v } from '@l2beat/validate'
 import { chains } from '../../../../config/chains'
 import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../../Handler'
 import { getCoingeckoId } from './getCoingeckoId'
 import { getTokenInfo } from './getTokenInfo'
 import { SourceEntry } from './types'
@@ -89,3 +89,8 @@ function getSupply(chain: string, entry: SourceEntry) {
   assert(formula !== undefined, 'Missing supply formula')
   return formula
 }
+
+export const ERC20DataHandlerBundle = declareHandler('ERC20Data', {
+  clazz: ERC20DataHandler,
+  definition: ERC20DataDefinition,
+})

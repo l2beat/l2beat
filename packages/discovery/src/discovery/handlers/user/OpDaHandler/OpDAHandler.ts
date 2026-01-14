@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../../Handler'
 import {
   generateReferenceInput,
   getReferencedName,
@@ -76,3 +76,8 @@ export class OpStackDAHandler implements Handler {
     }
   }
 }
+
+export const OpStackDAHandlerBundle = declareHandler('opStackDA', {
+  clazz: OpStackDAHandler,
+  definition: OpStackDAHandlerDefinition,
+})

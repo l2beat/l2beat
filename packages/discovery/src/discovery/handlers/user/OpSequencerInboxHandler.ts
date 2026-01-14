@@ -7,7 +7,7 @@ import { v } from '@l2beat/validate'
 
 import type { Transaction } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
   getReferencedName,
@@ -102,3 +102,8 @@ export class OpStackSequencerInboxHandler implements Handler {
     return inboxAddress
   }
 }
+
+export const OpStackSequencerInboxHandlerBundle = declareHandler('opStackSequencerInbox', {
+  clazz: OpStackSequencerInboxHandler,
+  definition: OpStackSequencerInboxHandlerDefinition,
+})

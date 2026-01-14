@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type ArbitrumActorsHandlerDefinition = v.infer<
   typeof ArbitrumActorsHandlerDefinition
@@ -127,3 +127,8 @@ export class ArbitrumActorsHandler implements Handler {
     }
   }
 }
+
+export const ArbitrumActorsHandlerBundle = declareHandler('arbitrumActors', {
+  clazz: ArbitrumActorsHandler,
+  definition: ArbitrumActorsHandlerDefinition,
+})

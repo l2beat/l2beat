@@ -6,7 +6,7 @@ import zip from 'lodash/zip'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type LineaRolesModuleHandlerDefinition = v.infer<
   typeof LineaRolesModuleHandlerDefinition
@@ -673,3 +673,8 @@ function parseRoleLog(
 function notUndefined<T>(value: T | undefined): value is T {
   return value !== undefined
 }
+
+export const LineaRolesModuleHandlerBundle = declareHandler('lineaRolesModule', {
+  clazz: LineaRolesModuleHandler,
+  definition: LineaRolesModuleHandlerDefinition,
+})

@@ -5,7 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import {
   AccessControlHandler,
   type AccessControlHandlerDefinition,
@@ -116,3 +116,8 @@ const YieldFiRoles = {
     'LOCKBOX',
   '0xaeed4774a6ca7dc9eef4423038c2a3abe132048336feddd81b2e9a5e941eb777': 'YIELD',
 }
+
+export const YieldFiMintersHandlerBundle = declareHandler('YieldFiMinters', {
+  clazz: YieldFiMintersHandler,
+  definition: YieldFiMintersDefinition,
+})

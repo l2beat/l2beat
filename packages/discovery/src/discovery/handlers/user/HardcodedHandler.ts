@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type HardCodedDefinition = v.infer<typeof HardCodedDefinition>
 export const HardCodedDefinition = v.strictObject({
@@ -24,3 +24,8 @@ export class HardCodedHandler implements Handler {
     })
   }
 }
+
+export const HardCodedHandlerBundle = declareHandler('hardcoded', {
+  clazz: HardCodedHandler,
+  definition: HardCodedDefinition,
+})
