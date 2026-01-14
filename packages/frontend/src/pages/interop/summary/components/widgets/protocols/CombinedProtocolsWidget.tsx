@@ -12,7 +12,9 @@ export function CombinedProtocolsWidget() {
         <div
           className={cn(
             'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
-            view === 'volume' ? 'translate-x-0' : '-translate-x-full',
+            view === 'volume'
+              ? 'translate-x-0'
+              : '-translate-x-[calc(100%+1rem)]',
             view === 'volume' ? 'z-10' : 'z-0',
           )}
         >
@@ -21,7 +23,9 @@ export function CombinedProtocolsWidget() {
         <div
           className={cn(
             'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
-            view === 'transfers' ? 'translate-x-0' : 'translate-x-full',
+            view === 'transfers'
+              ? 'translate-x-0'
+              : 'translate-x-[calc(100%+1rem)]',
             view === 'transfers' ? 'z-10' : 'z-0',
           )}
         >
