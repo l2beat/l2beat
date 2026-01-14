@@ -12,7 +12,7 @@ import { useCopy } from '../../hooks/useCopy'
 import { IconTick } from '../../icons/IconTick'
 import { useConfigHealth } from './hooks/useConfigHealth'
 
-type Mode = 'pretty' | 'markdown' | 'raw-markdown' | 'json'
+type Mode = 'pretty' | 'markdown'
 
 export function ConfigHealthReportPage() {
   const [mode, setMode] = useState<Mode>('pretty')
