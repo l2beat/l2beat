@@ -1,5 +1,6 @@
 import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
+import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
 import { Colorize } from './Colorize'
 import { CompareFlatSources } from './CompareFlatSources'
@@ -43,6 +44,7 @@ export function getSubcommands() {
   return [
     AddShape,
     AdriansCommand,
+    BlobSenders,
     CheckRpc,
     Colorize,
     CompareFlatSources,
