@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x094757c211a6ec157a5fafe0bb9c12634aba6537
+
+# Diff at Wed, 14 Jan 2026 06:08:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767794027
+- current timestamp: 1768370832
+
+## Description
+
+Feerecipient change for new  eclipse USDC escrow.
+
+## Watched changes
+
+```diff
+    contract HypERC20Collateral (eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+      values.feeRecipient:
+-        "eth:0xA4083FC009A39FC43A341a7D676C8Eb17D3fe3a1"
++        "eth:0xcf4ecA86606372B975FaF04a97e8eE3AfeA5a02D"
+    }
+```
+
 Generated with discovered.json: 0x0847c74148fab4d437346c79e85ce33cd16fe8f3
 
 # Diff at Wed, 07 Jan 2026 15:18:31 GMT:
