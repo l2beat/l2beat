@@ -270,32 +270,31 @@ export interface UpgradeabilityActor {
   delay: string
 }
 
-// Overspecification detection types
-export interface OverspecifiedResult {
-  ignoreInWatchMode: string[]
-  ignoreMethods: string[]
-  ignoreRelatives: string[]
+// Config health report types
+export type ApiConfigHealthResponse = {
+  healthHints: ApiHealthHint[]
+  length: number
 }
 
-export interface ApiCheckConfigOverspecificationRequest {
-  project: string
-  address: string
-  ignoreInWatchMode?: string[]
-  ignoreMethods?: string[]
-  ignoreRelatives?: string[]
+type ApiHealthHintBase = {
+  excess: {
+    ignoreInWatchMode?: string[]
+    ignoreMethods?: string[]
+    ignoreRelatives?: string[]
+  }
 }
 
-export interface ApiCheckConfigOverspecificationResponse {
-  overspecified: OverspecifiedResult
-}
-
-export interface ApiCheckTemplateOverspecificationRequest {
-  templateId: string
-  ignoreInWatchMode?: string[]
-  ignoreMethods?: string[]
-  ignoreRelatives?: string[]
-}
-
-export interface ApiCheckTemplateOverspecificationResponse {
-  overspecified: OverspecifiedResult
-}
+export type ApiHealthHint =
+  | (ApiHealthHintBase & {
+      source: 'config'
+      target: {
+        project: string
+        entry: string
+      }
+    })
+  | (ApiHealthHintBase & {
+      source: 'template'
+      target: {
+        templateId: string
+      }
+    })

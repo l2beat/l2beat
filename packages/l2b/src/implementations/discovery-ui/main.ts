@@ -1,8 +1,8 @@
 import {
+  ConfigHealthService,
   ConfigReader,
   ConfigWriter,
   getDiscoveryPaths,
-  OverspecificationService,
   TemplateService,
   UserHandlers,
 } from '@l2beat/discovery'
@@ -16,10 +16,10 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
+import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
-import { attachOverspecificationRouter } from './overspecification/router'
 import { searchCode } from './searchCode'
 import {
   attachTemplateRouter,
@@ -75,8 +75,9 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configReader = new ConfigReader(paths.discovery)
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
+  const configHealthService = new ConfigHealthService()
+
   const diffoveryController = new DiffoveryController()
-  const overspecificationService = new OverspecificationService(configReader)
 
   app.use(express.json())
 
@@ -222,7 +223,15 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   if (!readonly) {
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
-    attachOverspecificationRouter(app, overspecificationService)
+
+    app.get('/api/config/health', (_, res) => {
+      const response = getConfigHealth(
+        configReader,
+        templateService,
+        configHealthService,
+      )
+      res.json(response)
+    })
 
     app.get('/api/handlers', (_req, res) => {
       res.json({

@@ -1,12 +1,9 @@
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
-  ApiCheckConfigOverspecificationRequest,
-  ApiCheckConfigOverspecificationResponse,
-  ApiCheckTemplateOverspecificationRequest,
-  ApiCheckTemplateOverspecificationResponse,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiConfigHealthResponse,
   ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
@@ -172,6 +169,15 @@ export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncSt
   return data as ApiGlobalConfigSyncStatusResponse
 }
 
+export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
+  const res = await fetch('/api/config/health')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiConfigHealthResponse
+}
+
 export async function createConfigFile(
   project: string,
   type: 'project' | 'token',
@@ -279,42 +285,4 @@ export function executeFindMinters(address: string): EventSource {
     address,
   })
   return new EventSource(`/api/terminal/find-minters?${params}`)
-}
-
-export async function checkConfigOverspecification(
-  request: ApiCheckConfigOverspecificationRequest,
-): Promise<ApiCheckConfigOverspecificationResponse> {
-  const res = await fetch('/api/overspecification/check-config', {
-    method: 'POST',
-    body: JSON.stringify(request),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  const data = await res.json()
-  return data as ApiCheckConfigOverspecificationResponse
-}
-
-export async function checkTemplateOverspecification(
-  request: ApiCheckTemplateOverspecificationRequest,
-): Promise<ApiCheckTemplateOverspecificationResponse> {
-  const res = await fetch('/api/overspecification/check-template', {
-    method: 'POST',
-    body: JSON.stringify(request),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  const data = await res.json()
-  return data as ApiCheckTemplateOverspecificationResponse
 }
