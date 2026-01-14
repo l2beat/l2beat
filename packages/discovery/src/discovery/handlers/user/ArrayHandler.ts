@@ -245,16 +245,54 @@ export const ArrayHandlerBundle = declareHandler(
     definition: ArrayHandlerDefinition,
   },
   {
-    description: 'Array handler',
+    description: `
+    The array handler allows you to read values by repeatedly calling an array method, that is a method that takes only one argument of type \`uint256\`.
+    Such methods are automatically called by default, but the results are limited to 5 entries. Using this handler removes this limitation.`,
     examples: [
-      `{
-        "indices": [0, 1, 2],
-        "method": "getArray",
-        "length": 3,
-        "maxLength": 100,
-        "startIndex": 0,
-        "ignoreRelative": false,
-      }`,
+      {
+        title: 'Just read the array using the field name as the method name',
+        code: `{
+          "type": "array"
+        }`,
+      },
+      {
+        title: 'Read the array but use another method',
+        code: `{
+          "type": "array",
+          "method": "owners"
+        }`,
+      },
+      {
+        title: 'Read the array but specify full method abi',
+        code: `{
+          "type": "array",
+          "method": "function owners(uint256 i) view returns (uint256)"
+        }`,
+      },
+      {
+        title: 'Read the array until some specific length',
+        code: `{
+          "type": "array",
+          "method": "owners",
+          "length": "{{ ownersLength }}"
+        }`,
+      },
+      {
+        title: 'Read a very large array',
+        code: `{
+          "type": "array",
+          "method": "owners",
+          "maxLength": 1000
+        }`,
+      },
+      {
+        title: 'Read only the first 5 prime elements from the array',
+        code: `{
+          "type": "array",
+          "method": "owners",
+          "indices": [2, 3, 5, 7, 11]
+        }`,
+      },
     ],
   },
 )

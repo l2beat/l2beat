@@ -22,6 +22,12 @@ export interface Handler {
   ): Promise<HandlerResult>
 }
 
+export type HandlerExample = {
+  title: string
+  description?: string
+  code: string
+}
+
 /**
  * Helper function to enforce type safety when declaring a handler.
  *
@@ -46,7 +52,7 @@ export function declareHandler<
   },
   documentation?: {
     description?: string
-    examples?: string[]
+    examples?: HandlerExample[]
   },
 ): HandlerDeclaration<HandlerType, HandlerClass, DefinitionSchema> {
   return {
@@ -66,7 +72,7 @@ export interface HandlerDeclaration<
   definition: Parser<DefinitionSchema>
   documentation?: {
     description?: string
-    examples?: string[]
+    examples?: HandlerExample[]
   }
 }
 
