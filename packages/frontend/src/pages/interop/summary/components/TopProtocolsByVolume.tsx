@@ -21,7 +21,7 @@ export function TopProtocolsByVolume() {
     to: selectedChains.to,
   })
 
-  const displayProtocols = useMemo(() => {
+  const protocolsWithOthers = useMemo(() => {
     if (!data?.topProtocols) return []
 
     const top5 = data.topProtocols.slice(0, 5)
@@ -47,11 +47,11 @@ export function TopProtocolsByVolume() {
   }, [data?.topProtocols])
 
   const colors = useMemo(
-    () => generateAccessibleColors(displayProtocols.length),
-    [displayProtocols.length],
+    () => generateAccessibleColors(protocolsWithOthers.length),
+    [protocolsWithOthers.length],
   )
 
-  const withColors: DisplayProtocol[] = displayProtocols.map(
+  const protocolsWithColors: DisplayProtocol[] = protocolsWithOthers.map(
     (protocol, index) => ({
       ...protocol,
       color: colors[index] ?? '#000000',
@@ -67,7 +67,7 @@ export function TopProtocolsByVolume() {
         </div>
         <table className="mt-2 border-separate border-spacing-y-1">
           <tbody>
-            {withColors.map((protocol) => (
+            {protocolsWithColors.map((protocol) => (
               <tr key={protocol.protocolName}>
                 <td className="flex items-center gap-1 font-medium text-2xs">
                   <div
@@ -89,7 +89,7 @@ export function TopProtocolsByVolume() {
           </tbody>
         </table>
       </div>
-      <TopProtocolsByVolumeChart protocols={withColors} />
+      <TopProtocolsByVolumeChart protocols={protocolsWithColors} />
     </PrimaryCard>
   )
 }
