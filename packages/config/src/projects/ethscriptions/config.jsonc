@@ -39,7 +39,16 @@
     },
     "ethscr:0x3300000000000000000000000000000000000001": {
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
-      "ignoreMethods": ["exists", "tokenIdToEthscriptionId"],
+      "ignoreMethods": [
+        "exists",
+        "tokenIdToEthscriptionId",
+        "getApproved",
+        "getEthscription",
+        "getEthscriptionId",
+        "ownerOf",
+        "tokenByIndex",
+        "tokenURI"
+      ],
       "ignoreInWatchMode": ["totalSupply"]
     },
     "ethscr:0x3300000000000000000000000000000000000003": {
