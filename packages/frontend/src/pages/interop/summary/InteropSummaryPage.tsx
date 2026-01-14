@@ -4,10 +4,10 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
-import { CombinedProtocolsWidget } from './components/widgets/CombinedProtocolsWidget'
+import { CombinedProtocolsWidget } from './components/widgets/protocols/CombinedProtocolsWidget'
+import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
+import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
-import { TopProtocolsByTransfers } from './components/widgets/TopProtocolsByTransfers'
-import { TopProtocolsByVolume } from './components/widgets/TopProtocolsByVolume'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {

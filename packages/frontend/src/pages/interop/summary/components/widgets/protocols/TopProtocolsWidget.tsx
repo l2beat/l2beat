@@ -6,16 +6,26 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import { formatNumber } from '~/utils/number-format/formatNumber'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
+import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 
-export type DisplayProtocolTransfer = Omit<InteropProtocolData, 'volume'> & {
+export type DisplayProtocol = InteropProtocolData & {
   color: string
   othersCount?: number
 }
 
-export function TopProtocolsByTransfers() {
+type TopProtocolsWidgetProps = {
+  metricType: 'volume' | 'transfers'
+  heading: string
+  formatValue: (value: number) => string
+}
+
+export function TopProtocolsWidget({
+  metricType,
+  heading,
+  formatValue,
+}: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
   const { data, isLoading } = api.interop.dashboard.useQuery({
@@ -26,7 +36,7 @@ export function TopProtocolsByTransfers() {
   const protocolsWithOthers = useMemo(() => {
     if (!data?.topProtocols) return []
 
-    data.topProtocols.sort((a, b) => b.transfers.value - a.transfers.value)
+    data.topProtocols.sort((a, b) => b[metricType].value - a[metricType].value)
 
     const top5 = data.topProtocols.slice(0, 5)
     const others = data.topProtocols.slice(5)
@@ -35,44 +45,46 @@ export function TopProtocolsByTransfers() {
       return top5
     }
 
-    const totalTransfers = data.topProtocols.reduce(
-      (sum, p) => sum + p.transfers.value,
+    const totalValue = data.topProtocols.reduce(
+      (sum, p) => sum + p[metricType].value,
       0,
     )
-    const othersTransfers = others.reduce(
-      (sum, p) => sum + p.transfers.value,
-      0,
-    )
-    const othersShare = (othersTransfers / totalTransfers) * 100
+    const othersValue = others.reduce((sum, p) => sum + p[metricType].value, 0)
+    const othersShare = totalValue > 0 ? (othersValue / totalValue) * 100 : 0
 
     return [
       ...top5,
       {
         protocolName: 'Others',
+        volume: {
+          value: metricType === 'volume' ? othersValue : 0,
+          share: metricType === 'volume' ? othersShare : 0,
+        },
         transfers: {
-          value: othersTransfers,
-          share: othersShare,
+          value: metricType === 'transfers' ? othersValue : 0,
+          share: metricType === 'transfers' ? othersShare : 0,
         },
         othersCount: others.length,
       },
-    ]
-  }, [data?.topProtocols])
+    ] as DisplayProtocol[]
+  }, [data?.topProtocols, metricType])
 
   const colors = useMemo(
     () => generateAccessibleColors(protocolsWithOthers.length),
     [protocolsWithOthers.length],
   )
 
-  const protocolsWithColors: DisplayProtocolTransfer[] =
-    protocolsWithOthers.map((protocol, index) => ({
+  const protocolsWithColors: DisplayProtocol[] = protocolsWithOthers.map(
+    (protocol, index) => ({
       ...protocol,
       color: colors[index] ?? '#000000',
-    }))
+    }),
+  )
 
   return (
     <PrimaryCard className="flex h-full items-start justify-between">
       <div className="flex-1">
-        <h2 className="font-bold text-heading-20">Last 24 hours volume</h2>
+        <h2 className="font-bold text-heading-20">{heading}</h2>
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
           Between {uniqChains.length} supported chains
         </div>
@@ -100,17 +112,21 @@ export function TopProtocolsByTransfers() {
                       : protocol.protocolName}
                   </td>
                   <td className="px-2 font-medium text-2xs text-secondary">
-                    {protocol.transfers.share.toFixed(2)}%
+                    {protocol[metricType].share.toFixed(2)}%
                   </td>
                   <td className="font-medium text-2xs">
-                    {formatNumber(protocol.transfers.value)}
+                    {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
-      <TopProtocolsByTransfersChart protocols={protocolsWithColors} />
+      {metricType === 'volume' ? (
+        <TopProtocolsByVolumeChart protocols={protocolsWithColors} />
+      ) : (
+        <TopProtocolsByTransfersChart protocols={protocolsWithColors} />
+      )}
     </PrimaryCard>
   )
 }

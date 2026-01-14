@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
-import { formatNumber } from '~/utils/number-format/formatNumber'
-import { ProtocolsPieChart } from '../charts/ProtocolsPieChart'
-import type { DisplayProtocolTransfer } from './TopProtocolsByTransfers'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { ProtocolsPieChart } from '../../charts/ProtocolsPieChart'
+import type { DisplayProtocol } from './TopProtocolsWidget'
 
-export function TopProtocolsByTransfersChart({
+export function TopProtocolsByVolumeChart({
   protocols,
 }: {
-  protocols: DisplayProtocolTransfer[]
+  protocols: DisplayProtocol[]
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
@@ -26,14 +26,13 @@ export function TopProtocolsByTransfersChart({
   const chartData = useMemo(() => {
     return protocols.map((protocol) => ({
       name: protocol.protocolName,
-      value: protocol.transfers.value,
+      value: protocol.volume.value,
       fill: protocol.color,
     }))
   }, [protocols])
 
-  const totalTransfers = useMemo(
-    () =>
-      protocols.reduce((acc, protocol) => acc + protocol.transfers.value, 0),
+  const totalVolume = useMemo(
+    () => protocols.reduce((acc, protocol) => acc + protocol.volume.value, 0),
     [protocols],
   )
 
@@ -42,8 +41,10 @@ export function TopProtocolsByTransfersChart({
       chartMeta={chartMeta}
       chartData={chartData}
       center={{
-        label: 'Transfers',
-        value: formatNumber(totalTransfers),
+        label: 'Volume',
+        value: formatCurrency(totalVolume, 'usd', {
+          decimals: 1,
+        }),
       }}
     />
   )
