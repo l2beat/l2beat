@@ -47,6 +47,8 @@ export function ProtocolsPieChart({
   return (
     <div className="flex h-full items-center">
       <SimpleChartContainer
+        height={isEdgeCaseBreakpoint ? 110 : 164}
+        width="100%"
         meta={chartMeta}
         className="aspect-square min-h-41 [@media(min-width:1440px)]:h-[110px] [@media(min-width:1440px)]:min-h-[110px] [@media(min-width:1600px)]:min-h-41"
       >
