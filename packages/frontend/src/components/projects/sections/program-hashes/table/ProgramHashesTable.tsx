@@ -1,19 +1,19 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { StateValidationZkProgramHashData } from '../ProgramHashesSection'
-import { zkProgramHashesColumns } from './columns'
+import type { StateValidationProgramHashData } from '../ProgramHashesSection'
+import { programHashesColumns } from './columns'
 
-export type ZkProgramHashRow = StateValidationZkProgramHashData & BasicTableRow
+export type ProgramHashRow = StateValidationProgramHashData & BasicTableRow
 
 interface Props {
-  entries: ZkProgramHashRow[]
+  entries: ProgramHashRow[]
 }
 
-export function ZkProgramHashesTable({ entries }: Props) {
+export function ProgramHashesTable({ entries }: Props) {
   const table = useTable({
     data: entries,
-    columns: zkProgramHashesColumns,
+    columns: programHashesColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
