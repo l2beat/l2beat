@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2e11c1665fdeae2873b843a6590d8b55b692e155
+
+# Diff at Wed, 14 Jan 2026 06:07:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1762264409
+- current timestamp: 1768370794
+
+## Description
+
+Trusted Sequencer change.
+
+## Watched changes
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1"
++        "eth:0xdF1384abe257F41569cC20bc9d7C4f022d2a4826"
+    }
+```
+
 Generated with discovered.json: 0x3c26dedee6e53ae7886a87e3da18661459cf545c
 
 # Diff at Tue, 04 Nov 2025 13:54:33 GMT:
