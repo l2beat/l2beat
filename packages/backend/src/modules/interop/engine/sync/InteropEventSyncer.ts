@@ -15,10 +15,14 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../../tools/TimeLoop'
-import type {
-  InteropEvent,
-  InteropPluginResyncable,
-  LogToCapture,
+import {
+  createEventParser,
+  type EventSignature,
+  type InteropEvent,
+  type InteropPluginResyncable,
+  type LogToCapture,
+  type ParsedEventFromSignature,
+  type TxEventsContainer,
 } from '../../plugins/types'
 import { getItemsToCapture } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -40,7 +44,7 @@ export function buildLogQueryForPlugin(
   const result = new LogQuery()
   const eventRequests = plugin
     .getDataRequests()
-    .filter((r) => r.type === 'event')
+    .filter((r) => r.type === 'event' || r.type === 'eventWithTxLogs')
 
   for (const eventRequest of eventRequests) {
     let addressesOnThisChain = 0
@@ -53,12 +57,18 @@ export function buildLogQueryForPlugin(
       addressesOnThisChain++
     }
     if (addressesOnThisChain > 0) {
-      // TODO try also with `toEventSelector` straight from viem
-      const topic0 =
-        eventRequest.signature.topic0 ??
-        toEventSelector(eventRequest.signature.signature)
-      if (topic0) {
-        result.topic0s.add(topic0)
+      const signatures = [
+        eventRequest.signature,
+        ...(eventRequest.type === 'eventWithTxLogs'
+          ? eventRequest.includeTxEvents
+          : []),
+      ]
+      for (const signature of signatures) {
+        // TODO try also with `toEventSelector` straight from viem
+        const topic0 = toEventSelector(signature)
+        if (topic0) {
+          result.topic0s.add(topic0)
+        }
       }
     }
   }
@@ -84,6 +94,7 @@ export interface BlockProcessorState {
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
+  private parserCache = new Map<EventSignature, ReturnType<typeof createEventParser>>()
 
   constructor(
     readonly chain: LongChainName,
@@ -145,10 +156,64 @@ export class InteropEventSyncer extends TimeLoop {
       this.clusterPlugins.length > 0 ? this.clusterPlugins : [this.plugin]
 
     for (const plugin of pluginsToRun) {
-      const produced = plugin.capture(logToCapture)
+      const produced = this.captureFromDataRequests(plugin, logToCapture)
       if (produced) {
         return produced.map((p) => ({ ...p, plugin: this.plugin.name }))
       }
+    }
+  }
+
+  private getParser(signature: EventSignature) {
+    const existing = this.parserCache.get(signature)
+    if (existing) return existing
+    const parser = createEventParser(signature)
+    this.parserCache.set(signature, parser)
+    return parser
+  }
+
+  private captureFromDataRequests(
+    plugin: InteropPluginResyncable,
+    logToCapture: LogToCapture,
+  ) {
+    for (const request of plugin.getDataRequests()) {
+      const addressesOnThisChain = request.addresses
+        .filter(
+          (address) => ChainSpecificAddress.longChain(address) === logToCapture.chain,
+        )
+        .map((address) => ChainSpecificAddress.address(address))
+
+      if (addressesOnThisChain.length === 0) continue
+
+      const parser = this.getParser(request.signature)
+      const parsed = parser(logToCapture.log, addressesOnThisChain)
+      if (!parsed) continue
+
+      if (request.type === 'event') {
+        return request.captureFn(parsed, logToCapture)
+      }
+
+      const txEventsBySignature = new Map<EventSignature, unknown[]>()
+      for (const signature of request.includeTxEvents) {
+        const txParser = this.getParser(signature)
+        const events: unknown[] = []
+        for (const log of logToCapture.txLogs) {
+          const parsedTx = txParser(log, addressesOnThisChain)
+          if (parsedTx) {
+            events.push(parsedTx)
+          }
+        }
+        txEventsBySignature.set(signature, events)
+      }
+
+      const txEvents = {
+        get: <S extends (typeof request.includeTxEvents)[number]>(
+          signature: S,
+        ): ParsedEventFromSignature<S>[] => {
+          return (txEventsBySignature.get(signature) ?? []) as ParsedEventFromSignature<S>[]
+        },
+      } as TxEventsContainer<typeof request.includeTxEvents>
+
+      return request.captureFn(parsed, txEvents, logToCapture)
     }
   }
 

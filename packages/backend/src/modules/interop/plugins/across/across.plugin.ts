@@ -1,23 +1,24 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
-  createEventDataRequest,
-  createEventParser,
   createInteropEventType,
   type DataRequest,
+  eventDataRequest,
+  eventWithTxLogsDataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
+  type ParsedEventFromSignature,
   Result,
+  type TxEventsContainer,
 } from '../types'
 import { AcrossConfig } from './across.config'
 
 const fundsDepositedLog =
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)'
-const parseFundsDeposited = createEventParser(fundsDepositedLog)
 
 export const AcrossFundsDeposited = createInteropEventType<{
   $dstChain: string
@@ -30,11 +31,9 @@ export const AcrossFundsDeposited = createInteropEventType<{
 
 const filledRelayLog =
   'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)'
-const parseFilledRelay = createEventParser(filledRelayLog)
 
 const filledV3RelayLog =
   'event FilledV3Relay(address inputToken, address outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint32 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, address exclusiveRelayer, address indexed relayer, address depositor, address recipient, bytes message, (address updatedRecipient, bytes updatedMessage, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)'
-const parseFilledV3Relay = createEventParser(filledV3RelayLog)
 
 // For both V3 and V4 event capturing
 export const AcrossFilledRelay = createInteropEventType<{
@@ -61,87 +60,102 @@ export class AcrossPlugin implements InteropPluginResyncable {
       )
 
     return [
-      createEventDataRequest({
-        type: 'event',
-        signature: parseFundsDeposited,
+      eventWithTxLogsDataRequest({
+        signature: fundsDepositedLog,
         addresses: spokePoolAddresses,
-        captureFn: (_log) => {},
+        includeTxEvents: [filledV3RelayLog],
+        captureFn: this.captureFundsDepositedWithTx,
       }),
-      createEventDataRequest({
-        type: 'event',
-        signature: parseFilledRelay,
+      eventDataRequest({
+        signature: filledRelayLog,
         addresses: spokePoolAddresses,
-        captureFn: (_log) => {},
+        captureFn: this.captureFilledRelay,
       }),
-      createEventDataRequest({
-        type: 'event',
-        signature: parseFilledV3Relay,
+      eventDataRequest({
+        signature: filledV3RelayLog,
         addresses: spokePoolAddresses,
-        captureFn: (_log) => {},
+        captureFn: this.captureFilledV3Relay,
       }),
     ]
   }
 
-  capture(input: LogToCapture) {
+  private captureFundsDepositedWithTx = (
+    log: ParsedEventFromSignature<typeof fundsDepositedLog>,
+    _txEvents: TxEventsContainer<[typeof filledV3RelayLog]>,
+    input: LogToCapture,
+  ) => {
     const networks = this.configs.get(AcrossConfig)
     if (!networks) return
 
     const network = networks.find((n) => n.chain === input.chain)
     if (!network) return
 
-    const fundsDeposited = parseFundsDeposited(input.log, [network.spokePool])
-    if (fundsDeposited) {
-      return [
-        AcrossFundsDeposited.create(input, {
-          $dstChain: findChain(
-            networks,
-            (x) => x.chainId,
-            Number(fundsDeposited.destinationChainId),
-          ),
-          originChainId: network.chainId,
-          destinationChainId: Number(fundsDeposited.destinationChainId),
-          depositId: fundsDeposited.depositId,
-          tokenAddress: Address32.from(fundsDeposited.inputToken),
-          amount: fundsDeposited.inputAmount,
-        }),
-      ]
-    }
+    return [
+      AcrossFundsDeposited.create(input, {
+        $dstChain: findChain(
+          networks,
+          (x) => x.chainId,
+          Number(log.destinationChainId),
+        ),
+        originChainId: network.chainId,
+        destinationChainId: Number(log.destinationChainId),
+        depositId: log.depositId,
+        tokenAddress: Address32.from(log.inputToken),
+        amount: log.inputAmount,
+      }),
+    ]
+  }
 
-    const filledRelay = parseFilledRelay(input.log, [network.spokePool])
-    if (filledRelay) {
-      return [
-        AcrossFilledRelay.create(input, {
-          $srcChain: findChain(
-            networks,
-            (x) => x.chainId,
-            Number(filledRelay.originChainId),
-          ),
-          originChainId: Number(filledRelay.originChainId),
-          destinationChainId: network.chainId,
-          depositId: filledRelay.depositId,
-          tokenAddress: Address32.from(filledRelay.outputToken),
-          amount: filledRelay.outputAmount,
-        }),
-      ]
-    }
+  private captureFilledRelay = (
+    log: ParsedEventFromSignature<typeof filledRelayLog>,
+    input: LogToCapture,
+  ) => {
+    const networks = this.configs.get(AcrossConfig)
+    if (!networks) return
 
-    const filledV3Relay = parseFilledV3Relay(input.log, [network.spokePool])
-    if (filledV3Relay) {
-      return [
-        AcrossFilledRelay.create(input, {
-          $srcChain: findChain(
-            networks,
-            (x) => x.chainId,
-            Number(filledV3Relay.originChainId),
-          ),
-          originChainId: Number(filledV3Relay.originChainId),
-          destinationChainId: network.chainId,
-          depositId: BigInt(filledV3Relay.depositId),
-          tokenAddress: Address32.from(filledV3Relay.outputToken),
-          amount: filledV3Relay.outputAmount,
-        }),
-      ]
-    }
+    const network = networks.find((n) => n.chain === input.chain)
+    if (!network) return
+
+    return [
+      AcrossFilledRelay.create(input, {
+        $srcChain: findChain(
+          networks,
+          (x) => x.chainId,
+          Number(log.originChainId),
+        ),
+        originChainId: Number(log.originChainId),
+        destinationChainId: network.chainId,
+        depositId: log.depositId,
+        tokenAddress: Address32.from(log.outputToken),
+        amount: log.outputAmount,
+      }),
+    ]
+  }
+
+  private captureFilledV3Relay = (
+    log: ParsedEventFromSignature<typeof filledV3RelayLog>,
+    input: LogToCapture,
+  ) => {
+    const networks = this.configs.get(AcrossConfig)
+    if (!networks) return
+
+    const network = networks.find((n) => n.chain === input.chain)
+    if (!network) return
+
+    return [
+      AcrossFilledRelay.create(input, {
+        $srcChain: findChain(
+          networks,
+          (x) => x.chainId,
+          Number(log.originChainId),
+        ),
+        originChainId: Number(log.originChainId),
+        destinationChainId: network.chainId,
+        depositId: BigInt(log.depositId),
+        tokenAddress: Address32.from(log.outputToken),
+        amount: log.outputAmount,
+      }),
+    ]
   }
 
   matchTypes = [AcrossFilledRelay]

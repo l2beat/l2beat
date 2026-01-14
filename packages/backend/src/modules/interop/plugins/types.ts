@@ -204,19 +204,60 @@ export interface InteropEventDb {
   ): InteropEvent<T> | undefined
 }
 
-export type DataRequest = EventDataRequest
+export type EventSignature = `event ${string}(${string}`
 
-interface EventDataRequest<TParser extends EventParser = EventParser> {
-  type: 'event'
-  signature: TParser
-  addresses: ChainSpecificAddress[]
-  captureFn: (log: ParsedEventFromParser<TParser>) => void
+export type ParsedEventFromSignature<TSignature extends EventSignature> =
+  ParsedEvent<ParseAbiItem<TSignature>>
+
+export type TxEventsContainer<TSignatures extends readonly EventSignature[]> = {
+  get<S extends TSignatures[number]>(
+    signature: S,
+  ): ParsedEventFromSignature<S>[]
 }
 
-export function createEventDataRequest<TParser extends EventParser>(
-  request: EventDataRequest<TParser>,
-): EventDataRequest<TParser> {
-  return request
+export type EventDataRequest<TSignature extends EventSignature = EventSignature> = {
+  type: 'event'
+  signature: TSignature
+  addresses: ChainSpecificAddress[]
+  captureFn(
+    log: ParsedEventFromSignature<TSignature>,
+    context: LogToCapture,
+  ): Omit<InteropEvent, 'plugin'>[] | undefined
+}
+
+export type EventWithTxLogsDataRequest<
+  TSignature extends EventSignature = EventSignature,
+  TTxSignatures extends readonly EventSignature[] = readonly EventSignature[],
+> = {
+  type: 'eventWithTxLogs'
+  signature: TSignature
+  addresses: ChainSpecificAddress[]
+  includeTxEvents: TTxSignatures
+  captureFn(
+    log: ParsedEventFromSignature<TSignature>,
+    txEvents: TxEventsContainer<TTxSignatures>,
+    context: LogToCapture,
+  ): Omit<InteropEvent, 'plugin'>[] | undefined
+}
+
+export type DataRequest = EventDataRequest | EventWithTxLogsDataRequest
+
+export function eventDataRequest<TSignature extends EventSignature>(
+  request: Omit<EventDataRequest<TSignature>, 'type'>,
+): EventDataRequest<TSignature> {
+  return { type: 'event', ...request }
+}
+
+export function eventWithTxLogsDataRequest<
+  TSignature extends EventSignature,
+  const TTxSignatures extends readonly EventSignature[],
+>(
+  request: Omit<
+    EventWithTxLogsDataRequest<TSignature, TTxSignatures>,
+    'type'
+  >,
+): EventWithTxLogsDataRequest<TSignature, TTxSignatures> {
+  return { type: 'eventWithTxLogs', ...request }
 }
 
 export interface InteropPlugin {
@@ -233,7 +274,6 @@ export interface InteropPlugin {
 
 export interface InteropPluginResyncable extends InteropPlugin {
   getDataRequests: () => DataRequest[]
-  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
 }
 
 export function isPluginResyncable(
@@ -248,7 +288,7 @@ export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
 >['args']
 
 export type EventParser<
-  T extends `event ${string}(${string}` = `event ${string}(${string}`,
+  T extends EventSignature = EventSignature,
 > = ((
   log: Log,
   addressWhitelist: EthereumAddress[] | null,
@@ -261,7 +301,7 @@ export type ParsedEventFromParser<T extends EventParser> = NonNullable<
   ReturnType<T>
 >
 
-export function createEventParser<T extends `event ${string}(${string}`>(
+export function createEventParser<T extends EventSignature>(
   eventSignature: T,
 ): EventParser<T> {
   const eventName = eventSignature.slice(
