@@ -132,11 +132,13 @@ export function createInteropPlugins(
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
+
       new AcrossSettlementPlugin(), // should be run before OrbitStack and OpStack
       new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
+
       new ZklinkNovaPlugin(), // should be run before OpStack
       new WorldIdPlugin(), // should be run before OpStack
       new LidoWstethPlugin(), // should be run before OpStack
@@ -146,6 +148,7 @@ export function createInteropPlugins(
       new SkyBridgePlugin(), // should be run before OpStackStandardBridge
       new OpStackStandardBridgePlugin(), // should be run before OpStack
       new OpStackPlugin(),
+
       new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
       new HyperlaneHwrPlugin(), // should be run before Hyperlane
       new HyperlaneEcoPlugin(), // should be run before Hyperlane
