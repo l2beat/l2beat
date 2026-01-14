@@ -22,6 +22,18 @@ export interface Handler {
   ): Promise<HandlerResult>
 }
 
+/**
+ * Helper function to enforce type safety when declaring a handler.
+ *
+ * @example
+ * ```ts
+ * declareHandler('storage', {
+ *   clazz: StorageHandler,
+ *   definition: StorageHandlerDefinition,
+ * })
+ * ```
+ * @note Enforces that the schema definition must have a `type` field that matches the handler type.
+ */
 export function declareHandler<
   HandlerType extends string,
   DefinitionSchema extends { type: HandlerType },
