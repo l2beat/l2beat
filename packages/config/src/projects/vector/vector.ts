@@ -5,7 +5,7 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -140,7 +140,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
         text: 'the bridge contract is frozen by the Guardian (AvailMultisig).',
       },
     ],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(vectorProgramHash)],
+    programHashes: [PROGRAM_HASHES(vectorProgramHash)],
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [

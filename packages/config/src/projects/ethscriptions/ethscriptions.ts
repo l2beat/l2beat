@@ -9,8 +9,8 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -289,9 +289,7 @@ export const ethscriptions: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
-    zkProgramHashes: ethscriptionsProgramHashes.map((el) =>
-      ZK_PROGRAM_HASHES(el),
-    ),
+    programHashes: ethscriptionsProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

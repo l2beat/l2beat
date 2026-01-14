@@ -1,31 +1,29 @@
 import type {
   Project,
-  ProjectScalingContractsZkProgramHash,
+  ProjectScalingContractsProgramHash,
 } from '@l2beat/config'
-import type { StateValidationZkProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
+import type { StateValidationProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 
-export function getZkProgramHashes(
-  zkProgramHashes: ProjectScalingContractsZkProgramHash[] | undefined,
+export function getProgramHashes(
+  programHashes: ProjectScalingContractsProgramHash[] | undefined,
   zkCatalogProjects: Project[],
   allProjects: Project<'contracts'>[],
-): StateValidationZkProgramHashData[] {
-  if (!zkProgramHashes) return []
+): StateValidationProgramHashData[] {
+  if (!programHashes) return []
 
-  return zkProgramHashes
-    .map((zkHash) => {
+  return programHashes
+    .map((hash) => {
       const zkCatalogProject = zkCatalogProjects.find(
-        (x) => x.id === zkHash.proverSystemProject,
+        (x) => x.id === hash.proverSystemProject,
       )
 
       const usedIn = allProjects?.filter((project) =>
-        project.contracts.zkProgramHashes?.some(
-          (ph) => ph.hash === zkHash.hash,
-        ),
+        project.contracts.programHashes?.some((ph) => ph.hash === hash.hash),
       )
 
       return {
-        ...zkHash,
+        ...hash,
         zkCatalogProject: zkCatalogProject
           ? {
               name: zkCatalogProject.name,

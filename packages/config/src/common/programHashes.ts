@@ -1,13 +1,13 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import type { ProjectScalingContractsZkProgramHash } from '../types'
+import type { ProjectScalingContractsProgramHash } from '../types'
 
-export function ZK_PROGRAM_HASHES(
-  hash: ProjectScalingContractsZkProgramHash['hash'],
-): ProjectScalingContractsZkProgramHash {
-  const programHashData = zkProgramHashes[hash]
+export function PROGRAM_HASHES(
+  hash: ProjectScalingContractsProgramHash['hash'],
+): ProjectScalingContractsProgramHash {
+  const programHashData = programHashes[hash]
   assert(
     programHashData,
-    `Program hash data for ${hash} not found, please configure it in zkProgramHashes.ts`,
+    `Program hash data for ${hash} not found, please configure it in programHashes.ts`,
   )
 
   return {
@@ -16,9 +16,9 @@ export function ZK_PROGRAM_HASHES(
   }
 }
 
-const zkProgramHashes: Record<
-  ProjectScalingContractsZkProgramHash['hash'],
-  Omit<ProjectScalingContractsZkProgramHash, 'hash'>
+const programHashes: Record<
+  ProjectScalingContractsProgramHash['hash'],
+  Omit<ProjectScalingContractsProgramHash, 'hash'>
 > = {
   '0x0075c7ec424df1386508596dc886e528c733a5f2c7728e7a81ad7676495ff31c': {
     title: 'Aggregation program of OP Succinct FDP',
