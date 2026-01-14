@@ -1,13 +1,5 @@
 import type { Field } from '../../../api/types'
-import { InlineCode } from '../../../components/Code'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '../../../components/Tooltip'
-import { IconTriangleAlert } from '../../../icons/IconTriangleAlert'
 import { useConfigModels } from '../hooks/useConfigModels'
-import { useOverspecControl } from '../hooks/useOverspecControl'
 import { FieldTag } from './FieldTag'
 import { FieldValueDisplay } from './FieldValueDisplay'
 import { FieldConfigDialog } from './field-config-dialog/FieldConfigDialog'
@@ -22,16 +14,12 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
     templateModel,
     canModify: canModifyModel,
   } = useConfigModels()
-  const { checkTemplate, checkConfig } = useOverspecControl()
 
   const canModify = canModifyField(field) && canModifyModel
   const canModifyTemplate = canModify && templateModel.hasTemplate
   const description =
     configModel.getFieldDescription(field.name) ??
     templateModel.getFieldDescription(field.name)
-
-  const configOverspec = checkConfig(field)
-  const templateOverspec = checkTemplate(field)
 
   const templateTags = [
     {
@@ -109,46 +97,6 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
     <li className="group/field truncate text-sm">
       <div className="flex h-fit flex-wrap items-center gap-2 px-4 py-1 font-bold text-xs">
         <div className="flex flex-wrap items-center gap-1">{field.name}</div>
-        {(templateOverspec.length > 0 || configOverspec.length > 0) && (
-          <Tooltip>
-            <TooltipTrigger asChild className="hover:cursor-help">
-              <IconTriangleAlert className="size-4 text-aux-yellow" />
-            </TooltipTrigger>
-            <TooltipContent className="font-normal text-xs">
-              <div className="mb-1">
-                <InlineCode content={field.name} /> does not exist - yet
-                specified in:
-              </div>
-              <ul className="list-disc pl-4 marker:text-coffee-400">
-                {templateOverspec.length > 0 && (
-                  <>
-                    <li>Template ({templateModel.hasTemplate}):</li>
-                    <ul className="list-disc pl-4 marker:text-coffee-400">
-                      {templateOverspec.map((x) => (
-                        <li key={x}>
-                          <InlineCode content={x} />
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-                {configOverspec.length > 0 && (
-                  <>
-                    <li>Config:</li>
-                    <ul className="list-disc pl-4 marker:text-coffee-400">
-                      {configOverspec.map((x) => (
-                        <li key={x}>
-                          <InlineCode content={x} />
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </ul>
-            </TooltipContent>
-          </Tooltip>
-        )}
-
         {templateTags
           .filter((x) => x.isActive)
           .map((x) => (

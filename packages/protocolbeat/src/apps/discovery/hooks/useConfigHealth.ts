@@ -15,4 +15,3 @@ export function useConfigHealth() {
     reset: mutation.reset,
   }
 }
-
