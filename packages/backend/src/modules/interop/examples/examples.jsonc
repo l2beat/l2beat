@@ -25,23 +25,36 @@
   },
   "ccip": {
     "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
-      },
+      // Base → Ethereum (has Released event)
       {
         "chain": "base",
-        "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x9e6ea796ee5b851f57643669dd24fe68948b752d7369ebce6cbd1901c2e19349"
+        "tx": "0xf678216cf093c1517c81359c73d86ed3351c2ef07ef7d22056cd940fd9fb881b"
       },
       {
         "chain": "ethereum",
-        "tx": "0x7c86a861a08dde62ac6a9de69467fcdb32db8f502caab15ea91b41f4d83da1fa"
+        "tx": "0xf977ea203a1100a4c84cbcd494c7e9ada4e84326f46b1e648693248c091b544f"
+      },
+      // Base → Ethereum (has ReleasedOrMinted event - USDC)
+      {
+        "chain": "base",
+        "tx": "0x9c99b5b0bb81356c643da3eabcba8e76d70c1434509b239f6619dfb0165dde46"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa8e64ce873efd60fa103e29733a089f8960063d4c1c20b7507d3d838dd6faa90"
       }
-    ]
+    ],
+    "events": [
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged"
+    ],
+    "messages": [
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" }
+    ],
+    "transfers": ["ccip.Transfer", "ccip.Transfer"]
   },
   "celer": {
     "txs": [
