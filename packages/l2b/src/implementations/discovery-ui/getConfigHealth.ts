@@ -16,7 +16,10 @@ export function getConfigHealth(
 
   const configPairs = allProjects.map(
     (project) =>
-      [configReader.readConfig(project), configReader.readDiscovery(project)] as const,
+      [
+        configReader.readConfig(project),
+        configReader.readDiscovery(project),
+      ] as const,
   )
   const allDiscoveries = configPairs.map(([_, discovery]) => discovery)
 
@@ -61,4 +64,3 @@ export function getConfigHealth(
     length: apiHealthHints.length,
   }
 }
-
