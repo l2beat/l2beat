@@ -75,6 +75,7 @@ export const adi: ScalingProject = {
       socialMedia: [
         'https://x.com/ADIChain_',
         'https://discord.com/invite/adi-foundation',
+        'https://t.me/adifoundation',
       ],
     },
     // Do we need upgradesAndGovernanceImage? architectureImage? liveness?
