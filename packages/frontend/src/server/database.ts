@@ -14,7 +14,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? makeLogger() : undefined,
+          log: env.DATABASE_LOG_ENABLED ? makeDbLogger('Database') : undefined,
         })
       : createThrowingProxy()
   }
@@ -78,8 +78,8 @@ export function pool() {
   }
 }
 
-function makeLogger() {
-  const logger = getLogger().for('Database')
+export function makeDbLogger(tag: string) {
+  const logger = getLogger().for(tag)
 
   return (event: LogEvent) => {
     if (event.level === 'error') {

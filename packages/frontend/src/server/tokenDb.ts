@@ -1,12 +1,6 @@
-import {
-  compiledToSqlQuery,
-  createTokenDatabase,
-  type TokenDatabase,
-} from '@l2beat/database'
-import type { LogEvent } from 'kysely'
+import { createTokenDatabase, type TokenDatabase } from '@l2beat/database'
 import { env } from '~/env'
-import { createConnectionTag, pool } from './database'
-import { getLogger } from './utils/logger'
+import { createConnectionTag, makeDbLogger, pool } from './database'
 
 let db: TokenDatabase | undefined
 
@@ -21,7 +15,9 @@ export function getTokenDb() {
               ? { rejectUnauthorized: false }
               : undefined,
           ...pool(),
-          log: env.TOKENS_DATABASE_LOG_ENABLED ? makeLogger() : undefined,
+          log: env.TOKENS_DATABASE_LOG_ENABLED
+            ? makeDbLogger('TokenDatabase')
+            : undefined,
         })
       : createThrowingProxy()
   }
@@ -36,35 +32,4 @@ function createThrowingProxy() {
       )
     },
   })
-}
-
-function makeLogger() {
-  const logger = getLogger().for('TokenDatabase')
-
-  return (event: LogEvent) => {
-    if (event.level === 'error') {
-      logger.error('Query failed', {
-        durationMs: event.queryDurationMillis,
-        error: event.error,
-        sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV === 'production'
-          ? {
-              sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
-            }
-          : {}),
-      })
-    } else {
-      logger.info('Query executed', {
-        durationMs: event.queryDurationMillis,
-        sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV === 'production'
-          ? {
-              sqlTemplate: event.query.sql,
-              parameters: event.query.parameters,
-            }
-          : {}),
-      })
-    }
-  }
 }
