@@ -43,8 +43,6 @@ const SERVER_CONFIG = {
   REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
-  TOKEN_BACKEND_URL: z.string().optional(),
-  TOKEN_BACKEND_AUTH_TOKEN: z.string().optional(),
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
 
@@ -116,8 +114,6 @@ function getRawEnv(): Record<
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
     REDIS_URL: process.env.REDIS_URL,
-    TOKEN_BACKEND_URL: process.env.TOKEN_BACKEND_URL,
-    TOKEN_BACKEND_AUTH_TOKEN: process.env.TOKEN_BACKEND_AUTH_TOKEN,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
