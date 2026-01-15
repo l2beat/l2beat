@@ -477,6 +477,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/token-backend':
+        specifier: workspace:*
+        version: link:../token-backend
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
