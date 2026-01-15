@@ -84,7 +84,11 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => parseDispatch(log, null),
+        (log, index) => {
+          const dispatch = parseDispatch(log, null)
+          if (!dispatch) return
+          return { parsed: dispatch, index }
+        },
       )
       if (!dispatch) return
 
@@ -116,7 +120,11 @@ export class HyperlaneEcoPlugin implements InteropPlugin {
         // we start one index higher because we would otherwise find the wrong processId of the batch first
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex! - 1,
-        (log, _index) => parseProcess(log, null),
+        (log, index) => {
+          const process = parseProcess(log, null)
+          if (!process) return
+          return { parsed: process, index }
+        },
       )
       if (!processMatch) return
 
