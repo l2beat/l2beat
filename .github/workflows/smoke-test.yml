@@ -90,18 +90,25 @@ jobs:
         run: pnpm test:config
         working-directory: packages/backend
 
-  # Main aggregator job that waits for all matrix jobs to succeed.
-  # It's required - will not be run if any of the matrix jobs fail - thus failing the workflow.
+  # Main aggregator job that always runs and fails on any matrix failure.
   config-smoke-test:
     if: >
       ${{
-        github.event_name == 'merge_group' ||
-        (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+        always() &&
+        (
+          github.event_name == 'merge_group' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+        )
       }}
     name: Config smoke test
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: config-smoke-test-matrix
     steps:
-      - name: All matrix jobs succeeded
-        run: echo "All config smoke test matrix legs passed."
+      - name: Check matrix result
+        run: |
+          if [[ "${{ needs.config-smoke-test-matrix.result }}" != "success" ]]; then
+            echo "Config smoke test matrix failed."
+            exit 1
+          fi
+          echo "All config smoke test matrix legs passed."
