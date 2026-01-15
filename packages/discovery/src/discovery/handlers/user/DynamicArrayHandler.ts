@@ -124,6 +124,6 @@ function hashBigints(values: bigint[]): bigint {
 }
 
 export const DynamicArrayHandlerBundle = declareHandler('dynamicArray', {
-  clazz: DynamicArrayHandler,
   definition: DynamicArrayHandlerDefinition,
+  create: ({ field, definition }) => new DynamicArrayHandler(field, definition),
 })

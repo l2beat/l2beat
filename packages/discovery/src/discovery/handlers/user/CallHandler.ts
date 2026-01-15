@@ -119,6 +119,7 @@ function isViewFragment(fragment: utils.FunctionFragment): boolean {
 }
 
 export const CallHandlerBundle = declareHandler('call', {
-  clazz: CallHandler,
   definition: CallHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new CallHandler(field, definition, abi),
 })

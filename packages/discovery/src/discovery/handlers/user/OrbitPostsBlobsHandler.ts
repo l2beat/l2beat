@@ -100,6 +100,7 @@ export class OrbitPostsBlobsHandler implements Handler {
 }
 
 export const OrbitPostsBlobsHandlerBundle = declareHandler('orbitPostsBlobs', {
-  clazz: OrbitPostsBlobsHandler,
   definition: OrbitPostsBlobsDefinition,
+  create: ({ field, definition }) =>
+    new OrbitPostsBlobsHandler(field, definition),
 })

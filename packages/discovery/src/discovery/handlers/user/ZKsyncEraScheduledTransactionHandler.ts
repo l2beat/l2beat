@@ -236,7 +236,8 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
 export const ZKsyncEraScheduledTransactionHandlerBundle = declareHandler(
   'zksynceraScheduledTransactions',
   {
-    clazz: ZKsyncEraScheduledTransactionHandler,
     definition: ZKsyncEraScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new ZKsyncEraScheduledTransactionHandler(field, abi),
   },
 )

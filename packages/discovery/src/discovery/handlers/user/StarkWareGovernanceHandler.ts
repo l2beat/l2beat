@@ -76,7 +76,8 @@ export class StarkWareGovernanceHandler implements Handler {
 export const StarkWareGovernanceHandlerBundle = declareHandler(
   'starkWareGovernance',
   {
-    clazz: StarkWareGovernanceHandler,
     definition: StarkWareGovernanceHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new StarkWareGovernanceHandler(field, definition, abi),
   },
 )

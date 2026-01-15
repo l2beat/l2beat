@@ -263,8 +263,9 @@ export function getArrayFragment(
 export const ArrayHandlerBundle = declareHandler(
   'array',
   {
-    clazz: ArrayHandler,
     definition: ArrayHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new ArrayHandler(field, definition, abi),
   },
   {
     description: `

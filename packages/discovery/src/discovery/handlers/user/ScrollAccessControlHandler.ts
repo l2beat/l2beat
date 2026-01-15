@@ -245,7 +245,8 @@ function parseRoleLog(
 export const ScrollAccessControlHandlerBundle = declareHandler(
   'scrollAccessControl',
   {
-    clazz: ScrollAccessControlHandler,
     definition: ScrollAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new ScrollAccessControlHandler(field, definition, abi),
   },
 )

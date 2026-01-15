@@ -33,6 +33,6 @@ export class EventCountHandler implements Handler {
 }
 
 export const EventCountHandlerBundle = declareHandler('eventCount', {
-  clazz: EventCountHandler,
   definition: EventCountHandlerDefinition,
+  create: ({ field, definition }) => new EventCountHandler(field, definition),
 })

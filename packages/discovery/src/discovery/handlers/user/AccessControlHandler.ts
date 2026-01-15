@@ -187,6 +187,7 @@ function parseRoleLog(
 }
 
 export const AccessControlHandlerBundle = declareHandler('accessControl', {
-  clazz: AccessControlHandler,
   definition: AccessControlHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new AccessControlHandler(field, definition, abi),
 })

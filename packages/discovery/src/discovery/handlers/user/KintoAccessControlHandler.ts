@@ -387,7 +387,8 @@ function parseTargetLog(
 export const KintoAccessControlHandlerBundle = declareHandler(
   'kintoAccessControl',
   {
-    clazz: KintoAccessControlHandler,
     definition: KintoAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new KintoAccessControlHandler(field, definition, abi),
   },
 )

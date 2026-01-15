@@ -218,7 +218,8 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
 export const PolygonCDKScheduledTransactionHandlerBundle = declareHandler(
   'polygoncdkScheduledTransactions',
   {
-    clazz: PolygonCDKScheduledTransactionHandler,
     definition: PolygonCDKScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new PolygonCDKScheduledTransactionHandler(field, abi),
   },
 )

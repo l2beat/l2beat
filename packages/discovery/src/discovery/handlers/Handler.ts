@@ -34,42 +34,51 @@ export type HandlerExample = {
  * @example
  * ```ts
  * declareHandler('storage', {
- *   clazz: StorageHandler,
  *   definition: StorageHandlerDefinition,
+ *   create: ({ field, definition, abi }) =>
+ *     new StorageHandler(field, definition, abi),
  * })
  * ```
  * @note Enforces that the schema definition must have a `type` field that matches the handler type.
  */
+export type HandlerFactoryDeps<DefinitionSchema> = {
+  field: string
+  definition: DefinitionSchema
+  abi: string[]
+}
+
+export type HandlerFactory<DefinitionSchema> = (
+  deps: HandlerFactoryDeps<DefinitionSchema>,
+) => Handler
+
 export function declareHandler<
   HandlerType extends string,
   DefinitionSchema extends { type: HandlerType },
-  HandlerClass,
 >(
   idOrType: HandlerType,
   base: {
-    clazz: HandlerClass
     definition: Parser<DefinitionSchema>
+    create: HandlerFactory<DefinitionSchema>
   },
   documentation?: {
     description?: string
     examples?: HandlerExample[]
   },
-): HandlerDeclaration<HandlerType, HandlerClass, DefinitionSchema> {
+): HandlerDeclaration<HandlerType, DefinitionSchema> {
   return {
     type: idOrType,
-    clazz: base.clazz,
     definition: base.definition,
+    create: base.create,
     documentation,
   }
 }
 export interface HandlerDeclaration<
   HandlerType extends string = string,
-  HandlerClass = unknown,
   DefinitionSchema = unknown,
 > {
   type: HandlerType
-  clazz: HandlerClass
   definition: Parser<DefinitionSchema>
+  create(deps: HandlerFactoryDeps<DefinitionSchema>): Handler
   documentation?: {
     description?: string
     examples?: HandlerExample[]

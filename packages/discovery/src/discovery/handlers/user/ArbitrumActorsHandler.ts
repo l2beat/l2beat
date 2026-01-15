@@ -129,6 +129,7 @@ export class ArbitrumActorsHandler implements Handler {
 }
 
 export const ArbitrumActorsHandlerBundle = declareHandler('arbitrumActors', {
-  clazz: ArbitrumActorsHandler,
   definition: ArbitrumActorsHandlerDefinition,
+  create: ({ field, definition }) =>
+    new ArbitrumActorsHandler(field, definition),
 })

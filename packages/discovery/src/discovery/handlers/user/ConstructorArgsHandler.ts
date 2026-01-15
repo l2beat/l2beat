@@ -210,6 +210,7 @@ function popLeadingZeros(data: string): string {
 }
 
 export const ConstructorArgsHandlerBundle = declareHandler('constructorArgs', {
-  clazz: ConstructorArgsHandler,
   definition: ConstructorArgsDefinition,
+  create: ({ field, definition, abi }) =>
+    new ConstructorArgsHandler(field, definition, abi),
 })

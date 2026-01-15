@@ -91,6 +91,6 @@ function getSupply(chain: string, entry: SourceEntry) {
 }
 
 export const ERC20DataHandlerBundle = declareHandler('ERC20Data', {
-  clazz: ERC20DataHandler,
   definition: ERC20DataDefinition,
+  create: ({ field, definition }) => new ERC20DataHandler(field, definition),
 })

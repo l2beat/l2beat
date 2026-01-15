@@ -78,6 +78,6 @@ export class OpStackDAHandler implements Handler {
 }
 
 export const OpStackDAHandlerBundle = declareHandler('opStackDA', {
-  clazz: OpStackDAHandler,
   definition: OpStackDAHandlerDefinition,
+  create: ({ field, definition }) => new OpStackDAHandler(field, definition),
 })

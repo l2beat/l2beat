@@ -96,7 +96,8 @@ function decodeLastEvent(events: providers.Log[]): {
 export const ArbitrumDACKeysetHandlerBundle = declareHandler(
   'arbitrumDACKeyset',
   {
-    clazz: ArbitrumDACKeysetHandler,
     definition: ArbitrumDACKeysetHandlerDefinition,
+    create: ({ field, definition }) =>
+      new ArbitrumDACKeysetHandler(field, definition),
   },
 )

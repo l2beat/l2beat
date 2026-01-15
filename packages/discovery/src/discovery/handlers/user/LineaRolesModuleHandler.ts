@@ -677,7 +677,8 @@ function notUndefined<T>(value: T | undefined): value is T {
 export const LineaRolesModuleHandlerBundle = declareHandler(
   'lineaRolesModule',
   {
-    clazz: LineaRolesModuleHandler,
     definition: LineaRolesModuleHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new LineaRolesModuleHandler(field, definition, abi),
   },
 )

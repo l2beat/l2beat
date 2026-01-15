@@ -63,6 +63,6 @@ function parseDealDeployed(
 }
 
 export const TradableHandlerBundle = declareHandler('tradable', {
-  clazz: TradableHandler,
   definition: TradableDefinition,
+  create: ({ field }) => new TradableHandler(field),
 })

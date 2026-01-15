@@ -164,7 +164,7 @@ export class ZKsyncEraValidatorsHandler implements Handler {
 export const ZKsyncEraValidatorsHandlerBundle = declareHandler(
   'zksynceraValidators',
   {
-    clazz: ZKsyncEraValidatorsHandler,
     definition: ZKsyncEraValidatorsHandlerDefinition,
+    create: ({ field, abi }) => new ZKsyncEraValidatorsHandler(field, abi),
   },
 )

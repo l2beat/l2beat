@@ -52,7 +52,8 @@ export class StarkWareNamedStorageHandler implements Handler {
 export const StarkWareNamedStorageHandlerBundle = declareHandler(
   'starkWareNamedStorage',
   {
-    clazz: StarkWareNamedStorageHandler,
     definition: StarkWareNamedStorageHandlerDefinition,
+    create: ({ field, definition }) =>
+      new StarkWareNamedStorageHandler(field, definition),
   },
 )

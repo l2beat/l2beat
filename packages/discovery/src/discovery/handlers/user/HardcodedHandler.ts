@@ -26,6 +26,6 @@ export class HardCodedHandler implements Handler {
 }
 
 export const HardCodedHandlerBundle = declareHandler('hardcoded', {
-  clazz: HardCodedHandler,
   definition: HardCodedDefinition,
+  create: ({ field, definition }) => new HardCodedHandler(field, definition),
 })

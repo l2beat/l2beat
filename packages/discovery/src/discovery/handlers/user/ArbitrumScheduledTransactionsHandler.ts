@@ -292,7 +292,8 @@ function getSighash(data: string): string {
 export const ArbitrumScheduledTransactionsHandlerBundle = declareHandler(
   'arbitrumScheduledTransactions',
   {
-    clazz: ArbitrumScheduledTransactionsHandler,
     definition: ArbitrumScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new ArbitrumScheduledTransactionsHandler(field, abi),
   },
 )

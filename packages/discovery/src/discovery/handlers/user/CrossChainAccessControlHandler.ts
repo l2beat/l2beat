@@ -266,7 +266,8 @@ function parseRoleLog(
 export const CrossChainAccessControlHandlerBundle = declareHandler(
   'crossChainAccessControl',
   {
-    clazz: CrossChainAccessControlHandler,
     definition: CrossChainAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new CrossChainAccessControlHandler(field, definition, abi),
   },
 )

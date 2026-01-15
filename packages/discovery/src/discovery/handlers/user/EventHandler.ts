@@ -339,6 +339,7 @@ function isNumber(str: string): boolean {
 }
 
 export const EventHandlerBundle = declareHandler('event', {
-  clazz: EventHandler,
   definition: EventHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new EventHandler(field, definition, abi),
 })

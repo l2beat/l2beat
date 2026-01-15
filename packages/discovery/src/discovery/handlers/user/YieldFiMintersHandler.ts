@@ -118,6 +118,7 @@ const YieldFiRoles = {
 }
 
 export const YieldFiMintersHandlerBundle = declareHandler('YieldFiMinters', {
-  clazz: YieldFiMintersHandler,
   definition: YieldFiMintersDefinition,
+  create: ({ field, definition, abi }) =>
+    new YieldFiMintersHandler(field, definition, abi),
 })

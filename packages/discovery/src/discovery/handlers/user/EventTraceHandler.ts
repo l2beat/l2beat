@@ -142,6 +142,7 @@ function decodeWithNames(abi: string[], fn: string, data: string) {
 }
 
 export const EventTraceHandlerBundle = declareHandler('eventTrace', {
-  clazz: EventTraceHandler,
   definition: EventTraceHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new EventTraceHandler(field, definition, abi),
 })
