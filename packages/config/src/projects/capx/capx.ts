@@ -30,6 +30,7 @@ export const capx: ScalingProject = orbitStackL2({
         'https://discord.com/invite/capx',
         'https://x.com/0xCapx',
         'https://t.me/capxai',
+        'https://www.youtube.com/@capxai',
       ],
     },
   },
