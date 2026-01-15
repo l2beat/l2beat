@@ -7,7 +7,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TopPathsWidget({
   interopChains,
@@ -32,8 +32,8 @@ export function TopPathsWidget({
   }
 
   return (
-    <PrimaryCard className="@container h-[213px]">
-      <h2 className="font-bold text-heading-20">Top 3 paths by volume </h2>
+    <PrimaryCard className="@container z-10 h-[213px]">
+      <h2 className="font-bold text-heading-20">Top 3 paths by volume</h2>
       <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
         Between {uniqChains.length} supported chains
       </div>
