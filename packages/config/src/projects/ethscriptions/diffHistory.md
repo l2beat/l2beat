@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x3bdda8534b53f90e2c3ee53b461b1a4d7baebc50
+
+# Diff at Wed, 14 Jan 2026 13:02:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7f517859f6f313e4c82beba4300d1738b863a5d block: 1768211188
+- current timestamp: 1768395715
+
+## Description
+
+Config change: Removed `proxyType: immutable` workaround for L2 predeploys (Ethscriptions, EthscriptionsProver, L2ToL1MessagePasser). These contracts are now properly detected by l2b rpc as EIP1967 proxies (DeaD owner) with their implementations tracked.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768211188 (main branch discovery), not current.
+
+```diff
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001) {
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
+      sourceHashes.1:
++        "0x0645ac658c841359389c047ca68b72e620b5caf18e80d9fdca1667bdfe888ab7"
+      proxyType:
+-        "immutable"
++        "EIP1967 proxy"
+      values.$immutable:
+-        true
+      values.$admin:
++        "ethscr:0x4200000000000000000000000000000000000018"
+      values.$implementation:
++        "ethscr:0xc0D3C0d3C0d3c0d3c0D3C0D3C0D3C0d3c0d30001"
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+      values.name:
++        "Ethscriptions"
+      values.prover:
++        "ethscr:0x3300000000000000000000000000000000000003"
+      values.symbol:
++        "ETHSCRIPTIONS"
+      implementationNames.ethscr:0xc0D3C0d3C0d3c0d3c0D3C0D3C0D3C0d3c0d30001:
++        "Ethscriptions"
+    }
+```
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      sourceHashes.0:
++        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
+      proxyType:
+-        "immutable"
++        "EIP1967 proxy"
+      values.$immutable:
+-        true
+      values.$admin:
++        "ethscr:0x4200000000000000000000000000000000000018"
+      values.$implementation:
++        "ethscr:0xC0D3c0d3C0d3C0D3c0D3c0D3C0D3c0d3C0d30003"
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+      implementationNames.ethscr:0xC0D3c0d3C0d3C0D3c0D3c0D3C0D3c0d3C0d30003:
++        "EthscriptionsProver"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (ethscr:0x4200000000000000000000000000000000000016) {
+    +++ description: L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.
+      sourceHashes.1:
++        "0xeae30ba6711a363cca12f4e057185a1206f3f1adb48c6917f1b8bb4bc5717e0d"
+      proxyType:
+-        "immutable"
++        "EIP1967 proxy"
+      values.$immutable:
+-        true
+      values.$admin:
++        "ethscr:0x4200000000000000000000000000000000000018"
+      values.$implementation:
++        "ethscr:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
+      values.$pastUpgrades:
++        []
+      values.$upgradeCount:
++        0
+      values.MESSAGE_VERSION:
++        1
+      implementationNames.ethscr:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
++        "L2ToL1MessagePasser"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (ethscr:0x4200000000000000000000000000000000000018)
+    +++ description: ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.
+```
+
 Generated with discovered.json: 0x98cd5c5394c315ca5006ad70a81aa81b3e313819
 
 # Diff at Mon, 12 Jan 2026 09:47:31 GMT:
