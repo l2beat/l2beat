@@ -64,18 +64,6 @@ export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
           deployedTokens,
         }
       }),
-    getByIds: readOnlyProcedure
-      .input(v.array(v.string()))
-      .query(async ({ ctx, input }) => {
-        if (input.length === 0) return []
-
-        const abstractTokens = await ctx.db.abstractToken.getByIds(input)
-        return abstractTokens.map((token) => ({
-          id: token.id,
-          iconUrl: token.iconUrl,
-          symbol: token.symbol,
-        }))
-      }),
     checks: readOnlyProcedure.input(v.string()).query(async ({ input }) => {
       let coin: Coin | null = null
       try {
