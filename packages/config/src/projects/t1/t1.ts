@@ -20,6 +20,7 @@ export const t1: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/t1protocol',
         'https://discord.com/invite/nbvyXZHgke',
+        'https://t.me/t1_protocol_official',
       ],
       bridges: ['https://t1protocol.com/bridge'],
     },
