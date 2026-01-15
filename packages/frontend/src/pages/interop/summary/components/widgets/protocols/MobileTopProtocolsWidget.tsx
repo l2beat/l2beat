@@ -3,7 +3,7 @@ import { cn } from '~/utils/cn'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'
 
-export function CombinedProtocolsWidget() {
+export function MobileTopProtocolsWidget() {
   const [view, setView] = useState<'volume' | 'transfers'>('volume')
   return (
     <div className="relative xl:hidden">

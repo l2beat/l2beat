@@ -4,7 +4,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
-import { CombinedProtocolsWidget } from './components/widgets/protocols/CombinedProtocolsWidget'
+import { MobileTopProtocolsWidget } from './components/widgets/protocols/MobileTopProtocolsWidget'
 import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
@@ -32,7 +32,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
             <div className="h-full max-xl:hidden">
               <TopProtocolsByTransfers />
             </div>
-            <CombinedProtocolsWidget />
+            <MobileTopProtocolsWidget />
           </div>
         </InteropSelectedChainsProvider>
       </SideNavLayout>
