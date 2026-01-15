@@ -8,7 +8,8 @@ type ConfigHealthHint = {
   source: 'config'
   target: {
     project: string
-    entry: ChainSpecificAddress
+    address: ChainSpecificAddress
+    name?: string
   }
   excess: {
     ignoreInWatchMode?: string[]
@@ -64,7 +65,8 @@ export class ConfigHealthService {
           source: 'config',
           target: {
             project: config.name,
-            entry: entry.address,
+            address: entry.address,
+            name: entry.name,
           },
           excess: {
             ignoreInWatchMode: excessWatchMode,

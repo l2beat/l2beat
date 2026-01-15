@@ -46,7 +46,8 @@ export function getConfigHealth(
         source: 'config',
         target: {
           project: hint.target.project,
-          entry: hint.target.entry.toString(),
+          address: hint.target.address.toString(),
+          name: hint.target.name,
         },
         excess: hint.excess,
       }

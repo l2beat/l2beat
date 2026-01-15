@@ -205,7 +205,8 @@ export type ApiHealthHint =
       source: 'config'
       target: {
         project: string
-        entry: string
+        address: string
+        name?: string
       }
     })
   | (ApiHealthHintBase & {

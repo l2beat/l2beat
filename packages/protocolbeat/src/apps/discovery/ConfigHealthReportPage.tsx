@@ -168,7 +168,7 @@ function PrettyHealthHints(props: { hints: ApiHealthHint[] }) {
             .slice()
             .sort((a, b) =>
               a.source === 'config' && b.source === 'config'
-                ? a.target.entry.localeCompare(b.target.entry)
+                ? a.target.address.localeCompare(b.target.address)
                 : 0,
             ),
         }))}
@@ -237,7 +237,16 @@ function HintCard(props: { hint: ApiHealthHint }) {
   return (
     <div className="bg-coffee-800/30 p-2">
       {props.hint.source === 'config' && (
-        <span className="font-mono text-2xs">{props.hint.target.entry}</span>
+        <div className="flex items-center gap-1">
+          {props.hint.target.name && (
+            <span className="text-2xs text-coffee-400">
+              {props.hint.target.name}
+            </span>
+          )}
+          <span className="font-mono text-2xs">
+            {props.hint.target.address}
+          </span>
+        </div>
       )}
 
       <div className="mt-2 space-y-2">
@@ -265,11 +274,11 @@ function formatConfigHealthReport(
   const sorted = [...hints].sort((a, b) => {
     const aKey =
       a.source === 'config'
-        ? `${a.target.entry}`
+        ? `${a.target.address}`
         : `template:${a.target.templateId}`
     const bKey =
       b.source === 'config'
-        ? `${b.target.entry}`
+        ? `${b.target.address}`
         : `template:${b.target.templateId}`
     return aKey.localeCompare(bKey)
   })
@@ -290,7 +299,9 @@ function formatConfigHealthReport(
   for (const hint of sorted) {
     const title =
       hint.source === 'config'
-        ? `config ${hint.target.project}:${hint.target.entry}`
+        ? hint.target.name
+          ? `config ${hint.target.project}:${hint.target.name}:${hint.target.address}`
+          : `config ${hint.target.project}:${hint.target.address}`
         : `template ${hint.target.templateId}`
     lines.push(`## ${title}`)
 
