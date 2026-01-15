@@ -1544,7 +1544,7 @@
   },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
-    // 3 oft transfers
+    // 4 oft transfers
     "txs": [
       {
         "chain": "ethereum",
@@ -1569,6 +1569,15 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      },
+      // abstract ETH special case (eth is gas token and emits)
+      {
+        "chain": "abstract",
+        "tx": "0x8def42eab96d9a9e909335dd4c438abad28852f08bb5c796ca44668fdafb115d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x08fceb6f2db1a78a81a6ad94b8b2f137d7eb4e111043db1a7a05909db4208025"
       }
     ]
   },
