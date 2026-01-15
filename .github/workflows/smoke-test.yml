@@ -95,6 +95,7 @@ jobs:
       }}
     name: Config smoke test
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: config-smoke-test-matrix
     steps:
       - name: All matrix jobs succeeded
