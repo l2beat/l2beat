@@ -14,7 +14,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? makeLogger() : undefined,
+          log: env.DATABASE_LOG_ENABLED ? makeDbLogger('Database') : undefined,
         })
       : createThrowingProxy()
   }
@@ -33,7 +33,7 @@ function createThrowingProxy() {
 }
 
 // Tag is limited to 63 characters, so it will cut off the excess
-function createConnectionTag() {
+export function createConnectionTag() {
   const suffix =
     env.DEPLOYMENT_ENV === 'production'
       ? 'prod'
@@ -58,7 +58,7 @@ function ssl() {
     : undefined
 }
 
-function pool() {
+export function pool() {
   switch (env.DEPLOYMENT_ENV) {
     case 'production':
       return {
@@ -78,8 +78,8 @@ function pool() {
   }
 }
 
-function makeLogger() {
-  const logger = getLogger().for('Database')
+export function makeDbLogger(tag: string) {
+  const logger = getLogger().for(tag)
 
   return (event: LogEvent) => {
     if (event.level === 'error') {
