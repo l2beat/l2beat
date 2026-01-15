@@ -22,9 +22,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -549,7 +549,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           'EmergencyUpgradeBoard',
         ),
       ],
-      zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],
+      programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
     },
     stateDerivation:
       daProvider !== undefined

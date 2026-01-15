@@ -26,8 +26,8 @@ import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { getStage } from '../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
@@ -51,7 +51,7 @@ import type {
   ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
-  ProjectScalingContractsZkProgramHash,
+  ProjectScalingContractsProgramHash,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -212,7 +212,7 @@ interface OpStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
-  nonTemplateZkProgramHashes?: ProjectScalingContractsZkProgramHash[]
+  nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -454,9 +454,8 @@ function opStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
-      zkProgramHashes:
-        templateVars.nonTemplateZkProgramHashes ??
-        getZkProgramHashes(templateVars),
+      programHashes:
+        templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -618,9 +617,9 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   }
 }
 
-function getZkProgramHashes(
+function getProgramHashes(
   templateVars: OpStackConfigCommon,
-): ProjectScalingContractsZkProgramHash[] {
+): ProjectScalingContractsProgramHash[] {
   const fraudProofType = getFraudProofType(templateVars)
 
   switch (fraudProofType) {
@@ -637,8 +636,8 @@ function getZkProgramHashes(
         string[]
       >('RiscZeroSetVerifier', 'imageInfo')[0]
       return [
-        ZK_PROGRAM_HASHES(kailuaProgramHash),
-        ZK_PROGRAM_HASHES(setBuilderProgramHash),
+        PROGRAM_HASHES(kailuaProgramHash),
+        PROGRAM_HASHES(setBuilderProgramHash),
       ]
     }
     case 'KailuaSoon': {
@@ -646,7 +645,7 @@ function getZkProgramHashes(
         'KailuaTreasury',
         'FPVM_IMAGE_ID',
       )
-      return [ZK_PROGRAM_HASHES(kailuaProgramHash)]
+      return [PROGRAM_HASHES(kailuaProgramHash)]
     }
     case 'OpSuccinct': {
       const opSuccinctProgramHashes = [
@@ -660,7 +659,7 @@ function getZkProgramHashes(
         ),
       ]
 
-      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+      return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
     case 'OpSuccinctFDP': {
       const opSuccinctProgramHashes = [
@@ -674,7 +673,7 @@ function getZkProgramHashes(
         ),
       ]
 
-      return opSuccinctProgramHashes.map((el) => ZK_PROGRAM_HASHES(el))
+      return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
   }
 }

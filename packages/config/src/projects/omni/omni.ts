@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -183,7 +183,7 @@ export const omni: Bridge = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: [ZK_PROGRAM_HASHES(heliosProgramHash)],
+    programHashes: [PROGRAM_HASHES(heliosProgramHash)],
   },
   permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),

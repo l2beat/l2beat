@@ -1,13 +1,13 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import type { ProjectScalingContractsZkProgramHash } from '../types'
+import type { ProjectScalingContractsProgramHash } from '../types'
 
-export function ZK_PROGRAM_HASHES(
-  hash: ProjectScalingContractsZkProgramHash['hash'],
-): ProjectScalingContractsZkProgramHash {
-  const programHashData = zkProgramHashes[hash]
+export function PROGRAM_HASHES(
+  hash: ProjectScalingContractsProgramHash['hash'],
+): ProjectScalingContractsProgramHash {
+  const programHashData = programHashes[hash]
   assert(
     programHashData,
-    `Program hash data for ${hash} not found, please configure it in zkProgramHashes.ts`,
+    `Program hash data for ${hash} not found, please configure it in programHashes.ts`,
   )
 
   return {
@@ -16,9 +16,9 @@ export function ZK_PROGRAM_HASHES(
   }
 }
 
-const zkProgramHashes: Record<
-  ProjectScalingContractsZkProgramHash['hash'],
-  Omit<ProjectScalingContractsZkProgramHash, 'hash'>
+const programHashes: Record<
+  ProjectScalingContractsProgramHash['hash'],
+  Omit<ProjectScalingContractsProgramHash, 'hash'>
 > = {
   '0x0075c7ec424df1386508596dc886e528c733a5f2c7728e7a81ad7676495ff31c': {
     title: 'Aggregation program of OP Succinct FDP',
@@ -326,7 +326,6 @@ fn main() {
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
-
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
@@ -511,7 +510,24 @@ Verify:
     programUrl:
       'https://github.com/risc0/risc0-ethereum/tree/v3.0.1/crates/aggregation/guest/set-builder',
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct image ID only on linux OS. Steps below were done on Ubuntu 22.04 OS.
+
+Prepare:
+
+1. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`, then \`. .cargo/env\`.
+2. Install dependency libs \`sudo apt-get install build-essential\`.
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+4. Install the risc zero toolkit \`curl -L https://risczero.com/install | bash\`, then \`rzup install\`.
+
+Verify:
+
+1. Checkout the correct branch in [risc0-ethereum](https://github.com/risc0/risc0-ethereum/tree/main) repo:  \`git checkout v3.0.1\` . Commit hash should be  \`365e7b2db4f620fa256580c27558d2623362b9ae \`.
+2. Make sure docker is running by running  \`docker ps \`.
+3. Set env var to use Risc Zero docker build: \`export RISC0_USE_DOCKER=1\`.
+4. From the repo root dir:  \`cargo risczero build --manifest-path crates/aggregation/guest/set-builder/Cargo.toml\` to build elf binaries from sources. This command should output correct ImageID.
+    `,
   },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
@@ -878,6 +894,22 @@ Verify:
     title: 'Morph Guest Program (zkEVM Executor)',
     description:
       'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
+    title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
+    title: 'Range program of Ethscriptions ZK Fault Proofs',
+    description:
+      'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
+    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },

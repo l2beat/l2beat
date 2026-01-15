@@ -3,12 +3,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { StateValidationZkProgramHashData } from '../../ProgramHashesSection'
+import type { StateValidationProgramHashData } from '../../ProgramHashesSection'
 
 export function ZkProjectTooltip({
   zkProject,
 }: {
-  zkProject: NonNullable<StateValidationZkProgramHashData['zkCatalogProject']>
+  zkProject: NonNullable<StateValidationProgramHashData['zkCatalogProject']>
 }) {
   return (
     <Tooltip>

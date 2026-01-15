@@ -32,7 +32,7 @@ export function TopPathsWidget({
   }
 
   return (
-    <PrimaryCard className="z-10 h-[213px]">
+    <PrimaryCard className="@container z-10 h-[213px]">
       <h2 className="font-bold text-heading-20">Top 3 paths by volume</h2>
       <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
         Between {uniqChains.length} supported chains
@@ -93,7 +93,7 @@ function PathItem({
             alt={from.name}
             className="size-5"
           />
-          <div className="font-medium text-label-value-15 [@media(max-width:1050px)]:hidden [@media(min-width:1200px)]:hidden [@media(min-width:1250px)]:block [@media(min-width:1300px)]:block [@media(min-width:1440px)]:hidden [@media(min-width:1800px)]:block">
+          <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {from.name}
           </div>
           <ArrowRightIcon className="size-5 fill-brand" />
@@ -102,7 +102,7 @@ function PathItem({
             alt={to.name}
             className="size-5"
           />
-          <div className="font-medium text-label-value-15 [@media(max-width:1050px)]:hidden [@media(min-width:1200px)]:hidden [@media(min-width:1250px)]:block [@media(min-width:1300px)]:block [@media(min-width:1440px)]:hidden [@media(min-width:1800px)]:block">
+          <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {to.name}
           </div>
         </div>

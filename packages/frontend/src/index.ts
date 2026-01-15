@@ -14,9 +14,11 @@ function main() {
 
   createServer(logger)
 
-  if (env.NODE_ENV === 'production') {
+  if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {
     createCacheWarmer(logger)
-  } else {
+  }
+
+  if (env.NODE_ENV !== 'production') {
     setupDevReload(logger)
   }
 }

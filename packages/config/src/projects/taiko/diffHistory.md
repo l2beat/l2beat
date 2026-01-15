@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xce654aee2f74b7c08f314aaae5808c1f7c9401e3
+
+# Diff at Wed, 14 Jan 2026 06:28:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767795947
+- current timestamp: 1768372024
+
+## Description
+
+New standard proposal: lower hardcoded basefee by 2.5x: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/24 .
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        24
++        25
+      values.proposalIds.24:
++        "601724541768498866969402779460601617583941091352"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        15
++        16
+    }
+```
+
 Generated with discovered.json: 0xdf5ac5c47f1fe13609c81d625be6f43eb5e0a972
 
 # Diff at Wed, 07 Jan 2026 14:29:19 GMT:

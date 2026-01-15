@@ -166,6 +166,10 @@ export const sp1: BaseProject = {
         sinceTimestamp: UnixTime(1751407200),
       },
       {
+        projectId: ProjectId('ethscriptions'),
+        sinceTimestamp: UnixTime(1767735587),
+      },
+      {
         projectId: ProjectId('ternoa'),
         sinceTimestamp: UnixTime(1753882500),
       },

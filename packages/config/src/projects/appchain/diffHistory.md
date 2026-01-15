@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x42e38188f930bc5588a5ccbe498fe791beac5416
+
+# Diff at Wed, 14 Jan 2026 12:44:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7f517859f6f313e4c82beba4300d1738b863a5d block: 1760538476
+- current timestamp: 1768394426
+
+## Description
+
+Ownership of the three Espresso TEE verifier contracts (EspressoSGXTEEVerifier, EspressoTEEVerifier, EspressoNitroTEEVerifier) was transferred from an EOA to a Safe multisig. 
+
+## Watched changes
+
+```diff
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/appchain/.flat/Safe/Safe.sol      | 1088 ++++++++++++++++++++
+ .../projects/appchain/.flat/Safe/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xe26da9cf2a4225beb0fcf45d4b0ce609285c2a52
 
 # Diff at Mon, 05 Jan 2026 17:44:00 GMT:

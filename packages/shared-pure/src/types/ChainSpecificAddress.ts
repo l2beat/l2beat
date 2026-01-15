@@ -45,6 +45,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   gateway: 'gateway',
   ethereal: 'ethereal',
   jovay: 'jovay',
+  ethscr: 'ethscriptions',
   lens: 'lens',
   lisk: 'lisk',
   redstone: 'redstone',

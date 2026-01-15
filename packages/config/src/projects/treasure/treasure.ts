@@ -50,7 +50,7 @@ export const treasure: ScalingProject = zkStackL2({
   },
   chainConfig: {
     name: 'treasure',
-    chainId,
+    chainId: undefined, // Archived - chainId 61166 now used by Ethscriptions
     explorerUrl: 'https://treasurescan.io',
     sinceTimestamp: UnixTime(1732617294),
     apis: [

@@ -585,7 +585,7 @@ export interface ProjectScalingStateValidationCategory {
   isIncomplete?: boolean
 }
 
-export interface ProjectScalingContractsZkProgramHash {
+export interface ProjectScalingContractsProgramHash {
   hash: string
   proverSystemProject?: ProjectId
   title: string
@@ -1081,7 +1081,7 @@ export interface ProjectContracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
-  zkProgramHashes?: ProjectScalingContractsZkProgramHash[]
+  programHashes?: ProjectScalingContractsProgramHash[]
 }
 
 export interface ProjectContract {
