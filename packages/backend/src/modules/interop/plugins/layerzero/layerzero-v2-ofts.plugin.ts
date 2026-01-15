@@ -1,5 +1,6 @@
 import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findParsedAround } from '../hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -104,29 +105,18 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
 
-      // Find Transfer event before OFTSent by searching through all preceding logs in the worst case
-      let srcTokenAddress: Address32 | undefined
-      let srcAmount: bigint | undefined
-
-      for (
-        let offset = 1;
+      const matchingTransferData = findParsedAround(
+        input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
-          srcTokenAddress = Address32.from(precedingLog.address)
-          srcAmount = transfer.value
-          break
-        }
-      }
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value !== normalized.amountSentLD) return
+          return Address32.from(log.address)
+        },
+      )
 
       return [
         OFTSentPacketSent.create(input, {
@@ -135,8 +125,8 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           amountSentLD: normalized.amountSentLD,
           amountReceivedLD: normalized.amountReceivedLD,
           oappAddress: Address32.from(input.log.address),
-          srcTokenAddress,
-          srcAmount,
+          srcTokenAddress: matchingTransferData?.parsed,
+          srcAmount: normalized.amountSentLD,
         }),
       ]
     }
@@ -164,23 +154,28 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
-          // use erc20 transfer event instead (fragile because it might not be 1 log before)
-          const previousLog = input.txLogs.find(
+
+          const matchingTransferData = findParsedAround(
+            input.txLogs,
             // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === input.log.logIndex! - 1,
+            input.log.logIndex!,
+            (log, _index) => {
+              const transfer = parseTransfer(log, null)
+              if (!transfer) return
+              // compare amount to not match a rogue Transfer event
+              if (transfer.value !== oftReceived.amountReceivedLD) return
+              return Address32.from(log.address)
+            },
           )
-          const transfer = previousLog && parseTransfer(previousLog, null)
+
           return [
             OFTReceivedPacketDelivered.create(input, {
               $srcChain,
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
-              // TODO: OFT log emitter is not always the token contract (needs effects)
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: previousLog
-                ? Address32.from(previousLog.address)
-                : undefined,
-              dstAmount: transfer?.value ?? undefined,
+              dstTokenAddress: matchingTransferData?.parsed,
+              dstAmount: oftReceived.amountReceivedLD,
             }),
           ]
         }
@@ -215,10 +210,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: oftSentPacketSent.args.amountSentLD, // we also have oftSentPacketSent.args.srcAmount
+        srcAmount: oftSentPacketSent.args.amountSentLD, // same as oftSentPacketSent.args.srcAmount
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // we also have oftReceivedPacketDelivered.args.dstAmount
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
         dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
       }),
     ]
