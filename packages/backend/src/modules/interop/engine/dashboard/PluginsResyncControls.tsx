@@ -4,6 +4,7 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 export function PluginsResyncControls(props: {
   pluginSyncStatuses: PluginSyncStatus[]
 }) {
+  const resyncDaysOptions = [8, 2, 1]
   const pluginNames = Array.from(
     new Set(props.pluginSyncStatuses.map((status) => status.pluginName)),
   ).sort((a, b) => a.localeCompare(b))
@@ -28,13 +29,19 @@ export function PluginsResyncControls(props: {
             <tr key={pluginName}>
               <td>{pluginName}</td>
               <td>
-                <button
-                  type="button"
-                  className="interop-resync-button"
-                  data-plugin-name={pluginName}
-                >
-                  Wipe and resync 8d
-                </button>
+                {resyncDaysOptions.map((days, index) => (
+                  <React.Fragment key={days}>
+                    <button
+                      type="button"
+                      className="interop-resync-button"
+                      data-plugin-name={pluginName}
+                      data-resync-days={days}
+                    >
+                      Wipe and resync {days}d
+                    </button>
+                    {index < resyncDaysOptions.length - 1 ? ' ' : null}
+                  </React.Fragment>
+                ))}
               </td>
             </tr>
           ))}
@@ -44,11 +51,11 @@ export function PluginsResyncControls(props: {
         dangerouslySetInnerHTML={{
           __html: `
             (function() {
-              function buildPayload(pluginName) {
+              function buildPayload(pluginName, days) {
                 var nowSeconds = Math.floor(Date.now() / 1000);
                 return {
                   pluginName: pluginName,
-                  resyncRequestedFrom: { '*': nowSeconds - 3600 * 24 * 8 }
+                  resyncRequestedFrom: { '*': nowSeconds - 3600 * 24 * days }
                 };
               }
 
@@ -59,6 +66,8 @@ export function PluginsResyncControls(props: {
 
                 var pluginName = target.getAttribute('data-plugin-name');
                 if (!pluginName) return;
+                var resyncDays = Number(target.getAttribute('data-resync-days'));
+                if (!resyncDays) return;
 
                 var originalText = target.textContent;
                 target.disabled = true;
@@ -66,7 +75,7 @@ export function PluginsResyncControls(props: {
                 fetch('/interop/resync', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(buildPayload(pluginName))
+                  body: JSON.stringify(buildPayload(pluginName, resyncDays))
                 })
                   .then(function(response) {
                     if (!response.ok) {
