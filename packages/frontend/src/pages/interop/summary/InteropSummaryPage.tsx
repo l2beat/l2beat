@@ -22,7 +22,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
         <InteropSelectedChainsProvider interopChains={interopChains}>
           <ChainSelector chains={interopChains} />
           <div
-            className="mt-5 grid grid-cols-2 gap-5 xl:grid-cols-3"
+            className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3"
             data-hide-overflow-x
           >
             <TopPathsWidget interopChains={interopChains} />
