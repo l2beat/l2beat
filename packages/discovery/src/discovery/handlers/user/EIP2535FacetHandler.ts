@@ -71,6 +71,5 @@ export class EIP2535FacetHandler implements Handler {
 
 export const EIP2535FacetHandlerBundle = declareHandler('eip2535Facets', {
   definition: EIP2535FacetHandlerDefinition,
-  create: ({ field, definition }) =>
-    new EIP2535FacetHandler(field, definition),
+  create: ({ field, definition }) => new EIP2535FacetHandler(field, definition),
 })

@@ -149,6 +149,5 @@ function hashBigints(values: bigint[]): bigint {
 
 export const StorageHandlerBundle = declareHandler('storage', {
   definition: StorageHandlerDefinition,
-  create: ({ field, definition }) =>
-    new StorageHandler(field, definition),
+  create: ({ field, definition }) => new StorageHandler(field, definition),
 })
