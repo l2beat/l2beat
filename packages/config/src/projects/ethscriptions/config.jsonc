@@ -38,16 +38,23 @@
       "ignoreDiscovery": true
     },
     "ethscr:0x3300000000000000000000000000000000000001": {
-      "proxyType": "immutable",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
-      "ignoreMethods": ["exists", "tokenIdToEthscriptionId"]
+      "ignoreMethods": [
+        "exists",
+        "tokenIdToEthscriptionId",
+        "getApproved",
+        "getEthscription",
+        "getEthscriptionId",
+        "ownerOf",
+        "tokenByIndex",
+        "tokenURI"
+      ],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "ethscr:0x3300000000000000000000000000000000000003": {
-      "proxyType": "immutable",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred."
     },
     "ethscr:0x4200000000000000000000000000000000000016": {
-      "proxyType": "immutable",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
       "ignoreInWatchMode": ["messageNonce"]
     }

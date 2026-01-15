@@ -1,7 +1,7 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1768211188,
-  "configHash": "0xe13fb9b1a09c4c406f0ff0d9ce187337c42f2e5d2d76e85ec2cb8383236d4561",
+  "timestamp": 1768395715,
+  "configHash": "0x5b1827f5a7e01174083afe019d8399e719781115dc4d9360421b639a47e064c1",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000FacE7",
@@ -121,7 +121,7 @@
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 13,
+        "getProposalsLength": 21,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1767945143,
@@ -206,15 +206,27 @@
       "address": "ethscr:0x3300000000000000000000000000000000000001",
       "type": "Contract",
       "sourceHashes": [
-        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6",
+        "0x0645ac658c841359389c047ca68b72e620b5caf18e80d9fdca1667bdfe888ab7"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1967 proxy",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
-      "values": { "$immutable": true },
+      "values": {
+        "$admin": "ethscr:0x4200000000000000000000000000000000000018",
+        "$implementation": "ethscr:0xc0D3C0d3C0d3c0d3c0D3C0D3C0D3C0d3c0d30001",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "name": "Ethscriptions",
+        "prover": "ethscr:0x3300000000000000000000000000000000000003",
+        "symbol": "ETHSCRIPTIONS",
+        "totalSupply": 6311131
+      },
       "implementationNames": {
-        "ethscr:0x3300000000000000000000000000000000000001": "Proxy"
+        "ethscr:0x3300000000000000000000000000000000000001": "Proxy",
+        "ethscr:0xc0D3C0d3C0d3c0d3c0D3C0D3C0D3C0d3c0d30001": "Ethscriptions"
       }
     },
     {
@@ -222,15 +234,22 @@
       "address": "ethscr:0x3300000000000000000000000000000000000003",
       "type": "Contract",
       "sourceHashes": [
+        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0",
         "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
-      "values": { "$immutable": true },
+      "values": {
+        "$admin": "ethscr:0x4200000000000000000000000000000000000018",
+        "$implementation": "ethscr:0xC0D3c0d3C0d3C0D3c0D3c0D3C0D3c0d3C0d30003",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0
+      },
       "implementationNames": {
-        "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver"
+        "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver",
+        "ethscr:0xC0D3c0d3C0d3C0D3c0D3c0D3C0D3c0d3C0d30003": "EthscriptionsProver"
       }
     },
     {
@@ -238,16 +257,61 @@
       "address": "ethscr:0x4200000000000000000000000000000000000016",
       "type": "Contract",
       "sourceHashes": [
-        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6",
+        "0xeae30ba6711a363cca12f4e057185a1206f3f1adb48c6917f1b8bb4bc5717e0d"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
-      "values": { "$immutable": true },
+      "values": {
+        "$admin": "ethscr:0x4200000000000000000000000000000000000018",
+        "$implementation": "ethscr:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631448"
+      },
       "implementationNames": {
-        "ethscr:0x4200000000000000000000000000000000000016": "Proxy"
+        "ethscr:0x4200000000000000000000000000000000000016": "Proxy",
+        "ethscr:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "ethscr:0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa30dbc60acedeaa7e8154c11b75935442af967787bea59f73fe85e96780a15e6"
+      ],
+      "proxyType": "immutable",
+      "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "ethscr:0x3300000000000000000000000000000000000001",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethscr:0x3300000000000000000000000000000000000003",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethscr:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1686755075,
+      "sinceBlock": 0,
+      "values": {
+        "$immutable": true,
+        "owner": "ethscr:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      },
+      "implementationNames": {
+        "ethscr:0x4200000000000000000000000000000000000018": "ProxyAdmin"
       }
     }
   ],
@@ -434,6 +498,116 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) returns (bytes)"
+    ],
+    "ethscr:0x4200000000000000000000000000000000000018": [
+      "constructor(address _owner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data)"
+    ],
+    "ethscr:0xc0D3C0d3C0d3c0d3c0D3C0D3C0D3C0d3c0d30001": [
+      "error ContentTooLarge(uint256 size)",
+      "error DuplicateContentUri()",
+      "error ERC721EnumerableForbiddenBatchMint()",
+      "error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner)",
+      "error ERC721InsufficientApproval(address operator, uint256 tokenId)",
+      "error ERC721InvalidApprover(address approver)",
+      "error ERC721InvalidOperator(address operator)",
+      "error ERC721InvalidOwner(address owner)",
+      "error ERC721InvalidReceiver(address receiver)",
+      "error ERC721InvalidSender(address sender)",
+      "error ERC721NonexistentToken(uint256 tokenId)",
+      "error ERC721OutOfBoundsIndex(address owner, uint256 index)",
+      "error ERC721SequentialEnumerableInvalidTokenId(uint256 expected, uint256 actual)",
+      "error ERC721SequentialEnumerableTokenRemoval(uint256 tokenId)",
+      "error EthscriptionAlreadyExists()",
+      "error EthscriptionDoesNotExist()",
+      "error InvalidCreator()",
+      "error InvalidFormat()",
+      "error InvalidHandler()",
+      "error InvalidInitialization()",
+      "error InvalidPaginationLimit()",
+      "error InvalidSeparatorInInput()",
+      "error NoSuccessfulTransfers()",
+      "error NotInitializing()",
+      "error NotPackedData()",
+      "error OnlyDepositor()",
+      "error PreviousOwnerMismatch()",
+      "error ProtocolAlreadyRegistered()",
+      "error TokenDoesNotExist()",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event EthscriptionCreated(bytes32 indexed ethscriptionId, address indexed creator, address indexed initialOwner, bytes32 contentUriSha, bytes32 contentHash, uint256 ethscriptionNumber)",
+      "event EthscriptionTransferred(bytes32 indexed ethscriptionId, address indexed from, address indexed to, uint256 ethscriptionNumber)",
+      "event Initialized(uint64 version)",
+      "event ProtocolHandlerFailed(bytes32 indexed ethscriptionId, string protocol, bytes revertData)",
+      "event ProtocolHandlerSuccess(bytes32 indexed ethscriptionId, string protocol, bytes returnData)",
+      "event ProtocolRegistered(string indexed protocol, address indexed handler)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "function approve(address, uint256)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function createEthscription(tuple(bytes32 ethscriptionId, bytes32 contentUriSha, address initialOwner, bytes content, string mimetype, bool esip6, tuple(string protocolName, string operation, bytes data) protocolParams) params) returns (uint256 tokenId)",
+      "function exists(bytes32 ethscriptionId) view returns (bool)",
+      "function exists(uint256 tokenId) view returns (bool)",
+      "function firstEthscriptionByContentUri(bytes32) view returns (bytes32)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function getEthscription(uint256 tokenId) view returns (tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation))",
+      "function getEthscription(bytes32 ethscriptionId) view returns (tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation))",
+      "function getEthscription(bytes32 ethscriptionId, bool includeContent) view returns (tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation))",
+      "function getEthscription(uint256 tokenId, bool includeContent) view returns (tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation))",
+      "function getEthscriptionId(uint256 tokenId) view returns (bytes32)",
+      "function getEthscriptions(uint256 start, uint256 limit, bool includeContent) view returns (tuple(tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation)[] items, uint256 total, uint256 start, uint256 limit, uint256 nextStart, bool hasMore) page)",
+      "function getEthscriptions(uint256 start, uint256 limit) view returns (tuple(tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation)[] items, uint256 total, uint256 start, uint256 limit, uint256 nextStart, bool hasMore))",
+      "function getMediaUri(bytes32 ethscriptionId) view returns (string mediaType, string mediaUri)",
+      "function getMetadata(bytes32 ethscriptionId) view returns (string mimetype, string protocolName, string operation)",
+      "function getMimetype(bytes32 ethscriptionId) view returns (string)",
+      "function getOwnerEthscriptions(address owner, uint256 start, uint256 limit) view returns (tuple(tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation)[] items, uint256 total, uint256 start, uint256 limit, uint256 nextStart, bool hasMore))",
+      "function getOwnerEthscriptions(address owner, uint256 start, uint256 limit, bool includeContent) view returns (tuple(tuple(bytes32 ethscriptionId, uint256 ethscriptionNumber, bytes32 contentUriSha, bytes32 contentHash, string mimetype, bytes content, address currentOwner, address creator, address initialOwner, address previousOwner, bytes32 l1BlockHash, uint256 l1BlockNumber, uint256 l2BlockNumber, uint256 createdAt, bool esip6, string protocolName, string operation)[] items, uint256 total, uint256 start, uint256 limit, uint256 nextStart, bool hasMore) page)",
+      "function getProtocol(bytes32 ethscriptionId) view returns (string protocolName, string operation)",
+      "function getTokenId(bytes32 ethscriptionId) view returns (uint256)",
+      "function isApprovedForAll(address, address) view returns (bool)",
+      "function name() pure returns (string)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function ownerOf(bytes32 ethscriptionId) view returns (address)",
+      "function protocolHandlers(string) view returns (address)",
+      "function prover() view returns (address)",
+      "function registerProtocol(string protocol, address handler)",
+      "function safeTransferFrom(address, address, uint256)",
+      "function safeTransferFrom(address, address, uint256, bytes)",
+      "function setApprovalForAll(address, bool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() pure returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenIdToEthscriptionId(uint256) view returns (bytes32)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transferEthscription(address to, bytes32 ethscriptionId)",
+      "function transferEthscriptionForPreviousOwner(address to, bytes32 ethscriptionId, address previousOwner)",
+      "function transferEthscriptions(address to, bytes32[] ethscriptionIds) returns (uint256 successCount)",
+      "function transferFrom(address from, address to, uint256 tokenId)"
+    ],
+    "ethscr:0xC0D3c0d3C0d3C0D3c0D3c0D3C0D3c0d3C0d30003": [
+      "error OnlyEthscriptions()",
+      "error OnlyL1Block()",
+      "event EthscriptionDataProofSent(bytes32 indexed ethscriptionId, uint256 indexed l2BlockNumber, uint256 l2Timestamp)",
+      "function flushAllProofs()",
+      "function queueEthscription(bytes32 ethscriptionId)"
+    ],
+    "ethscr:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)"
     ]
   },
   "usedTemplates": {
@@ -442,6 +616,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24217826, "ethscriptions": 6788010 },
-  "permissionsConfigHash": "0x79df8f08549957361fb184d91be9482002586ea196a7aa63776914eb5eb22896"
+  "usedBlockNumbers": { "ethereum": 24233105, "ethscriptions": 6803387 },
+  "permissionsConfigHash": "0xf6f62dd57e3a8bee18e9523c4f4a01df258882856f328508b5c795d6c58a449f"
 }
