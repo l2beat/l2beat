@@ -46,7 +46,11 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => parseProcess(log, null),
+        (log, index) => {
+          const process = parseProcess(log, null)
+          if (!process) return
+          return { parsed: process, index }
+        },
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]
@@ -70,7 +74,11 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => parseProcess(log, null),
+        (log, index) => {
+          const process = parseProcess(log, null)
+          if (!process) return
+          return { parsed: process, index }
+        },
       )
       if (!process) return
       const processIdLog = input.txLogs[process.index + 1]

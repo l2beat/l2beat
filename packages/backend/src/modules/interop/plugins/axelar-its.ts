@@ -76,7 +76,7 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (transfer.value !== interchainTransfer.amount) return
           return Address32.from(log.address)
         },
-      )?.parsed
+      )
 
       const $dstChain = findChain(
         AXELAR_NETWORKS,
@@ -111,7 +111,7 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (transfer.value !== interchainTransferReceived.amount) return
           return Address32.from(log.address)
         },
-      )?.parsed
+      )
 
       const $srcChain = findChain(
         AXELAR_NETWORKS,

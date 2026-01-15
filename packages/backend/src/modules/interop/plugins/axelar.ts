@@ -4,11 +4,10 @@ For general message passing:
     - ContractCall on SRC chain
     - ContractCallApproved on DST chain
     - ContractCallExecuted on DST chain
-
-  TODO: handle other Axelar events (e.g. token transfer)
 */
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -42,6 +41,18 @@ const parseContractCallExecuted = createEventParser(
   'event ContractCallExecuted(bytes32 indexed commandId)',
 )
 
+// ExpressExecutedWithToken (index_topic_1 bytes32 commandId, string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, index_topic_2 uint256 amount, index_topic_3 address expressExecutor)
+const parseExpressExecutedWithToken = createEventParser(
+  'event ExpressExecutedWithToken(bytes32 indexed commandId,string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, uint256 indexed amount, address indexed expressExecutor)',
+)
+
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
+const parsePayloadVerified = createEventParser(
+  'event PayloadVerified(address dvn, bytes header, uint256 confirmations, bytes32 proofHash)',
+)
+
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
@@ -55,6 +66,14 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Polygon', chain: 'polygonpos' },
 ])
 
+export const SquidExpressExecutedWithToken = createInteropEventType<{
+  commandId: `0x${string}`
+  tokenAddress?: Address32
+  amount: bigint
+  symbol: string
+  $srcChain: string
+}>('axelar.ExpressExecutedWithToken')
+
 export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
@@ -66,13 +85,14 @@ export const ContractCallWithToken = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
+  tokenAddress?: Address32
   symbol: string
   amount: bigint
   $dstChain: string
 }>('axelar.ContractCallWithToken')
 
 export const ContractCallApproved = createInteropEventType<{
-  commandId: string
+  commandId: `0x${string}`
   sourceAddress: string
   contractAddress: EthereumAddress
   srcTxHash: `0x${string}`
@@ -81,7 +101,7 @@ export const ContractCallApproved = createInteropEventType<{
 }>('axelar.ContractCallApproved')
 
 export const ContractCallApprovedWithMint = createInteropEventType<{
-  commandId: string
+  commandId: `0x${string}`
   sourceAddress: string
   contractAddress: EthereumAddress
   symbol: string
@@ -92,13 +112,49 @@ export const ContractCallApprovedWithMint = createInteropEventType<{
 }>('axelar.ContractCallApprovedWithMint')
 
 export const ContractCallExecuted = createInteropEventType<{
-  commandId: string
+  commandId: `0x${string}`
+  tokenAddressUnsafe?: Address32
+  amountUnsafe?: bigint
+  isLayerZeroApp?: boolean
 }>('axelar.ContractCallExecuted')
 
 export class AxelarPlugin implements InteropPlugin {
   readonly name = 'axelar'
 
   capture(input: LogToCapture) {
+    const expressExecutedWithToken = parseExpressExecutedWithToken(
+      input.log,
+      null,
+    )
+    if (expressExecutedWithToken) {
+      const tokenAddress = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value !== expressExecutedWithToken.amount) return
+          return Address32.from(log.address)
+        },
+      )
+
+      return [
+        SquidExpressExecutedWithToken.create(input, {
+          commandId: expressExecutedWithToken.commandId,
+          tokenAddress,
+          amount: expressExecutedWithToken.amount,
+          symbol: expressExecutedWithToken.symbol,
+          $srcChain: findChain(
+            AXELAR_NETWORKS,
+            (x) => x.axelarChainName,
+            expressExecutedWithToken.sourceChain,
+          ),
+        }),
+      ]
+    }
+
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
       return [
@@ -117,12 +173,26 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
+      const tokenAddress = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value !== contractCallWithToken.amount) return
+          return Address32.from(log.address)
+        },
+      )
+
       return [
         ContractCallWithToken.create(input, {
           sender: EthereumAddress(contractCallWithToken.sender),
           destinationContractAddress:
             contractCallWithToken.destinationContractAddress,
           payloadHash: contractCallWithToken.payloadHash,
+          tokenAddress,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
           $dstChain: findChain(
@@ -181,9 +251,38 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallExecuted = parseContractCallExecuted(input.log, null)
     if (contractCallExecuted) {
+      const nearestTransfer = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (transfer) {
+            const from = Address32.from(transfer.from)
+            const axelarGatewayAddress = Address32.from(input.log.address)
+            // checking whether the token came from the gateway, not sure this is enough
+            if (from === axelarGatewayAddress)
+              return {
+                address: Address32.from(log.address),
+                amount: transfer.value,
+              }
+          }
+          const payloadVerified = parsePayloadVerified(log, null)
+          if (payloadVerified) {
+            return { isLayerZeroApp: true }
+          }
+        },
+      )
+
+      const tokenAddressUnsafe = nearestTransfer?.address
+      const amountUnsafe = nearestTransfer?.amount
+
       return [
         ContractCallExecuted.create(input, {
           commandId: contractCallExecuted.commandId,
+          tokenAddressUnsafe,
+          amountUnsafe,
+          isLayerZeroApp: nearestTransfer?.isLayerZeroApp,
         }),
       ]
     }
@@ -194,6 +293,7 @@ export class AxelarPlugin implements InteropPlugin {
   1. Start with contractCallExecuted on DST chain
   2. Find corresponding contractCallApproved or contractCallApprovedWithMint on DST chain using commandId
   3. Find corresponding contractCall or contractCallWithToken on SRC chain using payloadHash and srcTxHash
+  4. check for express execution via squid (commandId match)
 
   */
 
@@ -209,13 +309,15 @@ export class AxelarPlugin implements InteropPlugin {
       if (contractCallApproved) {
         const contractCall = db.find(ContractCall, {
           ctx: {
-            txHash: contractCallApproved.args.srcTxHash, // TODO: this may not be enough but event index is also available
+            txHash: contractCallApproved.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
           },
         })
         if (!contractCall) return
         return [
-          Result.Message('axelar.ContractCallMessage', {
-            app: 'unknown',
+          Result.Message('axelar.Message', {
+            app: contractCallExecuted.args.isLayerZeroApp
+              ? 'layerzero-wrapper'
+              : 'unknown',
             srcEvent: contractCall,
             dstEvent: contractCallExecuted,
             extraEvents: [contractCallApproved],
@@ -233,23 +335,75 @@ export class AxelarPlugin implements InteropPlugin {
 
       const contractCallWithToken = db.find(ContractCallWithToken, {
         ctx: {
-          txHash: contractCallApprovedWithMint.args.srcTxHash, // TODO: this may not be enough but event index is also available
+          txHash: contractCallApprovedWithMint.args.srcTxHash, // TODO: this does not match if axelar chain is used as an intermediate hop, same with the payloadHash
         },
       })
       if (!contractCallWithToken) return
+
+      const matchingUnsafeAmount =
+        contractCallApprovedWithMint.args.amount ===
+        contractCallExecuted.args.amountUnsafe
+
+      const expressExecuted = db.find(SquidExpressExecutedWithToken, {
+        commandId: contractCallExecuted.args.commandId,
+      })
+
+      if (expressExecuted) {
+        return [
+          // TODO: do we want to count intent fill AND settlement as message/transfer?
+          // INTENT FILL
+          Result.Message('squid.Message', {
+            app: 'axelar-squid-express',
+            srcEvent: contractCallWithToken,
+            dstEvent: expressExecuted,
+          }),
+          Result.Transfer('axelar-squid-express.Transfer', {
+            srcEvent: contractCallWithToken,
+            srcTokenAddress: contractCallWithToken.args.tokenAddress,
+            srcAmount: contractCallWithToken.args.amount,
+            dstEvent: expressExecuted,
+            dstTokenAddress: expressExecuted.args.tokenAddress,
+            dstAmount: expressExecuted.args.amount,
+          }),
+          // SETTLEMENT
+          Result.Message('axelar.Message', {
+            app: 'axelar-squid-express-settlement',
+            srcEvent: contractCallWithToken,
+            dstEvent: contractCallExecuted,
+            extraEvents: [contractCallApprovedWithMint],
+          }),
+          Result.Transfer('axelar-squid-express-settlement.Transfer', {
+            srcEvent: contractCallWithToken,
+            srcTokenAddress: contractCallWithToken.args.tokenAddress,
+            srcAmount: contractCallWithToken.args.amount,
+            dstEvent: contractCallExecuted,
+            dstTokenAddress: matchingUnsafeAmount
+              ? contractCallExecuted.args.tokenAddressUnsafe
+              : undefined,
+            dstAmount: matchingUnsafeAmount
+              ? contractCallApprovedWithMint.args.amount
+              : undefined,
+          }),
+        ]
+      }
       return [
-        Result.Message('axelar.ContractCallWithTokenMessage', {
-          app: 'axelar-gateway',
+        Result.Message('axelar.Message', {
+          app: 'axelar-contractCallWithToken',
           srcEvent: contractCallWithToken,
           dstEvent: contractCallExecuted,
           extraEvents: [contractCallApprovedWithMint],
         }),
-        Result.Transfer('axelar-gateway.Transfer', {
+        Result.Transfer('axelar-contractCallWithToken.Transfer', {
           srcEvent: contractCallWithToken,
-          // TODO: mapping. See axelar-its
-          // symbol: contractCallWithToken.args.symbol,
+          srcTokenAddress: contractCallWithToken.args.tokenAddress,
           srcAmount: contractCallWithToken.args.amount,
           dstEvent: contractCallExecuted,
+          dstTokenAddress: matchingUnsafeAmount
+            ? contractCallExecuted.args.tokenAddressUnsafe
+            : undefined,
+          dstAmount: matchingUnsafeAmount
+            ? contractCallApprovedWithMint.args.amount
+            : undefined,
         }),
       ]
     }

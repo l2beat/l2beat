@@ -99,7 +99,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
           const dispatchId = nextLog && parseDispatchId(nextLog, null)
           return dispatchId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $dstChain = findChain(
