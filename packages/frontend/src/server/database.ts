@@ -33,7 +33,7 @@ function createThrowingProxy() {
 }
 
 // Tag is limited to 63 characters, so it will cut off the excess
-function createConnectionTag() {
+export function createConnectionTag() {
   const suffix =
     env.DEPLOYMENT_ENV === 'production'
       ? 'prod'
@@ -58,7 +58,7 @@ function ssl() {
     : undefined
 }
 
-function pool() {
+export function pool() {
   switch (env.DEPLOYMENT_ENV) {
     case 'production':
       return {

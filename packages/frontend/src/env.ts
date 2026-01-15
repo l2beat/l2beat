@@ -32,7 +32,12 @@ const SERVER_CONFIG = {
     .string()
     .check((v) => !!new URL(v))
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+  TOKENS_DATABASE_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default(false),
+  TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
   REDIS_URL: z.string().optional(),
@@ -101,7 +106,9 @@ function getRawEnv(): Record<
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
+    TOKENS_DATABASE_URL: process.env.TOKENS_DATABASE_URL,
     DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
+    TOKENS_DATABASE_LOG_ENABLED: process.env.TOKENS_DATABASE_LOG_ENABLED,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
