@@ -209,6 +209,7 @@ export type DataRequest = EventDataRequest
 interface EventDataRequest {
   type: 'event'
   signature: string
+  includeTxEvents?: string[]
   addresses: ChainSpecificAddress[]
 }
 

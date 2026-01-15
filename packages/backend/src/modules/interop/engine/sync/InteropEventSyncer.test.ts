@@ -264,6 +264,8 @@ describe(InteropEventSyncer.name, () => {
   describe(buildLogQueryForPlugin.name, () => {
     it('includes only addresses on the target chain and their topics', () => {
       const signature = 'event Transfer(address,address,uint256)'
+      const extraSignature = 'event Approval(address,address,uint256)'
+      const extraSignatureTwo = 'event Mint(address,uint256)'
       const ethAddress = ChainSpecificAddress.fromLong(
         'ethereum',
         EthereumAddress.random(),
@@ -277,6 +279,7 @@ describe(InteropEventSyncer.name, () => {
           {
             type: 'event',
             signature,
+            includeTxEvents: [extraSignature, extraSignatureTwo],
             addresses: [ethAddress, arbAddress],
           },
         ],
@@ -288,7 +291,11 @@ describe(InteropEventSyncer.name, () => {
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
       ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
-      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(Array.from(query.topic0s)).toEqual([
+        toEventSelector(signature),
+        toEventSelector(extraSignature),
+        toEventSelector(extraSignatureTwo),
+      ])
       expect(query.isEmpty()).toEqual(false)
     })
 

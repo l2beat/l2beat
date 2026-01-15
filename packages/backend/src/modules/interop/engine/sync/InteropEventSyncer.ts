@@ -53,9 +53,15 @@ export function buildLogQueryForPlugin(
       addressesOnThisChain++
     }
     if (addressesOnThisChain > 0) {
-      // TODO try also with `toEventSelector` straight from viem
-      const topic0 = toEventSelector(eventRequest.signature)
-      result.topic0s.add(topic0)
+      const signatures = [
+        eventRequest.signature,
+        ...(eventRequest.includeTxEvents ?? []),
+      ]
+      for (const signature of signatures) {
+        // TODO try also with `toEventSelector` straight from viem
+        const topic0 = toEventSelector(signature)
+        result.topic0s.add(topic0)
+      }
     }
   }
 
