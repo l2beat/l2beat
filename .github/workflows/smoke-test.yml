@@ -90,6 +90,8 @@ jobs:
         run: pnpm test:config
         working-directory: packages/backend
 
+  # Main aggregator job that waits for all matrix jobs to succeed.
+  # It's required - will not be run if any of the matrix jobs fail - thus failing the workflow.
   config-smoke-test:
     if: >
       ${{
