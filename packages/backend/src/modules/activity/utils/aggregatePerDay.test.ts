@@ -1,6 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import range from 'lodash/range'
 import { aggregatePerDay } from './aggregatePerDay'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
@@ -55,9 +54,3 @@ export function activityRecord(
   }
 }
 
-export function transactions(count: number) {
-  return range(count).map((i) => ({
-    to: `0x${i.toString()}`,
-    data: `0x${i.toString()}`,
-  }))
-}
