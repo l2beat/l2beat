@@ -37,7 +37,7 @@ const ReceivedFromBridgeProcess = createInteropEventType<{
 }>('hyperlane-decent.ReceivedFromBridge')
 
 export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
-  name = 'hyperlane-simple-apps'
+  readonly name = 'hyperlane-simple-apps'
 
   capture(input: LogToCapture) {
     const priceUpdated = parsePriceUpdated(input.log, null)

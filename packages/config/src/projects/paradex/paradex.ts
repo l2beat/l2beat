@@ -16,9 +16,9 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { RISK_VIEW } from '../../common/riskView'
 import { STATE_VALIDATION } from '../../common/stateValidation'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -420,7 +420,7 @@ export const paradex: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
-    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: paradexProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

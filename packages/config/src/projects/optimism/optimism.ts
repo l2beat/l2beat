@@ -19,6 +19,13 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
+  nonTemplateProgramHashes: [
+    {
+      hash: '0x0075c7ec424df1386508596dc886e528c733a5f2c7728e7a81ad7676495ff31c',
+      title: 'Aggregation program of OP Succinct FDP',
+      verificationStatus: 'successful',
+    },
+  ],
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',
@@ -53,6 +60,37 @@ export const optimism: ScalingProject = opStackL2({
         'https://growthepie.com/chains/optimism',
       ],
     },
+  },
+  interopConfig: {
+    name: 'OP Canonical',
+    bridgeType: 'canonical',
+    plugins: [
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'opstack',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'opstack-standardbridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'beefy-bridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'maker-bridge',
+      },
+      {
+        filterBy: 'chain',
+        chain: 'optimism',
+        plugin: 'sorare-base',
+      },
+    ],
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],

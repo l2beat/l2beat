@@ -96,7 +96,7 @@ export const ContractCallExecuted = createInteropEventType<{
 }>('axelar.ContractCallExecuted')
 
 export class AxelarPlugin implements InteropPlugin {
-  name = 'axelar'
+  readonly name = 'axelar'
 
   capture(input: LogToCapture) {
     const contractCall = parseContractCall(input.log, null)

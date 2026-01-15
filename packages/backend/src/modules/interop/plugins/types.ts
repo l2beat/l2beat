@@ -1,3 +1,4 @@
+import type { InteropPluginName } from '@l2beat/config'
 import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
@@ -212,7 +213,8 @@ interface EventDataRequest {
 }
 
 export interface InteropPlugin {
-  name: string
+  readonly name: InteropPluginName
+  cluster?: string
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]

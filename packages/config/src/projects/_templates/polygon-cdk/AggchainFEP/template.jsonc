@@ -62,6 +62,14 @@
     "useDefaultGateway": {
       "severity": "HIGH",
       "description": "If set to false then aggchainVKey will be loaded from this contract and not from AggLayerGateway. In this case you can uncomment two handlers in this template to track ownedAggchainVKeys."
+    },
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the trusted sequencer address."
+        }
+      ]
     }
     //
     // "ownedAggchainVKeys": {

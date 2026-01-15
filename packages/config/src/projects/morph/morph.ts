@@ -19,8 +19,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -294,12 +294,22 @@ export const morph: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: [
-      ZK_PROGRAM_HASHES(
-        discovery.getContractValue('ZkEvmVerifierV1', 'programVkey'),
-      ),
-    ],
+    programHashes: getMorphVKeys().map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getMorphVKeys(): string[] {
+  const vkeys: string[] = []
+  const latestVerifier = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+
+  for (const { verifier } of latestVerifier) {
+    const vkey = discovery.getContractValue<string>(verifier, 'programVkey')
+    vkeys.push(vkey)
+  }
+
+  return vkeys
 }

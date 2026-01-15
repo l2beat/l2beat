@@ -5,6 +5,7 @@ export const WALK_AWAY_PASSED_PROJECTS = [
   'ink',
   'unichain',
   'facet',
+  'ethscriptions',
   'aztec',
 ]
 

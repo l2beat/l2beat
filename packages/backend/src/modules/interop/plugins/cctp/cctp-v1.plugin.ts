@@ -90,7 +90,7 @@ export const CCTPv1MessageReceived = createInteropEventType<{
 }>('cctp-v1.MessageReceived')
 
 export class CCTPV1Plugin implements InteropPlugin {
-  name = 'cctp-v1'
+  readonly name = 'cctp-v1'
 
   constructor(private configs: InteropConfigStore) {}
 

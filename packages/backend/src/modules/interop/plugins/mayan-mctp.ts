@@ -17,7 +17,7 @@ import {
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
 export class MayanMctpPlugin implements InteropPlugin {
-  name = 'mayan-mctp'
+  readonly name = 'mayan-mctp'
 
   matchTypes = [MayanForwarded]
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...

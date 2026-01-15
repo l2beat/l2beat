@@ -56,7 +56,7 @@ const parseMessageRelayed = createEventParser(
 )
 
 export class AcrossSettlementPlugin implements InteropPlugin {
-  name = 'across-settlement'
+  readonly name = 'across-settlement'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

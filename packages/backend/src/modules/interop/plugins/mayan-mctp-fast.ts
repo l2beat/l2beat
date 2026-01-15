@@ -26,7 +26,7 @@ export const OrderFulfilled = createInteropEventType<{
 }>('mayan-mctp-fast.OrderFulfilled')
 
 export class MayanMctpFastPlugin implements InteropPlugin {
-  name = 'mayan-mctp-fast'
+  readonly name = 'mayan-mctp-fast'
 
   constructor(private configs: InteropConfigStore) {}
 

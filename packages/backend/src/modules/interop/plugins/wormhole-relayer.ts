@@ -44,7 +44,7 @@ export const SendEvent = createInteropEventType<{
 }>('wormhole-relayer.SendEvent')
 
 export class WormholeRelayerPlugin implements InteropPlugin {
-  name = 'wormhole-relayer'
+  readonly name = 'wormhole-relayer'
 
   constructor(private configs: InteropConfigStore) {}
 

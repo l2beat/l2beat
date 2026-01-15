@@ -1,4 +1,5 @@
 import { HttpClient } from '@l2beat/shared'
+import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -16,6 +17,7 @@ import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropTransferStream } from './stream/InteropTransferStream'
+import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
   config,
@@ -41,6 +43,15 @@ export function createInteropModule({
     rpcClients: providers.clients.rpcClients,
   })
 
+  const syncersManager = new InteropSyncersManager(
+    plugins.eventPlugins,
+    config.interop.capture.chains.map((c) => c.id as LongChainName),
+    config.chainConfig,
+    eventStore,
+    db,
+    logger,
+  )
+
   const transferStream = new InteropTransferStream()
 
   const processors = []
@@ -53,6 +64,9 @@ export function createInteropModule({
         logger,
       )
       blockProcessors.push(processor)
+      blockProcessors.push(
+        syncersManager.getBlockProcessor(chain.id as LongChainName),
+      )
       processors.push(processor)
     }
   }
@@ -70,6 +84,7 @@ export function createInteropModule({
     db,
     config.interop,
     processors,
+    syncersManager,
     logger.for('InteropRouter'),
     transferStream,
   )
@@ -120,8 +135,10 @@ export function createInteropModule({
   const start = async () => {
     logger = logger.for('InteropModule')
     logger.info('Starting')
+
+    await eventStore.start()
+
     if (config.interop && config.interop.matching) {
-      await eventStore.start()
       matcher.start()
       await relayRootIndexer.start()
       await relayIndexer.start()
@@ -150,6 +167,10 @@ export function createInteropModule({
       configPlugins: plugins.configPlugins.length,
       eventPlugins: plugins.eventPlugins.length,
     })
+
+    if (config.interop && config.interop.capture.enabled) {
+      syncersManager.start()
+    }
   }
 
   return { routers: [router], start }

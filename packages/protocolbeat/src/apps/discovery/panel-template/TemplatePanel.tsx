@@ -5,6 +5,7 @@ import type { EditorSaveCallback } from '../../../components/editor/code/editor'
 import type { EditorFile } from '../../../components/editor/store'
 import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
+import { IS_READONLY } from '../../../config/readonly'
 import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
 
@@ -63,7 +64,7 @@ function getTemplateFiles(
     name: 'template.jsonc',
     content: templateModel.files.template,
     language: 'json',
-    readOnly: false,
+    readOnly: IS_READONLY,
   })
 
   if (templateModel.files.shapes) {

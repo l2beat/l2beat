@@ -49,6 +49,7 @@ import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
 import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
+import { ethscriptions } from '../projects/ethscriptions/ethscriptions'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
@@ -283,6 +284,7 @@ export const layer2s: ScalingProject[] = [
   edgeless,
   edgex,
   ethernity,
+  ethscriptions,
   everclear,
   facet,
   fhenix,

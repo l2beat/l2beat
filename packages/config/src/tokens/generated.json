@@ -5113,6 +5113,20 @@
       "supply": "zero"
     },
     {
+      "name": "SKY Governance Token",
+      "coingeckoId": "sky",
+      "address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+      "symbol": "SKY",
+      "decimals": 18,
+      "deploymentTimestamp": 1725290387,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Smooth Love Potion",
       "coingeckoId": "smooth-love-potion",
       "address": "0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25",

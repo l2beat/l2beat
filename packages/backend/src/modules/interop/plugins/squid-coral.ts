@@ -85,7 +85,7 @@ export const LogOrderFilled = createInteropEventType<{
 }>('squid-coral.LogOrderFilled')
 
 export class SquidCoralPlugin implements InteropPlugin {
-  name = 'squid-coral'
+  readonly name = 'squid-coral'
 
   capture(input: LogToCapture) {
     const logOrderCreated = parseOrderCreated(input.log, null)
