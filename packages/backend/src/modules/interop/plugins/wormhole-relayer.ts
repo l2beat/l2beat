@@ -92,7 +92,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-relayer', // NOTE: This isn't a real app, it's a mechanism for apps to use
+          app: 'unknown',
           srcEvent: logMessagePublished,
           dstEvent: delivery,
         }),
