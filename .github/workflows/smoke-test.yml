@@ -4,6 +4,9 @@ on:
   pull_request:
   merge_group: {}
 
+permissions:
+  contents: read
+
 jobs:
   config-smoke-test-matrix:
     if: >
