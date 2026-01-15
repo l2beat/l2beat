@@ -5,18 +5,44 @@ on:
   merge_group: {}
 
 jobs:
-  config-smoke-test:
+  config-smoke-test-matrix:
     if: >
       ${{
         github.event_name == 'merge_group' ||
         (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
       }}
-    name: Config smoke test
+    name: Config smoke test (${{ matrix.service }} - ${{ matrix.environment }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      matrix:
+        include:
+          - service: backend
+            environment: staging
+          - service: backend
+            environment: production
+          - service: update-monitor
+            environment: staging
+          - service: update-monitor
+            environment: production
+          - service: tvs
+            environment: staging
+          - service: tvs
+            environment: production
     env:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_RO_API_KEY }}
+      # GH cannot determine at workflow evaluation time if the secret is needed, so it passes ALL of them to the job.
+      # This way we only pass the needed secret and limit potential exposure.
+      COOLIFY_APP_ID: >-
+        ${{
+          (matrix.service == 'backend' && matrix.environment == 'staging' && secrets.COOLIFY_BACKEND_STAGING_ID) ||
+          (matrix.service == 'backend' && matrix.environment == 'production' && secrets.COOLIFY_BACKEND_PRODUCTION_ID) ||
+          (matrix.service == 'update-monitor' && matrix.environment == 'staging' && secrets.COOLIFY_UM_STAGING_ID) ||
+          (matrix.service == 'update-monitor' && matrix.environment == 'production' && secrets.COOLIFY_UM_PRODUCTION_ID) ||
+          (matrix.service == 'tvs' && matrix.environment == 'staging' && secrets.COOLIFY_TVS_STAGING_ID) ||
+          (matrix.service == 'tvs' && matrix.environment == 'production' && secrets.COOLIFY_TVS_PRODUCTION_ID)
+        }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -46,65 +72,30 @@ jobs:
           coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
           coolify context use l2beat
 
-      # Backend
-      - name: Pull staging backend configuration
+      - name: Validate COOLIFY_APP_ID
+        run: |
+          if [[ -z "$COOLIFY_APP_ID" ]]; then
+            echo "Missing COOLIFY_APP_ID for ${matrix.service}/${matrix.environment}"
+            exit 1
+          fi
+
+      - name: Pull ${{ matrix.environment }} ${{ matrix.service }} configuration
         run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
         working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_BACKEND_STAGING_ID }}
 
-      - name: Run staging backend smoke test
+      - name: Run ${{ matrix.environment }} ${{ matrix.service }} smoke test
         run: pnpm test:config
         working-directory: packages/backend
 
-      - name: Pull production backend configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_BACKEND_PRODUCTION_ID }}
-
-      - name: Run production backend smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
-
-      # Update Monitor
-      - name: Pull staging update monitor configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_UM_STAGING_ID }}
-
-      - name: Run staging update monitor smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
-
-      - name: Pull production update monitor configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
-
-      - name: Run production update monitor smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
-
-      # L2BEAT TVS
-      - name: Pull staging l2beat TVS configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_TVS_STAGING_ID }}
-
-      - name: Run staging l2beat TVS smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
-
-      - name: Pull production l2beat TVS configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
-        working-directory: packages/backend
-        env:
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_TVS_PRODUCTION_ID }}
-
-      - name: Run production l2beat TVS smoke test
-        run: pnpm test:config
-        working-directory: packages/backend
+  config-smoke-test:
+    if: >
+      ${{
+        github.event_name == 'merge_group' ||
+        (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+      }}
+    name: Config smoke test
+    runs-on: ubuntu-latest
+    needs: config-smoke-test-matrix
+    steps:
+      - name: All matrix jobs succeeded
+        run: echo "All config smoke test matrix legs passed."
