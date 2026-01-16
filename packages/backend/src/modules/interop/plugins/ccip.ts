@@ -229,7 +229,7 @@ export class CCIPPlugIn implements InteropPluginResyncable {
           mintedLog,
           transferLog,
         ],
-        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.outboundLanes)),
+        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.inboundLanes)),
       },
     ]
   }
