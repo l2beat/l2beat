@@ -112,6 +112,54 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
     })
   })
 
+  describe(AbstractTokenRepository.prototype.getByIds.name, () => {
+    it('returns empty array for empty ids', async () => {
+      const result = await repository.getByIds([])
+      expect(result).toEqual([])
+    })
+
+    it('returns selected fields for multiple ids', async () => {
+      await repository.insert(
+        abstractToken({
+          id: 'TK0001',
+          symbol: 'ETH',
+          iconUrl: 'https://example.com/eth.png',
+          issuer: 'ethereum',
+          category: 'ether',
+        }),
+      )
+      await repository.insert(
+        abstractToken({
+          id: 'TK0002',
+          symbol: 'USDC',
+          iconUrl: 'https://example.com/usdc.png',
+        }),
+      )
+      await repository.insert(
+        abstractToken({
+          id: 'TK0003',
+          symbol: 'DAI',
+          iconUrl: null,
+        }),
+      )
+
+      const result = await repository.getByIds(['TK0001', 'TK0003'])
+
+      expect(result).toEqualUnsorted([
+        {
+          id: 'TK0001',
+          symbol: 'ETH',
+          iconUrl: 'https://example.com/eth.png',
+        },
+        {
+          id: 'TK0003',
+          symbol: 'DAI',
+          iconUrl: null,
+        },
+      ])
+    })
+  })
+
   describe(AbstractTokenRepository.prototype.deleteByIds.name, () => {
     it('deletes selected records', async () => {
       await repository.insert(abstractToken({ id: 'TK0001' }))

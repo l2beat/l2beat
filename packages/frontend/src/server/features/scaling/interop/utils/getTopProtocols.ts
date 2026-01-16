@@ -22,16 +22,11 @@ export function getTopProtocols(
     dstValueUsd: number | null
     transferCount: number
   }[],
-  from: string[],
-  to: string[],
   interopProjects: Project<'interopConfig'>[],
 ): InteropProtocolData[] {
   const map = new Map<string, { volume: number; transfers: number }>()
 
   for (const record of records) {
-    if (!from.includes(record.srcChain) || !to.includes(record.dstChain)) {
-      continue
-    }
     const currentVolume = map.get(record.id) ?? { volume: 0, transfers: 0 }
     map.set(record.id, {
       volume:

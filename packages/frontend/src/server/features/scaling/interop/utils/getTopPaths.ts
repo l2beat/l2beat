@@ -13,15 +13,10 @@ export function getTopPaths(
     srcValueUsd: number | null
     dstValueUsd: number | null
   }[],
-  from: string[],
-  to: string[],
 ): InteropPathData[] {
   const map = new Map<string, number>()
 
   for (const record of records) {
-    if (!from.includes(record.srcChain) || !to.includes(record.dstChain)) {
-      continue
-    }
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
     map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))
