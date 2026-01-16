@@ -164,7 +164,7 @@ export const chains: ChainConfig[] = [
     ),
     explorer: {
       type: 'etherscan',
-      url: 'https://api-era.zksync.network/api',
+      url: 'https://block-explorer-api.mainnet.zksync.io/api',
     },
     coingeckoPlatform: 'zksync',
   },
