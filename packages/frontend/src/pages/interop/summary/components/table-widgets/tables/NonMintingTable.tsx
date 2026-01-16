@@ -8,12 +8,12 @@ export type NonMintingRow =
   InteropDashboardData['protocolsByType']['nonMinting'][number] & BasicTableRow
 
 export function NonMintingTable({
-  entires,
+  entries,
 }: {
-  entires: InteropDashboardData['protocolsByType']['nonMinting'] | undefined
+  entries: InteropDashboardData['protocolsByType']['nonMinting'] | undefined
 }) {
-  const activeTable = useTable<NonMintingRow>({
-    data: entires ?? [],
+  const table = useTable<NonMintingRow>({
+    data: entries ?? [],
     columns: nonMintingColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
@@ -26,7 +26,7 @@ export function NonMintingTable({
     },
   })
 
-  if (!entires) return null
+  if (!entries) return null
 
-  return <BasicTable table={activeTable} />
+  return <BasicTable table={table} />
 }

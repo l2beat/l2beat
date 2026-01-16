@@ -24,7 +24,7 @@ export function OmniChainCard() {
       {entries && entries.length === 0 ? (
         <NoResultsInfo />
       ) : (
-        <OmniChainTable entires={entries} />
+        <OmniChainTable entries={entries} />
       )}
     </PrimaryCard>
   )

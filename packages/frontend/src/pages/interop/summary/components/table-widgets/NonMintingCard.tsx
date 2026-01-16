@@ -24,7 +24,7 @@ export function NonMintingCard() {
       {entries && entries.length === 0 ? (
         <NoResultsInfo />
       ) : (
-        <NonMintingTable entires={entries} />
+        <NonMintingTable entries={entries} />
       )}
     </PrimaryCard>
   )

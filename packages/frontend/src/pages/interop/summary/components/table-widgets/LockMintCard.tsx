@@ -24,7 +24,7 @@ export function LockMintCard() {
       {entries && entries.length === 0 ? (
         <NoResultsInfo />
       ) : (
-        <LockMintTable entires={entries} />
+        <LockMintTable entries={entries} />
       )}
     </PrimaryCard>
   )

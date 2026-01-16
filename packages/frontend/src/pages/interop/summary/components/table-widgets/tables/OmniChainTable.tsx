@@ -8,12 +8,12 @@ export type OmniChainRow =
   InteropDashboardData['protocolsByType']['omniChain'][number] & BasicTableRow
 
 export function OmniChainTable({
-  entires,
+  entries,
 }: {
-  entires: InteropDashboardData['protocolsByType']['omniChain'] | undefined
+  entries: InteropDashboardData['protocolsByType']['omniChain'] | undefined
 }) {
-  const activeTable = useTable<OmniChainRow>({
-    data: entires ?? [],
+  const table = useTable<OmniChainRow>({
+    data: entries ?? [],
     columns: omniChainColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
@@ -26,7 +26,7 @@ export function OmniChainTable({
     },
   })
 
-  if (!entires) return null
+  if (!entries) return null
 
-  return <BasicTable table={activeTable} />
+  return <BasicTable table={table} />
 }

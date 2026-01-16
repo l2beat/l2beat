@@ -8,12 +8,12 @@ export type LockMintRow =
   InteropDashboardData['protocolsByType']['lockMint'][number] & BasicTableRow
 
 export function LockMintTable({
-  entires,
+  entries,
 }: {
-  entires: InteropDashboardData['protocolsByType']['lockMint'] | undefined
+  entries: InteropDashboardData['protocolsByType']['lockMint'] | undefined
 }) {
-  const activeTable = useTable<LockMintRow>({
-    data: entires ?? [],
+  const table = useTable<LockMintRow>({
+    data: entries ?? [],
     columns: lockMintColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
@@ -26,7 +26,7 @@ export function LockMintTable({
     },
   })
 
-  if (!entires) return null
+  if (!entries) return null
 
-  return <BasicTable table={activeTable} />
+  return <BasicTable table={table} />
 }
