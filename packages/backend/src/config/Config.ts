@@ -21,6 +21,7 @@ import type {
 } from '../modules/tvs/types'
 import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
+import type { InteropAggregationConfig } from './features/interop'
 
 export interface Config {
   readonly name: string
@@ -207,6 +208,11 @@ export interface AnomaliesConfig {
 }
 
 export interface InteropFeatureConfig {
+  aggregation:
+    | {
+        configs: InteropAggregationConfig[]
+      }
+    | false
   capture: {
     enabled: boolean
     chains: {
