@@ -14,10 +14,14 @@ import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
 // Types
+// Escrow-level category (who controls the escrow)
 type SecurityCategory =
   | 'rollup-secured'
   | 'issuer-secured'
   | 'third-party-secured'
+
+// Bridge-level category (what messaging system is used)
+type BridgeType = 'canonical' | 'external'
 
 interface TokenValue {
   symbol: string
@@ -37,7 +41,8 @@ interface TrustedParty {
 interface EscrowAnalysis {
   address: string
   name: string
-  category: SecurityCategory
+  category: SecurityCategory // Who controls the escrow (rollup/issuer/third-party)
+  bridgeType: BridgeType // What messaging is used (canonical/external)
   categoryReason: string
   admin: string | null
   adminName: string | null
@@ -59,9 +64,15 @@ interface EscrowReport {
   externalTokens: ExternalTokenAnalysis[]
   summary: {
     totalTvl: number
-    rollupSecuredTvl: number
-    issuerSecuredTvl: number
-    thirdPartySecuredTvl: number
+    // Bridge-level breakdown (by messaging type)
+    canonicalTvl: number // Uses rollup's canonical messaging (fraud/validity proofs)
+    externalTvl: number // Uses external bridge (third-party validation)
+    // Escrow-level breakdown (by admin) - for reference
+    byAdmin: {
+      rollupControlled: number
+      issuerControlled: number
+      thirdPartyControlled: number
+    }
   }
   externalTokensSummary: {
     totalCount: number
@@ -827,11 +838,13 @@ function classifyEscrow(
   }
 
   let category: SecurityCategory
+  let bridgeType: BridgeType
   let categoryReason: string
 
   if (rollupControlled) {
     // Escrow is controlled by the rollup
     category = 'rollup-secured'
+    bridgeType = 'canonical'
     categoryReason = `Escrow admin (${adminName || 'ProxyAdmin'}) is controlled by the rollup governance`
   } else if (escrowConfig.source === 'external') {
     // External escrow - check if issuer matches admin
@@ -842,23 +855,28 @@ function classifyEscrow(
     // Check if known issuer escrow
     if (knownIssuer) {
       category = 'issuer-secured'
-      categoryReason = `Escrow controlled by ${knownIssuer} (token issuer) - no additional trust assumption`
+      // CANONICAL_EXTERNAL escrows use canonical messaging even though admin is external
+      bridgeType = 'canonical'
+      categoryReason = `Escrow controlled by ${knownIssuer} (token issuer), uses canonical messaging`
     } else if (
       adminName &&
       tokenIssuers.length > 0 &&
       tokenIssuers.every((issuer) => issuer === adminName)
     ) {
-      // Issuer controls both escrow and token - no added trust
+      // Issuer controls both escrow and token - uses canonical messaging
       category = 'issuer-secured'
-      categoryReason = `Escrow admin (${adminName}) is the same as token issuer - no additional trust assumption`
+      bridgeType = 'canonical'
+      categoryReason = `Escrow admin (${adminName}) is the same as token issuer, uses canonical messaging`
     } else {
-      // Third party controls escrow
+      // Third party controls escrow - NOT using canonical messaging
       category = 'third-party-secured'
+      bridgeType = 'external'
       categoryReason = `Escrow controlled by ${adminName || 'external party'} which differs from token issuers`
     }
   } else {
     // Fallback - should not reach here for known escrows
     category = 'third-party-secured'
+    bridgeType = 'external'
     categoryReason = `Could not determine admin relationship`
   }
 
@@ -866,6 +884,7 @@ function classifyEscrow(
     address: escrowConfig.address,
     name: escrowConfig.name,
     category,
+    bridgeType,
     categoryReason,
     admin,
     adminName,
@@ -1039,10 +1058,15 @@ function analyzeNativeToken(
 
   if (!tokenData) return null
 
+  // Native tokens (no L1 escrow) use external bridges, not canonical messaging
+  // Even CCTP uses Circle's attestation service, not rollup fraud proofs
+  const bridgeType: BridgeType = 'external'
+
   return {
     address: nativeToken.l2Address,
     name: nativeToken.name,
     category: nativeToken.category,
+    bridgeType,
     categoryReason: nativeToken.categoryReason,
     admin: null,
     adminName: nativeToken.issuer,
@@ -1503,34 +1527,54 @@ function printReport(report: EscrowReport): void {
     ) + '│',
   )
 
-  const rollupPct =
+  const canonicalPct =
     report.summary.totalTvl > 0
-      ? ((report.summary.rollupSecuredTvl / report.summary.totalTvl) * 100).toFixed(1)
+      ? ((report.summary.canonicalTvl / report.summary.totalTvl) * 100).toFixed(1)
       : '0'
-  const issuerPct =
+  const externalPct =
     report.summary.totalTvl > 0
-      ? ((report.summary.issuerSecuredTvl / report.summary.totalTvl) * 100).toFixed(1)
-      : '0'
-  const thirdPartyPct =
-    report.summary.totalTvl > 0
-      ? ((report.summary.thirdPartySecuredTvl / report.summary.totalTvl) * 100).toFixed(1)
+      ? ((report.summary.externalTvl / report.summary.totalTvl) * 100).toFixed(1)
       : '0'
 
+  console.log('')
+  console.log(chalk.bold(`│ By Bridge Type (Security Model):`.padEnd(width + 1) + '│'))
   console.log(
-    `│   ${chalk.green('Rollup-Secured:')}    ${formatUsd(report.summary.rollupSecuredTvl).padStart(10)}  (${rollupPct}%)`.padEnd(
+    `│   ${chalk.green('Canonical:')}     ${formatUsd(report.summary.canonicalTvl).padStart(10)}  (${canonicalPct}%)`.padEnd(
       width + 20,
     ) + '│',
   )
   console.log(
-    `│   ${chalk.yellow('Issuer-Secured:')}    ${formatUsd(report.summary.issuerSecuredTvl).padStart(10)}  (${issuerPct}%)`.padEnd(
+    chalk.gray(`│     └─ Uses rollup fraud/validity proofs for withdrawals`.padEnd(width + 1) + '│'),
+  )
+  console.log(
+    `│   ${chalk.yellow('External:')}      ${formatUsd(report.summary.externalTvl).padStart(10)}  (${externalPct}%)`.padEnd(
       width + 20,
     ) + '│',
   )
   console.log(
-    `│   ${chalk.red('Third-Party:')}       ${formatUsd(report.summary.thirdPartySecuredTvl).padStart(10)}  (${thirdPartyPct}%)`.padEnd(
-      width + 20,
+    chalk.gray(`│     └─ Uses external validation (CCTP, LayerZero, etc.)`.padEnd(width + 1) + '│'),
+  )
+
+  // Escrow admin breakdown
+  console.log('')
+  console.log(chalk.bold(`│ By Escrow Admin (for reference):`.padEnd(width + 1) + '│'))
+  const { byAdmin } = report.summary
+  console.log(
+    `│   ${chalk.green('Rollup-controlled:')}  ${formatUsd(byAdmin.rollupControlled).padStart(10)}`.padEnd(
+      width + 10,
     ) + '│',
   )
+  console.log(
+    `│   ${chalk.cyan('Issuer-controlled:')}  ${formatUsd(byAdmin.issuerControlled).padStart(10)}`.padEnd(
+      width + 10,
+    ) + '│',
+  )
+  console.log(
+    `│   ${chalk.red('Third-party:')}        ${formatUsd(byAdmin.thirdPartyControlled).padStart(10)}`.padEnd(
+      width + 10,
+    ) + '│',
+  )
+
   console.log(`└${doubleLine}┘`)
   console.log('')
 }
@@ -1623,29 +1667,58 @@ async function main(): Promise<void> {
     externalTokensSummary.byCategory[token.category].value += token.valueUsd
   }
 
-  // Calculate summary (including external tokens)
-  const escrowTvl = escrows.reduce((sum, e) => sum + e.totalValueUsd, 0)
-  const externalTvl = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
+  // Calculate summary by bridge type (canonical vs external messaging)
+  //
+  // CANONICAL: Uses rollup's fraud/validity proofs for withdrawal security
+  //   - Standard gateways (rollup-controlled)
+  //   - Issuer escrows using canonical messaging (DAI, wstETH, LPT)
+  //
+  // EXTERNAL: Uses external validation (attestation services, DVNs, etc.)
+  //   - Native tokens with no L1 escrow (USDC via CCTP, USDT0 via LayerZero)
+  //   - Auto-discovered external tokens
+
+  // From L2Beat API: source="canonical" is the standard rollup TVL
+  const apiCanonicalTvl = tvsData
+    .filter((t) => t.source === 'canonical')
+    .reduce((sum, t) => sum + t.value, 0)
+
+  // Issuer-secured escrows that use canonical messaging (not native tokens)
+  const issuerCanonicalEscrows = escrows.filter(
+    (e) => e.category === 'issuer-secured' && e.bridgeType === 'canonical' && !e.isNativeToken
+  )
+  const issuerCanonicalTvl = issuerCanonicalEscrows.reduce((sum, e) => sum + e.totalValueUsd, 0)
+
+  // Total canonical = API canonical + issuer escrows using canonical messaging
+  const canonicalTvl = apiCanonicalTvl + issuerCanonicalTvl
+
+  // Native tokens (no L1 escrow) - all use external bridges
+  const nativeTokenEscrows = escrows.filter((e) => e.isNativeToken)
+  const nativeTokenTvl = nativeTokenEscrows.reduce((sum, e) => sum + e.totalValueUsd, 0)
+
+  // Auto-discovered external tokens
+  const autoExternalTvl = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
+
+  // Total external = native tokens + auto-discovered external tokens
+  const externalTvl = nativeTokenTvl + autoExternalTvl
+
+  const totalTvl = canonicalTvl + externalTvl
+
+  // Also track by admin for transparency
+  const byAdmin = {
+    rollupControlled: apiCanonicalTvl,
+    issuerControlled: issuerCanonicalTvl +
+      nativeTokenEscrows.filter(e => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
+      externalTokens.filter(t => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0),
+    thirdPartyControlled:
+      nativeTokenEscrows.filter(e => e.category === 'third-party-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
+      externalTokens.filter(t => t.category === 'third-party-secured').reduce((sum, t) => sum + t.valueUsd, 0),
+  }
 
   const summary = {
-    totalTvl: escrowTvl + externalTvl,
-    rollupSecuredTvl: escrows
-      .filter((e) => e.category === 'rollup-secured')
-      .reduce((sum, e) => sum + e.totalValueUsd, 0),
-    issuerSecuredTvl:
-      escrows
-        .filter((e) => e.category === 'issuer-secured')
-        .reduce((sum, e) => sum + e.totalValueUsd, 0) +
-      externalTokens
-        .filter((t) => t.category === 'issuer-secured')
-        .reduce((sum, t) => sum + t.valueUsd, 0),
-    thirdPartySecuredTvl:
-      escrows
-        .filter((e) => e.category === 'third-party-secured')
-        .reduce((sum, e) => sum + e.totalValueUsd, 0) +
-      externalTokens
-        .filter((t) => t.category === 'third-party-secured')
-        .reduce((sum, t) => sum + t.valueUsd, 0),
+    totalTvl,
+    canonicalTvl,
+    externalTvl,
+    byAdmin,
   }
 
   const report: EscrowReport = {
