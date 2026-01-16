@@ -544,12 +544,8 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('returns transfers within the specified range', async () => {
       const result = await repository.getByRange(UnixTime(200), UnixTime(400))
 
-      expect(result).toHaveLength(3)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted([
-        'msg2',
-        'msg3',
-        'msg4',
-      ])
+      expect(result).toHaveLength(2)
+      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg3', 'msg4'])
     })
 
     it('includes upper boundary but excludes lower boundary', async () => {
@@ -570,11 +566,10 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result).toEqual([])
     })
 
-    it('returns single transfer when range matches exactly', async () => {
+    it('does not return transfer when range matches exactly', async () => {
       const result = await repository.getByRange(UnixTime(300), UnixTime(300))
 
-      expect(result).toHaveLength(1)
-      expect(result[0]?.transferId).toEqual('msg3')
+      expect(result).toEqual([])
     })
   })
 
