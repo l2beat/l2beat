@@ -158,7 +158,7 @@ export class CentriFugePlugin implements InteropPlugin {
       if (!contractCall) return
 
       return [
-        Result.Message('axelar.ContractCallMessage', {
+        Result.Message('axelar.Message', {
           app: 'centrifuge',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,
