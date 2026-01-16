@@ -5,7 +5,13 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { EthRpcClient, RpcBlock, RpcLog } from '@l2beat/shared'
+import {
+  type EthRpcClient,
+  type RpcBlock,
+  type RpcLog,
+  type RpcReceipt,
+  UpsertMap,
+} from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -28,6 +34,7 @@ import { FollowingState } from './FollowingState'
 export class LogQuery {
   topic0s = new Set<string>()
   addresses = new Set<EthereumAddress>()
+  topicToTxEvents = new UpsertMap<string, Set<string>>()
   isEmpty() {
     return this.topic0s.size === 0 || this.addresses.size === 0
   }
@@ -53,14 +60,18 @@ export function buildLogQueryForPlugin(
       addressesOnThisChain++
     }
     if (addressesOnThisChain > 0) {
-      const signatures = [
-        eventRequest.signature,
-        ...(eventRequest.includeTxEvents ?? []),
-      ]
-      for (const signature of signatures) {
-        // TODO try also with `toEventSelector` straight from viem
-        const topic0 = toEventSelector(signature)
-        result.topic0s.add(topic0)
+      // TODO try also with `toEventSelector` straight from viem
+      const topic0 = toEventSelector(eventRequest.signature)
+      result.topic0s.add(topic0)
+
+      if (eventRequest.includeTxEvents?.length) {
+        const txEvents = result.topicToTxEvents.getOrInsertComputed(
+          topic0,
+          () => new Set(),
+        )
+        for (const signature of eventRequest.includeTxEvents) {
+          txEvents.add(toEventSelector(signature))
+        }
       }
     }
   }
@@ -220,6 +231,10 @@ export class InteropEventSyncer extends TimeLoop {
     topics: string[][]
   }): Promise<RpcLog[]> {
     return this.rpcClient.getLogs(filter)
+  }
+
+  getTransactionReceipt(hash: string): Promise<RpcReceipt | null> {
+    return this.rpcClient.getTransactionReceipt(hash)
   }
 
   getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {

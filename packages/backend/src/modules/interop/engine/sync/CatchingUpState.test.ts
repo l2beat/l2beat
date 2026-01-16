@@ -4,7 +4,7 @@ import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { InteropEvent } from '../../plugins/types'
+import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { CatchingUpState } from './CatchingUpState'
 import { FollowingState } from './FollowingState'
 import type { InteropEventSyncer } from './InteropEventSyncer'
@@ -191,6 +191,94 @@ describe(CatchingUpState.name, () => {
       )
     })
 
+    it('fetches transaction receipt logs when includeTxEvents are configured', async () => {
+      const baseTopic0 = '0xaaa'
+      const extraTopic0 = '0xbbb'
+      const otherTopic0 = '0xccc'
+      const txHash = `0x${'11'.repeat(32)}`
+
+      const captureLog = mockFn().returns(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const logQuery = new LogQuery()
+      logQuery.addresses.add(EthereumAddress.random())
+      logQuery.topic0s.add(baseTopic0)
+      logQuery.topicToTxEvents.set(baseTopic0, new Set([extraTopic0]))
+
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+      ])
+
+      const receiptLogs = [
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [extraTopic0],
+          logIndex: 1n,
+        }),
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [otherTopic0],
+          logIndex: 2n,
+        }),
+      ]
+      const receipt = {
+        transactionHash: txHash,
+        transactionIndex: 0n,
+        blockHash: ZERO_HASH,
+        blockNumber: 2n,
+        from: EthereumAddress.random(),
+        to: EthereumAddress.random(),
+        cumulativeGasUsed: 0n,
+        gasUsed: 0n,
+        contractAddress: null,
+        logs: receiptLogs,
+        logsBloom: `0x${'00'.repeat(256)}`,
+        type: 0n,
+      }
+      const getTransactionReceipt = mockFn().resolvesTo(receipt)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        getTransactionReceipt,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getTransactionReceipt).toHaveBeenCalledWith(txHash)
+      expect(captureLog).toHaveBeenCalledTimes(1)
+      const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      expect(captured?.txLogs.map((log) => log.topics[0])).toEqual([
+        baseTopic0,
+        extraTopic0,
+        otherTopic0,
+      ])
+    })
+
     it('throws when no synced range and no resync timestamp', async () => {
       const syncer = createSyncer({
         latestBlockNumber: 10n,
@@ -221,6 +309,7 @@ function createSyncer(
     ),
     buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
     getLogs: mockFn().resolvesTo([]),
+    getTransactionReceipt: mockFn().resolvesTo(null),
     captureLog: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
     db: mockObject<InteropEventSyncer['db']>({
@@ -268,12 +357,14 @@ function makeRpcLog(params: {
   txHash: string
   blockNumber: bigint
   blockTimestamp: bigint
+  topics?: string[]
+  logIndex?: bigint
 }): RpcLog {
   return {
     address: EthereumAddress.random(),
     data: '0x',
-    topics: [],
-    logIndex: 0n,
+    topics: params.topics ?? [],
+    logIndex: params.logIndex ?? 0n,
     transactionIndex: 0n,
     transactionHash: params.txHash,
     blockNumber: params.blockNumber,

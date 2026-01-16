@@ -137,10 +137,29 @@ export class CatchingUpState implements TimeloopState {
     )
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
+    const txsWithIncludedEvents = new Set<string>()
     for (const log of logs) {
       assert(log.transactionHash)
       const v = logsPerTx.getOrInsert(log.transactionHash, [])
       v.push(logToViemLog(toEVMLog(log)))
+
+      const topic0 = log.topics[0]
+      if (topic0 && logQueryForChain.topicToTxEvents.has(topic0)) {
+        txsWithIncludedEvents.add(log.transactionHash)
+      }
+    }
+
+    for (const txHash of txsWithIncludedEvents) {
+      const receipt = await this.syncer.getTransactionReceipt(txHash)
+      if (!receipt) {
+        continue
+      }
+      logsPerTx.set(
+        txHash,
+        receipt.logs
+          .map((log) => logToViemLog(toEVMLog(log)))
+          .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
+      )
     }
 
     const interopEvents = []
