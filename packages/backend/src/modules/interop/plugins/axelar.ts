@@ -55,7 +55,6 @@ const parsePayloadVerified = createEventParser(
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
-  { axelarChainName: 'axelar', chain: 'axelar' }, // usually ITS, with axelar intermediate hop
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Arbitrum', chain: 'arbitrum' }, // yeah
@@ -155,7 +154,7 @@ export class AxelarPlugin implements InteropPlugin {
           tokenAddress,
           amount: expressExecutedWithToken.amount,
           symbol: expressExecutedWithToken.symbol,
-          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
+          $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
         }),
       ]
     }
@@ -172,7 +171,7 @@ export class AxelarPlugin implements InteropPlugin {
           sender: EthereumAddress(contractCall.sender),
           destinationContractAddress: contractCall.destinationContractAddress,
           payloadHash: contractCall.payloadHash,
-          $dstChain: dstChain === 'axelar' ? undefined : dstChain,
+          $dstChain: dstChain === 'Unknown_axelar' ? undefined : dstChain,
         }),
       ]
     }
@@ -207,7 +206,7 @@ export class AxelarPlugin implements InteropPlugin {
           tokenAddress,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
-          $dstChain: dstChain === 'axelar' ? undefined : dstChain,
+          $dstChain: dstChain === 'Unknown_axelar' ? undefined : dstChain,
         }),
       ]
     }
@@ -229,7 +228,7 @@ export class AxelarPlugin implements InteropPlugin {
             contractCallApproved.contractAddress,
           ),
           srcTxHash: contractCallApproved.sourceTxHash,
-          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
+          $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
         }),
       ]
     }
@@ -256,7 +255,7 @@ export class AxelarPlugin implements InteropPlugin {
           symbol: contractCallApprovedWithMint.symbol,
           amount: contractCallApprovedWithMint.amount,
           srcTxHash: contractCallApprovedWithMint.sourceTxHash,
-          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
+          $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
         }),
       ]
     }
