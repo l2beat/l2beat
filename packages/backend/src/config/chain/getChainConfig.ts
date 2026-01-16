@@ -30,8 +30,8 @@ export async function getChainConfig(
         case 'etherscan':
           indexerApis.push({
             type: api.type,
-            url: env.string('ETHERSCAN_API_URL'),
-            apiKey: env.string('ETHERSCAN_API_KEY'),
+            url: api.customUrl ?? env.string('ETHERSCAN_API_URL'),
+            apiKey: api.customUrl ? '' : env.string('ETHERSCAN_API_KEY'),
             chainId: api.chainId,
           })
           break
