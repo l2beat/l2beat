@@ -31,56 +31,56 @@ export function getProtocolsByType(
   }[],
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
-  const map = new Map<string, number>()
+  const volumeByProtocol = new Map<string, number>()
 
   for (const record of records) {
-    const currentVolume = map.get(record.id) ?? 0
-    map.set(
+    const currentVolume = volumeByProtocol.get(record.id) ?? 0
+    volumeByProtocol.set(
       record.id,
       currentVolume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
     )
   }
 
-  const groupedProtocols = groupBy(
+  const protocolsByType = groupBy(
     interopProjects,
     (p) => p.interopConfig.bridgeType,
   )
 
-  const nonMintingData = Array.from(map.entries()).filter(([key]) =>
-    groupedProtocols.nonMinting?.some((p) => p.id === key),
+  const nonMintingData = Array.from(volumeByProtocol.entries()).filter(
+    ([key]) => protocolsByType.nonMinting?.some((p) => p.id === key),
   )
-  const mintLockData = Array.from(map.entries()).filter(([key]) =>
-    groupedProtocols.canonical?.some((p) => p.id === key),
+  const mintLockData = Array.from(volumeByProtocol.entries()).filter(([key]) =>
+    protocolsByType.canonical?.some((p) => p.id === key),
   )
-  const omniChainData = Array.from(map.entries()).filter(([key]) =>
-    groupedProtocols.omnichain?.some((p) => p.id === key),
+  const omniChainData = Array.from(volumeByProtocol.entries()).filter(([key]) =>
+    protocolsByType.omnichain?.some((p) => p.id === key),
   )
+
+  const getProjectCommon = (key: string) => {
+    const project = interopProjects.find((p) => p.id === key)
+    assert(project, `Project not found: ${key}`)
+    return {
+      protocolName: project?.interopConfig.name ?? project.name,
+      iconSlug: project?.slug,
+    }
+  }
 
   return {
     nonMinting: nonMintingData.map(([key, value]) => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
       return {
-        protocolName: project?.interopConfig.name ?? project.name,
-        iconSlug: project?.slug,
+        ...getProjectCommon(key),
         volume: value,
       }
     }),
     lockMint: mintLockData.map(([key, value]) => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
       return {
-        protocolName: project?.interopConfig.name ?? project.name,
-        iconSlug: project?.slug,
+        ...getProjectCommon(key),
         volume: value,
       }
     }),
     omniChain: omniChainData.map(([key, value]) => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
       return {
-        protocolName: project?.interopConfig.name ?? project.name,
-        iconSlug: project?.slug,
+        ...getProjectCommon(key),
         volume: value,
       }
     }),
