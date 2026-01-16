@@ -55,7 +55,7 @@ const parsePayloadVerified = createEventParser(
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
-  { axelarChainName: 'axelar', chain: 'unknown' }, // usually ITS, with axelar intermediate hop
+  { axelarChainName: 'axelar', chain: 'axelar' }, // usually ITS, with axelar intermediate hop
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Arbitrum', chain: 'arbitrum' }, // yeah
@@ -74,14 +74,14 @@ export const SquidExpressExecutedWithToken = createInteropEventType<{
   tokenAddress?: Address32
   amount: bigint
   symbol: string
-  $srcChain: string
+  $srcChain?: string
 }>('axelar.ExpressExecutedWithToken')
 
 export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
-  $dstChain: string
+  $dstChain?: string
 }>('axelar.ContractCall')
 
 export const ContractCallWithToken = createInteropEventType<{
@@ -91,7 +91,7 @@ export const ContractCallWithToken = createInteropEventType<{
   tokenAddress?: Address32
   symbol: string
   amount: bigint
-  $dstChain: string
+  $dstChain?: string
 }>('axelar.ContractCallWithToken')
 
 export const ContractCallApproved = createInteropEventType<{
@@ -100,7 +100,7 @@ export const ContractCallApproved = createInteropEventType<{
   contractAddress: EthereumAddress
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
-  $srcChain: string
+  $srcChain?: string
 }>('axelar.ContractCallApproved')
 
 export const ContractCallApprovedWithMint = createInteropEventType<{
@@ -111,7 +111,7 @@ export const ContractCallApprovedWithMint = createInteropEventType<{
   amount: bigint
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
-  $srcChain: string
+  $srcChain?: string
 }>('axelar.ContractCallApprovedWithMint')
 
 export const ContractCallExecuted = createInteropEventType<{
@@ -143,33 +143,36 @@ export class AxelarPlugin implements InteropPlugin {
         },
       )
 
+      const srcChain = findChain(
+        AXELAR_NETWORKS,
+        (x) => x.axelarChainName,
+        expressExecutedWithToken.sourceChain,
+      )
+
       return [
         SquidExpressExecutedWithToken.create(input, {
           commandId: expressExecutedWithToken.commandId,
           tokenAddress,
           amount: expressExecutedWithToken.amount,
           symbol: expressExecutedWithToken.symbol,
-          $srcChain: findChain(
-            AXELAR_NETWORKS,
-            (x) => x.axelarChainName,
-            expressExecutedWithToken.sourceChain,
-          ),
+          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
         }),
       ]
     }
 
     const contractCall = parseContractCall(input.log, null)
     if (contractCall) {
+      const dstChain = findChain(
+        AXELAR_NETWORKS,
+        (x) => x.axelarChainName,
+        contractCall.destinationChain,
+      )
       return [
         ContractCall.create(input, {
           sender: EthereumAddress(contractCall.sender),
           destinationContractAddress: contractCall.destinationContractAddress,
           payloadHash: contractCall.payloadHash,
-          $dstChain: findChain(
-            AXELAR_NETWORKS,
-            (x) => x.axelarChainName,
-            contractCall.destinationChain,
-          ),
+          $dstChain: dstChain === 'axelar' ? undefined : dstChain,
         }),
       ]
     }
@@ -189,6 +192,12 @@ export class AxelarPlugin implements InteropPlugin {
         },
       )
 
+      const dstChain = findChain(
+        AXELAR_NETWORKS,
+        (x) => x.axelarChainName,
+        contractCallWithToken.destinationChain,
+      )
+
       return [
         ContractCallWithToken.create(input, {
           sender: EthereumAddress(contractCallWithToken.sender),
@@ -198,17 +207,19 @@ export class AxelarPlugin implements InteropPlugin {
           tokenAddress,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
-          $dstChain: findChain(
-            AXELAR_NETWORKS,
-            (x) => x.axelarChainName,
-            contractCallWithToken.destinationChain,
-          ),
+          $dstChain: dstChain === 'axelar' ? undefined : dstChain,
         }),
       ]
     }
 
     const contractCallApproved = parseContractCallApproved(input.log, null)
     if (contractCallApproved) {
+      const srcChain = findChain(
+        AXELAR_NETWORKS,
+        (x) => x.axelarChainName,
+        contractCallApproved.sourceChain,
+      )
+
       return [
         ContractCallApproved.create(input, {
           commandId: contractCallApproved.commandId,
@@ -218,11 +229,7 @@ export class AxelarPlugin implements InteropPlugin {
             contractCallApproved.contractAddress,
           ),
           srcTxHash: contractCallApproved.sourceTxHash,
-          $srcChain: findChain(
-            AXELAR_NETWORKS,
-            (x) => x.axelarChainName,
-            contractCallApproved.sourceChain,
-          ),
+          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
         }),
       ]
     }
@@ -232,6 +239,12 @@ export class AxelarPlugin implements InteropPlugin {
       null,
     )
     if (contractCallApprovedWithMint) {
+      const srcChain = findChain(
+        AXELAR_NETWORKS,
+        (x) => x.axelarChainName,
+        contractCallApprovedWithMint.sourceChain,
+      )
+
       return [
         ContractCallApprovedWithMint.create(input, {
           commandId: contractCallApprovedWithMint.commandId,
@@ -243,11 +256,7 @@ export class AxelarPlugin implements InteropPlugin {
           symbol: contractCallApprovedWithMint.symbol,
           amount: contractCallApprovedWithMint.amount,
           srcTxHash: contractCallApprovedWithMint.sourceTxHash,
-          $srcChain: findChain(
-            AXELAR_NETWORKS,
-            (x) => x.axelarChainName,
-            contractCallApprovedWithMint.sourceChain,
-          ),
+          $srcChain: srcChain === 'axelar' ? undefined : srcChain,
         }),
       ]
     }

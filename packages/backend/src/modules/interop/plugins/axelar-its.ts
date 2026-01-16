@@ -145,16 +145,16 @@ export class AxelarITSPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [InterchainTransferReceived]
+  matchTypes = [ContractCallExecuted] // same entry as axelar.ts to prevent it stealing events
   match(
-    interchainTransferReceived: InteropEvent,
+    contractCallExecuted: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (InterchainTransferReceived.checkType(interchainTransferReceived)) {
-      const contractCallExecuted = db.find(ContractCallExecuted, {
-        commandId: interchainTransferReceived.args.commandId,
+    if (ContractCallExecuted.checkType(contractCallExecuted)) {
+      const interchainTransferReceived = db.find(InterchainTransferReceived, {
+        commandId: contractCallExecuted.args.commandId,
       })
-      if (!contractCallExecuted) return
+      if (!interchainTransferReceived) return
       const contractCallApproved = db.find(ContractCallApproved, {
         commandId: interchainTransferReceived.args.commandId,
       })
