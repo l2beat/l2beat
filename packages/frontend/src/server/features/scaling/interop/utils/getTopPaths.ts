@@ -13,8 +13,6 @@ export function getTopPaths(
     srcValueUsd: number | null
     dstValueUsd: number | null
   }[],
-  from: string[],
-  to: string[],
 ): InteropPathData[] {
   const map = new Map<string, number>()
 

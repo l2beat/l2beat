@@ -22,8 +22,6 @@ export function getTopProtocols(
     dstValueUsd: number | null
     transferCount: number
   }[],
-  from: string[],
-  to: string[],
   interopProjects: Project<'interopConfig'>[],
 ): InteropProtocolData[] {
   const map = new Map<string, { volume: number; transfers: number }>()

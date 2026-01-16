@@ -23,7 +23,7 @@ export async function getInteropDashboardData(
   await Promise.resolve(new Promise((resolve) => setTimeout(resolve, 1000)))
   const records = await Promise.resolve(interopMockData)
   const filteredRecords = records.filter(
-    (r) => params.from.includes(r.srcChain) || params.to.includes(r.dstChain),
+    (r) => params.from.includes(r.srcChain) && params.to.includes(r.dstChain),
   )
   // TODO: all above should be replaced with database query
 
@@ -32,13 +32,8 @@ export async function getInteropDashboardData(
   })
 
   return {
-    top3Paths: getTopPaths(filteredRecords, params.from, params.to),
-    topProtocols: getTopProtocols(
-      filteredRecords,
-      params.from,
-      params.to,
-      interopProjects,
-    ),
+    top3Paths: getTopPaths(filteredRecords),
+    topProtocols: getTopProtocols(filteredRecords, interopProjects),
     protocolsByType: getProtocolsByType(filteredRecords, interopProjects),
   }
 }
