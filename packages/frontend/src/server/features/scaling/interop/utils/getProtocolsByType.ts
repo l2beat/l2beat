@@ -8,6 +8,11 @@ export type ProtocolsByType = {
     protocolName: string
     volume: number
   }[]
+  omniChain: {
+    iconSlug: string
+    protocolName: string
+    volume: number
+  }[]
 }
 
 export function getProtocolsByType(
@@ -39,9 +44,21 @@ export function getProtocolsByType(
   const mintLockData = Array.from(map.entries()).filter(([key]) =>
     groupedProtocols.canonical?.some((p) => p.id === key),
   )
+  const omniChainData = Array.from(map.entries()).filter(([key]) =>
+    groupedProtocols.omnichain?.some((p) => p.id === key),
+  )
 
   return {
     lockMint: mintLockData.map(([key, value]) => {
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+      return {
+        protocolName: project?.interopConfig.name ?? project.name,
+        iconSlug: project?.slug,
+        volume: value,
+      }
+    }),
+    omniChain: omniChainData.map(([key, value]) => {
       const project = interopProjects.find((p) => p.id === key)
       assert(project, `Project not found: ${key}`)
       return {
