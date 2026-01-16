@@ -10,6 +10,9 @@
   "overrides": {
     "eth:0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c": {
       "ignoreDiscovery": true
+    },
+    "eth:0x39A90926306E11497EC5FE1C459910258B620edD": {
+      "ignoreMethods": ["isOutputFinalized"]
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "optopia",
-  "timestamp": 1768567884,
-  "configHash": "0xffbcbb8f477a36e4f675d732ecc30901f44fa156c1e019b06a7485372d9489a0",
+  "timestamp": 1768569941,
+  "configHash": "0x88425be4a028f74e1dffb94539872d4662578913a2e76b566cf221ce1c05c48e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -349,7 +349,6 @@
         "$upgradeCount": 6,
         "guardian": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
         "GUARDIAN": "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
-        "isOutputFinalized": [true, true, true, true, true],
         "L2_ORACLE": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
         "l2Oracle": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
@@ -364,7 +363,6 @@
         "systemConfig": "eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
         "version": "2.5.0"
       },
-      "errors": { "isOutputFinalized": "Processing error occurred." },
       "implementationNames": {
         "eth:0x39A90926306E11497EC5FE1C459910258B620edD": "Proxy",
         "eth:0xB22519CD5e46F5FC8809735F06E256A415777C31": "OptimismPortal"
@@ -1019,6 +1017,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24247404 },
+  "usedBlockNumbers": { "ethereum": 24247575 },
   "permissionsConfigHash": "0x5efad161254aa07d0b7792d1fa865315df99323aea6e75af329be5e12d121eba"
 }

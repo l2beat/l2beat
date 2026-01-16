@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0bec62c9704522308fce4ee39340d45b9db21f7b
+Generated with discovered.json: 0x586b88a5a691e2a23f7ca3d3fb4309ed6a1d6ca1
 
-# Diff at Fri, 16 Jan 2026 12:52:28 GMT:
+# Diff at Fri, 16 Jan 2026 13:26:44 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1748434475
-- current timestamp: 1768567884
+- current timestamp: 1768569941
 
 ## Description
 
@@ -88,16 +88,12 @@ Diff links:
       values.params.prevBlockNum:
 -        22521705
 +        24174890
-      values.isOutputFinalized:
-+        [true,true,true,true,true]
       implementationNames.eth:0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B:
 -        "OptimismPortal"
       implementationNames.eth:0xB22519CD5e46F5FC8809735F06E256A415777C31:
 +        "OptimismPortal"
       category:
 -        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"isOutputFinalized":"Processing error occurred."}
     }
 ```
 
