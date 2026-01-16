@@ -1,3 +1,4 @@
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
@@ -6,7 +7,7 @@ import { LockMintTable } from './tables/LockMintTable'
 
 export function LockMintCard() {
   const { selectedChains } = useInteropSelectedChains()
-  const { data } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
@@ -19,6 +20,7 @@ export function LockMintCard() {
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
       </div>
+      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
       {entries && entries.length === 0 ? (
         <NoResultsInfo />
       ) : (
