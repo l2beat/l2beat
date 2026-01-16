@@ -1,6 +1,6 @@
 {
   "name": "galxegravity",
-  "timestamp": 1764933656,
+  "timestamp": 1768566203,
   "configHash": "0x1546187ee54b047337649d196c484a6fae966c6dc00f6623de27edacd42c3006",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -298,6 +298,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
           "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -313,8 +314,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 193,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 200,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -409,6 +410,11 @@
       }
     },
     {
+      "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x74a0d46BA4F69cAB77A459f8B12dc531c7DaBf3C",
       "type": "EOA",
       "proxyType": "EOA",
@@ -461,7 +467,7 @@
           "eth:0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
         ],
         "allowedOutboxList": ["eth:0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
-        "delayedMessageCount": 14801,
+        "delayedMessageCount": 14957,
         "inboxHistory": [
           "eth:0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
           "eth:0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
@@ -471,8 +477,8 @@
         "outboxHistory": ["eth:0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
         "rollup": "eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerInbox": "eth:0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-        "sequencerMessageCount": 69030,
-        "sequencerReportedSubMessageCount": 113307813
+        "sequencerMessageCount": 69630,
+        "sequencerReportedSubMessageCount": 117565695
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -624,7 +630,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 69030,
+        "batchCount": 69630,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -665,7 +671,7 @@
         "rollup": "eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 14801,
+        "totalDelayedMessagesRead": 14957,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1052,13 +1058,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1090,
+        "firstUnresolvedNode": 1174,
         "inbox": "eth:0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739188,
-        "latestConfirmed": 1089,
-        "latestNodeCreated": 1100,
+        "latestConfirmed": 1173,
+        "latestNodeCreated": 1184,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF",
@@ -1790,6 +1796,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23946417 },
-  "permissionsConfigHash": "0x4c2ecf0f0bb8843ebaf0276c47c352e9d39da7e0c9dbd47b9030b50e4269f553"
+  "usedBlockNumbers": { "ethereum": 24247264 },
+  "permissionsConfigHash": "0x88057414e4a6d7672711ce35985f3642867656a37416b6199e4a866ef402d662"
 }
