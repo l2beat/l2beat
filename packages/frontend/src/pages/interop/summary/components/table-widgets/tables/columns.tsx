@@ -61,6 +61,15 @@ export const lockMintColumns = [
 const omniChainColumnHelper = createColumnHelper<OmniChainRow>()
 export const omniChainColumns = [
   ...getCommonColumns(omniChainColumnHelper),
+  omniChainColumnHelper.display({
+    id: 'token count',
+    header: 'Token\ncount',
+    cell: (ctx) => (
+      <div className="font-medium text-label-value-15">
+        {ctx.row.original.tokens.length}
+      </div>
+    ),
+  }),
   omniChainColumnHelper.accessor('tokens', {
     header: 'tokens by volume',
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,

@@ -21,7 +21,7 @@ export function TopTokensCell({ tokens }: { tokens: TokenData[] }) {
   const restTokens = tokens.slice(5)
 
   return (
-    <div className="grid grid-cols-[76px_60px] gap-1.5">
+    <div className="grid grid-cols-[76px_30px] gap-1">
       <div className="-space-x-1.5 flex items-center">
         {topTokens.map((token, i) => (
           <TokenIconWithTooltip key={token.id} token={token} index={i} />
@@ -73,13 +73,13 @@ function RestTokensDialog({
   return (
     <>
       <button
-        className="font-medium text-label-value-12 hover:underline"
+        className="font-bold text-label-value-13 hover:underline"
         onClick={(e) => {
           e.preventDefault()
           setOpen(true)
         }}
       >
-        +{restTokens.length} more
+        +{restTokens.length}
       </button>
       <CommandDialog
         open={open}
