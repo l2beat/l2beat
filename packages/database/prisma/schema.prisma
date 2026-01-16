@@ -376,19 +376,19 @@ model InteropMessage {
 
 model InteropTransfer {
   plugin     String   @db.VarChar(64)
-  transferId String   @db.VarChar(40)
+  transferId String   @id @db.VarChar(40)
   type       String   @db.VarChar(64)
   timestamp  DateTime @db.Timestamp(6)
 
-  duration Int?
+  duration Int
 
-  srcTime         DateTime? @db.Timestamp(6)
-  srcChain        String?   @db.VarChar(32)
-  srcTxHash       String?   @db.VarChar(66)
-  srcLogIndex     Int?
-  srcEventId      String?   @db.VarChar(40)
-  srcTokenAddress String?   @db.VarChar(66)
-  srcRawAmount    Decimal?  @db.Decimal(80, 0)
+  srcTime         DateTime @db.Timestamp(6)
+  srcChain        String   @db.VarChar(32)
+  srcTxHash       String   @db.VarChar(66)
+  srcLogIndex     Int
+  srcEventId      String   @db.VarChar(40)
+  srcTokenAddress String?  @db.VarChar(66)
+  srcRawAmount    Decimal? @db.Decimal(80, 0)
 
   srcAbstractTokenId String?  @db.VarChar(66)
   srcSymbol          String?  @db.VarChar(66)
@@ -397,13 +397,13 @@ model InteropTransfer {
   srcValueUsd        Float?   @db.Real
   srcWasBurned       Boolean?
 
-  dstTime         DateTime? @db.Timestamp(6)
-  dstChain        String?   @db.VarChar(32)
-  dstTxHash       String?   @db.VarChar(66)
-  dstLogIndex     Int?
-  dstEventId      String?   @db.VarChar(40)
-  dstTokenAddress String?   @db.VarChar(66)
-  dstRawAmount    Decimal?  @db.Decimal(80, 0)
+  dstTime         DateTime @db.Timestamp(6)
+  dstChain        String   @db.VarChar(32)
+  dstTxHash       String   @db.VarChar(66)
+  dstLogIndex     Int
+  dstEventId      String   @db.VarChar(40)
+  dstTokenAddress String?  @db.VarChar(66)
+  dstRawAmount    Decimal? @db.Decimal(80, 0)
 
   dstAbstractTokenId String?  @db.VarChar(66)
   dstSymbol          String?  @db.VarChar(66)
@@ -414,7 +414,6 @@ model InteropTransfer {
 
   isProcessed Boolean
 
-  @@id([transferId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
@@ -535,4 +534,19 @@ model InteropPluginSyncedRange {
   toTimestamp   DateTime @db.Timestamp(6)
 
   @@id([pluginName, chain])
+}
+
+model AggregatedInteropTransfer {
+  timestamp        DateTime @db.Timestamp(6)
+  id               String   @db.VarChar(255)
+  srcChain         String   @db.VarChar(255)
+  dstChain         String   @db.VarChar(255)
+  tokensByVolume   Json
+  transferCount    Int
+  totalDurationSum Int
+  srcValueUsd      Float?   @db.Real
+  dstValueUsd      Float?   @db.Real
+
+  @@id([timestamp, id, srcChain, dstChain])
+  @@index([timestamp, srcChain, dstChain])
 }
