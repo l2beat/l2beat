@@ -24,7 +24,7 @@ export const spheron: ScalingProject = upcomingL3({
         'https://t.me/Spheron',
         'https://youtube.com/@spheronfdn',
         'https://www.instagram.com/spheronhq',
-        'https://discord.com/invite/spheron-network-745315423783878757?utm_source=LP&utm_medium=landing_page&utm_campaign=landing_page',
+        'https://discord.com/invite/spheron-network-745315423783878757',
         'https://t.me/Spheron',
       ],
     },
