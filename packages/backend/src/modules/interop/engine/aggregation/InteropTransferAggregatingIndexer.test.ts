@@ -304,23 +304,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       ])
     })
   })
-
-  describe(InteropTransferAggregatingIndexer.prototype.invalidate.name, () => {
-    it('returns 0', async () => {
-      const indexer = new InteropTransferAggregatingIndexer({
-        db: mockDatabase(),
-        configs: [],
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
-
-      const result = await indexer.invalidate(100)
-
-      expect(result).toEqual(0)
-    })
-  })
 })
 
 function createTransfer(
