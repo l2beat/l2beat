@@ -105,4 +105,34 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  async getByChainsAndLatestTimestamp(
+    srcChains: string[],
+    dstChains: string[],
+  ): Promise<AggregatedInteropTransferRecord[]> {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return []
+    }
+
+    const latestTimestampSubquery = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .as('latest_timestamp')
+
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .innerJoin(latestTimestampSubquery, (join) =>
+        join.onRef(
+          'AggregatedInteropTransfer.timestamp',
+          '=',
+          'latest_timestamp.max_timestamp',
+        ),
+      )
+      .selectAll('AggregatedInteropTransfer')
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
+      .execute()
+
+    return rows.map(toRecord)
+  }
 }

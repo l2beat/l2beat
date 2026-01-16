@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 
@@ -31,16 +32,7 @@ export type ProtocolsByType = {
 }
 
 export function getProtocolsByType(
-  records: {
-    id: string
-    srcChain: string
-    dstChain: string
-    srcValueUsd: number | null
-    dstValueUsd: number | null
-    transferCount: number
-    totalDurationSum: number
-    tokensByVolume: Record<string, number>
-  }[],
+  records: AggregatedInteropTransferRecord[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
