@@ -471,6 +471,97 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getByChainsAndLatestTimestamp
+      .name,
+    () => {
+      it('returns only latest records matching srcChain and dstChain', async () => {
+        const record1 = record(
+          'id1',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'id2',
+          UnixTime(200),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const record3 = record(
+          'id3',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          7,
+          3000,
+        )
+        const record4 = record(
+          'id4',
+          UnixTime(150),
+          'polygon',
+          'ethereum',
+          2,
+          4000,
+        )
+        const records = [record1, record2, record3, record4]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          'ethereum',
+          'arbitrum',
+        )
+
+        // Should only return record3 which has the latest timestamp (300)
+        expect(result).toEqual([record3])
+      })
+
+      it('returns empty array when no records exist', async () => {
+        const result = await repository.getByChainsAndLatestTimestamp(
+          'ethereum',
+          'arbitrum',
+        )
+
+        expect(result).toEqual([])
+      })
+
+      it('returns latest records from entire table, not just filtered records', async () => {
+        const record1 = record(
+          'id1',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'id2',
+          UnixTime(500),
+          'polygon',
+          'optimism',
+          3,
+          2000,
+        )
+        const records = [record1, record2]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          'ethereum',
+          'arbitrum',
+        )
+
+        // Latest timestamp is 500, but no ethereum->arbitrum records have that timestamp
+        expect(result).toEqual([])
+      })
+    },
+  )
 })
 
 function record(
