@@ -16,14 +16,14 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 
-export interface InteropAggregatingIndexerDeps
+export interface InteropTransferAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
 }
 
-export class InteropAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: InteropAggregatingIndexerDeps) {
+export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: InteropTransferAggregatingIndexerDeps) {
     super({ ...$, name: 'interop_aggregating' })
   }
 
@@ -81,13 +81,10 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     let dstValueUsd = 0
 
     for (const transfer of group) {
-      totalDurationSum += transfer.duration ?? 0
-      if (transfer.srcValueUsd !== undefined) {
-        srcValueUsd += transfer.srcValueUsd
-      }
-      if (transfer.dstValueUsd !== undefined) {
-        dstValueUsd += transfer.dstValueUsd
-      }
+      totalDurationSum += transfer.duration
+      srcValueUsd += transfer.srcValueUsd ?? 0
+      dstValueUsd += transfer.dstValueUsd ?? 0
+
       if (transfer.srcAbstractTokenId === transfer.dstAbstractTokenId) {
         if (transfer.srcAbstractTokenId) {
           tokensByVolume[transfer.srcAbstractTokenId] =

@@ -6,16 +6,16 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
+import { InteropTransferAggregatingIndexer } from './InteropTransferAggregatingIndexer'
 
-describe(InteropAggregatingIndexer.name, () => {
+describe(InteropTransferAggregatingIndexer.name, () => {
   const to = 1768484645
   const from = to - UnixTime.DAY
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 
-  describe(InteropAggregatingIndexer.prototype.update.name, () => {
+  describe(InteropTransferAggregatingIndexer.prototype.update.name, () => {
     it('aggregates transfers and saves to database', async () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
@@ -66,7 +66,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTransfer,
       })
 
-      const indexer = new InteropAggregatingIndexer({
+      const indexer = new InteropTransferAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -232,7 +232,7 @@ describe(InteropAggregatingIndexer.name, () => {
         transaction,
       })
 
-      const indexer = new InteropAggregatingIndexer({
+      const indexer = new InteropTransferAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -305,9 +305,9 @@ describe(InteropAggregatingIndexer.name, () => {
     })
   })
 
-  describe(InteropAggregatingIndexer.prototype.invalidate.name, () => {
+  describe(InteropTransferAggregatingIndexer.prototype.invalidate.name, () => {
     it('returns 0', async () => {
-      const indexer = new InteropAggregatingIndexer({
+      const indexer = new InteropTransferAggregatingIndexer({
         db: mockDatabase(),
         configs: [],
         parents: [],
