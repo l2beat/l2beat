@@ -25,6 +25,7 @@ export type ProtocolsByType = {
     iconSlug: string
     protocolName: string
     volume: number
+    tokens: TokenData[]
   }[]
 }
 
@@ -86,6 +87,21 @@ export function getProtocolsByType(
     }
   }
 
+  const getTokensData = (tokens: Map<string, number>) => {
+    return Array.from(tokens.entries())
+      .map(([tokenId, volume]) => {
+        const tokenDetails = tokensDetailsMap.get(tokenId)
+        assert(tokenDetails, `Token details not found for token id: ${tokenId}`)
+        return {
+          id: tokenId,
+          symbol: tokenDetails.symbol,
+          iconUrl: tokenDetails.iconUrl,
+          volume,
+        }
+      })
+      .toSorted((a, b) => b.volume - a.volume)
+  }
+
   return {
     nonMinting: nonMintingData.map(([key, { volume }]) => {
       return {
@@ -97,27 +113,14 @@ export function getProtocolsByType(
       return {
         ...getProjectCommon(key),
         volume,
-        tokens: Array.from(tokens.entries())
-          .map(([tokenId, volume]) => {
-            const tokenDetails = tokensDetailsMap.get(tokenId)
-            assert(
-              tokenDetails,
-              `Token details not found for token id: ${tokenId}`,
-            )
-            return {
-              id: tokenId,
-              symbol: tokenDetails.symbol,
-              iconUrl: tokenDetails.iconUrl,
-              volume,
-            }
-          })
-          .toSorted((a, b) => b.volume - a.volume),
+        tokens: getTokensData(tokens),
       }
     }),
-    omniChain: omniChainData.map(([key, { volume }]) => {
+    omniChain: omniChainData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
         volume,
+        tokens: getTokensData(tokens),
       }
     }),
   }

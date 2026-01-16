@@ -59,4 +59,10 @@ export const lockMintColumns = [
 ]
 
 const omniChainColumnHelper = createColumnHelper<OmniChainRow>()
-export const omniChainColumns = [...getCommonColumns(omniChainColumnHelper)]
+export const omniChainColumns = [
+  ...getCommonColumns(omniChainColumnHelper),
+  omniChainColumnHelper.accessor('tokens', {
+    header: 'tokens by volume',
+    cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
+  }),
+]
