@@ -25,7 +25,7 @@ export const fuse: ScalingProject = upcomingL2({
         'https://discord.gg/46QxE5ESzQ',
         'https://x.com/Fuse_network',
         'https://t.me/fuseio',
-        'https://www.youtube.com/c/fusenetwork',
+        'https://youtube.com/fusenetwork',
       ],
     },
   },
