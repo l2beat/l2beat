@@ -2,6 +2,13 @@ import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 
+export type TokenData = {
+  id: string
+  symbol: string
+  iconUrl: string | null
+  volume: number
+}
+
 export type ProtocolsByType = {
   nonMinting: {
     iconSlug: string
@@ -12,6 +19,7 @@ export type ProtocolsByType = {
     iconSlug: string
     protocolName: string
     volume: number
+    tokens: TokenData[]
   }[]
   omniChain: {
     iconSlug: string
@@ -28,17 +36,30 @@ export function getProtocolsByType(
     srcValueUsd: number | null
     dstValueUsd: number | null
     transferCount: number
+    tokensByVolume: Record<string, number>
   }[],
+  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
-  const volumeByProtocol = new Map<string, number>()
+  const protocolsDataMap = new Map<
+    string,
+    { volume: number; tokens: Map<string, number> }
+  >()
 
   for (const record of records) {
-    const currentVolume = volumeByProtocol.get(record.id) ?? 0
-    volumeByProtocol.set(
-      record.id,
-      currentVolume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-    )
+    const current = protocolsDataMap.get(record.id) ?? {
+      volume: 0,
+      tokens: new Map<string, number>(),
+    }
+
+    for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
+      current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
+    }
+
+    protocolsDataMap.set(record.id, {
+      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      tokens: current.tokens,
+    })
   }
 
   const protocolsByType = groupBy(
@@ -46,13 +67,13 @@ export function getProtocolsByType(
     (p) => p.interopConfig.bridgeType,
   )
 
-  const nonMintingData = Array.from(volumeByProtocol.entries()).filter(
+  const nonMintingData = Array.from(protocolsDataMap.entries()).filter(
     ([key]) => protocolsByType.nonMinting?.some((p) => p.id === key),
   )
-  const mintLockData = Array.from(volumeByProtocol.entries()).filter(([key]) =>
+  const mintLockData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
     protocolsByType.canonical?.some((p) => p.id === key),
   )
-  const omniChainData = Array.from(volumeByProtocol.entries()).filter(([key]) =>
+  const omniChainData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
     protocolsByType.omnichain?.some((p) => p.id === key),
   )
 
@@ -66,22 +87,37 @@ export function getProtocolsByType(
   }
 
   return {
-    nonMinting: nonMintingData.map(([key, value]) => {
+    nonMinting: nonMintingData.map(([key, { volume }]) => {
       return {
         ...getProjectCommon(key),
-        volume: value,
+        volume,
       }
     }),
-    lockMint: mintLockData.map(([key, value]) => {
+    lockMint: mintLockData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
-        volume: value,
+        volume,
+        tokens: Array.from(tokens.entries())
+          .map(([tokenId, volume]) => {
+            const tokenDetails = tokensDetailsMap.get(tokenId)
+            assert(
+              tokenDetails,
+              `Token details not found for token id: ${tokenId}`,
+            )
+            return {
+              id: tokenId,
+              symbol: tokenDetails.symbol,
+              iconUrl: tokenDetails.iconUrl,
+              volume,
+            }
+          })
+          .toSorted((a, b) => b.volume - a.volume),
       }
     }),
-    omniChain: omniChainData.map(([key, value]) => {
+    omniChain: omniChainData.map(([key, { volume }]) => {
       return {
         ...getProjectCommon(key),
-        volume: value,
+        volume,
       }
     }),
   }

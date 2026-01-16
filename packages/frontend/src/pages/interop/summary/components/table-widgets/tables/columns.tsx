@@ -1,5 +1,6 @@
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { TopTokensCell } from '../TopTokensCell'
 import type { LockMintRow } from './LockMintTable'
 import type { NonMintingRow } from './NonMintingTable'
 import type { OmniChainRow } from './OmniChainTable'
@@ -45,11 +46,17 @@ function getCommonColumns<
   ]
 }
 
+const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
+export const nonMintingColumns = [...getCommonColumns(nonMintingColumnHelper)]
+
 const lockMintColumnHelper = createColumnHelper<LockMintRow>()
-export const lockMintColumns = [...getCommonColumns(lockMintColumnHelper)]
+export const lockMintColumns = [
+  ...getCommonColumns(lockMintColumnHelper),
+  lockMintColumnHelper.accessor('tokens', {
+    header: 'tokens by volume',
+    cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
+  }),
+]
 
 const omniChainColumnHelper = createColumnHelper<OmniChainRow>()
 export const omniChainColumns = [...getCommonColumns(omniChainColumnHelper)]
-
-const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
-export const nonMintingColumns = [...getCommonColumns(nonMintingColumnHelper)]
