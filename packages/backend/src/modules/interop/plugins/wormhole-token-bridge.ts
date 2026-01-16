@@ -1,4 +1,4 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
@@ -26,7 +26,7 @@ export const TransferRedeemed = createInteropEventType<{
   sequence: bigint
   $srcChain: string
   srcWormholeChainId: number
-  sender: string
+  sender: EthereumAddress
   srcTokenAddress?: Address32 | undefined
   srcAmount?: bigint | undefined
 }>('wormhole.LogTransferRedeemed')
@@ -48,6 +48,8 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     )
     const transfer = nextLog && parseTransfer(nextLog, null)
 
+    // emitterAddress is bytes32 (Wormhole format), extract last 20 bytes for EthereumAddress
+    const senderAddress = EthereumAddress(`0x${parsed.emitterAddress.slice(-40)}`)
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
@@ -59,7 +61,7 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
         srcTokenAddress: nextLog && Address32.from(nextLog.address),
         srcAmount: transfer?.value,
         srcWormholeChainId: parsed.emitterChainId,
-        sender: parsed.emitterAddress,
+        sender: senderAddress,
       }),
     ]
   }
@@ -70,10 +72,10 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     db: InteropEventDb,
   ): MatchResult | undefined {
     if (TransferRedeemed.checkType(transferRedeemed)) {
-      // TODO: we should match by sequence + emitter/sender address (wormhole proto), not assume there is only one emitter per chain of LogMessagePublished
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: transferRedeemed.args.sequence,
         wormholeChainId: transferRedeemed.args.srcWormholeChainId,
+        sender: transferRedeemed.args.sender,
       })
       if (!logMessagePublished) {
         return

@@ -47,5 +47,6 @@ export class WormholePlugin implements InteropPlugin {
       }),
     ]
   }
-  // no matching because wormhole matches by source emitter address + sequence, of which the destination event depends on the app layer
+  // no matching because wormhole matches by (msg.sender,sequence) (sender=emitter in wormhole core contracts, not to be confused with event emitter),
+  // of which the destination event depends on the app layer
 }

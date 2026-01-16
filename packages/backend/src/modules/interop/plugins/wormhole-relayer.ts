@@ -36,12 +36,15 @@ export const Delivery = createInteropEventType<{
   sequence: bigint
   deliveryVaaHash: `0x${string}`
   $srcChain: string
+  status: number
 }>('wormhole-relayer.Delivery')
 
+/*
 export const SendEvent = createInteropEventType<{
   sequence: string
   $dstChain: string
 }>('wormhole-relayer.SendEvent')
+*/
 
 export class WormholeRelayerPlugin implements InteropPlugin {
   readonly name = 'wormhole-relayer'
@@ -65,6 +68,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
             Number(parsed.sourceChain),
           ),
           sequence: parsed.sequence,
+          status: parsed.status
         }),
       ]
     }
@@ -80,6 +84,14 @@ export class WormholeRelayerPlugin implements InteropPlugin {
   }
 
   matchTypes = [Delivery]
+  /* TODO: we should also match by sender. From Wormhole Relayer contract:
+   *
+     // Revert if the emitter of the VAA is not a Wormhole Relayer contract 
+     bytes32 registeredWormholeRelayer = getRegisteredWormholeRelayerContract(vm.emitterChainId);
+       if (vm.emitterAddress != registeredWormholeRelayer) {
+         revert InvalidEmitter(vm.emitterAddress, registeredWormholeRelayer, vm.emitterChainId);
+       }
+  */
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
       const logMessagePublished = db.find(LogMessagePublished, {
