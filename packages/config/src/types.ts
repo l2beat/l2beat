@@ -295,6 +295,7 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+  customUrl?: string
 }
 
 export interface SourcifyApi {
