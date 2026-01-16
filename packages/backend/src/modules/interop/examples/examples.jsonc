@@ -364,81 +364,109 @@
   "axelar": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      // contractcallwithtoken + express fill via squid
+      // // contractcallwithtoken + express fill via squid
+      // {
+      //   "chain": "base",
+      //   "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x348e2ceff5c772660c292557ee765557b90d317d8cb30393d3a9e1bcea677d74"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x115fd33686a14f7ed42088f1032dffb52e14706f58b460fc9f3ef32026b57aff"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x53dc125b2e3a9e173f229052e59d4fb68c56d72a995c5e6f4dc56b3bef8c6abf"
+      // },
+      // // contractcallwithtoken
+      // {
+      //   "chain": "base",
+      //   "tx": "0xf5aa1b316e29ea7703db8abc97c61401d052ae597560470531148bfac2fd5604"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x4ffd8966901a60321f91bcff3caed4879f5839ed473c1a18df2276fb124d0bb0"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x39c05cfbecd0bbbfdd79ad70c9df270f4ecb48a24081af31e65e09e6c1896cd6"
+      // },
+      // // contractCall (layerzerowrapper)
+      // {
+      //   "chain": "arbitrum",
+      //   "tx": "0xa69efc2230d17f040125f5bec483b2725e81721c93c71a792377b8268c8cc218"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x298c7d3403c91f2d0b1ec2206870b13f3a6932818d2f4322247476872fa0a9bd"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0xee5fda453ba6fefa80deea9fa9781d0784bbb757cee564fe8bb61fcd3c216bbd"
+      // },
+      // // only needed for layerzero
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
+      // }
       {
         "chain": "base",
-        "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
+        "tx": "0xae8537bf04cb3fd4e3d250f00c49a92be59bfd4666567a107bce64dda5204312"
       },
-      {
-        "chain": "ethereum",
-        "tx": "0x348e2ceff5c772660c292557ee765557b90d317d8cb30393d3a9e1bcea677d74"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x115fd33686a14f7ed42088f1032dffb52e14706f58b460fc9f3ef32026b57aff"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x53dc125b2e3a9e173f229052e59d4fb68c56d72a995c5e6f4dc56b3bef8c6abf"
-      },
-      // contractcallwithtoken
-      {
-        "chain": "base",
-        "tx": "0xf5aa1b316e29ea7703db8abc97c61401d052ae597560470531148bfac2fd5604"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x4ffd8966901a60321f91bcff3caed4879f5839ed473c1a18df2276fb124d0bb0"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x39c05cfbecd0bbbfdd79ad70c9df270f4ecb48a24081af31e65e09e6c1896cd6"
-      },
-      // contractCall (layerzerowrapper)
       {
         "chain": "arbitrum",
-        "tx": "0xa69efc2230d17f040125f5bec483b2725e81721c93c71a792377b8268c8cc218"
+        "tx": "0x960eeafed892cf86c3a884c76b484de1f5efc4d209eed5b9afb3302b92d9cf83"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x298c7d3403c91f2d0b1ec2206870b13f3a6932818d2f4322247476872fa0a9bd"
+        "chain": "arbitrum",
+        "tx": "0x264a10a613cf6654b123474306d49219ab8480ba03bd90977d7b59d07791066f"
       },
       {
-        "chain": "ethereum",
-        "tx": "0xee5fda453ba6fefa80deea9fa9781d0784bbb757cee564fe8bb61fcd3c216bbd"
-      },
-      // only needed for layerzero
-      {
-        "chain": "ethereum",
-        "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
+        "chain": "arbitrum",
+        "tx": "0x4c615b0aa7dd70a1be8b315858daf470165d58fdba1d3380ebf8fb03ad40ca55"
       }
     ]
   },
   "axelar-its": {
     "txs": [
+      // {
+      //   "chain": "base",
+      //   "tx": "0x786ab86c88cfe52fc85f27d7a45ef8c3c39068275e4e183351c3956d0bcf259a"
+      // },
+      // {
+      //   "chain": "arbitrum",
+      //   "tx": "0x17403cd45ecdda27e606052ccd4a256637279b27f74dcb39e78c6a3dc5b02482"
+      // },
+      // {
+      //   "chain": "arbitrum",
+      //   "tx": "0x7b77fff01e7714ad807ae22b8c088a697f39feece8fbf0213e0affc50cfb5c5f"
+      // },
+      // {
+      //   "chain": "polygonpos",
+      //   "tx": "0x7292bc3046a32278e2e7b296d279de99e9f3215b0e5bdd39c84003ca136e0848"
+      // },
+      // {
+      //   "chain": "base",
+      //   "tx": "0x87745108f0034595c2c48ddaab752dc866589a8573de1f02e3fd770cbae2db9b"
+      // },
+      // {
+      //   "chain": "base",
+      //   "tx": "0xfd4e5dcf4351d0d98b15eca74fa52792a630d4598f4953aac38efb277d50d8e7"
+      // },
       {
         "chain": "base",
-        "tx": "0x786ab86c88cfe52fc85f27d7a45ef8c3c39068275e4e183351c3956d0bcf259a"
+        "tx": "0xcde0b6b999c119e76db1caa0958e35cee2276b0b4a5a8035f19232b9bcff5e13"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x17403cd45ecdda27e606052ccd4a256637279b27f74dcb39e78c6a3dc5b02482"
+        "tx": "0x87f11f2e569dec1a458d4ccd1eb91102829c975048626b9aaced714f0bf8549b"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x7b77fff01e7714ad807ae22b8c088a697f39feece8fbf0213e0affc50cfb5c5f"
-      },
-      {
-        "chain": "polygonpos",
-        "tx": "0x7292bc3046a32278e2e7b296d279de99e9f3215b0e5bdd39c84003ca136e0848"
-      },
-      {
-        "chain": "base",
-        "tx": "0x87745108f0034595c2c48ddaab752dc866589a8573de1f02e3fd770cbae2db9b"
-      },
-      {
-        "chain": "base",
-        "tx": "0xfd4e5dcf4351d0d98b15eca74fa52792a630d4598f4953aac38efb277d50d8e7"
+        "tx": "0x3ea610acd6fc3422099437b3c6c5d47ccc1c97b7e9c75e0adc9577cda3bebe5c"
       }
     ]
   },

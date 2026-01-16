@@ -170,7 +170,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       })
       if (!contractCall) return
       return [
-        Result.Message('axelar.ContractCallMessage', {
+        Result.Message('axelar.Message', {
           app: 'axelar-its',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,
