@@ -4,6 +4,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
+import { LockMintCard } from './components/table-widgets/LockMintCard'
 import { MobileTopProtocolsWidget } from './components/widgets/protocols/MobileTopProtocolsWidget'
 import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
@@ -33,6 +34,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
               <TopProtocolsByTransfers />
             </div>
             <MobileTopProtocolsWidget />
+            <LockMintCard />
           </div>
         </InteropSelectedChainsProvider>
       </SideNavLayout>
