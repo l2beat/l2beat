@@ -55,7 +55,7 @@ const parsePayloadVerified = createEventParser(
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
-  { axelarChainName: 'axelar', chain: 'axelar' }, // usually ITS, with axelar intermediate hop
+  { axelarChainName: 'axelar', chain: 'unknown' }, // usually ITS, with axelar intermediate hop
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
   { axelarChainName: 'Arbitrum', chain: 'arbitrum' }, // yeah
