@@ -1,14 +1,20 @@
-Generated with discovered.json: 0x099a336d10cd2ac8e2cd0a04bfc110fc763f9a7d
+Generated with discovered.json: 0x0bec62c9704522308fce4ee39340d45b9db21f7b
 
-# Diff at Fri, 16 Jan 2026 12:24:18 GMT:
+# Diff at Fri, 16 Jan 2026 12:52:28 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1748434475
-- current timestamp: 1768566190
+- current timestamp: 1768567884
 
 ## Description
 
-L1StandardBridge and OptimismPortal upgraded to new implementations. A guardian EOA was added. ProxyAdmin role description updated. Conduit Multisig 1 added a new signer (10 → 11 members).
+Project archived. L1StandardBridge upgraded with a custom `withdraw()` function allowing the guardian EOA (`0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE`) to withdraw any tokens from the bridge. OptimismPortal has a similar addition for native ETH.
+
+Conduit Multisig 1 also added a new signer (10 → 11 members).
+
+Diff links:
+- [L1StandardBridge diff](https://disco.l2beat.com/diff/eth:0x4f30C8A322ab6f84F15B8955B58D295E138B14Ca/eth:0x347603566c9f79AC5f28a440B8d6A111A1672FB5)
+- [OptimismPortal diff](https://disco.l2beat.com/diff/eth:0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B/eth:0xB22519CD5e46F5FC8809735F06E256A415777C31)
 
 ## Watched changes
 

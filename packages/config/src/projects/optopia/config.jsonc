@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "optopia",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1"],
   "names": {
