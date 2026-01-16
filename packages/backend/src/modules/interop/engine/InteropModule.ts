@@ -133,7 +133,9 @@ export function createInteropModule({
     logger,
   )
 
-  let interopTransferAggregatingIndexer: InteropTransferAggregatingIndexer | undefined
+  let interopTransferAggregatingIndexer:
+    | InteropTransferAggregatingIndexer
+    | undefined
   if (config.interop.aggregation) {
     interopTransferAggregatingIndexer = new InteropTransferAggregatingIndexer({
       db,
