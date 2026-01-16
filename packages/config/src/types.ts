@@ -295,6 +295,7 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+  customUrl?: string
 }
 
 export interface SourcifyApi {
@@ -1241,22 +1242,26 @@ export interface InteropConfig {
   plugins: InteropPlugin[]
 }
 
-type InteropPlugin = ByChainPlugin | ByTokenIdPlugin | PlainPlugin
+export type InteropPlugin =
+  | InteropByChainPlugin
+  | InteropByTokenIdPlugin
+  | InteropPlainPlugin
 
-type ByChainPlugin = {
+export type InteropByChainPlugin = {
   filterBy: 'chain'
   chain: string
   plugin: InteropPluginName
 }
 
-type ByTokenIdPlugin = {
+export type InteropByTokenIdPlugin = {
   filterBy: 'abstractTokenId'
   abstractTokenId: string
   plugin: InteropPluginName
 }
 
-type PlainPlugin = {
+export type InteropPlainPlugin = {
   plugin: InteropPluginName
+  filterBy?: undefined
 }
 // #endregion
 

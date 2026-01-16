@@ -107,14 +107,18 @@ export class AbstractTokenRepository extends BaseRepository {
     return result ? toRecord(result) : undefined
   }
 
-  async getByIds(ids: string[]): Promise<AbstractTokenRecord[]> {
+  async getByIds(
+    ids: string[],
+  ): Promise<Pick<AbstractTokenRecord, 'id' | 'symbol' | 'iconUrl'>[]> {
+    if (ids.length === 0) return []
+
     const result = await this.db
       .selectFrom('AbstractToken')
-      .selectAll()
+      .select(['id', 'symbol', 'iconUrl'])
       .where('id', 'in', ids)
       .execute()
 
-    return result.map(toRecord)
+    return result
   }
 
   async getAll(): Promise<AbstractTokenRecord[]> {

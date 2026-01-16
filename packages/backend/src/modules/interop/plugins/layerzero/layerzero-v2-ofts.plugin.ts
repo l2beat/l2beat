@@ -125,7 +125,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           amountSentLD: normalized.amountSentLD,
           amountReceivedLD: normalized.amountReceivedLD,
           oappAddress: Address32.from(input.log.address),
-          srcTokenAddress: matchingTransferData?.parsed,
+          srcTokenAddress: matchingTransferData,
           srcAmount: normalized.amountSentLD,
         }),
       ]
@@ -174,7 +174,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: matchingTransferData?.parsed,
+              dstTokenAddress: matchingTransferData,
               dstAmount: oftReceived.amountReceivedLD,
             }),
           ]
