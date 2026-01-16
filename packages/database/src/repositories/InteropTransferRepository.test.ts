@@ -47,13 +47,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         plugin: 'test-plugin',
         transferId: 'test-transfer',
         type: 'deposit',
-        duration: undefined,
+        duration: 0,
         timestamp: UnixTime(100),
-        srcTime: undefined,
-        srcChain: undefined,
-        srcTxHash: undefined,
-        srcLogIndex: undefined,
-        srcEventId: undefined,
+        srcTime: UnixTime(100),
+        srcChain: 'ethereum',
+        srcTxHash: '0x123',
+        srcLogIndex: 1,
+        srcEventId: 'event1',
         srcTokenAddress: undefined,
         srcRawAmount: undefined,
         srcWasBurned: undefined,
@@ -62,11 +62,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         srcAmount: undefined,
         srcPrice: undefined,
         srcValueUsd: undefined,
-        dstTime: undefined,
-        dstChain: undefined,
-        dstTxHash: undefined,
-        dstLogIndex: undefined,
-        dstEventId: undefined,
+        dstTime: UnixTime(100),
+        dstChain: 'arbitrum',
+        dstTxHash: '0x456',
+        dstLogIndex: 2,
+        dstEventId: 'event2',
         dstTokenAddress: undefined,
         dstRawAmount: undefined,
         dstWasMinted: undefined,
@@ -472,17 +472,15 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     it('handles non-existent transfer ID gracefully', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
       await repository.insertMany([record])
-
       const update = {
-        srcPrice: 2000.0,
+        srcPrice: 3000.0,
       }
 
       await repository.updateFinancials('nonexistent-msg', update)
-
       const result = await repository.getAll()
       expect(result).toHaveLength(1)
       expect(result[0]?.isProcessed).toEqual(false)
-      expect(result[0]?.srcPrice).not.toEqual(2000.0)
+      expect(result[0]?.srcPrice).not.toEqual(3000.0)
     })
 
     it('updates with empty update object', async () => {
@@ -532,6 +530,49 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(InteropTransferRepository.prototype.getByRange.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+        transfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
+        transfer('plugin2', 'msg3', 'withdraw', UnixTime(300)),
+        transfer('plugin2', 'msg4', 'deposit', UnixTime(400)),
+        transfer('plugin1', 'msg5', 'withdraw', UnixTime(500)),
+      ])
+    })
+
+    it('returns transfers within the specified range', async () => {
+      const result = await repository.getByRange(UnixTime(200), UnixTime(400))
+
+      expect(result).toHaveLength(2)
+      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg3', 'msg4'])
+    })
+
+    it('includes upper boundary but excludes lower boundary', async () => {
+      const result = await repository.getByRange(UnixTime(100), UnixTime(500))
+
+      expect(result).toHaveLength(4)
+      expect(result.map((r) => r.transferId)).toEqualUnsorted([
+        'msg2',
+        'msg3',
+        'msg4',
+        'msg5',
+      ])
+    })
+
+    it('returns empty array when no transfers in range', async () => {
+      const result = await repository.getByRange(UnixTime(600), UnixTime(700))
+
+      expect(result).toEqual([])
+    })
+
+    it('does not return transfer when range matches exactly', async () => {
+      const result = await repository.getByRange(UnixTime(300), UnixTime(300))
+
+      expect(result).toEqual([])
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
@@ -550,34 +591,34 @@ function transfer(
     plugin,
     transferId,
     type,
-    duration,
+    duration: duration ?? 0,
     timestamp,
-    srcTime: srcChain ? timestamp : undefined,
-    srcChain,
-    srcTxHash: srcChain ? `0x${transferId}src` : undefined,
-    srcLogIndex: srcChain ? 1 : undefined,
-    srcEventId: srcChain ? `${transferId}-src-event` : undefined,
-    srcTokenAddress: srcChain ? EthereumAddress.random() : undefined,
-    srcRawAmount: srcChain ? 1000000000000000000n : undefined,
+    srcTime: timestamp,
+    srcChain: srcChain ?? 'ethereum',
+    srcTxHash: `0x${transferId}src`,
+    srcLogIndex: 1,
+    srcEventId: `${transferId}-src-event`,
+    srcTokenAddress: EthereumAddress.random(),
+    srcRawAmount: 1000000000000000000n,
     srcWasBurned: false,
-    srcSymbol: srcChain ? 'ETH' : undefined,
-    srcAbstractTokenId: srcChain ? 'ethereum' : undefined,
-    srcAmount: srcChain ? 1.0 : undefined,
-    srcPrice: srcChain ? 2000.0 : undefined,
-    srcValueUsd: srcChain ? 2000.0 : undefined,
-    dstTime: dstChain ? timestamp + (duration ?? 0) : undefined,
-    dstChain,
-    dstTxHash: dstChain ? `0x${transferId}dst` : undefined,
-    dstLogIndex: dstChain ? 2 : undefined,
-    dstEventId: dstChain ? `${transferId}-dst-event` : undefined,
-    dstTokenAddress: dstChain ? EthereumAddress.random() : undefined,
-    dstRawAmount: dstChain ? 1000000000000000000n : undefined,
+    srcSymbol: 'ETH',
+    srcAbstractTokenId: 'ethereum',
+    srcAmount: 1.0,
+    srcPrice: 2000.0,
+    srcValueUsd: 2000.0,
+    dstTime: timestamp + (duration ?? 0),
+    dstChain: dstChain ?? 'arbitrum',
+    dstTxHash: `0x${transferId}dst`,
+    dstLogIndex: 2,
+    dstEventId: `${transferId}-dst-event`,
+    dstTokenAddress: EthereumAddress.random(),
+    dstRawAmount: 1000000000000000000n,
     dstWasMinted: false,
-    dstSymbol: dstChain ? 'ETH' : undefined,
-    dstAbstractTokenId: dstChain ? 'ethereum' : undefined,
-    dstAmount: dstChain ? 1.0 : undefined,
-    dstPrice: dstChain ? 2000.0 : undefined,
-    dstValueUsd: dstChain ? 2000.0 : undefined,
+    dstSymbol: 'ETH',
+    dstAbstractTokenId: 'ethereum',
+    dstAmount: 1.0,
+    dstPrice: 2000.0,
+    dstValueUsd: 2000.0,
     isProcessed: false,
   }
 }
