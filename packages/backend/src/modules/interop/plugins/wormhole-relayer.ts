@@ -36,7 +36,7 @@ export const Delivery = createInteropEventType<{
   sequence: bigint
   deliveryVaaHash: `0x${string}`
   $srcChain: string
-  status: number
+  status: number // 0: SUCCESS, 1: RECEIVER_FAILURE 
 }>('wormhole-relayer.Delivery')
 
 /*
