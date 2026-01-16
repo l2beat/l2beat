@@ -340,7 +340,10 @@ export class CCIPPlugIn implements InteropPluginResyncable {
       })
 
       if (ccipSendRequests.length === 0) return
-      if (delivery.args.state !== 2) return // Only match successful executions
+      if (delivery.args.state !== 2) {
+        // Only match successful executions
+        return [Result.Ignore([delivery])]
+      }
 
       const result: MatchResult = []
       const dstTokens = delivery.args.dstTokens ?? []
