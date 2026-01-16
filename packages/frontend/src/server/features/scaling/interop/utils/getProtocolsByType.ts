@@ -20,6 +20,7 @@ export type ProtocolsByType = {
     protocolName: string
     volume: number
     tokens: TokenData[]
+    averageDuration: number
   }[]
   omniChain: {
     iconSlug: string
@@ -37,6 +38,7 @@ export function getProtocolsByType(
     srcValueUsd: number | null
     dstValueUsd: number | null
     transferCount: number
+    totalDurationSum: number
     tokensByVolume: Record<string, number>
   }[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
@@ -44,13 +46,20 @@ export function getProtocolsByType(
 ): ProtocolsByType {
   const protocolsDataMap = new Map<
     string,
-    { volume: number; tokens: Map<string, number> }
+    {
+      volume: number
+      tokens: Map<string, number>
+      transferCount: number
+      totalDurationSum: number
+    }
   >()
 
   for (const record of records) {
     const current = protocolsDataMap.get(record.id) ?? {
       volume: 0,
       tokens: new Map<string, number>(),
+      transferCount: 0,
+      totalDurationSum: 0,
     }
 
     for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
@@ -60,6 +69,9 @@ export function getProtocolsByType(
     protocolsDataMap.set(record.id, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: current.tokens,
+      transferCount: current.transferCount + (record.transferCount ?? 0),
+      totalDurationSum:
+        current.totalDurationSum + (record.totalDurationSum ?? 0),
     })
   }
 
@@ -109,13 +121,16 @@ export function getProtocolsByType(
         volume,
       }
     }),
-    lockMint: mintLockData.map(([key, { volume, tokens }]) => {
-      return {
-        ...getProjectCommon(key),
-        volume,
-        tokens: getTokensData(tokens),
-      }
-    }),
+    lockMint: mintLockData.map(
+      ([key, { volume, tokens, transferCount, totalDurationSum }]) => {
+        return {
+          ...getProjectCommon(key),
+          volume,
+          tokens: getTokensData(tokens),
+          averageDuration: Math.floor(totalDurationSum / transferCount),
+        }
+      },
+    ),
     omniChain: omniChainData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
