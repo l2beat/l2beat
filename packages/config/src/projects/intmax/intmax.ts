@@ -39,7 +39,10 @@ export const intmax: ScalingProject = {
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
       ],
       repositories: ['https://github.com/InternetMaximalism'],
-      socialMedia: ['https://twitter.com/intmaxIO'],
+      socialMedia: [
+        'https://twitter.com/intmaxIO',
+        'https://discord.com/invite/TGMctchPR6',
+      ],
       bridges: ['https://app.intmax.io/bridge'],
     },
   },
