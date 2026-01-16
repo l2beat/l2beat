@@ -84,19 +84,33 @@ export class WormholeRelayerPlugin implements InteropPlugin {
   }
 
   matchTypes = [Delivery]
-  /* TODO: we should also match by sender. From Wormhole Relayer contract:
+
+  /* We match by sender (relayer address) in addition to sequence + chain.
+   * From Wormhole Relayer contract:
    *
-     // Revert if the emitter of the VAA is not a Wormhole Relayer contract 
-     bytes32 registeredWormholeRelayer = getRegisteredWormholeRelayerContract(vm.emitterChainId);
-       if (vm.emitterAddress != registeredWormholeRelayer) {
-         revert InvalidEmitter(vm.emitterAddress, registeredWormholeRelayer, vm.emitterChainId);
-       }
-  */
+   *   // Revert if the emitter of the VAA is not a Wormhole Relayer contract
+   *   bytes32 registeredWormholeRelayer = getRegisteredWormholeRelayerContract(vm.emitterChainId);
+   *   if (vm.emitterAddress != registeredWormholeRelayer) {
+   *     revert InvalidEmitter(vm.emitterAddress, registeredWormholeRelayer, vm.emitterChainId);
+   *   }
+   *
+   * Otherwise we risk matching with improper sender with same chain+sequence.
+   */
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
+      const wormholeNetworks = this.configs.get(WormholeConfig)
+      if (!wormholeNetworks) return
+
+      // Find the relayer address for the source chain
+      const srcNetwork = wormholeNetworks.find(
+        (n) => n.wormholeChainId === delivery.args.sourceChain,
+      )
+      if (!srcNetwork?.relayer) return
+
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: delivery.args.sequence,
         wormholeChainId: delivery.args.sourceChain,
+        sender: srcNetwork.relayer,
       })
       if (!logMessagePublished) {
         return

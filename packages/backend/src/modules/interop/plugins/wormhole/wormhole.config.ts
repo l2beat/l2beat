@@ -21,6 +21,7 @@ export interface WormholeNetwork {
   chainId?: number
   wormholeChainId: number
   coreContract?: EthereumAddress
+  relayer?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -84,11 +85,12 @@ export class WormholeConfigPlugin
     const html = await response.text()
     const $ = cheerio.load(html)
 
-    const mainnetTable = $('.tabbed-block').first().find('table').first()
+    // Parse Core Contracts (first tabbed-block, first table = mainnet)
+    const coreContractsTable = $('.tabbed-block').first().find('table').first()
 
     const evmContracts: EthereumAddress[] = []
 
-    mainnetTable.find('tbody tr').each((_, row) => {
+    coreContractsTable.find('tbody tr').each((_, row) => {
       const cells = $(row).find('td')
       if (cells.length === 2) {
         const chain = $(cells[0]).text().trim()
@@ -101,6 +103,28 @@ export class WormholeConfigPlugin
           address.length === 42
         ) {
           evmContracts.push(EthereumAddress(address))
+        }
+      }
+    })
+
+    // Parse Wormhole Relayer addresses (third tabbed-block, first table = mainnet)
+    // Page structure: 1. Core Contracts, 2. Wrapped Token Transfers, 3. Wormhole Relayer
+    const relayerTable = $('.tabbed-block').eq(2).find('table').first()
+    const relayerByChain = new Map<string, EthereumAddress>()
+
+    relayerTable.find('tbody tr').each((_, row) => {
+      const cells = $(row).find('td')
+      if (cells.length === 2) {
+        const chain = $(cells[0]).text().trim().toLowerCase()
+        const address = $(cells[1]).find('code').text().trim()
+
+        if (
+          chain &&
+          address &&
+          address.startsWith('0x') &&
+          address.length === 42
+        ) {
+          relayerByChain.set(chain, EthereumAddress(address))
         }
       }
     })
@@ -140,6 +164,7 @@ export class WormholeConfigPlugin
                 chainId: chain.id,
                 wormholeChainId: Number(decoded),
                 coreContract: evmContracts[i],
+                relayer: relayerByChain.get(chain.name.toLowerCase()),
               }
             }
           } catch {
