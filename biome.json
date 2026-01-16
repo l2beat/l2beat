@@ -25,7 +25,13 @@
     "defaultBranch": "main",
     "useIgnoreFile": true
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -102,8 +108,14 @@
           "level": "error",
           "fix": "safe",
           "options": {
-            "attributes": ["className", "classname"],
-            "functions": ["cn", "cva"]
+            "attributes": [
+              "className",
+              "classname"
+            ],
+            "functions": [
+              "cn",
+              "cva"
+            ]
           }
         }
       },
@@ -125,7 +137,10 @@
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
-        "noFocusedTests": "error",
+        "noFocusedTests": {
+          "fix": "none",
+          "level": "error"
+        },
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",
@@ -159,16 +174,29 @@
   },
   "overrides": [
     {
-      "includes": ["**/test/**/*.ts", "**/*.test.ts"],
+      "includes": [
+        "**/test/**/*.ts",
+        "**/*.test.ts"
+      ],
       "linter": {
         "rules": {
-          "style": { "noNonNullAssertion": "off" },
-          "suspicious": { "noExplicitAny": "off", "useAwait": "off" }
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off",
+            "useAwait": "off"
+          }
         }
       }
     },
     {
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+      "includes": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts"
+      ],
       "linter": {
         "rules": {
           "correctness": {

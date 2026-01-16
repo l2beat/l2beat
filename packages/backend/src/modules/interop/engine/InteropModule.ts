@@ -7,6 +7,7 @@ import type { ApplicationModule, ModuleDependencies } from '../../types'
 import { createInteropPlugins } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
+import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -132,6 +133,18 @@ export function createInteropModule({
     logger,
   )
 
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
+  if (config.interop.aggregation) {
+    interopAggregatingIndexer = new InteropAggregatingIndexer({
+      db,
+      configs: config.interop.aggregation.configs,
+      logger,
+      indexerService,
+      parents: [hourlyIndexer],
+      minHeight: 1,
+    })
+  }
+
   const start = async () => {
     logger = logger.for('InteropModule')
     logger.info('Starting')
@@ -151,8 +164,11 @@ export function createInteropModule({
     if (config.interop && config.interop.cleaner) {
       cleaner.start()
     }
+    await hourlyIndexer.start()
+    if (config.interop && config.interop.aggregation) {
+      await interopAggregatingIndexer?.start()
+    }
     if (config.interop && config.interop.financials.enabled) {
-      await hourlyIndexer.start()
       await recentPricesIndexer.start()
       financialsService.start()
     }
