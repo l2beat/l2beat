@@ -20,7 +20,7 @@ export const spheron: ScalingProject = upcomingL3({
       repositories: ['https://github.com/spheronFdn'],
       bridges: ['https://spheron-devnet-eth.bridge.caldera.xyz'],
       socialMedia: [
-        'https://x.com/SpheronFDN',
+        'https://x.com/spheron',
         'https://t.me/Spheron',
         'https://youtube.com/@spheronfdn',
         'https://www.instagram.com/spheronhq',
