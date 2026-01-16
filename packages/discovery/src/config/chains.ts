@@ -11,7 +11,12 @@ interface ChainConfig {
   shortName: string
   explorer:
     | {
-        type: 'etherscan' | 'blockscout' | 'routescan'
+        type: 'etherscan'
+        customUrl?: string
+        unsupported?: EtherscanUnsupportedMethods
+      }
+    | {
+        type: 'blockscout' | 'routescan'
         url: string
         unsupported?: EtherscanUnsupportedMethods
       }
@@ -31,7 +36,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(14353601),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.etherscan.io/api',
     },
     coingeckoPlatform: 'ethereum',
   },
@@ -42,7 +46,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(7654707),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.arbiscan.io/api',
     },
     coingeckoPlatform: 'arbitrum-one',
   },
@@ -53,7 +56,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(1746963),
     explorer: {
       type: 'etherscan',
-      url: 'https://api-nova.arbiscan.io/api',
     },
     coingeckoPlatform: 'arbitrum-nova',
   },
@@ -64,7 +66,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(4286263),
     explorer: {
       type: 'etherscan',
-      url: 'https://api-optimistic.etherscan.io/api',
     },
     coingeckoPlatform: 'optimistic-ethereum',
   },
@@ -75,7 +76,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(25770160),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.polygonscan.com/api',
     },
   },
   {
@@ -85,7 +85,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(15921452),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.bscscan.com/api',
     },
   },
   {
@@ -95,7 +94,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(11907934),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.snowtrace.io/api',
     },
   },
   {
@@ -105,10 +103,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(13112599),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.celoscan.io/api',
-      unsupported: {
-        getContractCreation: true,
-      },
     },
     coingeckoPlatform: 'celo',
   },
@@ -119,7 +113,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(42),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.lineascan.build/api',
     },
     coingeckoPlatform: 'linea',
   },
@@ -130,7 +123,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(5022),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.basescan.org/api',
     },
     coingeckoPlatform: 'base',
   },
@@ -141,7 +133,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(57746),
     explorer: {
       type: 'etherscan',
-      url: 'https://api-zkevm.polygonscan.com/api',
     },
   },
   {
@@ -151,7 +142,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(21022491),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.gnosisscan.io/api',
     },
   },
   {
@@ -164,7 +154,7 @@ export const chains: ChainConfig[] = [
     ),
     explorer: {
       type: 'etherscan',
-      url: 'https://block-explorer-api.mainnet.zksync.io/api',
+      customUrl: 'https://block-explorer-api.mainnet.zksync.io/api',
     },
     coingeckoPlatform: 'zksync',
   },
@@ -175,7 +165,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(751532),
     explorer: {
       type: 'etherscan',
-      url: 'https://api-sepolia.etherscan.io/api',
     },
   },
   {
@@ -185,7 +174,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(14),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.scrollscan.com/api',
     },
     coingeckoPlatform: 'scroll',
   },
@@ -262,7 +250,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(88189),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.blastscan.io/api',
     },
     coingeckoPlatform: 'blast',
   },
@@ -286,7 +273,6 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(8000000),
     explorer: {
       type: 'etherscan',
-      url: 'https://api.uniscan.xyz/api',
     },
     coingeckoPlatform: 'unichain',
   },
@@ -363,7 +349,6 @@ export const chains: ChainConfig[] = [
     multicall: undefined,
     explorer: {
       type: 'etherscan',
-      url: 'https://api.taikoscan.io/api',
     },
   },
   {
