@@ -86,7 +86,7 @@ export function ConfigRow({
   headline,
   children,
 }: {
-  headline: string
+  headline: React.ReactNode
   children: React.ReactNode
 }) {
   return (

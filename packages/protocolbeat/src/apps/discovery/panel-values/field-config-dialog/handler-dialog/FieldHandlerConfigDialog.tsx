@@ -4,6 +4,7 @@ import type { ApiHandlersResponse } from '../../../../../api/types'
 import { Button } from '../../../../../components/Button'
 import { Dialog } from '../../../../../components/Dialog'
 import { Kbd } from '../../../../../components/Kbd'
+import { LoadingState } from '../../../../../components/LoadingState'
 import { IconEdit } from '../../../../../icons/IconEdit'
 import { IconTriangleAlert } from '../../../../../icons/IconTriangleAlert'
 import { useAvailableHandlers } from '../../../hooks/useAvailableHandlers'
@@ -20,7 +21,8 @@ type Props = {
 export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
   const models = useConfigModels()
   const { ctrlKey } = useIsomorphicKeys()
-  const { handlers, parseRaw, detectHandler } = useAvailableHandlers()
+  const { handlers, parseRaw, detectHandler, isPending } =
+    useAvailableHandlers()
 
   const model = context === 'config' ? models.configModel : models.templateModel
 
@@ -115,50 +117,56 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
         className="flex h-[85vh] max-w-full flex-col"
       >
         <Dialog.Title>Handler editor</Dialog.Title>
-        <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
-          <div className="col-span-3 flex min-h-0 w-full flex-col gap-2 border-coffee-400 border-r pr-2">
-            <div className="flex min-h-0 flex-1 flex-col border border-coffee-400 bg-coffee-900 p-4 pl-0">
-              <HandlerEditor
-                context={context}
-                editorKey={editorKey}
-                fieldName={fieldName}
-                contents={handlerEditorContent}
+        {isPending ? (
+          <div className="flex flex-1 items-center justify-center">
+            <LoadingState />
+          </div>
+        ) : (
+          <div className="grid min-h-0 flex-1 grid-cols-5 gap-2">
+            <div className="col-span-3 flex min-h-0 w-full flex-col gap-2 border-coffee-400 border-r pr-2">
+              <div className="flex min-h-0 flex-1 flex-col border border-coffee-400 bg-coffee-900 p-4 pl-0">
+                <HandlerEditor
+                  context={context}
+                  editorKey={editorKey}
+                  fieldName={fieldName}
+                  contents={handlerEditorContent}
+                  selectedHandler={selectedHandler}
+                  onSave={onSave}
+                  onChange={onChange}
+                />
+              </div>
+              <div className="flex items-start justify-end gap-2">
+                {errorMessage && (
+                  <div className="flex h-full w-full items-center gap-1 border border-aux-red/20 bg-aux-red/10 p-1 text-2xs">
+                    <IconTriangleAlert className="size-4 text-aux-red" />
+                    {errorMessage}
+                  </div>
+                )}
+                <Dialog.Close asChild>
+                  <Button variant="destructive" className="rounded-sm">
+                    Discard
+                  </Button>
+                </Dialog.Close>
+                <Button
+                  onClick={() => onSave(handlerEditorContent)}
+                  disabled={!isDirty}
+                  className="rounded-sm"
+                >
+                  <div className="flex items-center justify-center gap-1">
+                    Save <Kbd keys={[[ctrlKey, 'S']]} size="sm" />
+                  </div>
+                </Button>
+              </div>
+            </div>
+            <div className="col-span-2 flex h-full min-h-0 w-full">
+              <HandlerSelector
+                handlers={handlers}
                 selectedHandler={selectedHandler}
-                onSave={onSave}
-                onChange={onChange}
+                onSelectedHandlerChange={onSelectedHandlerChange}
               />
             </div>
-            <div className="flex items-start justify-end gap-2">
-              {errorMessage && (
-                <div className="flex h-full w-full items-center gap-1 border border-aux-red/20 bg-aux-red/10 p-1 text-2xs">
-                  <IconTriangleAlert className="size-4 text-aux-red" />
-                  {errorMessage}
-                </div>
-              )}
-              <Dialog.Close asChild>
-                <Button variant="destructive" className="rounded-sm">
-                  Discard
-                </Button>
-              </Dialog.Close>
-              <Button
-                onClick={() => onSave(handlerEditorContent)}
-                disabled={!isDirty}
-                className="rounded-sm"
-              >
-                <div className="flex items-center justify-center gap-1">
-                  Save <Kbd keys={[[ctrlKey, 'S']]} size="sm" />
-                </div>
-              </Button>
-            </div>
           </div>
-          <div className="col-span-2 flex h-full min-h-0 w-full">
-            <HandlerSelector
-              handlers={handlers}
-              selectedHandler={selectedHandler}
-              onSelectedHandlerChange={onSelectedHandlerChange}
-            />
-          </div>
-        </div>
+        )}
       </Dialog.Body>
     </Dialog.Root>
   )

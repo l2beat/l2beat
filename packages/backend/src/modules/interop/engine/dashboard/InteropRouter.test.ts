@@ -9,6 +9,7 @@ import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { createInteropRouter } from './InteropRouter'
 
 const config: InteropFeatureConfig = {
+  aggregation: false,
   capture: { enabled: false, chains: [] },
   matching: false,
   cleaner: false,

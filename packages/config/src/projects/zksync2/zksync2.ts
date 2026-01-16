@@ -70,7 +70,11 @@ export const zksync2: ScalingProject = zkStackL2({
         url: 'https://mainnet.era.zksync.io',
         callsPerMinute: 300,
       },
-      { type: 'etherscan', chainId },
+      {
+        type: 'etherscan',
+        chainId,
+        customUrl: 'https://block-explorer-api.mainnet.zksync.io/api',
+      },
     ],
   },
   associatedTokens: ['ZK'],
