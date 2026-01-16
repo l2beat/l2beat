@@ -21,7 +21,7 @@ export function TopTokensCell({ tokens }: { tokens: TokenData[] }) {
   const restTokens = tokens.slice(5)
 
   return (
-    <div className="flex gap-1.5">
+    <div className="grid grid-cols-[76px_60px] gap-1.5">
       <div className="-space-x-1.5 flex items-center">
         {topTokens.map((token, i) => (
           <TokenIconWithTooltip key={token.id} token={token} index={i} />
