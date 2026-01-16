@@ -52,7 +52,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   soneium: 'soneium',
   wc: 'worldchain',
   'hype-evm': 'hyperevm',
-  megaeth: 'megaeth'
+  megaeth: 'megaeth',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
