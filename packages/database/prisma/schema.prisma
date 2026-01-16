@@ -376,7 +376,7 @@ model InteropMessage {
 
 model InteropTransfer {
   plugin     String   @db.VarChar(64)
-  transferId String   @id @db.VarChar(40)
+  transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
   timestamp  DateTime @db.Timestamp(6)
 
@@ -414,6 +414,7 @@ model InteropTransfer {
 
   isProcessed Boolean
 
+  @@id([transferId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
@@ -547,6 +548,5 @@ model AggregatedInteropTransfer {
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
 
-  @@id([timestamp, id, srcChain, dstChain])
-  @@index([timestamp, srcChain, dstChain])
+  @@id([timestamp, srcChain, dstChain, id])
 }
