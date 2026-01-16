@@ -110,6 +110,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     srcChains: string[],
     dstChains: string[],
   ): Promise<AggregatedInteropTransferRecord[]> {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return []
+    }
+
     const latestTimestampSubquery = this.db
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))

@@ -620,6 +620,45 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         // Latest timestamp is 500, but no ethereum->arbitrum records have that timestamp
         expect(result).toEqual([])
       })
+
+      it('returns empty array when srcChains is empty', async () => {
+        await repository.insertMany([
+          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
+          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
+        ])
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          [],
+          ['arbitrum'],
+        )
+
+        expect(result).toEqual([])
+      })
+
+      it('returns empty array when dstChains is empty', async () => {
+        await repository.insertMany([
+          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
+          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
+        ])
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          ['ethereum'],
+          [],
+        )
+
+        expect(result).toEqual([])
+      })
+
+      it('returns empty array when both srcChains and dstChains are empty', async () => {
+        await repository.insertMany([
+          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
+          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
+        ])
+
+        const result = await repository.getByChainsAndLatestTimestamp([], [])
+
+        expect(result).toEqual([])
+      })
     },
   )
 })
