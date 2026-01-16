@@ -31,6 +31,11 @@ export const memo: BaseProject = {
       socialMedia: [
         'https://x.com/MemoLabsOrg',
         'https://discord.com/invite/YG4Ydv2E7X',
+        'https://t.me/memolabsio',
+        'https://memolabs.medium.com/',
+        'https://www.facebook.com/memolabs.org/',
+        'https://www.reddit.com/user/memolabs/',
+        'https://www.youtube.com/channel/UCv596bF_KxcoxAKp0AOhkLA',
       ],
     },
     badges: [],
