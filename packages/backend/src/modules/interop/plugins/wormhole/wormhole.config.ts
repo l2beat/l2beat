@@ -107,25 +107,30 @@ export class WormholeConfigPlugin
       }
     })
 
-    // Parse Wormhole Relayer addresses (third tabbed-block, first table = mainnet)
-    // Page structure: 1. Core Contracts, 2. Wrapped Token Transfers, 3. Wormhole Relayer
-    const relayerTable = $('.tabbed-block').eq(2).find('table').first()
+    // Parse Wormhole Relayer addresses by finding the h2 header and the table after it
     const relayerByChain = new Map<string, EthereumAddress>()
 
-    relayerTable.find('tbody tr').each((_, row) => {
-      const cells = $(row).find('td')
-      if (cells.length === 2) {
-        const chain = $(cells[0]).text().trim().toLowerCase()
-        const address = $(cells[1]).find('code').text().trim()
+    // Find the h2 containing "Wormhole Relayer" and get the first table after it
+    $('h2').each((_, h2) => {
+      if ($(h2).text().includes('Wormhole Relayer')) {
+        // Find the next table after this h2 (first table = mainnet)
+        const relayerTable = $(h2).nextAll('div').find('table').first()
+        relayerTable.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
 
-        if (
-          chain &&
-          address &&
-          address.startsWith('0x') &&
-          address.length === 42
-        ) {
-          relayerByChain.set(chain, EthereumAddress(address))
-        }
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              relayerByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
       }
     })
 

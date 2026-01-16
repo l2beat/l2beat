@@ -1642,11 +1642,11 @@
     "txs": [
       {
         "chain": "ethereum",
-        "tx": "0xd31a3dd306fddab83fa9b7936158f281bddc5d19da755e1b095abab2eb175523"
+        "tx": "0x31501df432f135cbd87f1614df5d1259db0969aec2b8664c8a25ca1c6744211d"
       },
       {
         "chain": "base",
-        "tx": "0xc445f637a2bb6ca2174c25cd8a7ea1754cde05cb5f9cf48c16107e29d669f440"
+        "tx": "0x2f6c995f2d834d8792108d93f7f55749dc04d58eab0915c35ec1d1066728e6ee"
       }
     ]
   },
