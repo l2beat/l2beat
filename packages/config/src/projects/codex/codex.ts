@@ -21,6 +21,7 @@ export const codex: ScalingProject = underReviewL2({
       socialMedia: [
         'https://x.com/codex_pbc',
         'https://linkedin.com/company/codex-pbc',
+        'https://guild.xyz/codex-community-guild',
       ],
     },
   },
