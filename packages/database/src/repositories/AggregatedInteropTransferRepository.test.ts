@@ -493,6 +493,6 @@ function record(
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
-    tokensByVolume,
+    tokensByVolume: tokensByVolume ?? { eth: 1000 },
   }
 }
