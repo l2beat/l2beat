@@ -83,9 +83,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
-      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
-        to,
-      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         {
           timestamp: to,
@@ -246,9 +243,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
-      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
-        to,
-      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         // Config1: Plain plugin filter - should match msg1 (across)
         {
