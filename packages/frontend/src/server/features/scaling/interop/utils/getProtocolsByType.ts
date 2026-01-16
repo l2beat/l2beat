@@ -3,6 +3,11 @@ import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 
 export type ProtocolsByType = {
+  nonMinting: {
+    iconSlug: string
+    protocolName: string
+    volume: number
+  }[]
   lockMint: {
     iconSlug: string
     protocolName: string
@@ -41,6 +46,9 @@ export function getProtocolsByType(
     (p) => p.interopConfig.bridgeType,
   )
 
+  const nonMintingData = Array.from(map.entries()).filter(([key]) =>
+    groupedProtocols.nonMinting?.some((p) => p.id === key),
+  )
   const mintLockData = Array.from(map.entries()).filter(([key]) =>
     groupedProtocols.canonical?.some((p) => p.id === key),
   )
@@ -49,6 +57,15 @@ export function getProtocolsByType(
   )
 
   return {
+    nonMinting: nonMintingData.map(([key, value]) => {
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+      return {
+        protocolName: project?.interopConfig.name ?? project.name,
+        iconSlug: project?.slug,
+        volume: value,
+      }
+    }),
     lockMint: mintLockData.map(([key, value]) => {
       const project = interopProjects.find((p) => p.id === key)
       assert(project, `Project not found: ${key}`)

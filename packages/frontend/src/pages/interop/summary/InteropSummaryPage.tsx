@@ -5,6 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
 import { LockMintCard } from './components/table-widgets/LockMintCard'
+import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
 import { MobileTopProtocolsWidget } from './components/widgets/protocols/MobileTopProtocolsWidget'
 import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
@@ -35,6 +36,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
               <TopProtocolsByTransfers />
             </div>
             <MobileTopProtocolsWidget />
+            <NonMintingCard />
             <LockMintCard />
             <OmniChainCard />
           </div>

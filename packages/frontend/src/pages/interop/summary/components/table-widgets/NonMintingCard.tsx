@@ -1,9 +1,9 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { OmniChainTable } from './tables/OmniChainTable'
+import { NonMintingTable } from './tables/NonMintingTable'
 
-export function OmniChainCard() {
+export function NonMintingCard() {
   const { selectedChains } = useInteropSelectedChains()
   const { data } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
@@ -11,13 +11,13 @@ export function OmniChainCard() {
   })
 
   return (
-    <PrimaryCard className="col-span-1 lg:max-xl:col-span-2">
-      <h2 className="font-bold text-heading-24">Omnichain</h2>
+    <PrimaryCard>
+      <h2 className="font-bold text-heading-24">Non-minting</h2>
       <div className="mt-2.5 text-paragraph-13 text-secondary">
-        The bridge risk is present at all times, as it can mint tokens on all
-        chains. Flow limits might be applied.
+        In-light risk only. Tokens are therefore first bridged using a different
+        minting bridge that needs to be separately assessed.
       </div>
-      <OmniChainTable entires={data?.protocolsByType.omniChain} />
+      <NonMintingTable entires={data?.protocolsByType.nonMinting} />
     </PrimaryCard>
   )
 }
