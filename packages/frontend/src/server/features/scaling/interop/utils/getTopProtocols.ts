@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 
 export type InteropProtocolData = {
@@ -14,14 +15,7 @@ export type InteropProtocolData = {
 }
 
 export function getTopProtocols(
-  records: {
-    id: string
-    srcChain: string
-    dstChain: string
-    srcValueUsd: number | null
-    dstValueUsd: number | null
-    transferCount: number
-  }[],
+  records: AggregatedInteropTransferRecord[],
   from: string[],
   to: string[],
   interopProjects: Project<'interopConfig'>[],

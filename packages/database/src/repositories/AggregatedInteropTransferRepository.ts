@@ -107,8 +107,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   }
 
   async getByChainsAndLatestTimestamp(
-    srcChain: string,
-    dstChain: string,
+    srcChains: string[],
+    dstChains: string[],
   ): Promise<AggregatedInteropTransferRecord[]> {
     const latestTimestampSubquery = this.db
       .selectFrom('AggregatedInteropTransfer')
@@ -125,8 +125,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         ),
       )
       .selectAll('AggregatedInteropTransfer')
-      .where('srcChain', '=', srcChain)
-      .where('dstChain', '=', dstChain)
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
       .execute()
 
     return rows.map(toRecord)
