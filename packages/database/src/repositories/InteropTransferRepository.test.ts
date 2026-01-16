@@ -552,12 +552,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       ])
     })
 
-    it('includes transfers at the boundary timestamps', async () => {
+    it('includes upper boundary but excludes lower boundary', async () => {
       const result = await repository.getByRange(UnixTime(100), UnixTime(500))
 
-      expect(result).toHaveLength(5)
+      expect(result).toHaveLength(4)
       expect(result.map((r) => r.transferId)).toEqualUnsorted([
-        'msg1',
         'msg2',
         'msg3',
         'msg4',
