@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x46866dea72dee3d45f5e904a9866a31caa551d1d
+
+# Diff at Fri, 16 Jan 2026 12:24:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1768394418
+- current timestamp: 1768566203
+
+## Description
+
+Arbitrum Security Council member sync executed: 0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67 replaced 0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988 across L2SecurityCouncilEmergency (Nova) and SecurityCouncil (Ethereum).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.0:
++        "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+    }
+```
+
 Generated with discovered.json: 0x302b814d4d4d183f03aade28d6fb5b08376d0038
 
 # Diff at Wed, 14 Jan 2026 12:41:24 GMT:

@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x099a336d10cd2ac8e2cd0a04bfc110fc763f9a7d
+
+# Diff at Fri, 16 Jan 2026 12:24:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1748434475
+- current timestamp: 1768566190
+
+## Description
+
+L1StandardBridge and OptimismPortal upgraded to new implementations. A guardian EOA was added. ProxyAdmin role description updated. Conduit Multisig 1 added a new signer (10 → 11 members).
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.2.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1) {
+    +++ description: None
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0x710fc3f6ed40ea4a5162760cb3c7201edd6bdc10b1462da5f27b5dc809a532db"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      values.$implementation:
+-        "eth:0x4f30C8A322ab6f84F15B8955B58D295E138B14Ca"
++        "eth:0x347603566c9f79AC5f28a440B8d6A111A1672FB5"
+      values.guardian:
++        "eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE"
+      implementationNames.eth:0x4f30C8A322ab6f84F15B8955B58D295E138B14Ca:
+-        "L1StandardBridge"
+      implementationNames.eth:0x347603566c9f79AC5f28a440B8d6A111A1672FB5:
++        "L1StandardBridge"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Optopia Multisig (eth:0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.2.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.2.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x39A90926306E11497EC5FE1C459910258B620edD) {
+    +++ description: None
+      template:
+-        "opstack/OptimismPortal"
+      sourceHashes.1:
+-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
++        "0x94485995648eb1348d02f16b00f8be4872ab3d1da83d8ebb27b4cd2bf8bad0b3"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      values.$implementation:
+-        "eth:0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B"
++        "eth:0xB22519CD5e46F5FC8809735F06E256A415777C31"
+      values.$pastUpgrades.5:
++        ["2026-01-16T09:30:59.000Z","0xcf79a0cec877055337c9fc44e55d7372af7fd4d426feb3b1cfc3c963c7f006e3",["eth:0xB22519CD5e46F5FC8809735F06E256A415777C31"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.params.prevBoughtGas:
+-        491822
++        490798
+      values.params.prevBlockNum:
+-        22521705
++        24174890
+      values.isOutputFinalized:
++        [true,true,true,true,true]
+      implementationNames.eth:0xFe9B3d40DB0ec8f97D9ea638e926b3aEED8cF29B:
+-        "OptimismPortal"
+      implementationNames.eth:0xB22519CD5e46F5FC8809735F06E256A415777C31:
++        "OptimismPortal"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"isOutputFinalized":"Processing error occurred."}
+    }
+```
+
+```diff
+    EOA  (eth:0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"guard","from":"eth:0x39A90926306E11497EC5FE1C459910258B620edD","role":".guardian"}
+      receivedPermissions.3:
+-        {"permission":"guard","from":"eth:0x39A90926306E11497EC5FE1C459910258B620edD","role":".GUARDIAN"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol            | 20 +++++++++++++++++++-
+ .../OptimismPortal/OptimismPortal.sol                | 10 +++++++---
+ 2 files changed, 26 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x79a61d02f0893e0ba7c5111c9e8966fef2964b79
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:
