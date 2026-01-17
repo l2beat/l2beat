@@ -27,8 +27,8 @@ export const TransferRedeemed = createInteropEventType<{
   $srcChain: string
   srcWormholeChainId: number
   sender: EthereumAddress
-  srcTokenAddress?: Address32 | undefined
-  srcAmount?: bigint | undefined
+  dstTokenAddress?: Address32 | undefined
+  dstAmount?: bigint | undefined
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements InteropPlugin {
@@ -58,8 +58,8 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
           (x) => x.wormholeChainId,
           parsed.emitterChainId,
         ),
-        srcTokenAddress: nextLog && Address32.from(nextLog.address),
-        srcAmount: transfer?.value,
+        dstTokenAddress: nextLog && Address32.from(nextLog.address),
+        dstAmount: transfer?.value,
         srcWormholeChainId: parsed.emitterChainId,
         sender: senderAddress,
       }),
@@ -90,8 +90,8 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
         Result.Transfer('wormhole-tokenbridge.Transfer', {
           srcEvent: logMessagePublished,
           dstEvent: transferRedeemed,
-          srcTokenAddress: transferRedeemed.args.srcTokenAddress,
-          srcAmount: transferRedeemed.args.srcAmount,
+          dstTokenAddress: transferRedeemed.args.dstTokenAddress,
+          dstAmount: transferRedeemed.args.dstAmount,
         }),
       ]
     }
