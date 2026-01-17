@@ -49,7 +49,9 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     const transfer = nextLog && parseTransfer(nextLog, null)
 
     // emitterAddress is bytes32 (Wormhole format), extract last 20 bytes for EthereumAddress
-    const senderAddress = EthereumAddress(`0x${parsed.emitterAddress.slice(-40)}`)
+    const senderAddress = EthereumAddress(
+      `0x${parsed.emitterAddress.slice(-40)}`,
+    )
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
