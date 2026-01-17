@@ -38,6 +38,9 @@ export class WormholePlugin implements InteropPlugin {
     const parsed = parseLogMessagePublished(input.log, [network.coreContract])
     if (!parsed) return
 
+
+    // TODO: if the sender is the token bridge, we can get the src token by
+    // looking at the Transfer at logIndex - 1. Example: https://app.blocksec.com/phalcon/explorer/tx/base/0x7eebd35bd9b1d0b614dfe3d464d915378f2d370ab425d1ddc4510b820ed5df8d
     return [
       LogMessagePublished.create(input, {
         payload: parsed.payload,
