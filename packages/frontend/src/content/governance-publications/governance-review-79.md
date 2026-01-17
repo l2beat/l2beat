@@ -76,7 +76,7 @@ Scroll’s governance hasn’t seen any new developments over the last week. If 
 
 ### **Secondary Governance Interface Now Live!**
 
-ZKsync’s Governance Team [announced](https://forum.zknation.io/t/secondary-governance-interface-now-live/862) that [alt.vote.zknation.io](alt.vote.zknation.io) is now live as a secondary governance interface, letting delegates and ZK holders delegate voting power, vote on proposals, and submit proposals. The site adds a few UX extras, including delegate vote-history previews, delegate search by name (not just ENS), and easier copying/formatting of full proposal text. The rollout follows a June 2025 RFP to replace the deprecated Boardroom interface. A team was selected in September, and development began in October, while [vote.zknation.io](vote.zknation.io) (Tally) remains the primary interface.
+ZKsync’s Governance Team [announced](https://forum.zknation.io/t/secondary-governance-interface-now-live/862) that [alt.vote.zknation.io](https://alt.vote.zknation.io/) is now live as a secondary governance interface, letting delegates and ZK holders delegate voting power, vote on proposals, and submit proposals. The site adds a few UX extras, including delegate vote-history previews, delegate search by name (not just ENS), and easier copying/formatting of full proposal text. The rollout follows a June 2025 RFP to replace the deprecated Boardroom interface. A team was selected in September, and development began in October, while [vote.zknation.io](https://vote.zknation.io/dao) (Tally) remains the primary interface.
 
 **Discuss with L2BEAT**
 
