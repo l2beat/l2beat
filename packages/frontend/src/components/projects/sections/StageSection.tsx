@@ -123,7 +123,7 @@ export function StageSection({
       {walkAway === 'passed' && (
         <Callout
           color="green"
-          body="Users can exit in the presence of malicious operators even if the Security Council disappears."
+          body="The project passes the walkaway test: users can exit in the presence of malicious operators even if the Security Council disappears."
           icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
@@ -131,7 +131,7 @@ export function StageSection({
       {walkAway === 'not-passed' && (
         <Callout
           color="red"
-          body="Users are not able to exit in the presence of malicious operators if the Security Council disappears."
+          body="The project does not pass the walkaway test: users are not able to exit in the presence of malicious operators if the Security Council disappears." 
           icon={
             <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
           }
