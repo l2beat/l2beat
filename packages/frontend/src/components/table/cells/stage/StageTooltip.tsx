@@ -73,7 +73,12 @@ export function StageTooltip({
         <Callout
           color="green"
           body={
-            <><strong>The project passes the walkaway test:</strong> users can exit in the presence of malicious operators even if the Security Council disappears.</>}
+            <>
+              <strong>The project passes the walkaway test:</strong> users can
+              exit in the presence of malicious operators even if the Security
+              Council disappears.
+            </>
+          }
           icon={<WalkAwayPassedIcon className="size-4 fill-positive" />}
           className={cn('mb-3 gap-2! px-3 py-2')}
         />
@@ -81,7 +86,13 @@ export function StageTooltip({
       {walkAway === 'not-passed' && (
         <Callout
           color="red"
-          body={<><strong>The project does not pass the walkaway test:</strong> users are not able to exit in the presence of malicious operators if the Security Council disappears.</>}
+          body={
+            <>
+              <strong>The project does not pass the walkaway test:</strong>{' '}
+              users are not able to exit in the presence of malicious operators
+              if the Security Council disappears.
+            </>
+          }
           icon={<WalkAwayNotPassedIcon className="size-4 fill-negative" />}
           className={cn('mb-3 gap-2! px-3 py-2')}
         />
