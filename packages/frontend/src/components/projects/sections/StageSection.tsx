@@ -125,7 +125,7 @@ export function StageSection({
           color="green"
           body={
             <>
-              <strong>The project passes the walkaway test:</strong> users are
+              <strong>The project passes the walkaway test</strong>: users are
               not able to exit in the presence of malicious operators if the
               Security Council disappears.
             </>
@@ -139,7 +139,7 @@ export function StageSection({
           color="red"
           body={
             <>
-              <strong>The project does not pass the walkaway test:</strong>{' '}
+              <strong>The project does not pass the walkaway test</strong>:{' '}
               users are not able to exit in the presence of malicious operators
               if the Security Council disappears.
             </>

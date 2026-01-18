@@ -74,7 +74,7 @@ export function StageTooltip({
           color="green"
           body={
             <>
-              <strong>The project passes the walkaway test:</strong> users can
+              <strong>The project passes the walkaway test</strong>: users can
               exit in the presence of malicious operators even if the Security
               Council disappears.
             </>
@@ -88,7 +88,7 @@ export function StageTooltip({
           color="red"
           body={
             <>
-              <strong>The project does not pass the walkaway test:</strong>{' '}
+              <strong>The project does not pass the walkaway test</strong>:{' '}
               users are not able to exit in the presence of malicious operators
               if the Security Council disappears.
             </>
