@@ -131,7 +131,7 @@ export function StageSection({
       {walkAway === 'not-passed' && (
         <Callout
           color="red"
-          body="The project does not pass the walkaway test: users are not able to exit in the presence of malicious operators if the Security Council disappears." 
+          body="The project does not pass the walkaway test: users are not able to exit in the presence of malicious operators if the Security Council disappears."
           icon={
             <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
           }
