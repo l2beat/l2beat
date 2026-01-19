@@ -71,13 +71,17 @@ export function getProtocolsByType(
     (p) => p.interopConfig.bridgeType,
   )
 
-  const nonMintingData = Array.from(protocolsDataMap.entries()).filter(
-    ([key]) => protocolsByType.nonMinting?.some((p) => p.id === key),
+  const protocolsData = Array.from(protocolsDataMap.entries()).sort(
+    (a, b) => b[1].volume - a[1].volume,
   )
-  const mintLockData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
+
+  const nonMintingData = protocolsData.filter(([key]) =>
+    protocolsByType.nonMinting?.some((p) => p.id === key),
+  )
+  const mintLockData = protocolsData.filter(([key]) =>
     protocolsByType.canonical?.some((p) => p.id === key),
   )
-  const omniChainData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
+  const omniChainData = protocolsData.filter(([key]) =>
     protocolsByType.omnichain?.some((p) => p.id === key),
   )
 
