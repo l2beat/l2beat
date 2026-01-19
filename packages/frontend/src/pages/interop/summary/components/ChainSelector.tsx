@@ -42,7 +42,7 @@ export function ChainSelector({ chains }: Props) {
         </div>
         {isDirty && (
           <button
-            className="font-semibold text-base leading-[115%] underline"
+            className="font-semibold text-base leading-[115%] underline max-md:hidden"
             onClick={reset}
           >
             Reset to default

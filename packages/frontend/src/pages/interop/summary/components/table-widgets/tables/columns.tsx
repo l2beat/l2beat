@@ -54,7 +54,16 @@ function getCommonColumns<
 }
 
 const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
-export const nonMintingColumns = [...getCommonColumns(nonMintingColumnHelper)]
+export const nonMintingColumns = [
+  ...getCommonColumns(nonMintingColumnHelper),
+  nonMintingColumnHelper.accessor('tokens', {
+    header: 'tokens by\nvolume',
+    meta: {
+      cellClassName: '!pr-0',
+    },
+    cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
+  }),
+]
 
 const lockMintColumnHelper = createColumnHelper<LockMintRow>()
 export const lockMintColumns = [

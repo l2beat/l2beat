@@ -15,6 +15,7 @@ export type ProtocolsByType = {
     iconSlug: string
     protocolName: string
     volume: number
+    tokens: TokenData[]
   }[]
   lockMint: {
     iconSlug: string
@@ -107,10 +108,11 @@ export function getProtocolsByType(
   }
 
   return {
-    nonMinting: nonMintingData.map(([key, { volume }]) => {
+    nonMinting: nonMintingData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
         volume,
+        tokens: getTokensData(tokens),
       }
     }),
     lockMint: mintLockData.map(
