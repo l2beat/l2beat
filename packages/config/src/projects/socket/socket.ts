@@ -51,7 +51,18 @@ export const socket: Bridge = {
     },
   },
   technology: {
-    destination: ['Ethereum', 'Reya', 'Lyra', 'Kinto', 'Polynomial', 'Blast'],
+    // tracking superbrigde destinations https://github.com/SocketDotTech/socket-plugs/tree/main/deployments/superbridge
+    destination: [
+      'Ethereum',
+      'Reya',
+      'Lyra',
+      'Kinto',
+      'Polynomial',
+      'Blast',
+      'Winr',
+      'Aevo',
+      'SX Network',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
