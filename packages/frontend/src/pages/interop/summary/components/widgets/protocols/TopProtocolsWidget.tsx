@@ -47,9 +47,12 @@ export function TopProtocolsWidget({
 
     data.topProtocols.sort((a, b) => b[metricType].value - a[metricType].value)
 
-    const top5 = data.topProtocols.slice(0, 5)
-    const others = data.topProtocols.slice(5)
+    const top5 = data.topProtocols.slice(0, 5).map((protocol) => ({
+      ...protocol,
+      color: protocolColorMap.get(protocol.protocolName) ?? '#000000',
+    })) as DisplayProtocol[]
 
+    const others = data.topProtocols.slice(5)
     if (others.length === 0) {
       return top5
     }
@@ -74,18 +77,10 @@ export function TopProtocolsWidget({
           share: metricType === 'transfers' ? othersShare : 0,
         },
         othersCount: others.length,
+        color: protocolColorMap.get(OTHERS_PROTOCOL_NAME) ?? '#000000',
       },
     ] as DisplayProtocol[]
-  }, [data?.topProtocols, metricType])
-
-  const protocolsWithColors: DisplayProtocol[] = useMemo(
-    () =>
-      protocolsWithOthers.map((protocol) => ({
-        ...protocol,
-        color: protocolColorMap.get(protocol.protocolName) ?? '#000000',
-      })),
-    [protocolsWithOthers, protocolColorMap],
-  )
+  }, [data?.topProtocols, metricType, protocolColorMap])
 
   return (
     <PrimaryCard
@@ -99,7 +94,7 @@ export function TopProtocolsWidget({
         </div>
         <table className="mt-2 w-full border-separate border-spacing-y-1 pr-1">
           <tbody>
-            {isLoading || protocolsWithColors.length === 0
+            {isLoading || protocolsWithOthers.length === 0
               ? times(5).map((index) => (
                   <tr key={index}>
                     <td colSpan={3}>
@@ -108,8 +103,8 @@ export function TopProtocolsWidget({
                   </tr>
                 ))
               : null}
-            {protocolsWithColors.length > 0 &&
-              protocolsWithColors.map((protocol) => (
+            {protocolsWithOthers.length > 0 &&
+              protocolsWithOthers.map((protocol) => (
                 <tr key={protocol.protocolName}>
                   <td className="flex items-center gap-1 font-medium text-2xs">
                     <div
@@ -133,13 +128,13 @@ export function TopProtocolsWidget({
       </div>
       {metricType === 'volume' ? (
         <TopProtocolsByVolumeChart
-          protocols={protocolsWithColors}
+          protocols={protocolsWithOthers}
           isLoading={isLoading}
           containerWidth={width}
         />
       ) : (
         <TopProtocolsByTransfersChart
-          protocols={protocolsWithColors}
+          protocols={protocolsWithOthers}
           isLoading={isLoading}
           containerWidth={width}
         />
