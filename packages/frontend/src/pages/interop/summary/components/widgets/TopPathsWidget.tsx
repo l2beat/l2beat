@@ -33,8 +33,10 @@ export function TopPathsWidget({
 
   return (
     <PrimaryCard className="@container max-md:rounded-lg max-[1024px]:h-full min-[1024px]:h-[213px]">
-      <h2 className="font-bold text-heading-20">Top 3 paths by volume</h2>
-      <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
+      <h2 className="font-bold text-heading-16 md:text-heading-20">
+        Top 3 paths by volume
+      </h2>
+      <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         Between {uniqChains.length} supported chains
       </div>
       <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">

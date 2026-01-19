@@ -15,7 +15,7 @@ export function MobileCarouselWidget({
   const [view, setView] = useState<View>('paths')
 
   return (
-    <div className="relative max-md:mx-4 max-md:mb-4 max-[1024px]:h-[232px] min-[1600px]:hidden min-[1024px]:h-[213px]">
+    <div className="relative max-md:mx-4 max-md:mb-4 max-md:h-[220px] md:max-[1024px]:h-[232px] min-[1600px]:hidden min-[1024px]:h-[213px]">
       <div className="relative h-full">
         {/* Paths widget - only visible below 1024px */}
         <WidgetWrapper
@@ -53,7 +53,7 @@ export function MobileCarouselWidget({
           <TopProtocolsByTransfers />
         </WidgetWrapper>
       </div>
-      <div className="-translate-x-1/2 absolute bottom-4 left-1/2 z-20 flex">
+      <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">
         {/* Paths dot - only visible below 1024px */}
         <DotElement
           onClick={() => setView('paths')}

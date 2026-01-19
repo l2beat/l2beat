@@ -15,8 +15,10 @@ export function OmniChainCard() {
 
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
-      <h2 className="font-bold text-heading-24">Omnichain</h2>
-      <div className="mt-2.5 text-paragraph-13 text-secondary">
+      <h2 className="font-bold text-heading-20 md:text-heading-24">
+        Omnichain
+      </h2>
+      <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
         The bridge risk is present at all times, as it can mint tokens on all
         chains. Flow limits might be applied.
       </div>
