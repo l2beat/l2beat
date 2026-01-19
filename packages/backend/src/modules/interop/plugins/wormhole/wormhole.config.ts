@@ -22,6 +22,7 @@ export interface WormholeNetwork {
   wormholeChainId: number
   coreContract?: EthereumAddress
   relayer?: EthereumAddress
+  tokenBridge?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -40,6 +41,15 @@ const OVERRIDES: WormholeNetwork[] = [
     wormholeChainId: 1,
   },
 ]
+
+// Map our chain names to Wormhole docs chain names
+const CHAIN_NAME_TO_DOCS: Record<string, string> = {
+  polygonpos: 'polygon',
+}
+
+function toDocsChainName(chainName: string): string {
+  return CHAIN_NAME_TO_DOCS[chainName] ?? chainName
+}
 
 export class WormholeConfigPlugin
   extends TimeLoop
@@ -107,15 +117,17 @@ export class WormholeConfigPlugin
       }
     })
 
-    // Parse Wormhole Relayer addresses by finding the h2 header and the table after it
+    // Parse addresses from sections by finding h2 headers and the tables after them
     const relayerByChain = new Map<string, EthereumAddress>()
+    const tokenBridgeByChain = new Map<string, EthereumAddress>()
 
-    // Find the h2 containing "Wormhole Relayer" and get the first table after it
     $('h2').each((_, h2) => {
-      if ($(h2).text().includes('Wormhole Relayer')) {
-        // Find the next table after this h2 (first table = mainnet)
-        const relayerTable = $(h2).nextAll('div').find('table').first()
-        relayerTable.find('tbody tr').each((__, row) => {
+      const headerText = $(h2).text()
+      const table = $(h2).nextAll('div').find('table').first()
+
+      // Parse Wormhole Relayer addresses
+      if (headerText.includes('Wormhole Relayer')) {
+        table.find('tbody tr').each((__, row) => {
           const cells = $(row).find('td')
           if (cells.length === 2) {
             const chain = $(cells[0]).text().trim().toLowerCase()
@@ -128,6 +140,26 @@ export class WormholeConfigPlugin
               address.length === 42
             ) {
               relayerByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
+      }
+
+      // Parse Token Bridge (WTT) addresses
+      if (headerText.includes('Wrapped Token Transfers')) {
+        table.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
+
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              tokenBridgeByChain.set(chain, EthereumAddress(address))
             }
           }
         })
@@ -164,12 +196,14 @@ export class WormholeConfigPlugin
                 data: result.data.toString() as Hex,
               })
 
+              const docsChainName = toDocsChainName(chain.name.toLowerCase())
               return {
                 chain: chain.name,
                 chainId: chain.id,
                 wormholeChainId: Number(decoded),
                 coreContract: evmContracts[i],
-                relayer: relayerByChain.get(chain.name.toLowerCase()),
+                relayer: relayerByChain.get(docsChainName),
+                tokenBridge: tokenBridgeByChain.get(docsChainName),
               }
             }
           } catch {
