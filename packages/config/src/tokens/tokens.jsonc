@@ -7309,6 +7309,20 @@
   ],
   "abstract": [
     {
+      "symbol": "gtBTC",
+      "address": "0x0035b877C3aB50cFFA9eD52bA05282c7045f78dd",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "Polly",
       "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
       "source": "native",

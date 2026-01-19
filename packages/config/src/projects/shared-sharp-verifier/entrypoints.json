@@ -64,6 +64,10 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b": {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "type": "Contract",
@@ -163,6 +167,10 @@
     "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0": {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
       "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C": {
+      "type": "EOA",
       "project": "shared-sharp-verifier"
     },
     "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3": {

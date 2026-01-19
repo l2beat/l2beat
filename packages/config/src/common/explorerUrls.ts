@@ -16,7 +16,7 @@
 
 export const EXPLORER_URLS: Record<string, string> = {
   ethereum: 'https://etherscan.io',
-  zksync2: 'https://era.zksync.network',
+  zksync2: 'https://explorer.zksync.io',
   arbitrum: 'https://arbiscan.io',
   nova: 'https://nova.arbiscan.io',
   optimism: 'https://optimistic.etherscan.io',

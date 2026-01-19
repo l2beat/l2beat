@@ -565,14 +565,7 @@
   },
   "debridge": {
     "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x0d7b69436a35c8e0de7420c06e5ed7fd27530bf72b050b10f886f1d5a757cfc4"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
-      },
+      // tokenbridge
       {
         "chain": "ethereum",
         "tx": "0x69722a83e20ee078c95ad4d8532a86201ba441481999f695b3767d389b8c6798"
@@ -585,6 +578,7 @@
   },
   "debridge-dln": {
     "txs": [
+      // intent fill
       {
         "chain": "arbitrum",
         "tx": "0xc55fbe60a15226b1c8ef38bfd0f847d254e30a2cc319bd84637a4b2642973ee5"
@@ -592,6 +586,15 @@
       {
         "chain": "base",
         "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      },
+      // settlement (including the above intent)
+      {
+        "chain": "base",
+        "tx": "0x091653460f8aad2dcfc3fbfaed0c2c02d6740c757ad587581850d894157ff086"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf1ea02ebca6e3678ae7a47b25dba4b28c35373f4be2a27109be1f9bfee5cd643"
       }
     ]
   },

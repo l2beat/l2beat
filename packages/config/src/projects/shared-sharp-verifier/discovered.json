@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1765205910,
+  "timestamp": 1768823299,
   "configHash": "0x6bee813c1b46f75d22129b0931ea2f27541a2f65588d1249aa8224674ee9f16e",
   "entries": [
     {
@@ -167,7 +167,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -337,6 +337,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PoseidonPoseidonFullRoundKey2Column",
       "address": "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
       "type": "Contract",
@@ -463,11 +468,14 @@
           "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
           "eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f",
           "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
-          "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526"
+          "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
+          "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
+          "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A"
         ],
         "customProxyImplementations": [
           "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
-          "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934"
+          "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
+          "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
         ],
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getUpgradeActivationDelay": 691200,
@@ -822,6 +830,11 @@
         "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0": "PoseidonPoseidonPartialRoundKey0Column"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -2708,6 +2721,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 23968827 },
-  "permissionsConfigHash": "0x9f54fde9d9e644d982b636c740969b23f7aa441e4da841bf83c687a7ef9902b0"
+  "usedBlockNumbers": { "ethereum": 24268619 },
+  "permissionsConfigHash": "0x417b6cfc83629593ce1296d4dd60523726b812664c1a4bc06d0dbcf974f8e8d4"
 }
