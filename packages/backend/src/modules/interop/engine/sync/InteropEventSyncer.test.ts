@@ -10,6 +10,8 @@ import {
   type Block,
   ChainSpecificAddress,
   EthereumAddress,
+  type Log as SharedLog,
+  type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -20,6 +22,7 @@ import type {
   LogToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { logToViemLog } from '../capture/getItemsToCapture'
 import { toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
 import {
@@ -138,51 +141,119 @@ describe(InteropEventSyncer.name, () => {
 
   describe(InteropEventSyncer.prototype.captureLog.name, () => {
     it('captures using the primary plugin when not clustered', () => {
+      const signature = 'event Test()'
+      const logToCapture = makeLogToCapture(signature)
+      const address = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress(logToCapture.log.address),
+      )
       const event = makeInteropEventNoPlugin()
-      const capture = mockFn().returns([event])
+      const captureFn = mockFn().returns([event])
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base', capture }),
+        plugin: makePlugin({
+          name: 'base',
+          dataRequests: [
+            {
+              type: 'event',
+              signature,
+              addresses: [address],
+              captureFn,
+            },
+          ],
+        }),
         clusterPlugins: [],
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(logToCapture)
 
-      expect(capture).toHaveBeenCalled()
+      expect(captureFn).toHaveBeenCalled()
       expect(result).toEqual([
         { ...event, plugin: 'base' as InteropPluginName },
       ])
     })
 
     it('captures using first plugin in cluster that produces', () => {
+      const signature = 'event Test()'
+      const logToCapture = makeLogToCapture(signature)
+      const address = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress(logToCapture.log.address),
+      )
       const event = makeInteropEventNoPlugin()
-      const firstCapture = mockFn().returns(undefined)
-      const secondCapture = mockFn().returns([event])
+      const firstCaptureFn = mockFn().returns(undefined)
+      const secondCaptureFn = mockFn().returns([event])
 
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base', capture: mockFn() }),
+        plugin: makePlugin({
+          name: 'base',
+          dataRequests: [
+            {
+              type: 'event',
+              signature,
+              addresses: [address],
+              captureFn: mockFn().returns(undefined),
+            },
+          ],
+        }),
         clusterPlugins: [
-          makePlugin({ name: 'first', capture: firstCapture }),
-          makePlugin({ name: 'second', capture: secondCapture }),
+          makePlugin({
+            name: 'first',
+            dataRequests: [
+              {
+                type: 'event',
+                signature,
+                addresses: [address],
+                captureFn: firstCaptureFn,
+              },
+            ],
+          }),
+          makePlugin({
+            name: 'second',
+            dataRequests: [
+              {
+                type: 'event',
+                signature,
+                addresses: [address],
+                captureFn: secondCaptureFn,
+              },
+            ],
+          }),
         ],
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(logToCapture)
 
-      expect(firstCapture).toHaveBeenCalled()
-      expect(secondCapture).toHaveBeenCalled()
+      expect(firstCaptureFn).toHaveBeenCalled()
+      expect(secondCaptureFn).toHaveBeenCalled()
       expect(result).toEqual([
         { ...event, plugin: 'base' as InteropPluginName },
       ])
     })
 
     it('returns undefined when no plugin produces', () => {
+      const signature = 'event Test()'
+      const logToCapture = makeLogToCapture(signature)
+      const address = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress(logToCapture.log.address),
+      )
       const syncer = createSyncer({
         clusterPlugins: [
-          makePlugin({ name: 'x', capture: mockFn().returns(undefined) }),
+          makePlugin({
+            name: 'x',
+            dataRequests: [
+              {
+                type: 'event',
+                signature,
+                addresses: [address],
+                captureFn: mockFn().returns(undefined),
+              },
+            ],
+          }),
         ],
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(logToCapture)
 
       expect(result).toEqual(undefined)
     })
@@ -278,6 +349,7 @@ describe(InteropEventSyncer.name, () => {
             type: 'event',
             signature,
             addresses: [ethAddress, arbAddress],
+            captureFn: (_log, _context) => undefined,
           },
         ],
       })
@@ -289,6 +361,34 @@ describe(InteropEventSyncer.name, () => {
       ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(query.isEmpty()).toEqual(false)
+    })
+
+    it('includes topics from includeTxEvents', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const includeSignature = 'event Approval(address,address,uint256)'
+      const ethAddress = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+      const plugin = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            includeTxEvents: [includeSignature],
+            addresses: [ethAddress],
+            captureFn: (_log, _txEvents, _context) => undefined,
+          },
+        ],
+      })
+
+      const query = buildLogQueryForPlugin(plugin, 'ethereum')
+
+      expect(Array.from(query.addresses)).toHaveLength(1)
+      expect(Array.from(query.topic0s).sort()).toEqual(
+        [toEventSelector(signature), toEventSelector(includeSignature)].sort(),
+      )
       expect(query.isEmpty()).toEqual(false)
     })
 
@@ -304,6 +404,7 @@ describe(InteropEventSyncer.name, () => {
             type: 'event',
             signature,
             addresses: [arbAddress],
+            captureFn: (_log, _context) => undefined,
           },
         ],
       })
@@ -476,14 +577,10 @@ function makePlugin(
   params: {
     name?: string
     dataRequests?: DataRequest[]
-    capture?: (
-      input: LogToCapture,
-    ) => Omit<InteropEvent, 'plugin'>[] | undefined
   } = {},
 ): InteropPluginResyncable {
   return {
     name: (params.name as InteropPluginName) ?? ('plugin' as InteropPluginName),
-    capture: params.capture ?? mockFn().returns(undefined),
     getDataRequests: () => params.dataRequests ?? [],
   }
 }
@@ -571,6 +668,35 @@ function makeInteropEventNoPlugin(): Omit<InteropEvent, 'plugin'> {
   const event = makeInteropEvent()
   const { plugin: _plugin, ...rest } = event
   return rest
+}
+
+function makeLogToCapture(signature: string): LogToCapture {
+  const address = EthereumAddress.random()
+  const log: SharedLog = {
+    address,
+    topics: [toEventSelector(signature)],
+    data: '0x',
+    blockNumber: 1,
+    blockHash: ZERO_HASH,
+    transactionHash: ZERO_HASH,
+    logIndex: 0,
+  }
+  const viemLog = logToViemLog(log)
+  const tx: Transaction = { hash: ZERO_HASH }
+  const block: Block = {
+    number: 1,
+    hash: ZERO_HASH,
+    logsBloom: '0x',
+    timestamp: 1,
+    transactions: [tx],
+  }
+  return {
+    log: viemLog,
+    txLogs: [viemLog],
+    tx,
+    block,
+    chain: 'ethereum',
+  }
 }
 
 function makeInteropEventRecord(
