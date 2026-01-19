@@ -93,7 +93,7 @@ export function TopProtocolsWidget({
       <div className="flex-1">
         <h2 className="font-bold text-heading-20">{heading}</h2>
         <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
-          Between {uniqChains.length} supported chains
+          Between {uniqChains.length} selected chains
         </div>
         <table className="mt-2 w-full border-separate border-spacing-y-1 pr-1">
           <tbody>
