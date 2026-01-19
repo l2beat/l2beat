@@ -14,7 +14,7 @@ export function OmniChainCard() {
   const entries = data?.protocolsByType.omniChain
 
   return (
-    <PrimaryCard className="col-span-1 flex flex-col lg:max-xl:col-span-2">
+    <PrimaryCard className="col-span-1 flex flex-col [@media(min-width:1024px)]:[@media(max-width:1600px)]:col-span-2">
       <h2 className="font-bold text-heading-24">Omnichain</h2>
       <div className="mt-2.5 text-paragraph-13 text-secondary">
         The bridge risk is present at all times, as it can mint tokens on all
