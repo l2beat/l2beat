@@ -79,7 +79,7 @@ function ChainSelectorButton({
                   key={chain.id}
                   src={`/icons/${chain.iconSlug}.png`}
                   alt={chain.name}
-                  className="size-5"
+                  className="size-5 rounded-full bg-white shadow"
                   style={{ zIndex: selectedChains.length - i }}
                 />
               ))}

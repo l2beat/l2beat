@@ -54,15 +54,21 @@ const lockMintColumnHelper = createColumnHelper<LockMintRow>()
 export const lockMintColumns = [
   ...getCommonColumns(lockMintColumnHelper),
   lockMintColumnHelper.accessor('averageDuration', {
-    header: 'last 24h\navg. transfer time',
+    header: 'last 24h avg.\ntransfer time',
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
         {formatDuration(ctx.row.original.averageDuration)}
       </div>
     ),
+    meta: {
+      align: 'right',
+    },
   }),
   lockMintColumnHelper.accessor('tokens', {
-    header: 'tokens by volume',
+    header: 'tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+    },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
 ]
@@ -80,7 +86,10 @@ export const omniChainColumns = [
     ),
   }),
   omniChainColumnHelper.accessor('tokens', {
-    header: 'tokens by volume',
+    header: 'tokens by\nvolume',
+    meta: {
+      cellClassName: '!pr-0',
+    },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
 ]
