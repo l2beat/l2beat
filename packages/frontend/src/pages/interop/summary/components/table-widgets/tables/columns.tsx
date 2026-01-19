@@ -31,10 +31,13 @@ function getCommonColumns<
     columnHelper.accessor((row) => row.protocolName, {
       header: 'Name',
       cell: (ctx) => (
-        <span className="font-bold text-label-value-15">
+        <div className="max-w-[76px] break-words font-bold text-label-value-15">
           {ctx.row.original.protocolName}
-        </span>
+        </div>
       ),
+      meta: {
+        cellClassName: 'whitespace-normal',
+      },
     }),
     columnHelper.accessor((row) => row.volume, {
       header: 'Last 24h\nVolume',
