@@ -26,6 +26,11 @@ export const stone: BaseProject = {
       ],
       documentation: ['https://docs.starknet.io/architecture/sharp/'],
       repositories: ['https://github.com/starkware-libs/stone-prover'],
+      socialMedia: [
+        'https://x.com/StarkWareLtd/',
+        'https://medium.com/starkware',
+        'https://www.linkedin.com/company/starkware/',
+      ],
     },
     badges: [],
   },
