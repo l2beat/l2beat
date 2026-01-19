@@ -648,14 +648,25 @@
       {
         "chain": "base",
         "tx": "0x7a1fb1167c3f1ec048d4e26792a47c760327080727480ee93af77cda28bd99f5"
+      },
+      // NTT transfer from Ethereum → Base
+      {
+        "chain": "ethereum",
+        "tx": "0x616967c7771523d2db16b3a21eef8c8ec654d245f6462424f6e7f23ea4839632"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
       }
     ],
     "messages": [
       { "type": "wormhole.Message", "app": "wormhole-ntt" },
       { "type": "wormhole.Message", "app": "m0-index" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt" },
       { "type": "wormhole.Message", "app": "wormhole-ntt" }
     ],
     "transfers": [
+      "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer"
     ]
