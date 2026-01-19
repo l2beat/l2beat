@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "timestamp": 1765880174,
+  "timestamp": 1768824106,
   "configHash": "0xce7e8fdb1cadff7ee9b8154d51f46f45df793d74a75159f12d4f1eae1f932e65",
   "entries": [
     {
@@ -247,7 +247,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -701,8 +701,14 @@
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
@@ -1414,9 +1420,19 @@
             "2025-06-25T14:41:47.000Z",
             "0x9529b94a823908b9a8c9097a89ef76e034740a971363e3f7913f4971eb3633e3",
             ["eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]
+          ],
+          [
+            "2026-01-15T16:06:23.000Z",
+            "0x27532d9c2db25f9d053fe4246f83a8c719a0d0b000a9d0e9f1e7dae1e05f287a",
+            ["eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7"]
+          ],
+          [
+            "2026-01-15T16:08:35.000Z",
+            "0x787522b1ecf6f59d77fdd6278cf3d92f7b28cc292264e5f7ae9ef93c1344d587",
+            ["eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2066,7 +2082,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1685001,
+        "l1ToL2MessageNonce": 1686962,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -2092,9 +2108,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "619284369871001020666491752012103544625372532728073809225928929726115670779",
-        "stateBlockNumber": 4368576,
-        "stateRoot": "2269340537287754986914911646985231566371941852958745741964954081837351137486",
+        "stateBlockHash": "1367413567124770509815713679324945779585805123142938193507362419263151388711",
+        "stateBlockNumber": 5768049,
+        "stateRoot": "1341459408999047709368235523909792257388388544887562126248687195697794371454",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -4649,6 +4665,6 @@
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
-  "usedBlockNumbers": { "ethereum": 24024509 },
+  "usedBlockNumbers": { "ethereum": 24268686 },
   "permissionsConfigHash": "0x97f6353e6a732be057666f407f2253ee13e6525eec075c008536e7ad92eecd9e"
 }
