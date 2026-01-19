@@ -16,7 +16,7 @@ import type { ContractsSectionProps } from '../../../components/projects/section
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
-import { getZkProgramHashes } from './getZkProgramHashes'
+import { getProgramHashes } from './getProgramHashes'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -97,8 +97,8 @@ export function getContractsSection(
       projectParams.architectureImage ?? projectParams.slug,
     ),
     isUnderReview: projectParams.isUnderReview,
-    zkProgramHashes: getZkProgramHashes(
-      projectParams.contracts.zkProgramHashes,
+    programHashes: getProgramHashes(
+      projectParams.contracts.programHashes,
       zkCatalogProjects,
       allProjects,
     ),

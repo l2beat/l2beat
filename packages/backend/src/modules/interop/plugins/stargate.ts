@@ -269,7 +269,7 @@ const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
 
 export class StargatePlugin implements InteropPlugin {
-  name = 'stargate'
+  readonly name = 'stargate'
 
   constructor(private configs: InteropConfigStore) {}
 

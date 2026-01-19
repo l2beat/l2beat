@@ -25,7 +25,13 @@
     "defaultBranch": "main",
     "useIgnoreFile": true
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -125,7 +131,10 @@
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
-        "noFocusedTests": "error",
+        "noFocusedTests": {
+          "fix": "none",
+          "level": "error"
+        },
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",
@@ -162,8 +171,13 @@
       "includes": ["**/test/**/*.ts", "**/*.test.ts"],
       "linter": {
         "rules": {
-          "style": { "noNonNullAssertion": "off" },
-          "suspicious": { "noExplicitAny": "off", "useAwait": "off" }
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off",
+            "useAwait": "off"
+          }
         }
       }
     },

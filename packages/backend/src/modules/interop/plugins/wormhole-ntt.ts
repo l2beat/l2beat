@@ -93,7 +93,7 @@ export const ReceivedRelayedMessage = createInteropEventType<{
 }>('wormhole-ntt.ReceivedRelayedMessage')
 
 export class WormholeNTTPlugin implements InteropPlugin {
-  name = 'wormhole-ntt'
+  readonly name = 'wormhole-ntt'
 
   constructor(private configs: InteropConfigStore) {}
 

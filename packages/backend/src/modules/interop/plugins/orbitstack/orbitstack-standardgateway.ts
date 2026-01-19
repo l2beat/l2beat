@@ -80,7 +80,7 @@ const parseWithdrawalFinalized = createEventParser(
 )
 
 export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
-  name = 'orbitstack-standardgateway'
+  readonly name = 'orbitstack-standardgateway'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

@@ -41,7 +41,7 @@ export const GatewayBurned = createInteropEventType<{
 }>('circle-gateway.GatewayBurned')
 
 export class CircleGatewayPlugIn implements InteropPlugin {
-  name = 'circle-gateway'
+  readonly name = 'circle-gateway'
 
   constructor(private configs: InteropConfigStore) {}
 

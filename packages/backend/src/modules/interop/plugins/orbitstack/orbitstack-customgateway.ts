@@ -82,7 +82,7 @@ const parseTransfer = createEventParser(
 )
 
 export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
-  name = 'orbitstack-customgateway'
+  readonly name = 'orbitstack-customgateway'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

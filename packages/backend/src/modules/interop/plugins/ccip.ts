@@ -61,6 +61,42 @@ const parseExecutionStateChanged = createEventParser(
   'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)',
 )
 
+/*
+TokenPool events emitted when tokens are released or minted on destination chain.
+These are more reliable than Transfer events as they're CCIP-specific and avoid
+capturing internal mint operations (e.g., USDC burn/mint pattern).
+
+CCIP v1.6.1+ (ReleasedOrMinted - unified event):
+  https://docs.chain.link/ccip/api-reference/evm/v1.6.1/token-pool#releasedorminted
+  event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)
+  - Token address is included in event data
+  - `sender` is the offRamp address (msg.sender calling the pool)
+
+CCIP v1.5.x - v1.6.0 (Released/Minted - separate events):
+  https://docs.chain.link/ccip/api-reference/evm/v1.6.0/token-pool#minted
+  https://docs.chain.link/ccip/api-reference/evm/v1.5.1/token-pool
+  event Released(address indexed sender, address indexed recipient, uint256 amount)
+  event Minted(address indexed sender, address indexed recipient, uint256 amount)
+  - Token address must be extracted from the preceding Transfer event
+  - Event order: Transfer -> Released/Minted -> ExecutionStateChanged
+  - `sender` is the offRamp address
+*/
+
+// v1.6.1+ TokenPool event (has token address in event data)
+const parseReleasedOrMinted = createEventParser(
+  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)',
+)
+
+// v1.5.x - v1.6.0 TokenPool events (token address from preceding Transfer event)
+const parseReleased = createEventParser(
+  'event Released(address indexed sender, address indexed recipient, uint256 amount)',
+)
+
+const parseMinted = createEventParser(
+  'event Minted(address indexed sender, address indexed recipient, uint256 amount)',
+)
+
+// Standard ERC20 Transfer event to extract token address for v1.5 events
 const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
@@ -70,14 +106,15 @@ export const CCIPSendRequested = createInteropEventType<{
   $dstChain: string
   token: Address32
   amount: bigint
+  index: number // Position in tokenAmounts array for matching
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
   messageId: `0x${string}`
   state: number
   $srcChain: string
-  dstTokenAddresses?: Address32[]
-  dstAmounts?: bigint[]
+  // Token data from ReleasedOrMinted events (one per token in the message)
+  dstTokens?: { address: Address32; amount: bigint }[]
 }>('ccip.ExecutionStateChanged')
 
 interface CcipNetwork {
@@ -123,8 +160,29 @@ const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
   },
 ])
 
+/**
+ * Find the token address from the Transfer event immediately preceding a Released/Minted event.
+ * In v1.5 TokenPools, the event order is: Transfer -> Released/Minted
+ */
+function findPrecedingTransferToken(
+  logs: LogToCapture['txLogs'],
+  currentIndex: number,
+  amount: bigint,
+): string | undefined {
+  // Look backwards from the current log to find a matching Transfer event
+  for (let j = currentIndex - 1; j >= 0; j--) {
+    const prevLog = logs[j]
+    const transfer = parseTransfer(prevLog, null)
+    if (transfer && transfer.value === amount) {
+      // The token address is the contract that emitted the Transfer event
+      return prevLog.address
+    }
+  }
+  return undefined
+}
+
 export class CCIPPlugIn implements InteropPlugin {
-  name = 'ccip'
+  readonly name = 'ccip'
 
   capture(input: LogToCapture) {
     const network = CCIP_NETWORKS.find((x) => x.chain === input.chain)
@@ -133,11 +191,12 @@ export class CCIPPlugIn implements InteropPlugin {
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
-      return ccipSendRequested.message.tokenAmounts.map((ta) =>
+      return ccipSendRequested.message.tokenAmounts.map((ta, index) =>
         CCIPSendRequested.create(input, {
           messageId: ccipSendRequested.message.messageId,
           token: Address32.from(ta.token),
           amount: ta.amount,
+          index,
           $dstChain:
             Object.entries(network.outboundLanes).find(
               ([_, address]) => address === outboundLane,
@@ -150,24 +209,60 @@ export class CCIPPlugIn implements InteropPlugin {
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
 
-      // Collect preceding Transfer events in the same transaction
-      const dstTokenAddresses: Address32[] = []
-      const dstAmounts: bigint[] = []
-      for (
-        let offset = 1;
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
-          dstTokenAddresses.push(Address32.from(precedingLog.address))
-          dstAmounts.push(transfer.value)
+      // Collect token release/mint events from TokenPools in the same transaction
+      // These are emitted in the same order as tokenAmounts[] in the source message
+      // Support multiple event formats: ReleasedOrMinted (v1.6+), Released/Minted (v1.5)
+      const dstTokens: { address: Address32; amount: bigint }[] = []
+      const logsBeforeExecution = input.txLogs.filter(
+        (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+      )
+
+      for (let i = 0; i < logsBeforeExecution.length; i++) {
+        const log = logsBeforeExecution[i]
+
+        // Try v1.6+ ReleasedOrMinted event (has token address in event data)
+        const releasedOrMinted = parseReleasedOrMinted(log, null)
+        if (releasedOrMinted) {
+          dstTokens.push({
+            address: Address32.from(releasedOrMinted.token),
+            amount: releasedOrMinted.amount,
+          })
+          continue
+        }
+
+        // Try v1.5 Released event (token address from preceding Transfer event)
+        const released = parseReleased(log, null)
+        if (released) {
+          // Find the Transfer event immediately before this Released event
+          const tokenAddress = findPrecedingTransferToken(
+            logsBeforeExecution,
+            i,
+            released.amount,
+          )
+          if (tokenAddress) {
+            dstTokens.push({
+              address: Address32.from(tokenAddress),
+              amount: released.amount,
+            })
+          }
+          continue
+        }
+
+        // Try v1.5 Minted event (token address from preceding Transfer event)
+        const minted = parseMinted(log, null)
+        if (minted) {
+          // Find the Transfer event immediately before this Minted event
+          const tokenAddress = findPrecedingTransferToken(
+            logsBeforeExecution,
+            i,
+            minted.amount,
+          )
+          if (tokenAddress) {
+            dstTokens.push({
+              address: Address32.from(tokenAddress),
+              amount: minted.amount,
+            })
+          }
         }
       }
 
@@ -179,15 +274,11 @@ export class CCIPPlugIn implements InteropPlugin {
             Object.entries(network.inboundLanes).find(
               ([_, address]) => address === inboundLane,
             )?.[0] ?? `Unknown_${inboundLane}`,
-          dstTokenAddresses:
-            dstTokenAddresses.length > 0 ? dstTokenAddresses : undefined,
-          dstAmounts: dstAmounts.length > 0 ? dstAmounts : undefined,
+          dstTokens: dstTokens.length > 0 ? dstTokens : undefined,
         }),
       ]
     }
   }
-
-  // TODO: If the token is USDC, transfer should not be double-counted
 
   matchTypes = [ExecutionStateChanged]
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
@@ -197,19 +288,16 @@ export class CCIPPlugIn implements InteropPlugin {
       })
 
       if (ccipSendRequests.length === 0) return
-      if (delivery.args.state !== 2) return
+      if (delivery.args.state !== 2) return // Only match successful executions
 
       const result: MatchResult = []
-      const dstTokenAddresses = delivery.args.dstTokenAddresses ?? []
-      const dstAmounts = delivery.args.dstAmounts ?? []
+      const dstTokens = delivery.args.dstTokens ?? []
 
-      // Match each dstAmount to a CCIPSendRequested by amount
-      for (let i = 0; i < dstAmounts.length; i++) {
-        const dstAmount = dstAmounts[i]
-        const dstTokenAddress = dstTokenAddresses[i]
-        const matched = ccipSendRequests.find(
-          (req) => req.args.amount === dstAmount,
-        )
+      // Match by index position - tokenAmounts[] and ReleasedOrMinted events
+      // are emitted in the same order
+      for (let i = 0; i < dstTokens.length; i++) {
+        const dstToken = dstTokens[i]
+        const matched = ccipSendRequests.find((req) => req.args.index === i)
         if (matched) {
           result.push(
             Result.Transfer('ccip.Transfer', {
@@ -217,8 +305,8 @@ export class CCIPPlugIn implements InteropPlugin {
               dstEvent: delivery,
               srcTokenAddress: matched.args.token,
               srcAmount: matched.args.amount,
-              dstTokenAddress,
-              dstAmount,
+              dstTokenAddress: dstToken.address,
+              dstAmount: dstToken.amount,
             }),
           )
         }

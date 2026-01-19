@@ -60,7 +60,7 @@ export const InterchainTransferReceived = createInteropEventType<{
 }>('axelar-its.InterchainTransferReceived')
 
 export class AxelarITSPlugin implements InteropPlugin {
-  name = 'axelar-its'
+  readonly name = 'axelar-its'
 
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
@@ -76,14 +76,21 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (transfer.value !== interchainTransfer.amount) return
           return Address32.from(log.address)
         },
-      )?.parsed
+      )
 
       const $dstChain = findChain(
         AXELAR_NETWORKS,
         (x) => x.axelarChainName,
         interchainTransfer.destinationChain,
       )
-      const matchId = `${input.chain}-${$dstChain}-${interchainTransfer.sourceAddress.toLowerCase()}-${interchainTransfer.destinationAddress.toLowerCase()}-${interchainTransfer.amount.toString()}-${interchainTransfer.dataHash}`
+      const matchId = axelarSynthMatchId(
+        input.chain,
+        $dstChain,
+        interchainTransfer.sourceAddress,
+        interchainTransfer.destinationAddress,
+        interchainTransfer.amount,
+        interchainTransfer.dataHash,
+      )
 
       return [
         InterchainTransfer.create(input, {
@@ -111,15 +118,21 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (transfer.value !== interchainTransferReceived.amount) return
           return Address32.from(log.address)
         },
-      )?.parsed
+      )
 
       const $srcChain = findChain(
         AXELAR_NETWORKS,
         (x) => x.axelarChainName,
         interchainTransferReceived.sourceChain,
       )
-      const matchId = `${$srcChain}-${input.chain}-${interchainTransferReceived.sourceAddress.toLowerCase()}-${interchainTransferReceived.destinationAddress.toLowerCase()}-${interchainTransferReceived.amount.toString()}-${interchainTransferReceived.dataHash}`
-
+      const matchId = axelarSynthMatchId(
+        $srcChain,
+        input.chain,
+        interchainTransferReceived.sourceAddress,
+        interchainTransferReceived.destinationAddress,
+        interchainTransferReceived.amount,
+        interchainTransferReceived.dataHash,
+      )
       return [
         InterchainTransferReceived.create(input, {
           matchId,
@@ -132,16 +145,16 @@ export class AxelarITSPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [InterchainTransferReceived]
+  matchTypes = [ContractCallExecuted] // same entry as axelar.ts to prevent it stealing events
   match(
-    interchainTransferReceived: InteropEvent,
+    contractCallExecuted: InteropEvent,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (InterchainTransferReceived.checkType(interchainTransferReceived)) {
-      const contractCallExecuted = db.find(ContractCallExecuted, {
-        commandId: interchainTransferReceived.args.commandId,
+    if (ContractCallExecuted.checkType(contractCallExecuted)) {
+      const interchainTransferReceived = db.find(InterchainTransferReceived, {
+        commandId: contractCallExecuted.args.commandId,
       })
-      if (!contractCallExecuted) return
+      if (!interchainTransferReceived) return
       const contractCallApproved = db.find(ContractCallApproved, {
         commandId: interchainTransferReceived.args.commandId,
       })
@@ -157,7 +170,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       })
       if (!contractCall) return
       return [
-        Result.Message('axelar.ContractCallMessage', {
+        Result.Message('axelar.Message', {
           app: 'axelar-its',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,
@@ -174,4 +187,15 @@ export class AxelarITSPlugin implements InteropPlugin {
       ]
     }
   }
+}
+
+export function axelarSynthMatchId(
+  srcChain: string,
+  dstChain: string,
+  srcAddress: string,
+  dstAddress: string,
+  amount: bigint,
+  dataHash: `0x${string}`,
+): string {
+  return `${srcChain}-${dstChain}-${srcAddress.toLowerCase()}-${dstAddress.toLowerCase()}-${amount.toString()}-${dataHash.toLowerCase()}`
 }

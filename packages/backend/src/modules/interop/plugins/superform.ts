@@ -57,7 +57,7 @@ const SuperformCrosschainAction = createInteropEventType<{
 }>('superform.CrosschainAction')
 
 export class SuperformPlugin implements InteropPlugin {
-  name = 'superform'
+  readonly name = 'superform'
 
   capture(input: LogToCapture) {
     const network = SUPERFORM_NETWORKS.find((x) => x.chain === input.chain)

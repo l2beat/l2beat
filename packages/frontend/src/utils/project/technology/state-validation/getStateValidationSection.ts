@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
-import { getZkProgramHashes } from '../../contracts-and-permissions/getZkProgramHashes'
+import { getProgramHashes } from '../../contracts-and-permissions/getProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'
 import { getProverInfo } from './getProverInfo'
 
@@ -41,8 +41,8 @@ export function getStateValidationSection(
       tvs,
       allProjects,
     ),
-    zkProgramHashes: getZkProgramHashes(
-      project.contracts?.zkProgramHashes,
+    programHashes: getProgramHashes(
+      project.contracts?.programHashes,
       zkCatalogProjects,
       allProjectsWithContracts,
     ),

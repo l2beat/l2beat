@@ -36,15 +36,18 @@ export const Delivery = createInteropEventType<{
   sequence: bigint
   deliveryVaaHash: `0x${string}`
   $srcChain: string
+  status: number // 0: SUCCESS, 1: RECEIVER_FAILURE
 }>('wormhole-relayer.Delivery')
 
+/*
 export const SendEvent = createInteropEventType<{
   sequence: string
   $dstChain: string
 }>('wormhole-relayer.SendEvent')
+*/
 
 export class WormholeRelayerPlugin implements InteropPlugin {
-  name = 'wormhole-relayer'
+  readonly name = 'wormhole-relayer'
 
   constructor(private configs: InteropConfigStore) {}
 
@@ -65,6 +68,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
             Number(parsed.sourceChain),
           ),
           sequence: parsed.sequence,
+          status: parsed.status,
         }),
       ]
     }
@@ -80,11 +84,33 @@ export class WormholeRelayerPlugin implements InteropPlugin {
   }
 
   matchTypes = [Delivery]
+
+  /* We match by sender (relayer address) in addition to sequence + chain.
+   * From Wormhole Relayer contract:
+   *
+   *   // Revert if the emitter of the VAA is not a Wormhole Relayer contract
+   *   bytes32 registeredWormholeRelayer = getRegisteredWormholeRelayerContract(vm.emitterChainId);
+   *   if (vm.emitterAddress != registeredWormholeRelayer) {
+   *     revert InvalidEmitter(vm.emitterAddress, registeredWormholeRelayer, vm.emitterChainId);
+   *   }
+   *
+   * Otherwise we risk matching with improper sender with same chain+sequence.
+   */
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (Delivery.checkType(delivery)) {
+      const wormholeNetworks = this.configs.get(WormholeConfig)
+      if (!wormholeNetworks) return
+
+      // Find the relayer address for the source chain
+      const srcNetwork = wormholeNetworks.find(
+        (n) => n.wormholeChainId === delivery.args.sourceChain,
+      )
+      if (!srcNetwork?.relayer) return
+
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: delivery.args.sequence,
         wormholeChainId: delivery.args.sourceChain,
+        sender: srcNetwork.relayer,
       })
       if (!logMessagePublished) {
         return
@@ -92,7 +118,7 @@ export class WormholeRelayerPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-relayer', // NOTE: This isn't a real app, it's a mechanism for apps to use
+          app: 'unknown',
           srcEvent: logMessagePublished,
           dstEvent: delivery,
         }),

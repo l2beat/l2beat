@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2c159060471dd399b94fb0f1689a62947638fbd4
+
+# Diff at Wed, 14 Jan 2026 06:06:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1765882505
+- current timestamp: 1768370407
+
+## Description
+
+new pending admin: the admin can change the trusted sequencer address, which in turn can finalize state by signature, but only in optimistic mode, managed by the optimistic mode manager address.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.pendingAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
 Generated with discovered.json: 0x4cd55c8821f56a57026261abfcffcaa5452f3984
 
 # Diff at Wed, 17 Dec 2025 10:37:21 GMT:

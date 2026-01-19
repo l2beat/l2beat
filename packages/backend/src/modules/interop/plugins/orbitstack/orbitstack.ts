@@ -204,7 +204,7 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
 ])
 
 export class OrbitStackPlugin implements InteropPlugin {
-  name = 'orbitstack'
+  readonly name = 'orbitstack'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

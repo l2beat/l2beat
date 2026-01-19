@@ -7,7 +7,7 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
@@ -26,8 +26,8 @@ export const megaeth: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
-  nonTemplateZkProgramHashes: [
-    ZK_PROGRAM_HASHES(
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],

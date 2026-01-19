@@ -67,7 +67,7 @@ export const HwrTransferSentMerkly = createInteropEventType<{
 }>('hyperlane-merkly-tokenbridge.TransferSent')
 
 export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
-  name = 'hyperlane-merkly-tokenbridge'
+  readonly name = 'hyperlane-merkly-tokenbridge'
 
   capture(input: LogToCapture) {
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(
@@ -99,7 +99,7 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
           const dispatchId = nextLog && parseDispatchId(nextLog, null)
           return dispatchId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $dstChain = findChain(

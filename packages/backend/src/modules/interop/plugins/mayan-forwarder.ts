@@ -80,7 +80,7 @@ export const MayanForwarded = createInteropEventType<{
 }>('mayan-forwarder.MayanForwarded')
 
 export class MayanForwarderPlugin implements InteropPlugin {
-  name = 'mayan-forwarder'
+  readonly name = 'mayan-forwarder'
 
   constructor(private configs: InteropConfigStore) {}
 

@@ -21,6 +21,8 @@ export interface WormholeNetwork {
   chainId?: number
   wormholeChainId: number
   coreContract?: EthereumAddress
+  relayer?: EthereumAddress
+  tokenBridge?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -39,6 +41,15 @@ const OVERRIDES: WormholeNetwork[] = [
     wormholeChainId: 1,
   },
 ]
+
+// Map our chain names to Wormhole docs chain names
+const CHAIN_NAME_TO_DOCS: Record<string, string> = {
+  polygonpos: 'polygon',
+}
+
+function toDocsChainName(chainName: string): string {
+  return CHAIN_NAME_TO_DOCS[chainName] ?? chainName
+}
 
 export class WormholeConfigPlugin
   extends TimeLoop
@@ -84,11 +95,12 @@ export class WormholeConfigPlugin
     const html = await response.text()
     const $ = cheerio.load(html)
 
-    const mainnetTable = $('.tabbed-block').first().find('table').first()
+    // Parse Core Contracts (first tabbed-block, first table = mainnet)
+    const coreContractsTable = $('.tabbed-block').first().find('table').first()
 
     const evmContracts: EthereumAddress[] = []
 
-    mainnetTable.find('tbody tr').each((_, row) => {
+    coreContractsTable.find('tbody tr').each((_, row) => {
       const cells = $(row).find('td')
       if (cells.length === 2) {
         const chain = $(cells[0]).text().trim()
@@ -102,6 +114,55 @@ export class WormholeConfigPlugin
         ) {
           evmContracts.push(EthereumAddress(address))
         }
+      }
+    })
+
+    // Parse addresses from sections by finding h2 headers and the tables after them
+    const relayerByChain = new Map<string, EthereumAddress>()
+    const tokenBridgeByChain = new Map<string, EthereumAddress>()
+
+    $('h2').each((_, h2) => {
+      const headerText = $(h2).text()
+      const table = $(h2).nextAll('div').find('table').first()
+
+      // Parse Wormhole Relayer addresses
+      if (headerText.includes('Wormhole Relayer')) {
+        table.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
+
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              relayerByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
+      }
+
+      // Parse Token Bridge (WTT) addresses
+      if (headerText.includes('Wrapped Token Transfers')) {
+        table.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
+
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              tokenBridgeByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
       }
     })
 
@@ -135,11 +196,14 @@ export class WormholeConfigPlugin
                 data: result.data.toString() as Hex,
               })
 
+              const docsChainName = toDocsChainName(chain.name.toLowerCase())
               return {
                 chain: chain.name,
                 chainId: chain.id,
                 wormholeChainId: Number(decoded),
                 coreContract: evmContracts[i],
+                relayer: relayerByChain.get(docsChainName),
+                tokenBridge: tokenBridgeByChain.get(docsChainName),
               }
             }
           } catch {

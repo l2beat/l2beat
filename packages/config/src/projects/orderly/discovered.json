@@ -1,6 +1,6 @@
 {
   "name": "orderly",
-  "timestamp": 1768222390,
+  "timestamp": 1768566190,
   "configHash": "0xcd24373b613403bd25ddb128107bf06e1b5af6f4df1b7b764a5343db3940f5df",
   "entries": [
     {
@@ -244,6 +244,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
           "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -259,8 +260,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 199,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 200,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -316,6 +317,11 @@
     },
     {
       "address": "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -945,7 +951,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 344,
+        "gameCount": 352,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xef91b38Ca24C97C7147FcA3429503c76CdE043DD",
@@ -958,7 +964,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 344,
+        "permissionedGamesTotal": 352,
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -1901,6 +1907,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24218756 },
-  "permissionsConfigHash": "0x3bd7189a7572680bc8228a0c9e7ac20d9675fd141c090aa165e6450074b45d9d"
+  "usedBlockNumbers": { "ethereum": 24247262 },
+  "permissionsConfigHash": "0x1cbab795bf30e96bea98879822df2da4870eb5095d18ba031f2a97cff321044e"
 }

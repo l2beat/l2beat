@@ -62,7 +62,7 @@ const HwrTransferReceived = createInteropEventType<{
 }>('hyperlane-hwr.TransferReceived')
 
 export class HyperlaneHwrPlugin implements InteropPlugin {
-  name = 'hyperlane-hwr'
+  readonly name = 'hyperlane-hwr'
 
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
@@ -86,7 +86,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           const dispatchId = nextLog && parseDispatchId(nextLog, null)
           return dispatchId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $dstChain = findChain(
@@ -107,7 +107,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           return Address32.from(log.address)
         },
       )
-      const srcTokenAddress = transferMatch?.parsed
+      const srcTokenAddress = transferMatch
 
       const depositForBurn = findParsedAround(
         input.txLogs,
@@ -120,9 +120,9 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           HwrTransferSent.create(input, {
             messageId,
             $dstChain,
-            amount: depositForBurn.parsed.amount,
+            amount: depositForBurn.amount,
             destination: Number(sentTransferRemote.destination),
-            recipient: Address32.from(depositForBurn.parsed.mintRecipient),
+            recipient: Address32.from(depositForBurn.mintRecipient),
             tokenAddress: srcTokenAddress ?? Address32.NATIVE,
             cctp: true,
           }),
@@ -160,7 +160,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           const processId = nextLog && parseProcessId(nextLog, null)
           return processId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $srcChain = findChain(
@@ -169,7 +169,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
-      const transferMatch = findParsedAround(
+      const dstTokenAddress = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -181,7 +181,6 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           return Address32.from(log.address)
         },
       )
-      const dstTokenAddress = transferMatch?.parsed
 
       return [
         HwrTransferReceived.create(input, {
@@ -251,23 +250,26 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
 export function findParsedAround<T>(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
-  parse: (log: LogToCapture['txLogs'][number], index: number) => T | undefined,
-): { parsed: T; index: number } | undefined {
+  transform: (
+    log: LogToCapture['txLogs'][number],
+    index: number,
+  ) => T | undefined,
+): T | undefined {
   const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
   if (startPos === -1) return
 
   for (let offset = 0; offset < logs.length; offset++) {
     const forward = startPos + offset
     if (forward < logs.length) {
-      const parsed = parse(logs[forward], forward)
-      if (parsed) return { parsed, index: forward }
+      const transformed = transform(logs[forward], forward)
+      if (transformed) return transformed
     }
 
     if (offset === 0) continue
     const backward = startPos - offset
     if (backward >= 0) {
-      const parsed = parse(logs[backward], backward)
-      if (parsed) return { parsed, index: backward }
+      const transformed = transform(logs[backward], backward)
+      if (transformed) return transformed
     }
   }
 }

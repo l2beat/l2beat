@@ -41,7 +41,7 @@ const parseRootPropagated = createEventParser(
 )
 
 export class WorldIdPlugin implements InteropPlugin {
-  name = 'world-id'
+  readonly name = 'world-id'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {

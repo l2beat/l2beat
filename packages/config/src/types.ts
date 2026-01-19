@@ -102,6 +102,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // interop data
+  interopConfig?: InteropConfig
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -124,6 +127,7 @@ export interface BaseProject {
   isBridge?: true
   isScaling?: true
   isZkCatalog?: true
+  isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
@@ -291,6 +295,7 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+  customUrl?: string
 }
 
 export interface SourcifyApi {
@@ -581,7 +586,7 @@ export interface ProjectScalingStateValidationCategory {
   isIncomplete?: boolean
 }
 
-export interface ProjectScalingContractsZkProgramHash {
+export interface ProjectScalingContractsProgramHash {
   hash: string
   proverSystemProject?: ProjectId
   title: string
@@ -1077,7 +1082,7 @@ export interface ProjectContracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
-  zkProgramHashes?: ProjectScalingContractsZkProgramHash[]
+  programHashes?: ProjectScalingContractsProgramHash[]
 }
 
 export interface ProjectContract {
@@ -1177,6 +1182,86 @@ export interface ProjectDiscoveryInfo {
   contractsDiscoDriven: boolean
   baseTimestamp: number | undefined
   hasDiscoUi: boolean
+}
+
+export type InteropPluginName =
+  | 'across'
+  | 'across-settlement'
+  | 'allbridge'
+  | 'aori'
+  | 'axelar'
+  | 'axelar-its'
+  | 'beefy-bridge'
+  | 'ccip'
+  | 'cctp-v1'
+  | 'cctp-v2'
+  | 'celer'
+  | 'centrifuge'
+  | 'circle-gateway'
+  | 'debridge'
+  | 'debridge-dln'
+  | 'gaszip'
+  | 'hyperlane'
+  | 'hyperlane-eco'
+  | 'hyperlane-hwr'
+  | 'hyperlane-merkly-tokenbridge'
+  | 'hyperlane-simple-apps'
+  | 'layerzero-v1'
+  | 'layerzero-v2'
+  | 'layerzero-v2-ofts'
+  | 'lido-wsteth'
+  | 'maker-bridge'
+  | 'mayan-forwarder'
+  | 'mayan-mctp'
+  | 'mayan-mctp-fast'
+  | 'mayan-swift'
+  | 'oneinch-fusion-plus'
+  | 'opstack'
+  | 'opstack-standardbridge'
+  | 'orbitstack'
+  | 'orbitstack-customgateway'
+  | 'orbitstack-standardgateway'
+  | 'orbitstack-wethgateway'
+  | 'relay'
+  | 'relay-simple'
+  | 'sky-bridge'
+  | 'sorare-base'
+  | 'squid-coral'
+  | 'stargate'
+  | 'superform'
+  | 'world-id'
+  | 'wormhole'
+  | 'wormhole-ntt'
+  | 'wormhole-relayer'
+  | 'wormhole-token-bridge'
+  | 'zklink-nova'
+
+export interface InteropConfig {
+  name?: string
+  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  plugins: InteropPlugin[]
+}
+
+export type InteropPlugin =
+  | InteropByChainPlugin
+  | InteropByTokenIdPlugin
+  | InteropPlainPlugin
+
+export type InteropByChainPlugin = {
+  filterBy: 'chain'
+  chain: string
+  plugin: InteropPluginName
+}
+
+export type InteropByTokenIdPlugin = {
+  filterBy: 'abstractTokenId'
+  abstractTokenId: string
+  plugin: InteropPluginName
+}
+
+export type InteropPlainPlugin = {
+  plugin: InteropPluginName
+  filterBy?: undefined
 }
 // #endregion
 

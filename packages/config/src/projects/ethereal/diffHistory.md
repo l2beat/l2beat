@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x05610d011c42ab2f8f3eae2d0161f508fa3cc79f
+
+# Diff at Fri, 16 Jan 2026 12:24:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1768394405
+- current timestamp: 1768566203
+
+## Description
+
+Conduit Multisig 2 added a new signer, increasing members from 9 to 10 (threshold remains 4).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x9e9ce9688636b72ad7cd2830907df565194e83fd
+
+# Diff at Wed, 14 Jan 2026 12:41:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7f517859f6f313e4c82beba4300d1738b863a5d block: 1767629465
+- current timestamp: 1768394405
+
+## Description
+
+Conduit Multisig 2 lost one member, reducing from 4 of 10 to 4 of 9 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.5:
+-        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 9 (44%)"
+    }
+```
+
 Generated with discovered.json: 0x12387dfcfb9ad7ef2bc20eb6be57d936d1bc0e20
 
 # Diff at Mon, 05 Jan 2026 17:44:16 GMT:

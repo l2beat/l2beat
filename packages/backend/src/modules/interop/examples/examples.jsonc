@@ -25,6 +25,7 @@
   },
   "ccip": {
     "txs": [
+      // Arbitrum → Base (old Minted event format)
       {
         "chain": "arbitrum",
         "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
@@ -33,6 +34,7 @@
         "chain": "base",
         "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
       },
+      // Arbitrum → Ethereum (old Minted event format)
       {
         "chain": "arbitrum",
         "tx": "0x9e6ea796ee5b851f57643669dd24fe68948b752d7369ebce6cbd1901c2e19349"
@@ -40,7 +42,120 @@
       {
         "chain": "ethereum",
         "tx": "0x7c86a861a08dde62ac6a9de69467fcdb32db8f502caab15ea91b41f4d83da1fa"
+      },
+      // Base → Ethereum (has Released event)
+      {
+        "chain": "base",
+        "tx": "0xf678216cf093c1517c81359c73d86ed3351c2ef07ef7d22056cd940fd9fb881b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf977ea203a1100a4c84cbcd494c7e9ada4e84326f46b1e648693248c091b544f"
+      },
+      // Base → Ethereum (has ReleasedOrMinted event - USDC)
+      {
+        "chain": "base",
+        "tx": "0x9c99b5b0bb81356c643da3eabcba8e76d70c1434509b239f6619dfb0165dde46"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa8e64ce873efd60fa103e29733a089f8960063d4c1c20b7507d3d838dd6faa90"
+      },
+      // Ethereum → Base (USDC transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x995d6705856238e85b293eb190f3a3b7c8dd61fb6579f3e14d04412f384714ef"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb12cbb7d5252086155c63dcc9496e35c1f1bf09cf69deb65a8886242edccd6c3"
+      },
+      // Base → Arbitrum (USDC transfer)
+      {
+        "chain": "base",
+        "tx": "0x677f39f89080c3659d126f203d32a5d66da6049118e2e6fac8fa530f2407d81a"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x389ab7037904f0709e847c098f6a66c01c01093f20b391cfaa3f6ce17d4e1c22"
+      },
+      // Ethereum → Base BATCHED (2 source txs, 1 dst tx with 2 ExecutionStateChanged events)
+      {
+        "chain": "ethereum",
+        "tx": "0x0c4597c5a788e5700dfff0583a8da5e16ba3f2ef56acca8629f18dcb08920d02"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x92f8265d0f5020dd9babb5f63c99fdec8c2361828c8ea8d73d5163ea69997b54"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5cb327c65ab86ddc22bc81fb310c3a2d80c7ca44a690f8de0f3c2a7c7abfbbbf"
+      },
+      // Base → Ethereum LINK token (tests Released event parsing)
+      {
+        "chain": "base",
+        "tx": "0xadbfe87e982ec948b7825b5c48f7284957a2dfe06012858fe0d37309e290a385"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1cfdefda87414b4dc7c5bc04fcc264260a4231f50e15a91a839a718948a33989"
+      },
+      // Ethereum → Arbitrum WETH token
+      {
+        "chain": "ethereum",
+        "tx": "0x57ffa562517040e73b538e0762c7a1131cef66a0676a57d447fa252f34954935"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x142313291f839043b3f56627b5022ab4dc5cb6f1dffe15a3985f7093a2bc96b1"
       }
+    ],
+    "events": [
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged"
+    ],
+    "messages": [
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
+      { "type": "ccip.Message", "app": "CCIP Token Transfer" }
+    ],
+    "transfers": [
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer",
+      "ccip.Transfer"
     ]
   },
   "celer": {
@@ -246,19 +361,69 @@
       }
     ]
   },
-  "axelar-contractCall": {
+  "axelar": {
+    "loadConfigs": ["layerzero-v2"],
     "txs": [
+      // contractcallwithtoken + express fill via squid
+      {
+        "chain": "base",
+        "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
+      },
       {
         "chain": "ethereum",
-        "tx": "0x12fd354579e5296ba53b3c38597cee42b03febc0b7818e6d71ea471f421022d6"
+        "tx": "0x348e2ceff5c772660c292557ee765557b90d317d8cb30393d3a9e1bcea677d74"
       },
       {
-        "chain": "base",
-        "tx": "0xf71b63d06b0d10f5493bd421cfb15b654bbe05ac32ba705ac8410bf11f5ea165"
+        "chain": "ethereum",
+        "tx": "0x115fd33686a14f7ed42088f1032dffb52e14706f58b460fc9f3ef32026b57aff"
       },
       {
+        "chain": "ethereum",
+        "tx": "0x53dc125b2e3a9e173f229052e59d4fb68c56d72a995c5e6f4dc56b3bef8c6abf"
+      },
+      // contractcallwithtoken
+      {
         "chain": "base",
-        "tx": "0xb49a09079ac6398fd53673ef5d3a57237daa4b895d21724e4ce4eb7dc91d0c2e"
+        "tx": "0xf5aa1b316e29ea7703db8abc97c61401d052ae597560470531148bfac2fd5604"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4ffd8966901a60321f91bcff3caed4879f5839ed473c1a18df2276fb124d0bb0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x39c05cfbecd0bbbfdd79ad70c9df270f4ecb48a24081af31e65e09e6c1896cd6"
+      },
+      // contractCall (layerzerowrapper)
+      {
+        "chain": "arbitrum",
+        "tx": "0xa69efc2230d17f040125f5bec483b2725e81721c93c71a792377b8268c8cc218"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x298c7d3403c91f2d0b1ec2206870b13f3a6932818d2f4322247476872fa0a9bd"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xee5fda453ba6fefa80deea9fa9781d0784bbb757cee564fe8bb61fcd3c216bbd"
+      },
+      // only needed for layerzero
+      {
+        "chain": "ethereum",
+        "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
+      },
+      // contractcallwithtoken, no express, axlUSDC execution (amountUnsafe fix)
+      {
+        "chain": "ethereum",
+        "tx": "0x066aeb47a399e49dc10ebfe34cc0d49caa734e177305eec09b59af024a0e2840"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x12288c68ad085819e445e28f145a3c24c88610efb457fb7db28075ad9c4a71dc"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
       }
     ]
   },
@@ -287,6 +452,18 @@
       {
         "chain": "base",
         "tx": "0xfd4e5dcf4351d0d98b15eca74fa52792a630d4598f4953aac38efb277d50d8e7"
+      },
+      {
+        "chain": "base",
+        "tx": "0xcde0b6b999c119e76db1caa0958e35cee2276b0b4a5a8035f19232b9bcff5e13"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x87f11f2e569dec1a458d4ccd1eb91102829c975048626b9aaced714f0bf8549b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x3ea610acd6fc3422099437b3c6c5d47ccc1c97b7e9c75e0adc9577cda3bebe5c"
       }
     ]
   },
@@ -318,51 +495,6 @@
     ],
     "messages": ["axelar.ContractCallMessage"],
     "transfers": ["axelar-its.Transfer"]
-  },
-  "axelar-contractCallWithMint2": {
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xb3bcbed1cec775088aa6c1785fd84d3c41cd904976554ff8edf32477b1980e48"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x6280c9278d845daa6fddcbfdd0e855e64153d25f99eb16cfcc38a066b5e157c3"
-      },
-      {
-        "chain": "base",
-        "tx": "0xe2f90a6a31aec70efd13ac2e4e0e6bfba2a916ef90013bc41c63a0590f8c40ac"
-      }
-    ],
-    "events": [
-      "axelar.ContractCallWithToken",
-      "axelar.ContractCallApprovedWithMint"
-    ],
-    "messages": ["axelar.ContractCallWithTokenMessage"],
-    "transfers": ["axelar-gateway.Transfer"]
-  },
-  "axelar-contractCallWithMint": {
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0x99edfa94b5779c2c0cf50c561cf8b2b30cb8ec878c886889c2ce6c71019e6801"
-      },
-      {
-        "chain": "optimism",
-        "tx": "0x7385ff7389a6338bbfabf8cfbd6e29cf3f50be2e3f949f3d8e216d9e4f7197d2"
-      },
-      {
-        "chain": "optimism",
-        "tx": "0x1e771a8c9acf904a731a5a9c19ba70845cf84f60cb80196ebc3257cc3d311b27"
-      }
-    ],
-    "events": [
-      "axelar.ContractCallWithToken",
-      "axelar.ContractCallApprovedWithMint",
-      "axelar.ContractCallExecuted"
-    ],
-    "messages": ["axelar.ContractCallWithTokenMessage"],
-    "transfers": ["axelar-gateway.Transfer"]
   },
   "relay-simple-3": {
     "txs": [
@@ -509,6 +641,62 @@
       {
         "chain": "arbitrum",
         "tx": "0xe81f7b139c8077f1ce52f3661289c176459d556878961b70ad9f1625654dd89c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1a2dcc3e6e3b2186140d5df7694240a2e292df501a292ebd4725fec04bb1d0d0"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4fd07fde84050df16288618f78e119aaa346121bd32405c1c5aa0926925218d2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9ce8ffaf4a34124796465535be836803cc13e0468d0bcac0e69df2c93e83c524"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x5e065deefec95bb0bd6fc5450e99d2b2a537a1f7d30a7f249f2f0765b40dad42"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xe9ea6ec8088d807830337bf1fdb177533696dd6e769ad78c90ade75d999260fe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xcbee6b21f94f72cfd069f4dcf73172a3b4528264cdeb82a17336a1b6f0ec9920"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xd8c6c535cac0cd65137f279e1385fdf944fbb0252d1a12cb9a403cc02b79b3ef"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xbc75616ca167ff3a572476e9522313c07b7640054918e86ce0f9949982969632"
+      },
+      {
+        "chain": "base",
+        "tx": "0xc9c9d4c79d03406e42c7e211e2c09571f3d2259dd8620e21712d28ac873d23d1"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x675563a55517e0788b467c00af7f35bc80f17c258d4277573a4b0f01e1dbd3fb"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xcf1fcce0c1789d25847882ac778fd364b55e6129d30980a524470cc158fc08a1"
+      },
+      {
+        "chain": "base",
+        "tx": "0x27a469b135714e9f800b1b938bba1c344cb7d8cd7cf96fa4ea987a4f98fab52b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x058d308f99ab55d58c30820e7acaf2e82b96006781ed6346c115f18cb7fed555"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0a3a28a1099eadd62a233ea2b54c740f4fbb2de6040a995a26ff6189d159f1e6"
       }
     ]
   },
@@ -1531,20 +1719,21 @@
     ]
   },
   "wormhole-debug": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x17aa2be5aafb29e41a7e75eeaff7a06aaeabae0bfb9bee5f47d7f9d6979649b4"
+        "chain": "ethereum",
+        "tx": "0x31501df432f135cbd87f1614df5d1259db0969aec2b8664c8a25ca1c6744211d"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x625564530b469cdb41c11ed585276688362964bbf4a9e7c93b03ae5dd73be8d7"
+        "chain": "base",
+        "tx": "0x2f6c995f2d834d8792108d93f7f55749dc04d58eab0915c35ec1d1066728e6ee"
       }
     ]
   },
   "oft": {
     "loadConfigs": ["layerzero-v2"],
-    // 3 oft transfers
+    // 4 oft transfers
     "txs": [
       {
         "chain": "ethereum",
@@ -1569,6 +1758,15 @@
       {
         "chain": "ethereum",
         "tx": "0x17a8188cbc60c5fdea6160dd4f51b5c0be25f4e93d5bcfc9a53fda3047a4e1db"
+      },
+      // abstract ETH special case (eth is gas token and emits)
+      {
+        "chain": "abstract",
+        "tx": "0x8def42eab96d9a9e909335dd4c438abad28852f08bb5c796ca44668fdafb115d"
+      },
+      {
+        "chain": "base",
+        "tx": "0x08fceb6f2db1a78a81a6ad94b8b2f137d7eb4e111043db1a7a05909db4208025"
       }
     ]
   },

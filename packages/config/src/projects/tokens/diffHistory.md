@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xab5a1c06e16c207961f4d125d45da63d22ed8d40
+
+# Diff at Wed, 14 Jan 2026 06:34:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767796932
+- current timestamp: 1768372202
+
+## Description
+
+cctp fee recipient change. new stakingvault in Lido.
+
+## Watched changes
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      values.feeRecipient:
+-        "base:0xDB03303F417A5eF98680FECde60c1e0701F3b6f3"
++        "base:0xBEA3621Ef88850E062cF4baCCaD72877E2c3e4Eb"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      values.vaultByIndex.3:
++        "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../PinnedBeaconProxy.p.sol                        |  586 ++++++
+ .../StakingVault.sol                               | 2000 ++++++++++++++++++++
+ 2 files changed, 2586 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796932 (main branch discovery), not current.
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      template:
++        "tokens/Lido/VaultHub"
+    }
+```
+
 Generated with discovered.json: 0x0c75c322e68ce0ce05e748e92e4ca56912a3488c
 
 # Diff at Wed, 07 Jan 2026 15:13:19 GMT:

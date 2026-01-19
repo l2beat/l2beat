@@ -1,0 +1,30 @@
+import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
+
+export type InteropPathData = {
+  srcChain: string
+  dstChain: string
+  volume: number
+}
+
+export function getTopPaths(
+  records: AggregatedInteropTransferRecord[],
+): InteropPathData[] {
+  const map = new Map<string, number>()
+
+  for (const record of records) {
+    const key = `${record.srcChain}::${record.dstChain}`
+    const current = map.get(key) ?? 0
+    map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))
+  }
+
+  return Array.from(map.entries())
+    .toSorted((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([key, volume]): InteropPathData => {
+      const [srcChain, dstChain] = key.split('::')
+      assert(srcChain && dstChain)
+
+      return { srcChain, dstChain, volume }
+    })
+}

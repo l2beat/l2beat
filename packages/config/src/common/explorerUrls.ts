@@ -37,5 +37,6 @@ export const EXPLORER_URLS: Record<string, string> = {
   zircuit: 'https://explorer.zircuit.com',
   metis: 'https://andromeda-explorer.metis.io',
   ethereal: 'https://explorer.ethereal.trade',
+  ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
 }

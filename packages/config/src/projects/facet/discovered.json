@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1767717465,
+  "timestamp": 1768391906,
   "configHash": "0x668768bdc2deaaf17983133f822fd00a47d1802f9de00ee74aa57e4e67bafe5c",
   "entries": [
     {
@@ -152,6 +152,7 @@
         {
           "permission": "propose",
           "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
         }
       ]
@@ -165,7 +166,7 @@
         "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+      "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -177,15 +178,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 2770660,
-        "anchorProposalId": 589,
-        "anchorRoot": "0xd611afecee21989268297092ef13c359267a7dc6ee306cb63d2c5d1fce456ed5",
+        "anchorL2BlockNumber": 2828260,
+        "anchorProposalId": 621,
+        "anchorRoot": "0x85a315b9016d7e4b843284b4323fa7153b87fcfac90bc87acfd3cc38a5b2df35",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 618,
+        "getProposalsLength": 650,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1754499659,
@@ -831,6 +832,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24176875, "facet": 2822743 },
-  "permissionsConfigHash": "0x0fce2db250d4177647709f445b4f4e0d924a8700b3acd3798704c94903377789"
+  "usedBlockNumbers": { "ethereum": 24232790, "facet": 2878947 },
+  "permissionsConfigHash": "0x804277fe3ef466ad4a6f1643551094a2daca80f97376fbc270e197e312316767"
 }

@@ -1,0 +1,114 @@
+name: Smoke Test
+
+on:
+  pull_request:
+  merge_group: {}
+
+permissions:
+  contents: read
+
+jobs:
+  config-smoke-test-matrix:
+    if: >
+      ${{
+        github.event_name == 'merge_group' ||
+        (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+      }}
+    name: Config (${{ matrix.service }} - ${{ matrix.environment }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        include:
+          - service: backend
+            environment: staging
+          - service: backend
+            environment: production
+          - service: update-monitor
+            environment: staging
+          - service: update-monitor
+            environment: production
+          - service: tvs
+            environment: staging
+          - service: tvs
+            environment: production
+    env:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_API_KEY: ${{ secrets.COOLIFY_RO_API_KEY }}
+      # GH cannot determine at workflow evaluation time if the secret is needed, so it passes ALL of them to the job.
+      # This way we only pass the needed secret and limit potential exposure.
+      COOLIFY_APP_ID: >-
+        ${{
+          (matrix.service == 'backend' && matrix.environment == 'staging' && secrets.COOLIFY_BACKEND_STAGING_ID) ||
+          (matrix.service == 'backend' && matrix.environment == 'production' && secrets.COOLIFY_BACKEND_PRODUCTION_ID) ||
+          (matrix.service == 'update-monitor' && matrix.environment == 'staging' && secrets.COOLIFY_UM_STAGING_ID) ||
+          (matrix.service == 'update-monitor' && matrix.environment == 'production' && secrets.COOLIFY_UM_PRODUCTION_ID) ||
+          (matrix.service == 'tvs' && matrix.environment == 'staging' && secrets.COOLIFY_TVS_STAGING_ID) ||
+          (matrix.service == 'tvs' && matrix.environment == 'production' && secrets.COOLIFY_TVS_PRODUCTION_ID)
+        }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: packages/backend
+
+      - name: Build packages
+        run: pnpm build:dependencies
+        working-directory: packages/backend
+
+      - name: Install and setup Coolify CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
+          coolify context use l2beat
+
+      - name: Validate COOLIFY_APP_ID
+        run: |
+          if [[ -z "$COOLIFY_APP_ID" ]]; then
+            echo "Missing COOLIFY_APP_ID for ${matrix.service}/${matrix.environment}"
+            exit 1
+          fi
+
+      - name: Pull ${{ matrix.environment }} ${{ matrix.service }} configuration
+        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
+        working-directory: packages/backend
+
+      - name: Run ${{ matrix.environment }} ${{ matrix.service }} smoke test
+        run: pnpm test:config
+        working-directory: packages/backend
+
+  # Main aggregator job that always runs and fails on any matrix failure.
+  config-smoke-test:
+    if: >
+      ${{
+        always() &&
+        (
+          github.event_name == 'merge_group' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+        )
+      }}
+    name: Config smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: config-smoke-test-matrix
+    steps:
+      - name: Check matrix result
+        run: |
+          if [[ "${{ needs.config-smoke-test-matrix.result }}" != "success" ]]; then
+            echo "Config smoke test matrix failed."
+            exit 1
+          fi
+          echo "All config smoke test matrix legs passed."

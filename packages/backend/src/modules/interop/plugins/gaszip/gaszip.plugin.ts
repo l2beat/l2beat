@@ -40,7 +40,7 @@ export const GasZipFill = createInteropEventType<{
 }>('gaszip.Fill')
 
 export class GasZipPlugin implements InteropPlugin {
-  name = 'gaszip'
+  readonly name = 'gaszip'
 
   constructor(private logger: Logger) {}
 
