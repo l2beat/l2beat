@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcfc7c972bea366e25be9064c682bae7bc6d60109
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+ARB tokenpool added.
 
 ## Watched changes
 
