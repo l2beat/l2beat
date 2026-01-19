@@ -104,6 +104,14 @@ export const megaeth: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
   },
+  nonTemplateDaTracking: [
+    {
+      type: 'eigen-da',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1762995600), // 2025-11-13T01:00:00Z
+      customerId: '0x42b5ea5238752cc6f70d93fa4249feae480a0b39',
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(

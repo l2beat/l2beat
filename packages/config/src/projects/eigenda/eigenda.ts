@@ -412,13 +412,13 @@ export const eigenda: BaseProject = {
         ],
       },
       {
-        projectId: ProjectId('megaeth'),
-        name: 'MegaETH',
+        projectId: ProjectId('rise'),
+        name: 'Rise',
         daTrackingConfig: [
           {
             type: 'eigen-da',
-            sinceTimestamp: 1722405600,
-            customerId: '0xcd1161b78f01da838ce0d42ec750891ec8708f1d',
+            sinceTimestamp: 1767607200, // 2026-01-05T10:00:00Z
+            customerId: '0x78d5974216f751eb328018f003067f77e8be2fc4',
           },
         ],
       },
