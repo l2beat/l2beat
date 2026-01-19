@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x9d307655ca4557ebb80d33b38a882391537921ef
+
+# Diff at Mon, 19 Jan 2026 12:20:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7fd8e6c42f2f1cc03bcf6ecae4818cfa02672b07 block: 1766146814
+- current timestamp: 1768825040
+
+## Description
+
+No actual change in the contracts. I think this is caused by switching explorer to zksync native explorer. This proxy admin contract is marked as partially verified there: https://explorer.zksync.io/address/0xdB1E46B448e68a5E35CB693a99D59f784aD115CC#contract, this could be a reason.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766146814 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+    }
+```
+
 Generated with discovered.json: 0xc440fd1d02b23efff7574feda951f565885e3665
 
 # Diff at Fri, 19 Dec 2025 12:27:53 GMT:

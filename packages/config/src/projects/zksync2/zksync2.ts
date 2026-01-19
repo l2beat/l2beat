@@ -32,7 +32,6 @@ export const zksync2: ScalingProject = zkStackL2({
       documentation: ['https://docs.zksync.io/'],
       explorers: [
         'https://explorer.zksync.io/',
-        'https://era.zksync.network/',
         'https://zksync.blockscout.com/',
         'https://hyperscan.xyz/',
       ],
@@ -53,7 +52,7 @@ export const zksync2: ScalingProject = zkStackL2({
   chainConfig: {
     name: 'zksync2',
     chainId,
-    explorerUrl: 'https://era.zksync.network',
+    explorerUrl: 'https://explorer.zksync.io',
     sinceTimestamp: UnixTime(1676384520),
     multicallContracts: [
       {
