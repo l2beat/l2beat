@@ -1820,6 +1820,7 @@
       "name": "ValidatorShare",
       "address": "eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797",
       "type": "Contract",
+      "template": "polygonposbridge/ValidatorShare",
       "sourceHashes": [
         "0x4b0f6f393ba1c67669b6757ed5ed3f2e684d143e6cca00498c7baefe7778a8ee"
       ],
@@ -1855,7 +1856,6 @@
         "withdrawPool": 0,
         "withdrawShares": 0
       },
-      "errors": { "getRewardPerShare": "Processing error occurred." },
       "implementationNames": {
         "eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797": "ValidatorShare"
       }
@@ -3157,6 +3157,7 @@
     "polygonposbridge/StakingInfo": "0x829f5c8f53e24e460b0c9e3d62696df2e750bdef5977d52d9d9085c223fdb77b",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
+    "polygonposbridge/ValidatorShare": "0xde2a6f44e0d5494f1ad05d334b0d65c079402f3350f8579af8f5a005cf2ba4a1",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24268164 },
