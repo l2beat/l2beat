@@ -68,7 +68,6 @@ export const synapse: Bridge = {
       'DFK Chain',
       'Optimism',
       'Polygon',
-      'Aurora',
       'Boba Network',
       'Fantom',
       'Metis',

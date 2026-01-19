@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x6680748b69bbba76a039e6e9ff1353e8e42f0621
+
+# Diff at Mon, 19 Jan 2026 09:53:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768370289
+- current timestamp: 1768816348
+
+## Description
+
+ms member added.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0x36fae4976f4a4fccb1418c7490e7ae0c52dc9f84
 
 # Diff at Wed, 14 Jan 2026 05:59:19 GMT:

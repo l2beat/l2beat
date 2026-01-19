@@ -272,7 +272,7 @@ export class AxelarPlugin implements InteropPlugin {
             const from = Address32.from(transfer.from)
             const axelarGatewayAddress = Address32.from(input.log.address)
             // checking whether the token came from the gateway, not sure this is enough
-            if (from === axelarGatewayAddress)
+            if (from === axelarGatewayAddress || from === Address32.ZERO)
               return {
                 address: Address32.from(log.address),
                 amount: transfer.value,

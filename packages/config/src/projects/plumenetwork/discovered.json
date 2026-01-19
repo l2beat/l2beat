@@ -1,6 +1,6 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1764933819,
+  "timestamp": 1768566203,
   "configHash": "0x57464414e26dcb236e56428df2a32e16a0684674a8c8fd9d91eea17b987ff2d5",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -182,7 +182,7 @@
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
         ],
         "allowedOutboxList": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
-        "delayedMessageCount": 1792,
+        "delayedMessageCount": 2053,
         "inboxHistory": [
           "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
           "eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"
@@ -192,8 +192,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 27788,
-        "sequencerReportedSubMessageCount": 41199274
+        "sequencerMessageCount": 33799,
+        "sequencerReportedSubMessageCount": 46844266
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -265,13 +265,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 557,
+        "firstUnresolvedNode": 641,
         "inbox": "eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739185,
-        "latestConfirmed": 556,
-        "latestNodeCreated": 567,
+        "latestConfirmed": 640,
+        "latestNodeCreated": 651,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71",
@@ -511,6 +511,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
           "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -526,8 +527,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 193,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 200,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -574,6 +575,11 @@
       "implementationNames": {
         "eth:0x6982e35C878cD2b5aF8Dcf06f33c4EfB01D6f482": "OneStepProver0"
       }
+    },
+    {
+      "address": "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x74a0d46BA4F69cAB77A459f8B12dc531c7DaBf3C",
@@ -725,7 +731,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 27788,
+        "batchCount": 33799,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -766,7 +772,7 @@
         "rollup": "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1792,
+        "totalDelayedMessagesRead": 2053,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1952,6 +1958,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23946430 },
-  "permissionsConfigHash": "0xcac9487e804cf5731799e2b26690bdacaceaf64fcb881cfad4715309237f20ba"
+  "usedBlockNumbers": { "ethereum": 24247264 },
+  "permissionsConfigHash": "0xe40f1a10b78b8acc15e309a0584e11f4475322c90d719d6d67e204a0319405e2"
 }

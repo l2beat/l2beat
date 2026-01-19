@@ -412,21 +412,18 @@
         "chain": "ethereum",
         "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
       },
+      // contractcallwithtoken, no express, axlUSDC execution (amountUnsafe fix)
       {
-        "chain": "base",
-        "tx": "0xae8537bf04cb3fd4e3d250f00c49a92be59bfd4666567a107bce64dda5204312"
+        "chain": "ethereum",
+        "tx": "0x066aeb47a399e49dc10ebfe34cc0d49caa734e177305eec09b59af024a0e2840"
       },
       {
-        "chain": "arbitrum",
-        "tx": "0x960eeafed892cf86c3a884c76b484de1f5efc4d209eed5b9afb3302b92d9cf83"
+        "chain": "polygonpos",
+        "tx": "0x12288c68ad085819e445e28f145a3c24c88610efb457fb7db28075ad9c4a71dc"
       },
       {
-        "chain": "arbitrum",
-        "tx": "0x264a10a613cf6654b123474306d49219ab8480ba03bd90977d7b59d07791066f"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x4c615b0aa7dd70a1be8b315858daf470165d58fdba1d3380ebf8fb03ad40ca55"
+        "chain": "polygonpos",
+        "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
       }
     ]
   },
@@ -638,12 +635,28 @@
     "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0x3cfa65ab201ecf59f94f7d7ebbf82cfb8ca80154bb0cc62df25cca25c3362d3b"
+        "chain": "arbitrum",
+        "tx": "0xbb4d6c8c5d09202beaa0baf58e28bbc93a6abf4400eb1b4c0e819cfdf5bcf913"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x879761cd499524e14b298c7887ca8de035aebbd30f52dd85dd0abc33dc24a04f"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xe81f7b139c8077f1ce52f3661289c176459d556878961b70ad9f1625654dd89c"
+        "tx": "0xe15d154c06cb913ac50a7868ca0fe519286a9b9b1c1ff600e5a706f56538aa48"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14d3f4f8a63dcfffdfc0eb29217a0446e01d82aea503f4ec037df8668966d21d"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe0a8dc3c941ed7952543255e20a3012f83760d823144666e523783f92f2848d6"
+      },
+      {
+        "chain": "base",
+        "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
     ]
   },
@@ -1666,14 +1679,15 @@
     ]
   },
   "wormhole-debug": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x17aa2be5aafb29e41a7e75eeaff7a06aaeabae0bfb9bee5f47d7f9d6979649b4"
+        "chain": "ethereum",
+        "tx": "0x31501df432f135cbd87f1614df5d1259db0969aec2b8664c8a25ca1c6744211d"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x625564530b469cdb41c11ed585276688362964bbf4a9e7c93b03ae5dd73be8d7"
+        "chain": "base",
+        "tx": "0x2f6c995f2d834d8792108d93f7f55749dc04d58eab0915c35ec1d1066728e6ee"
       }
     ]
   },

@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xf36b99662b83385ed3ff578fc7a3e05a25a74a78
+
+# Diff at Mon, 19 Jan 2026 10:41:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768372119
+- current timestamp: 1768817836
+
+## Description
+
+Upgrade of the ValidatorShare contract (the contract that implements the delegation token for each validator):
+- validator share tokens (dPOL___) are now transferable
+
+## Watched changes
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getValidatorShareAddress:
+-        "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B"
++        "eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.minDeposit:
+-        "1000000000000000000"
++        "100000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      values.$members.7:
+-        "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B"
++        "eth:0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1768372119 => .flat}/ValidatorShare.sol | 517 ++++++++++++++++-----
+ 1 file changed, 407 insertions(+), 110 deletions(-)
+```
+
 Generated with discovered.json: 0x36c75c26f1691d801fc8a3402cffbe4defa113b5
 
 # Diff at Wed, 14 Jan 2026 06:29:46 GMT:

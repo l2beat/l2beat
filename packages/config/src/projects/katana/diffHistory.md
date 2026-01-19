@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x923d64d3f30337aa0193c25fe961c0701df0596e
+
+# Diff at Mon, 19 Jan 2026 09:54:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768370407
+- current timestamp: 1768816385
+
+## Description
+
+admin change and multisig member change.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.admin:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac"
++        "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "2 of 7 (29%)"
+    }
+```
+
 Generated with discovered.json: 0x2c159060471dd399b94fb0f1689a62947638fbd4
 
 # Diff at Wed, 14 Jan 2026 06:06:21 GMT:

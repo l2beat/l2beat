@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1768394405,
+  "timestamp": 1768566203,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -103,7 +103,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 2596,
+        "batchCount": 2644,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -422,13 +422,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 216,
+        "firstUnresolvedNode": 219,
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23421301,
-        "latestConfirmed": 215,
-        "latestNodeCreated": 226,
+        "latestConfirmed": 218,
+        "latestNodeCreated": 230,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -523,6 +523,11 @@
     },
     {
       "address": "arb1:0x690d1E0fac0599874b849EE88AeA27F7b348e1f2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -632,6 +637,7 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
           "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
@@ -646,8 +652,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 117,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 119,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -863,8 +869,8 @@
         ],
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 2596,
-        "sequencerReportedSubMessageCount": 1677548
+        "sequencerMessageCount": 2644,
+        "sequencerReportedSubMessageCount": 1763398
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1091,7 +1097,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2629,6 +2635,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 421271450, "ethereal": 1678823 },
-  "permissionsConfigHash": "0xc3d2eb724d352684d52b8a385beee1acd6c2a36692feaec8e5115022fb992e3f"
+  "usedBlockNumbers": { "arbitrum": 421958838, "ethereal": 1763552 },
+  "permissionsConfigHash": "0xb37860e3d4dd18faf2377667aba7c31f2fce64b2c6c0faa29ee1a3a5de0cf12b"
 }

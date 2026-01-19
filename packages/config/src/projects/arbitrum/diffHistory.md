@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x651e79e718a58f0cd09d3838c62d461ae6024e6b
+
+# Diff at Fri, 16 Jan 2026 12:24:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1768394371
+- current timestamp: 1768566202
+
+## Description
+
+Arbitrum Security Council member sync executed: 0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67 replaced 0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988 across all Security Council multisigs (L2SecurityCouncilEmergency, L2SecurityCouncilPropose on Arbitrum, and main Security Council on Ethereum).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "arb1:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988"
+    }
+```
+
 Generated with discovered.json: 0x6ffd4ee7786ab09804eb0311dc3aa53cbc3b0f34
 
 # Diff at Wed, 14 Jan 2026 12:40:40 GMT:
