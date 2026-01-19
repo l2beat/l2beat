@@ -87,7 +87,7 @@ function WidgetWrapper({
   return (
     <div
       className={cn(
-        'absolute inset-x-0 top-0 h-full w-full overflow-clip transition-transform duration-300 ease-in-out max-md:rounded-lg',
+        'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
         className,
       )}
     >
