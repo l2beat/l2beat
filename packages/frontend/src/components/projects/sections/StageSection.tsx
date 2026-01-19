@@ -125,9 +125,9 @@ export function StageSection({
           color="green"
           body={
             <>
-              <strong>The project passes the walkaway test</strong>: users are
-              not able to exit in the presence of malicious operators if the
-              Security Council disappears.
+              <strong>The project passes the walkaway test</strong>: users can
+              exit in the presence of malicious operators even if the Security
+              Council disappears.
             </>
           }
           icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
