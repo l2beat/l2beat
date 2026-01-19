@@ -6,6 +6,7 @@ import {
   type InteropPlugin,
   type LogToCapture,
 } from '../types'
+import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
 import { WormholeConfig } from './wormhole.config'
 
 const parseLogMessagePublished = createEventParser(
@@ -16,6 +17,12 @@ const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
+// Folks Finance uses Wormhole for cross-chain messaging and emits SendMessage with destination chain.
+// This might need a separate plugin in the future if more Folks-specific logic is needed.
+const parseFolksSendMessage = createEventParser(
+  'event SendMessage(bytes32 operationId, ((uint16,uint16,uint256,uint256,uint256),bytes32,uint16,bytes32,bytes,uint64,bytes) message)',
+)
+
 export const LogMessagePublished = createInteropEventType<{
   payload: `0x${string}`
   sequence: bigint
@@ -23,6 +30,7 @@ export const LogMessagePublished = createInteropEventType<{
   sender: EthereumAddress
   srcTokenAddress?: Address32
   srcAmount?: bigint
+  $dstChain?: string
 }>('wormhole.LogMessagePublished')
 
 export class WormholePlugin implements InteropPlugin {
@@ -71,6 +79,27 @@ export class WormholePlugin implements InteropPlugin {
       }
     }
 
+    // Try to find destination chain from Folks Finance SendMessage event after LogMessagePublished
+    let $dstChain: string | undefined
+    for (const candidateLog of input.txLogs) {
+      if (
+        candidateLog.logIndex === null ||
+        logIndex === null ||
+        candidateLog.logIndex <= logIndex
+      ) {
+        continue
+      }
+      const folksSendMessage = parseFolksSendMessage(candidateLog, null)
+      if (folksSendMessage) {
+        // message tuple: ((params), sender, destinationChainId, handler, payload, finalityLevel, extraArgs)
+        // destinationChainId is at index 2, using Folks Finance's own chain ID system
+        const folksChainId = Number(folksSendMessage.message[2])
+        $dstChain =
+          FOLKS_CHAIN_ID_TO_CHAIN[folksChainId] ?? `Unknown_${folksChainId}`
+        break
+      }
+    }
+
     return [
       LogMessagePublished.create(input, {
         payload: parsed.payload,
@@ -79,6 +108,7 @@ export class WormholePlugin implements InteropPlugin {
         sender: EthereumAddress(parsed.sender),
         srcTokenAddress,
         srcAmount,
+        $dstChain,
       }),
     ]
   }
