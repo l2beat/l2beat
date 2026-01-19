@@ -46,6 +46,9 @@ function getCommonColumns<
           {formatCurrency(ctx.row.original.volume, 'usd')}
         </span>
       ),
+      meta: {
+        align: 'right',
+      },
     }),
   ]
 }
@@ -63,9 +66,6 @@ export const lockMintColumns = [
         {formatSeconds(ctx.row.original.averageDuration)}
       </div>
     ),
-    meta: {
-      align: 'right',
-    },
   }),
   lockMintColumnHelper.accessor('tokens', {
     header: 'tokens\nby volume',
@@ -87,6 +87,9 @@ export const omniChainColumns = [
         {ctx.row.original.tokens.length}
       </div>
     ),
+    meta: {
+      align: 'right',
+    },
   }),
   omniChainColumnHelper.accessor('tokens', {
     header: 'tokens by\nvolume',

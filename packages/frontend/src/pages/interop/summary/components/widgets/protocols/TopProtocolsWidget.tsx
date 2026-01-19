@@ -97,7 +97,7 @@ export function TopProtocolsWidget({
         <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
           Between {uniqChains.length} supported chains
         </div>
-        <table className="mt-2 w-full border-separate border-spacing-y-1 pr-1">
+        <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
             {isLoading || protocolsWithColors.length === 0
               ? times(5).map((index) => (
@@ -120,10 +120,10 @@ export function TopProtocolsWidget({
                       ? `Others (${protocol.othersCount ?? 0})`
                       : protocol.protocolName}
                   </td>
-                  <td className="px-2 font-medium text-2xs text-secondary">
+                  <td className="px-2 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%
                   </td>
-                  <td className="font-medium text-2xs">
+                  <td className="text-right font-medium text-2xs">
                     {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>
