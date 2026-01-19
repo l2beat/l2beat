@@ -92,6 +92,8 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
         Result.Transfer('wormhole-tokenbridge.Transfer', {
           srcEvent: logMessagePublished,
           dstEvent: transferRedeemed,
+          srcTokenAddress: logMessagePublished.args.srcTokenAddress,
+          srcAmount: logMessagePublished.args.srcAmount,
           dstTokenAddress: transferRedeemed.args.dstTokenAddress,
           dstAmount: transferRedeemed.args.dstAmount,
         }),
