@@ -623,7 +623,9 @@
     ]
   },
   "wormhole-ntt": {
+    "loadConfigs": ["wormhole"],
     "txs": [
+      // NTT token transfer (L3 token: Arbitrum → Base)
       {
         "chain": "arbitrum",
         "tx": "0xd8cec5a2163774b308d382442a59f3558f0e7d6ebf9817bc5953c27c3d98b671"
@@ -631,8 +633,22 @@
       {
         "chain": "base",
         "tx": "0xed7885b062d7b42ec332ffc035410686128103db9a38c6d4842276f95ed68539"
+      },
+      // M^0 Index propagation (Ethereum → Arbitrum) - not a token transfer
+      {
+        "chain": "ethereum",
+        "tx": "0x53c97bcf404690cea7b294329e43d36320db0c7e32f374a1a6eb7aff4963d59b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
       }
-    ]
+    ],
+    "messages": [
+      { "type": "wormhole.Message", "app": "wormhole-ntt" },
+      { "type": "wormhole.Message", "app": "m0-index" }
+    ],
+    "transfers": ["wormhole-ntt.Transfer"]
   },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],
