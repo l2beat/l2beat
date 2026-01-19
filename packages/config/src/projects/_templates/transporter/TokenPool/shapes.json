@@ -245,5 +245,11 @@
     "address": "eth:0x267aE721c7b9BB409847C324A06259A7d96a644A",
     "chain": "ethereum",
     "blockNumber": 24183337
+  },
+  "ArbiPool.sol": {
+    "hash": "0xa52bfc1e9813d8b3037f594627c702f56923644fff98918b2f65040f21973011",
+    "address": "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C",
+    "chain": "ethereum",
+    "blockNumber": 24268139
   }
 }
