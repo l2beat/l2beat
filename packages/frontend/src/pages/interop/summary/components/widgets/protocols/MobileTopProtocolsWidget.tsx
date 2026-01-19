@@ -6,7 +6,7 @@ import { TopProtocolsByVolume } from './TopProtocolsByVolume'
 export function MobileTopProtocolsWidget() {
   const [view, setView] = useState<'volume' | 'transfers'>('volume')
   return (
-    <div className="relative h-[213px] [@media(min-width:1600px)]:hidden">
+    <div className="relative h-[213px] min-[1600px]:hidden">
       <div className="relative h-full">
         {/* Animated widgets - both always in DOM */}
         <div

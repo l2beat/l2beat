@@ -25,14 +25,16 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
         <InteropSelectedChainsProvider interopChains={interopChains}>
           <ChainSelector chains={interopChains} />
           <div
-            className="mt-5 grid grid-cols-1 gap-5 [@media(min-width:1024px)]:grid-cols-2 [@media(min-width:1600px)]:grid-cols-3"
+            className="mt-5 grid grid-cols-1 gap-5 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3"
             data-hide-overflow-x
           >
-            <TopPathsWidget interopChains={interopChains} />
-            <div className="h-full [@media(max-width:1600px)]:hidden">
+            <div className="z-10 max-[1024px]:hidden">
+              <TopPathsWidget interopChains={interopChains} />
+            </div>
+            <div className="h-full max-[1600px]:hidden">
               <TopProtocolsByVolume />
             </div>
-            <div className="h-full [@media(max-width:1600px)]:hidden">
+            <div className="h-full max-[1600px]:hidden">
               <TopProtocolsByTransfers />
             </div>
             <MobileTopProtocolsWidget />
