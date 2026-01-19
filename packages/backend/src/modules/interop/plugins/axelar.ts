@@ -351,9 +351,6 @@ export class AxelarPlugin implements InteropPlugin {
       })
       if (!contractCallWithToken) return
 
-      console.log(
-        `amounts: approvedWithMint=${contractCallApprovedWithMint.args.amount} executedUnsafe=${contractCallExecuted.args.amountUnsafe}`,
-      )
       const matchingUnsafeAmount =
         contractCallApprovedWithMint.args.amount ===
         contractCallExecuted.args.amountUnsafe
