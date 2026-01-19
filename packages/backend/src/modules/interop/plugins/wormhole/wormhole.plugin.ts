@@ -51,9 +51,14 @@ export class WormholePlugin implements InteropPlugin {
 
     const senderAddress = EthereumAddress(parsed.sender)
 
-    if (network.tokenBridge && senderAddress === network.tokenBridge) {
+    const logIndex = input.log.logIndex
+    if (
+      network.tokenBridge &&
+      senderAddress === network.tokenBridge &&
+      logIndex !== null
+    ) {
       // Find the Transfer event to the token bridge, searching backwards from current log
-      for (let i = input.log.logIndex! - 1; i >= 0; i--) {
+      for (let i = logIndex - 1; i >= 0; i--) {
         const candidateLog = input.txLogs.find((log) => log.logIndex === i)
         if (!candidateLog) continue
 
