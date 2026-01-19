@@ -10,25 +10,24 @@ export type TokenData = {
   volume: number
 }
 
+type CommonProtocolData = {
+  iconSlug: string
+  protocolName: string
+}
+
 export type ProtocolsByType = {
-  nonMinting: {
-    iconSlug: string
-    protocolName: string
+  nonMinting: (CommonProtocolData & {
     volume: number
-  }[]
-  lockMint: {
-    iconSlug: string
-    protocolName: string
+  })[]
+  lockMint: (CommonProtocolData & {
     volume: number
     tokens: TokenData[]
     averageDuration: number
-  }[]
-  omniChain: {
-    iconSlug: string
-    protocolName: string
+  })[]
+  omniChain: (CommonProtocolData & {
     volume: number
     tokens: TokenData[]
-  }[]
+  })[]
 }
 
 export function getProtocolsByType(
@@ -82,7 +81,7 @@ export function getProtocolsByType(
     protocolsByType.omnichain?.some((p) => p.id === key),
   )
 
-  const getProjectCommon = (key: string) => {
+  const getProjectCommon = (key: string): CommonProtocolData => {
     const project = interopProjects.find((p) => p.id === key)
     assert(project, `Project not found: ${key}`)
     return {

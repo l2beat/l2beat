@@ -6,10 +6,13 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
-import { generateAccessibleColors } from '~/utils/generateColors'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
+import {
+  OTHERS_PROTOCOL_NAME,
+  useProtocolColorMap,
+} from './useProtocolColorMap'
 
 export type DisplayProtocol = InteropProtocolData & {
   color: string
@@ -37,6 +40,8 @@ export function TopProtocolsWidget({
 
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
+  const protocolColorMap = useProtocolColorMap(data?.topProtocols)
+
   const protocolsWithOthers = useMemo(() => {
     if (!data?.topProtocols) return []
 
@@ -59,7 +64,7 @@ export function TopProtocolsWidget({
     return [
       ...top5,
       {
-        protocolName: 'Others',
+        protocolName: OTHERS_PROTOCOL_NAME,
         volume: {
           value: metricType === 'volume' ? othersValue : 0,
           share: metricType === 'volume' ? othersShare : 0,
@@ -73,16 +78,13 @@ export function TopProtocolsWidget({
     ] as DisplayProtocol[]
   }, [data?.topProtocols, metricType])
 
-  const colors = useMemo(
-    () => generateAccessibleColors(protocolsWithOthers.length),
-    [protocolsWithOthers.length],
-  )
-
-  const protocolsWithColors: DisplayProtocol[] = protocolsWithOthers.map(
-    (protocol, index) => ({
-      ...protocol,
-      color: colors[index] ?? '#000000',
-    }),
+  const protocolsWithColors: DisplayProtocol[] = useMemo(
+    () =>
+      protocolsWithOthers.map((protocol) => ({
+        ...protocol,
+        color: protocolColorMap.get(protocol.protocolName) ?? '#000000',
+      })),
+    [protocolsWithOthers, protocolColorMap],
   )
 
   return (
