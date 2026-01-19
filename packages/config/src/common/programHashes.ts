@@ -456,7 +456,25 @@ Verify:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
     programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.1.8',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+    Even though the program is compiled in docker for reproducibility reasons, it gives the correct image ID only on linux OS. Steps below were done on Ubuntu 22.04 OS.
+    
+    Prepare (see [kailua prerequisites](https://github.com/boundless-xyz/kailua?tab=readme-ov-file#prerequisites)):
+    
+    1. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`, then \`. .cargo/env\`.
+    2. Install dependency libs \`sudo apt-get install build-essential libssl-dev clang\`.
+    3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+    4. Install the risc zero toolkit \`curl -L https://risczero.com/install | bash\`, then \`rzup install\`.
+    5. Install just, svm and foundry.
+    
+    Verify:
+    
+    1. Checkout the correct branch in [kailua](https://github.com/boundless-xyz/kailua) repo:  \`git checkout v1.1.8\`. Commit hash should be  \`e4b655382c5f481b61f0c4459fb3559b54c84137\`.
+    2. Make sure docker is running by running  \`docker ps\`.
+    3. Execute just script to build FPVM kona image: \`just build-fpvm-kona\`.
+    4. Execute \`just export-fpvm\`. This command should output correct ImageID in a format of array of hex values instead of a single string. Note that the array elements will have bytes in the reverse order.
+    `,
   },
   '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
     title: 'Kailua fault proof program (SOON)',
