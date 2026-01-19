@@ -15,22 +15,21 @@ export function MobileCarouselWidget({
   const [view, setView] = useState<View>('paths')
 
   return (
-    <div className="relative max-[1024px]:h-[232px] min-[1600px]:hidden min-[1024px]:h-[213px]">
+    <div className="relative max-md:mx-4 max-md:mb-4 max-[1024px]:h-[232px] min-[1600px]:hidden min-[1024px]:h-[213px]">
       <div className="relative h-full">
         {/* Paths widget - only visible below 1024px */}
-        <div
+        <WidgetWrapper
           className={cn(
-            'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out min-[1024px]:hidden',
+            'min-[1024px]:hidden',
             view === 'paths' && 'translate-x-0',
             view === 'volume' && '-translate-x-[calc(100%+1.25rem)]',
             view === 'transfers' && '-translate-x-[calc(200%+2.5rem)]',
           )}
         >
           <TopPathsWidget interopChains={interopChains} />
-        </div>
-        <div
+        </WidgetWrapper>
+        <WidgetWrapper
           className={cn(
-            'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
             // On >= 1024px, volume becomes first position since paths is hidden
             // Disable transition to prevent animation during resize
             view === 'paths' &&
@@ -40,10 +39,9 @@ export function MobileCarouselWidget({
           )}
         >
           <TopProtocolsByVolume />
-        </div>
-        <div
+        </WidgetWrapper>
+        <WidgetWrapper
           className={cn(
-            'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
             // On >= 1024px, transfers becomes second position since paths is hidden
             // Disable transition to prevent animation during resize
             view === 'paths' &&
@@ -53,46 +51,69 @@ export function MobileCarouselWidget({
           )}
         >
           <TopProtocolsByTransfers />
-        </div>
+        </WidgetWrapper>
       </div>
       <div className="-translate-x-1/2 absolute bottom-4 left-1/2 z-20 flex">
         {/* Paths dot - only visible below 1024px */}
-        <div
-          className="flex size-4 cursor-pointer items-center justify-center min-[1024px]:hidden"
+        <DotElement
           onClick={() => setView('paths')}
-        >
-          <div
-            className={cn(
-              'size-2 rounded-xs',
-              view === 'paths' ? 'bg-brand' : 'bg-secondary',
-            )}
-          />
-        </div>
-        <div
-          className="flex size-4 cursor-pointer items-center justify-center"
+          wrapperClassName="min-[1024px]:hidden"
+          dotClassName={view === 'paths' ? 'bg-brand' : 'bg-secondary'}
+        />
+        <DotElement
           onClick={() => setView('volume')}
-        >
-          <div
-            className={cn(
-              'size-2 rounded-xs',
-              view === 'volume' ? 'bg-brand' : 'bg-secondary',
-              // When paths is selected but hidden on large screens, highlight volume
-              view === 'paths' && 'min-[1024px]:bg-brand',
-            )}
-          />
-        </div>
-        <div
-          className="flex size-4 cursor-pointer items-center justify-center"
+          dotClassName={cn(
+            view === 'volume' ? 'bg-brand' : 'bg-secondary',
+            // When paths is selected but hidden on large screens, highlight volume
+            view === 'paths' && 'min-[1024px]:bg-brand',
+          )}
+        />
+        <DotElement
           onClick={() => setView('transfers')}
-        >
-          <div
-            className={cn(
-              'size-2 rounded-xs',
-              view === 'transfers' ? 'bg-brand' : 'bg-secondary',
-            )}
-          />
-        </div>
+          dotClassName={view === 'transfers' ? 'bg-brand' : 'bg-secondary'}
+        />
       </div>
+    </div>
+  )
+}
+
+function WidgetWrapper({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'absolute inset-x-0 top-0 h-full w-full overflow-clip transition-transform duration-300 ease-in-out max-md:rounded-lg',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+function DotElement({
+  onClick,
+  wrapperClassName,
+  dotClassName,
+}: {
+  onClick: () => void
+  wrapperClassName?: string
+  dotClassName?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'flex size-4 cursor-pointer items-center justify-center',
+        wrapperClassName,
+      )}
+      onClick={onClick}
+    >
+      <div className={cn('size-2 rounded-xs', dotClassName)} />
     </div>
   )
 }

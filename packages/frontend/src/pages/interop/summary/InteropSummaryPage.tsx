@@ -25,7 +25,7 @@ export function InteropSummaryPage({ interopChains, ...props }: Props) {
         <InteropSelectedChainsProvider interopChains={interopChains}>
           <ChainSelector chains={interopChains} />
           <div
-            className="mt-5 grid grid-cols-1 gap-5 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3"
+            className="mt-5 grid grid-cols-1 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
             data-hide-overflow-x
           >
             <div className="z-10 max-[1024px]:hidden">

@@ -17,7 +17,7 @@ export function ChainSelector({ chains }: Props) {
     useInteropSelectedChains()
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2">
+    <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2 dark:bg-pink-900">
       <div className="flex items-center gap-[17px]">
         <div className="font-semibold text-xs uppercase">Chain Selector</div>
         <div className="h-10 w-px bg-black/16" />

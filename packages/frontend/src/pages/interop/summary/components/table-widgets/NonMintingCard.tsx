@@ -14,7 +14,7 @@ export function NonMintingCard() {
   const entries = data?.protocolsByType.nonMinting
 
   return (
-    <PrimaryCard className="flex flex-col">
+    <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
       <h2 className="font-bold text-heading-24">Non-minting</h2>
       <div className="mt-2.5 text-paragraph-13 text-secondary">
         In-light risk only. Tokens are therefore first bridged using a different
