@@ -639,13 +639,26 @@
       {
         "chain": "arbitrum",
         "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
+      },
+      // NTT transfer from Optimism → Base (tests Optimism wormhole config)
+      {
+        "chain": "optimism",
+        "tx": "0xfbcd1e83c48b7543cc5b13e54c23ffda3007b24584989aea7ff17dc315e30884"
+      },
+      {
+        "chain": "base",
+        "tx": "0x7a1fb1167c3f1ec048d4e26792a47c760327080727480ee93af77cda28bd99f5"
       }
     ],
     "messages": [
       { "type": "wormhole.Message", "app": "wormhole-ntt" },
-      { "type": "wormhole.Message", "app": "m0-index" }
+      { "type": "wormhole.Message", "app": "m0-index" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt" }
     ],
-    "transfers": ["wormhole-ntt.Transfer"]
+    "transfers": [
+      "wormhole-ntt.Transfer",
+      "wormhole-ntt.Transfer"
+    ]
   },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],
