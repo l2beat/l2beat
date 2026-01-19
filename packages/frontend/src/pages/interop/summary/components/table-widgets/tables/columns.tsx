@@ -1,5 +1,5 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
-import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../TopTokensCell'
 import type { LockMintRow } from './LockMintTable'
@@ -60,7 +60,7 @@ export const lockMintColumns = [
     header: 'last 24h avg.\ntransfer time',
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
-        {formatDuration(ctx.row.original.averageDuration)}
+        {formatSeconds(ctx.row.original.averageDuration)}
       </div>
     ),
     meta: {
