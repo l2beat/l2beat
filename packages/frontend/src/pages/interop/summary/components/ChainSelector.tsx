@@ -17,22 +17,24 @@ export function ChainSelector({ chains }: Props) {
     useInteropSelectedChains()
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-[#ECB2FF] px-6 py-2 dark:bg-pink-900">
+    <div className="flex items-center justify-between bg-[#ECB2FF] px-4 py-3 max-md:border-brand max-md:border-b md:rounded-lg md:py-2 min-[1024px]:px-6 dark:bg-pink-900">
       <div className="flex items-center gap-[17px]">
-        <div className="font-semibold text-xs uppercase">Chain Selector</div>
-        <div className="h-10 w-px bg-black/16" />
+        <div className="font-semibold text-xs uppercase max-[1024px]:hidden">
+          Chain Selector
+        </div>
+        <div className="h-10 w-px bg-black/16 max-[1024px]:hidden" />
         <div className="flex items-center gap-3">
-          <div className="font-semibold">From</div>
           <ChainSelectorButton
             selectedChains={selectedChains.from}
             allChains={chains}
             toggleSelected={toggleFrom}
+            type="From"
           />
-          <div className="font-semibold">to</div>
           <ChainSelectorButton
             selectedChains={selectedChains.to}
             allChains={chains}
             toggleSelected={toggleTo}
+            type="To"
           />
         </div>
       </div>
@@ -52,10 +54,12 @@ function ChainSelectorButton({
   selectedChains,
   allChains,
   toggleSelected,
+  type,
 }: {
   selectedChains: string[]
   allChains: InteropChain[]
   toggleSelected: (chainId: string) => void
+  type: 'From' | 'To'
 }) {
   const chainsWithDetails = allChains.map(({ id, iconSlug, name }) => ({
     id,
@@ -65,43 +69,50 @@ function ChainSelectorButton({
   }))
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <div className="h-10 bg-surface-primary px-4 py-[7px]">
-          <div className="font-semibold leading-none">
-            {selectedChains.length} {pluralize(selectedChains.length, 'chain')}
+    <div className="flex items-start gap-1 max-md:flex-col md:items-center md:gap-3">
+      <div className="font-semibold max-md:hidden">{type}</div>
+      <div className="font-medium text-xs leading-none md:hidden">
+        {type} selected chains
+      </div>
+      <Popover>
+        <PopoverTrigger asChild>
+          <div className="h-10 bg-surface-primary px-4 py-[7px]">
+            <div className="font-semibold leading-none">
+              {selectedChains.length}{' '}
+              {pluralize(selectedChains.length, 'chain')}
+            </div>
+            <div className="-space-x-3 md:-space-x-2 flex items-center">
+              {chainsWithDetails
+                .filter((chain) => chain.isSelected)
+                .map((chain, i) => (
+                  <img
+                    key={chain.id}
+                    src={`/icons/${chain.iconSlug}.png`}
+                    alt={chain.name}
+                    className="size-5 rounded-full bg-white shadow"
+                    style={{ zIndex: selectedChains.length - i }}
+                  />
+                ))}
+            </div>
           </div>
-          <div className="-space-x-2 flex items-center">
-            {chainsWithDetails
-              .filter((chain) => chain.isSelected)
-              .map((chain, i) => (
-                <img
-                  key={chain.id}
-                  src={`/icons/${chain.iconSlug}.png`}
-                  alt={chain.name}
-                  className="size-5 rounded-full bg-white shadow"
-                  style={{ zIndex: selectedChains.length - i }}
-                />
-              ))}
+        </PopoverTrigger>
+        <PopoverContent
+          className="!bg-surface-primary max-w-95 p-4"
+          align="start"
+          side="bottom"
+        >
+          <div className="flex flex-wrap gap-1">
+            {chainsWithDetails.map((chain) => (
+              <ChainSelectorItem
+                key={chain.id}
+                chain={chain}
+                toggleSelected={toggleSelected}
+              />
+            ))}
           </div>
-        </div>
-      </PopoverTrigger>
-      <PopoverContent
-        className="!bg-surface-primary max-w-95 p-4"
-        align="start"
-        side="bottom"
-      >
-        <div className="flex flex-wrap gap-1">
-          {chainsWithDetails.map((chain) => (
-            <ChainSelectorItem
-              key={chain.id}
-              chain={chain}
-              toggleSelected={toggleSelected}
-            />
-          ))}
-        </div>
-      </PopoverContent>
-    </Popover>
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }
 
