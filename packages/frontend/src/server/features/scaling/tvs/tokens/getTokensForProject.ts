@@ -30,7 +30,6 @@ export async function getTokensForProject(
   )
 
   const tokenValuesMap = new Map(tokenValues.map((x) => [x.tokenId, x]))
-  const placeholderIcon = getStaticAsset('/images/token-placeholder.png')
 
   const projectTokens: ProjectToken[] = project.tvsConfig
     .map((t) => {
@@ -43,7 +42,7 @@ export async function getTokensForProject(
         source: t.source,
         category: t.category,
         value: tokenValue.valueForProject,
-        iconUrl: t.iconUrl ?? placeholderIcon,
+        iconUrl: t.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
       }
     })
     .filter(notUndefined)
