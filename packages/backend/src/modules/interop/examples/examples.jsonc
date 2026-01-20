@@ -595,6 +595,19 @@
       {
         "chain": "arbitrum",
         "tx": "0xf1ea02ebca6e3678ae7a47b25dba4b28c35373f4be2a27109be1f9bfee5cd643"
+      },
+      // cancellation
+      {
+        "chain": "ethereum",
+        "tx": "0x7f0557d22fb86488203ab9bacf410f268000dbf005ad8a7acebc435fb5fb95dc"
+      },
+      {
+        "chain": "base",
+        "tx": "0x23a776014fd7cc72250391f09c3bfae30c9d6d39d739bd2acf1fac3adbff8c09"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x20350493243d9255ce6cb8d179cd7369727bfae83964df4d8e33ed690d665473"
       }
     ]
   },
@@ -643,7 +656,7 @@
         "chain": "arbitrum",
         "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
       },
-      // NTT transfer from Optimism → Base (tests Optimism wormhole config)
+      // NTT transfer from Optimism → Base (Relayer path)
       {
         "chain": "optimism",
         "tx": "0xfbcd1e83c48b7543cc5b13e54c23ffda3007b24584989aea7ff17dc315e30884"
@@ -652,7 +665,7 @@
         "chain": "base",
         "tx": "0x7a1fb1167c3f1ec048d4e26792a47c760327080727480ee93af77cda28bd99f5"
       },
-      // NTT transfer from Ethereum → Base
+      // NTT transfer from Ethereum → Base (Core path)
       {
         "chain": "ethereum",
         "tx": "0x616967c7771523d2db16b3a21eef8c8ec654d245f6462424f6e7f23ea4839632"
@@ -662,11 +675,12 @@
         "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
       }
     ],
+    "events": ["wormhole-ntt.ReceivedMessage"],
     "messages": [
-      { "type": "wormhole.Message", "app": "wormhole-ntt" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
       { "type": "wormhole.Message", "app": "m0-index" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt" }
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" }
     ],
     "transfers": [
       "wormhole-ntt.Transfer",
