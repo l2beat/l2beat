@@ -1,8 +1,10 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -85,12 +87,11 @@ export function ActivityRatioChart({
 }
 
 function ActivityCustomTooltip({
-  active,
   payload,
   label: timestamp,
-}: TooltipProps<number, string>) {
+}: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

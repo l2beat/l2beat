@@ -4,9 +4,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -223,24 +226,23 @@ export function DaThroughputByProjectChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   denominator: mainDenominator,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   denominator: number
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
-  payload.sort((a, b) => {
-    if (a.name === 'Unknown') return 1
-    if (b.name === 'Unknown') return -1
-    return (b.value ?? 0) - (a.value ?? 0)
-  })
-
-  const actualPayload = payload.filter((p) => !p.hide)
+  if (!payload || typeof label !== 'number') return null
+  const actualPayload = [...payload]
+    .sort((a, b) => {
+      if (a.name === 'Unknown') return 1
+      if (b.name === 'Unknown') return -1
+      return (b.value ?? 0) - (a.value ?? 0)
+    })
+    .filter((p) => !p.hide)
 
   return (
     <ChartTooltipWrapper>

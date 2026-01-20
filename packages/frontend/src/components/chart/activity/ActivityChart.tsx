@@ -1,9 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -111,7 +114,9 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend
+          content={(props) => <ChartLegendContent payload={props.payload} />}
+        />
         {getStrokeOverFillAreaComponents({
           data: [
             {
@@ -171,15 +176,14 @@ export function ActivityChart({
 }
 
 export function ActivityCustomTooltip({
-  active,
   payload,
   label: timestamp,
   metric,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   metric: ActivityMetric
 }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

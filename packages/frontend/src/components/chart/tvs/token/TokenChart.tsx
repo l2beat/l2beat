@@ -1,13 +1,16 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart, type TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-  type ChartMeta,
-  type ChartProject,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
@@ -97,13 +100,9 @@ export function TokenChart({
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

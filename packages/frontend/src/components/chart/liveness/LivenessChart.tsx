@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import {
   Area,
   ComposedChart,
@@ -13,7 +12,11 @@ import {
   ReferenceArea,
   ReferenceDot,
 } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -223,20 +226,19 @@ export function LivenessChart({
 }
 
 function LivenessCustomTooltip({
-  active,
   payload,
   label: timestamp,
   subtype,
   anyAnomalyLive,
   resolution,
   lastValidTimestamp,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
   resolution: ChartResolution
   lastValidTimestamp: number | undefined
 }) {
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',

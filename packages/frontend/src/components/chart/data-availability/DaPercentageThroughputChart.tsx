@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, Bar, BarChart } from 'recharts'
+import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -180,19 +180,18 @@ export function DaPercentageThroughputChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   includeScalingOnly,
   syncStatus,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
 }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 

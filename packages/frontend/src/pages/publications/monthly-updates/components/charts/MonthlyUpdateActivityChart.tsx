@@ -1,8 +1,11 @@
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
-import { AreaChart, type TooltipProps } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import { AreaChart } from 'recharts'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -145,13 +148,9 @@ function Header({
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

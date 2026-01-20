@@ -1,7 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -188,12 +191,11 @@ export function AssetCategoryTvsChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
-  if (!active || !payload || typeof label !== 'number') return null
+}: CustomChartTooltipProps & { unit: ChartUnit }) {
+  if (!payload || typeof label !== 'number') return null
 
   const total = payload.reduce<number | null>((acc, curr) => {
     if (curr.value === null || curr.value === undefined || curr.hide) {

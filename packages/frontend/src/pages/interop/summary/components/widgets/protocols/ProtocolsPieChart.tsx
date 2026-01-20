@@ -1,7 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
-import { Label, Pie, PieChart, type TooltipProps } from 'recharts'
+import { Label, Pie, PieChart } from 'recharts'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
-  type ChartMeta,
   ChartTooltip,
   ChartTooltipWrapper,
   SimpleChartContainer,
@@ -99,9 +102,9 @@ export function ProtocolsPieChart({
   )
 }
 
-function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
+function CustomTooltip({ payload }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload) return null
+  if (!payload) return null
   return (
     <ChartTooltipWrapper>
       <div className="flex flex-col gap-1">

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
+import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -171,21 +171,20 @@ export function DaAbsoluteThroughputChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
   includeScalingOnly,
   syncStatus,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   unit: string
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 

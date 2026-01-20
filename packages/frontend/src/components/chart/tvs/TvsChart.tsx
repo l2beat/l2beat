@@ -1,8 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
@@ -91,13 +94,12 @@ export function TvsChart({
 }
 
 export function TvsCustomTooltip({
-  active,
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
+}: CustomChartTooltipProps & { unit: ChartUnit }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

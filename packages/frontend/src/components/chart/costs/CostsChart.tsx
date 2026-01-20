@@ -2,9 +2,12 @@ import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -298,18 +301,17 @@ export function CostsChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
   resolution,
   chartMeta,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   unit: CostsUnit
   resolution: ChartResolution
   chartMeta: ChartMeta
 }) {
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   const actualPayload = [...payload].reverse().filter((p) => !p.hide)
   const total = actualPayload.reduce<number | null>((acc, curr) => {

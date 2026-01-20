@@ -1,9 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -159,12 +161,8 @@ export function ScalingSummaryTvsChart({
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
-  if (!active || !payload || typeof label !== 'number') return null
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+  if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
   const total = validPayload.reduce<number | null>((acc, curr) => {

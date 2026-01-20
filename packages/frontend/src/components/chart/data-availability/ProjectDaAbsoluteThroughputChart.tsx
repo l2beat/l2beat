@@ -1,9 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -171,17 +174,16 @@ export function ProjectDaAbsoluteThroughputChart({
 }
 
 export function ProjectDaThroughputCustomTooltip({
-  active,
   payload,
   label,
   unit,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   unit: string
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

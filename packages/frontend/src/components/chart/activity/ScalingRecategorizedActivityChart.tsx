@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { AreaChart, type TooltipProps } from 'recharts'
+import { AreaChart } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
@@ -9,6 +9,7 @@ import {
   type ChartMeta,
   ChartTooltip,
   ChartTooltipWrapper,
+  type CustomChartTooltipProps,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
@@ -201,18 +202,17 @@ export function ScalingRecategorizedActivityChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   syncedUntil,
   metric,
   chartMeta,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   syncedUntil: number | undefined
   metric: ActivityMetric
   chartMeta: ChartMeta
 }) {
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

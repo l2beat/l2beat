@@ -2,9 +2,11 @@ import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import pick from 'lodash/pick'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -139,15 +141,14 @@ export function DataPostedChart({
 }
 
 function DataPostedCustomTooltip({
-  active,
   payload,
   label: timestamp,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   resolution: DaThroughputResolution
 }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>
