@@ -7,8 +7,11 @@ import type {
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   generateId,
+  type InteropApproximateQuery,
   type InteropEvent,
   type InteropEventDb,
+  type InteropEventQuery,
+  type InteropEventType,
   type InteropMessage,
   type InteropPlugin,
   type InteropTransfer,
@@ -88,6 +91,9 @@ export async function match(
   const unsupported = new Set<InteropEvent>()
   const allMessages: InteropMessage[] = []
   const allTransfers: InteropTransfer[] = []
+  const isExcluded = (event: InteropEvent) =>
+    matched.has(event) || unsupported.has(event)
+  const filteredDb = createFilteredDb(db, isExcluded)
 
   for (const plugin of plugins) {
     if (!plugin.matchTypes || !plugin.match) {
@@ -107,12 +113,12 @@ export async function match(
       const events = getEvents(type.type)
       stats.events += events.length
       for (const event of events) {
-        if (matched.has(event)) {
+        if (matched.has(event) || unsupported.has(event)) {
           continue
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, db)
+          result = await plugin.match?.(event, filteredDb)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,
@@ -198,6 +204,30 @@ export async function match(
     unsupported: Array.from(unsupported),
     messages: allMessages,
     transfers: allTransfers,
+  }
+}
+
+function createFilteredDb(
+  db: InteropEventDb,
+  isExcluded: (event: InteropEvent) => boolean,
+): InteropEventDb {
+  const filterEvents = <T>(events: InteropEvent<T>[]) =>
+    events.filter((event) => !isExcluded(event))
+
+  return {
+    find<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
+      return filterEvents(db.findAll(type, query))[0]
+    },
+    findAll<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
+      return filterEvents(db.findAll(type, query))
+    },
+    findApproximate<T>(
+      type: InteropEventType<T>,
+      query: InteropEventQuery<T>,
+      approximate: InteropApproximateQuery<T>,
+    ) {
+      return filterEvents(db.findApproximate(type, query, approximate))
+    },
   }
 }
 

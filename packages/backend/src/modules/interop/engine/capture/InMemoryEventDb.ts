@@ -102,11 +102,11 @@ export class InMemoryEventDb implements InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined {
+  ): InteropEvent<T>[] {
     const events = this.getStore<T>(type.type).findAll(query)
 
     if (events.length === 0) {
-      return
+      return []
     }
 
     assert(
@@ -128,6 +128,7 @@ export class InMemoryEventDb implements InteropEventDb {
           PRECISION
       : approximate.valueBigInt
 
+    const matches: InteropEvent<T>[] = []
     for (const e of events) {
       if (
         // @ts-ignore
@@ -135,9 +136,10 @@ export class InMemoryEventDb implements InteropEventDb {
         // @ts-ignore
         e.args[approximate.key] <= maxValue
       ) {
-        return e
+        matches.push(e)
       }
     }
+    return matches
   }
 
   findAll<T>(
