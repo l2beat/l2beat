@@ -1,3 +1,7 @@
+/**
+ * Hyperlane AMB
+ * matches 'unknown' messages that we cannot identify as any tracked hyperlane app
+ */
 import { keccak256 } from 'viem'
 import {
   createEventParser,
