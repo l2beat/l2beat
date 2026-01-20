@@ -17,11 +17,11 @@ import type { TokenData } from '~/server/features/scaling/interop/utils/getProto
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function TopTokensCell({ tokens }: { tokens: TokenData[] }) {
-  const topTokens = tokens.slice(0, 5)
-  const restTokens = tokens.slice(5)
+  const topTokens = tokens.slice(0, 3)
+  const restTokens = tokens.slice(3)
 
   return (
-    <div className="grid grid-cols-[76px_30px] gap-1">
+    <div className="grid grid-cols-[46px_30px] gap-1">
       <div className="-space-x-1.5 flex items-center">
         {topTokens.map((token, i) => (
           <TokenIconWithTooltip key={token.id} token={token} index={i} />
@@ -46,7 +46,7 @@ function TokenIconWithTooltip({
       <TooltipTrigger>
         <img
           key={token.id}
-          src={token.iconUrl ?? ''}
+          src={token.iconUrl}
           alt={token.symbol}
           className="relative size-5 min-w-5 rounded-full bg-white shadow"
           style={{ zIndex: 5 - index }}
@@ -99,7 +99,7 @@ function RestTokensDialog({
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={token.iconUrl ?? ''}
+                      src={token.iconUrl}
                       alt={token.symbol}
                       className="size-5"
                     />

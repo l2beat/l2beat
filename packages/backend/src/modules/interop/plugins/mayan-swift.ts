@@ -3,16 +3,21 @@ Mayan SWIFT Protocol. If used independently, it emits only OrderCreated event wi
 information about the Order itself. However, when used with MayanForwarder contract, we can capture
 ForwardedETH or ForwardedERC20 event which contains order details and the destination chain info.
 
-However on the destination there's only OrderFulfilled event with the order hash. To get src chain
-we would need to extract it from calldata (trace) - currently we don't do that.
+On the destination there's OrderFulfilled event with the order hash, plus a LogMessagePublished
+for settlement back to the source chain. We extract the source chain from the settlement message payload.
 */
 
-import type { Address32 } from '@l2beat/shared-pure'
+import { type Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
+  extractMayanSwiftSettlementDestChain,
+  MAYAN_SWIFT,
+} from './mayan-swift.utils'
+import {
   createEventParser,
   createInteropEventType,
+  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
@@ -28,6 +33,10 @@ const parseOrderFulfilled = createEventParser(
   'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)',
 )
 
+const parseLogMessagePublished = createEventParser(
+  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
+)
+
 export const OrderCreated = createInteropEventType<{
   key: string
   $dstChain: string
@@ -39,6 +48,7 @@ export const OrderCreated = createInteropEventType<{
 export const OrderFulfilled = createInteropEventType<{
   key: string
   dstAmount: bigint
+  $srcChain?: string
 }>('mayan-swift.OrderFulfilled')
 
 export class MayanSwiftPlugin implements InteropPlugin {
@@ -52,10 +62,30 @@ export class MayanSwiftPlugin implements InteropPlugin {
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
+      // Find LogMessagePublished in same tx from Mayan Swift to extract source chain
+      // The settlement message goes back to the source chain
+      let $srcChain: string | undefined
+      for (const log of input.txLogs) {
+        const logMsg = parseLogMessagePublished(log, null)
+        if (logMsg && EthereumAddress(logMsg.sender) === MAYAN_SWIFT) {
+          const srcChainId = extractMayanSwiftSettlementDestChain(
+            logMsg.payload,
+          )
+          if (srcChainId !== undefined) {
+            $srcChain = findChain(
+              wormholeNetworks,
+              (x) => x.wormholeChainId,
+              srcChainId,
+            )
+          }
+          break
+        }
+      }
       return [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
           dstAmount: orderFulfilled.netAmount,
+          $srcChain,
         }),
       ]
     }
@@ -108,7 +138,9 @@ export class MayanSwiftPlugin implements InteropPlugin {
         srcAmount:
           orderCreated.args.amountIn !== 0n
             ? orderCreated.args.amountIn
-            : orderFulfilled.args.dstAmount, // dirty fallback for special cases like 7702 + eth at source with 0 tx.value (see examples)
+            : mayanForwarded.args.amountIn !== 0n
+              ? mayanForwarded.args.amountIn // MayanForwarded has WETH Withdrawal detection for ForwardedEth with tx.value=0
+              : undefined, // 7702 + native ETH with no WETH Withdrawal - can't determine from events
         srcTokenAddress: orderCreated.args.srcTokenAddress,
         dstEvent: orderFulfilled,
         dstAmount: orderFulfilled.args.dstAmount,

@@ -1,8 +1,13 @@
 import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
+  extractMayanSwiftSettlementDestChain,
+  MAYAN_SWIFT,
+} from '../mayan-swift.utils'
+import {
   createEventParser,
   createInteropEventType,
+  findChain,
   type InteropPlugin,
   type LogToCapture,
 } from '../types'
@@ -79,24 +84,36 @@ export class WormholePlugin implements InteropPlugin {
       }
     }
 
-    // Try to find destination chain from Folks Finance SendMessage event after LogMessagePublished
+    // Try to find destination chain
     let $dstChain: string | undefined
-    for (const candidateLog of input.txLogs) {
-      if (
-        candidateLog.logIndex === null ||
-        logIndex === null ||
-        candidateLog.logIndex <= logIndex
-      ) {
-        continue
+
+    // Mayan Swift: extract destination from settlement payload
+    if (senderAddress === MAYAN_SWIFT) {
+      const dstChainId = extractMayanSwiftSettlementDestChain(parsed.payload)
+      if (dstChainId !== undefined) {
+        $dstChain = findChain(networks, (x) => x.wormholeChainId, dstChainId)
       }
-      const folksSendMessage = parseFolksSendMessage(candidateLog, null)
-      if (folksSendMessage) {
-        // message tuple: ((params), sender, destinationChainId, handler, payload, finalityLevel, extraArgs)
-        // destinationChainId is at index 2, using Folks Finance's own chain ID system
-        const folksChainId = Number(folksSendMessage.message[2])
-        $dstChain =
-          FOLKS_CHAIN_ID_TO_CHAIN[folksChainId] ?? `Unknown_${folksChainId}`
-        break
+    }
+
+    // Folks Finance: find SendMessage event after LogMessagePublished
+    if (!$dstChain) {
+      for (const candidateLog of input.txLogs) {
+        if (
+          candidateLog.logIndex === null ||
+          logIndex === null ||
+          candidateLog.logIndex <= logIndex
+        ) {
+          continue
+        }
+        const folksSendMessage = parseFolksSendMessage(candidateLog, null)
+        if (folksSendMessage) {
+          // message tuple: ((params), sender, destinationChainId, handler, payload, finalityLevel, extraArgs)
+          // destinationChainId is at index 2, using Folks Finance's own chain ID system
+          const folksChainId = Number(folksSendMessage.message[2])
+          $dstChain =
+            FOLKS_CHAIN_ID_TO_CHAIN[folksChainId] ?? `Unknown_${folksChainId}`
+          break
+        }
       }
     }
 
