@@ -53,7 +53,7 @@ export const debridge: Bridge = {
   },
   // this is only the debridge messaging and token bridge
   interopConfig: {
-    name: 'deBridge Messaging and Token Bridge',
+    name: 'deBridge',
     bridgeType: 'lockAndMint',
     plugins: [
       {
