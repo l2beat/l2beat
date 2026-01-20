@@ -8,6 +8,7 @@ import { ChainSelector } from './components/ChainSelector'
 import { LockMintCard } from './components/table-widgets/LockMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
+import { MobileCarouselWidget } from './components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
@@ -43,7 +44,7 @@ export function InteropSummaryPage({
               <div className="h-full max-[1600px]:hidden">
                 <TopProtocolsByTransfers />
               </div>
-              <MobileTopProtocolsWidget />
+              <MobileCarouselWidget interopChains={interopChains} />
               <NonMintingCard />
               <LockMintCard />
               <OmniChainCard />
