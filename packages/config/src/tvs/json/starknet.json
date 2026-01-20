@@ -272,23 +272,30 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "starknet-SolvBTC",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
-        "chain": "ethereum",
-        "escrowAddress": "0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+        "type": "starknetTotalSupply",
+        "address": "0x0593e034dda23eea82d2ba9a30960ed42cf4a01502cc2351dc9b9881f9931a68",
+        "chain": "starknet",
         "decimals": 18,
-        "sinceTimestamp": 1750859519
+        "sinceTimestamp": 1705235489
       },
       "category": "btc",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -473,23 +480,30 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "starknet-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "chain": "ethereum",
-        "escrowAddress": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+        "type": "starknetTotalSupply",
+        "address": "0x03fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac",
+        "chain": "starknet",
         "decimals": 8,
-        "sinceTimestamp": 1657137600
+        "sinceTimestamp": 1656440326
       },
       "category": "btc",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
