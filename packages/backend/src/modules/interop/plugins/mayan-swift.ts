@@ -138,7 +138,9 @@ export class MayanSwiftPlugin implements InteropPlugin {
         srcAmount:
           orderCreated.args.amountIn !== 0n
             ? orderCreated.args.amountIn
-            : orderFulfilled.args.dstAmount, // dirty fallback for special cases like 7702 + eth at source with 0 tx.value (see examples)
+            : mayanForwarded.args.amountIn !== 0n
+              ? mayanForwarded.args.amountIn // MayanForwarded has WETH Withdrawal detection for ForwardedEth with tx.value=0
+              : undefined, // 7702 + native ETH with no WETH Withdrawal - can't determine from events
         srcTokenAddress: orderCreated.args.srcTokenAddress,
         dstEvent: orderFulfilled,
         dstAmount: orderFulfilled.args.dstAmount,

@@ -316,6 +316,42 @@
       {
         "chain": "ethereum",
         "tx": "0x36a8c31c8b5d933b0b9d8fcf2952e1b3f44c0554d1868e450a23d5f9084ac72a"
+      },
+      // SwapAndForwardedERC20: AMBER → USDC → ETH
+      {
+        "chain": "polygonpos",
+        "tx": "0x12470c42db9447477eceaa92bdfaed789b4a6e68b8762b01115bdaed1e7deb66"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xe056ef54cb7b734e5cc42bb88c9fcd2a8389450f77f712e1ae4f25a00451ea18"
+      },
+      // SwapAndForwardedERC20: DRB → USDC → USDT
+      {
+        "chain": "base",
+        "tx": "0x41f15c51e67ead7a1cae461994788796a0622de31716c66b2ac93b671e0e3a4c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8d75ef3a10ec577e5e5df0e9e18a5d9b11ad7aee7991802c35068ebc72b02c4f"
+      },
+      // SwapAndForwardedEth: ETH → USDC → USDC
+      {
+        "chain": "ethereum",
+        "tx": "0xafc7a6c5000903d676eaf65841637f72c6ba84fab7e3cdb9ca9203f962277bf1"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf65f6d08a88645cfc60baafce774cec6f17de24756514730593c807e97aae1b6"
+      },
+      // ForwardedEth: ETH → SOL (destination is base)
+      {
+        "chain": "arbitrum",
+        "tx": "0xd9f47fbf8d7a8528eaf1a2d8e2b11dc492c175906fba4601f4e1e67f03ca0f47"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0015b68093c56f3c80e48d3e21fe6fa09560bb6bc04bd8c546401c07758b9207"
       }
     ],
     "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
