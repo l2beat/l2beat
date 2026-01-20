@@ -15,6 +15,7 @@ import capitalize from 'lodash/capitalize'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
@@ -23,7 +24,6 @@ import {
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
 import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
-import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 
 type AddressData = {
   address: string
