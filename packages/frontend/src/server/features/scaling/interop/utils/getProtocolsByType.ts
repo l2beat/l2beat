@@ -1,12 +1,14 @@
 import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
+import { getLogger } from '~/server/utils/logger'
 
 export type TokenData = {
   id: string
   symbol: string
-  iconUrl: string | null
+  iconUrl: string
   volume: number
 }
 
@@ -42,6 +44,7 @@ export function getProtocolsByType(
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
+  const logger = getLogger().for('getProtocolsByType')
   const protocolsDataMap = new Map<
     string,
     {
@@ -105,14 +108,22 @@ export function getProtocolsByType(
     return Array.from(tokens.entries())
       .map(([tokenId, volume]) => {
         const tokenDetails = tokensDetailsMap.get(tokenId)
-        assert(tokenDetails, `Token details not found for token id: ${tokenId}`)
+
+        if (!tokenDetails) {
+          logger.warn(`Token not found: ${tokenId}`)
+          return undefined
+        }
+
         return {
           id: tokenId,
           symbol: tokenDetails.symbol,
-          iconUrl: tokenDetails.iconUrl,
+          iconUrl:
+            tokenDetails.iconUrl ??
+            getStaticAsset('/images/token-placeholder.png'),
           volume,
         }
       })
+      .filter(notUndefined)
       .toSorted((a, b) => b.volume - a.volume)
   }
 
