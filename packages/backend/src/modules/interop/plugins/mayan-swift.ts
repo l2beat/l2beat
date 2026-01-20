@@ -68,7 +68,9 @@ export class MayanSwiftPlugin implements InteropPlugin {
       for (const log of input.txLogs) {
         const logMsg = parseLogMessagePublished(log, null)
         if (logMsg && EthereumAddress(logMsg.sender) === MAYAN_SWIFT) {
-          const srcChainId = extractMayanSwiftSettlementDestChain(logMsg.payload)
+          const srcChainId = extractMayanSwiftSettlementDestChain(
+            logMsg.payload,
+          )
           if (srcChainId !== undefined) {
             $srcChain = findChain(
               wormholeNetworks,
