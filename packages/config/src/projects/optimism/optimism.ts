@@ -63,7 +63,7 @@ export const optimism: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'OP Canonical',
-    bridgeType: 'canonical',
+    bridgeType: 'lockAndMint',
     plugins: [
       {
         filterBy: 'chain',
