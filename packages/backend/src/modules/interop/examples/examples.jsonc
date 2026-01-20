@@ -595,6 +595,19 @@
       {
         "chain": "arbitrum",
         "tx": "0xf1ea02ebca6e3678ae7a47b25dba4b28c35373f4be2a27109be1f9bfee5cd643"
+      },
+      // cancellation
+      {
+        "chain": "ethereum",
+        "tx": "0x7f0557d22fb86488203ab9bacf410f268000dbf005ad8a7acebc435fb5fb95dc"
+      },
+      {
+        "chain": "base",
+        "tx": "0x23a776014fd7cc72250391f09c3bfae30c9d6d39d739bd2acf1fac3adbff8c09"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x20350493243d9255ce6cb8d179cd7369727bfae83964df4d8e33ed690d665473"
       }
     ]
   },
