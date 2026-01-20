@@ -130,7 +130,8 @@ export class MayanForwarderPlugin implements InteropPlugin {
           for (let i = input.log.logIndex - 1; i >= 0; i--) {
             const candidateLog = input.txLogs.find((log) => log.logIndex === i)
             if (!candidateLog) continue
-            if (EthereumAddress(candidateLog.address) !== wrappedNative) continue
+            if (EthereumAddress(candidateLog.address) !== wrappedNative)
+              continue
             const withdrawal = parseWethWithdrawal(candidateLog, null)
             if (withdrawal) {
               amountIn = withdrawal.wad
