@@ -4,6 +4,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../TopTokensCell'
 import type { LockAndMintRow } from './LockAndMintTable'
 import type { NonMintingRow } from './NonMintingTable'
+import type { OmniChainRow } from './OmniChainTable'
 
 function getCommonColumns<
   T extends { iconSlug: string; protocolName: string; volume: number },
