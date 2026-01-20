@@ -5,6 +5,7 @@ import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
+import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
@@ -83,4 +84,5 @@ export const refactored: BaseProject[] = [
   gateway,
   // interop protocols
   usdt0,
+  debridgeDln,
 ]

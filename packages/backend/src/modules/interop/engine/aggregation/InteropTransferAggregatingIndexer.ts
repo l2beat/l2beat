@@ -54,6 +54,7 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,
       )
+      await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedRecords)
     })
     this.logger.info('Aggregated interop transfers saved to db', {
@@ -63,8 +64,9 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
     return to
   }
 
-  override invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+  // Invalidate on every restart
+  override invalidate(_: number): Promise<number> {
+    return Promise.resolve(0)
   }
 
   private mergeGroup(
