@@ -10,8 +10,8 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
+import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'

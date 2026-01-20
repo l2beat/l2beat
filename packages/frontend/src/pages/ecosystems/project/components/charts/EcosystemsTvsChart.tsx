@@ -12,9 +12,9 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'

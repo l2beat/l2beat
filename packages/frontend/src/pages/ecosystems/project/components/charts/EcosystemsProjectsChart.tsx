@@ -11,9 +11,9 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
