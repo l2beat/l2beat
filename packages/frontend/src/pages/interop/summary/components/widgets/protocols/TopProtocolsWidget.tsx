@@ -9,10 +9,8 @@ import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
-import {
-  OTHERS_PROTOCOL_NAME,
-  useProtocolColorMap,
-} from './useProtocolColorMap'
+import { useProtocolColorMap } from './useProtocolColorMap'
+import { getProtocolsDataWithOthers } from './utils/getProtocolsDataWithOthers'
 
 export type DisplayProtocol = InteropProtocolData & {
   color: string
@@ -41,46 +39,15 @@ export function TopProtocolsWidget({
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
   const protocolColorMap = useProtocolColorMap(data?.topProtocols)
-
-  const protocolsWithOthers = useMemo(() => {
-    if (!data?.topProtocols) return []
-
-    data.topProtocols.sort((a, b) => b[metricType].value - a[metricType].value)
-
-    const top5 = data.topProtocols.slice(0, 5).map((protocol) => ({
-      ...protocol,
-      color: protocolColorMap.get(protocol.protocolName) ?? '#000000',
-    })) as DisplayProtocol[]
-
-    const others = data.topProtocols.slice(5)
-    if (others.length === 0) {
-      return top5
-    }
-
-    const totalValue = data.topProtocols.reduce(
-      (sum, p) => sum + p[metricType].value,
-      0,
-    )
-    const othersValue = others.reduce((sum, p) => sum + p[metricType].value, 0)
-    const othersShare = totalValue > 0 ? (othersValue / totalValue) * 100 : 0
-
-    return [
-      ...top5,
-      {
-        protocolName: OTHERS_PROTOCOL_NAME,
-        volume: {
-          value: metricType === 'volume' ? othersValue : 0,
-          share: metricType === 'volume' ? othersShare : 0,
-        },
-        transfers: {
-          value: metricType === 'transfers' ? othersValue : 0,
-          share: metricType === 'transfers' ? othersShare : 0,
-        },
-        othersCount: others.length,
-        color: protocolColorMap.get(OTHERS_PROTOCOL_NAME) ?? '#000000',
-      },
-    ] as DisplayProtocol[]
-  }, [data?.topProtocols, metricType, protocolColorMap])
+  const protocolsWithOthers = useMemo(
+    () =>
+      getProtocolsDataWithOthers(
+        data?.topProtocols,
+        protocolColorMap,
+        metricType,
+      ),
+    [data?.topProtocols, metricType, protocolColorMap],
+  )
 
   return (
     <PrimaryCard
