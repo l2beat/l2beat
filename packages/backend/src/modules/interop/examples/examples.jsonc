@@ -311,8 +311,14 @@
       {
         "chain": "base",
         "tx": "0xe8ac1d52bf580037bfd13b07373a4456c7fff2624c9b3dda2099788c16a5ba52"
+      },
+      // Solana → Ethereum (unsupported source chain)
+      {
+        "chain": "ethereum",
+        "tx": "0x36a8c31c8b5d933b0b9d8fcf2952e1b3f44c0554d1868e450a23d5f9084ac72a"
       }
-    ]
+    ],
+    "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
   },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],
