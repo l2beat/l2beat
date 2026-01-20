@@ -1,0 +1,4109 @@
+{
+  "projectId": "arbitrum",
+  "timestamp": 1768475870865,
+  "escrows": [
+    {
+      "address": "eth:0xcEe284F754E854890e311e3280b767F80797180d",
+      "name": "Custom ERC20 Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow admin (GatewaysAdmin) is controlled by the rollup governance",
+      "admin": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "adminName": "GatewaysAdmin",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 2618033000,
+          "amount": 778629.1,
+          "issuer": null
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 787405100,
+          "amount": 8140.05,
+          "issuer": "BitGo"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 331320350,
+          "amount": 90655.42,
+          "issuer": null
+        },
+        {
+          "symbol": "APEX",
+          "valueUsd": 92238784,
+          "amount": 243602860,
+          "issuer": null
+        },
+        {
+          "symbol": "SQD",
+          "valueUsd": 69246710,
+          "amount": 953520000,
+          "issuer": null
+        },
+        {
+          "symbol": "PENDLE",
+          "valueUsd": 67081860,
+          "amount": 30104070,
+          "issuer": null
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 65510832,
+          "amount": 65516672,
+          "issuer": "Circle"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 50719624,
+          "amount": 3605964.2,
+          "issuer": null
+        },
+        {
+          "symbol": "ANIME",
+          "valueUsd": 35690288,
+          "amount": 4301405000,
+          "issuer": null
+        },
+        {
+          "symbol": "MAGIC",
+          "valueUsd": 29935276,
+          "amount": 294954530,
+          "issuer": null
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 24187330,
+          "amount": 6221.06,
+          "issuer": null
+        },
+        {
+          "symbol": "HEGIC",
+          "valueUsd": 18191742,
+          "amount": 745572740,
+          "issuer": null
+        },
+        {
+          "symbol": "FNXAI",
+          "valueUsd": 16368584,
+          "amount": 102500000,
+          "issuer": null
+        },
+        {
+          "symbol": "WOO",
+          "valueUsd": 15043583,
+          "amount": 485840300,
+          "issuer": null
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 12984247,
+          "amount": 73237.1,
+          "issuer": null
+        },
+        {
+          "symbol": "POND",
+          "valueUsd": 10788192,
+          "amount": 2717353700,
+          "issuer": null
+        },
+        {
+          "symbol": "MCB",
+          "valueUsd": 10415789,
+          "amount": 4220373.5,
+          "issuer": null
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 7900807.5,
+          "amount": 18404422,
+          "issuer": null
+        },
+        {
+          "symbol": "EQB",
+          "valueUsd": 7058168.5,
+          "amount": 30149652,
+          "issuer": null
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 6365266,
+          "amount": 1142876.1,
+          "issuer": null
+        },
+        {
+          "symbol": "rDPX",
+          "valueUsd": 2594732.2,
+          "amount": 2212977.8,
+          "issuer": null
+        },
+        {
+          "symbol": "WXM",
+          "valueUsd": 2291683.5,
+          "amount": 57201912,
+          "issuer": null
+        },
+        {
+          "symbol": "CNFI",
+          "valueUsd": 2231360.5,
+          "amount": 37279796,
+          "issuer": null
+        },
+        {
+          "symbol": "LON",
+          "valueUsd": 2169905.8,
+          "amount": 4741245.5,
+          "issuer": null
+        },
+        {
+          "symbol": "crvUSD",
+          "valueUsd": 2039223.8,
+          "amount": 2036570.9,
+          "issuer": null
+        },
+        {
+          "symbol": "DOLA",
+          "valueUsd": 1963299.6,
+          "amount": 1967546.4,
+          "issuer": null
+        },
+        {
+          "symbol": "DPX",
+          "valueUsd": 1867061.2,
+          "amount": 495059.1,
+          "issuer": null
+        },
+        {
+          "symbol": "PREMIA",
+          "valueUsd": 1275096.9,
+          "amount": 14677383,
+          "issuer": null
+        },
+        {
+          "symbol": "SIS",
+          "valueUsd": 1160444,
+          "amount": 28855532,
+          "issuer": null
+        },
+        {
+          "symbol": "LDO",
+          "valueUsd": 1147502.1,
+          "amount": 1785214.2,
+          "issuer": null
+        },
+        {
+          "symbol": "LOGX",
+          "valueUsd": 1057859.1,
+          "amount": 581050000,
+          "issuer": null
+        },
+        {
+          "symbol": "cbETH",
+          "valueUsd": 875730.5,
+          "amount": 232.25,
+          "issuer": null
+        },
+        {
+          "symbol": "TEL",
+          "valueUsd": 794560.94,
+          "amount": 194111170,
+          "issuer": null
+        },
+        {
+          "symbol": "FOX",
+          "valueUsd": 754161.75,
+          "amount": 61472972,
+          "issuer": null
+        },
+        {
+          "symbol": "FOOM",
+          "valueUsd": 575894.25,
+          "amount": 4052772500000,
+          "issuer": null
+        },
+        {
+          "symbol": "MOON",
+          "valueUsd": 542138.1,
+          "amount": 10025211,
+          "issuer": null
+        },
+        {
+          "symbol": "FFM",
+          "valueUsd": 486226.03,
+          "amount": 997232060,
+          "issuer": null
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 398196.12,
+          "amount": 706844.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ETH+",
+          "valueUsd": 394646.5,
+          "amount": 109.84,
+          "issuer": null
+        },
+        {
+          "symbol": "SPELL",
+          "valueUsd": 376978.97,
+          "amount": 1393051900,
+          "issuer": null
+        },
+        {
+          "symbol": "PNK",
+          "valueUsd": 375254.38,
+          "amount": 22536144,
+          "issuer": null
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 373342.47,
+          "amount": 13697.78,
+          "issuer": null
+        },
+        {
+          "symbol": "COW",
+          "valueUsd": 325978.44,
+          "amount": 1278490.4,
+          "issuer": null
+        },
+        {
+          "symbol": "THALES",
+          "valueUsd": 299428.66,
+          "amount": 1141963.8,
+          "issuer": null
+        },
+        {
+          "symbol": "PC",
+          "valueUsd": 274083.78,
+          "amount": 10500,
+          "issuer": null
+        },
+        {
+          "symbol": "AIUS",
+          "valueUsd": 249023.2,
+          "amount": 315100,
+          "issuer": null
+        },
+        {
+          "symbol": "NEXO",
+          "valueUsd": 203120.42,
+          "amount": 208705.19,
+          "issuer": null
+        },
+        {
+          "symbol": "YBR",
+          "valueUsd": 200335.67,
+          "amount": 627909300,
+          "issuer": null
+        },
+        {
+          "symbol": "TUSD",
+          "valueUsd": 193997.48,
+          "amount": 194017.98,
+          "issuer": null
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 174785.05,
+          "amount": 174527.19,
+          "issuer": null
+        },
+        {
+          "symbol": "HOT",
+          "valueUsd": 173294.45,
+          "amount": 328000000,
+          "issuer": null
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 170861.77,
+          "amount": 499849.97,
+          "issuer": null
+        },
+        {
+          "symbol": "KNC",
+          "valueUsd": 170692.19,
+          "amount": 708644.1,
+          "issuer": null
+        },
+        {
+          "symbol": "USDD",
+          "valueUsd": 169693.5,
+          "amount": 169709.64,
+          "issuer": null
+        },
+        {
+          "symbol": "GOB",
+          "valueUsd": 151686.12,
+          "amount": 571098500,
+          "issuer": null
+        },
+        {
+          "symbol": "eUSD",
+          "valueUsd": 143745.25,
+          "amount": 143878.23,
+          "issuer": null
+        },
+        {
+          "symbol": "YFX",
+          "valueUsd": 109879.24,
+          "amount": 14904014,
+          "issuer": null
+        },
+        {
+          "symbol": "SNT",
+          "valueUsd": 106523.86,
+          "amount": 6973174,
+          "issuer": null
+        },
+        {
+          "symbol": "VRTX",
+          "valueUsd": 101941.09,
+          "amount": 1000000000,
+          "issuer": null
+        },
+        {
+          "symbol": "GTC",
+          "valueUsd": 91022.77,
+          "amount": 635557.2,
+          "issuer": null
+        },
+        {
+          "symbol": "MKR",
+          "valueUsd": 90743.7,
+          "amount": 63.79,
+          "issuer": null
+        },
+        {
+          "symbol": "OLAS",
+          "valueUsd": 83978.43,
+          "amount": 984671.8,
+          "issuer": null
+        },
+        {
+          "symbol": "RSR",
+          "valueUsd": 79860.59,
+          "amount": 28290254,
+          "issuer": null
+        },
+        {
+          "symbol": "DODO",
+          "valueUsd": 78566.48,
+          "amount": 4142703.2,
+          "issuer": null
+        },
+        {
+          "symbol": "Silo",
+          "valueUsd": 75752.93,
+          "amount": 9864325,
+          "issuer": null
+        },
+        {
+          "symbol": "MATIC",
+          "valueUsd": 67546.95,
+          "amount": 380162.06,
+          "issuer": null
+        },
+        {
+          "symbol": "ACX",
+          "valueUsd": 64733.51,
+          "amount": 1170588.9,
+          "issuer": null
+        },
+        {
+          "symbol": "PORK",
+          "valueUsd": 63881.24,
+          "amount": 3002519000000,
+          "issuer": null
+        },
+        {
+          "symbol": "KIBSHI",
+          "valueUsd": 61785.14,
+          "amount": 8597937000,
+          "issuer": null
+        },
+        {
+          "symbol": "BUSD",
+          "valueUsd": 60820.61,
+          "amount": 60837.02,
+          "issuer": null
+        },
+        {
+          "symbol": "YFI",
+          "valueUsd": 47122.91,
+          "amount": 13.21,
+          "issuer": null
+        },
+        {
+          "symbol": "BICO",
+          "valueUsd": 43465.12,
+          "amount": 970440.44,
+          "issuer": null
+        },
+        {
+          "symbol": "EIGEN",
+          "valueUsd": 39904.89,
+          "amount": 93676.11,
+          "issuer": null
+        },
+        {
+          "symbol": "DOG",
+          "valueUsd": 39431.58,
+          "amount": 41881156,
+          "issuer": null
+        },
+        {
+          "symbol": "GOVI",
+          "valueUsd": 39317.39,
+          "amount": 7170592,
+          "issuer": null
+        },
+        {
+          "symbol": "GNO",
+          "valueUsd": 33805.6,
+          "amount": 229.23,
+          "issuer": null
+        },
+        {
+          "symbol": "ENS",
+          "valueUsd": 33647.58,
+          "amount": 3119.85,
+          "issuer": null
+        },
+        {
+          "symbol": "PAXG",
+          "valueUsd": 31918.28,
+          "amount": 6.91,
+          "issuer": null
+        },
+        {
+          "symbol": "RNDR",
+          "valueUsd": 29311.96,
+          "amount": 13141.17,
+          "issuer": null
+        },
+        {
+          "symbol": "SX",
+          "valueUsd": 26270.66,
+          "amount": 692738.06,
+          "issuer": null
+        },
+        {
+          "symbol": "APW",
+          "valueUsd": 24594.85,
+          "amount": 34902.13,
+          "issuer": null
+        },
+        {
+          "symbol": "BADGER",
+          "valueUsd": 21395.2,
+          "amount": 36661.37,
+          "issuer": null
+        },
+        {
+          "symbol": "RPL",
+          "valueUsd": 17525.83,
+          "amount": 7990.11,
+          "issuer": null
+        },
+        {
+          "symbol": "GRT",
+          "valueUsd": 16631.49,
+          "amount": 394129.94,
+          "issuer": null
+        },
+        {
+          "symbol": "PROM",
+          "valueUsd": 16606.09,
+          "amount": 2385.76,
+          "issuer": null
+        },
+        {
+          "symbol": "CTX",
+          "valueUsd": 16317,
+          "amount": 19333.03,
+          "issuer": null
+        },
+        {
+          "symbol": "GEAR",
+          "valueUsd": 14706.25,
+          "amount": 10982611,
+          "issuer": null
+        },
+        {
+          "symbol": "EURS",
+          "valueUsd": 14218.55,
+          "amount": 12174.83,
+          "issuer": null
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 13952.08,
+          "amount": 629.8,
+          "issuer": null
+        },
+        {
+          "symbol": "CELR",
+          "valueUsd": 12797.82,
+          "amount": 2981829.2,
+          "issuer": null
+        },
+        {
+          "symbol": "GENE",
+          "valueUsd": 12197.08,
+          "amount": 537810500,
+          "issuer": null
+        },
+        {
+          "symbol": "OCEAN",
+          "valueUsd": 10271.35,
+          "amount": 60835.16,
+          "issuer": null
+        },
+        {
+          "symbol": "LQTY",
+          "valueUsd": 9742.09,
+          "amount": 22934.78,
+          "issuer": null
+        },
+        {
+          "symbol": "AXGT",
+          "valueUsd": 7458.6,
+          "amount": 1680490.4,
+          "issuer": null
+        },
+        {
+          "symbol": "UMA",
+          "valueUsd": 7368.56,
+          "amount": 9491.14,
+          "issuer": null
+        },
+        {
+          "symbol": "FORT",
+          "valueUsd": 7336.56,
+          "amount": 342858.3,
+          "issuer": null
+        },
+        {
+          "symbol": "APE",
+          "valueUsd": 7182.17,
+          "amount": 32003.43,
+          "issuer": null
+        },
+        {
+          "symbol": "TRADE",
+          "valueUsd": 6634.77,
+          "amount": 111717.36,
+          "issuer": null
+        },
+        {
+          "symbol": "uniETH",
+          "valueUsd": 6372.46,
+          "amount": 1.69,
+          "issuer": null
+        },
+        {
+          "symbol": "DIA",
+          "valueUsd": 6246.93,
+          "amount": 20971.56,
+          "issuer": null
+        },
+        {
+          "symbol": "PBX",
+          "valueUsd": 6059.69,
+          "amount": 509148830,
+          "issuer": null
+        },
+        {
+          "symbol": "ONDO",
+          "valueUsd": 5979.26,
+          "amount": 15184.29,
+          "issuer": null
+        },
+        {
+          "symbol": "gOHM",
+          "valueUsd": 5881.23,
+          "amount": 1.01,
+          "issuer": null
+        },
+        {
+          "symbol": "SOL",
+          "valueUsd": 5757.06,
+          "amount": 39.46,
+          "issuer": null
+        },
+        {
+          "symbol": "DPI",
+          "valueUsd": 5699.37,
+          "amount": 87.37,
+          "issuer": null
+        },
+        {
+          "symbol": "T",
+          "valueUsd": 5191.49,
+          "amount": 519636.16,
+          "issuer": null
+        },
+        {
+          "symbol": "LYRA",
+          "valueUsd": 4798.36,
+          "amount": 19864592,
+          "issuer": null
+        },
+        {
+          "symbol": "ETHFI",
+          "valueUsd": 4665.87,
+          "amount": 6062.06,
+          "issuer": null
+        },
+        {
+          "symbol": "weETHs",
+          "valueUsd": 4606.04,
+          "amount": 1.31,
+          "issuer": null
+        },
+        {
+          "symbol": "SNX",
+          "valueUsd": 4066.89,
+          "amount": 8259.89,
+          "issuer": null
+        },
+        {
+          "symbol": "QNT",
+          "valueUsd": 3618.28,
+          "amount": 48.28,
+          "issuer": null
+        },
+        {
+          "symbol": "FRAX.legacy",
+          "valueUsd": 3461.34,
+          "amount": 3480.14,
+          "issuer": null
+        },
+        {
+          "symbol": "DHT",
+          "valueUsd": 3385.02,
+          "amount": 18173.05,
+          "issuer": null
+        },
+        {
+          "symbol": "SHIB",
+          "valueUsd": 3267.94,
+          "amount": 378202240,
+          "issuer": null
+        },
+        {
+          "symbol": "ezETH",
+          "valueUsd": 3018.41,
+          "amount": 0.84,
+          "issuer": null
+        },
+        {
+          "symbol": "VERI",
+          "valueUsd": 2950.73,
+          "amount": 250.45,
+          "issuer": null
+        },
+        {
+          "symbol": "LORDS",
+          "valueUsd": 2876.2,
+          "amount": 196568.1,
+          "issuer": null
+        },
+        {
+          "symbol": "USDM",
+          "valueUsd": 2845.78,
+          "amount": 2876.13,
+          "issuer": null
+        },
+        {
+          "symbol": "RAI",
+          "valueUsd": 2482,
+          "amount": 659.34,
+          "issuer": null
+        },
+        {
+          "symbol": "XCHNG",
+          "valueUsd": 2343.58,
+          "amount": 2790527.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ENA",
+          "valueUsd": 2332.32,
+          "amount": 9885.86,
+          "issuer": null
+        },
+        {
+          "symbol": "CVX",
+          "valueUsd": 2230.41,
+          "amount": 1072.87,
+          "issuer": null
+        },
+        {
+          "symbol": "PMON",
+          "valueUsd": 2157.02,
+          "amount": 62903.46,
+          "issuer": null
+        },
+        {
+          "symbol": "frxETH",
+          "valueUsd": 1856.94,
+          "amount": 0.55,
+          "issuer": null
+        },
+        {
+          "symbol": "IMX",
+          "valueUsd": 1678.93,
+          "amount": 6016.01,
+          "issuer": null
+        },
+        {
+          "symbol": "ELON",
+          "valueUsd": 1635.59,
+          "amount": 30786090000,
+          "issuer": null
+        },
+        {
+          "symbol": "CRO",
+          "valueUsd": 1567.76,
+          "amount": 15248.38,
+          "issuer": null
+        },
+        {
+          "symbol": "OHM",
+          "valueUsd": 1556.68,
+          "amount": 72.33,
+          "issuer": null
+        },
+        {
+          "symbol": "LRC",
+          "valueUsd": 1450.85,
+          "amount": 26825.5,
+          "issuer": null
+        },
+        {
+          "symbol": "FPI",
+          "valueUsd": 1352.24,
+          "amount": 1177.47,
+          "issuer": null
+        },
+        {
+          "symbol": "1INCH",
+          "valueUsd": 1273.13,
+          "amount": 7880.18,
+          "issuer": null
+        },
+        {
+          "symbol": "ZRX",
+          "valueUsd": 1263.36,
+          "amount": 8595.38,
+          "issuer": null
+        },
+        {
+          "symbol": "GALA",
+          "valueUsd": 1217.42,
+          "amount": 165423.45,
+          "issuer": null
+        },
+        {
+          "symbol": "SPEC",
+          "valueUsd": 1039.76,
+          "amount": 10000,
+          "issuer": null
+        },
+        {
+          "symbol": "XAUt",
+          "valueUsd": 1032.72,
+          "amount": 0.22,
+          "issuer": null
+        },
+        {
+          "symbol": "FTM",
+          "valueUsd": 1019,
+          "amount": 10957.01,
+          "issuer": null
+        },
+        {
+          "symbol": "BAT",
+          "valueUsd": 839.21,
+          "amount": 4147.98,
+          "issuer": null
+        },
+        {
+          "symbol": "BLUR",
+          "valueUsd": 814.47,
+          "amount": 23381.69,
+          "issuer": null
+        },
+        {
+          "symbol": "SDT",
+          "valueUsd": 784.24,
+          "amount": 3022.12,
+          "issuer": null
+        },
+        {
+          "symbol": "FET",
+          "valueUsd": 775.3,
+          "amount": 2721.19,
+          "issuer": null
+        },
+        {
+          "symbol": "SWELL",
+          "valueUsd": 759.51,
+          "amount": 413988.53,
+          "issuer": null
+        },
+        {
+          "symbol": "ILV",
+          "valueUsd": 750.86,
+          "amount": 122.8,
+          "issuer": null
+        },
+        {
+          "symbol": "PERP",
+          "valueUsd": 662.89,
+          "amount": 8241.6,
+          "issuer": null
+        },
+        {
+          "symbol": "scrvUSD",
+          "valueUsd": 649.8,
+          "amount": 600,
+          "issuer": null
+        },
+        {
+          "symbol": "ZRC",
+          "valueUsd": 627.65,
+          "amount": 184554.28,
+          "issuer": null
+        },
+        {
+          "symbol": "eETH",
+          "valueUsd": 616.23,
+          "amount": 0.18,
+          "issuer": null
+        },
+        {
+          "symbol": "RSS3",
+          "valueUsd": 582.48,
+          "amount": 49573.22,
+          "issuer": null
+        },
+        {
+          "symbol": "COTI",
+          "valueUsd": 504.71,
+          "amount": 22963.56,
+          "issuer": null
+        },
+        {
+          "symbol": "MXC",
+          "valueUsd": 447.41,
+          "amount": 220484430,
+          "issuer": null
+        },
+        {
+          "symbol": "BIT",
+          "valueUsd": 419.54,
+          "amount": 425.36,
+          "issuer": null
+        },
+        {
+          "symbol": "DFX",
+          "valueUsd": 393.12,
+          "amount": 301636.2,
+          "issuer": null
+        },
+        {
+          "symbol": "PEPU",
+          "valueUsd": 388.66,
+          "amount": 1395054.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ETHx",
+          "valueUsd": 366.76,
+          "amount": 0.1,
+          "issuer": null
+        },
+        {
+          "symbol": "BNT",
+          "valueUsd": 334.96,
+          "amount": 748.44,
+          "issuer": null
+        },
+        {
+          "symbol": "INJ",
+          "valueUsd": 322.51,
+          "amount": 59.79,
+          "issuer": null
+        },
+        {
+          "symbol": "DYDX",
+          "valueUsd": 319.21,
+          "amount": 1546.16,
+          "issuer": null
+        },
+        {
+          "symbol": "MANA",
+          "valueUsd": 312.71,
+          "amount": 2099.16,
+          "issuer": null
+        },
+        {
+          "symbol": "SAND",
+          "valueUsd": 284.9,
+          "amount": 2275.92,
+          "issuer": null
+        },
+        {
+          "symbol": "AGIX",
+          "valueUsd": 280.86,
+          "amount": 2270.7,
+          "issuer": null
+        },
+        {
+          "symbol": "EURC",
+          "valueUsd": 274.72,
+          "amount": 236.13,
+          "issuer": null
+        },
+        {
+          "symbol": "TRIBE",
+          "valueUsd": 248.08,
+          "amount": 498.08,
+          "issuer": null
+        },
+        {
+          "symbol": "sDAI",
+          "valueUsd": 235.64,
+          "amount": 201.28,
+          "issuer": null
+        },
+        {
+          "symbol": "OGN",
+          "valueUsd": 233.79,
+          "amount": 6951,
+          "issuer": null
+        },
+        {
+          "symbol": "POL",
+          "valueUsd": 228.05,
+          "amount": 1475.45,
+          "issuer": null
+        },
+        {
+          "symbol": "TONCOIN",
+          "valueUsd": 197.04,
+          "amount": 110.18,
+          "issuer": null
+        },
+        {
+          "symbol": "xSUSHI",
+          "valueUsd": 193.93,
+          "amount": 360.11,
+          "issuer": null
+        },
+        {
+          "symbol": "ALI",
+          "valueUsd": 184.14,
+          "amount": 61609.53,
+          "issuer": null
+        },
+        {
+          "symbol": "FIS",
+          "valueUsd": 183.48,
+          "amount": 8380.47,
+          "issuer": null
+        },
+        {
+          "symbol": "PLUME",
+          "valueUsd": 179.11,
+          "amount": 9977.71,
+          "issuer": null
+        },
+        {
+          "symbol": "ankrETH",
+          "valueUsd": 152.37,
+          "amount": 0.04,
+          "issuer": null
+        },
+        {
+          "symbol": "CTSI",
+          "valueUsd": 151.74,
+          "amount": 4125.2,
+          "issuer": null
+        },
+        {
+          "symbol": "LDY",
+          "valueUsd": 145.35,
+          "amount": 14641.5,
+          "issuer": null
+        },
+        {
+          "symbol": "REN",
+          "valueUsd": 129.79,
+          "amount": 21801.92,
+          "issuer": null
+        },
+        {
+          "symbol": "MIM",
+          "valueUsd": 116.85,
+          "amount": 116.22,
+          "issuer": null
+        },
+        {
+          "symbol": "SUPER",
+          "valueUsd": 113.82,
+          "amount": 517.03,
+          "issuer": null
+        },
+        {
+          "symbol": "ANKR",
+          "valueUsd": 102.74,
+          "amount": 14300.14,
+          "issuer": null
+        },
+        {
+          "symbol": "MNT",
+          "valueUsd": 97.05,
+          "amount": 99.75,
+          "issuer": null
+        },
+        {
+          "symbol": "FARM",
+          "valueUsd": 86.7,
+          "amount": 4.44,
+          "issuer": null
+        },
+        {
+          "symbol": "Metis",
+          "valueUsd": 82.98,
+          "amount": 15.1,
+          "issuer": null
+        },
+        {
+          "symbol": "POLY",
+          "valueUsd": 81.31,
+          "amount": 3135.25,
+          "issuer": null
+        },
+        {
+          "symbol": "Mog",
+          "valueUsd": 76.08,
+          "amount": 242176480,
+          "issuer": null
+        },
+        {
+          "symbol": "RAD",
+          "valueUsd": 74.57,
+          "amount": 239.44,
+          "issuer": null
+        },
+        {
+          "symbol": "MASK",
+          "valueUsd": 72.09,
+          "amount": 105,
+          "issuer": null
+        },
+        {
+          "symbol": "EURA",
+          "valueUsd": 69.89,
+          "amount": 60,
+          "issuer": null
+        },
+        {
+          "symbol": "WLD",
+          "valueUsd": 60.55,
+          "amount": 101.86,
+          "issuer": null
+        },
+        {
+          "symbol": "SPX",
+          "valueUsd": 59.72,
+          "amount": 100,
+          "issuer": null
+        },
+        {
+          "symbol": "HOP",
+          "valueUsd": 59.04,
+          "amount": 45533.27,
+          "issuer": null
+        },
+        {
+          "symbol": "VIRTUAL",
+          "valueUsd": 57.62,
+          "amount": 55.86,
+          "issuer": null
+        },
+        {
+          "symbol": "ALEPH",
+          "valueUsd": 55.87,
+          "amount": 1594.64,
+          "issuer": null
+        },
+        {
+          "symbol": "RGT",
+          "valueUsd": 51.27,
+          "amount": 1168.11,
+          "issuer": null
+        },
+        {
+          "symbol": "API3",
+          "valueUsd": 48.32,
+          "amount": 105.73,
+          "issuer": null
+        },
+        {
+          "symbol": "sfrxETH",
+          "valueUsd": 44.04,
+          "amount": 0.01,
+          "issuer": null
+        },
+        {
+          "symbol": "OVR",
+          "valueUsd": 37.81,
+          "amount": 648.44,
+          "issuer": null
+        },
+        {
+          "symbol": "cvxCRV",
+          "valueUsd": 34.39,
+          "amount": 199.58,
+          "issuer": null
+        },
+        {
+          "symbol": "DAO",
+          "valueUsd": 28.95,
+          "amount": 533.91,
+          "issuer": null
+        },
+        {
+          "symbol": "PSP",
+          "valueUsd": 26.03,
+          "amount": 7236.46,
+          "issuer": null
+        },
+        {
+          "symbol": "WXT",
+          "valueUsd": 24.64,
+          "amount": 10000,
+          "issuer": null
+        },
+        {
+          "symbol": "LPT",
+          "valueUsd": 23.25,
+          "amount": 7,
+          "issuer": "Livepeer"
+        },
+        {
+          "symbol": "PEOPLE",
+          "valueUsd": 21.86,
+          "amount": 2000.64,
+          "issuer": null
+        },
+        {
+          "symbol": "REQ",
+          "valueUsd": 21.61,
+          "amount": 202,
+          "issuer": null
+        },
+        {
+          "symbol": "TBANK",
+          "valueUsd": 19.66,
+          "amount": 4680.56,
+          "issuer": null
+        },
+        {
+          "symbol": "ENJ",
+          "valueUsd": 18.79,
+          "amount": 599.6,
+          "issuer": null
+        },
+        {
+          "symbol": "USUAL",
+          "valueUsd": 17.67,
+          "amount": 599.62,
+          "issuer": null
+        },
+        {
+          "symbol": "LOOKS",
+          "valueUsd": 17.58,
+          "amount": 15573.09,
+          "issuer": null
+        },
+        {
+          "symbol": "WBNB",
+          "valueUsd": 16.46,
+          "amount": 0.02,
+          "issuer": null
+        },
+        {
+          "symbol": "XCN",
+          "valueUsd": 14.94,
+          "amount": 1700,
+          "issuer": null
+        },
+        {
+          "symbol": "AEVO",
+          "valueUsd": 12.61,
+          "amount": 291.55,
+          "issuer": null
+        },
+        {
+          "symbol": "FRAX",
+          "valueUsd": 12.39,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "MLN",
+          "valueUsd": 12.27,
+          "amount": 2.42,
+          "issuer": null
+        },
+        {
+          "symbol": "DEXTF",
+          "valueUsd": 12.14,
+          "amount": 100,
+          "issuer": null
+        },
+        {
+          "symbol": "UOS",
+          "valueUsd": 11.68,
+          "amount": 1173.04,
+          "issuer": null
+        },
+        {
+          "symbol": "JASMY",
+          "valueUsd": 10.9,
+          "amount": 1275.33,
+          "issuer": null
+        },
+        {
+          "symbol": "ERN",
+          "valueUsd": 10.34,
+          "amount": 229.2,
+          "issuer": null
+        },
+        {
+          "symbol": "ARC",
+          "valueUsd": 10.2,
+          "amount": 10000.61,
+          "issuer": null
+        },
+        {
+          "symbol": "alUSD",
+          "valueUsd": 9.92,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "BITCOIN",
+          "valueUsd": 9.6,
+          "amount": 208.02,
+          "issuer": null
+        },
+        {
+          "symbol": "RACA",
+          "valueUsd": 9.25,
+          "amount": 372473.25,
+          "issuer": null
+        },
+        {
+          "symbol": "WAMPL",
+          "valueUsd": 9.01,
+          "amount": 5.8,
+          "issuer": null
+        },
+        {
+          "symbol": "AXL",
+          "valueUsd": 7.06,
+          "amount": 89.99,
+          "issuer": null
+        },
+        {
+          "symbol": "PYR",
+          "valueUsd": 6.7,
+          "amount": 13.28,
+          "issuer": null
+        },
+        {
+          "symbol": "CVC",
+          "valueUsd": 5.11,
+          "amount": 107.28,
+          "issuer": null
+        },
+        {
+          "symbol": "NSTR",
+          "valueUsd": 4.84,
+          "amount": 397.22,
+          "issuer": null
+        },
+        {
+          "symbol": "SSV",
+          "valueUsd": 4.13,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "pufETH",
+          "valueUsd": 3.58,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "rswETH",
+          "valueUsd": 3.56,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "ELG",
+          "valueUsd": 2.91,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "BONE",
+          "valueUsd": 2.71,
+          "amount": 30,
+          "issuer": null
+        },
+        {
+          "symbol": "VITA",
+          "valueUsd": 2.17,
+          "amount": 5,
+          "issuer": null
+        },
+        {
+          "symbol": "SYN",
+          "valueUsd": 2.09,
+          "amount": 30.85,
+          "issuer": null
+        },
+        {
+          "symbol": "MYRIA",
+          "valueUsd": 1.62,
+          "amount": 13319.99,
+          "issuer": null
+        },
+        {
+          "symbol": "eXRD",
+          "valueUsd": 1.13,
+          "amount": 896.04,
+          "issuer": null
+        },
+        {
+          "symbol": "wUSDM",
+          "valueUsd": 0.99,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "stTAO",
+          "valueUsd": 0.91,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "CLEAR",
+          "valueUsd": 0.84,
+          "amount": 152.26,
+          "issuer": null
+        },
+        {
+          "symbol": "LYXe",
+          "valueUsd": 0.44,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "deUSD",
+          "valueUsd": 0.33,
+          "amount": 295.3,
+          "issuer": null
+        },
+        {
+          "symbol": "OMI",
+          "valueUsd": 0.19,
+          "amount": 1100,
+          "issuer": null
+        },
+        {
+          "symbol": "ATA",
+          "valueUsd": 0.18,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "EURT",
+          "valueUsd": 0.18,
+          "amount": 1.47,
+          "issuer": null
+        },
+        {
+          "symbol": "sUSDz",
+          "valueUsd": 0.12,
+          "amount": 0.1,
+          "issuer": null
+        },
+        {
+          "symbol": "OMG",
+          "valueUsd": 0.03,
+          "amount": 0.31,
+          "issuer": null
+        },
+        {
+          "symbol": "DIVI",
+          "valueUsd": 0.01,
+          "amount": 8,
+          "issuer": null
+        },
+        {
+          "symbol": "MORPHO",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null
+        }
+      ],
+      "totalValueUsd": 4307006856.110002,
+      "source": "canonical",
+      "description": "Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2."
+    },
+    {
+      "address": "eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "name": "Standard ERC20 Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow admin (GatewaysAdmin) is controlled by the rollup governance",
+      "admin": "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
+      "adminName": "GatewaysAdmin",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 2618033000,
+          "amount": 778629.1,
+          "issuer": null
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 787405100,
+          "amount": 8140.05,
+          "issuer": "BitGo"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 331320350,
+          "amount": 90655.42,
+          "issuer": null
+        },
+        {
+          "symbol": "APEX",
+          "valueUsd": 92238784,
+          "amount": 243602860,
+          "issuer": null
+        },
+        {
+          "symbol": "SQD",
+          "valueUsd": 69246710,
+          "amount": 953520000,
+          "issuer": null
+        },
+        {
+          "symbol": "PENDLE",
+          "valueUsd": 67081860,
+          "amount": 30104070,
+          "issuer": null
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 65510832,
+          "amount": 65516672,
+          "issuer": "Circle"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 50719624,
+          "amount": 3605964.2,
+          "issuer": null
+        },
+        {
+          "symbol": "ANIME",
+          "valueUsd": 35690288,
+          "amount": 4301405000,
+          "issuer": null
+        },
+        {
+          "symbol": "MAGIC",
+          "valueUsd": 29935276,
+          "amount": 294954530,
+          "issuer": null
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 24187330,
+          "amount": 6221.06,
+          "issuer": null
+        },
+        {
+          "symbol": "HEGIC",
+          "valueUsd": 18191742,
+          "amount": 745572740,
+          "issuer": null
+        },
+        {
+          "symbol": "FNXAI",
+          "valueUsd": 16368584,
+          "amount": 102500000,
+          "issuer": null
+        },
+        {
+          "symbol": "WOO",
+          "valueUsd": 15043583,
+          "amount": 485840300,
+          "issuer": null
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 12984247,
+          "amount": 73237.1,
+          "issuer": null
+        },
+        {
+          "symbol": "POND",
+          "valueUsd": 10788192,
+          "amount": 2717353700,
+          "issuer": null
+        },
+        {
+          "symbol": "MCB",
+          "valueUsd": 10415789,
+          "amount": 4220373.5,
+          "issuer": null
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 7900807.5,
+          "amount": 18404422,
+          "issuer": null
+        },
+        {
+          "symbol": "EQB",
+          "valueUsd": 7058168.5,
+          "amount": 30149652,
+          "issuer": null
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 6365266,
+          "amount": 1142876.1,
+          "issuer": null
+        },
+        {
+          "symbol": "rDPX",
+          "valueUsd": 2594732.2,
+          "amount": 2212977.8,
+          "issuer": null
+        },
+        {
+          "symbol": "WXM",
+          "valueUsd": 2291683.5,
+          "amount": 57201912,
+          "issuer": null
+        },
+        {
+          "symbol": "CNFI",
+          "valueUsd": 2231360.5,
+          "amount": 37279796,
+          "issuer": null
+        },
+        {
+          "symbol": "LON",
+          "valueUsd": 2169905.8,
+          "amount": 4741245.5,
+          "issuer": null
+        },
+        {
+          "symbol": "crvUSD",
+          "valueUsd": 2039223.8,
+          "amount": 2036570.9,
+          "issuer": null
+        },
+        {
+          "symbol": "DOLA",
+          "valueUsd": 1963299.6,
+          "amount": 1967546.4,
+          "issuer": null
+        },
+        {
+          "symbol": "DPX",
+          "valueUsd": 1867061.2,
+          "amount": 495059.1,
+          "issuer": null
+        },
+        {
+          "symbol": "PREMIA",
+          "valueUsd": 1275096.9,
+          "amount": 14677383,
+          "issuer": null
+        },
+        {
+          "symbol": "SIS",
+          "valueUsd": 1160444,
+          "amount": 28855532,
+          "issuer": null
+        },
+        {
+          "symbol": "LDO",
+          "valueUsd": 1147502.1,
+          "amount": 1785214.2,
+          "issuer": null
+        },
+        {
+          "symbol": "LOGX",
+          "valueUsd": 1057859.1,
+          "amount": 581050000,
+          "issuer": null
+        },
+        {
+          "symbol": "cbETH",
+          "valueUsd": 875730.5,
+          "amount": 232.25,
+          "issuer": null
+        },
+        {
+          "symbol": "TEL",
+          "valueUsd": 794560.94,
+          "amount": 194111170,
+          "issuer": null
+        },
+        {
+          "symbol": "FOX",
+          "valueUsd": 754161.75,
+          "amount": 61472972,
+          "issuer": null
+        },
+        {
+          "symbol": "FOOM",
+          "valueUsd": 575894.25,
+          "amount": 4052772500000,
+          "issuer": null
+        },
+        {
+          "symbol": "MOON",
+          "valueUsd": 542138.1,
+          "amount": 10025211,
+          "issuer": null
+        },
+        {
+          "symbol": "FFM",
+          "valueUsd": 486226.03,
+          "amount": 997232060,
+          "issuer": null
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 398196.12,
+          "amount": 706844.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ETH+",
+          "valueUsd": 394646.5,
+          "amount": 109.84,
+          "issuer": null
+        },
+        {
+          "symbol": "SPELL",
+          "valueUsd": 376978.97,
+          "amount": 1393051900,
+          "issuer": null
+        },
+        {
+          "symbol": "PNK",
+          "valueUsd": 375254.38,
+          "amount": 22536144,
+          "issuer": null
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 373342.47,
+          "amount": 13697.78,
+          "issuer": null
+        },
+        {
+          "symbol": "COW",
+          "valueUsd": 325978.44,
+          "amount": 1278490.4,
+          "issuer": null
+        },
+        {
+          "symbol": "THALES",
+          "valueUsd": 299428.66,
+          "amount": 1141963.8,
+          "issuer": null
+        },
+        {
+          "symbol": "PC",
+          "valueUsd": 274083.78,
+          "amount": 10500,
+          "issuer": null
+        },
+        {
+          "symbol": "AIUS",
+          "valueUsd": 249023.2,
+          "amount": 315100,
+          "issuer": null
+        },
+        {
+          "symbol": "NEXO",
+          "valueUsd": 203120.42,
+          "amount": 208705.19,
+          "issuer": null
+        },
+        {
+          "symbol": "YBR",
+          "valueUsd": 200335.67,
+          "amount": 627909300,
+          "issuer": null
+        },
+        {
+          "symbol": "TUSD",
+          "valueUsd": 193997.48,
+          "amount": 194017.98,
+          "issuer": null
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 174785.05,
+          "amount": 174527.19,
+          "issuer": null
+        },
+        {
+          "symbol": "HOT",
+          "valueUsd": 173294.45,
+          "amount": 328000000,
+          "issuer": null
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 170861.77,
+          "amount": 499849.97,
+          "issuer": null
+        },
+        {
+          "symbol": "KNC",
+          "valueUsd": 170692.19,
+          "amount": 708644.1,
+          "issuer": null
+        },
+        {
+          "symbol": "USDD",
+          "valueUsd": 169693.5,
+          "amount": 169709.64,
+          "issuer": null
+        },
+        {
+          "symbol": "GOB",
+          "valueUsd": 151686.12,
+          "amount": 571098500,
+          "issuer": null
+        },
+        {
+          "symbol": "eUSD",
+          "valueUsd": 143745.25,
+          "amount": 143878.23,
+          "issuer": null
+        },
+        {
+          "symbol": "YFX",
+          "valueUsd": 109879.24,
+          "amount": 14904014,
+          "issuer": null
+        },
+        {
+          "symbol": "SNT",
+          "valueUsd": 106523.86,
+          "amount": 6973174,
+          "issuer": null
+        },
+        {
+          "symbol": "VRTX",
+          "valueUsd": 101941.09,
+          "amount": 1000000000,
+          "issuer": null
+        },
+        {
+          "symbol": "GTC",
+          "valueUsd": 91022.77,
+          "amount": 635557.2,
+          "issuer": null
+        },
+        {
+          "symbol": "MKR",
+          "valueUsd": 90743.7,
+          "amount": 63.79,
+          "issuer": null
+        },
+        {
+          "symbol": "OLAS",
+          "valueUsd": 83978.43,
+          "amount": 984671.8,
+          "issuer": null
+        },
+        {
+          "symbol": "RSR",
+          "valueUsd": 79860.59,
+          "amount": 28290254,
+          "issuer": null
+        },
+        {
+          "symbol": "DODO",
+          "valueUsd": 78566.48,
+          "amount": 4142703.2,
+          "issuer": null
+        },
+        {
+          "symbol": "Silo",
+          "valueUsd": 75752.93,
+          "amount": 9864325,
+          "issuer": null
+        },
+        {
+          "symbol": "MATIC",
+          "valueUsd": 67546.95,
+          "amount": 380162.06,
+          "issuer": null
+        },
+        {
+          "symbol": "ACX",
+          "valueUsd": 64733.51,
+          "amount": 1170588.9,
+          "issuer": null
+        },
+        {
+          "symbol": "PORK",
+          "valueUsd": 63881.24,
+          "amount": 3002519000000,
+          "issuer": null
+        },
+        {
+          "symbol": "KIBSHI",
+          "valueUsd": 61785.14,
+          "amount": 8597937000,
+          "issuer": null
+        },
+        {
+          "symbol": "BUSD",
+          "valueUsd": 60820.61,
+          "amount": 60837.02,
+          "issuer": null
+        },
+        {
+          "symbol": "YFI",
+          "valueUsd": 47122.91,
+          "amount": 13.21,
+          "issuer": null
+        },
+        {
+          "symbol": "BICO",
+          "valueUsd": 43465.12,
+          "amount": 970440.44,
+          "issuer": null
+        },
+        {
+          "symbol": "EIGEN",
+          "valueUsd": 39904.89,
+          "amount": 93676.11,
+          "issuer": null
+        },
+        {
+          "symbol": "DOG",
+          "valueUsd": 39431.58,
+          "amount": 41881156,
+          "issuer": null
+        },
+        {
+          "symbol": "GOVI",
+          "valueUsd": 39317.39,
+          "amount": 7170592,
+          "issuer": null
+        },
+        {
+          "symbol": "GNO",
+          "valueUsd": 33805.6,
+          "amount": 229.23,
+          "issuer": null
+        },
+        {
+          "symbol": "ENS",
+          "valueUsd": 33647.58,
+          "amount": 3119.85,
+          "issuer": null
+        },
+        {
+          "symbol": "PAXG",
+          "valueUsd": 31918.28,
+          "amount": 6.91,
+          "issuer": null
+        },
+        {
+          "symbol": "RNDR",
+          "valueUsd": 29311.96,
+          "amount": 13141.17,
+          "issuer": null
+        },
+        {
+          "symbol": "SX",
+          "valueUsd": 26270.66,
+          "amount": 692738.06,
+          "issuer": null
+        },
+        {
+          "symbol": "APW",
+          "valueUsd": 24594.85,
+          "amount": 34902.13,
+          "issuer": null
+        },
+        {
+          "symbol": "BADGER",
+          "valueUsd": 21395.2,
+          "amount": 36661.37,
+          "issuer": null
+        },
+        {
+          "symbol": "RPL",
+          "valueUsd": 17525.83,
+          "amount": 7990.11,
+          "issuer": null
+        },
+        {
+          "symbol": "GRT",
+          "valueUsd": 16631.49,
+          "amount": 394129.94,
+          "issuer": null
+        },
+        {
+          "symbol": "PROM",
+          "valueUsd": 16606.09,
+          "amount": 2385.76,
+          "issuer": null
+        },
+        {
+          "symbol": "CTX",
+          "valueUsd": 16317,
+          "amount": 19333.03,
+          "issuer": null
+        },
+        {
+          "symbol": "GEAR",
+          "valueUsd": 14706.25,
+          "amount": 10982611,
+          "issuer": null
+        },
+        {
+          "symbol": "EURS",
+          "valueUsd": 14218.55,
+          "amount": 12174.83,
+          "issuer": null
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 13952.08,
+          "amount": 629.8,
+          "issuer": null
+        },
+        {
+          "symbol": "CELR",
+          "valueUsd": 12797.82,
+          "amount": 2981829.2,
+          "issuer": null
+        },
+        {
+          "symbol": "GENE",
+          "valueUsd": 12197.08,
+          "amount": 537810500,
+          "issuer": null
+        },
+        {
+          "symbol": "OCEAN",
+          "valueUsd": 10271.35,
+          "amount": 60835.16,
+          "issuer": null
+        },
+        {
+          "symbol": "LQTY",
+          "valueUsd": 9742.09,
+          "amount": 22934.78,
+          "issuer": null
+        },
+        {
+          "symbol": "AXGT",
+          "valueUsd": 7458.6,
+          "amount": 1680490.4,
+          "issuer": null
+        },
+        {
+          "symbol": "UMA",
+          "valueUsd": 7368.56,
+          "amount": 9491.14,
+          "issuer": null
+        },
+        {
+          "symbol": "FORT",
+          "valueUsd": 7336.56,
+          "amount": 342858.3,
+          "issuer": null
+        },
+        {
+          "symbol": "APE",
+          "valueUsd": 7182.17,
+          "amount": 32003.43,
+          "issuer": null
+        },
+        {
+          "symbol": "TRADE",
+          "valueUsd": 6634.77,
+          "amount": 111717.36,
+          "issuer": null
+        },
+        {
+          "symbol": "uniETH",
+          "valueUsd": 6372.46,
+          "amount": 1.69,
+          "issuer": null
+        },
+        {
+          "symbol": "DIA",
+          "valueUsd": 6246.93,
+          "amount": 20971.56,
+          "issuer": null
+        },
+        {
+          "symbol": "PBX",
+          "valueUsd": 6059.69,
+          "amount": 509148830,
+          "issuer": null
+        },
+        {
+          "symbol": "ONDO",
+          "valueUsd": 5979.26,
+          "amount": 15184.29,
+          "issuer": null
+        },
+        {
+          "symbol": "gOHM",
+          "valueUsd": 5881.23,
+          "amount": 1.01,
+          "issuer": null
+        },
+        {
+          "symbol": "SOL",
+          "valueUsd": 5757.06,
+          "amount": 39.46,
+          "issuer": null
+        },
+        {
+          "symbol": "DPI",
+          "valueUsd": 5699.37,
+          "amount": 87.37,
+          "issuer": null
+        },
+        {
+          "symbol": "T",
+          "valueUsd": 5191.49,
+          "amount": 519636.16,
+          "issuer": null
+        },
+        {
+          "symbol": "LYRA",
+          "valueUsd": 4798.36,
+          "amount": 19864592,
+          "issuer": null
+        },
+        {
+          "symbol": "ETHFI",
+          "valueUsd": 4665.87,
+          "amount": 6062.06,
+          "issuer": null
+        },
+        {
+          "symbol": "weETHs",
+          "valueUsd": 4606.04,
+          "amount": 1.31,
+          "issuer": null
+        },
+        {
+          "symbol": "SNX",
+          "valueUsd": 4066.89,
+          "amount": 8259.89,
+          "issuer": null
+        },
+        {
+          "symbol": "QNT",
+          "valueUsd": 3618.28,
+          "amount": 48.28,
+          "issuer": null
+        },
+        {
+          "symbol": "FRAX.legacy",
+          "valueUsd": 3461.34,
+          "amount": 3480.14,
+          "issuer": null
+        },
+        {
+          "symbol": "DHT",
+          "valueUsd": 3385.02,
+          "amount": 18173.05,
+          "issuer": null
+        },
+        {
+          "symbol": "SHIB",
+          "valueUsd": 3267.94,
+          "amount": 378202240,
+          "issuer": null
+        },
+        {
+          "symbol": "ezETH",
+          "valueUsd": 3018.41,
+          "amount": 0.84,
+          "issuer": null
+        },
+        {
+          "symbol": "VERI",
+          "valueUsd": 2950.73,
+          "amount": 250.45,
+          "issuer": null
+        },
+        {
+          "symbol": "LORDS",
+          "valueUsd": 2876.2,
+          "amount": 196568.1,
+          "issuer": null
+        },
+        {
+          "symbol": "USDM",
+          "valueUsd": 2845.78,
+          "amount": 2876.13,
+          "issuer": null
+        },
+        {
+          "symbol": "RAI",
+          "valueUsd": 2482,
+          "amount": 659.34,
+          "issuer": null
+        },
+        {
+          "symbol": "XCHNG",
+          "valueUsd": 2343.58,
+          "amount": 2790527.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ENA",
+          "valueUsd": 2332.32,
+          "amount": 9885.86,
+          "issuer": null
+        },
+        {
+          "symbol": "CVX",
+          "valueUsd": 2230.41,
+          "amount": 1072.87,
+          "issuer": null
+        },
+        {
+          "symbol": "PMON",
+          "valueUsd": 2157.02,
+          "amount": 62903.46,
+          "issuer": null
+        },
+        {
+          "symbol": "frxETH",
+          "valueUsd": 1856.94,
+          "amount": 0.55,
+          "issuer": null
+        },
+        {
+          "symbol": "IMX",
+          "valueUsd": 1678.93,
+          "amount": 6016.01,
+          "issuer": null
+        },
+        {
+          "symbol": "ELON",
+          "valueUsd": 1635.59,
+          "amount": 30786090000,
+          "issuer": null
+        },
+        {
+          "symbol": "CRO",
+          "valueUsd": 1567.76,
+          "amount": 15248.38,
+          "issuer": null
+        },
+        {
+          "symbol": "OHM",
+          "valueUsd": 1556.68,
+          "amount": 72.33,
+          "issuer": null
+        },
+        {
+          "symbol": "LRC",
+          "valueUsd": 1450.85,
+          "amount": 26825.5,
+          "issuer": null
+        },
+        {
+          "symbol": "FPI",
+          "valueUsd": 1352.24,
+          "amount": 1177.47,
+          "issuer": null
+        },
+        {
+          "symbol": "1INCH",
+          "valueUsd": 1273.13,
+          "amount": 7880.18,
+          "issuer": null
+        },
+        {
+          "symbol": "ZRX",
+          "valueUsd": 1263.36,
+          "amount": 8595.38,
+          "issuer": null
+        },
+        {
+          "symbol": "GALA",
+          "valueUsd": 1217.42,
+          "amount": 165423.45,
+          "issuer": null
+        },
+        {
+          "symbol": "SPEC",
+          "valueUsd": 1039.76,
+          "amount": 10000,
+          "issuer": null
+        },
+        {
+          "symbol": "XAUt",
+          "valueUsd": 1032.72,
+          "amount": 0.22,
+          "issuer": null
+        },
+        {
+          "symbol": "FTM",
+          "valueUsd": 1019,
+          "amount": 10957.01,
+          "issuer": null
+        },
+        {
+          "symbol": "BAT",
+          "valueUsd": 839.21,
+          "amount": 4147.98,
+          "issuer": null
+        },
+        {
+          "symbol": "BLUR",
+          "valueUsd": 814.47,
+          "amount": 23381.69,
+          "issuer": null
+        },
+        {
+          "symbol": "SDT",
+          "valueUsd": 784.24,
+          "amount": 3022.12,
+          "issuer": null
+        },
+        {
+          "symbol": "FET",
+          "valueUsd": 775.3,
+          "amount": 2721.19,
+          "issuer": null
+        },
+        {
+          "symbol": "SWELL",
+          "valueUsd": 759.51,
+          "amount": 413988.53,
+          "issuer": null
+        },
+        {
+          "symbol": "ILV",
+          "valueUsd": 750.86,
+          "amount": 122.8,
+          "issuer": null
+        },
+        {
+          "symbol": "PERP",
+          "valueUsd": 662.89,
+          "amount": 8241.6,
+          "issuer": null
+        },
+        {
+          "symbol": "scrvUSD",
+          "valueUsd": 649.8,
+          "amount": 600,
+          "issuer": null
+        },
+        {
+          "symbol": "ZRC",
+          "valueUsd": 627.65,
+          "amount": 184554.28,
+          "issuer": null
+        },
+        {
+          "symbol": "eETH",
+          "valueUsd": 616.23,
+          "amount": 0.18,
+          "issuer": null
+        },
+        {
+          "symbol": "RSS3",
+          "valueUsd": 582.48,
+          "amount": 49573.22,
+          "issuer": null
+        },
+        {
+          "symbol": "COTI",
+          "valueUsd": 504.71,
+          "amount": 22963.56,
+          "issuer": null
+        },
+        {
+          "symbol": "MXC",
+          "valueUsd": 447.41,
+          "amount": 220484430,
+          "issuer": null
+        },
+        {
+          "symbol": "BIT",
+          "valueUsd": 419.54,
+          "amount": 425.36,
+          "issuer": null
+        },
+        {
+          "symbol": "DFX",
+          "valueUsd": 393.12,
+          "amount": 301636.2,
+          "issuer": null
+        },
+        {
+          "symbol": "PEPU",
+          "valueUsd": 388.66,
+          "amount": 1395054.5,
+          "issuer": null
+        },
+        {
+          "symbol": "ETHx",
+          "valueUsd": 366.76,
+          "amount": 0.1,
+          "issuer": null
+        },
+        {
+          "symbol": "BNT",
+          "valueUsd": 334.96,
+          "amount": 748.44,
+          "issuer": null
+        },
+        {
+          "symbol": "INJ",
+          "valueUsd": 322.51,
+          "amount": 59.79,
+          "issuer": null
+        },
+        {
+          "symbol": "DYDX",
+          "valueUsd": 319.21,
+          "amount": 1546.16,
+          "issuer": null
+        },
+        {
+          "symbol": "MANA",
+          "valueUsd": 312.71,
+          "amount": 2099.16,
+          "issuer": null
+        },
+        {
+          "symbol": "SAND",
+          "valueUsd": 284.9,
+          "amount": 2275.92,
+          "issuer": null
+        },
+        {
+          "symbol": "AGIX",
+          "valueUsd": 280.86,
+          "amount": 2270.7,
+          "issuer": null
+        },
+        {
+          "symbol": "EURC",
+          "valueUsd": 274.72,
+          "amount": 236.13,
+          "issuer": null
+        },
+        {
+          "symbol": "TRIBE",
+          "valueUsd": 248.08,
+          "amount": 498.08,
+          "issuer": null
+        },
+        {
+          "symbol": "sDAI",
+          "valueUsd": 235.64,
+          "amount": 201.28,
+          "issuer": null
+        },
+        {
+          "symbol": "OGN",
+          "valueUsd": 233.79,
+          "amount": 6951,
+          "issuer": null
+        },
+        {
+          "symbol": "POL",
+          "valueUsd": 228.05,
+          "amount": 1475.45,
+          "issuer": null
+        },
+        {
+          "symbol": "TONCOIN",
+          "valueUsd": 197.04,
+          "amount": 110.18,
+          "issuer": null
+        },
+        {
+          "symbol": "xSUSHI",
+          "valueUsd": 193.93,
+          "amount": 360.11,
+          "issuer": null
+        },
+        {
+          "symbol": "ALI",
+          "valueUsd": 184.14,
+          "amount": 61609.53,
+          "issuer": null
+        },
+        {
+          "symbol": "FIS",
+          "valueUsd": 183.48,
+          "amount": 8380.47,
+          "issuer": null
+        },
+        {
+          "symbol": "PLUME",
+          "valueUsd": 179.11,
+          "amount": 9977.71,
+          "issuer": null
+        },
+        {
+          "symbol": "ankrETH",
+          "valueUsd": 152.37,
+          "amount": 0.04,
+          "issuer": null
+        },
+        {
+          "symbol": "CTSI",
+          "valueUsd": 151.74,
+          "amount": 4125.2,
+          "issuer": null
+        },
+        {
+          "symbol": "LDY",
+          "valueUsd": 145.35,
+          "amount": 14641.5,
+          "issuer": null
+        },
+        {
+          "symbol": "REN",
+          "valueUsd": 129.79,
+          "amount": 21801.92,
+          "issuer": null
+        },
+        {
+          "symbol": "MIM",
+          "valueUsd": 116.85,
+          "amount": 116.22,
+          "issuer": null
+        },
+        {
+          "symbol": "SUPER",
+          "valueUsd": 113.82,
+          "amount": 517.03,
+          "issuer": null
+        },
+        {
+          "symbol": "ANKR",
+          "valueUsd": 102.74,
+          "amount": 14300.14,
+          "issuer": null
+        },
+        {
+          "symbol": "MNT",
+          "valueUsd": 97.05,
+          "amount": 99.75,
+          "issuer": null
+        },
+        {
+          "symbol": "FARM",
+          "valueUsd": 86.7,
+          "amount": 4.44,
+          "issuer": null
+        },
+        {
+          "symbol": "Metis",
+          "valueUsd": 82.98,
+          "amount": 15.1,
+          "issuer": null
+        },
+        {
+          "symbol": "POLY",
+          "valueUsd": 81.31,
+          "amount": 3135.25,
+          "issuer": null
+        },
+        {
+          "symbol": "Mog",
+          "valueUsd": 76.08,
+          "amount": 242176480,
+          "issuer": null
+        },
+        {
+          "symbol": "RAD",
+          "valueUsd": 74.57,
+          "amount": 239.44,
+          "issuer": null
+        },
+        {
+          "symbol": "MASK",
+          "valueUsd": 72.09,
+          "amount": 105,
+          "issuer": null
+        },
+        {
+          "symbol": "EURA",
+          "valueUsd": 69.89,
+          "amount": 60,
+          "issuer": null
+        },
+        {
+          "symbol": "WLD",
+          "valueUsd": 60.55,
+          "amount": 101.86,
+          "issuer": null
+        },
+        {
+          "symbol": "SPX",
+          "valueUsd": 59.72,
+          "amount": 100,
+          "issuer": null
+        },
+        {
+          "symbol": "HOP",
+          "valueUsd": 59.04,
+          "amount": 45533.27,
+          "issuer": null
+        },
+        {
+          "symbol": "VIRTUAL",
+          "valueUsd": 57.62,
+          "amount": 55.86,
+          "issuer": null
+        },
+        {
+          "symbol": "ALEPH",
+          "valueUsd": 55.87,
+          "amount": 1594.64,
+          "issuer": null
+        },
+        {
+          "symbol": "RGT",
+          "valueUsd": 51.27,
+          "amount": 1168.11,
+          "issuer": null
+        },
+        {
+          "symbol": "API3",
+          "valueUsd": 48.32,
+          "amount": 105.73,
+          "issuer": null
+        },
+        {
+          "symbol": "sfrxETH",
+          "valueUsd": 44.04,
+          "amount": 0.01,
+          "issuer": null
+        },
+        {
+          "symbol": "OVR",
+          "valueUsd": 37.81,
+          "amount": 648.44,
+          "issuer": null
+        },
+        {
+          "symbol": "cvxCRV",
+          "valueUsd": 34.39,
+          "amount": 199.58,
+          "issuer": null
+        },
+        {
+          "symbol": "DAO",
+          "valueUsd": 28.95,
+          "amount": 533.91,
+          "issuer": null
+        },
+        {
+          "symbol": "PSP",
+          "valueUsd": 26.03,
+          "amount": 7236.46,
+          "issuer": null
+        },
+        {
+          "symbol": "WXT",
+          "valueUsd": 24.64,
+          "amount": 10000,
+          "issuer": null
+        },
+        {
+          "symbol": "LPT",
+          "valueUsd": 23.25,
+          "amount": 7,
+          "issuer": "Livepeer"
+        },
+        {
+          "symbol": "PEOPLE",
+          "valueUsd": 21.86,
+          "amount": 2000.64,
+          "issuer": null
+        },
+        {
+          "symbol": "REQ",
+          "valueUsd": 21.61,
+          "amount": 202,
+          "issuer": null
+        },
+        {
+          "symbol": "TBANK",
+          "valueUsd": 19.66,
+          "amount": 4680.56,
+          "issuer": null
+        },
+        {
+          "symbol": "ENJ",
+          "valueUsd": 18.79,
+          "amount": 599.6,
+          "issuer": null
+        },
+        {
+          "symbol": "USUAL",
+          "valueUsd": 17.67,
+          "amount": 599.62,
+          "issuer": null
+        },
+        {
+          "symbol": "LOOKS",
+          "valueUsd": 17.58,
+          "amount": 15573.09,
+          "issuer": null
+        },
+        {
+          "symbol": "WBNB",
+          "valueUsd": 16.46,
+          "amount": 0.02,
+          "issuer": null
+        },
+        {
+          "symbol": "XCN",
+          "valueUsd": 14.94,
+          "amount": 1700,
+          "issuer": null
+        },
+        {
+          "symbol": "AEVO",
+          "valueUsd": 12.61,
+          "amount": 291.55,
+          "issuer": null
+        },
+        {
+          "symbol": "FRAX",
+          "valueUsd": 12.39,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "MLN",
+          "valueUsd": 12.27,
+          "amount": 2.42,
+          "issuer": null
+        },
+        {
+          "symbol": "DEXTF",
+          "valueUsd": 12.14,
+          "amount": 100,
+          "issuer": null
+        },
+        {
+          "symbol": "UOS",
+          "valueUsd": 11.68,
+          "amount": 1173.04,
+          "issuer": null
+        },
+        {
+          "symbol": "JASMY",
+          "valueUsd": 10.9,
+          "amount": 1275.33,
+          "issuer": null
+        },
+        {
+          "symbol": "ERN",
+          "valueUsd": 10.34,
+          "amount": 229.2,
+          "issuer": null
+        },
+        {
+          "symbol": "ARC",
+          "valueUsd": 10.2,
+          "amount": 10000.61,
+          "issuer": null
+        },
+        {
+          "symbol": "alUSD",
+          "valueUsd": 9.92,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "BITCOIN",
+          "valueUsd": 9.6,
+          "amount": 208.02,
+          "issuer": null
+        },
+        {
+          "symbol": "RACA",
+          "valueUsd": 9.25,
+          "amount": 372473.25,
+          "issuer": null
+        },
+        {
+          "symbol": "WAMPL",
+          "valueUsd": 9.01,
+          "amount": 5.8,
+          "issuer": null
+        },
+        {
+          "symbol": "AXL",
+          "valueUsd": 7.06,
+          "amount": 89.99,
+          "issuer": null
+        },
+        {
+          "symbol": "PYR",
+          "valueUsd": 6.7,
+          "amount": 13.28,
+          "issuer": null
+        },
+        {
+          "symbol": "CVC",
+          "valueUsd": 5.11,
+          "amount": 107.28,
+          "issuer": null
+        },
+        {
+          "symbol": "NSTR",
+          "valueUsd": 4.84,
+          "amount": 397.22,
+          "issuer": null
+        },
+        {
+          "symbol": "SSV",
+          "valueUsd": 4.13,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "pufETH",
+          "valueUsd": 3.58,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "rswETH",
+          "valueUsd": 3.56,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "ELG",
+          "valueUsd": 2.91,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "BONE",
+          "valueUsd": 2.71,
+          "amount": 30,
+          "issuer": null
+        },
+        {
+          "symbol": "VITA",
+          "valueUsd": 2.17,
+          "amount": 5,
+          "issuer": null
+        },
+        {
+          "symbol": "SYN",
+          "valueUsd": 2.09,
+          "amount": 30.85,
+          "issuer": null
+        },
+        {
+          "symbol": "MYRIA",
+          "valueUsd": 1.62,
+          "amount": 13319.99,
+          "issuer": null
+        },
+        {
+          "symbol": "eXRD",
+          "valueUsd": 1.13,
+          "amount": 896.04,
+          "issuer": null
+        },
+        {
+          "symbol": "wUSDM",
+          "valueUsd": 0.99,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "stTAO",
+          "valueUsd": 0.91,
+          "amount": 0,
+          "issuer": null
+        },
+        {
+          "symbol": "CLEAR",
+          "valueUsd": 0.84,
+          "amount": 152.26,
+          "issuer": null
+        },
+        {
+          "symbol": "LYXe",
+          "valueUsd": 0.44,
+          "amount": 1,
+          "issuer": null
+        },
+        {
+          "symbol": "deUSD",
+          "valueUsd": 0.33,
+          "amount": 295.3,
+          "issuer": null
+        },
+        {
+          "symbol": "OMI",
+          "valueUsd": 0.19,
+          "amount": 1100,
+          "issuer": null
+        },
+        {
+          "symbol": "ATA",
+          "valueUsd": 0.18,
+          "amount": 10,
+          "issuer": null
+        },
+        {
+          "symbol": "EURT",
+          "valueUsd": 0.18,
+          "amount": 1.47,
+          "issuer": null
+        },
+        {
+          "symbol": "sUSDz",
+          "valueUsd": 0.12,
+          "amount": 0.1,
+          "issuer": null
+        },
+        {
+          "symbol": "OMG",
+          "valueUsd": 0.03,
+          "amount": 0.31,
+          "issuer": null
+        },
+        {
+          "symbol": "DIVI",
+          "valueUsd": 0.01,
+          "amount": 8,
+          "issuer": null
+        },
+        {
+          "symbol": "MORPHO",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null
+        }
+      ],
+      "totalValueUsd": 4307006856.110002,
+      "source": "canonical",
+      "description": "Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, \"wrapped\" token will be minted."
+    },
+    {
+      "address": "eth:0xA10c7CE4b876998858b1a9E12b10092229539400",
+      "name": "Maker/Sky DAI Vault",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow admin (MakerDAO) is the same as token issuer, uses canonical messaging",
+      "admin": "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+      "adminName": "MakerDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "sUSDS",
+          "valueUsd": 104784470,
+          "amount": 96266176,
+          "issuer": "MakerDAO"
+        },
+        {
+          "symbol": "sUSDS",
+          "valueUsd": 104784470,
+          "amount": 96266176,
+          "issuer": "MakerDAO"
+        },
+        {
+          "symbol": "USDS",
+          "valueUsd": 99773400,
+          "amount": 99817080,
+          "issuer": "MakerDAO"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 22287060,
+          "amount": 22280828,
+          "issuer": "MakerDAO"
+        }
+      ],
+      "totalValueUsd": 331629400,
+      "source": "external",
+      "description": "Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging."
+    },
+    {
+      "address": "eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+      "name": "Lido wstETH Vault",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow admin (Lido DAO) is the same as token issuer, uses canonical messaging",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 273804320,
+          "amount": 66454.17,
+          "issuer": "Lido DAO"
+        }
+      ],
+      "totalValueUsd": 273804320,
+      "source": "external",
+      "description": "wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance."
+    },
+    {
+      "address": "eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+      "name": "Livepeer LPT Vault",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Livepeer (token issuer), uses canonical messaging",
+      "admin": null,
+      "adminName": "Livepeer",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "LPT",
+          "valueUsd": 20180800,
+          "amount": 6076544.5,
+          "issuer": "Livepeer"
+        }
+      ],
+      "totalValueUsd": 20180800,
+      "source": "external",
+      "description": "LPT Vault for custom Livepeer Token Gateway."
+    },
+    {
+      "address": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "name": "Native USDC (Circle CCTP)",
+      "category": "issuer-secured",
+      "bridgeType": "external",
+      "categoryReason": "Circle controls both USDC token AND the CCTP attestation service. True issuer control.",
+      "admin": null,
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 6390473000,
+          "amount": 6391042600,
+          "issuer": "Circle"
+        }
+      ],
+      "totalValueUsd": 6390473000,
+      "source": "external",
+      "description": "Native USDC minted directly on Arbitrum by Circle via Cross-Chain Transfer Protocol. Circle controls the attestation service.",
+      "isNativeToken": true,
+      "bridgeProtocol": "Circle CCTP"
+    },
+    {
+      "address": "arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "name": "USDT0 (Layer Zero OFT)",
+      "category": "third-party-secured",
+      "bridgeType": "external",
+      "categoryReason": "Trust LayerZero Labs (3-of-5 multisig) + Everdawn Labs DVN. Tether does not directly control the bridge.",
+      "admin": null,
+      "adminName": "Tether",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 1039958850,
+          "amount": 1040275300,
+          "issuer": "Tether"
+        }
+      ],
+      "totalValueUsd": 1039958850,
+      "source": "external",
+      "description": "USDT0 on Arbitrum via Layer Zero OFT. Validated by LayerZero DVN + Everdawn Labs DVN.",
+      "isNativeToken": true,
+      "bridgeProtocol": "Layer Zero v2 OFT"
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0x4186bfc76e2e237523cbc30fd220fe055156b41f",
+      "valueUsd": 256001950,
+      "amount": 71615.43,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "l2Address": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
+      "valueUsd": 152005710,
+      "amount": 3602202600,
+      "bridgeProtocol": "The Graph Custom Gateway",
+      "issuer": "The Graph",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via The Graph Custom Gateway. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "The Graph Custom Gateway Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "The Graph Custom Gateway controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+      "valueUsd": 142071860,
+      "amount": 39492.55,
+      "bridgeProtocol": "Connext (xERC20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Connext (xERC20). Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Connext (xERC20) Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Connext (xERC20) controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "syrupUSDC",
+      "name": "Syrup USDC",
+      "l2Address": "0x41ca7586cc1311807b4605fbb748a3b8862b42b5",
+      "valueUsd": 123935790,
+      "amount": 108093224,
+      "bridgeProtocol": "Chainlink CCIP",
+      "issuer": "Maple Finance",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Chainlink CCIP. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Chainlink Node Operators",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "relay proofs"
+          ],
+          "riskDescription": "Node operators control message validation"
+        }
+      ]
+    },
+    {
+      "symbol": "clBTC",
+      "name": "clBTC",
+      "l2Address": "0x1792865d493fe4dfdd504010d3c0f6da11e8046d",
+      "valueUsd": 120523120,
+      "amount": 1252,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "Corn Finance",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole NTT. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Guardian Network",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Guardians can approve fraudulent mints if 13/19 collude"
+        }
+      ]
+    },
+    {
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "l2Address": "0xa3931d71877c0e7a3148cb7eb4463524fec27fbd",
+      "valueUsd": 104784470,
+      "amount": 96266176,
+      "bridgeProtocol": "Custom escrow",
+      "issuer": "MakerDAO",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Custom escrow. Trust model not fully analyzed.",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Custom escrow Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Custom escrow controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "l2Address": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+      "valueUsd": 99773400,
+      "amount": 99817080,
+      "bridgeProtocol": "Custom escrow",
+      "issuer": "MakerDAO",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Custom escrow. Trust model not fully analyzed.",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Custom escrow Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Custom escrow controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "ZRO",
+      "name": "LayerZero",
+      "l2Address": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+      "valueUsd": 50874048,
+      "amount": 31036406,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Layer Zero",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "EDU",
+      "name": "EDU Coin",
+      "l2Address": "0xf8173a39c56a554837c4c7f104153a005d284d11",
+      "valueUsd": 40605892,
+      "amount": 252397620,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Open Campus",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "cgETH.hashkey",
+      "name": "cgETH Hashkey Cloud",
+      "l2Address": "0x0ce45dd53affbb011884ef1866e0738f58ab7969",
+      "valueUsd": 23488610,
+      "amount": 9546.58,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole NTT. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Guardian Network",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Guardians can approve fraudulent mints if 13/19 collude"
+        }
+      ]
+    },
+    {
+      "symbol": "ATH",
+      "name": "Aethir Token",
+      "l2Address": "0xc87b37a581ec3257b734886d9d3a581f5a9d056c",
+      "valueUsd": 22673688,
+      "amount": 2172003600,
+      "bridgeProtocol": "Axelar (ITS)",
+      "issuer": "Aethir",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Axelar (ITS). Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Axelar (ITS) Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Axelar (ITS) controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "l2Address": "0x178412e79c25968a32e89b11f63b33f733770c2a",
+      "valueUsd": 17788824,
+      "amount": 5302,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Frax Ferry. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax Ferry Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Frax Ferry controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "tBTC",
+      "name": "Arbitrum tBTC v2",
+      "l2Address": "0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40",
+      "valueUsd": 12926121,
+      "amount": 133.1,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "Threshold",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "RDNT",
+      "name": "Radiant",
+      "l2Address": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+      "valueUsd": 11144951,
+      "amount": 1078502700,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Radiant",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero. 2 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs or change security assumptions"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor legitimate transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "l2Address": "0x2bcc6d6cdbbdc0a4071e48bb3b969b06b3330c07",
+      "valueUsd": 10932669,
+      "amount": 75069.98,
+      "bridgeProtocol": "Wormhole Token Bridge",
+      "issuer": "Solana/Wormhole",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole Token Bridge. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Token Bridge Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole Token Bridge controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "l2Address": "0x95ab45875cffdba1e5f451b950bc2e42c0053f39",
+      "valueUsd": 10801739,
+      "amount": 2802,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Frax Ferry. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax Ferry Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Frax Ferry controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "XBG",
+      "name": "XBorg",
+      "l2Address": "0x93fa0b88c0c78e45980fa74cdd87469311b7b3e4",
+      "valueUsd": 9637698,
+      "amount": 175605340,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "XBorg",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole NTT. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Guardian Network",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Guardians can approve fraudulent mints if 13/19 collude"
+        }
+      ]
+    },
+    {
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "l2Address": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
+      "valueUsd": 6751634.5,
+      "amount": 5560495,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "MOR",
+      "name": "MOR",
+      "l2Address": "0x092baadb7def4c3981454dd9c0a0d7ff07bcfc86",
+      "valueUsd": 6622659,
+      "amount": 4899461,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Morpheus",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "ETHFI",
+      "name": "ether.fi governance token",
+      "l2Address": "0x7189fb5b6504bbff6a852b13b7b82a3c118fdc27",
+      "valueUsd": 6603204.5,
+      "amount": 8579117,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "EtherFi",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "USDY",
+      "name": "Ondo U.S. Dollar Yield",
+      "l2Address": "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d",
+      "valueUsd": 5478919,
+      "amount": 4941989,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Ondo",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "GHO",
+      "name": "Gho Token",
+      "l2Address": "0x7dff72693f6a4149b17e7c6314655f6a9f7c8b33",
+      "valueUsd": 4840977.5,
+      "amount": 4845638,
+      "bridgeProtocol": "Chainlink CCIP",
+      "issuer": "Aave",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Chainlink CCIP. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Chainlink Node Operators",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "relay proofs"
+          ],
+          "riskDescription": "Node operators control message validation"
+        }
+      ]
+    },
+    {
+      "symbol": "STG",
+      "name": "StargateToken",
+      "l2Address": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+      "valueUsd": 2648122.8,
+      "amount": 18721668,
+      "bridgeProtocol": "Stargate",
+      "issuer": "Stargate",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Stargate. 2 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs or change security assumptions"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor legitimate transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "USDe",
+      "name": "USDe",
+      "l2Address": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+      "valueUsd": 2586910.2,
+      "amount": 2587742,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "l2Address": "0x3647c54c4c2c65bc7a2d63c0da2809b399dbbdc0",
+      "valueUsd": 2045402,
+      "amount": 21.12,
+      "bridgeProtocol": "CCIP (via free.tech and solv.finance)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via CCIP (via free.tech and solv.finance). Trust model not fully analyzed.",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "CCIP (via free.tech and solv.finance) Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "CCIP (via free.tech and solv.finance) controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "FRAX",
+      "name": "Frax",
+      "l2Address": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "valueUsd": 1881206.4,
+      "amount": 1891420.8,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Frax Ferry. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax Ferry Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Frax Ferry controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "MGP",
+      "name": "Magpie Token",
+      "l2Address": "0xa61f74247455a40b01b0559ff6274441fafa22a3",
+      "valueUsd": 1402250.4,
+      "amount": 133595450,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "SDEX",
+      "name": "SmarDex Token",
+      "l2Address": "0xabd587f2607542723b17f14d00d99b987c29b074",
+      "valueUsd": 1257677.2,
+      "amount": 192890940,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "W",
+      "name": "Wormhole Token",
+      "l2Address": "0xb0ffa8000886e57f86dd5264b9582b2ad87b2b91",
+      "valueUsd": 1177688.5,
+      "amount": 30901142,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Wormhole. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Wormhole controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "l2Address": "0x7f9fbf9bdd3f4105c478b996b648fe6e828a1e98",
+      "valueUsd": 1171268.6,
+      "amount": 5219124,
+      "bridgeProtocol": "Native/Calculated Supply",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Unknown bridge protocol (Native/Calculated Supply). Trust model not verified.",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Unknown Bridge Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "mint tokens",
+            "potentially upgrade contracts",
+            "unknown other powers"
+          ],
+          "riskDescription": "Bridge trust model not researched - unknown parties may control privileged functions"
+        }
+      ]
+    },
+    {
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "l2Address": "0x1b01514a2b3cdef16fd3c680a818a0ab97da8a09",
+      "valueUsd": 1148426.8,
+      "amount": 1000000,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Frax Ferry. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax Ferry Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Frax Ferry controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "BIFI",
+      "name": "beefy.finance",
+      "l2Address": "0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
+      "valueUsd": 1112560.1,
+      "amount": 5406.41,
+      "bridgeProtocol": "Multichain",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Multichain. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Multichain Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Multichain controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "l2Address": "0x25d887ce7a35172c62febfd67a1856f20faebb00",
+      "valueUsd": 919785.6,
+      "amount": 150665070000,
+      "bridgeProtocol": "Layer Zero OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "l2Address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+      "valueUsd": 899743.8,
+      "amount": 726075.8,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Frax Ferry. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax Ferry Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Frax Ferry controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "BTC.b",
+      "name": "Bitcoin",
+      "l2Address": "0x2297aebd383787a160dd0d9f71508148769342e3",
+      "valueUsd": 826029.1,
+      "amount": 8.52,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero. 2 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs or change security assumptions"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor legitimate transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "JOE",
+      "name": "JoeToken",
+      "l2Address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
+      "valueUsd": 636630.9,
+      "amount": 9741535,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero. 2 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs or change security assumptions"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor legitimate transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "xSolvBTC",
+      "name": "xSolvBTC",
+      "l2Address": "0x346c574c56e1a4aaa8dc88cda8f7eb12b39947ab",
+      "valueUsd": 496144.62,
+      "amount": 5.08,
+      "bridgeProtocol": "CCIP (via free.tech and solv.finance)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via CCIP (via free.tech and solv.finance). Trust model not fully analyzed.",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "CCIP (via free.tech and solv.finance) Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "CCIP (via free.tech and solv.finance) controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "CAKE",
+      "name": "PancakeSwap Token",
+      "l2Address": "0x1b896893dfc86bb67cf57767298b9073d2c1ba2c",
+      "valueUsd": 382023.44,
+      "amount": 183980.4,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Layer Zero v2 OFT. Trust model not fully analyzed.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero v2 OFT Operator",
+          "role": "Bridge Controller",
+          "powers": [
+            "validate messages",
+            "mint tokens"
+          ],
+          "riskDescription": "Layer Zero v2 OFT controls message validation and token minting"
+        }
+      ]
+    },
+    {
+      "symbol": "EARNM",
+      "name": "EARNM",
+      "l2Address": "0x3e62fed35c97145e6b445704b8ce74b2544776a9",
+      "valueUsd": 224690.95,
+      "amount": 1387449300,
+      "bridgeProtocol": "Chainlink CCIP",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Token bridged via Chainlink CCIP. 1 parties with privileged functions that can put tokens at risk.",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Chainlink Node Operators",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "relay proofs"
+          ],
+          "riskDescription": "Node operators control message validation"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 13624137722.02,
+    "canonicalTvl": 4932621376.110002,
+    "externalTvl": 8691516345.91,
+    "byAdmin": {
+      "rollupControlled": 4307006856.110002,
+      "issuerControlled": 7016087520,
+      "thirdPartyControlled": 2301043345.91
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 39,
+    "totalValue": 1261084495.9099998,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 6,
+        "value": 359965491.44
+      },
+      "The Graph Custom Gateway": {
+        "count": 1,
+        "value": 152005710
+      },
+      "Connext (xERC20)": {
+        "count": 1,
+        "value": 142071860
+      },
+      "Chainlink CCIP": {
+        "count": 3,
+        "value": 129001458.45
+      },
+      "Wormhole NTT": {
+        "count": 3,
+        "value": 153649428
+      },
+      "Custom escrow": {
+        "count": 2,
+        "value": 204557870
+      },
+      "Axelar (ITS)": {
+        "count": 1,
+        "value": 22673688
+      },
+      "Frax Ferry": {
+        "count": 5,
+        "value": 32519940
+      },
+      "Wormhole": {
+        "count": 5,
+        "value": 23366941.599999998
+      },
+      "Layer Zero": {
+        "count": 3,
+        "value": 12607611
+      },
+      "Wormhole Token Bridge": {
+        "count": 1,
+        "value": 10932669
+      },
+      "Layer Zero v2": {
+        "count": 2,
+        "value": 9338544.7
+      },
+      "Stargate": {
+        "count": 1,
+        "value": 2648122.8
+      },
+      "CCIP (via free.tech and solv.finance)": {
+        "count": 2,
+        "value": 2541546.62
+      },
+      "Native/Calculated Supply": {
+        "count": 1,
+        "value": 1171268.6
+      },
+      "Multichain": {
+        "count": 1,
+        "value": 1112560.1
+      },
+      "Layer Zero OFT": {
+        "count": 1,
+        "value": 919785.6
+      }
+    },
+    "byCategory": {
+      "third-party-secured": {
+        "count": 39,
+        "value": 1261084495.9099998
+      }
+    }
+  }
+}
