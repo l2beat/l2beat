@@ -83,6 +83,9 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
+        to,
+      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         {
           timestamp: to,
@@ -215,10 +218,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn(async (x) => {
-          console.log('dupa', x)
-          return Promise.resolve(5)
-        }),
+        insertMany: mockFn().resolvesTo(5),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -243,6 +243,9 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
+        to,
+      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         // Config1: Plain plugin filter - should match msg1 (across)
         {
