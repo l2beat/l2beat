@@ -11,6 +11,10 @@ import { type Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
+  extractMayanSwiftSettlementDestChain,
+  MAYAN_SWIFT,
+} from './mayan-swift.utils'
+import {
   createEventParser,
   createInteropEventType,
   findChain,
@@ -22,11 +26,6 @@ import {
   Result,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
-
-// Mayan Swift contract address (same on all chains)
-const MAYAN_SWIFT = EthereumAddress(
-  '0xC38e4e6A15593f908255214653d3D947CA1c2338',
-)
 
 const parseOrderCreated = createEventParser('event OrderCreated(bytes32 key)')
 
@@ -69,9 +68,7 @@ export class MayanSwiftPlugin implements InteropPlugin {
       for (const log of input.txLogs) {
         const logMsg = parseLogMessagePublished(log, null)
         if (logMsg && EthereumAddress(logMsg.sender) === MAYAN_SWIFT) {
-          // Payload format: 0x02 + orderKey(32) + dstChainId(2) + ...
-          // dstChainId is the settlement destination = original source chain
-          const srcChainId = extractSettlementDestChain(logMsg.payload)
+          const srcChainId = extractMayanSwiftSettlementDestChain(logMsg.payload)
           if (srcChainId !== undefined) {
             $srcChain = findChain(
               wormholeNetworks,
@@ -147,19 +144,5 @@ export class MayanSwiftPlugin implements InteropPlugin {
         extraEvents: [mayanForwarded],
       }),
     ]
-  }
-}
-
-// Extract the settlement destination chain ID from the Mayan Swift settlement payload
-// Payload format: 0x02 + orderKey(32 bytes) + destChainId(2 bytes) + ...
-function extractSettlementDestChain(payload: string): number | undefined {
-  try {
-    // Skip 0x prefix (2 chars) + message type (2 chars) + order key (64 chars) = 68 chars
-    // Then read 2 bytes (4 chars) for chain ID
-    if (payload.length < 72) return undefined
-    const chainIdHex = payload.slice(68, 72)
-    return Number.parseInt(chainIdHex, 16)
-  } catch {
-    return undefined
   }
 }
