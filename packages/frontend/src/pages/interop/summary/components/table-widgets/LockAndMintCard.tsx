@@ -3,15 +3,15 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
-import { LockMintTable } from './tables/LockMintTable'
+import { LockAndMintTable } from './tables/LockAndMintTable'
 
-export function LockMintCard() {
+export function LockAndMintCard() {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.protocolsByType.lockMint
+  const entries = data?.protocolsByType.lockAndMint
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
@@ -26,7 +26,7 @@ export function LockMintCard() {
       {entries && entries.length === 0 ? (
         <NoResultsInfo />
       ) : (
-        <LockMintTable entries={entries} />
+        <LockAndMintTable entries={entries} />
       )}
     </PrimaryCard>
   )
