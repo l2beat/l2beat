@@ -1,5 +1,5 @@
 import type { InteropChain } from '@l2beat/config'
-import { HydrationBoundary, type DehydratedState } from '@tanstack/react-query'
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
