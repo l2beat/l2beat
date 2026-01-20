@@ -5,6 +5,7 @@ import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
+import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
@@ -37,7 +38,6 @@ import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
-import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 
 // TODO: Once all projects are refactored this will simply become `projects`
 export const refactored: BaseProject[] = [
