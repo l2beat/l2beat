@@ -39,7 +39,7 @@ import type { ActivityMetric } from '~/pages/scaling/activity/components/Activit
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
@@ -117,8 +117,8 @@ export function ActivityChart({
         <ChartLegend
           content={(props) => <ChartLegendContent payload={props.payload} />}
         />
-        {getStrokeOverFillAreaComponents({
-          data: [
+        <ChartStrokeOverFillAreaComponents
+          data={[
             {
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
@@ -131,8 +131,8 @@ export function ActivityChart({
               fill: 'url(#fillProjects)',
               hide: !dataKeys.includes('projects'),
             },
-          ],
-        })}
+          ]}
+        />
         <ChartCommonComponents
           data={data}
           isLoading={isLoading}

@@ -17,7 +17,7 @@ import {
 } from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type {
@@ -120,8 +120,8 @@ export function EcosystemsActivityChart({
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: [
+          <ChartStrokeOverFillAreaComponents
+            data={[
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
@@ -136,8 +136,8 @@ export function EcosystemsActivityChart({
                 fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },
-            ],
-          })}
+            ]}
+          />
           <ChartCommonComponents
             data={chartData}
             isLoading={isLoading}

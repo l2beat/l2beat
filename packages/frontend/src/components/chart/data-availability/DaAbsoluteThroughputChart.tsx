@@ -18,7 +18,7 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -122,8 +122,8 @@ export function DaAbsoluteThroughputChart({
           <NoDataPatternDef />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: Object.keys(chartMeta).flatMap((key) => {
+        <ChartStrokeOverFillAreaComponents
+          data={Object.keys(chartMeta).flatMap((key) => {
             const actualKey = key as keyof typeof chartMeta
             const estimatedKey = `${actualKey}Estimated`
             return [
@@ -141,8 +141,8 @@ export function DaAbsoluteThroughputChart({
                 hide: !dataKeys.includes(actualKey),
               },
             ]
-          }),
-        })}
+          })}
+        />
 
         <ChartCommonComponents
           data={chartData}

@@ -23,7 +23,7 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
@@ -107,15 +107,15 @@ export function DataPostedChart({
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: Object.keys(filteredChartMeta).flatMap((key) => ({
+        <ChartStrokeOverFillAreaComponents
+          data={Object.keys(filteredChartMeta).flatMap((key) => ({
             dataKey: key,
             stroke:
               filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
             fill: `url(#${key}-fill)`,
             hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
-          })),
-        })}
+          }))}
+        />
         <ChartCommonComponents
           data={data}
           isLoading={isLoading}

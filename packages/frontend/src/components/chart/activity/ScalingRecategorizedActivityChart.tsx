@@ -29,7 +29,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -150,8 +150,8 @@ export function ScalingRecategorizedActivityChart({
           <EthereumStrokeGradientDef id="ethereum-stroke" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: [
+        <ChartStrokeOverFillAreaComponents
+          data={[
             {
               dataKey: 'rollups',
               stroke: 'url(#rollups-stroke)',
@@ -176,8 +176,8 @@ export function ScalingRecategorizedActivityChart({
               fill: 'url(#ethereum-fill)',
               hide: !dataKeys.includes('ethereum'),
             },
-          ],
-        })}
+          ]}
+        />
         <ChartTooltip
           content={
             <CustomTooltip

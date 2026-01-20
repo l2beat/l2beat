@@ -28,7 +28,7 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -123,8 +123,8 @@ export function ScalingSummaryTvsChart({
             <YellowStrokeGradientDef id="others-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: [
+          <ChartStrokeOverFillAreaComponents
+            data={[
               {
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
@@ -143,8 +143,8 @@ export function ScalingSummaryTvsChart({
                 fill: 'url(#others-fill)',
                 hide: !dataKeys.includes('others'),
               },
-            ],
-          })}
+            ]}
+          />
           <ChartCommonComponents
             data={chartData}
             isLoading={isLoading}

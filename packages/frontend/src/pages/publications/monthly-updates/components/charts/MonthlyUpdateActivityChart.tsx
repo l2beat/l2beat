@@ -14,11 +14,11 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
@@ -85,15 +85,15 @@ export function MonthlyUpdateActivityChart({
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: compact([
+          <ChartStrokeOverFillAreaComponents
+            data={compact([
               {
                 dataKey: 'projects',
                 stroke: 'var(--project-primary)',
                 fill: `url(#${id})`,
               },
-            ]),
-          })}
+            ])}
+          />
           <ChartCommonComponents
             data={chartData}
             isLoading={isLoading}
