@@ -28,8 +28,6 @@ This update marks the practical conclusion of the Chain Delegation Program as a 
 
 ## **Arbitrum**
 
-## **Active Votes**
-
 ### **Firestarter Grant Program - Info & Application**
 
 OpCo has opened applications for the Firestarter Grant Program, a small-grant initiative that funds early exploration and groundwork for potential DAO initiatives, rather than full execution. Grants target feasibility research or initial setup work in areas such as new Arbitrum revenue streams, builder support beyond DeFi (e.g., RWAs, DePIN, AI), ecosystem-wide coordination efforts, and an open track.
@@ -77,10 +75,6 @@ INCA [published](https://community.starknet.io/t/starknet-dao-governance-and-tok
 You can find us to discuss everything related to Starknet’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
 ## **Everclear**
-
-## **Active Votes**
-
-[[Redo] Social EGP 34 - Everclear Security Council Regular Members Elections](https://snapshot.box/#/s:dao.connext.eth/proposal/0x16d29f8fd1347f7adfc086f39f33cd843020fbdbb6f8c18f07f6874856896da4) - ends on November 12 at 22:37 UTC.
 
 Everclear’s governance hasn’t seen any new developments over the last week. If you believe we might have missed something, please let us know.
 
