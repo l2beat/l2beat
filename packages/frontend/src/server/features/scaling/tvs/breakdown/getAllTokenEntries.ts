@@ -23,6 +23,7 @@ import {
   extractAddressesFromTokenConfig,
 } from './extractAddressesFromTokenConfig'
 import type { ProjectTvsBreakdownTokenEntry } from './getProjectTokensEntries'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 
 type AddressData = {
   address: string
@@ -107,7 +108,8 @@ function getEntries(
           chains,
           project.contracts?.addresses,
         ),
-        iconUrl: token.iconUrl ?? '',
+        iconUrl:
+          token.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
         priceUsd: tokenValue.priceUsd,
         valueForProject: tokenValue.valueForProject,
         value: tokenValue.value,

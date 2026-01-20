@@ -2,11 +2,12 @@ import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 
 export type TokenData = {
   id: string
   symbol: string
-  iconUrl: string | null
+  iconUrl: string
   volume: number
 }
 
@@ -104,11 +105,13 @@ export function getProtocolsByType(
     return Array.from(tokens.entries())
       .map(([tokenId, volume]) => {
         const tokenDetails = tokensDetailsMap.get(tokenId)
-        assert(tokenDetails, `Token details not found for token id: ${tokenId}`)
+
         return {
           id: tokenId,
-          symbol: tokenDetails.symbol,
-          iconUrl: tokenDetails.iconUrl,
+          symbol: tokenDetails?.symbol ?? 'Unknown',
+          iconUrl:
+            tokenDetails?.iconUrl ??
+            getStaticAsset('/images/token-placeholder.png'),
           volume,
         }
       })

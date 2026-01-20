@@ -46,7 +46,7 @@ function TokenIconWithTooltip({
       <TooltipTrigger>
         <img
           key={token.id}
-          src={token.iconUrl ?? ''}
+          src={token.iconUrl}
           alt={token.symbol}
           className="relative size-5 min-w-5 rounded-full bg-white shadow"
           style={{ zIndex: 5 - index }}
@@ -99,7 +99,7 @@ function RestTokensDialog({
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={token.iconUrl ?? ''}
+                      src={token.iconUrl}
                       alt={token.symbol}
                       className="size-5"
                     />
