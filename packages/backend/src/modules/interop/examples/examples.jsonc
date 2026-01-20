@@ -655,8 +655,8 @@
     ],
     "events": ["wormhole-ntt.ReceivedMessage"],
     "messages": [
-      { "type": "wormhole.Message", "app": "wormhole-ntt" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" },
       { "type": "wormhole.Message", "app": "m0-index" }
     ],
     "transfers": ["wormhole-ntt.Transfer", "wormhole-ntt.Transfer"]

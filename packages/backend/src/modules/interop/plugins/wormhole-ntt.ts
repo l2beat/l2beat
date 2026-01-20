@@ -164,8 +164,8 @@ export class WormholeNTTPlugin implements InteropPlugin {
 
   matchTypes = [ReceivedRelayedMessage, ReceivedMessage]
   match(received: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    // Relayer path
     if (ReceivedRelayedMessage.checkType(received)) {
-      // find on DST WormholeRelayer.Delivery with the same digest, extract sequenceId
       const delivery = db.find(Delivery, {
         deliveryVaaHash: received.args.digest,
       })
@@ -231,7 +231,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-ntt',
+          app: 'wormhole-ntt-relayer',
           srcEvent: logMessagePublished,
           dstEvent: delivery,
         }),
@@ -251,6 +251,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
       ]
     }
 
+    // Core path (without Wormhole Relayer)
     if (ReceivedMessage.checkType(received)) {
       const wormholeNetworks = this.configs.get(WormholeConfig)
       if (!wormholeNetworks) return
@@ -300,7 +301,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-ntt',
+          app: 'wormhole-ntt-core',
           srcEvent: logMessagePublished,
           dstEvent: received,
         }),
