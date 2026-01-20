@@ -19,6 +19,7 @@ type CommonProtocolEntry = {
 
 export type NonMintingProtocolEntry = CommonProtocolEntry & {
   volume: number
+  tokens: TokenData[]
 }
 
 export type LockAndMintProtocolEntry = CommonProtocolEntry & {
@@ -127,10 +128,11 @@ export function getProtocolsByType(
   }
 
   return {
-    nonMinting: nonMintingData.map(([key, { volume }]) => {
+    nonMinting: nonMintingData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
         volume,
+        tokens: getTokensData(tokens),
       }
     }),
     lockAndMint: lockAndMintData.map(

@@ -14,9 +14,11 @@ export function LockAndMintCard() {
   const entries = data?.protocolsByType.lockAndMint
 
   return (
-    <PrimaryCard className="flex flex-col">
-      <h2 className="font-bold text-heading-24">Lock & Mint</h2>
-      <div className="mt-2.5 text-paragraph-13 text-secondary">
+    <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
+      <h2 className="font-bold text-heading-20 md:text-heading-24">
+        Lock & Mint
+      </h2>
+      <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
       </div>

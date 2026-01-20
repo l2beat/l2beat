@@ -27,5 +27,5 @@ export function NonMintingTable({
 
   if (!entries) return null
 
-  return <BasicTable table={table} />
+  return <BasicTable table={table} tableWrapperClassName="pb-0" />
 }

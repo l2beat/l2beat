@@ -51,15 +51,17 @@ export function TopProtocolsWidget({
 
   return (
     <PrimaryCard
-      className="@container flex h-full items-start justify-between"
+      className="@container flex h-full items-start justify-between max-md:rounded-lg"
       ref={containerRef}
     >
       <div className="flex-1">
-        <h2 className="font-bold text-heading-20">{heading}</h2>
-        <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
+        <h2 className="font-bold text-heading-16 md:text-heading-20">
+          {heading}
+        </h2>
+        <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
           Between {uniqChains.length} selected chains
         </div>
-        <table className="mt-2 w-full border-separate border-spacing-y-1 pr-1">
+        <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
             {isLoading || protocolsWithOthers.length === 0
               ? times(5).map((index) => (
@@ -82,10 +84,10 @@ export function TopProtocolsWidget({
                       ? `Others (${protocol.othersCount ?? 0})`
                       : protocol.protocolName}
                   </td>
-                  <td className="px-2 font-medium text-2xs text-secondary">
+                  <td className="px-2 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%
                   </td>
-                  <td className="font-medium text-2xs">
+                  <td className="text-right font-medium text-2xs">
                     {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>
