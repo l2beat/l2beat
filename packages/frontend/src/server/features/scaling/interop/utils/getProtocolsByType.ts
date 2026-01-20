@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { getLogger } from '~/server/utils/logger'
 
 export type TokenData = {
   id: string
@@ -41,6 +42,7 @@ export function getProtocolsByType(
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
+  const logger = getLogger()
   const protocolsDataMap = new Map<
     string,
     {
@@ -104,7 +106,10 @@ export function getProtocolsByType(
     return Array.from(tokens.entries())
       .map(([tokenId, volume]) => {
         const tokenDetails = tokensDetailsMap.get(tokenId)
-        assert(tokenDetails, `Token details not found for token id: ${tokenId}`)
+        if (!tokenDetails) {
+          logger.error(`Token details not found for token id: ${tokenId}`)
+          return
+        }
         return {
           id: tokenId,
           symbol: tokenDetails.symbol,
@@ -112,6 +117,7 @@ export function getProtocolsByType(
           volume,
         }
       })
+      .filter((t) => t !== undefined)
       .toSorted((a, b) => b.volume - a.volume)
   }
 
