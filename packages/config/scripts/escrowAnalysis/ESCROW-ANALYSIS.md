@@ -210,9 +210,12 @@ cd packages/config
 npx ts-node scripts/escrowAnalysis/analyzeEscrows.ts arbitrum
 ```
 
+For Orbit chains, pass the project id and the script will auto-detect escrow
+addresses from TVS formulas (example: `game7`, `powerloom`, `degen`).
+
 Output:
 - Console report with colored categorization
-- JSON file: `arbitrum-escrow-analysis.json`
+- JSON file: `{projectId}-escrow-analysis.json`
 
 ---
 

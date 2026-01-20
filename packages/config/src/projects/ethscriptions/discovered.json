@@ -1,6 +1,6 @@
 {
   "name": "ethscriptions",
-  "timestamp": 1768211188,
+  "timestamp": 1768898798,
   "configHash": "0xe13fb9b1a09c4c406f0ff0d9ce187337c42f2e5d2d76e85ec2cb8383236d4561",
   "entries": [
     {
@@ -113,15 +113,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd",
-        "anchorL2BlockNumber": 6765840,
-        "anchorProposalId": 0,
-        "anchorRoot": "0xd6d92a80e3ac563ab150dd0bc3a6845ba3d34edaff0ee65f442f55bddc2c3ca6",
+        "anchorL2BlockNumber": 6794640,
+        "anchorProposalId": 16,
+        "anchorRoot": "0x8dd8f7fda0ecf9477b7a534b2c6911ccc513979411589d1f11dab97690872bc8",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 13,
+        "getProposalsLength": 45,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1767945143,
@@ -442,6 +442,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24217826, "ethscriptions": 6788010 },
+  "usedBlockNumbers": { "ethereum": 24274885, "ethscriptions": 6845311 },
   "permissionsConfigHash": "0x79df8f08549957361fb184d91be9482002586ea196a7aa63776914eb5eb22896"
 }
