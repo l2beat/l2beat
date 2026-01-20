@@ -6,6 +6,7 @@ import type {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
+import { addProjectToWhitelist } from '../defidisco/defiProjectFilter'
 import { projectParamsSchema } from '../main'
 
 const updateConfigFileSchema = z.object({
@@ -77,6 +78,8 @@ export function attachConfigRouter(
 
     if (body.data.type === 'project') {
       configWriter.createProjectConfigFile(body.data.project, templateValues)
+      // Automatically add to project whitelist so it appears in menu
+      addProjectToWhitelist(body.data.project)
     } else {
       configWriter.createTokenConfigFile(body.data.project, templateValues)
     }
