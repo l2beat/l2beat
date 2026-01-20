@@ -19,6 +19,7 @@ import type {
   ApiV2ScoreResponse,
   ApiFundsDataResponse,
   ApiCallGraphResponse,
+  ApiAIModelsResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -28,6 +29,15 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   }
   const data = await res.json()
   return data as ApiProjectsResponse
+}
+
+export async function getAIModels(): Promise<ApiAIModelsResponse[]> {
+  const res = await fetch('/api/ai-models')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiAIModelsResponse[]
 }
 
 export async function getProject(project: string): Promise<ApiProjectResponse> {
@@ -348,18 +358,25 @@ export async function updateContractTag(
 
 export async function detectPermissionsWithAI(
   project: string,
-  address: string
+  address: string,
+  model?: string
 ): Promise<{ success: boolean; detectedFunctions: number; functions: any[] }> {
   const res = await fetch(`/api/projects/${project}/ai-detect-permissions/${address}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ model: model || 'gpt-4o' }),
   })
 
   if (!res.ok) {
     const errorData = await res.json()
-    throw new Error(errorData.error || res.statusText)
+    // Create enhanced error with additional fields
+    const error = new Error(errorData.userMessage || errorData.error || res.statusText) as any
+    error.userMessage = errorData.userMessage
+    error.technicalDetails = errorData.technicalDetails
+    error.suggestedAction = errorData.suggestedAction
+    throw error
   }
 
   return await res.json()
@@ -444,4 +461,3 @@ export function executeGenerateCallGraph(project: string, devMode: boolean): Eve
   })
   return new EventSource(`/api/terminal/generate-call-graph?${params}`)
 }
-

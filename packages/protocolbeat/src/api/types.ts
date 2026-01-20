@@ -526,3 +526,12 @@ export interface ExternalCall {
   resolutionConfidence?: number   // 0-100, dynamic based on match count
   resolutionCandidates?: ResolutionCandidate[] // All matches when multiple found
 }
+
+export interface ApiAIModelsResponse {
+  key: string
+  config: {
+    provider: 'openai' | 'claude'
+    displayName: string
+    modelId: string
+  }
+}

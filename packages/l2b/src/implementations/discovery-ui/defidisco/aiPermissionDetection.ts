@@ -99,18 +99,92 @@ Examples:
 
 Now analyze the following contract source code:`
 
+export interface ParsedAiError {
+  userMessage: string
+  technicalDetails: string
+  suggestedAction?: string
+}
+
+/**
+ * Parse AI API errors into user-friendly messages
+ */
+export function parseAiError(error: any): ParsedAiError {
+  const technicalDetails =
+    error instanceof Error ? error.message : String(error)
+
+  // Check for rate limit errors (429)
+  if (
+    technicalDetails.includes('429') ||
+    technicalDetails.toLowerCase().includes('rate limit')
+  ) {
+    return {
+      userMessage: 'Rate limit exceeded. Too many requests to the AI provider.',
+      technicalDetails,
+      suggestedAction:
+        'Wait a few minutes before trying again, or switch to a different model.',
+    }
+  }
+
+  // Check for overload errors (529 or 'overloaded')
+  if (
+    technicalDetails.includes('529') ||
+    technicalDetails.toLowerCase().includes('overload')
+  ) {
+    return {
+      userMessage: 'AI provider is currently overloaded with requests.',
+      technicalDetails,
+      suggestedAction:
+        'Try again in a few moments, or switch to a different model.',
+    }
+  }
+
+  // Check for authentication errors (401, 403, or 'api key')
+  if (
+    technicalDetails.includes('401') ||
+    technicalDetails.includes('403') ||
+    technicalDetails.toLowerCase().includes('api key') ||
+    technicalDetails.toLowerCase().includes('authentication')
+  ) {
+    return {
+      userMessage:
+        'Authentication failed. Please check your API key configuration.',
+      technicalDetails,
+      suggestedAction:
+        'Verify that your API key is correctly set in the .env file.',
+    }
+  }
+
+  // Generic error
+  return {
+    userMessage: 'An error occurred while detecting permissions.',
+    technicalDetails,
+    suggestedAction: 'Check the terminal logs for more details.',
+  }
+}
+
 /**
  * Calls AI API to detect permissioned functions in contract source code
  */
 export async function detectPermissionsWithAI(
   sourceCode: string,
   apiKey: string,
-  provider: 'openai' | 'claude' = 'openai',
+  provider: 'openai' | 'claude',
+  modelId: string,
 ): Promise<AiDetectionResult> {
-  if (provider === 'openai') {
-    return detectWithOpenAI(sourceCode, apiKey)
+  try {
+    if (provider === 'openai') {
+      return await detectWithOpenAI(sourceCode, apiKey, modelId)
+    }
+    return await detectWithClaude(sourceCode, apiKey, modelId)
+  } catch (error) {
+    // Re-throw with parsed error information
+    const parsedError = parseAiError(error)
+    const enhancedError = new Error(parsedError.userMessage) as any
+    enhancedError.technicalDetails = parsedError.technicalDetails
+    enhancedError.suggestedAction = parsedError.suggestedAction
+    enhancedError.originalError = error
+    throw enhancedError
   }
-  return detectWithClaude(sourceCode, apiKey)
 }
 
 /**
@@ -119,11 +193,12 @@ export async function detectPermissionsWithAI(
 async function detectWithOpenAI(
   sourceCode: string,
   apiKey: string,
+  modelId: string,
 ): Promise<AiDetectionResult> {
   const openai = new OpenAI({ apiKey })
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: modelId,
     messages: [
       {
         role: 'system',
@@ -152,11 +227,12 @@ async function detectWithOpenAI(
 async function detectWithClaude(
   sourceCode: string,
   apiKey: string,
+  modelId: string,
 ): Promise<AiDetectionResult> {
   const anthropic = new Anthropic({ apiKey })
 
   const response = await anthropic.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
+    model: modelId,
     max_tokens: 4096,
     messages: [
       {

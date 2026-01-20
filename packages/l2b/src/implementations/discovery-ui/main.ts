@@ -25,6 +25,13 @@ import {
   updateFunction,
 } from './defidisco/functions'
 import {
+  DEFAULT_MODEL,
+  getAvailableModels,
+  getModelConfig,
+  isValidModelKey,
+  type ModelKey,
+} from './defidisco/aiModels'
+import {
   getContractTags,
   updateContractTag,
 } from './defidisco/contractTags'
@@ -102,6 +109,11 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
+  })
+
+  app.get('/api/ai-models', (_req, res) => {
+    const models = getAvailableModels()
+    res.json(models)
   })
 
   app.get('/api/projects', (_req, res) => {
@@ -301,189 +313,227 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   // AI permission detection endpoint
   app.post('/api/projects/:project/ai-detect-permissions/:address', async (req, res) => {
-    if (readonly) {
-      res.status(403).json({ error: 'Server is in readonly mode' })
-      return
-    }
-
-    const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
-    if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.message })
-      return
-    }
-    const { project, address } = paramsValidation.data
-
-    try {
-      // Get AI provider and API key from environment
-      const aiProvider = (process.env.AI_PROVIDER as 'openai' | 'claude') || 'openai'
-      const aiApiKey = process.env.AI_API_KEY
-
-      if (!aiApiKey) {
-        res.status(500).json({ error: 'AI_API_KEY not configured in environment' })
+      if (readonly) {
+        res.status(403).json({ error: 'Server is in readonly mode' })
         return
       }
 
-      // Get contract source code
-      const codeResponse = getCode(paths, configReader, project, address, false)
-
-      if (!codeResponse.sources || codeResponse.sources.length === 0) {
-        res.status(400).json({ error: 'No source code found for this contract' })
+      const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
+      if (!paramsValidation.success) {
+        res.status(400).json({ errors: paramsValidation.message })
         return
       }
+      const { project, address } = paramsValidation.data
 
-      // Build mapping of source file to contract address
-      const discovery = configReader.readDiscovery(project)
-      const entry = discovery.entries.find((e) => e.address === address)
+      try {
+        // Get model from request body or use default
+        const requestedModel = req.body?.model || DEFAULT_MODEL
 
-      const sourceToAddress: Record<string, string> = {}
+        // Validate model key
+        if (!isValidModelKey(requestedModel)) {
+          res.status(400).json({ error: `Invalid model: ${requestedModel}` })
+          return
+        }
 
-      if (entry && entry.type === 'Contract') {
-        // Get implementation addresses if this is a proxy
-        const implementationAddresses = get$Implementations(entry.values)
+        const modelConfig = getModelConfig(requestedModel)
 
-        // Map source files to addresses
-        // File naming patterns:
-        // - Files ending with .p.sol are proxy contracts → map to proxy address
-        // - Files NOT ending with .p.sol are implementations → map to implementation addresses
-        // - For multiple implementations (diamonds), they may be numbered .0.sol, .1.sol, etc.
+        // Get appropriate API key based on provider
+        const openaiApiKey = process.env.OPENAI_API_KEY
+        const anthropicApiKey = process.env.ANTHROPIC_API_KEY
 
-        console.log(`Mapping source files for ${address}:`)
-        console.log(`  Implementation addresses: ${implementationAddresses.join(', ')}`)
+        const aiApiKey =
+          modelConfig.provider === 'openai' ? openaiApiKey : anthropicApiKey
 
-        for (const source of codeResponse.sources) {
-          if (source.name.endsWith('.p.sol')) {
-            // Proxy file
-            sourceToAddress[source.name] = address
-            console.log(`  ${source.name} → ${address} (proxy)`)
-          } else {
-            // Implementation file - check if it's numbered (e.g., ".0.sol", ".1.sol") for diamonds
-            const match = source.name.match(/\.(\d+)\.sol$/)
-            if (match) {
-              const index = parseInt(match[1]!, 10)
-              if (implementationAddresses[index]) {
-                sourceToAddress[source.name] = implementationAddresses[index]!
-                console.log(`  ${source.name} → ${implementationAddresses[index]} (impl #${index})`)
-              } else {
-                sourceToAddress[source.name] = address  // fallback to proxy
-                console.log(`  ${source.name} → ${address} (fallback to proxy)`)
-              }
+        if (!aiApiKey) {
+          const envVarName =
+            modelConfig.provider === 'openai'
+              ? 'OPENAI_API_KEY'
+              : 'ANTHROPIC_API_KEY'
+          res.status(500).json({
+            error: `${envVarName} not configured in environment`,
+            userMessage: `API key for ${modelConfig.displayName} is not configured.`,
+            suggestedAction: `Add ${envVarName} to your .env file.`,
+          })
+          return
+        }
+
+        console.log(
+          `Using model: ${modelConfig.displayName} (${modelConfig.modelId})`,
+        )
+
+        // Get contract source code
+        const codeResponse = getCode(paths, configReader, project, address, false)
+
+        if (!codeResponse.sources || codeResponse.sources.length === 0) {
+          res.status(400).json({ error: 'No source code found for this contract' })
+          return
+        }
+
+        // Build mapping of source file to contract address
+        const discovery = configReader.readDiscovery(project)
+        const entry = discovery.entries.find((e) => e.address === address)
+
+        const sourceToAddress: Record<string, string> = {}
+
+        if (entry && entry.type === 'Contract') {
+          // Get implementation addresses if this is a proxy
+          const implementationAddresses = get$Implementations(entry.values)
+
+          // Map source files to addresses
+          // File naming patterns:
+          // - Files ending with .p.sol are proxy contracts → map to proxy address
+          // - Files NOT ending with .p.sol are implementations → map to implementation addresses
+          // - For multiple implementations (diamonds), they may be numbered .0.sol, .1.sol, etc.
+
+          console.log(`Mapping source files for ${address}:`)
+          console.log(`  Implementation addresses: ${implementationAddresses.join(', ')}`)
+
+          for (const source of codeResponse.sources) {
+            if (source.name.endsWith('.p.sol')) {
+              // Proxy file
+              sourceToAddress[source.name] = address
+              console.log(`  ${source.name} → ${address} (proxy)`)
             } else {
-              // Regular implementation file without numbering
-              if (implementationAddresses.length > 0) {
-                sourceToAddress[source.name] = implementationAddresses[0]!
-                console.log(`  ${source.name} → ${implementationAddresses[0]} (impl)`)
+              // Implementation file - check if it's numbered (e.g., ".0.sol", ".1.sol") for diamonds
+              const match = source.name.match(/\.(\d+)\.sol$/)
+              if (match) {
+                const index = parseInt(match[1]!, 10)
+                if (implementationAddresses[index]) {
+                  sourceToAddress[source.name] = implementationAddresses[index]!
+                  console.log(`  ${source.name} → ${implementationAddresses[index]} (impl #${index})`)
+                } else {
+                  sourceToAddress[source.name] = address // fallback to proxy
+                  console.log(`  ${source.name} → ${address} (fallback to proxy)`)
+                }
               } else {
-                // Single contract (no proxy pattern)
-                sourceToAddress[source.name] = address
-                console.log(`  ${source.name} → ${address} (single contract)`)
+                // Regular implementation file without numbering
+                if (implementationAddresses.length > 0) {
+                  sourceToAddress[source.name] = implementationAddresses[0]!
+                  console.log(`  ${source.name} → ${implementationAddresses[0]} (impl)`)
+                } else {
+                  // Single contract (no proxy pattern)
+                  sourceToAddress[source.name] = address
+                  console.log(`  ${source.name} → ${address} (single contract)`)
+                }
               }
             }
           }
+        } else {
+          // Non-proxy contract - map all sources to the contract address
+          for (const source of codeResponse.sources) {
+            sourceToAddress[source.name] = address
+          }
         }
-      } else {
-        // Non-proxy contract - map all sources to the contract address
+
+        // Combine source files
+        const sourcesMap: Record<string, string> = {}
         for (const source of codeResponse.sources) {
-          sourceToAddress[source.name] = address
+          sourcesMap[source.name] = source.code
         }
-      }
+        const combinedSource = combineSourceFiles(sourcesMap)
 
-      // Combine source files
-      const sourcesMap: Record<string, string> = {}
-      for (const source of codeResponse.sources) {
-        sourcesMap[source.name] = source.code
-      }
-      const combinedSource = combineSourceFiles(sourcesMap)
+        // Call AI API
+        console.log(`Detecting permissions for ${address} using ${modelConfig.displayName}...`)
+        const aiResult = await detectPermissionsWithAI(
+          combinedSource,
+          aiApiKey,
+          modelConfig.provider,
+          modelConfig.modelId,
+        )
+        console.log(`AI detected ${aiResult.functions.length} functions for ${address}`)
 
-      // Call AI API
-      console.log(`Detecting permissions for ${address} using ${aiProvider}...`)
-      const aiResult = await detectPermissionsWithAI(combinedSource, aiApiKey, aiProvider)
-      console.log(`AI detected ${aiResult.functions.length} functions for ${address}`)
+        // Build a set of valid write function names from the target contract's ABI
+        // Use the same logic as PermissionsDisplay to identify write functions
+        const validFunctionNames = new Set<string>()
 
-      // Build a set of valid write function names from the target contract's ABI
-      // Use the same logic as PermissionsDisplay to identify write functions
-      const validFunctionNames = new Set<string>()
+        if (entry && entry.type === 'Contract') {
+          // Get the project response to access ABIs
+          const projectResponse = getProject(configReader, templateService, project)
 
-      if (entry && entry.type === 'Contract') {
-        // Get the project response to access ABIs
-        const projectResponse = getProject(configReader, templateService, project)
+          // Find the contract in the project response
+          for (const chain of projectResponse.entries) {
+            const allContracts = [...chain.initialContracts,...chain.discoveredContracts]
+            const targetContract = allContracts.find((c) => c.address === address)
 
-        // Find the contract in the project response
-        for (const chain of projectResponse.entries) {
-          const allContracts = [...chain.initialContracts, ...chain.discoveredContracts]
-          const targetContract = allContracts.find(c => c.address === address)
+            if (targetContract && 'abis' in targetContract) {
+              const readMarkers = [' view ', ' pure ']
 
-          if (targetContract && 'abis' in targetContract) {
-            const readMarkers = [' view ', ' pure ']
+              for (const abi of targetContract.abis) {
+                for (const abiEntry of abi.entries) {
+                  const value = abiEntry.value
 
-            for (const abi of targetContract.abis) {
-              for (const abiEntry of abi.entries) {
-                const value = abiEntry.value
+                  // Skip errors and events
+                  if (value.startsWith('error') || value.startsWith('event')) {
+                    continue
+                  }
 
-                // Skip errors and events
-                if (value.startsWith('error') || value.startsWith('event')) {
-                  continue
-                }
+                  // Skip view/pure functions (read-only)
+                  if (readMarkers.some((marker) => value.includes(marker))) {
+                    continue
+                  }
 
-                // Skip view/pure functions (read-only)
-                if (readMarkers.some((marker) => value.includes(marker))) {
-                  continue
-                }
-
-                // Extract function name from write functions
-                const match = value.match(/^function\s+(\w+)\s*\(/)
-                if (match) {
-                  validFunctionNames.add(match[1]!)
+                  // Extract function name from write functions
+                  const match = value.match(/^function\s+(\w+)\s*\(/)
+                  if (match) {
+                    validFunctionNames.add(match[1]!)
+                  }
                 }
               }
             }
           }
         }
-      }
 
-      console.log(`Valid write function names for ${address}: ${validFunctionNames.size}`)
+        console.log(`Valid write function names for ${address}: ${validFunctionNames.size}`)
 
-      // Save each detected function to the correct contract address based on source file
-      let savedCount = 0
-      let skippedCount = 0
+        // Save each detected function to the correct contract address based on source file
+        let savedCount = 0
+        let skippedCount = 0
 
-      for (const func of aiResult.functions) {
-        // Validate that the function actually exists in some contract's ABI
-        if (!validFunctionNames.has(func.functionName)) {
-          console.log(`⚠️  Skipping function ${func.functionName} - not found in any contract ABI`)
-          skippedCount++
-          continue
+        for (const func of aiResult.functions) {
+          // Validate that the function actually exists in some contract's ABI
+          if (!validFunctionNames.has(func.functionName)) {
+            console.log(`⚠️  Skipping function ${func.functionName} - not found in any contract ABI`)
+            skippedCount++
+            continue
+          }
+
+          const targetAddress = func.sourceFile ? sourceToAddress[func.sourceFile] || address : address
+
+          console.log(`✓ Saving function ${func.functionName} from ${func.sourceFile || 'unknown'} to ${targetAddress}`)
+
+          updateFunction(paths, project, {
+            contractAddress: targetAddress,
+            functionName: func.functionName,
+            isPermissioned: func.isPermissioned,
+            ownerDefinitions: func.ownerDefinitions,
+          })
+
+          savedCount++
         }
 
-        const targetAddress = func.sourceFile ? sourceToAddress[func.sourceFile] || address : address
+        console.log(`Saved ${savedCount} functions, skipped ${skippedCount} invalid functions`)
 
-        console.log(`✓ Saving function ${func.functionName} from ${func.sourceFile || 'unknown'} to ${targetAddress}`)
-
-        updateFunction(paths, project, {
-          contractAddress: targetAddress,
-          functionName: func.functionName,
-          isPermissioned: func.isPermissioned,
-          ownerDefinitions: func.ownerDefinitions,
+        res.json({
+          success: true,
+          detectedFunctions: savedCount,
+          skippedFunctions: skippedCount,
+          functions: aiResult.functions,
         })
+      } catch (error: any) {
+        console.error('Error detecting permissions with AI:', error)
 
-        savedCount++
+        // Return enhanced error information if available
+        res.status(500).json({
+          error: error.message || 'Failed to detect permissions with AI',
+          userMessage: error.message,
+          technicalDetails:
+            error.technicalDetails ||
+            (error instanceof Error ? error.message : 'Unknown error'),
+          suggestedAction: error.suggestedAction,
+        })
       }
-
-      console.log(`Saved ${savedCount} functions, skipped ${skippedCount} invalid functions`)
-
-      res.json({
-        success: true,
-        detectedFunctions: savedCount,
-        skippedFunctions: skippedCount,
-        functions: aiResult.functions
-      })
-    } catch (error) {
-      console.error('Error detecting permissions with AI:', error)
-      res.status(500).json({
-        error: 'Failed to detect permissions with AI',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      })
-    }
-  })
+    },
+  )
 
   // Contract tags endpoints
   app.get('/api/projects/:project/contract-tags', (req, res) => {

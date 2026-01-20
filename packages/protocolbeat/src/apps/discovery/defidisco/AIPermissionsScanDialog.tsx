@@ -1,10 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import {
   detectPermissionsWithAI,
   getFunctions,
   getProject,
+  getAIModels,
 } from '../../../api/api'
 import type { ApiProjectContract } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
@@ -18,6 +19,7 @@ interface ScanResult {
   status: 'pending' | 'scanning' | 'success' | 'error'
   detectedCount?: number
   error?: string
+  suggestedAction?: string
 }
 
 export function AIPermissionsScanDialog({ project, onClose }: Props) {
@@ -30,6 +32,23 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
   )
   const [isScanning, setIsScanning] = useState(false)
   const [currentScanIndex, setCurrentScanIndex] = useState(0)
+
+  // Fetch available AI models from API
+  const { data: availableModels } = useQuery({
+    queryKey: ['ai-models'],
+    queryFn: getAIModels,
+  })
+
+  // Model selection with localStorage persistence
+  const [selectedModel, setSelectedModel] = useState<string>(() => {
+    const saved = localStorage.getItem('ai-model-preference')
+    return saved || 'gpt-4o'
+  })
+
+  // Save model preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('ai-model-preference', selectedModel)
+  }, [selectedModel])
 
   const { data: projectData } = useQuery({
     queryKey: ['projects', project],
@@ -112,16 +131,28 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
       setScanResults(new Map(results))
 
       try {
-        const result = await detectPermissionsWithAI(project, address)
+        const result = await detectPermissionsWithAI(
+          project,
+          address,
+          selectedModel,
+        )
         results.set(address, {
           status: 'success',
           detectedCount: result.detectedFunctions,
         })
-      } catch (error) {
+      } catch (error: any) {
         results.set(address, {
           status: 'error',
-          error: error instanceof Error ? error.message : 'Unknown error',
+          error: error.userMessage || error.message || 'Unknown error',
+          suggestedAction: error.suggestedAction,
         })
+        // Log technical details to console
+        if (error.technicalDetails) {
+          console.error(
+            `Technical details for ${address}:`,
+            error.technicalDetails,
+          )
+        }
       }
 
       setScanResults(new Map(results))
@@ -167,7 +198,10 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
       case 'success':
         return `Found ${result.detectedCount} function${result.detectedCount === 1 ? '' : 's'}`
       case 'error':
-        return `Error: ${result.error}`
+        const errorText = `Error: ${result.error}`
+        return result.suggestedAction
+          ? `${errorText}. ${result.suggestedAction}`
+          : errorText
       default:
         return ''
     }
@@ -183,11 +217,32 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
       <div className="flex max-h-[calc(100vh-12rem)] w-[700px] flex-col rounded border border-coffee-600 bg-coffee-800 shadow-xl">
         {/* Header */}
         <div className="border-coffee-600 border-b p-4">
-          <h2 className="font-semibold text-lg">AI Permissions Scanner</h2>
-          <p className="mt-1 text-coffee-400 text-sm">
-            Select contracts to scan for permissioned functions using AI
-            analysis
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-lg">AI Permissions Scanner</h2>
+              <p className="mt-1 text-coffee-400 text-sm">
+                Select contracts to scan for permissioned functions using AI
+                analysis
+              </p>
+            </div>
+            <div className="ml-4">
+              <label className="block text-coffee-400 text-xs mb-1">
+                AI Model
+              </label>
+              <select
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                disabled={isScanning}
+                className="rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-sm text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {availableModels?.map((model) => (
+                  <option key={model.key} value={model.key}>
+                    {model.config.displayName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Progress Indicator */}
