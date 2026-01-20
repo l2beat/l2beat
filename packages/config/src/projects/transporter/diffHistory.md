@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xcfc7c972bea366e25be9064c682bae7bc6d60109
+
+# Diff at Mon, 19 Jan 2026 10:16:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768371884
+- current timestamp: 1768817536
+
+## Description
+
+ARB tokenpool added.
+
+## Watched changes
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.314:
++        "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C"
+      values.pools.315:
++        "eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC"
+      values.poolsMap.eth:0x0acdb582C1d5512Ea31fD64b9C07882CB31E494D:
++        "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C"
+      values.poolsMap.eth:0xfEFF18567FCD8417b43a4B3BF577Ab41ca376969:
++        "eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbiPool (eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/transporter/.flat/ArbiPool.sol    | 1838 ++++++++++++++++++++
+ ...:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC.sol | 1374 +++++++++++++++
+ 2 files changed, 3212 insertions(+)
+```
+
 Generated with discovered.json: 0x024092e3b3ab7ef7dc5cbe13410383e9fd99cfb7
 
 # Diff at Wed, 14 Jan 2026 06:26:47 GMT:

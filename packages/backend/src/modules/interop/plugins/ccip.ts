@@ -5,14 +5,19 @@ The dst chain on SRC must be determined by the contract address that emitted the
 contracts are set up for every SRC-DST pair on each chain
 */
 
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   defineNetworks,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -53,13 +58,13 @@ import {
   event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, Internal.MessageExecutionState state, bytes returnData);
 */
 
-const parseCCIPSendRequested = createEventParser(
-  'event CCIPSendRequested((uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, (address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId) message)',
-)
+const CCIPSendRequestedLog =
+  'event CCIPSendRequested((uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, (address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId) message)'
+const parseCCIPSendRequested = createEventParser(CCIPSendRequestedLog)
 
-const parseExecutionStateChanged = createEventParser(
-  'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)',
-)
+const executionStateChangedLog =
+  'event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)'
+const parseExecutionStateChanged = createEventParser(executionStateChangedLog)
 
 /*
 TokenPool events emitted when tokens are released or minted on destination chain.
@@ -83,23 +88,23 @@ CCIP v1.5.x - v1.6.0 (Released/Minted - separate events):
 */
 
 // v1.6.1+ TokenPool event (has token address in event data)
-const parseReleasedOrMinted = createEventParser(
-  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)',
-)
+const releasedOrMintedLog =
+  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)'
+const parseReleasedOrMinted = createEventParser(releasedOrMintedLog)
 
 // v1.5.x - v1.6.0 TokenPool events (token address from preceding Transfer event)
-const parseReleased = createEventParser(
-  'event Released(address indexed sender, address indexed recipient, uint256 amount)',
-)
+const releasedLog =
+  'event Released(address indexed sender, address indexed recipient, uint256 amount)'
+const parseReleased = createEventParser(releasedLog)
 
-const parseMinted = createEventParser(
-  'event Minted(address indexed sender, address indexed recipient, uint256 amount)',
-)
+const mintedLog =
+  'event Minted(address indexed sender, address indexed recipient, uint256 amount)'
+const parseMinted = createEventParser(mintedLog)
 
 // Standard ERC20 Transfer event to extract token address for v1.5 events
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+const parseTransfer = createEventParser(transferLog)
 
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
@@ -119,8 +124,8 @@ export const ExecutionStateChanged = createInteropEventType<{
 
 interface CcipNetwork {
   chain: string
-  outboundLanes: Record<string, EthereumAddress>
-  inboundLanes: Record<string, EthereumAddress>
+  outboundLanes: Record<string, ChainSpecificAddress>
+  inboundLanes: Record<string, ChainSpecificAddress>
 }
 
 // Future reference: https://docs.chain.link/ccip/directory/mainnet/chain/mainnet
@@ -128,34 +133,58 @@ const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
   {
     chain: 'base',
     outboundLanes: {
-      arbitrum: EthereumAddress('0x9D0ffA76C7F82C34Be313b5bFc6d42A72dA8CA69'),
-      ethereum: EthereumAddress('0x56b30A0Dcd8dc87Ec08b80FA09502bAB801fa78e'),
+      arbitrum: ChainSpecificAddress(
+        'base:0x9D0ffA76C7F82C34Be313b5bFc6d42A72dA8CA69',
+      ),
+      ethereum: ChainSpecificAddress(
+        'base:0x56b30A0Dcd8dc87Ec08b80FA09502bAB801fa78e',
+      ),
     },
     inboundLanes: {
-      arbitrum: EthereumAddress('0x7D38c6363d5E4DFD500a691Bc34878b383F58d93'),
-      ethereum: EthereumAddress('0xCA04169671A81E4fB8768cfaD46c347ae65371F1'),
+      arbitrum: ChainSpecificAddress(
+        'base:0x7D38c6363d5E4DFD500a691Bc34878b383F58d93',
+      ),
+      ethereum: ChainSpecificAddress(
+        'base:0xCA04169671A81E4fB8768cfaD46c347ae65371F1',
+      ),
     },
   },
   {
     chain: 'arbitrum',
     outboundLanes: {
-      base: EthereumAddress('0xc1b6287A3292d6469F2D8545877E40A2f75CA9a6'),
-      ethereum: EthereumAddress('0x67761742ac8A21Ec4D76CA18cbd701e5A6F3Bef3'),
+      base: ChainSpecificAddress(
+        'arb1:0xc1b6287A3292d6469F2D8545877E40A2f75CA9a6',
+      ),
+      ethereum: ChainSpecificAddress(
+        'arb1:0x67761742ac8A21Ec4D76CA18cbd701e5A6F3Bef3',
+      ),
     },
     inboundLanes: {
-      base: EthereumAddress('0xb62178f8198905D0Fa6d640Bdb188E4E8143Ac4b'),
-      ethereum: EthereumAddress('0x91e46cc5590A4B9182e47f40006140A7077Dec31'),
+      base: ChainSpecificAddress(
+        'arb1:0xb62178f8198905D0Fa6d640Bdb188E4E8143Ac4b',
+      ),
+      ethereum: ChainSpecificAddress(
+        'arb1:0x91e46cc5590A4B9182e47f40006140A7077Dec31',
+      ),
     },
   },
   {
     chain: 'ethereum',
     outboundLanes: {
-      arbitrum: EthereumAddress('0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284'),
-      base: EthereumAddress('0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937'),
+      arbitrum: ChainSpecificAddress(
+        'eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284',
+      ),
+      base: ChainSpecificAddress(
+        'eth:0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937',
+      ),
     },
     inboundLanes: {
-      arbitrum: EthereumAddress('0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9'),
-      base: EthereumAddress('0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD'),
+      arbitrum: ChainSpecificAddress(
+        'eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9',
+      ),
+      base: ChainSpecificAddress(
+        'eth:0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD',
+      ),
     },
   },
 ])
@@ -181,8 +210,29 @@ function findPrecedingTransferToken(
   return undefined
 }
 
-export class CCIPPlugIn implements InteropPlugin {
+export class CCIPPlugIn implements InteropPluginResyncable {
   readonly name = 'ccip'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: CCIPSendRequestedLog,
+        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.outboundLanes)),
+      },
+      {
+        type: 'event',
+        signature: executionStateChangedLog,
+        includeTxEvents: [
+          releasedOrMintedLog,
+          releasedLog,
+          mintedLog,
+          transferLog,
+        ],
+        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.inboundLanes)),
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const network = CCIP_NETWORKS.find((x) => x.chain === input.chain)
@@ -199,7 +249,8 @@ export class CCIPPlugIn implements InteropPlugin {
           index,
           $dstChain:
             Object.entries(network.outboundLanes).find(
-              ([_, address]) => address === outboundLane,
+              ([_, address]) =>
+                ChainSpecificAddress.address(address) === outboundLane,
             )?.[0] ?? `Unknown_${outboundLane}`,
         }),
       )
@@ -272,7 +323,8 @@ export class CCIPPlugIn implements InteropPlugin {
           state: executionStateChanged.state,
           $srcChain:
             Object.entries(network.inboundLanes).find(
-              ([_, address]) => address === inboundLane,
+              ([_, address]) =>
+                ChainSpecificAddress.address(address) === inboundLane,
             )?.[0] ?? `Unknown_${inboundLane}`,
           dstTokens: dstTokens.length > 0 ? dstTokens : undefined,
         }),
@@ -288,7 +340,10 @@ export class CCIPPlugIn implements InteropPlugin {
       })
 
       if (ccipSendRequests.length === 0) return
-      if (delivery.args.state !== 2) return // Only match successful executions
+      if (delivery.args.state !== 2) {
+        // Only match successful executions
+        return [Result.Ignore([delivery])]
+      }
 
       const result: MatchResult = []
       const dstTokens = delivery.args.dstTokens ?? []

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x777d5996e0322392f055e2efab53510c9a851f2f
+
+# Diff at Mon, 19 Jan 2026 12:03:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7fd8e6c42f2f1cc03bcf6ecae4818cfa02672b07 block: 1765880174
+- current timestamp: 1768824106
+
+## Description
+
+Added Starkware multisig as app governor and app admin to WBTC bridge. Upgraded SolvBTCBridge twice, second upgrade returned implementation to the initial version, the intermediate implementation is haltable but was not halted afai can see: https://disco.l2beat.com/diff/eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff/eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7.
+
+## Watched changes
+
+```diff
+    contract WBTCBridge (eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.0:
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      values.$pastUpgrades.1:
++        ["2026-01-15T16:06:23.000Z","0x27532d9c2db25f9d053fe4246f83a8c719a0d0b000a9d0e9f1e7dae1e05f287a",["eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7"]]
+      values.$pastUpgrades.2:
++        ["2026-01-15T16:08:35.000Z","0x787522b1ecf6f59d77fdd6278cf3d92f7b28cc292264e5f7ae9ef93c1344d587",["eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"]]
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
 Generated with discovered.json: 0xeb5c013aec2a1190ee835ec3ef4bc75220ce9f3f
 
 # Diff at Tue, 16 Dec 2025 10:17:18 GMT:

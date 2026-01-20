@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x5f5ffe9d52db6f5941dd2818d9f8b7d9b6acbc73
+
+# Diff at Mon, 19 Jan 2026 10:09:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1766407632
+- current timestamp: 1768816709
+
+## Description
+
+add megaeth adapter.
+
+diff to another op stack adapter (soneium): https://disco.l2beat.com/diff/eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2/eth:0xE1f04404b74F996A311F13aE291849fC153578Ac
+- cctpv2 support, so substantial changes
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.4326:
++        "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac"
+      values.CrossChainContracts.4326:
++        "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OP_Adapter (eth:0xE1f04404b74F996A311F13aE291849fC153578Ac)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across-v3/.flat/OP_Adapter.sol    | 658 +++++++++++++++++++++
+ 1 file changed, 658 insertions(+)
+```
+
 Generated with discovered.json: 0x61851209fba119531f164ca1d4ba295b8a9e53b8
 
 # Diff at Mon, 22 Dec 2025 12:48:18 GMT:

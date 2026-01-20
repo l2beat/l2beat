@@ -5,7 +5,7 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { RpcBlock, RpcLog } from '@l2beat/shared'
+import type { RpcBlock, RpcLog, RpcReceipt } from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -264,6 +264,8 @@ describe(InteropEventSyncer.name, () => {
   describe(buildLogQueryForPlugin.name, () => {
     it('includes only addresses on the target chain and their topics', () => {
       const signature = 'event Transfer(address,address,uint256)'
+      const extraSignature = 'event Approval(address,address,uint256)'
+      const extraSignatureTwo = 'event Mint(address,uint256)'
       const ethAddress = ChainSpecificAddress.fromLong(
         'ethereum',
         EthereumAddress.random(),
@@ -277,6 +279,7 @@ describe(InteropEventSyncer.name, () => {
           {
             type: 'event',
             signature,
+            includeTxEvents: [extraSignature, extraSignatureTwo],
             addresses: [ethAddress, arbAddress],
           },
         ],
@@ -289,6 +292,12 @@ describe(InteropEventSyncer.name, () => {
       ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(
+        Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
+      ).toEqual([
+        toEventSelector(extraSignature),
+        toEventSelector(extraSignatureTwo),
+      ])
       expect(query.isEmpty()).toEqual(false)
     })
 
@@ -313,6 +322,7 @@ describe(InteropEventSyncer.name, () => {
       expect(query.isEmpty()).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
+      expect(query.topicToTxEvents.size).toEqual(0)
     })
   })
 
@@ -403,14 +413,17 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe('rpc wrapper methods', () => {
-    it('passes through getBlockByNumber and getLogs', async () => {
+    it('passes through getBlockByNumber, getLogs, and getTransactionReceipt', async () => {
       const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
       const log = makeRpcLog()
       const getLogs = mockFn().resolvesTo([log])
+      const receipt = makeRpcReceipt()
+      const getTransactionReceipt = mockFn().resolvesTo(receipt)
       const syncer = createSyncer({
         rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
           getBlockByNumber,
           getLogs,
+          getTransactionReceipt,
         }),
       })
 
@@ -421,9 +434,11 @@ describe(InteropEventSyncer.name, () => {
         address: [],
         topics: [[]],
       })
+      const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
 
       expect(block).toEqual(makeRpcBlock(5n))
       expect(logs).toEqual([log])
+      expect(txReceipt).toEqual(receipt)
     })
   })
 })
@@ -619,10 +634,28 @@ function makeRpcLog(): RpcLog {
   }
 }
 
+function makeRpcReceipt(): RpcReceipt {
+  return {
+    transactionHash: ZERO_HASH,
+    transactionIndex: 0n,
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    to: EthereumAddress.random(),
+    cumulativeGasUsed: 0n,
+    gasUsed: 0n,
+    contractAddress: null,
+    logs: [],
+    logsBloom: `0x${'00'.repeat(256)}`,
+    type: 0n,
+  }
+}
+
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
   return mockObject<InteropEventSyncer['rpcClient']>({
     getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(1n)),
     getLogs: mockFn().resolvesTo([]),
+    getTransactionReceipt: mockFn().resolvesTo(null),
   })
 }
 

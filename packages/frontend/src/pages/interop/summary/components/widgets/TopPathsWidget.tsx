@@ -37,7 +37,7 @@ export function TopPathsWidget({
         Top 3 paths by volume
       </h2>
       <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Between {uniqChains.length} supported chains
+        Between {uniqChains.length} selected chains
       </div>
       <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
         <tbody>

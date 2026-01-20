@@ -565,14 +565,7 @@
   },
   "debridge": {
     "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x0d7b69436a35c8e0de7420c06e5ed7fd27530bf72b050b10f886f1d5a757cfc4"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x7092e179d4dadcb97ef2bf5ee3eb0c641f8d4549273c2cdcd66ed8707c99a641"
-      },
+      // tokenbridge
       {
         "chain": "ethereum",
         "tx": "0x69722a83e20ee078c95ad4d8532a86201ba441481999f695b3767d389b8c6798"
@@ -585,6 +578,7 @@
   },
   "debridge-dln": {
     "txs": [
+      // intent fill
       {
         "chain": "arbitrum",
         "tx": "0xc55fbe60a15226b1c8ef38bfd0f847d254e30a2cc319bd84637a4b2642973ee5"
@@ -592,6 +586,15 @@
       {
         "chain": "base",
         "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      },
+      // settlement (including the above intent)
+      {
+        "chain": "base",
+        "tx": "0x091653460f8aad2dcfc3fbfaed0c2c02d6740c757ad587581850d894157ff086"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xf1ea02ebca6e3678ae7a47b25dba4b28c35373f4be2a27109be1f9bfee5cd643"
       }
     ]
   },
@@ -620,7 +623,9 @@
     ]
   },
   "wormhole-ntt": {
+    "loadConfigs": ["wormhole"],
     "txs": [
+      // NTT token transfer (L3 token: Arbitrum → Base)
       {
         "chain": "arbitrum",
         "tx": "0xd8cec5a2163774b308d382442a59f3558f0e7d6ebf9817bc5953c27c3d98b671"
@@ -628,19 +633,49 @@
       {
         "chain": "base",
         "tx": "0xed7885b062d7b42ec332ffc035410686128103db9a38c6d4842276f95ed68539"
+      },
+      // M^0 Index propagation (Ethereum → Arbitrum) - not a token transfer
+      {
+        "chain": "ethereum",
+        "tx": "0x53c97bcf404690cea7b294329e43d36320db0c7e32f374a1a6eb7aff4963d59b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
       }
-    ]
+    ],
+    "messages": [
+      { "type": "wormhole.Message", "app": "wormhole-ntt" },
+      { "type": "wormhole.Message", "app": "m0-index" }
+    ],
+    "transfers": ["wormhole-ntt.Transfer"]
   },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0x3cfa65ab201ecf59f94f7d7ebbf82cfb8ca80154bb0cc62df25cca25c3362d3b"
+        "chain": "arbitrum",
+        "tx": "0xbb4d6c8c5d09202beaa0baf58e28bbc93a6abf4400eb1b4c0e819cfdf5bcf913"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x879761cd499524e14b298c7887ca8de035aebbd30f52dd85dd0abc33dc24a04f"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xe81f7b139c8077f1ce52f3661289c176459d556878961b70ad9f1625654dd89c"
+        "tx": "0xe15d154c06cb913ac50a7868ca0fe519286a9b9b1c1ff600e5a706f56538aa48"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14d3f4f8a63dcfffdfc0eb29217a0446e01d82aea503f4ec037df8668966d21d"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe0a8dc3c941ed7952543255e20a3012f83760d823144666e523783f92f2848d6"
+      },
+      {
+        "chain": "base",
+        "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
     ]
   },
@@ -1663,14 +1698,15 @@
     ]
   },
   "wormhole-debug": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x17aa2be5aafb29e41a7e75eeaff7a06aaeabae0bfb9bee5f47d7f9d6979649b4"
+        "chain": "ethereum",
+        "tx": "0x31501df432f135cbd87f1614df5d1259db0969aec2b8664c8a25ca1c6744211d"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x625564530b469cdb41c11ed585276688362964bbf4a9e7c93b03ae5dd73be8d7"
+        "chain": "base",
+        "tx": "0x2f6c995f2d834d8792108d93f7f55749dc04d58eab0915c35ec1d1066728e6ee"
       }
     ]
   },

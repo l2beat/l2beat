@@ -6,10 +6,11 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { api } from '~/trpc/React'
-import { generateAccessibleColors } from '~/utils/generateColors'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
+import { useProtocolColorMap } from './useProtocolColorMap'
+import { getProtocolsDataWithOthers } from './utils/getProtocolsDataWithOthers'
 
 export type DisplayProtocol = InteropProtocolData & {
   color: string
@@ -37,52 +38,15 @@ export function TopProtocolsWidget({
 
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
-  const protocolsWithOthers = useMemo(() => {
-    if (!data?.topProtocols) return []
-
-    data.topProtocols.sort((a, b) => b[metricType].value - a[metricType].value)
-
-    const top5 = data.topProtocols.slice(0, 5)
-    const others = data.topProtocols.slice(5)
-
-    if (others.length === 0) {
-      return top5
-    }
-
-    const totalValue = data.topProtocols.reduce(
-      (sum, p) => sum + p[metricType].value,
-      0,
-    )
-    const othersValue = others.reduce((sum, p) => sum + p[metricType].value, 0)
-    const othersShare = totalValue > 0 ? (othersValue / totalValue) * 100 : 0
-
-    return [
-      ...top5,
-      {
-        protocolName: 'Others',
-        volume: {
-          value: metricType === 'volume' ? othersValue : 0,
-          share: metricType === 'volume' ? othersShare : 0,
-        },
-        transfers: {
-          value: metricType === 'transfers' ? othersValue : 0,
-          share: metricType === 'transfers' ? othersShare : 0,
-        },
-        othersCount: others.length,
-      },
-    ] as DisplayProtocol[]
-  }, [data?.topProtocols, metricType])
-
-  const colors = useMemo(
-    () => generateAccessibleColors(protocolsWithOthers.length),
-    [protocolsWithOthers.length],
-  )
-
-  const protocolsWithColors: DisplayProtocol[] = protocolsWithOthers.map(
-    (protocol, index) => ({
-      ...protocol,
-      color: colors[index] ?? '#000000',
-    }),
+  const protocolColorMap = useProtocolColorMap(data?.topProtocols)
+  const protocolsWithOthers = useMemo(
+    () =>
+      getProtocolsDataWithOthers(
+        data?.topProtocols,
+        protocolColorMap,
+        metricType,
+      ),
+    [data?.topProtocols, metricType, protocolColorMap],
   )
 
   return (
@@ -95,11 +59,11 @@ export function TopProtocolsWidget({
           {heading}
         </h2>
         <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Between {uniqChains.length} supported chains
+          Between {uniqChains.length} selected chains
         </div>
         <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
-            {isLoading || protocolsWithColors.length === 0
+            {isLoading || protocolsWithOthers.length === 0
               ? times(5).map((index) => (
                   <tr key={index}>
                     <td colSpan={3}>
@@ -108,8 +72,8 @@ export function TopProtocolsWidget({
                   </tr>
                 ))
               : null}
-            {protocolsWithColors.length > 0 &&
-              protocolsWithColors.map((protocol) => (
+            {protocolsWithOthers.length > 0 &&
+              protocolsWithOthers.map((protocol) => (
                 <tr key={protocol.protocolName}>
                   <td className="flex items-center gap-1 font-medium text-2xs">
                     <div
@@ -133,13 +97,13 @@ export function TopProtocolsWidget({
       </div>
       {metricType === 'volume' ? (
         <TopProtocolsByVolumeChart
-          protocols={protocolsWithColors}
+          protocols={protocolsWithOthers}
           isLoading={isLoading}
           containerWidth={width}
         />
       ) : (
         <TopProtocolsByTransfersChart
-          protocols={protocolsWithColors}
+          protocols={protocolsWithOthers}
           isLoading={isLoading}
           containerWidth={width}
         />

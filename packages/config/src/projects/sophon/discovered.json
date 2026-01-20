@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1763548305,
+  "timestamp": 1768823225,
   "configHash": "0xfb4a6d5f3e6c1079e43782fa7eb6b301e5aad4b674286f91e5e4f326085bcb34",
   "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
   "entries": [
@@ -128,7 +128,7 @@
           ]
         ],
         "$upgradeCount": 8,
-        "baseTokenGasPriceMultiplierDenominator": 569,
+        "baseTokenGasPriceMultiplierDenominator": 381,
         "baseTokenGasPriceMultiplierNominator": 100000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
@@ -245,7 +245,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 9683,
+        "getFirstUnprocessedPriorityTx": 9950,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -254,7 +254,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0xaedc67c3fd69ec298c253f108f56ca8f3d435f4e3bd95712a17d42d4fe4aada6",
+        "getPriorityTreeRoot": "0x4bc56134d6c9ec50fd0cc9cd21023343ed4289a44bdbc538e8e301917b314d62",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -262,13 +262,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 35184,
-        "getTotalBatchesExecuted": 35181,
-        "getTotalBatchesVerified": 35184,
-        "getTotalBlocksCommitted": 35184,
-        "getTotalBlocksExecuted": 35181,
-        "getTotalBlocksVerified": 35184,
-        "getTotalPriorityTxs": 9684,
+        "getTotalBatchesCommitted": 37553,
+        "getTotalBatchesExecuted": 37552,
+        "getTotalBatchesVerified": 37553,
+        "getTotalBlocksCommitted": 37553,
+        "getTotalBlocksExecuted": 37552,
+        "getTotalBlocksVerified": 37553,
+        "getTotalPriorityTxs": 9951,
         "getTransactionFilterer": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -560,11 +560,6 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "eth:0x90E10C37d8d9e854e7775B0069728642A1F88610",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SophonTransactionFilterer",
       "address": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
       "type": "Contract",
@@ -826,7 +821,6 @@
           "eth:0x3b6036d410cA018661324766680674921a8b2d89",
           "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
           "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
-          "eth:0x90E10C37d8d9e854e7775B0069728642A1F88610",
           "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
           "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
         ],
@@ -834,8 +828,8 @@
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 27,
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 29,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1402,6 +1396,6 @@
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 23832552 },
-  "permissionsConfigHash": "0x47712e4e76a217075afad34d255dee43b2235de932dc48978e366ebf55a2621d"
+  "usedBlockNumbers": { "ethereum": 24268613 },
+  "permissionsConfigHash": "0x426757f6b7f676c62b5919376d76a00d54768306cede69504afbcd354fd8ac3a"
 }

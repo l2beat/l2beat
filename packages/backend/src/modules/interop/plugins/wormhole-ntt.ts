@@ -143,9 +143,19 @@ export class WormholeNTTPlugin implements InteropPlugin {
       if (!delivery) return
 
       // find on SRC WormholeCore.LogMessagePublished and WormholeRelayer.SendEvent with the same sequenceId
+      const wormholeNetworks = this.configs.get(WormholeConfig)
+      if (!wormholeNetworks) return
+
+      // Find the relayer address for the source chain
+      const srcNetwork = wormholeNetworks.find(
+        (n) => n.wormholeChainId === delivery.args.sourceChain,
+      )
+      if (!srcNetwork?.relayer) return
+
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: delivery.args.sequence,
         wormholeChainId: delivery.args.sourceChain,
+        sender: srcNetwork.relayer,
       })
       if (!logMessagePublished) return
 
@@ -162,6 +172,22 @@ export class WormholeNTTPlugin implements InteropPlugin {
       })
       if (!sentTransceiverMessage) return
 
+      // Check if this is an M^0 Protocol index propagation message (not a token transfer)
+      const payloadPrefix = getPayloadPrefix(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )
+      if (payloadPrefix === M0IT_PREFIX) {
+        // M^0 Index messages are system state updates, not token transfers
+        return [
+          Result.Message('wormhole.Message', {
+            app: 'm0-index',
+            srcEvent: logMessagePublished,
+            dstEvent: delivery,
+          }),
+        ]
+      }
+
+      // Standard NTT token transfer
       const srcTokenAddress = decodeNTTManagerPayload(
         sentTransceiverMessage.args.nttManagerPayload,
       )?.sourceToken
@@ -176,7 +202,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-ntt', // NOTE: This isn't a real app, it's a mechanism for apps to use
+          app: 'wormhole-ntt',
           srcEvent: logMessagePublished,
           dstEvent: delivery,
         }),
@@ -195,6 +221,26 @@ export class WormholeNTTPlugin implements InteropPlugin {
         }),
       ]
     }
+  }
+}
+
+// M^0 Protocol uses the same Wormhole Transceiver to broadcast M Earning Index updates.
+// These have a different payload format (M0IT prefix) and are not token transfers.
+// See: https://docs.m0.org/home/technical-documentations/m-portal/overview/
+const M0IT_PREFIX = '4d304954' // "M0IT" in hex
+
+function getPayloadPrefix(payload: string): string | undefined {
+  try {
+    const reader = new BinaryReader(payload)
+    reader.readBytes(32) // id
+    reader.readBytes(32) // sender
+    const payloadLength = reader.readUint16()
+    if (payloadLength < 4) return undefined
+    const payloadData = reader.readBytes(payloadLength)
+    // First 4 bytes of inner payload is the prefix
+    return payloadData.slice(2, 10) // skip "0x", take 8 hex chars (4 bytes)
+  } catch {
+    return undefined
   }
 }
 

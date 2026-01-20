@@ -148,7 +148,7 @@ const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FRAX',
+  'FRAX (prev. FXS)',
   discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
@@ -574,7 +574,9 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FRAX'],
         description:
-          'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
+          'StarkGate bridge for FRAX (prev. FXS).' +
+          ' ' +
+          escrowFXSMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
