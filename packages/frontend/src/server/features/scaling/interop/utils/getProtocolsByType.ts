@@ -10,25 +10,30 @@ export type TokenData = {
   volume: number
 }
 
+type CommonProtocolEntry = {
+  iconSlug: string
+  protocolName: string
+}
+
+export type NonMintingProtocolEntry = CommonProtocolEntry & {
+  volume: number
+}
+
+export type LockMintProtocolEntry = CommonProtocolEntry & {
+  volume: number
+  tokens: TokenData[]
+  averageDuration: number
+}
+
+export type OmniChainProtocolEntry = CommonProtocolEntry & {
+  volume: number
+  tokens: TokenData[]
+}
+
 export type ProtocolsByType = {
-  nonMinting: {
-    iconSlug: string
-    protocolName: string
-    volume: number
-  }[]
-  lockMint: {
-    iconSlug: string
-    protocolName: string
-    volume: number
-    tokens: TokenData[]
-    averageDuration: number
-  }[]
-  omniChain: {
-    iconSlug: string
-    protocolName: string
-    volume: number
-    tokens: TokenData[]
-  }[]
+  nonMinting: NonMintingProtocolEntry[]
+  lockMint: LockMintProtocolEntry[]
+  omniChain: OmniChainProtocolEntry[]
 }
 
 export function getProtocolsByType(
@@ -72,17 +77,21 @@ export function getProtocolsByType(
     (p) => p.interopConfig.bridgeType,
   )
 
-  const nonMintingData = Array.from(protocolsDataMap.entries()).filter(
-    ([key]) => protocolsByType.nonMinting?.some((p) => p.id === key),
+  const protocolsData = Array.from(protocolsDataMap.entries()).sort(
+    (a, b) => b[1].volume - a[1].volume,
   )
-  const mintLockData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
+
+  const nonMintingData = protocolsData.filter(([key]) =>
+    protocolsByType.nonMinting?.some((p) => p.id === key),
+  )
+  const mintLockData = protocolsData.filter(([key]) =>
     protocolsByType.canonical?.some((p) => p.id === key),
   )
-  const omniChainData = Array.from(protocolsDataMap.entries()).filter(([key]) =>
+  const omniChainData = protocolsData.filter(([key]) =>
     protocolsByType.omnichain?.some((p) => p.id === key),
   )
 
-  const getProjectCommon = (key: string) => {
+  const getProjectCommon = (key: string): CommonProtocolEntry => {
     const project = interopProjects.find((p) => p.id === key)
     assert(project, `Project not found: ${key}`)
     return {

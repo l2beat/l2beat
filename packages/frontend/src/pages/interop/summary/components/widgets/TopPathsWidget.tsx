@@ -35,7 +35,7 @@ export function TopPathsWidget({
     <PrimaryCard className="@container z-10 h-[213px]">
       <h2 className="font-bold text-heading-20">Top 3 paths by volume</h2>
       <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
-        Between {uniqChains.length} supported chains
+        Between {uniqChains.length} selected chains
       </div>
       <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
         <tbody>
