@@ -37,6 +37,7 @@ function getCommonColumns<
       ),
       meta: {
         cellClassName: 'whitespace-normal',
+        headClassName: 'text-2xs',
       },
     }),
     columnHelper.accessor((row) => row.volume, {
@@ -48,6 +49,7 @@ function getCommonColumns<
       ),
       meta: {
         align: 'right',
+        headClassName: 'text-2xs text-right',
       },
     }),
   ]
@@ -57,9 +59,10 @@ const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
 export const nonMintingColumns = [
   ...getCommonColumns(nonMintingColumnHelper),
   nonMintingColumnHelper.accessor('tokens', {
-    header: 'tokens by\nvolume',
+    header: 'tokens\nby volume',
     meta: {
       cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
     },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
@@ -70,6 +73,9 @@ export const lockAndMintColumns = [
   ...getCommonColumns(lockAndMintColumnHelper),
   lockAndMintColumnHelper.accessor('averageDuration', {
     header: 'last 24h avg.\ntransfer time',
+    meta: {
+      headClassName: 'text-2xs',
+    },
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
         {formatSeconds(ctx.row.original.averageDuration)}
@@ -80,6 +86,7 @@ export const lockAndMintColumns = [
     header: 'tokens\nby volume',
     meta: {
       cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
     },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
@@ -98,12 +105,14 @@ export const omniChainColumns = [
     ),
     meta: {
       align: 'right',
+      headClassName: 'text-2xs',
     },
   }),
   omniChainColumnHelper.accessor('tokens', {
-    header: 'tokens by\nvolume',
+    header: 'tokens\nby volume',
     meta: {
       cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
     },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
