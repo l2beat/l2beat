@@ -119,7 +119,10 @@ export async function runExampleCore(
 
   const events: InteropEvent[] = []
   for (const chain of chains) {
-    logger.info('Getting transaction', { chain: chain.name, txHash: chain.txHash })
+    logger.info('Getting transaction', {
+      chain: chain.name,
+      txHash: chain.txHash,
+    })
     const tx = await chain.rpc.getTransaction(chain.txHash)
     logger.debug('Transaction retrieved', { tx })
     assert(tx.blockNumber)
