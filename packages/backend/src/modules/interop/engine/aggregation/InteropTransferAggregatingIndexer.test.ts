@@ -41,7 +41,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [{ plugin: 'across' }],
         },
       ]
@@ -181,13 +181,13 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         // Config1: Plain plugin filter - should match msg1 (across)
         {
           id: 'config1',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [{ plugin: 'across' }],
         },
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum) and msg5 (arbitrum->ethereum)
         {
           id: 'config2',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [
             { filterBy: 'chain', chain: 'ethereum', plugin: 'cctp-v1' },
           ],
@@ -195,7 +195,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc, src is eth)
         {
           id: 'config3',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [
             {
               filterBy: 'abstractTokenId',

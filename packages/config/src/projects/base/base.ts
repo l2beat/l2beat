@@ -50,7 +50,7 @@ export const base: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'Base Canonical',
-    bridgeType: 'canonical',
+    bridgeType: 'lockAndMint',
     plugins: [
       {
         filterBy: 'chain',
