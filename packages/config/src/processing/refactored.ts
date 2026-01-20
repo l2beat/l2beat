@@ -37,6 +37,7 @@ import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
+import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 
 // TODO: Once all projects are refactored this will simply become `projects`
 export const refactored: BaseProject[] = [
@@ -83,4 +84,5 @@ export const refactored: BaseProject[] = [
   gateway,
   // interop protocols
   usdt0,
+  debridgeDln,
 ]
