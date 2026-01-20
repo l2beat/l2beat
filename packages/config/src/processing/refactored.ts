@@ -13,6 +13,7 @@ import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
+import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
@@ -85,4 +86,5 @@ export const refactored: BaseProject[] = [
   // interop protocols
   usdt0,
   debridgeDln,
+  hyperlaneHwr,
 ]

@@ -1,3 +1,9 @@
+/**
+ * Hyperlane Warp Route (HWR) tokens, adapters and wrappers (OFT equivalent)
+ * also tracks xERC20 that send via Hyperlane AMB
+ * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative
+ * OMNICHAIN
+ */
 import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
@@ -19,12 +25,6 @@ import {
   type MatchResult,
   Result,
 } from './types'
-
-/**
- * This plugin tracks Hyperlane Warp Route tokens, adapters and wrappers (OFT equivalent).
- * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative(partial)
- * TODO: native token HWR only emit at the source
- */
 
 export const parseSentTransferRemote = createEventParser(
   'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
