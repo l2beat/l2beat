@@ -307,6 +307,19 @@ export async function updateFunction(
   }
 }
 
+export async function clearContractPermissions(
+  project: string,
+  contractAddress: string
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/functions/${contractAddress}`, {
+    method: 'DELETE',
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
 export async function getContractTags(project: string): Promise<ApiContractTagsResponse> {
   const res = await fetch(`/api/projects/${project}/contract-tags`)
   if (!res.ok) {

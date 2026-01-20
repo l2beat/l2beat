@@ -20,6 +20,7 @@ import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
 import {
+  deleteContractFunctions,
   getFunctions,
   updateFunction,
 } from './defidisco/functions'
@@ -271,6 +272,30 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating functions:', error)
       res.status(500).json({ error: 'Failed to update functions' })
+    }
+  })
+
+  app.delete('/api/projects/:project/functions/:address', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+  
+    const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
+
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+
+    const { project, address } = paramsValidation.data
+
+    try {
+      deleteContractFunctions(paths, project, address)
+      res.status(204).send()
+    } catch (error) {
+      console.error('Error deleting contract functions:', error)
+      res.status(500).json({ error: 'Failed to delete contract functions' })
     }
   })
 

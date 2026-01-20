@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
-import { getProject, getFunctions, detectPermissionsWithAI } from '../../../api/api'
+import { getProject, getFunctions, detectPermissionsWithAI, clearContractPermissions } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
@@ -18,6 +18,7 @@ import { FieldDisplay } from './Field'
 import { FieldTag } from './FieldTag'
 import { Folder } from './Folder'
 import { ValuesPanelExtensions } from '../defidisco/ValuesPanelExtensions'
+import { ClearPermissionsDialog } from '../defidisco/ClearPermissionsDialog'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
 
 
@@ -68,6 +69,7 @@ function Display({
   const chain = selected.chain
   const queryClient = useQueryClient()
   const [aiDetectionStatus, setAiDetectionStatus] = useState<string>('')
+  const [showClearPermissionsDialog, setShowClearPermissionsDialog] = useState(false)
 
   const addresses = getAddressesToCopy(selected)
 
@@ -141,6 +143,50 @@ function Display({
     </button>
   )
 
+  // Clear Permissions mutation
+  const clearPermissionsMutation = useMutation({
+    mutationFn: async () => {
+      return await clearContractPermissions(project, selected.address)
+    },
+    onSuccess: () => {
+      setAiDetectionStatus(`✓ Cleared permissions for ${selected.name}`)
+      // Invalidate queries to refresh the UI
+      queryClient.invalidateQueries({ queryKey: ['functions', project] })
+      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
+      // Clear status after 3 seconds
+      setTimeout(() => setAiDetectionStatus(''), 3000)
+    },
+    onError: (error: Error) => {
+      setAiDetectionStatus(`✗ Error clearing permissions: ${error.message}`)
+      // Clear status after 5 seconds
+      setTimeout(() => setAiDetectionStatus(''), 5000)
+    },
+  })
+
+  // Clear Permissions button
+  const functionCount = functions?.contracts?.[selected.address]?.functions?.length || 0
+  const hasFunctions = functionCount > 0
+
+  const getClearButtonDisabledReason = (): string | null => {
+    if (IS_READONLY) return 'Server is in readonly mode'
+    if (!hasFunctions) return 'No permissions to clear'
+    return null
+  }
+
+  const clearButtonDisabledReason = getClearButtonDisabledReason()
+  const isClearButtonDisabled = clearPermissionsMutation.isPending || clearButtonDisabledReason !== null
+
+  const clearPermissionsButton = (
+    <button
+      onClick={() => !isClearButtonDisabled && setShowClearPermissionsDialog(true)}
+      disabled={isClearButtonDisabled}
+      title={clearButtonDisabledReason || 'Clear all permission scanner results for this contract'}
+      className="ml-2 bg-red-600 px-3 py-1 font-medium text-sm text-white transition-all duration-300 hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Clear Permissions
+    </button>
+  )
+
   const contractConfigDialog = canModify && <ContractConfigDialog />
 
   return (
@@ -158,6 +204,7 @@ function Display({
             {templateDialog}
             {contractConfigDialog}
             {aiDetectionButton}
+            {clearPermissionsButton}
           </div>
         </div>
         {aiDetectionStatus && (
@@ -287,6 +334,18 @@ function Display({
         </Folder>
       )}
       <ValuesPanelExtensions selected={selected} abis={'abis' in selected ? selected.abis : []} />
+      {showClearPermissionsDialog && (
+        <ClearPermissionsDialog
+          contractAddress={selected.address}
+          contractName={selected.name || 'Unknown'}
+          functionCount={functionCount}
+          onConfirm={async () => {
+            await clearPermissionsMutation.mutateAsync()
+            setShowClearPermissionsDialog(false)
+          }}
+          onCancel={() => setShowClearPermissionsDialog(false)}
+        />
+      )}
     </>
   )
 }

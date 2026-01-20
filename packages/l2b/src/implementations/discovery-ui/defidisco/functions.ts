@@ -202,6 +202,45 @@ export function updateFunction(
   fs.writeFileSync(functionsPath, JSON.stringify(updatedData, null, 2))
 }
 
+export function deleteContractFunctions(
+  paths: DiscoveryPaths,
+  project: string,
+  contractAddress: string,
+): void {
+  const functionsPath = getFunctionsPath(paths, project)
+
+  // Load existing user functions
+  let userContracts: Record<string, ContractFunctions> = {}
+  if (fs.existsSync(functionsPath)) {
+    try {
+      const fileContent = fs.readFileSync(functionsPath, 'utf8')
+      const data = JSON.parse(fileContent) as ApiFunctionsResponse
+      userContracts = data.contracts || {}
+    } catch (error) {
+      console.error('Error parsing functions file:', error)
+    }
+  }
+
+  // Remove the contract entry
+  delete userContracts[contractAddress]
+
+  // Create updated data
+  const updatedData: ApiFunctionsResponse = {
+    version: '1.0',
+    lastModified: new Date().toISOString(),
+    contracts: userContracts,
+  }
+
+  // Ensure directory exists
+  const dir = path.dirname(functionsPath)
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+
+  // Write updated data
+  fs.writeFileSync(functionsPath, JSON.stringify(updatedData, null, 2))
+}
+
 function getFunctionsPath(paths: DiscoveryPaths, project: string): string {
   // The discovery path points to packages/config/src/projects
   return path.join(paths.discovery, project, 'functions.json')
