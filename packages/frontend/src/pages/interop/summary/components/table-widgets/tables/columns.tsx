@@ -2,7 +2,7 @@ import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../TopTokensCell'
-import type { LockMintRow } from './LockMintTable'
+import type { LockAndMintRow } from './LockAndMintTable'
 import type { NonMintingRow } from './NonMintingTable'
 import type { OmniChainRow } from './OmniChainTable'
 
@@ -50,10 +50,10 @@ function getCommonColumns<
 const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
 export const nonMintingColumns = [...getCommonColumns(nonMintingColumnHelper)]
 
-const lockMintColumnHelper = createColumnHelper<LockMintRow>()
-export const lockMintColumns = [
-  ...getCommonColumns(lockMintColumnHelper),
-  lockMintColumnHelper.accessor('averageDuration', {
+const lockAndMintColumnHelper = createColumnHelper<LockAndMintRow>()
+export const lockAndMintColumns = [
+  ...getCommonColumns(lockAndMintColumnHelper),
+  lockAndMintColumnHelper.accessor('averageDuration', {
     header: 'last 24h\navg. transfer time',
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
@@ -61,7 +61,7 @@ export const lockMintColumns = [
       </div>
     ),
   }),
-  lockMintColumnHelper.accessor('tokens', {
+  lockAndMintColumnHelper.accessor('tokens', {
     header: 'tokens by volume',
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),

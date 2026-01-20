@@ -643,7 +643,16 @@
         "chain": "arbitrum",
         "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
       },
-      // NTT token transfer via Core attestation path (Ethereum → Base) - no Wormhole Relayer
+      // NTT transfer from Optimism → Base (Relayer path)
+      {
+        "chain": "optimism",
+        "tx": "0xfbcd1e83c48b7543cc5b13e54c23ffda3007b24584989aea7ff17dc315e30884"
+      },
+      {
+        "chain": "base",
+        "tx": "0x7a1fb1167c3f1ec048d4e26792a47c760327080727480ee93af77cda28bd99f5"
+      },
+      // NTT transfer from Ethereum → Base (Core path)
       {
         "chain": "ethereum",
         "tx": "0x616967c7771523d2db16b3a21eef8c8ec654d245f6462424f6e7f23ea4839632"
@@ -656,10 +665,15 @@
     "events": ["wormhole-ntt.ReceivedMessage"],
     "messages": [
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt-core" },
-      { "type": "wormhole.Message", "app": "m0-index" }
+      { "type": "wormhole.Message", "app": "m0-index" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" }
     ],
-    "transfers": ["wormhole-ntt.Transfer", "wormhole-ntt.Transfer"]
+    "transfers": [
+      "wormhole-ntt.Transfer",
+      "wormhole-ntt.Transfer",
+      "wormhole-ntt.Transfer"
+    ]
   },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],

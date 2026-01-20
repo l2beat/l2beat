@@ -5,7 +5,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/ChainSelector'
-import { LockMintCard } from './components/table-widgets/LockMintCard'
+import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
 import { MobileTopProtocolsWidget } from './components/widgets/protocols/MobileTopProtocolsWidget'
@@ -44,7 +44,7 @@ export function InteropSummaryPage({
               </div>
               <MobileTopProtocolsWidget />
               <NonMintingCard />
-              <LockMintCard />
+              <LockAndMintCard />
               <OmniChainCard />
             </div>
           </InteropSelectedChainsProvider>
