@@ -13,6 +13,7 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -27,7 +28,6 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -145,15 +145,15 @@ export function ScalingSummaryTvsChart({
               },
             ],
           })}
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>

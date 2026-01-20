@@ -15,13 +15,13 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
@@ -159,15 +159,15 @@ export function ProjectDaAbsoluteThroughputChart({
             />
           }
         />
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             unit: ` ${unit}`,
             tickCount: 4,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
       </AreaChart>
     </ChartContainer>
   )

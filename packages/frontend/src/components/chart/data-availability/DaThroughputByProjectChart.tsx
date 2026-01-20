@@ -18,9 +18,9 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
@@ -205,15 +205,15 @@ export function DaThroughputByProjectChart({
           />
         ))}
 
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             unit: ` ${unit}`,
             tickCount: 4,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={

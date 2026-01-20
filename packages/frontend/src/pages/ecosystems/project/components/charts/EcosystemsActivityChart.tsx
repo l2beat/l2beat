@@ -9,6 +9,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
@@ -16,7 +17,6 @@ import {
 } from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
@@ -138,15 +138,14 @@ export function EcosystemsActivityChart({
               },
             ],
           })}
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
-              scale: 'lin',
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               unit: ' UOPS',
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
           <defs>
             <CustomFillGradientDef

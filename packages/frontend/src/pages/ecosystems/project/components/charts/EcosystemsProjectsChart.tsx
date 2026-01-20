@@ -13,8 +13,8 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/getEcosystemProjectsChartData'
@@ -85,14 +85,14 @@ export function EcosystemsProjectsChart({
             type="stepAfter"
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: data.chart,
-            isLoading: false,
-            yAxis: {
+          <ChartCommonComponents
+            data={data.chart}
+            isLoading={false}
+            yAxis={{
               tickCount: 2,
-            },
-            syncedUntil: undefined,
-          })}
+            }}
+            syncedUntil={undefined}
+          />
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>
       </ChartContainer>

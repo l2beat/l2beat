@@ -24,12 +24,12 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -171,17 +171,16 @@ export function LivenessChart({
           strokeDasharray="5 5"
         />
 
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
             tickCount,
-          },
-          // We want to show custom ReferenceArea for this chart
-          syncedUntil: undefined,
-        })}
+          }}
+          syncedUntil={undefined}
+        />
         {lastValidTimestamp && (
           <ReferenceArea
             x1={lastValidTimestamp}

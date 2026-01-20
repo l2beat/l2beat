@@ -15,6 +15,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -33,7 +34,6 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
@@ -133,17 +133,17 @@ export function ActivityChart({
             },
           ],
         })}
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             scale,
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
-            tickCount,
-          },
-          syncedUntil,
-        })}
+            tickCount: tickCount ?? 3,
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={<ActivityCustomTooltip metric={metric} />}

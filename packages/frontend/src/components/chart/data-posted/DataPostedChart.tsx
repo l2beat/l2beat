@@ -15,6 +15,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
@@ -22,7 +23,6 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
@@ -116,15 +116,15 @@ export function DataPostedChart({
             hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
           })),
         })}
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           content={<DataPostedCustomTooltip resolution={resolution} />}
         />

@@ -15,9 +15,9 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -273,19 +273,19 @@ export function CostsChart({
           }}
         />
 
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
                 : formatCurrency(value, unit),
             tickCount,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           content={
             <CustomTooltip

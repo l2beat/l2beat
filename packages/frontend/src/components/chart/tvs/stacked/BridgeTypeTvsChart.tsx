@@ -12,8 +12,8 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
@@ -119,16 +119,16 @@ export function BridgeTypeTvsChart({
           stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           content={<CustomTooltip unit={unit} />}
           filterNull={false}

@@ -11,10 +11,10 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EstimatedBarPatternDef } from '~/components/core/chart/defs/EstimatedBarPatternDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -139,19 +139,19 @@ export function DaPercentageThroughputChart({
           ]
         })}
 
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             unit: '%',
             // To avoid showing 100.000001% we specify domain manually
             domain: [0, 100],
             // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
-          },
-          chartType: 'bar',
-          syncedUntil,
-        })}
+          }}
+          chartType="bar"
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={

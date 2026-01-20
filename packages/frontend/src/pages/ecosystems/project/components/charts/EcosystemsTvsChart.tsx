@@ -14,8 +14,8 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import type {
@@ -129,14 +129,14 @@ export function EcosystemsTvsChart({
             strokeWidth={2}
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>

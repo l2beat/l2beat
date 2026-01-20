@@ -11,6 +11,7 @@ import {
   ChartTooltipWrapper,
   type CustomChartTooltipProps,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -28,7 +29,6 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -187,15 +187,15 @@ export function ScalingRecategorizedActivityChart({
             />
           }
         />
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'uops' ? ' UOPS' : ' TPS',
-          },
-          syncedUntil: data?.syncedUntil,
-        })}
+          }}
+          syncedUntil={data?.syncedUntil}
+        />
       </AreaChart>
     </ChartContainer>
   )
