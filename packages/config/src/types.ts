@@ -1238,7 +1238,7 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
-  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  bridgeType: 'lockAndMint' | 'nonMinting' | 'omnichain'
   plugins: InteropPlugin[]
 }
 
