@@ -94,7 +94,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const protocolsByTypeMap = {
     nonMinting: [] as ProtocolsByType['nonMinting'],
-    lockMint: [] as ProtocolsByType['lockMint'],
+    lockAndMint: [] as ProtocolsByType['lockAndMint'],
     omniChain: [] as ProtocolsByType['omniChain'],
   }
 
@@ -109,7 +109,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     if (project.interopConfig.bridgeType === 'nonMinting') {
       protocolsByTypeMap.nonMinting.push(data)
     } else if (project.interopConfig.bridgeType === 'lockAndMint') {
-      protocolsByTypeMap.lockMint.push({ ...data, averageDuration: 100_000 })
+      protocolsByTypeMap.lockAndMint.push({ ...data, averageDuration: 100_000 })
     } else if (project.interopConfig.bridgeType === 'omnichain') {
       protocolsByTypeMap.omniChain.push(data)
     }

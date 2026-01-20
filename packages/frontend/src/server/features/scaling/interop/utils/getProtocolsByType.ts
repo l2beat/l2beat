@@ -19,7 +19,7 @@ export type NonMintingProtocolEntry = CommonProtocolEntry & {
   volume: number
 }
 
-export type LockMintProtocolEntry = CommonProtocolEntry & {
+export type LockAndMintProtocolEntry = CommonProtocolEntry & {
   volume: number
   tokens: TokenData[]
   averageDuration: number
@@ -32,7 +32,7 @@ export type OmniChainProtocolEntry = CommonProtocolEntry & {
 
 export type ProtocolsByType = {
   nonMinting: NonMintingProtocolEntry[]
-  lockMint: LockMintProtocolEntry[]
+  lockAndMint: LockAndMintProtocolEntry[]
   omniChain: OmniChainProtocolEntry[]
 }
 
@@ -84,7 +84,7 @@ export function getProtocolsByType(
   const nonMintingData = protocolsData.filter(([key]) =>
     protocolsByType.nonMinting?.some((p) => p.id === key),
   )
-  const lockMintData = protocolsData.filter(([key]) =>
+  const lockAndMintData = protocolsData.filter(([key]) =>
     protocolsByType.lockAndMint?.some((p) => p.id === key),
   )
   const omniChainData = protocolsData.filter(([key]) =>
@@ -122,7 +122,7 @@ export function getProtocolsByType(
         volume,
       }
     }),
-    lockMint: lockMintData.map(
+    lockAndMint: lockAndMintData.map(
       ([key, { volume, tokens, transferCount, totalDurationSum }]) => {
         return {
           ...getProjectCommon(key),
