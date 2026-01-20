@@ -173,7 +173,6 @@ export class ValueService {
         switch (formula.operator) {
           case 'sum':
             return definedValues.reduce((val, acc) => (acc += val), 0n)
-          // TODO: enforce by test somewhere, all have the same since timestamp
           case 'diff':
             if (values[0] !== undefined) {
               const subtractFrom = values[0]
