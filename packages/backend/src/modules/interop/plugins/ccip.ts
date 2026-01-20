@@ -15,6 +15,7 @@ import {
   createInteropEventType,
   type DataRequest,
   defineNetworks,
+  eventDataRequest,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -215,13 +216,29 @@ export class CCIPPlugIn implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     return [
-      {
-        type: 'event',
+      eventDataRequest({
         signature: CCIPSendRequestedLog,
         addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.outboundLanes)),
-      },
-      {
-        type: 'event',
+        captureFn: (ccipSendRequested, context) => {
+          const outboundLane = EthereumAddress(context.log.address)
+          const network = CCIP_NETWORKS.find((x) => x.chain === context.chain)
+          if (!network) return
+          return ccipSendRequested.message.tokenAmounts.map((ta, index) =>
+            CCIPSendRequested.create(context, {
+              messageId: ccipSendRequested.message.messageId,
+              token: Address32.from(ta.token),
+              amount: ta.amount,
+              index,
+              $dstChain:
+                Object.entries(network.outboundLanes).find(
+                  ([_, address]) =>
+                    ChainSpecificAddress.address(address) === outboundLane,
+                )?.[0] ?? `Unknown_${outboundLane}`,
+            }),
+          )
+        },
+      }),
+      eventDataRequest({
         signature: executionStateChangedLog,
         includeTxEvents: [
           releasedOrMintedLog,
@@ -230,7 +247,88 @@ export class CCIPPlugIn implements InteropPluginResyncable {
           transferLog,
         ],
         addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.inboundLanes)),
-      },
+        captureFn: (log, txEvents, context) => {
+          const inboundLane = EthereumAddress(context.log.address)
+
+          // Collect token release/mint events from TokenPools in the same transaction
+          // These are emitted in the same order as tokenAmounts[] in the source message
+          // Support multiple event formats: ReleasedOrMinted (v1.6+), Released/Minted (v1.5)
+          const dstTokens: { address: Address32; amount: bigint }[] = []
+          const logsBeforeExecution = context.txLogs.filter(
+            (log) => (log.logIndex ?? 0) < (context.log.logIndex ?? 0),
+          )
+
+          for (const releasedOrMinted of txEvents.get(releasedOrMintedLog)) {
+            if (releasedOrMinted.)
+              dstTokens.push({
+                address: Address32.from(releasedOrMinted.token),
+                amount: releasedOrMinted.amount,
+              })
+          }
+
+          for (let i = 0; i < logsBeforeExecution.length; i++) {
+            const log = logsBeforeExecution[i]
+
+            // Try v1.6+ ReleasedOrMinted event (has token address in event data)
+            const releasedOrMinted = parseReleasedOrMinted(log, null)
+            if (releasedOrMinted) {
+              dstTokens.push({
+                address: Address32.from(releasedOrMinted.token),
+                amount: releasedOrMinted.amount,
+              })
+              continue
+            }
+
+            // Try v1.5 Released event (token address from preceding Transfer event)
+            const released = parseReleased(log, null)
+            if (released) {
+              // Find the Transfer event immediately before this Released event
+              const tokenAddress = findPrecedingTransferToken(
+                logsBeforeExecution,
+                i,
+                released.amount,
+              )
+              if (tokenAddress) {
+                dstTokens.push({
+                  address: Address32.from(tokenAddress),
+                  amount: released.amount,
+                })
+              }
+              continue
+            }
+
+            // Try v1.5 Minted event (token address from preceding Transfer event)
+            const minted = parseMinted(log, null)
+            if (minted) {
+              // Find the Transfer event immediately before this Minted event
+              const tokenAddress = findPrecedingTransferToken(
+                logsBeforeExecution,
+                i,
+                minted.amount,
+              )
+              if (tokenAddress) {
+                dstTokens.push({
+                  address: Address32.from(tokenAddress),
+                  amount: minted.amount,
+                })
+              }
+            }
+          }
+
+          return [
+            ExecutionStateChanged.create(context, {
+              messageId: executionStateChanged.messageId,
+              state: executionStateChanged.state,
+              $srcChain:
+                Object.entries(network.inboundLanes).find(
+                  ([_, address]) =>
+                    ChainSpecificAddress.address(address) === inboundLane,
+                )?.[0] ?? `Unknown_${inboundLane}`,
+              dstTokens: dstTokens.length > 0 ? dstTokens : undefined,
+            }),
+          ]
+        },
+      }),
     ]
   }
 
