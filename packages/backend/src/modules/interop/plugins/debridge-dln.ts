@@ -28,7 +28,15 @@ const parseClaimedUnlock = createEventParser(
   'event ClaimedUnlock(bytes32 orderId, address beneficiary, uint256 giveAmount, address giveTokenAddress)',
 )
 
-const CreatedOrder = createInteropEventType<{
+const parseSentOrderCancel = createEventParser(
+  'event SentOrderCancel((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes cancelBeneficiary, bytes32 submissionId)',
+)
+
+const parseClaimedOrderCancel = createEventParser(
+  'event ClaimedOrderCancel(bytes32 orderId, address beneficiary, uint256 paidAmount, address giveTokenAddress)',
+)
+
+export const CreatedOrder = createInteropEventType<{
   orderId: `0x${string}`
   fromToken: Address32
   toToken: Address32
@@ -59,59 +67,66 @@ export const ClaimedUnlock = createInteropEventType<{
   giveTokenAddress: Address32
 }>('debridge-dln.ClaimedUnlock')
 
+export const SentOrderCancel = createInteropEventType<{
+  orderId: `0x${string}`
+  submissionId: `0x${string}`
+}>('debridge-dln.SentOrderCancel')
+
+export const ClaimedOrderCancel = createInteropEventType<{
+  orderId: `0x${string}`
+}>('debridge-dln.ClaimedOrderCancel')
+
 export class DeBridgeDlnPlugin implements InteropPlugin {
   readonly name = 'debridge-dln'
 
   capture(input: LogToCapture) {
-    const logOrderCreated = parseCreatedOrder(input.log, null)
-    if (logOrderCreated) {
+    const createdOrder = parseCreatedOrder(input.log, null)
+    if (createdOrder) {
       const fromToken =
-        Address32.from(logOrderCreated.order.giveTokenAddress) ===
-        Address32.ZERO
+        Address32.from(createdOrder.order.giveTokenAddress) === Address32.ZERO
           ? Address32.NATIVE
-          : Address32.from(logOrderCreated.order.giveTokenAddress)
+          : Address32.from(createdOrder.order.giveTokenAddress)
       const toToken =
-        Address32.from(logOrderCreated.order.takeTokenAddress) ===
-        Address32.ZERO
+        Address32.from(createdOrder.order.takeTokenAddress) === Address32.ZERO
           ? Address32.NATIVE
-          : Address32.from(logOrderCreated.order.takeTokenAddress)
+          : Address32.from(createdOrder.order.takeTokenAddress)
       return [
         CreatedOrder.create(input, {
-          orderId: logOrderCreated.orderId,
+          orderId: createdOrder.orderId,
           fromToken,
           toToken,
-          fromAmount: logOrderCreated.order.giveAmount,
-          fillAmount: logOrderCreated.order.takeAmount,
+          fromAmount: createdOrder.order.giveAmount,
+          fillAmount: createdOrder.order.takeAmount,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,
-            logOrderCreated.order.takeChainId.toString(),
+            createdOrder.order.takeChainId.toString(),
           ),
         }),
       ]
     }
 
-    const logOrderFilled = parseFulfilledOrder(input.log, null)
-    if (logOrderFilled) {
+    const fulfilledOrder = parseFulfilledOrder(input.log, null)
+    if (fulfilledOrder) {
       const fromToken =
-        Address32.from(logOrderFilled.order.giveTokenAddress) === Address32.ZERO
+        Address32.from(fulfilledOrder.order.giveTokenAddress) === Address32.ZERO
           ? Address32.NATIVE
-          : Address32.from(logOrderFilled.order.giveTokenAddress)
+          : Address32.from(fulfilledOrder.order.giveTokenAddress)
       const toToken =
-        Address32.from(logOrderFilled.order.takeTokenAddress) === Address32.ZERO
+        Address32.from(fulfilledOrder.order.takeTokenAddress) === Address32.ZERO
           ? Address32.NATIVE
-          : Address32.from(logOrderFilled.order.takeTokenAddress)
+          : Address32.from(fulfilledOrder.order.takeTokenAddress)
       return [
         FulfilledOrder.create(input, {
-          orderId: logOrderFilled.orderId,
+          orderId: fulfilledOrder.orderId,
           fromToken,
           toToken,
-          fromAmount: logOrderFilled.order.giveAmount,
-          fillAmount: logOrderFilled.order.takeAmount,
+          fromAmount: fulfilledOrder.order.giveAmount,
+          fillAmount: fulfilledOrder.order.takeAmount,
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,
             (x) => x.chainId,
-            logOrderFilled.order.giveChainId.toString(),
+            fulfilledOrder.order.giveChainId.toString(),
           ),
         }),
       ]
@@ -124,7 +139,8 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           orderId: sentOrderUnlock.orderId,
           beneficiary: Address32.from(sentOrderUnlock.beneficiary),
           submissionId: sentOrderUnlock.submissionId,
-          // TODO: token address and amount
+          // TODO: token address and amount for settlement src side
+          // (could be fetched from the FulfilledOrder event, but that is already consumed)
         }),
       ]
     }
@@ -142,6 +158,25 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           beneficiary: Address32.from(claimedUnlock.beneficiary),
           giveAmount: claimedUnlock.giveAmount,
           giveTokenAddress,
+        }),
+      ]
+    }
+
+    const sentOrderCancel = parseSentOrderCancel(input.log, null)
+    if (sentOrderCancel) {
+      return [
+        SentOrderCancel.create(input, {
+          orderId: sentOrderCancel.orderId,
+          submissionId: sentOrderCancel.submissionId,
+        }),
+      ]
+    }
+
+    const claimedOrderCancel = parseClaimedOrderCancel(input.log, null)
+    if (claimedOrderCancel) {
+      return [
+        ClaimedOrderCancel.create(input, {
+          orderId: claimedOrderCancel.orderId,
         }),
       ]
     }
@@ -171,27 +206,6 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           dstEvent: fulfilledOrder_claimedUnlock,
           dstTokenAddress: fulfilledOrder_claimedUnlock.args.toToken,
           dstAmount: fulfilledOrder_claimedUnlock.args.fillAmount,
-        }),
-      ]
-    }
-    if (ClaimedUnlock.checkType(fulfilledOrder_claimedUnlock)) {
-      const sentOrderUnlock = db.find(SentOrderUnlock, {
-        orderId: fulfilledOrder_claimedUnlock.args.orderId,
-      })
-      if (!sentOrderUnlock) return
-      return [
-        Result.Message('debridge.Message', {
-          app: 'debridge-dln-settlement',
-          srcEvent: sentOrderUnlock,
-          dstEvent: fulfilledOrder_claimedUnlock,
-        }),
-        Result.Transfer('debridge-dln.Transfer', {
-          srcEvent: sentOrderUnlock,
-          srcTokenAddress: fulfilledOrder_claimedUnlock.args.giveTokenAddress,
-          srcAmount: fulfilledOrder_claimedUnlock.args.giveAmount,
-          dstEvent: fulfilledOrder_claimedUnlock,
-          dstTokenAddress: fulfilledOrder_claimedUnlock.args.giveTokenAddress,
-          dstAmount: fulfilledOrder_claimedUnlock.args.giveAmount,
         }),
       ]
     }

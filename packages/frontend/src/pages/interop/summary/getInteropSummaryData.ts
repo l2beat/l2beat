@@ -15,17 +15,19 @@ export async function getInteropSummaryData(
   const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
-  await cache.get(
+  const queryState = await cache.get(
     {
-      key: ['interop', 'summary', 'data'],
+      key: ['interop', 'summary', 'prefetch'],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () =>
+    async () => {
       await helpers.interop.dashboard.prefetch({
         from: interopChainsIds,
         to: interopChainsIds,
-      }),
+      })
+      return helpers.dehydrate()
+    },
   )
 
   return {
@@ -42,7 +44,7 @@ export async function getInteropSummaryData(
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
-        queryState: helpers.dehydrate(),
+        queryState,
         interopChains: INTEROP_CHAINS,
       },
     },

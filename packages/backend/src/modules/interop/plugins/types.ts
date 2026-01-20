@@ -201,7 +201,7 @@ export interface InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined
+  ): InteropEvent<T>[]
 }
 
 export type DataRequest = EventDataRequest
