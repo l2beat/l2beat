@@ -84,8 +84,8 @@ export function getProtocolsByType(
   const nonMintingData = protocolsData.filter(([key]) =>
     protocolsByType.nonMinting?.some((p) => p.id === key),
   )
-  const mintLockData = protocolsData.filter(([key]) =>
-    protocolsByType.canonical?.some((p) => p.id === key),
+  const lockMintData = protocolsData.filter(([key]) =>
+    protocolsByType.lockAndMint?.some((p) => p.id === key),
   )
   const omniChainData = protocolsData.filter(([key]) =>
     protocolsByType.omnichain?.some((p) => p.id === key),
@@ -122,7 +122,7 @@ export function getProtocolsByType(
         volume,
       }
     }),
-    lockMint: mintLockData.map(
+    lockMint: lockMintData.map(
       ([key, { volume, tokens, transferCount, totalDurationSum }]) => {
         return {
           ...getProjectCommon(key),
