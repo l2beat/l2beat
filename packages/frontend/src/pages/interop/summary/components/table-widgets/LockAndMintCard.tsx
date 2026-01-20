@@ -2,6 +2,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { LessThenFiveInfo } from '../LessThenFiveInfo'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { LockAndMintTable } from './tables/LockAndMintTable'
 
@@ -14,10 +15,15 @@ export function LockAndMintCard() {
   const entries = data?.protocolsByType.lockAndMint
 
   return (
-    <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
-      <h2 className="font-bold text-heading-20 md:text-heading-24">
-        Lock & Mint
-      </h2>
+    <PrimaryCard className="flex h-83.5 flex-col max-md:border-divider max-md:border-b md:h-113.5">
+      <div className="flex items-center gap-2">
+        <h2 className="font-bold text-heading-20 md:text-heading-24">
+          Lock & Mint
+        </h2>
+        <div className="h-full rounded-sm bg-surface-secondary px-2.5 pt-1.5 pb-1 font-semibold text-secondary leading-[115%]">
+          TOP 5
+        </div>
+      </div>
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
@@ -28,6 +34,7 @@ export function LockAndMintCard() {
       ) : (
         <LockAndMintTable entries={entries} />
       )}
+      {entries && entries.length < 5 && <LessThenFiveInfo />}
     </PrimaryCard>
   )
 }
