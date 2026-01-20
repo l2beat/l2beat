@@ -88,10 +88,6 @@ You can find us to discuss everything related to Everclear’s governance, from 
 
 ## **Uniswap**
 
-## **Active Votes**
-
-[Uniswap Community Proposal Factory](https://snapshot.box/#/s:uniswapgovernance.eth/proposal/0x3836142b24294e065fc9f26e24c70732dce53f15361f50261297bc206acda441) - ends on November 11 at 20:01 UTC
-
 ### **[RFC] Flow Application for Canonical Uniswap V3 Deployment**
 
 Protofire [requests](https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876) recognizing Flow as a canonical Uniswap v3 chain, proposing a live standalone deployment called Flow Swap with Axelar bridging, citing Flow’s high-throughput L1 with sub-second blocks, low fees, EVM-equivalence, MEV-resilience, and consumer app traction, aiming to attract NFT and gaming users to DeFi; current KPIs show about $111M DeFi TVL, $473K daily DEX volume, and $62.8M bridged TVL, contracts are deployed, and the production frontend is operational at [flowswap.io](flowswap.io).
@@ -134,7 +130,7 @@ Under this model, a user’s HOP holdings act as “priority tickets” when the
 
 Some ecosystems didn’t see any meaningful governance activity over the past week.
 
-This week, **Polygon**, **Everclear**, **Lisk**, and **Wormhole** had no proposal to vote on or notable governance updates. As always, if you think we missed something important, feel free to reach out, we’re happy to dig deeper.
+This week, **Polygon**, **Everclear**, **Lisk**, and **Wormhole** had no proposal to vote on or notable governance updates. As always, if you think we missed something important, feel free to reach out; we’re happy to dig deeper.
 
 **Discuss with L2BEAT**
 
