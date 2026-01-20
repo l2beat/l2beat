@@ -8,6 +8,7 @@ import {
   executeFetchFunds,
   executeGenerateCallGraph,
 } from '../../../api/api'
+import { truncateOutput } from '../defidisco/terminalUtils'
 
 interface CommandState {
   inFlight: boolean
@@ -82,7 +83,8 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
     return executeStreaming(get, set, () => executeFetchFunds(project))
   },
   generateCallGraph: (project: string) => {
-    return executeStreaming(get, set, () => executeGenerateCallGraph(project))
+    // Use truncation for call graph to prevent memory issues with verbose output
+    return executeStreaming(get, set, () => executeGenerateCallGraph(project, get().command.devMode), true)
   },
 }))
 
@@ -92,6 +94,7 @@ function executeStreaming(
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,
   cmd: () => EventSource,
+  truncate = false,
 ) {
   return new Promise<boolean>((resolve, reject) => {
     if (get().command.inFlight) {
@@ -134,7 +137,13 @@ function executeStreaming(
         }
 
         const toAdd = text.endsWith('\n') ? text : text + '\n'
-        set((state) => ({ output: state.output + toAdd }))
+        set((state) => {
+          let newOutput = state.output + toAdd
+          if (truncate) {
+            newOutput = truncateOutput(newOutput)
+          }
+          return { output: newOutput }
+        })
 
         // Parse exit code from command output
         const exitCodeMatch = text.match(/Process exited with code (\d+)/)

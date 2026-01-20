@@ -605,43 +605,6 @@ export function FunctionFolder({
     return newOwnerPath.trim().length > 0
   }
 
-  // Format owner definition with resolved value
-  const formatOwnerDefinition = (
-    definition: OwnerDefinition,
-    resolvedOwner?: {
-      address: string
-      isResolved: boolean
-      allAddresses?: string[]
-      structuredValue?: any
-    },
-  ) => {
-    let baseDescription = definition.path
-
-    // Append resolved value if available
-    if (
-      resolvedOwner?.isResolved &&
-      resolvedOwner.allAddresses &&
-      resolvedOwner.allAddresses.length > 0
-    ) {
-      // Check if it's a structured value (object with properties, not array)
-      const isStructured =
-        resolvedOwner.structuredValue &&
-        typeof resolvedOwner.structuredValue === 'object' &&
-        !Array.isArray(resolvedOwner.structuredValue) &&
-        !resolvedOwner.structuredValue.startsWith?.('eth:')
-
-      if (isStructured) {
-        baseDescription += ' → [structured value]'
-      } else if (resolvedOwner.allAddresses.length === 1) {
-        baseDescription += ` → ${resolvedOwner.allAddresses[0]!.slice(0, 10)}...`
-      } else {
-        baseDescription += ` → ${resolvedOwner.allAddresses.length} addresses`
-      }
-    }
-
-    return baseDescription
-  }
-
   return (
     <div className="overflow-x-auto border-coffee-600 border-t">
       {/* Function header with icons and signature */}
@@ -900,7 +863,7 @@ export function FunctionFolder({
                                     correspondingResolved.allAddresses
                                       ?.length === 1
                                   ) {
-                                    return `→ ${correspondingResolved.allAddresses[0]!.slice(0, 10)}...`
+                                    return `→ ${correspondingResolved.allAddresses[0]?.slice(0, 10)}...`
                                   }
                                   return `→ ${correspondingResolved.allAddresses?.length || 0} addresses`
                                 })()}

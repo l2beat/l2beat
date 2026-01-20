@@ -424,9 +424,10 @@ export async function getCallGraphData(project: string): Promise<ApiCallGraphRes
   return data as ApiCallGraphResponse
 }
 
-export function executeGenerateCallGraph(project: string): EventSource {
+export function executeGenerateCallGraph(project: string, devMode: boolean): EventSource {
   const params = new URLSearchParams({
     project,
+    devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/generate-call-graph?${params}`)
 }

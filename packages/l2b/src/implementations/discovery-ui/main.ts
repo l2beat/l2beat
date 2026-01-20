@@ -715,12 +715,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
 
     app.get('/api/terminal/generate-call-graph', async (req, res) => {
-      const queryValidation = projectParamsSchema.safeParse(req.query)
+      const queryValidation = discoverQuerySchema.safeParse(req.query)
       if (!queryValidation.success) {
         res.status(400).json({ errors: queryValidation.message })
         return
       }
-      const { project } = queryValidation.data
+      const { project, devMode } = queryValidation.data
 
       // Set up Server-Sent Events headers
       res.writeHead(200, {
@@ -736,7 +736,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
 
       try {
-        await generateCallGraph(paths, configReader, project, sendProgress)
+        await generateCallGraph(paths, configReader, project, sendProgress, devMode)
         sendProgress('DONE')
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'

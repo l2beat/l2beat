@@ -6,6 +6,11 @@ import type {
 import { spawn } from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
+import {
+  createHeuristicEngine,
+  type HeuristicContext,
+  parseVariableAssignments,
+} from './callGraphHeuristics'
 import { getContractTags } from './contractTags'
 import type {
   ApiCallGraphResponse,
@@ -19,6 +24,18 @@ import type {
 
 const SLITHER_VENV_PATH = path.join(process.env.HOME || '', '.slither-venv')
 const SLITHER_PATH = path.join(SLITHER_VENV_PATH, 'bin', 'slither')
+const SLITHIR_CACHE_FOLDER = 'slithir-cache'
+
+// =============================================================================
+// Slithir Cache Types
+// =============================================================================
+
+interface SlithirCacheEntry {
+  version: string
+  sourceHash: string
+  generatedAt: string
+  slithirOutput: string
+}
 
 // =============================================================================
 // Internal Types (for slithir parsing)
@@ -27,7 +44,12 @@ const SLITHER_PATH = path.join(SLITHER_VENV_PATH, 'bin', 'slither')
 interface ParsedFunction {
   name: string
   contractName: string
-  internalCalls: { contract: string; functionName: string }[]
+  parameters: { name: string; type: string }[]
+  internalCalls: {
+    contract: string
+    functionName: string
+    arguments: string[]
+  }[]
   libraryCalls: { library: string; functionName: string }[]
   highLevelCalls: {
     storageVariable: string
@@ -101,12 +123,14 @@ export function saveCallGraphData(
 
 /**
  * Generate call graph for a project
+ * @param verbose - If true, outputs detailed heuristic resolution info (use with devMode)
  */
 export async function generateCallGraph(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   onProgress?: (message: string) => void,
+  verbose = false,
 ): Promise<ApiCallGraphResponse> {
   // Get Etherscan API key from environment
   const etherscanApiKey =
@@ -138,44 +162,84 @@ export async function generateCallGraph(
 
   const result: Record<string, ContractCallGraph> = {}
 
+  // Track cache statistics
+  let cacheHits = 0
+  let cacheMisses = 0
+
   for (let i = 0; i < contracts.length; i++) {
     const contract = contracts[i]!
     onProgress?.(
       `[${i + 1}/${contracts.length}] Analyzing ${contract.name} (${contract.address})...`,
     )
 
-    // Run slither on the contract
-    const slitherResult = await runSlitherOnContract(
+    // Check cache first
+    const currentSourceHash = getContractSourceHash(
+      discovered,
       contract.address,
-      etherscanApiKey,
-      onProgress,
     )
+    const cachedEntry = getSlithirCache(paths, project, contract.address)
 
-    if (slitherResult.error === 'UNVERIFIED') {
-      onProgress?.(
-        '  Skipping: Source code not available (unverified contract)',
+    let slithirOutput: string | null = null
+
+    // Use cache if source hash matches
+    if (
+      cachedEntry &&
+      currentSourceHash &&
+      cachedEntry.sourceHash === currentSourceHash
+    ) {
+      onProgress?.('  Using cached Slithir output (source unchanged)')
+      slithirOutput = cachedEntry.slithirOutput
+      cacheHits++
+    } else {
+      // Run slither on the contract
+      const reason = cachedEntry ? 'source changed' : 'no cache'
+      onProgress?.(`  Running Slither (${reason})...`)
+
+      const slitherResult = await runSlitherOnContract(
+        contract.address,
+        etherscanApiKey,
+        onProgress,
       )
-      result[contract.address] = {
-        address: contract.address,
-        name: contract.name,
-        externalCalls: [],
-        generatedAt: new Date().toISOString(),
-        skipped: true,
-        skipReason: 'Unverified contract',
-      }
-      continue
-    }
 
-    if (slitherResult.error) {
-      onProgress?.(`  Error: ${slitherResult.error}`)
-      result[contract.address] = {
-        address: contract.address,
-        name: contract.name,
-        externalCalls: [],
-        generatedAt: new Date().toISOString(),
-        error: slitherResult.error,
+      if (slitherResult.error === 'UNVERIFIED') {
+        onProgress?.(
+          '  Skipping: Source code not available (unverified contract)',
+        )
+        result[contract.address] = {
+          address: contract.address,
+          name: contract.name,
+          externalCalls: [],
+          generatedAt: new Date().toISOString(),
+          skipped: true,
+          skipReason: 'Unverified contract',
+        }
+        continue
       }
-      continue
+
+      if (slitherResult.error) {
+        onProgress?.(`  Error: ${slitherResult.error}`)
+        result[contract.address] = {
+          address: contract.address,
+          name: contract.name,
+          externalCalls: [],
+          generatedAt: new Date().toISOString(),
+          error: slitherResult.error,
+        }
+        continue
+      }
+
+      slithirOutput = slitherResult.output
+      cacheMisses++
+
+      // Save to cache if we have a source hash
+      if (currentSourceHash && slithirOutput) {
+        saveSlithirCache(paths, project, contract.address, {
+          version: '1.0',
+          sourceHash: currentSourceHash,
+          generatedAt: new Date().toISOString(),
+          slithirOutput,
+        })
+      }
     }
 
     // Get ABI function names for this contract
@@ -186,27 +250,95 @@ export async function generateCallGraph(
 
     // Parse the slithir output using ABI-driven approach
     const externalCalls = parseSlithirForContract(
-      slitherResult.output,
+      slithirOutput!,
       contract.name,
       abiFunctionNames,
       onProgress,
     )
 
+    // Parse variable assignments for heuristic resolution
+    const variableAssignments = parseVariableAssignments(slithirOutput!)
+
+    // Create heuristic engine for optimistic resolution
+    const heuristicEngine = createHeuristicEngine()
+
+    // Track resolution statistics
+    let deterministicCount = 0
+    let optimisticCount = 0
+
+    // In verbose mode, create a throttled progress callback with delays
+    // to prevent overwhelming the UI with too many messages
+    let verboseMessageCount = 0
+    const THROTTLE_BATCH_SIZE = 5 // Yield to event loop every N verbose messages
+    const THROTTLE_DELAY_MS = 100 // Delay in ms to let UI catch up
+    const verboseProgress = verbose
+      ? async (message: string) => {
+          onProgress?.(message)
+          verboseMessageCount++
+          // Add a delay every batch to let UI catch up
+          if (verboseMessageCount % THROTTLE_BATCH_SIZE === 0) {
+            await new Promise((resolve) =>
+              setTimeout(resolve, THROTTLE_DELAY_MS),
+            )
+          }
+        }
+      : undefined
+
     // Resolve addresses and classify calls for each external call
     for (const call of externalCalls) {
+      // Try deterministic resolution first (direct state variable lookup)
       const resolved = resolveStorageVariable(
         discovered,
         contract.address,
         call.storageVariable,
       )
-      call.resolvedAddress = resolved.address
-      call.resolvedContractName = resolved.name
+
+      if (resolved.address) {
+        // Deterministic resolution succeeded
+        call.resolvedAddress = resolved.address
+        call.resolvedContractName = resolved.name
+        call.resolutionType = 'deterministic'
+        deterministicCount++
+      } else {
+        // Try optimistic resolution using heuristics
+        const heuristicContext: HeuristicContext = {
+          call,
+          callerContractAddress: contract.address,
+          discovered,
+          variableAssignments,
+        }
+
+        // Only pass progress callback in verbose mode (devMode)
+        const heuristicResult = verbose
+          ? await heuristicEngine.resolveAsync(
+              heuristicContext,
+              verboseProgress,
+            )
+          : heuristicEngine.resolve(heuristicContext)
+
+        if (heuristicResult && heuristicResult.matches.length > 0) {
+          // Use the first match as the primary resolution
+          const primaryMatch = heuristicResult.matches[0]!
+          call.resolvedAddress = primaryMatch.address
+          call.resolvedContractName = primaryMatch.contractName
+          call.resolutionType = 'optimistic'
+          call.resolutionHeuristic = heuristicResult.heuristicName
+          call.resolutionConfidence = heuristicResult.confidence
+
+          // Store all candidates if multiple matches
+          if (heuristicResult.matches.length > 1) {
+            call.resolutionCandidates = heuristicResult.matches
+          }
+
+          optimisticCount++
+        }
+      }
 
       // Look up the called function in the target contract's ABI to determine if it's a view/pure
-      if (resolved.address) {
+      if (call.resolvedAddress) {
         const abiLookup = findFunctionInAbi(
           discovered.abis,
-          resolved.address,
+          call.resolvedAddress,
           call.calledFunction,
         )
         if (abiLookup.found) {
@@ -235,8 +367,9 @@ export async function generateCallGraph(
       (c) => c.isViewCall === false,
     ).length
     onProgress?.(
-      `  Found ${externalCalls.length} external calls (${resolvedCount} resolved, ${viewCount} reads, ${writeCount} writes)`,
+      `  Found ${externalCalls.length} external calls (${deterministicCount} deterministic, ${optimisticCount} optimistic, ${resolvedCount - deterministicCount - optimisticCount} unresolved)`,
     )
+    onProgress?.(`  Read/Write: ${viewCount} reads, ${writeCount} writes`)
 
     result[contract.address] = {
       address: contract.address,
@@ -244,6 +377,10 @@ export async function generateCallGraph(
       externalCalls,
       generatedAt: new Date().toISOString(),
     }
+
+    // Yield to event loop after each contract to prevent blocking
+    // This is especially important when using cached data (no natural async breaks)
+    await new Promise((resolve) => setImmediate(resolve))
   }
 
   // Calculate summary
@@ -251,21 +388,34 @@ export async function generateCallGraph(
     (sum, c) => sum + c.externalCalls.length,
     0,
   )
-  const resolvedCalls = Object.values(result).reduce(
+  const deterministicTotal = Object.values(result).reduce(
     (sum, c) =>
-      sum + c.externalCalls.filter((call) => call.resolvedAddress).length,
+      sum +
+      c.externalCalls.filter((call) => call.resolutionType === 'deterministic')
+        .length,
     0,
   )
+  const optimisticTotal = Object.values(result).reduce(
+    (sum, c) =>
+      sum +
+      c.externalCalls.filter((call) => call.resolutionType === 'optimistic')
+        .length,
+    0,
+  )
+  const unresolvedTotal = totalCalls - deterministicTotal - optimisticTotal
   const errorCount = Object.values(result).filter((c) => c.error).length
   const skippedCount = Object.values(result).filter((c) => c.skipped).length
 
   onProgress?.('')
   onProgress?.('=== Summary ===')
   onProgress?.(`Contracts analyzed: ${contracts.length}`)
+  onProgress?.(`Cache: ${cacheHits} hits, ${cacheMisses} misses`)
   onProgress?.(`Skipped (unverified): ${skippedCount}`)
   onProgress?.(`Errors: ${errorCount}`)
   onProgress?.(`Total external calls: ${totalCalls}`)
-  onProgress?.(`Resolved addresses: ${resolvedCalls}/${totalCalls}`)
+  onProgress?.(
+    `Resolved: ${deterministicTotal} deterministic, ${optimisticTotal} optimistic, ${unresolvedTotal} unresolved`,
+  )
 
   const response: ApiCallGraphResponse = {
     version: '1.0',
@@ -286,6 +436,87 @@ export async function generateCallGraph(
 
 function getCallGraphDataPath(paths: DiscoveryPaths, project: string): string {
   return path.join(paths.discovery, project, 'call-graph-data.json')
+}
+
+// =============================================================================
+// Private Helpers - Slithir Cache
+// =============================================================================
+
+function getSlithirCacheFolderPath(
+  paths: DiscoveryPaths,
+  project: string,
+): string {
+  return path.join(paths.discovery, project, SLITHIR_CACHE_FOLDER)
+}
+
+function getSlithirCacheFilePath(
+  paths: DiscoveryPaths,
+  project: string,
+  contractAddress: string,
+): string {
+  // Use the address (without eth: prefix) as filename
+  const cleanAddress = contractAddress.replace(/^eth:/i, '')
+  return path.join(
+    getSlithirCacheFolderPath(paths, project),
+    `${cleanAddress}.json`,
+  )
+}
+
+function getSlithirCache(
+  paths: DiscoveryPaths,
+  project: string,
+  contractAddress: string,
+): SlithirCacheEntry | null {
+  const cachePath = getSlithirCacheFilePath(paths, project, contractAddress)
+
+  if (!fs.existsSync(cachePath)) {
+    return null
+  }
+
+  try {
+    const content = fs.readFileSync(cachePath, 'utf8')
+    return JSON.parse(content) as SlithirCacheEntry
+  } catch {
+    return null
+  }
+}
+
+function saveSlithirCache(
+  paths: DiscoveryPaths,
+  project: string,
+  contractAddress: string,
+  entry: SlithirCacheEntry,
+): void {
+  const cacheFolder = getSlithirCacheFolderPath(paths, project)
+
+  // Ensure cache folder exists
+  if (!fs.existsSync(cacheFolder)) {
+    fs.mkdirSync(cacheFolder, { recursive: true })
+  }
+
+  const cachePath = getSlithirCacheFilePath(paths, project, contractAddress)
+  fs.writeFileSync(cachePath, JSON.stringify(entry, null, 2))
+}
+
+function getContractSourceHash(
+  discovered: DiscoveryOutput,
+  address: string,
+): string | undefined {
+  const entry = discovered.entries.find(
+    (e) => e.address.toLowerCase() === address.toLowerCase(),
+  )
+
+  if (!entry || !('sourceHashes' in entry)) {
+    return undefined
+  }
+
+  const sourceHashes = (entry as { sourceHashes?: string[] }).sourceHashes
+  if (!sourceHashes || sourceHashes.length === 0) {
+    return undefined
+  }
+
+  // Combine all source hashes into one (handles proxy + implementation)
+  return sourceHashes.join(':')
 }
 
 // =============================================================================
@@ -456,18 +687,29 @@ function parseSlithirStructured(output: string): ParsedSlithir {
     }
 
     // Check for function header: "\tFunction ContractName.functionName(params) (*)"
-    const funcMatch = line.match(/^\s*Function\s+(\w+)\.(\w+)\s*\(/)
+    // Example: "Function BorrowerOperations._adjustTrove(ITroveManager,uint256,TroveChange,uint256) (*)"
+    const funcMatch = line.match(/^\s*Function\s+(\w+)\.(\w+)\s*\(([^)]*)\)/)
     if (funcMatch && currentContract) {
-      const [, contractName, functionName] = funcMatch
+      const [, contractName, functionName, paramsStr] = funcMatch
       // Handle function overloading: merge calls from overloaded functions with same name
       const existingFunc = currentContract.functions.get(functionName!)
       if (existingFunc) {
         // Reuse existing function entry to accumulate calls from all overloads
         currentFunction = existingFunc
       } else {
+        // Parse parameter types from the function signature
+        // Note: Function headers only have types, not names (e.g., "ITroveManager,uint256")
+        const paramTypes = paramsStr
+          ? paramsStr
+              .split(',')
+              .map((t) => t.trim())
+              .filter((t) => t.length > 0)
+          : []
+
         currentFunction = {
           name: functionName!,
           contractName: contractName!,
+          parameters: paramTypes.map((type) => ({ name: '', type })), // names filled in later from usage
           internalCalls: [],
           libraryCalls: [],
           highLevelCalls: [],
@@ -480,14 +722,37 @@ function parseSlithirStructured(output: string): ParsedSlithir {
     if (!currentFunction) continue
 
     // Parse INTERNAL_CALL: "TMP = INTERNAL_CALL, ContractName.funcName(params)(args)"
+    // Example: "INTERNAL_CALL, BorrowerOperations._adjustTrove(ITroveManager,uint256,TroveChange,uint256)(troveManagerCached,_troveId,troveChange,0)"
     if (line.includes('INTERNAL_CALL')) {
-      const internalMatch = line.match(/INTERNAL_CALL,\s*(\w+)\.(\w+)\(/)
-      if (internalMatch) {
-        const [, contract, funcName] = internalMatch
+      // First try to match with arguments: Contract.func(types)(args)
+      const internalMatchWithArgs = line.match(
+        /INTERNAL_CALL,\s*(\w+)\.(\w+)\([^)]*\)\(([^)]*)\)/,
+      )
+      if (internalMatchWithArgs) {
+        const [, contract, funcName, argsStr] = internalMatchWithArgs
+        // Parse arguments (split by comma, trim whitespace)
+        const args = argsStr
+          ? argsStr
+              .split(',')
+              .map((a) => a.trim())
+              .filter((a) => a.length > 0)
+          : []
         currentFunction.internalCalls.push({
           contract: contract!,
           functionName: funcName!,
+          arguments: args,
         })
+      } else {
+        // Fallback: match without arguments (for parameterless functions)
+        const internalMatch = line.match(/INTERNAL_CALL,\s*(\w+)\.(\w+)\(/)
+        if (internalMatch) {
+          const [, contract, funcName] = internalMatch
+          currentFunction.internalCalls.push({
+            contract: contract!,
+            functionName: funcName!,
+            arguments: [],
+          })
+        }
       }
       continue
     }
@@ -527,14 +792,59 @@ function parseSlithirStructured(output: string): ParsedSlithir {
 }
 
 /**
+ * Type-based substitution map: maps (interfaceType) -> argumentName
+ * Used to substitute parameter variables with the actual arguments passed by the caller
+ */
+type TypeSubstitutionMap = Map<string, string>
+
+/**
+ * Build a type-based substitution map from INTERNAL_CALL arguments to called function parameters
+ * This maps parameter types to the actual argument values passed
+ */
+function buildTypeSubstitutionMap(
+  calledFunc: ParsedFunction,
+  callArguments: string[],
+  parentSubstitutions: TypeSubstitutionMap,
+): TypeSubstitutionMap {
+  const substitutions = new Map<string, string>()
+
+  // Map each parameter type to its corresponding argument
+  for (
+    let i = 0;
+    i < calledFunc.parameters.length && i < callArguments.length;
+    i++
+  ) {
+    const paramType = calledFunc.parameters[i]?.type
+    let argValue = callArguments[i]!
+
+    // If the argument is itself a substituted value from a parent scope, resolve it
+    if (parentSubstitutions.has(argValue)) {
+      argValue = parentSubstitutions.get(argValue)!
+    }
+
+    // Only store if we don't already have a mapping for this type
+    // (handles case where multiple params have same type - first one wins)
+    if (!substitutions.has(paramType)) {
+      substitutions.set(paramType, argValue)
+    }
+  }
+
+  return substitutions
+}
+
+/**
  * Recursively collect all HIGH_LEVEL_CALLs reachable from a function
  * following INTERNAL_CALL and LIBRARY_CALL chains
+ *
+ * @param typeSubstitutions - Map from interface types to actual argument names from caller.
+ *   When a HIGH_LEVEL_CALL uses a variable of a given type, we substitute with the caller's argument.
  */
 function collectHighLevelCalls(
   parsedSlithir: ParsedSlithir,
   contractName: string,
   functionName: string,
   visited: Set<string>,
+  typeSubstitutions: TypeSubstitutionMap = new Map(),
   onProgress?: (message: string) => void,
 ): {
   storageVariable: string
@@ -557,17 +867,41 @@ function collectHighLevelCalls(
     calledFunction: string
   }[] = []
 
-  // Collect direct HIGH_LEVEL_CALLs
-  calls.push(...func.highLevelCalls)
+  // Collect direct HIGH_LEVEL_CALLs with type-based substitution
+  for (const hlc of func.highLevelCalls) {
+    // Check if this variable's interface type has a substitution
+    // This handles the case where a function parameter is used to make an external call
+    const substitutedVar = typeSubstitutions.get(hlc.interfaceType)
 
-  // Follow INTERNAL_CALLs
+    calls.push({
+      ...hlc,
+      storageVariable: substitutedVar ?? hlc.storageVariable,
+    })
+  }
+
+  // Follow INTERNAL_CALLs with argument propagation
   for (const ic of func.internalCalls) {
+    // Look up the called function to get its parameter types
+    const calledContract = parsedSlithir.contracts.get(ic.contract)
+    const calledFunc = calledContract?.functions.get(ic.functionName)
+
+    // Build new type substitution map for the called function
+    let newSubstitutions = typeSubstitutions
+    if (calledFunc && ic.arguments.length > 0) {
+      newSubstitutions = buildTypeSubstitutionMap(
+        calledFunc,
+        ic.arguments,
+        typeSubstitutions,
+      )
+    }
+
     calls.push(
       ...collectHighLevelCalls(
         parsedSlithir,
         ic.contract,
         ic.functionName,
         visited,
+        newSubstitutions,
         onProgress,
       ),
     )
@@ -595,6 +929,7 @@ function collectHighLevelCalls(
         lc.library,
         lc.functionName,
         visited,
+        typeSubstitutions, // Library calls don't typically pass contract references as params
         onProgress,
       ),
     )
@@ -627,6 +962,7 @@ function parseSlithirForContract(
       contractName,
       funcName,
       visited,
+      new Map(), // No type substitutions for top-level public functions
       onProgress,
     )
 
@@ -696,11 +1032,11 @@ async function runSlitherOnContract(
 
     const slither = spawn(SLITHER_PATH, args, { env })
 
-    let stdout = ''
+    let _stdout = ''
     let stderr = ''
 
     slither.stdout.on('data', (data) => {
-      stdout += data.toString()
+      _stdout += data.toString()
     })
 
     slither.stderr.on('data', (data) => {

@@ -184,7 +184,7 @@ function parseAiResponse(responseText: string): AiDetectionResult {
     let jsonText = responseText.trim()
     const jsonMatch = jsonText.match(/```json\s*([\s\S]*?)\s*```/)
     if (jsonMatch) {
-      jsonText = jsonMatch[1]!.trim()
+      jsonText = jsonMatch[1]?.trim()
     }
 
     const parsed = JSON.parse(jsonText)

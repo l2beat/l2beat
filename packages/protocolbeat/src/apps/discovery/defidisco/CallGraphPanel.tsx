@@ -106,11 +106,21 @@ export function CallGraphPanel() {
     (sum, c) => sum + c.externalCalls.length,
     0,
   )
-  const resolvedCalls = contracts.reduce(
+  const deterministicCalls = contracts.reduce(
     (sum, c) =>
-      sum + c.externalCalls.filter((call) => call.resolvedAddress).length,
+      sum +
+      c.externalCalls.filter((call) => call.resolutionType === 'deterministic')
+        .length,
     0,
   )
+  const optimisticCalls = contracts.reduce(
+    (sum, c) =>
+      sum +
+      c.externalCalls.filter((call) => call.resolutionType === 'optimistic')
+        .length,
+    0,
+  )
+  const unresolvedCalls = totalCalls - deterministicCalls - optimisticCalls
   const viewCalls = contracts.reduce(
     (sum, c) =>
       sum + c.externalCalls.filter((call) => call.isViewCall === true).length,
@@ -198,7 +208,7 @@ export function CallGraphPanel() {
     <div className="flex h-full w-full flex-col text-sm">
       <div className="sticky top-0 z-10 border-coffee-500 border-b bg-coffee-600 p-2">
         <div className="mb-2 font-bold text-lg">Call Graph Analysis</div>
-        <div className="flex gap-4 text-xs">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
           <span>
             Contracts: <span className="text-aux-green">{successCount}</span>
           </span>
@@ -209,10 +219,16 @@ export function CallGraphPanel() {
             Errors: <span className="text-aux-red">{errorCount}</span>
           </span>
           <span>
-            Calls:{' '}
-            <span className="text-aux-blue">
-              {resolvedCalls}/{totalCalls}
-            </span>
+            Deterministic:{' '}
+            <span className="text-aux-green">{deterministicCalls}</span>
+          </span>
+          <span>
+            Optimistic:{' '}
+            <span className="text-aux-purple">{optimisticCalls}</span>
+          </span>
+          <span>
+            Unresolved:{' '}
+            <span className="text-aux-yellow">{unresolvedCalls}</span>
           </span>
           <span>
             Reads: <span className="text-aux-cyan">{viewCalls}</span>
@@ -342,6 +358,80 @@ function ExternalCallsList({
     selectGlobal(address)
   }
 
+  // Helper to render resolution display
+  const renderResolution = (call: ExternalCall) => {
+    if (!call.resolvedAddress) {
+      return (
+        <span className="text-aux-yellow">
+          [unresolved: {call.interfaceType}]
+        </span>
+      )
+    }
+
+    // Deterministic resolution - solid green
+    if (call.resolutionType === 'deterministic') {
+      return (
+        <span
+          className="cursor-pointer text-aux-green hover:underline"
+          onClick={() => handleAddressClick(call.resolvedAddress!)}
+        >
+          [{call.resolvedContractName || call.resolvedAddress.slice(0, 14)}]
+        </span>
+      )
+    }
+
+    // Optimistic resolution - purple with ~ prefix
+    if (call.resolutionType === 'optimistic') {
+      const tooltipText = `${call.resolutionHeuristic} (${call.resolutionConfidence}%)${
+        call.resolutionCandidates && call.resolutionCandidates.length > 1
+          ? ` - ${call.resolutionCandidates.length} matches`
+          : ''
+      }`
+
+      // Multiple candidates - show all
+      if (call.resolutionCandidates && call.resolutionCandidates.length > 1) {
+        return (
+          <span className="text-aux-purple" title={tooltipText}>
+            [~
+            {call.resolutionCandidates.map((candidate, i) => (
+              <span key={candidate.address}>
+                {i > 0 && ' | '}
+                <span
+                  className="cursor-pointer hover:underline"
+                  onClick={() => handleAddressClick(candidate.address)}
+                >
+                  {candidate.contractName || candidate.address.slice(0, 14)}
+                </span>
+              </span>
+            ))}
+            ]
+          </span>
+        )
+      }
+
+      // Single optimistic match
+      return (
+        <span
+          className="cursor-pointer text-aux-purple hover:underline"
+          onClick={() => handleAddressClick(call.resolvedAddress!)}
+          title={tooltipText}
+        >
+          [~{call.resolvedContractName || call.resolvedAddress.slice(0, 14)}]
+        </span>
+      )
+    }
+
+    // Fallback for old data without resolutionType (treat as deterministic)
+    return (
+      <span
+        className="cursor-pointer text-aux-green hover:underline"
+        onClick={() => handleAddressClick(call.resolvedAddress!)}
+      >
+        [{call.resolvedContractName || call.resolvedAddress.slice(0, 14)}]
+      </span>
+    )
+  }
+
   return (
     <div className="space-y-2">
       {Object.entries(callsByFunction).map(([funcName, funcCalls]) => (
@@ -390,21 +480,7 @@ function ExternalCallsList({
                 ) : (
                   <span className="text-aux-teal">{call.calledFunction}()</span>
                 )}
-                {call.resolvedAddress ? (
-                  <span
-                    className="cursor-pointer text-aux-green hover:underline"
-                    onClick={() => handleAddressClick(call.resolvedAddress!)}
-                  >
-                    [
-                    {call.resolvedContractName ||
-                      call.resolvedAddress.slice(0, 14)}
-                    ]
-                  </span>
-                ) : (
-                  <span className="text-aux-yellow">
-                    [unresolved: {call.interfaceType}]
-                  </span>
-                )}
+                {renderResolution(call)}
               </div>
             ))}
           </div>

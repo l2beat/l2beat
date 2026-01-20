@@ -287,24 +287,6 @@ function StatusOfReviewSection({
 }
 
 // Helper functions for contract data processing
-function resolveImplementationAddress(
-  contractAddress: string,
-  projectData: any,
-): string {
-  // Try to find the contract entry in projectData
-  for (const entry of projectData.entries || []) {
-    if (entry.address === contractAddress) {
-      // If this is a proxy with an implementation, return the implementation address
-      if (entry.values?.$implementation) {
-        return entry.values.$implementation
-      }
-      break
-    }
-  }
-  // Return original address if no implementation found
-  return contractAddress
-}
-
 function buildContractsList(
   projectData: any,
 ): Array<{ address: string; name: string; source: string }> {

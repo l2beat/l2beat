@@ -359,6 +359,15 @@ function CallsList({
     <div className="space-y-1 pl-3 text-xs">
       {calls.map((call, idx) => (
         <div key={idx} className="flex items-center gap-1">
+          {/* Resolution type indicator */}
+          {call.resolutionType === 'optimistic' && (
+            <span
+              className="text-aux-purple"
+              title={`Optimistic: ${call.resolutionHeuristic} (${call.resolutionConfidence}%)`}
+            >
+              ~
+            </span>
+          )}
           <span
             className="cursor-pointer text-coffee-200 hover:text-aux-blue"
             onClick={() => onOpenInCode(callerAddress, call.callerFunction)}

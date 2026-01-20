@@ -502,6 +502,15 @@ export interface ContractCallGraph {
   error?: string
 }
 
+// Resolution type to distinguish deterministic vs optimistic
+export type ResolutionType = 'deterministic' | 'optimistic'
+
+// Candidate match for optimistic resolution (when multiple contracts match)
+export interface ResolutionCandidate {
+  address: string
+  contractName?: string
+}
+
 export interface ExternalCall {
   callerFunction: string      // "_sendBoldtoDepositor"
   callerIsView?: boolean      // true if caller function is view/pure (infers external calls are also view)
@@ -511,4 +520,9 @@ export interface ExternalCall {
   resolvedAddress?: string    // "eth:0x6440f..." from discovered.json
   resolvedContractName?: string
   isViewCall?: boolean        // true if view/pure, false if state-changing, undefined if unknown
+  // Optimistic resolution fields
+  resolutionType?: ResolutionType // 'deterministic' (direct lookup) or 'optimistic' (heuristic-based)
+  resolutionHeuristic?: string    // Which heuristic matched (e.g., 'variable-chain', 'interface-name')
+  resolutionConfidence?: number   // 0-100, dynamic based on match count
+  resolutionCandidates?: ResolutionCandidate[] // All matches when multiple found
 }

@@ -30,6 +30,7 @@ packages/l2b/**/cache/
 packages/config/cache/
 packages/config/crytic-export/
 /crytic-export/
+packages/config/src/projects/**/slithir-cache/
 packages/backend/scripts/tvs/breakdown.json
 packages/backend/scripts/tvs/local-data.json
 packages/uops-dashboard/src/chains.json

@@ -25,6 +25,16 @@
     },
     "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": {
       "ignoreRelatives": ["getTransmitters"]
+    },
+    "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": {
+      "fields": {
+        "troveManager": {
+          "handler": { "type": "storage", "slot": 5, "returnType": "address" }
+        },
+        "defaultPool": {
+          "handler": { "type": "storage", "slot": 1, "returnType": "address" }
+        }
+      }
     }
   }
 }
