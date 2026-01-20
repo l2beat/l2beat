@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "examples": {
+    "allbridge": {
+      "definitionHash": "bc456692e689e712e03cab361fc469ecfd0d8ab2989c15af45f956e7266221db",
+      "sealedAt": "2026-01-20T21:32:09.306Z"
+    }
+  }
+}

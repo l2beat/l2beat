@@ -1,81 +1,55 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
-  MulticallV3Client,
+  type MulticallV3Client,
   RpcClientCompat,
 } from '@l2beat/shared'
-import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
+import { CoingeckoId, unique } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
-import { v } from '@l2beat/validate'
 import { boolean, command, flag, positional, run, string } from 'cmd-ts'
-import { readFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
-import { logToViemLog } from '../engine/capture/getItemsToCapture'
-import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
-import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { DeployedTokenId } from '../engine/financials/DeployedTokenId'
 import {
   getTokenInfos,
   type TokenInfos,
-  toDeployedId,
 } from '../engine/financials/InteropFinancialsLoop'
-import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from '../plugins'
 import type {
   InteropEvent,
   InteropMessage,
   InteropTransfer,
 } from '../plugins/types'
-
-export function readJsonc(path: string): JSON {
-  const contents = readFileSync(path, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(contents, errors, {
-    allowTrailingComma: true,
-  }) as JSON
-  if (errors.length !== 0) {
-    throw new Error(`Cannot parse file ${path}`)
-  }
-  return parsed
-}
-
-// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
-const ExpectedMessage = v.union([
-  v.string(),
-  v.object({
-    type: v.string(),
-    app: v.string().optional(),
-  }),
-])
-
-type Example = v.infer<typeof Example>
-const Example = v.object({
-  loadConfigs: v.array(v.string()).optional(),
-  txs: v.array(
-    v.object({
-      chain: v.string(),
-      tx: v.string(),
-    }),
-  ),
-  events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
-  transfers: v.array(v.string()).optional(),
-})
+import {
+  type Example,
+  type ExpectedMessageType,
+  readExamples,
+  runExampleCore,
+} from './core'
+import { hashExampleDefinition, SnapshotService } from './snapshot/service'
+import { RpcSnapshotClient } from './snapshot/snapshot'
 
 const cmd = command({
   name: 'interop:example',
   args: {
     name: positional({ type: string, displayName: 'name' }),
     simple: flag({ type: boolean, long: 'simple' }),
+    seal: flag({
+      type: boolean,
+      long: 'seal',
+      short: 's',
+      defaultValue: () => false,
+    }),
+    uncompressed: flag({
+      type: boolean,
+      long: 'uncompressed',
+      short: 'u',
+      defaultValue: () => false,
+      description: 'Do not compress the snapshot files',
+    }),
   },
   handler: async (args) => {
-    const examples = v
-      .record(v.string(), Example)
-      .validate(readJsonc(join(__dirname, 'examples.jsonc')))
+    const examples = readExamples()
 
     if (args.name === 'all') {
       const bigResult: RunResult = {
@@ -87,7 +61,10 @@ const cmd = command({
       let success = true
       for (const [key, example] of Object.entries(examples)) {
         console.log('\nExample:', key, '\n')
-        const result = await runExample(example)
+        const result = await runExample(key, example, {
+          seal: args.seal,
+          uncompressed: args.uncompressed,
+        })
         bigResult.events.push(...result.events)
         bigResult.messages.push(...result.messages)
         bigResult.transfers.push(...result.transfers)
@@ -105,7 +82,10 @@ const cmd = command({
         console.error(`${args.name}: example not found, see examples.jsonc`)
         return
       }
-      const result = await runExample(example)
+      const result = await runExample(args.name, example, {
+        seal: args.seal,
+        uncompressed: args.uncompressed,
+      })
       const success = checkExample(example, result, !args.simple)
       summarize(result)
       if (!success) {
@@ -122,8 +102,19 @@ interface RunResult {
   transfers: InteropTransfer[]
 }
 
-async function runExample(example: Example): Promise<RunResult> {
+async function runExample(
+  exampleName: string,
+  example: Example,
+  opts: { seal: boolean; uncompressed: boolean },
+): Promise<RunResult> {
   const logger = Logger.ERROR
+  const snapshotService = new SnapshotService({
+    rootDir: join(__dirname, 'snapshots'),
+    noCompression: opts.uncompressed,
+  })
+
+  const exampleInputs = snapshotService.createEmptyExampleInputs()
+
   const http = new HttpClient()
   const env = getEnv()
   const tokenDbClient = getTokenDbClient({
@@ -143,147 +134,40 @@ async function runExample(example: Example): Promise<RunResult> {
     }),
   )
 
-  const ps = new ProjectService()
-  const psChains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
-  )
-  const pluginChains = psChains
-    .filter((c) => c.chainId !== undefined)
-    .map((c) => ({ name: c.name, id: c.chainId as number }))
-
-  const makeRpcClient = (chain: string) => {
-    let multicallClient: MulticallV3Client | undefined
-    const multicallConfig = psChains
-      .find((c) => c.name === chain)
-      ?.multicallContracts?.find((c) => c.version === '3')
-    if (multicallConfig) {
-      multicallClient = new MulticallV3Client(
-        multicallConfig.address,
-        multicallConfig.sinceBlock,
-        multicallConfig.batchSize,
-      )
-    }
-    return RpcClientCompat.create({
+  const makeRpcClient = ({
+    chain,
+    multicallClient,
+  }: {
+    chain: string
+    multicallClient?: MulticallV3Client
+  }) => {
+    const baseClientDeps = {
       url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-      chain: chain,
+      chain,
       http,
       logger,
       callsPerMinute: 600,
-      retryStrategy: 'SCRIPT',
+      retryStrategy: 'SCRIPT' as const,
       multicallClient,
-    })
+    }
+
+    if (opts.seal) {
+      return RpcSnapshotClient.create({ ...baseClientDeps, exampleInputs })
+    }
+
+    return RpcClientCompat.create(baseClientDeps)
   }
 
-  const chains = example.txs.map(({ chain, tx }) => {
-    return {
-      txHash: tx,
-      name: chain,
-      rpc: makeRpcClient(chain),
-    }
+  const coreResult = await runExampleCore(example, {
+    makeRpcClient,
+    logger,
+    httpClient: http,
   })
 
-  const rpcClients = chains.map((x) => x.rpc)
-  if (!rpcClients.some((x) => x.chain === 'ethereum')) {
-    rpcClients.push(makeRpcClient('ethereum'))
-  }
-
-  const configs = new InteropConfigStore(undefined)
-
-  const plugins = createInteropPlugins({
-    chains: pluginChains,
-    configs,
-    httpClient: new HttpClient(),
-    logger,
-    rpcClients,
-  })
-
-  if (example.loadConfigs && example.loadConfigs.length > 0) {
-    for (const key of example.loadConfigs) {
-      const config = plugins.configPlugins.find((x) =>
-        x.provides.map((k) => k.key).includes(key),
-      )
-      if (!config) {
-        throw new Error(`Cannot load configs: ${key}`)
-      }
-      console.log('LOADING CONFIG:', key)
-      await config.run()
-    }
-  }
-
-  const events: InteropEvent[] = []
-  for (const chain of chains) {
-    const tx = await chain.rpc.getTransaction(chain.txHash)
-    assert(tx.blockNumber)
-
-    const block = await chain.rpc.getBlockWithTransactions(tx.blockNumber)
-    const logs = await chain.rpc.getLogs(block.number, block.number)
-    const txLogs = logs
-      .filter((l) => l.transactionHash === tx.hash)
-      .map(logToViemLog)
-
-    for (const plugin of plugins.eventPlugins) {
-      if (!plugin.captureTx) {
-        continue
-      }
-      const captured = plugin.captureTx({
-        chain: chain.name,
-        tx,
-        block,
-        txLogs,
-      })
-      if (captured) {
-        events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-        break
-      }
-    }
-
-    for (const log of txLogs) {
-      for (const plugin of plugins.eventPlugins) {
-        if (!plugin.capture) {
-          continue
-        }
-        const captured = plugin.capture({
-          chain: chain.name,
-          log: log,
-          tx,
-          block,
-          txLogs,
-        })
-        if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-          break
-        }
-      }
-    }
-  }
-
-  const eventDb = new InMemoryEventDb()
-  for (const event of events) {
-    eventDb.addEvent(event)
-  }
-
-  const result = await match(
-    eventDb,
-    (type) => events.filter((x) => x.type === type),
-    [...new Set(events.map((x) => x.type))],
-    events.length,
-    plugins.eventPlugins,
-    chains.map((x) => x.name),
-    logger,
-  )
-
-  const transfers = result.transfers.map((u) => ({
-    transfer: u,
-    srcId: toDeployedId(
-      INTEROP_CHAINS,
-      u.src.event.ctx.chain,
-      u.src.tokenAddress,
-    ),
-    dstId: toDeployedId(
-      INTEROP_CHAINS,
-      u.dst.event.ctx.chain,
-      u.dst.tokenAddress,
-    ),
+  const transfers = coreResult.transfers.map((u) => ({
+    transfer: u.transfer,
+    srcId: u.srcId,
+    dstId: u.dstId,
   }))
 
   const tokenInfos = await getTokenInfos(
@@ -330,13 +214,24 @@ async function runExample(example: Example): Promise<RunResult> {
     })
   }
 
+  const result = {
+    events: coreResult.events,
+    messages: coreResult.messages,
+    transfers: coreResult.transfers,
+  }
+
+  if (opts.seal) {
+    await snapshotService.saveInputs(exampleName, exampleInputs)
+    await snapshotService.saveOutputs(exampleName, result)
+    if (!opts.uncompressed) {
+      const definitionHash = hashExampleDefinition(example)
+      await snapshotService.updateManifest(exampleName, definitionHash)
+    }
+  }
+
   return {
-    events: events.map((e) => ({ ...e, chain: e.ctx.chain })),
-    messages: result.messages.map((m) => ({
-      ...m,
-      src: { ...m.src, chain: m.src.ctx.chain },
-      dst: { ...m.dst, chain: m.dst.ctx.chain },
-    })),
+    events: coreResult.events,
+    messages: coreResult.messages,
     transfers: transfersWithFinancials.map((t) => ({
       ...t,
       events: t.events.map((e) => ({ ...e, chain: e.ctx.chain })),
@@ -345,8 +240,6 @@ async function runExample(example: Example): Promise<RunResult> {
     })),
   }
 }
-
-type ExpectedMessageType = v.infer<typeof ExpectedMessage>
 
 function normalizeExpectedMessage(item: ExpectedMessageType): {
   type: string

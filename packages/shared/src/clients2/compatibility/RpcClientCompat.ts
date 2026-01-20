@@ -25,7 +25,7 @@ import {
 import { Http } from '../Http'
 import { withRetries } from '../retries'
 
-interface Receipt {
+export interface Receipt {
   logs: {
     topics: string[]
     data: string
