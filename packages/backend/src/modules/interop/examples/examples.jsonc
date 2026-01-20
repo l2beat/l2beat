@@ -642,13 +642,24 @@
       {
         "chain": "arbitrum",
         "tx": "0xec84b8dfddd4e3c3cf289034b008981f171513f2cf167f989fb450958830558d"
+      },
+      // NTT token transfer via Core attestation path (Ethereum → Base) - no Wormhole Relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x616967c7771523d2db16b3a21eef8c8ec654d245f6462424f6e7f23ea4839632"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
       }
     ],
+    "events": ["wormhole-ntt.ReceivedMessage"],
     "messages": [
+      { "type": "wormhole.Message", "app": "wormhole-ntt" },
       { "type": "wormhole.Message", "app": "wormhole-ntt" },
       { "type": "wormhole.Message", "app": "m0-index" }
     ],
-    "transfers": ["wormhole-ntt.Transfer"]
+    "transfers": ["wormhole-ntt.Transfer", "wormhole-ntt.Transfer"]
   },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],
