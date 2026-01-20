@@ -184,6 +184,11 @@ export class WormholeConfigPlugin
         const block = await rpc.getBlock('latest', false)
         const results = await rpc.multicall(calls, block.number)
 
+        const validContracts: {
+          wormholeChainId: number
+          coreContract: EthereumAddress
+        }[] = []
+
         for (let i = 0; i < results.length; i++) {
           const result = results[i]
           if (!result || result.success === false) continue
@@ -196,19 +201,34 @@ export class WormholeConfigPlugin
                 data: result.data.toString() as Hex,
               })
 
-              const docsChainName = toDocsChainName(chain.name.toLowerCase())
-              return {
-                chain: chain.name,
-                chainId: chain.id,
+              validContracts.push({
                 wormholeChainId: Number(decoded),
                 coreContract: evmContracts[i],
-                relayer: relayerByChain.get(docsChainName),
-                tokenBridge: tokenBridgeByChain.get(docsChainName),
-              }
+              })
             }
           } catch {
             // Failed to decode, skip this contract
           }
+        }
+
+        // Filter out contracts that return chainId 0 (invalid/uninitialized)
+        // Some contract addresses exist on multiple chains but return 0 if not the real wormhole core
+        const validNonZero = validContracts.filter(
+          (c) => c.wormholeChainId !== 0,
+        )
+
+        // Pick the first contract with a valid (non-zero) wormhole chain ID
+        const selected = validNonZero[0]
+        if (!selected) return undefined
+
+        const docsChainName = toDocsChainName(chain.name.toLowerCase())
+        return {
+          chain: chain.name,
+          chainId: chain.id,
+          wormholeChainId: selected.wormholeChainId,
+          coreContract: selected.coreContract,
+          relayer: relayerByChain.get(docsChainName),
+          tokenBridge: tokenBridgeByChain.get(docsChainName),
         }
       } catch (error) {
         this.logger.debug('Failed to multicall for chain', {
