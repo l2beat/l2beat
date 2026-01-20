@@ -144,7 +144,7 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    const gasZipDeposit = db.findApproximate(
+    const gasZipDeposits = db.findApproximate(
       GasZipDeposit,
       {
         $dstChain: gasZipFill.ctx.chain,
@@ -156,6 +156,7 @@ export class GasZipPlugin implements InteropPlugin {
         toleranceUp: 0.05,
       },
     )
+    const gasZipDeposit = gasZipDeposits[0]
     if (!gasZipDeposit) return
 
     return [
