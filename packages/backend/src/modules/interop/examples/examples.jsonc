@@ -1156,34 +1156,34 @@
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement": {
-    "txs": [
-      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
+    "groups": [
       {
-        "chain": "ethereum",
-        "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+        "name": "L1 → Optimism (OpStack)",
+        "txs": [
+          { "chain": "ethereum", "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d" },
+          { "chain": "optimism", "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f" }
+        ],
+        "events": ["across-settlement.MessageRelayedOP"],
+        "messages": [{ "type": "opstack.L1ToL2Message", "app": "across-settlement" }]
       },
       {
-        "chain": "optimism",
-        "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f"
+        "name": "L1 → Base (OpStack)",
+        "txs": [
+          { "chain": "ethereum", "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d" },
+          { "chain": "base", "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c" }
+        ],
+        "events": ["across-settlement.MessageRelayedOP"],
+        "messages": [{ "type": "opstack.L1ToL2Message", "app": "across-settlement" }]
       },
       {
-        "chain": "base",
-        "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
+        "name": "L1 → Arbitrum (OrbitStack)",
+        "txs": [
+          { "chain": "ethereum", "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d" },
+          { "chain": "arbitrum", "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a" }
+        ],
+        "events": ["across-settlement.RelayedMessageOrbit"],
+        "messages": [{ "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }]
       }
-    ],
-    "events": [
-      "across-settlement.RelayedMessageOP",
-      "across-settlement.RelayedMessageOP",
-      "across-settlement.RelayedMessageOrbit"
-    ],
-    "messages": [
-      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
-      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
-      { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
   "world-id": {
