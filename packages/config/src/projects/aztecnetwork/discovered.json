@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1767796183,
-  "configHash": "0x2d77285f4d0168b8529bd29caec6087ab1b742cf485687289f18e8da0fb9d9dc",
+  "timestamp": 1769000209,
+  "configHash": "0xaed546101c970e65353aeaa8f11ac0947e0bae7b09f634577d57e062e5f71c74",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -82,7 +82,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 66,
+        "getCurrentRound": 83,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -156,11 +156,39 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 1,
-        "totalPowerNow": "375138000000000000000000000",
-        "withdrawalCount": 109
+        "totalPowerNow": "520322000000000000000000000",
+        "withdrawalCount": 134
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
+      }
+    },
+    {
+      "name": "ATPWithdrawableAndClaimableStakerV2",
+      "address": "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95",
+      "type": "Contract",
+      "template": "aztecnetwork/ATPWithdrawableAndClaimableStaker",
+      "sourceHashes": [
+        "0xdbe19cd7f53b8c978b7b4fdb849f158f916d347912ce37296c14163a8c0c7296"
+      ],
+      "proxyType": "immutable",
+      "description": "Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.",
+      "sinceTimestamp": 1768592243,
+      "sinceBlock": 24249428,
+      "values": {
+        "$immutable": true,
+        "getATP": "eth:0x000000000000000000000000000000000000dEaD",
+        "getImplementation": "eth:0x0000000000000000000000000000000000000000",
+        "hasStaked": false,
+        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+        "ROLLUP_REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "STAKING_ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "STAKING_REGISTRY": "eth:0x042dF8f42790d6943F41C25C2132400fd727f452",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WITHDRAWAL_TIMESTAMP": 1768592243
+      },
+      "implementationNames": {
+        "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95": "ATPWithdrawableAndClaimableStakerV2"
       }
     },
     {
@@ -285,7 +313,7 @@
       "values": {
         "_epochProofVerifier": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5",
         "$immutable": true,
-        "archive": "0x03a4c53e2021d44fe0a5d425d9623494caed9343adb72cd0065a0a428d48bf7c",
+        "archive": "0x0943b7e7facd1f63a0898866593e29301af79c35d72d03cc90c78e0e5f96687a",
         "checkBlob": true,
         "eip712Domain": {
           "fields": "0x0f",
@@ -297,18 +325,18 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 1876,
+        "getActiveAttesterCount": 2602,
         "getAvailableValidatorFlushes": 0,
         "getBlockReward": "400000000000000000000",
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00e1ffbdb3454a79b39161f2cb6444bcf0ee8975a46148866dcc8174cf321bbc",
-        "getCurrentEpoch": 2083,
-        "getCurrentSampleSeed": "88245211310043240919012690030644022396453809384110550789406574007841193726",
-        "getCurrentSlot": 66680,
+        "getCurrentBlobCommitmentsHash": "0x00eb1173c31d112e08134f0926505c30d33560dbb6b1817621230dec2e483148",
+        "getCurrentEpoch": 2606,
+        "getCurrentSampleSeed": "24496260833846902008247928285238862169552646458150895611900508452231026879680",
+        "getCurrentSlot": 83403,
         "getEarliestRewardsClaimableTimestamp": 1770818400,
         "getEjectionThreshold": "100000000000000000000000",
-        "getEntryQueueFlushSize": 1,
-        "getEntryQueueLength": 2544,
+        "getEntryQueueFlushSize": 4,
+        "getEntryQueueLength": 1881,
         "getEpochDuration": 32,
         "getEpochForBlock": [],
         "getExitDelay": 345600,
@@ -324,11 +352,11 @@
         "getLocalEjectionThreshold": "196000000000000000000000",
         "getManaLimit": 0,
         "getManaTarget": 0,
-        "getNextFlushableEpoch": 2084,
+        "getNextFlushableEpoch": 2607,
         "getOutbox": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
-        "getPendingBlockNumber": 52814,
+        "getPendingBlockNumber": 68234,
         "getProofSubmissionEpochs": 1,
-        "getProvenBlockNumber": 52790,
+        "getProvenBlockNumber": 68222,
         "getProvingCostPerManaInEth": 0,
         "getProvingCostPerManaInFeeAsset": 0,
         "getRewardConfig": {
@@ -345,7 +373,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 24,
-        "getTips": { "pendingBlockNumber": 52814, "provenBlockNumber": 52790 },
+        "getTips": { "pendingBlockNumber": 68234, "provenBlockNumber": 68222 },
         "getVersion": 0,
         "isRewardsClaimable": false,
         "L1_BLOCK_AT_GENESIS": 23786836,
@@ -358,10 +386,72 @@
         "getManaLimit": {
           "severity": "HIGH",
           "description": "gas limit, currently 0 to prevent transactions"
+        },
+        "getEntryQueueFlushSize": {
+          "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
         }
       },
       "implementationNames": {
         "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12": "Rollup"
+      }
+    },
+    {
+      "name": "BaseStaker",
+      "address": "eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9",
+      "type": "Contract",
+      "template": "aztecnetwork/BaseStaker",
+      "sourceHashes": [
+        "0xaf64fb5970d5a784cc6822b5e3288c0dcb324cb15ce1c6a4c1f2e610bd603763"
+      ],
+      "proxyType": "immutable",
+      "description": "A template contract used for staker proxies within the StakingRegistry.",
+      "sinceTimestamp": 1762995671,
+      "sinceBlock": 23786879,
+      "values": {
+        "$immutable": true,
+        "getATP": "eth:0x000000000000000000000000000000000000dEaD",
+        "getImplementation": "eth:0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9": "BaseStaker"
+      }
+    },
+    {
+      "name": "AztecTokenPositionRegistry_Sequencers",
+      "address": "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde",
+      "type": "Contract",
+      "template": "aztecnetwork/AztecTokenPositionRegistry_Sequencers",
+      "sourceHashes": [
+        "0x5bec86caaab8c1c4f3acc5289ed1e63204996e1060b8cc0b3659805297f969f5"
+      ],
+      "proxyType": "immutable",
+      "description": "A registry for contracts related to Sequencer staking and token unlock parameters.",
+      "sinceTimestamp": 1762995671,
+      "sinceBlock": 23786879,
+      "values": {
+        "$immutable": true,
+        "getExecuteAllowedAt": 0,
+        "getGlobalLockParams": {
+          "startTime": 1763042400,
+          "cliffDuration": 31536000,
+          "lockDuration": 31536000
+        },
+        "getNextMilestoneId": 0,
+        "getNextStakerVersion": 2,
+        "getRevoker": "eth:0x0000000000000000000000000000000000000000",
+        "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
+        "getStakerImplementation": [
+          "eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9",
+          "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42"
+        ],
+        "getUnlockStartTime": 1763042400,
+        "owner": "eth:0xa04129571DacB1dEB57caB6bbA58e52E2B5CDF9b",
+        "pendingOwner": "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
+      },
+      "implementationNames": {
+        "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde": "Registry"
       }
     },
     {
@@ -418,6 +508,38 @@
       }
     },
     {
+      "name": "TGEPayload",
+      "address": "eth:0x77A5EEF319E23615B848a09Ebd151744547b959C",
+      "type": "Contract",
+      "template": "aztecnetwork/TGEPayload",
+      "sourceHashes": [
+        "0xc2410dd48add80f68a5d7e354ca701a42d52f1a651c686a180e524179a08ed12"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1768592243,
+      "sinceBlock": 24249428,
+      "values": {
+        "$immutable": true,
+        "ATP_REGISTRY": "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde",
+        "AZTEC_TOKEN": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "DATE_GATED_RELAYER_SHORT": "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e",
+        "END_DAY": 3,
+        "END_OF_WORKDAY": 54000,
+        "getURI": "https://github.com/AztecProtocol/ignition-contracts/",
+        "JAN_1_2026_CET": 1767222000,
+        "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
+        "ROLLUP_REGISTRY": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+        "STAKER": "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95",
+        "STAKING_REGISTRY": "eth:0x042dF8f42790d6943F41C25C2132400fd727f452",
+        "START_DAY": 1,
+        "START_OF_WORKDAY": 28800,
+        "VIRTUAL_LBP_STRATEGY": "eth:0xd53006d1e3110fD319a79AEEc4c527a0d265E080"
+      },
+      "implementationNames": {
+        "eth:0x77A5EEF319E23615B848a09Ebd151744547b959C": "TGEPayload"
+      }
+    },
+    {
       "name": "HonkVerifier",
       "address": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5",
       "type": "Contract",
@@ -460,7 +582,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 520,
+        "getCurrentRound": 651,
         "INSTANCE": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -507,6 +629,28 @@
       },
       "implementationNames": {
         "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42": "ATPWithdrawableAndClaimableStaker"
+      }
+    },
+    {
+      "name": "GovernanceAcceleratedLock",
+      "address": "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfb438774e06a1be7d3332d42ac3698c2d6cbd37cb52aa964d35814bf4725a2d4"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1762995647,
+      "sinceBlock": 23786877,
+      "values": {
+        "$immutable": true,
+        "EXTENDED_LOCK_TIME": 31536000,
+        "lockAccelerated": false,
+        "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+        "SHORTER_LOCK_TIME": 7776000,
+        "START_TIME": 1763042400
+      },
+      "implementationNames": {
+        "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e": "GovernanceAcceleratedLock"
       }
     },
     {
@@ -675,7 +819,7 @@
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "375138000000000000000000000"
+        "totalSupply": "520322000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -1024,6 +1168,51 @@
       "function vote(uint256 _proposalId, uint256 _amount, bool _support)",
       "function withdrawalCount() view returns (uint256)"
     ],
+    "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95": [
+      "constructor(address _stakingAsset, address _rollupRegistry, address _stakingRegistry, uint256 _withdrawalTimestamp)",
+      "error AddressEmptyCode(address target)",
+      "error AlreadyInitialized()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error NotATP(address caller, address atp)",
+      "error NotOperator(address caller, address operator)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StakingNotOccurred()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error WithdrawalDelayNotPassed()",
+      "error ZeroATP()",
+      "event Staked(address indexed staker, address indexed attester, address indexed rollupAddress)",
+      "event TokensWithdrawn(address indexed recipient, uint256 amount)",
+      "event TokensWithdrawnToBeneficiary(address indexed beneficiary, uint256 amount)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawableStatusChanged()",
+      "function ROLLUP_REGISTRY() view returns (address)",
+      "function STAKING_ASSET() view returns (address)",
+      "function STAKING_REGISTRY() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WITHDRAWAL_TIMESTAMP() view returns (uint256)",
+      "function claimRewards(uint256 _version)",
+      "function delegate(uint256 _version, address _attester, address _delegatee)",
+      "function depositIntoGovernance(uint256 _amount)",
+      "function finalizeWithdraw(uint256 _version, address _attester)",
+      "function getATP() view returns (address)",
+      "function getImplementation() view returns (address)",
+      "function getOperator() view returns (address)",
+      "function hasStaked() view returns (bool)",
+      "function initialize(address _atp)",
+      "function initiateWithdraw(uint256 _version, address _attester)",
+      "function initiateWithdrawFromGovernance(uint256 _amount) returns (uint256)",
+      "function moveFundsBackToATP()",
+      "function proposeWithLock(address _proposal) returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function stake(uint256 _version, address _attester, tuple(uint256 x, uint256 y) _publicKeyG1, tuple(uint256 x0, uint256 x1, uint256 y0, uint256 y1) _publicKeyG2, tuple(uint256 x, uint256 y) _signature, bool _moveWithLatestRollup)",
+      "function stakeWithProvider(uint256 _version, uint256 _providerIdentifier, uint16 _expectedProviderTakeRate, address _userRewardsRecipient, bool _moveWithLatestRollup)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function voteInGovernance(uint256 _proposalId, uint256 _amount, bool _support)",
+      "function withdrawAllTokensToBeneficiary()"
+    ],
     "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee": [
       "constructor(address _rollup, address _feeAsset, uint256 _version, uint256 _height)",
       "error Inbox__ActorTooLarge(bytes32 actor)",
@@ -1273,6 +1462,71 @@
       "function validateHeaderWithAttestations(tuple(bytes32 lastArchiveRoot, tuple(bytes32 blobsHash, bytes32 inHash, bytes32 outHash) contentCommitment, uint256 slotNumber, uint256 timestamp, address coinbase, bytes32 feeRecipient, tuple(uint128 feePerDaGas, uint128 feePerL2Gas) gasFees, uint256 totalManaUsed) _header, tuple(bytes signatureIndices, bytes signaturesOrAddresses) _attestations, address[] _signers, tuple(uint8 v, bytes32 r, bytes32 s) _attestationsAndSignersSignature, bytes32 _digest, bytes32 _blobsHash, tuple(bool ignoreDA) _flags)",
       "function vote(uint256 _proposalId)"
     ],
+    "eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AlreadyInitialized()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error NotATP(address caller, address atp)",
+      "error NotOperator(address caller, address operator)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnSupportedOperation()",
+      "error ZeroATP()",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function getATP() view returns (address)",
+      "function getImplementation() view returns (address)",
+      "function getOperator() view returns (address)",
+      "function initialize(address _atp)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde": [
+      "constructor(address __owner, uint256 _unlockCliffDuration, uint256 _unlockLockDuration)",
+      "error InvalidExecuteAllowedAt(uint256 newExecuteAllowedAt, uint256 currentExecuteAllowedAt)",
+      "error InvalidMilestoneId(uint96 milestoneId)",
+      "error InvalidMilestoneStatus(uint96 milestoneId)",
+      "error InvalidStakerImplementation(address implementation)",
+      "error InvalidUnlockCliffDuration()",
+      "error InvalidUnlockDuration()",
+      "error InvalidUnlockStartTime(uint256 newUnlockStartTime, uint256 currentUnlockStartTime)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UnRegisteredStaker(uint256 version)",
+      "event MilestoneAdded(uint96 milestoneId)",
+      "event MilestoneStatusUpdated(uint96 milestoneId, uint8 status)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event StakerRegistered(uint256 version, address implementation)",
+      "event UpdatedExecuteAllowedAt(uint256 executeAllowedAt)",
+      "event UpdatedRevoker(address revoker)",
+      "event UpdatedRevokerOperator(address revokerOperator)",
+      "event UpdatedUnlockStartTime(uint256 unlockStartTime)",
+      "function acceptOwnership()",
+      "function addMilestone() returns (uint96)",
+      "function getExecuteAllowedAt() view returns (uint256)",
+      "function getGlobalLockParams() view returns (tuple(uint256 startTime, uint256 cliffDuration, uint256 lockDuration))",
+      "function getMilestoneStatus(uint96 _milestoneId) view returns (uint8)",
+      "function getNextMilestoneId() view returns (uint96)",
+      "function getNextStakerVersion() view returns (uint256)",
+      "function getRevoker() view returns (address)",
+      "function getRevokerOperator() view returns (address)",
+      "function getStakerImplementation(uint256 _version) view returns (address)",
+      "function getUnlockStartTime() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerStakerImplementation(address _implementation)",
+      "function renounceOwnership()",
+      "function setExecuteAllowedAt(uint256 _executeAllowedAt)",
+      "function setMilestoneStatus(uint96 _milestoneId, uint8 _status)",
+      "function setRevoker(address _revoker)",
+      "function setRevokerOperator(address _revokerOperator)",
+      "function setUnlockStartTime(uint256 _unlockStartTime)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": [
       "constructor(address _governance, address _atpRegistry, uint256 _gatedUntil)",
       "error FailedCall()",
@@ -1301,6 +1555,25 @@
       "function getConfig() view returns (tuple(uint32 increment, uint32 maxScore, uint32 a, uint32 minimum, uint32 k))",
       "function getSharesFor(address _prover) view returns (uint256)",
       "function updateAndGetShares(address _prover) returns (uint256)"
+    ],
+    "eth:0x77A5EEF319E23615B848a09Ebd151744547b959C": [
+      "constructor()",
+      "error OutsideBusinessHours(uint256 secondsSinceMidnightCET, uint256 dayOfWeek)",
+      "function ATP_REGISTRY() view returns (address)",
+      "function AZTEC_TOKEN() view returns (address)",
+      "function DATE_GATED_RELAYER_SHORT() view returns (address)",
+      "function END_DAY() view returns (uint256)",
+      "function END_OF_WORKDAY() view returns (uint256)",
+      "function JAN_1_2026_CET() view returns (uint256)",
+      "function ROLLUP() view returns (address)",
+      "function ROLLUP_REGISTRY() view returns (address)",
+      "function STAKER() view returns (address)",
+      "function STAKING_REGISTRY() view returns (address)",
+      "function START_DAY() view returns (uint256)",
+      "function START_OF_WORKDAY() view returns (uint256)",
+      "function VIRTUAL_LBP_STRATEGY() view returns (address)",
+      "function getActions() view returns (tuple(address target, bytes data)[])",
+      "function getURI() pure returns (string)"
     ],
     "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5": [
       "error ProofLengthWrong()",
@@ -1424,6 +1697,29 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function voteInGovernance(uint256 _proposalId, uint256 _amount, bool _support)",
       "function withdrawAllTokensToBeneficiary()"
+    ],
+    "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e": [
+      "constructor(address _governance, uint256 _startTime)",
+      "error AddressEmptyCode(address target)",
+      "error FailedCall()",
+      "error GovernanceAcceleratedLock__GovernanceAddressCannotBeZero()",
+      "error GovernanceAcceleratedLock__LockTimeNotMet()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event LockAccelerated()",
+      "event LockExtended()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function EXTENDED_LOCK_TIME() view returns (uint256)",
+      "function SHORTER_LOCK_TIME() view returns (uint256)",
+      "function START_TIME() view returns (uint256)",
+      "function accelerateLock()",
+      "function extendLock()",
+      "function lockAccelerated() view returns (bool)",
+      "function owner() view returns (address)",
+      "function relay(address _target, bytes _data) returns (bytes)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4": [
       "function getActions() view returns (tuple(address target, bytes data)[] actions)",
@@ -1699,7 +1995,7 @@
     "aztecnetwork/ATPWithdrawableAndClaimableStaker": "0x829f70cfbf1a0dc4cbc075bf8c385689e08a80e148416fec856aecc61cddcc05",
     "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "aztecnetwork/AztecTokenPositionRegistry": "0x59976ab5bef1becfde3f9417e435b12d9d791e7ce50906b3a6af408bad767a3e",
-    "aztecnetwork/AztecTokenPositionRegistry_Sequencers": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "aztecnetwork/AztecTokenPositionRegistry_Sequencers": "0xcf3e85f96decdc6b571453f78068e52e3dadb948582065ffacc927a20dbc87ed",
     "aztecnetwork/BaseStaker": "0x829f70cfbf1a0dc4cbc075bf8c385689e08a80e148416fec856aecc61cddcc05",
     "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/FeeJuicePortal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1713,13 +2009,14 @@
     "aztecnetwork/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Rollup": "0x3cb4752a169fc0804eb2da88546e6d7d7ed1decc8684c6a4e874559fe4dc6bcb",
+    "aztecnetwork/Rollup": "0x727596b63f29887b1c34bfde5fcd32e313bb538a9820093a24f1a08a29d7e96b",
     "aztecnetwork/Slasher": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/StakingRegistry": "0x128e10de5ff9d287ce77ff53148856f503b2e869cff95f365cf84c02810c571d",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
+    "aztecnetwork/TGEPayload": "0xd94c4d4a0e1fefd5d6e81f71f5817224358c97666e22b600eb506923c6e6de6e",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24183405 },
-  "permissionsConfigHash": "0xe157d3fef95f68049f7dc1fcfff3635ee094636deb81d2424e803fdb373a2417"
+  "usedBlockNumbers": { "ethereum": 24283306 },
+  "permissionsConfigHash": "0x4f53c0e768cbb8f35156f26eb13085a1fd9f74de2a36b2026d94c2a00821681c"
 }

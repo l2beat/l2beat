@@ -24,5 +24,11 @@
     "address": "eth:0x8F870CF6621AEaF6026dFfc77f484FdAb370c4Ba",
     "chain": "ethereum",
     "blockNumber": 24038982
+  },
+  "ZKsyncOSVerifierPlonk_v30_0_ADI": {
+    "hash": "0x369b284860edc23e3dc04a83d43fa393d45f1c0ebe6122e70b08550e27d1ecec",
+    "address": "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D",
+    "chain": "ethereum",
+    "blockNumber": 24275768
   }
 }

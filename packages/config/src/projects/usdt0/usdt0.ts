@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
-const ABSTRACT_TOKEN_ID = 'yoI9zn'
+const ABSTRACT_TOKEN_ID = 'xxeNQv'
 
 export const usdt0: BaseProject = {
   id: ProjectId('usdt0'),
@@ -13,12 +13,10 @@ export const usdt0: BaseProject = {
     bridgeType: 'omnichain',
     plugins: [
       {
-        filterBy: 'abstractTokenId',
         abstractTokenId: ABSTRACT_TOKEN_ID,
         plugin: 'layerzero-v2',
       },
       {
-        filterBy: 'abstractTokenId',
         abstractTokenId: ABSTRACT_TOKEN_ID,
         plugin: 'layerzero-v2-ofts',
       },

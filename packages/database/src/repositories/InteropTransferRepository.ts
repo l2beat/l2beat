@@ -137,6 +137,7 @@ export function toRow(
 }
 
 export interface InteropTransfersStatsRecord {
+  plugin: string
   type: string
   count: number
   avgDuration: number
@@ -145,6 +146,7 @@ export interface InteropTransfersStatsRecord {
 }
 
 export interface InteropTransfersDetailedStatsRecord {
+  plugin: string
   type: string
   srcChain: string
   dstChain: string
@@ -235,16 +237,18 @@ export class InteropTransferRepository extends BaseRepository {
     const overallStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy('type')
+      .groupBy(['plugin', 'type'])
       .execute()
 
     return overallStats.map((overall) => ({
+      plugin: overall.plugin,
       type: overall.type,
       count: Number(overall.count),
       avgDuration: Number(overall.avgDuration),
@@ -257,6 +261,7 @@ export class InteropTransferRepository extends BaseRepository {
     const chainStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         'srcChain',
         'dstChain',
@@ -267,12 +272,13 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
-      .groupBy(['type', 'srcChain', 'dstChain'])
+      .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
     return chainStats.map((chain) => {
       assert(chain.srcChain && chain.dstChain)
       return {
+        plugin: chain.plugin,
         type: chain.type,
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,

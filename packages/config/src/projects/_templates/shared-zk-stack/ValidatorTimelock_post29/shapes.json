@@ -9,5 +9,11 @@
     "address": "eth:0x406f329645E323B1bd1C020a219e30E6DAf4f899",
     "chain": "ethereum",
     "blockNumber": 24038982
+  },
+  "ValidatorTimelock_v30_0_ADI": {
+    "hash": "0x48e14ef8734c4e2891920ea10bac8fb0c1d36e0a18c1e38ec85253ee2be5056d",
+    "address": "eth:0x6CB28384f21B18924FA312AA2E10D4E813e66263",
+    "chain": "ethereum",
+    "blockNumber": 24275768
   }
 }

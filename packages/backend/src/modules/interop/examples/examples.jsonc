@@ -356,6 +356,110 @@
     ],
     "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
   },
+  "mayan-swift-settlement-non-batched": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Flow 1: AMBER transfer polygonpos → ethereum (non-batched)
+      // 1a. Source: OrderCreated + MayanForwarded on Polygon
+      {
+        "chain": "polygonpos",
+        "tx": "0x12470c42db9447477eceaa92bdfaed789b4a6e68b8762b01115bdaed1e7deb66"
+      },
+      // 1b. Destination: OrderFulfilled + SettlementSent on Ethereum (batch=false)
+      {
+        "chain": "ethereum",
+        "tx": "0xe056ef54cb7b734e5cc42bb88c9fcd2a8389450f77f712e1ae4f25a00451ea18"
+      },
+      // 1c. Source: OrderUnlocked on Polygon
+      {
+        "chain": "polygonpos",
+        "tx": "0x1d66f8b36511656e23e3a6da0cf0327ad6cca7e5b411ee6fbfca22d81c0fa376"
+      },
+      // Flow 2: base → ethereum (non-batched)
+      // Order key: 0x2f75bfd6f85957172d781f46c499e1e7538e234626d0f8d8bb7f5dcb5ca2db45
+      // 2a. Source: OrderCreated on Base
+      {
+        "chain": "base",
+        "tx": "0x1007c0ebd089c5031a33ad548aae5b1174a6f567e5cc634804d3570397cd719d"
+      },
+      // 2b. Destination: OrderFulfilled + SettlementSent on Ethereum (batch=false)
+      {
+        "chain": "ethereum",
+        "tx": "0x5c3528f7361927df329916eb77f35e22d7763c56f0ac4734eaf2fcf443c6c177"
+      },
+      // 2c. Source: OrderUnlocked on Base
+      {
+        "chain": "base",
+        "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
+      }
+    ],
+    "events": [
+      "mayan-swift.OrderCreated",
+      "mayan-forwarder.MayanForwarded",
+      "mayan-swift.OrderFulfilled",
+      "mayan-swift.SettlementSent",
+      "mayan-swift.OrderUnlocked"
+    ],
+    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+    "transfers": ["mayan-swift.Transfer"]
+  },
+  "mayan-swift-settlement-batched": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Flow 1: Ethereum → BSC batch (8 orders)
+      // Order key: 0xa2178dd759b8ca5aa843e4f541b6dc8b10bf2ec40da84cd501659150731e6528
+      // 1a. Source: OrderCreated on Ethereum
+      {
+        "chain": "ethereum",
+        "tx": "0x34159463576341493f46076a0305f38f1d18d59977f2f2176efe8e62b6aefdc1"
+      },
+      // 1b. Destination: OrderFulfilled on BSC (batch=true)
+      {
+        "chain": "bsc",
+        "tx": "0xf7013ed60eed20e6959a19d1c19465e1231a846bb3862a19e32270cdb205c738"
+      },
+      // 1c. Destination: postBatch on BSC (8 SettlementSent to Ethereum)
+      {
+        "chain": "bsc",
+        "tx": "0x736fc9c506f27a576b1fd2fdc8b472a527428a5bab4e9528ce42871d1e6cc58e"
+      },
+      // 1d. Source: unlockBatch on Ethereum (8 OrderUnlocked)
+      {
+        "chain": "ethereum",
+        "tx": "0x443fc3a3286b832d38e1811a1c2b17ca78c8a32206c26c58fa3ea3cb2a58386f"
+      },
+      // Flow 2: Arbitrum → Base batch (8 orders)
+      // Order key: 0x43c0c4285690ae648d3482b42e9060159f6076ddb1ea56c6b910752a12286a63
+      // 2a. Source: OrderCreated on Arbitrum
+      {
+        "chain": "arbitrum",
+        "tx": "0xad5dda95f31cf81a1e2140d74838259dcb1b6062b39c7cd2dd9f4519cb6019a2"
+      },
+      // 2b. Destination: OrderFulfilled on Base (batch=true)
+      {
+        "chain": "base",
+        "tx": "0x20031fb2921b006c6e52b8de6e34385fe97d95dffcce1174cb659531b48d026f"
+      },
+      // 2c. Destination: postBatch on Base (8 SettlementSent to Arbitrum)
+      {
+        "chain": "base",
+        "tx": "0xb6487cd0106f85f35e75ecf561a7593356a2d60a5b76f739d286277d4482472b"
+      },
+      // 2d. Source: unlockBatch on Arbitrum (8 OrderUnlocked)
+      {
+        "chain": "arbitrum",
+        "tx": "0x1cce878d867321728632a6e4d898e1b029e208dd9ae3d1e92f500dd4405abc5c"
+      }
+    ],
+    "events": [
+      "mayan-swift.OrderCreated",
+      "mayan-swift.OrderFulfilled",
+      "mayan-swift.SettlementSent",
+      "mayan-swift.OrderUnlocked"
+    ],
+    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+    "transfers": ["mayan-swift.Transfer"]
+  },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],
     "txs": [

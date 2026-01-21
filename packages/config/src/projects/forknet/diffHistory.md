@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdac26daffc2847ac9300fcb4207f8abe3ac6e1e4
+Generated with discovered.json: 0x1a3cef86ae755c234141734216bdbef5077591d7
 
-# Diff at Wed, 21 Jan 2026 08:34:30 GMT:
+# Diff at Wed, 21 Jan 2026 12:17:21 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768816348
-- current timestamp: 1768984400
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768816348
+- current timestamp: 1768996338
 
 ## Description
 
-New member conduit msig.
+Upgrade to known contracts. The depositTransaction() revert in OptimismPortal is now removed. It is very likely that the node software / derivation changed though, ignoring deposits from the OptimismPortal2. We do not have an execution logic root because there is no proof system (absolute prestate in the PermissionedDisputeGame is normal).
 
 ## Watched changes
 
@@ -251,7 +251,7 @@ New member conduit msig.
 
 ```diff
     contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) {
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
       name:
 -        "OptimismPortal2_neutered"
 +        "OptimismPortal2"
@@ -261,9 +261,6 @@ New member conduit msig.
       sourceHashes.1:
 -        "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338"
 +        "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2"
-      description:
--        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
-+        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
       values.$implementation:
 -        "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc"
 +        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
@@ -365,6 +362,21 @@ New member conduit msig.
  .../PermissionedDisputeGame.sol                    | 142 ++-
  .../SystemConfig/SystemConfig.sol                  | 495 ++++++++---
  12 files changed, 3346 insertions(+), 1008 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816348 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2_neutered (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      description:
+-        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
++        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
+    }
 ```
 
 Generated with discovered.json: 0x6680748b69bbba76a039e6e9ff1353e8e42f0621

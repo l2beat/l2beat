@@ -40,6 +40,7 @@ import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
+import { MayanSwiftSettlementPlugin } from './mayan-swift-settlement'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
@@ -116,6 +117,7 @@ export function createInteropPlugins(
       new CCIPPlugIn(),
       new CentriFugePlugin(),
       new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+      new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
       new MayanMctpPlugin(), // should be run before CCTP
       new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
       new CCTPV1Plugin(deps.configs),

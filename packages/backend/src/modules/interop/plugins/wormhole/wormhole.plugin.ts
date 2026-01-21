@@ -1,13 +1,9 @@
 import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import {
-  extractMayanSwiftSettlementDestChain,
-  MAYAN_SWIFT,
-} from '../mayan-swift.utils'
+import { MAYAN_SWIFT } from '../mayan-swift.utils'
 import {
   createEventParser,
   createInteropEventType,
-  findChain,
   type InteropPlugin,
   type LogToCapture,
 } from '../types'
@@ -64,6 +60,14 @@ export class WormholePlugin implements InteropPlugin {
 
     const senderAddress = EthereumAddress(parsed.sender)
 
+    // Skip Mayan Swift settlement messages - they are handled by mayan-swift.ts and
+    // mayan-swift-settlement.ts which create SettlementSent events with extracted order keys
+    // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
+    // they would remain unmatched since the settlement matching uses SettlementSent.
+    if (senderAddress === MAYAN_SWIFT) {
+      return
+    }
+
     const logIndex = input.log.logIndex
     if (
       network.tokenBridge &&
@@ -86,14 +90,6 @@ export class WormholePlugin implements InteropPlugin {
 
     // Try to find destination chain
     let $dstChain: string | undefined
-
-    // Mayan Swift: extract destination from settlement payload
-    if (senderAddress === MAYAN_SWIFT) {
-      const dstChainId = extractMayanSwiftSettlementDestChain(parsed.payload)
-      if (dstChainId !== undefined) {
-        $dstChain = findChain(networks, (x) => x.wormholeChainId, dstChainId)
-      }
-    }
 
     // Folks Finance: find SendMessage event after LogMessagePublished
     if (!$dstChain) {

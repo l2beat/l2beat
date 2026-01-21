@@ -51,8 +51,9 @@
       "ignoreRelatives": [
         "l2TokenContract",
         "bridgedToken",
-        "maxTotalTokenBalance",
-        "manager" // added because it is unverified (prevent warning)
+        "manager", // added because it is unverified (prevent warning)
+        "tokenHaltSignalled",
+        "tokenHaltCompleted"
       ]
     },
     "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": {
@@ -73,6 +74,9 @@
     },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "ignoreDiscovery": true
+    },
+    "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": {
+      "ignoreRelatives": ["cleareanceAddress"]
     }
   }
 }

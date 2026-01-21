@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "DA verifier specifically for zksync OS chains. It keeps track of blob versioned hashes and checks if blob with particular hash was published."
+}

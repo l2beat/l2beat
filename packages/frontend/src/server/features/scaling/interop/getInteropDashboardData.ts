@@ -5,9 +5,9 @@ import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams } from './types'
 import {
-  getProtocolsByType,
-  type ProtocolsByType,
-} from './utils/getProtocolsByType'
+  getProtocolEntries,
+  type ProtocolEntry,
+} from './utils/getProtocolEntries'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
@@ -17,7 +17,7 @@ import {
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
-  protocolsByType: ProtocolsByType
+  entries: ProtocolEntry[]
 }
 
 export async function getInteropDashboardData(
@@ -49,11 +49,7 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records),
     topProtocols: getTopProtocols(records, interopProjects),
-    protocolsByType: getProtocolsByType(
-      records,
-      tokensDetailsDataMap,
-      interopProjects,
-    ),
+    entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
 
@@ -93,33 +89,37 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   ]
 
-  const protocolsByTypeMap = {
-    nonMinting: [] as ProtocolsByType['nonMinting'],
-    lockAndMint: [] as ProtocolsByType['lockAndMint'],
-    omniChain: [] as ProtocolsByType['omniChain'],
-  }
+  const mockChains = [
+    {
+      id: 'ethereum',
+      name: 'Ethereum',
+      iconUrl: manifest.getUrl('/icons/ethereum.png'),
+      volume: 8_000_000,
+    },
+    {
+      id: 'arbitrum',
+      name: 'Arbitrum',
+      iconUrl: manifest.getUrl('/icons/arbitrum.png'),
+      volume: 5_000_000,
+    },
+  ]
 
-  for (const project of interopProjects) {
-    const data = {
-      protocolName: project.interopConfig.name ?? project.name,
-      iconSlug: project.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      volume: 15_000_000,
-      tokens: mockTokens,
-    }
-
-    if (project.interopConfig.bridgeType === 'nonMinting') {
-      protocolsByTypeMap.nonMinting.push(data)
-    } else if (project.interopConfig.bridgeType === 'lockAndMint') {
-      protocolsByTypeMap.lockAndMint.push({ ...data, averageDuration: 100_000 })
-    } else if (project.interopConfig.bridgeType === 'omnichain') {
-      protocolsByTypeMap.omniChain.push(data)
-    }
-  }
+  const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
+    protocolName: project.interopConfig.name ?? project.name,
+    iconSlug: project.slug,
+    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+    bridgeType: project.interopConfig.bridgeType,
+    volume: 15_000_000,
+    tokens: mockTokens,
+    chains: mockChains,
+    transferCount: 5000,
+    averageValue: 3000,
+    averageDuration: { type: 'single', duration: 100_000 },
+  }))
 
   return {
     top3Paths,
     topProtocols,
-    protocolsByType: protocolsByTypeMap,
+    entries: allProtocols,
   }
 }

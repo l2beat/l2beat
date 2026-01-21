@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6dba78cde319d021c93cbec69119ec940acc1298
+Generated with discovered.json: 0xa5c83ac44e30555c8dfe15b131dfd20f73aa13cd
 
-# Diff at Wed, 21 Jan 2026 08:34:43 GMT:
+# Diff at Wed, 21 Jan 2026 12:34:25 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768816385
-- current timestamp: 1768984416
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768816385
+- current timestamp: 1768998796
 
 ## Description
 
-New member conduit msig.
+conduit ms change.
 
 ## Watched changes
 
