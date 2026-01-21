@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x714cff79cbe7f5e917dbed4eb9d5631efb1ca126
+
+# Diff at Wed, 21 Jan 2026 08:35:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1764933767
+- current timestamp: 1768984444
+
+## Description
+
+New member conduit msig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.$members.1:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 12 (33%)"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.domainSeparator:
+-        "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890"
++        "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76"
+      values.getModules:
+-        []
+      values.NAME:
+-        "Gnosis Safe"
+      values.VERSION:
+-        "1.1.1"
++        "1.4.1"
+      values.getChainId:
++        1
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  959 -----------------
+ .../.flat/OpFoundationOperationsSafe/Safe.sol      | 1088 ++++++++++++++++++++
+ 2 files changed, 1088 insertions(+), 959 deletions(-)
+```
+
 Generated with discovered.json: 0x5258e095a6f7765dfc4748b93bfb02d025375b95
 
 # Diff at Fri, 05 Dec 2025 11:24:04 GMT:
