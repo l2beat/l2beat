@@ -31,7 +31,7 @@ export function BridgeTypeBadge({
     <div
       className={cn(
         config.bgColor,
-        'w-max rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+        'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
         className,
       )}
     >
