@@ -78,8 +78,12 @@ export class SkyBridgePlugin implements InteropPlugin {
         return [
           DepositBridgeInitiated.create(input, {
             amount: bridgeInitiated.amount,
-            l1Token: Address32.from(EthereumAddress(bridgeInitiated.localToken)),
-            l2Token: Address32.from(EthereumAddress(bridgeInitiated.remoteToken)),
+            l1Token: Address32.from(
+              EthereumAddress(bridgeInitiated.localToken),
+            ),
+            l2Token: Address32.from(
+              EthereumAddress(bridgeInitiated.remoteToken),
+            ),
           }),
         ]
       }
@@ -92,8 +96,12 @@ export class SkyBridgePlugin implements InteropPlugin {
         return [
           WithdrawalBridgeFinalized.create(input, {
             amount: bridgeFinalized.amount,
-            l1Token: Address32.from(EthereumAddress(bridgeFinalized.localToken)),
-            l2Token: Address32.from(EthereumAddress(bridgeFinalized.remoteToken)),
+            l1Token: Address32.from(
+              EthereumAddress(bridgeFinalized.localToken),
+            ),
+            l2Token: Address32.from(
+              EthereumAddress(bridgeFinalized.remoteToken),
+            ),
           }),
         ]
       }
@@ -106,8 +114,12 @@ export class SkyBridgePlugin implements InteropPlugin {
         return [
           DepositBridgeFinalized.create(input, {
             amount: bridgeFinalized.amount,
-            l1Token: Address32.from(EthereumAddress(bridgeFinalized.remoteToken)),
-            l2Token: Address32.from(EthereumAddress(bridgeFinalized.localToken)),
+            l1Token: Address32.from(
+              EthereumAddress(bridgeFinalized.remoteToken),
+            ),
+            l2Token: Address32.from(
+              EthereumAddress(bridgeFinalized.localToken),
+            ),
           }),
         ]
       }
@@ -120,8 +132,12 @@ export class SkyBridgePlugin implements InteropPlugin {
         return [
           WithdrawalBridgeInitiated.create(input, {
             amount: bridgeInitiated.amount,
-            l1Token: Address32.from(EthereumAddress(bridgeInitiated.remoteToken)),
-            l2Token: Address32.from(EthereumAddress(bridgeInitiated.localToken)),
+            l1Token: Address32.from(
+              EthereumAddress(bridgeInitiated.remoteToken),
+            ),
+            l2Token: Address32.from(
+              EthereumAddress(bridgeInitiated.localToken),
+            ),
           }),
         ]
       }
