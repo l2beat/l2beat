@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { cn } from '~/utils/cn'
-import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { TopPathsWidget } from '../TopPathsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'

@@ -1,7 +1,7 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { OmniChainTable } from './tables/OmniChainTable'
 

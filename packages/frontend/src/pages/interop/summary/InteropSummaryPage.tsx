@@ -3,8 +3,9 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { ChainSelector } from './components/chain-selector/ChainSelector'
-import type { InteropChainWithIcon } from './components/chain-selector/types'
+import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
@@ -12,7 +13,6 @@ import { MobileCarouselWidget } from './components/widgets/protocols/MobileCarou
 import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
-import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
