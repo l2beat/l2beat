@@ -1,13 +1,13 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import { BridgeTypeBadge } from '../BridgeTypeBadge'
 import { TopChainsCell } from '../TopChainsCell'
 import { TopTokensCell } from '../TopTokensCell'
+import type { AllProtocolsRow } from './AllProtocolsTable'
 import type { LockAndMintRow } from './LockAndMintTable'
 import type { NonMintingRow } from './NonMintingTable'
 import type { OmniChainRow } from './OmniChainTable'
-import type { AllProtocolsRow } from './AllProtocolsTable'
 
 function getCommonColumns<
   T extends {
@@ -162,18 +162,7 @@ export const allProtocolsColumns = [
   // Type column
   allProtocolsColumnHelper.accessor('bridgeType', {
     header: 'Type',
-    cell: (ctx) => {
-      const type = ctx.row.original.bridgeType
-      const displayType =
-        type === 'lockAndMint'
-          ? 'Lock & Mint'
-          : type === 'nonMinting'
-            ? 'Non-minting'
-            : 'Omnichain'
-      return (
-        <div className="font-medium text-label-value-15">{displayType}</div>
-      )
-    },
+    cell: (ctx) => <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />,
     meta: {
       headClassName: 'text-2xs',
     },
