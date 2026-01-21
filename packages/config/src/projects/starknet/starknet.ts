@@ -105,14 +105,6 @@ const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
-const escrowWBTCMaxTotalBalanceString = 'There is no bridge cap.'
-// maxTotalBalance value was removed from this bridge
-// formatMaxTotalBalanceString(
-//   'WBTC',
-//   discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
-//   8,
-// )
-
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
   discovery.getContractValue<number>('USDCBridge', 'maxTotalBalance'),
@@ -528,7 +520,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         untilTimestamp: UnixTime(1768848455),
         tokens: ['WBTC'],
         description:
-          'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
+          'StarkGate bridge for WBTC. The bridge is halted and WBTC migrated to external OFT bridging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
@@ -616,7 +608,8 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_SOLVBTC_ADDRESS),
         untilTimestamp: UnixTime(1768848971),
         tokens: ['SolvBTC'],
-        description: 'StarkGate bridge for SolvBTC.',
+        description:
+          'StarkGate bridge for SolvBTC. The bridge is halted and SolvBTC migrated to external OFT bridging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
