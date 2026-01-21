@@ -1,6 +1,6 @@
 {
   "name": "superseed",
-  "timestamp": 1768984476,
+  "timestamp": 1768990330,
   "configHash": "0x856c750912eddca683781b2911ad181d82e2c8a4b72419e85e6cee2f1f03cd44",
   "entries": [
     {
@@ -2045,6 +2045,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24281998 },
+  "usedBlockNumbers": { "ethereum": 24282483 },
   "permissionsConfigHash": "0xe43be52f6ab90e7f57d4449534c008441b8d701062b7b9ce4ca9dd67d8197a26"
 }

@@ -1,6 +1,6 @@
 {
   "name": "aevo",
-  "timestamp": 1768984358,
+  "timestamp": 1768989014,
   "configHash": "0x797e108b6ee5c166c34cf8bf43ea6b9f285012565cbaab2d1ea89092c2ff34e2",
   "entries": [
     {
@@ -101,7 +101,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 4312,
+        "gameCount": 4313,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x7DfcCbEaB04c446eC151aEa12EBD35111643800A",
@@ -115,7 +115,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 4312,
+        "permissionedGamesTotal": 4313,
         "proxyAdmin": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.3.0"
@@ -227,7 +227,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644722",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644723",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -851,8 +851,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 721181,
-          "prevBlockNum": 24275102
+          "prevBoughtGas": 821744,
+          "prevBlockNum": 24282067
         },
         "paused": false,
         "proofMaturityDelaySeconds": 3600,
@@ -2160,6 +2160,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24281988 },
+  "usedBlockNumbers": { "ethereum": 24282374 },
   "permissionsConfigHash": "0x08facd0ae7124d8d28ff3a788e478f4266c58a65bf21ff490ea587b9cc4941dd"
 }

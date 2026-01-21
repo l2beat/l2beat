@@ -1,6 +1,6 @@
 {
   "name": "phala",
-  "timestamp": 1768984449,
+  "timestamp": 1768990153,
   "configHash": "0x72696c4eb7450c6fb0563b9ba0d44e15f6820682f47d6f3e67a4843862573c6b",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -2299,6 +2299,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24281995 },
+  "usedBlockNumbers": { "ethereum": 24282469 },
   "permissionsConfigHash": "0x24ed6de316354e4f6b5236699842bcb373dfd416ffa615048472f3dd9c555fce"
 }

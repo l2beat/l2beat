@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x034f05c896272d85deb3708ace6d3c7a845cc7a2
+Generated with discovered.json: 0x9e080e55e234d59b7da225d3744254a136e6f9f3
 
-# Diff at Wed, 21 Jan 2026 08:34:55 GMT:
+# Diff at Wed, 21 Jan 2026 10:07:45 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768563850
-- current timestamp: 1768984431
+- current timestamp: 1768989976
 
 ## Description
 
-New member conduit msig.
+New member added to Conduit Multisig 1 (now 4/12, previously 4/11).
 
 ## Watched changes
 

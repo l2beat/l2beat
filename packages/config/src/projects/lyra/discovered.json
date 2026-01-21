@@ -1,6 +1,6 @@
 {
   "name": "lyra",
-  "timestamp": 1768984426,
+  "timestamp": 1768989802,
   "configHash": "0x510ea28a3a8d8b73d2fac1d324bc35ee4556e24fe267ee7d5fd0602fbb86de3b",
   "entries": [
     {
@@ -1122,7 +1122,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 360,
+        "gameCount": 361,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x2839BaF8BbdA830e96896aA698A6183ea42295A8",
@@ -1136,7 +1136,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 360,
+        "permissionedGamesTotal": 361,
         "proxyAdmin": "eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.3.0"
@@ -2100,6 +2100,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24281993 },
+  "usedBlockNumbers": { "ethereum": 24282439 },
   "permissionsConfigHash": "0x757d74e0ddbdfaf0a31542fcc1adad469b89822f950dab305ee8aeb070fcc450"
 }

@@ -1,6 +1,6 @@
 {
   "name": "polynomial",
-  "timestamp": 1768984458,
+  "timestamp": 1768990273,
   "configHash": "0xe72f7914bca8c190e1437f140820f9f85f371864d8326ac2deb36829a31373a2",
   "entries": [
     {
@@ -2100,6 +2100,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24281996 },
+  "usedBlockNumbers": { "ethereum": 24282479 },
   "permissionsConfigHash": "0x59d87d5cf40b0bb53f96e6ea752b5f34bdf5a5df21d7292f6b24f5e16194abee"
 }

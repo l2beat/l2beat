@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xa1be43f8f442464f627ebe5e1f433bcb60d00408
+Generated with discovered.json: 0x7cd4caba75f0b1f8b1a9d0d9f6fd2cff990de65f
 
-# Diff at Wed, 21 Jan 2026 08:33:48 GMT:
+# Diff at Wed, 21 Jan 2026 09:52:13 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768566190
-- current timestamp: 1768984358
+- current timestamp: 1768989014
 
 ## Description
 
-New member conduit msig.
+Upgraded to op-contracts v1.8.0-rc.4 (isthmus). Major version upgrades: OptimismPortal2 3.14.0 → 5.1.1, SystemConfig 2.5.0 → 3.11.0, L1CrossDomainMessenger 2.6.0 → 2.11.0, L1StandardBridge 2.3.0 → 2.8.0, L1ERC721Bridge 2.4.0 → 2.9.0, DisputeGameFactory 1.0.1 → 1.3.0. New dispute game infrastructure deployed with MIPS64, PermissionedDisputeGame, DelayedWETH, and AnchorStateRegistry at new addresses. SystemConfig maximumGasLimit increased from 200M to 500M.
+
+Also added new member to Conduit Multisig 1 (now 4/12).
 
 ## Watched changes
 
