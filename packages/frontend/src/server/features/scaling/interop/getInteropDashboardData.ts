@@ -37,12 +37,11 @@ export async function getInteropDashboardData(
     : []
 
   const db = getDb()
-  const records =
-    await db.aggregatedInteropTransfer.getByChainsAndLatestTimestamp(
-      params.from,
-      params.to,
-      filteredProjects.map((p) => p.id),
-    )
+  const records = await db.aggregatedInteropTransfer.getLatest(
+    params.from,
+    params.to,
+    filteredProjects.map((p) => p.id),
+  )
 
   if (records.length === 0) {
     return {

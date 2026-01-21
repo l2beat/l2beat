@@ -106,7 +106,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getByChainsAndLatestTimestamp(
+  async getLatest(
     srcChains: string[],
     dstChains: string[],
     protocolIds?: string[],
