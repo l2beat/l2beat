@@ -338,8 +338,16 @@ function extractEscrowAddresses(formula: TvsTokenFormula): string[] {
       extract(record.amount)
     }
     if (Array.isArray(record.arguments)) {
-      for (const arg of record.arguments) {
-        extract(arg)
+      // For diff formulas, only extract from the first argument (the minuend)
+      // The second argument is the subtrahend (not a real escrow)
+      if (record.type === 'calculation' && record.operator === 'diff') {
+        if (record.arguments.length > 0) {
+          extract(record.arguments[0])
+        }
+      } else {
+        for (const arg of record.arguments) {
+          extract(arg)
+        }
       }
     }
   }
@@ -358,7 +366,7 @@ function mapTvsToTokens(escrowAddress: string, tvsData: TvsToken[]): TokenValue[
       const escrowCount = escrowAddresses.length
       tokens.push({
         symbol: token.symbol,
-        valueUsd: token.value / escrowCount,
+        valueUsd: token.valueForProject / escrowCount,
         amount: token.amount / escrowCount,
         issuer: TOKEN_ISSUERS[token.symbol] || null,
         source: token.source as BridgeType,
@@ -451,7 +459,10 @@ function analyzeExternalTokens(
   for (const token of tvsData) {
     if (token.source !== 'external') continue
     if (token.formula.type === 'balanceOfEscrow') continue
-    if (token.value < 100000) continue
+    // Skip tokens that have escrow addresses (already counted in escrow analysis)
+    const escrowAddresses = extractEscrowAddresses(token.formula)
+    if (escrowAddresses.length > 0) continue
+    if (token.valueForProject < 100000) continue
 
     const bridgeFromConfig = getBridgeFromConfig(token, tvsConfig)
     const issuer = EXTENDED_TOKEN_ISSUERS[token.symbol] || 'Unknown'
@@ -502,7 +513,7 @@ function analyzeExternalTokens(
       symbol: token.symbol,
       name: token.name,
       l2Address: token.address?.address || '',
-      valueUsd: token.value,
+      valueUsd: token.valueForProject,
       amount: token.amount,
       bridgeProtocol,
       issuer,
@@ -556,6 +567,10 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   // Dedupe tokens with same symbol+source (API has duplicates like sUSDS)
   const tvsData = dedupeTokens(tvsDataRaw)
 
+  // Note: Use valueForProject (not value) for correct TVL calculations
+  // - value: raw escrow balance (wrong for diff formulas)
+  // - valueForProject: correctly calculated value after applying formula
+
   const tvsConfig = loadTvsConfig(projectId)
 
   // Build escrow configs from TVS if auto-detecting
@@ -592,17 +607,14 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   // Analyze external tokens
   const externalTokens = analyzeExternalTokens(tvsData, tvsConfig)
 
-  // Calculate summary
-  const apiTotal = tvsData.reduce((sum, t) => sum + t.value, 0)
-  const apiNativeTvl = tvsData.filter((t) => t.source === 'native').reduce((sum, t) => sum + t.value, 0)
-  const apiBridgedTvl = apiTotal - apiNativeTvl
+  // Calculate summary using valueForProject (correctly calculated values)
+  const totalTvl = tvsData.reduce((sum, t) => sum + t.valueForProject, 0)
+  const nativeTvl = tvsData.filter((t) => t.source === 'native').reduce((sum, t) => sum + t.valueForProject, 0)
 
   const escrowCanonicalTvl = escrows.filter((e) => e.bridgeType === 'canonical').reduce((sum, e) => sum + e.totalValueUsd, 0)
   const escrowExternalTvl = escrows.filter((e) => e.bridgeType === 'external').reduce((sum, e) => sum + e.totalValueUsd, 0)
   const externalTokensTvl = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
 
-  // Use raw escrow values directly (no proportional scaling)
-  // These match what you'd see on Etherscan
   const canonicalTvl = escrowCanonicalTvl
   const externalTvl = escrowExternalTvl + externalTokensTvl
 
@@ -610,9 +622,9 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     .filter((e) => e.bridgeType === 'canonical' && (e.category === 'rollup-secured' || e.category === 'issuer-secured'))
     .reduce((sum, e) => sum + e.totalValueUsd, 0)
 
-  // Calculate Current API classification for comparison
-  const apiCanonicalTvl = tvsData.filter((t) => t.source === 'canonical').reduce((sum, t) => sum + t.value, 0)
-  const apiExternalTvl = tvsData.filter((t) => t.source === 'external').reduce((sum, t) => sum + t.value, 0)
+  // API classification for comparison (using valueForProject for correct totals)
+  const apiCanonicalTvl = tvsData.filter((t) => t.source === 'canonical').reduce((sum, t) => sum + t.valueForProject, 0)
+  const apiExternalTvl = tvsData.filter((t) => t.source === 'external').reduce((sum, t) => sum + t.valueForProject, 0)
 
   const report: EscrowReport = {
     projectId,
@@ -620,10 +632,10 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     escrows,
     externalTokens,
     summary: {
-      totalTvl: apiTotal,
+      totalTvl,
       canonicalTvl,
       externalTvl,
-      nativeTvl: apiNativeTvl,
+      nativeTvl,
       canonicalNoAdditionalTrust: noTrustEscrowTvl,
       // Current API values for comparison
       apiCanonicalTvl,
@@ -670,23 +682,23 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   console.log(chalk.bold('  Source        Current API          New Framework        Difference'))
   console.log(chalk.gray('  ─────────────────────────────────────────────────────────────────────'))
 
-  const apiCanonicalPct = ((apiCanonicalTvl / apiTotal) * 100).toFixed(1)
-  const newCanonicalPct = ((canonicalTvl / apiTotal) * 100).toFixed(1)
+  const apiCanonicalPct = ((apiCanonicalTvl / totalTvl) * 100).toFixed(1)
+  const newCanonicalPct = ((canonicalTvl / totalTvl) * 100).toFixed(1)
   const canonicalDiff = canonicalTvl - apiCanonicalTvl
   const canonicalDiffStr = canonicalDiff >= 0 ? chalk.green(`+${formatUsd(canonicalDiff)}`) : chalk.red(`-${formatUsd(Math.abs(canonicalDiff))}`)
   console.log(`  ${chalk.green('Canonical')}     ${formatUsd(apiCanonicalTvl)} (${apiCanonicalPct.padStart(4)}%)    ${formatUsd(canonicalTvl)} (${newCanonicalPct.padStart(4)}%)    ${canonicalDiffStr}`)
 
-  const apiExternalPct = ((apiExternalTvl / apiTotal) * 100).toFixed(1)
-  const newExternalPct = ((externalTvl / apiTotal) * 100).toFixed(1)
+  const apiExternalPct = ((apiExternalTvl / totalTvl) * 100).toFixed(1)
+  const newExternalPct = ((externalTvl / totalTvl) * 100).toFixed(1)
   const externalDiff = externalTvl - apiExternalTvl
   const externalDiffStr = externalDiff >= 0 ? chalk.green(`+${formatUsd(externalDiff)}`) : chalk.red(`-${formatUsd(Math.abs(externalDiff))}`)
   console.log(`  ${chalk.yellow('External')}      ${formatUsd(apiExternalTvl)} (${apiExternalPct.padStart(4)}%)    ${formatUsd(externalTvl)} (${newExternalPct.padStart(4)}%)    ${externalDiffStr}`)
 
-  const nativePct = ((apiNativeTvl / apiTotal) * 100).toFixed(1)
-  console.log(`  ${chalk.cyan('Native')}        ${formatUsd(apiNativeTvl)} (${nativePct.padStart(4)}%)    ${formatUsd(apiNativeTvl)} (${nativePct.padStart(4)}%)    -`)
+  const nativePct = ((nativeTvl / totalTvl) * 100).toFixed(1)
+  console.log(`  ${chalk.cyan('Native')}        ${formatUsd(nativeTvl)} (${nativePct.padStart(4)}%)    ${formatUsd(nativeTvl)} (${nativePct.padStart(4)}%)    -`)
 
   console.log(chalk.gray('  ─────────────────────────────────────────────────────────────────────'))
-  console.log(chalk.bold(`  Total         ${formatUsd(apiTotal)}              ${formatUsd(apiTotal)}              ✓`))
+  console.log(chalk.bold(`  Total         ${formatUsd(totalTvl)}              ${formatUsd(totalTvl)}              ✓`))
   console.log('')
 
   return report

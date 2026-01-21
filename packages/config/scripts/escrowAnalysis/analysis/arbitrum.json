@@ -1,6 +1,6 @@
 {
   "projectId": "arbitrum",
-  "timestamp": 1769019556587,
+  "timestamp": 1769022156831,
   "escrows": [
     {
       "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -3496,21 +3496,21 @@
           "source": "external"
         },
         {
-          "symbol": "USDS",
-          "valueUsd": 33261356.666666668,
-          "amount": 33272360,
-          "issuer": "MakerDAO",
-          "source": "external"
-        },
-        {
           "symbol": "DAI",
           "valueUsd": 21512432,
           "amount": 21535182,
           "issuer": "MakerDAO",
           "source": "external"
+        },
+        {
+          "symbol": "USDS",
+          "valueUsd": 81705.4,
+          "amount": 99817080,
+          "issuer": "MakerDAO",
+          "source": "external"
         }
       ],
-      "totalValueUsd": 409543648.6666667,
+      "totalValueUsd": 376363997.4,
       "source": "canonical",
       "description": "Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging."
     },
@@ -3564,7 +3564,7 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "l2Address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-      "valueUsd": 6184660000,
+      "valueUsd": 6169688600,
       "amount": 6187033000,
       "bridgeProtocol": "Circle CCTP",
       "issuer": "Circle",
@@ -3673,29 +3673,6 @@
             "validate cross-chain messages"
           ],
           "riskDescription": "Node operator collusion can approve fraudulent transfers"
-        }
-      ]
-    },
-    {
-      "symbol": "USDS",
-      "name": "USDS Stablecoin",
-      "l2Address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-      "valueUsd": 99784070,
-      "amount": 99817080,
-      "bridgeProtocol": "Custom escrow",
-      "issuer": "MakerDAO",
-      "category": "issuer-secured",
-      "categoryReason": "MakerDAO operates both the token and the bridge",
-      "formulaType": "calculation",
-      "trustedParties": [
-        {
-          "name": "MakerDAO",
-          "role": "Token Issuer & Bridge Operator",
-          "powers": [
-            "mint/burn tokens",
-            "control bridge"
-          ],
-          "riskDescription": "Full control over USDS - no additional trust beyond holding the token"
         }
       ]
     },
@@ -4010,18 +3987,6 @@
       "formulaType": "totalSupply"
     },
     {
-      "symbol": "SolvBTC",
-      "name": "Solv BTC",
-      "l2Address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-      "valueUsd": 2642846,
-      "amount": 30.11,
-      "bridgeProtocol": "CCIP (via free.tech and solv.finance)",
-      "issuer": "Unknown",
-      "category": "third-party-secured",
-      "categoryReason": "Bridged via CCIP (via free.tech and solv.finance) (trust model not analyzed)",
-      "formulaType": "calculation"
-    },
-    {
       "symbol": "USDe",
       "name": "USDe",
       "l2Address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -4053,6 +4018,18 @@
           "riskDescription": "Can approve fraudulent mints or censor transfers"
         }
       ]
+    },
+    {
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "l2Address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "valueUsd": 2583688,
+      "amount": 30.11,
+      "bridgeProtocol": "CCIP (via free.tech and solv.finance)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via CCIP (via free.tech and solv.finance) (trust model not analyzed)",
+      "formulaType": "calculation"
     },
     {
       "symbol": "FRAX",
@@ -4262,18 +4239,6 @@
       ]
     },
     {
-      "symbol": "xSolvBTC",
-      "name": "xSolvBTC",
-      "l2Address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
-      "valueUsd": 452446.25,
-      "amount": 5.04,
-      "bridgeProtocol": "CCIP (via free.tech and solv.finance)",
-      "issuer": "Unknown",
-      "category": "third-party-secured",
-      "categoryReason": "Bridged via CCIP (via free.tech and solv.finance) (trust model not analyzed)",
-      "formulaType": "calculation"
-    },
-    {
       "symbol": "CAKE",
       "name": "PancakeSwap Token",
       "l2Address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
@@ -4309,29 +4274,29 @@
     }
   ],
   "summary": {
-    "totalTvl": 17976448412.220013,
-    "canonicalTvl": 4456145884.196665,
-    "externalTvl": 8220756614.109999,
+    "totalTvl": 17861263043.370014,
+    "canonicalTvl": 4422966232.929998,
+    "externalTvl": 8105489539.859999,
     "nativeTvl": 5332521744.889999,
-    "canonicalNoAdditionalTrust": 4456145884.196665,
+    "canonicalNoAdditionalTrust": 4422966232.929998,
     "apiCanonicalTvl": 3793360353.5299983,
-    "apiExternalTvl": 8850566313.8,
+    "apiExternalTvl": 8735380944.949999,
     "rollupSecuredTvl": 3793360353.529999,
-    "issuerSecuredTvl": 7164112038.666667,
-    "thirdPartySecuredTvl": 1719430106.1100004,
+    "issuerSecuredTvl": 7016176917.4,
+    "thirdPartySecuredTvl": 1718918501.8600004,
     "byAdmin": {
       "rollupControlled": 3793360353.529999,
-      "issuerControlled": 7164112038.666667,
-      "thirdPartyControlled": 1719430106.1100004
+      "issuerControlled": 7016176917.4,
+      "thirdPartyControlled": 1718918501.8600004
     }
   },
   "externalTokensSummary": {
-    "totalCount": 40,
-    "totalValue": 8220756614.109999,
+    "totalCount": 38,
+    "totalValue": 8105489539.859999,
     "byProtocol": {
       "Circle CCTP": {
         "count": 1,
-        "value": 6184660000
+        "value": 6169688600
       },
       "Layer Zero v2 OFT": {
         "count": 7,
@@ -4352,10 +4317,6 @@
       "Chainlink CCIP": {
         "count": 3,
         "value": 105158215.03
-      },
-      "Custom escrow": {
-        "count": 1,
-        "value": 99784070
       },
       "Axelar (ITS)": {
         "count": 1,
@@ -4386,8 +4347,8 @@
         "value": 3105779
       },
       "CCIP (via free.tech and solv.finance)": {
-        "count": 2,
-        "value": 3095292.25
+        "count": 1,
+        "value": 2583688
       },
       "Multichain": {
         "count": 1,
@@ -4404,12 +4365,12 @@
     },
     "byCategory": {
       "issuer-secured": {
-        "count": 7,
-        "value": 6501326508
+        "count": 6,
+        "value": 6386571038
       },
       "third-party-secured": {
-        "count": 33,
-        "value": 1719430106.1100004
+        "count": 32,
+        "value": 1718918501.8600004
       }
     }
   }

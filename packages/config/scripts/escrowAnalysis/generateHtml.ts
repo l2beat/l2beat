@@ -52,6 +52,9 @@ function generateHtml(reports: EscrowReport[]): string {
         return `<span class="${diff >= 0 ? 'positive' : 'negative'}" style="font-size:11px;margin-left:4px;">(${sign}${formatUsd(Math.abs(diff))})</span>`
       }
 
+      const noTrust = r.summary.rollupSecuredTvl + r.summary.issuerSecuredTvl
+      const rollupPct = noTrust > 0 ? (r.summary.rollupSecuredTvl / noTrust) * 100 : 0
+
       return `
       <tr>
         <td class="clickable" onclick="showChainDetail('${r.projectId}')">${r.projectId}</td>
@@ -59,8 +62,13 @@ function generateHtml(reports: EscrowReport[]): string {
         <td class="canonical clickable" onclick="showReclassified('${r.projectId}', 'canonical')">${formatUsd(r.summary.canonicalTvl)}${diffStr(canonicalDiff)}</td>
         <td class="external clickable" onclick="showReclassified('${r.projectId}', 'external')">${formatUsd(r.summary.externalTvl)}${diffStr(externalDiff)}</td>
         <td class="native separator">${formatUsd(r.summary.nativeTvl)}</td>
-        <td class="rollup clickable" onclick="showCategoryDetail('${r.projectId}', 'rollup-secured')">${formatUsd(r.summary.rollupSecuredTvl)}</td>
-        <td class="issuer clickable" onclick="showCategoryDetail('${r.projectId}', 'issuer-secured')">${formatUsd(r.summary.issuerSecuredTvl)}</td>
+        <td class="clickable" onclick="showCategoryDetail('${r.projectId}', 'no-additional-trust')" style="position: relative;">
+          <div class="trust-bar">
+            <div class="trust-bar-rollup" style="width: ${rollupPct}%"></div>
+            <div class="trust-bar-issuer" style="width: ${100 - rollupPct}%"></div>
+          </div>
+          <span style="position: relative; z-index: 1;">${formatUsd(noTrust)}</span>
+        </td>
         <td class="third-party clickable" onclick="showCategoryDetail('${r.projectId}', 'third-party-secured')">${formatUsd(r.summary.thirdPartySecuredTvl)}</td>
       </tr>
     `}).join('')
@@ -152,6 +160,18 @@ function generateHtml(reports: EscrowReport[]): string {
     .third-party { color: #f85149; }
     .positive { color: #3fb950; }
     .negative { color: #f85149; }
+
+    .trust-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      opacity: 0.3;
+    }
+    .trust-bar-rollup { background: #3fb950; }
+    .trust-bar-issuer { background: #a371f7; }
 
     .comparison-table {
       width: auto;
@@ -275,47 +295,6 @@ function generateHtml(reports: EscrowReport[]): string {
     </tbody>
   </table>
 
-  <h2>Trust Assumptions</h2>
-  <div class="summary-grid" style="grid-template-columns: repeat(2, 1fr);">
-    <div class="summary-card" style="border-left: 4px solid #3fb950;">
-      <div class="label">No Additional Trust</div>
-      <div class="value" style="color: #3fb950;">${formatUsd(totalRollupSecured + totalIssuerSecured)}</div>
-      <div style="color: #8b949e; font-size: 12px; margin-top: 8px;">
-        Rollup-secured (${formatUsd(totalRollupSecured)}) + Issuer-secured (${formatUsd(totalIssuerSecured)})
-      </div>
-      <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">
-        You already trust the rollup governance and token issuers
-      </div>
-    </div>
-    <div class="summary-card" style="border-left: 4px solid #f85149;">
-      <div class="label">Additional Trust Required</div>
-      <div class="value" style="color: #f85149;">${formatUsd(totalThirdParty)}</div>
-      <div style="color: #8b949e; font-size: 12px; margin-top: 8px;">
-        Third-party bridges (LayerZero, Wormhole, etc.)
-      </div>
-      <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">
-        Requires trusting external validators/guardians
-      </div>
-    </div>
-  </div>
-
-  <h2>Trust Assumptions Breakdown</h2>
-  <p style="color: #8b949e; font-size: 13px; margin-bottom: 16px;">Who secures the bridge: Rollup governance, Token issuer, or Third-party validators</p>
-  <div class="breakdown-grid">
-    <div class="breakdown-card rollup">
-      <div class="label">Rollup-Secured</div>
-      <div class="value">${formatUsd(totalRollupSecured)}</div>
-    </div>
-    <div class="breakdown-card issuer">
-      <div class="label">Issuer-Secured</div>
-      <div class="value">${formatUsd(totalIssuerSecured)}</div>
-    </div>
-    <div class="breakdown-card third-party">
-      <div class="label">Third-Party-Secured</div>
-      <div class="value">${formatUsd(totalThirdParty)}</div>
-    </div>
-  </div>
-
   <h2>Chains (${reports.length})</h2>
   <table>
     <thead>
@@ -323,14 +302,13 @@ function generateHtml(reports: EscrowReport[]): string {
         <th rowspan="2">Chain</th>
         <th rowspan="2">Total TVL</th>
         <th colspan="3" class="separator" style="text-align: center; color: #58a6ff;">Messaging Classification</th>
-        <th colspan="3" style="text-align: center; color: #a371f7;">Trust Assumptions</th>
+        <th colspan="2" style="text-align: center; color: #a371f7;">Trust Assumptions</th>
       </tr>
       <tr>
         <th class="canonical">Canonical</th>
         <th class="external">External</th>
         <th class="native separator">Native</th>
-        <th class="rollup">Rollup</th>
-        <th class="issuer">Issuer</th>
+        <th style="color: #3fb950;">No Additional Trust</th>
         <th class="third-party">Third-Party</th>
       </tr>
     </thead>
@@ -539,20 +517,26 @@ function generateHtml(reports: EscrowReport[]): string {
       const categoryNames = {
         'rollup-secured': 'Rollup-Secured',
         'issuer-secured': 'Issuer-Secured',
-        'third-party-secured': 'Third-Party-Secured'
+        'third-party-secured': 'Third-Party-Secured',
+        'no-additional-trust': 'No Additional Trust'
       };
 
       document.getElementById('modal-title').textContent = chainId + ' - ' + categoryNames[category] + ' Assets';
 
+      // Handle combined "no-additional-trust" category
+      const categories = category === 'no-additional-trust'
+        ? ['rollup-secured', 'issuer-secured']
+        : [category];
+
       // Get escrows for this category
       const escrows = report.escrows
-        .filter(e => e.category === category)
+        .filter(e => categories.includes(e.category))
         .filter(e => e.totalValueUsd > 10000)
         .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
 
       // Get external tokens for this category
       const externalTokens = (report.externalTokens || [])
-        .filter(t => t.category === category)
+        .filter(t => categories.includes(t.category))
         .filter(t => t.valueUsd > 10000)
         .sort((a, b) => b.valueUsd - a.valueUsd);
 
@@ -560,6 +544,34 @@ function generateHtml(reports: EscrowReport[]): string {
       const tokenTotal = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0);
 
       let html = '';
+
+      // Show breakdown summary for no-additional-trust
+      if (category === 'no-additional-trust') {
+        const rollupEscrows = escrows.filter(e => e.category === 'rollup-secured').reduce((sum, e) => sum + e.totalValueUsd, 0);
+        const issuerEscrows = escrows.filter(e => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0);
+        const rollupTokens = externalTokens.filter(t => t.category === 'rollup-secured').reduce((sum, t) => sum + t.valueUsd, 0);
+        const issuerTokens = externalTokens.filter(t => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0);
+        const rollupTotal = rollupEscrows + rollupTokens;
+        const issuerTotal = issuerEscrows + issuerTokens;
+        const grandTotal = rollupTotal + issuerTotal;
+        const rollupPct = grandTotal > 0 ? ((rollupTotal / grandTotal) * 100).toFixed(1) : 0;
+        const issuerPct = grandTotal > 0 ? ((issuerTotal / grandTotal) * 100).toFixed(1) : 0;
+
+        html += \`
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div style="background: #21262d; border-radius: 8px; padding: 16px; border-left: 4px solid #3fb950;">
+              <div style="color: #8b949e; font-size: 12px;">Rollup-Secured</div>
+              <div style="font-size: 20px; font-weight: 600; color: #3fb950;">\${formatUsd(rollupTotal)}</div>
+              <div style="color: #8b949e; font-size: 11px;">\${rollupPct}% of total</div>
+            </div>
+            <div style="background: #21262d; border-radius: 8px; padding: 16px; border-left: 4px solid #a371f7;">
+              <div style="color: #8b949e; font-size: 12px;">Issuer-Secured</div>
+              <div style="font-size: 20px; font-weight: 600; color: #a371f7;">\${formatUsd(issuerTotal)}</div>
+              <div style="color: #8b949e; font-size: 11px;">\${issuerPct}% of total</div>
+            </div>
+          </div>
+        \`;
+      }
 
       if (escrows.length > 0) {
         html += \`
@@ -569,7 +581,7 @@ function generateHtml(reports: EscrowReport[]): string {
               <tr>
                 <th style="text-align: left;">Escrow</th>
                 <th style="text-align: right;">TVL</th>
-                <th style="text-align: left;">Bridge Type</th>
+                <th style="text-align: left;">Category</th>
               </tr>
             </thead>
             <tbody>
@@ -577,7 +589,7 @@ function generateHtml(reports: EscrowReport[]): string {
                 <tr>
                   <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
                   <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
-                  <td>\${e.bridgeType}</td>
+                  <td class="\${e.category === 'rollup-secured' ? 'rollup' : 'issuer'}">\${e.category === 'rollup-secured' ? 'Rollup' : 'Issuer'}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
@@ -599,6 +611,7 @@ function generateHtml(reports: EscrowReport[]): string {
                 <th style="text-align: left;">Token</th>
                 <th style="text-align: right;">TVL</th>
                 <th style="text-align: left;">Bridge</th>
+                <th style="text-align: left;">Category</th>
               </tr>
             </thead>
             <tbody>
@@ -607,11 +620,13 @@ function generateHtml(reports: EscrowReport[]): string {
                   <td>\${t.symbol}</td>
                   <td style="text-align: right;">\${formatUsd(t.valueUsd)}</td>
                   <td>\${t.bridgeProtocol}</td>
+                  <td class="\${t.category === 'rollup-secured' ? 'rollup' : t.category === 'issuer-secured' ? 'issuer' : 'third-party'}">\${t.category === 'rollup-secured' ? 'Rollup' : t.category === 'issuer-secured' ? 'Issuer' : 'Third-Party'}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
                 <td>Subtotal</td>
                 <td style="text-align: right;">\${formatUsd(tokenTotal)}</td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>

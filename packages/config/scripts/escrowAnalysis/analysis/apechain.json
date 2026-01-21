@@ -1,6 +1,6 @@
 {
   "projectId": "apechain",
-  "timestamp": 1769015972002,
+  "timestamp": 1769022149812,
   "escrows": [
     {
       "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -14,82 +14,39 @@
       "tokens": [
         {
           "symbol": "APE",
-          "valueUsd": 95459760,
-          "amount": 500016770,
+          "valueUsd": 28825462,
+          "amount": 1000033540,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 95459760,
+      "totalValueUsd": 28825462,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
-    },
-    {
-      "address": "0xe4103e80c967f58591a1d7ca443ed7e392fed862",
-      "name": "Escrow 0xe4103e80...",
-      "category": "third-party-secured",
-      "bridgeType": "canonical",
-      "categoryReason": "Token issuers unknown",
-      "admin": null,
-      "adminName": null,
-      "isRollupControlled": false,
-      "tokens": [
-        {
-          "symbol": "APE",
-          "valueUsd": 95459760,
-          "amount": 500016770,
-          "issuer": null,
-          "source": "external"
-        }
-      ],
-      "totalValueUsd": 95459760,
-      "source": "canonical",
-      "description": null
     }
   ],
-  "externalTokens": [
-    {
-      "symbol": "APE",
-      "name": "ApeCoin",
-      "l2Address": "0x7f9FBf9bDd3F4105C478b996B648FE6e828a1e98",
-      "valueUsd": 190919520,
-      "amount": 1000033540,
-      "bridgeProtocol": "Unknown Bridge",
-      "issuer": "Unknown",
-      "category": "third-party-secured",
-      "categoryReason": "Unknown bridge protocol",
-      "formulaType": "calculation"
-    }
-  ],
+  "externalTokens": [],
   "summary": {
-    "totalTvl": 190919520,
-    "canonicalTvl": 95459760,
-    "externalTvl": 95459760,
+    "totalTvl": 28825462,
+    "canonicalTvl": 28825462,
+    "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 47729880,
-    "rollupSecuredTvl": 95459760,
+    "canonicalNoAdditionalTrust": 28825462,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 28825462,
+    "rollupSecuredTvl": 28825462,
     "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 286379280,
+    "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 95459760,
+      "rollupControlled": 28825462,
       "issuerControlled": 0,
-      "thirdPartyControlled": 286379280
+      "thirdPartyControlled": 0
     }
   },
   "externalTokensSummary": {
-    "totalCount": 1,
-    "totalValue": 190919520,
-    "byProtocol": {
-      "Unknown Bridge": {
-        "count": 1,
-        "value": 190919520
-      }
-    },
-    "byCategory": {
-      "third-party-secured": {
-        "count": 1,
-        "value": 190919520
-      }
-    }
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
   }
 }
