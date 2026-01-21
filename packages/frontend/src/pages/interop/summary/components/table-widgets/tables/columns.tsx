@@ -69,6 +69,7 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
 const averageDurationColumn = columnHelper.accessor('averageDuration', {
   header: 'last 24h avg.\ntransfer time',
   meta: {
+    align: 'right',
     headClassName: 'text-2xs',
   },
   cell: (ctx) => (
