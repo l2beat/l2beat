@@ -5,6 +5,17 @@ ForwardedETH or ForwardedERC20 event which contains order details and the destin
 
 On the destination there's OrderFulfilled event with the order hash, plus a LogMessagePublished
 for settlement back to the source chain. We extract the source chain from the settlement message payload.
+
+Settlement Message Behavior:
+- On Ethereum destinations: fulfillOrder is called with batch=false, so wormhole.publishMessage
+  is called immediately and LogMessagePublished is emitted in the same tx as OrderFulfilled.
+- On L2 destinations (Arbitrum, Base, etc.): fulfillOrder is called with batch=true for gas efficiency.
+  The settlement message is stored and later sent via a separate postBatch(bytes32[] orderHashes) call
+  that batches multiple settlements into a single wormhole message.
+
+Because of this, we only capture the settlement LogMessagePublished in extraEvents when:
+1. It exists in the same tx as OrderFulfilled (Ethereum destinations)
+2. The order key in the payload matches the OrderFulfilled key (to avoid capturing unrelated messages)
 */
 
 import { type Address32, EthereumAddress } from '@l2beat/shared-pure'
@@ -12,7 +23,10 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
 import {
   extractMayanSwiftSettlementDestChain,
+  extractMayanSwiftSettlementOrderKey,
+  getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT,
+  MAYAN_SWIFT_MSG_TYPE_UNLOCK,
 } from './mayan-swift.utils'
 import {
   createEventParser,
@@ -51,6 +65,12 @@ export const OrderFulfilled = createInteropEventType<{
   $srcChain?: string
 }>('mayan-swift.OrderFulfilled')
 
+// Settlement message sent via wormhole (non-batched case, same tx as OrderFulfilled)
+export const SettlementSent = createInteropEventType<{
+  key: string
+  $dstChain?: string
+}>('mayan-swift.SettlementSent')
+
 export class MayanSwiftPlugin implements InteropPlugin {
   readonly name = 'mayan-swift'
 
@@ -64,10 +84,20 @@ export class MayanSwiftPlugin implements InteropPlugin {
     if (orderFulfilled) {
       // Find LogMessagePublished in same tx from Mayan Swift to extract source chain
       // The settlement message goes back to the source chain
+      // For non-batched (Ethereum destinations), also create SettlementSent event
       let $srcChain: string | undefined
+      let settlementSent: ReturnType<typeof SettlementSent.create> | undefined
       for (const log of input.txLogs) {
         const logMsg = parseLogMessagePublished(log, null)
         if (logMsg && EthereumAddress(logMsg.sender) === MAYAN_SWIFT) {
+          const msgType = getMayanSwiftSettlementMsgType(logMsg.payload)
+          // Only handle single UNLOCK here, BATCH_UNLOCK is handled in mayan-swift-settlement plugin
+          if (msgType !== MAYAN_SWIFT_MSG_TYPE_UNLOCK) break
+
+          const orderKey = extractMayanSwiftSettlementOrderKey(logMsg.payload)
+          // Verify the order key matches to avoid capturing wrong settlement
+          if (orderKey !== orderFulfilled.key) break
+
           const srcChainId = extractMayanSwiftSettlementDestChain(
             logMsg.payload,
           )
@@ -78,16 +108,33 @@ export class MayanSwiftPlugin implements InteropPlugin {
               srcChainId,
             )
           }
+
+          // Create SettlementSent event for non-batched case
+          // Use the log's position to create the event properly
+          settlementSent = SettlementSent.create(
+            { ...input, log },
+            {
+              key: orderKey,
+              $dstChain: $srcChain, // Settlement destination is the original transfer's source
+            },
+          )
           break
         }
       }
-      return [
+
+      const events: ReturnType<
+        typeof OrderFulfilled.create | typeof SettlementSent.create
+      >[] = [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
           dstAmount: orderFulfilled.netAmount,
           $srcChain,
         }),
       ]
+      if (settlementSent) {
+        events.push(settlementSent)
+      }
+      return events
     }
 
     const orderCreated = parseOrderCreated(input.log, null)
@@ -125,6 +172,10 @@ export class MayanSwiftPlugin implements InteropPlugin {
       sameTxAfter: orderCreated,
     })
     if (!mayanForwarded) return
+
+    // Settlement messages (LogMessagePublished → OrderUnlocked) are matched separately
+    // by the mayan-swift-settlement plugin
+
     return [
       // NOTE: This is a synthetic message. The real thing goes through wormhole and solana and we can't see it
       Result.Message('mayan-swift.Message', {
@@ -132,7 +183,6 @@ export class MayanSwiftPlugin implements InteropPlugin {
         srcEvent: orderCreated,
         dstEvent: orderFulfilled,
       }),
-      // TODO: implement properly. Handle optional wormhole core settlement event
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
         srcAmount:
