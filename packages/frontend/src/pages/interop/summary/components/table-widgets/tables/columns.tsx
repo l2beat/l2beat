@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
@@ -118,8 +119,8 @@ export const omniChainColumns = [
   tokensByVolumeColumn,
 ]
 
-export function getallProtocolsColumns(hideTypeColumn?: boolean) {
-  return [
+export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
+  return compact([
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
       cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
@@ -131,15 +132,16 @@ export function getallProtocolsColumns(hideTypeColumn?: boolean) {
       size: 48,
     }),
     ...commonColumns,
-    columnHelper.accessor('bridgeType', {
-      header: 'Type',
-      cell: (ctx) => (
-        <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />
-      ),
-      meta: {
-        headClassName: 'text-2xs',
-      },
-    }),
+    !hideTypeColumn &&
+      columnHelper.accessor('bridgeType', {
+        header: 'Type',
+        cell: (ctx) => (
+          <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />
+        ),
+        meta: {
+          headClassName: 'text-2xs',
+        },
+      }),
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'chains\nby volume',
@@ -164,5 +166,5 @@ export function getallProtocolsColumns(hideTypeColumn?: boolean) {
         </span>
       ),
     }),
-  ]
+  ])
 }
