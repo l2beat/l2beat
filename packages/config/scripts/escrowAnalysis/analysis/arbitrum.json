@@ -1,6 +1,6 @@
 {
   "projectId": "arbitrum",
-  "timestamp": 1769015980065,
+  "timestamp": 1769018437367,
   "escrows": [
     {
       "address": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -3496,13 +3496,6 @@
           "source": "external"
         },
         {
-          "symbol": "sUSDS",
-          "valueUsd": 118090710,
-          "amount": 108998473.33333333,
-          "issuer": "MakerDAO",
-          "source": "external"
-        },
-        {
           "symbol": "USDS",
           "valueUsd": 33259341.333333332,
           "amount": 33272360,
@@ -3517,7 +3510,7 @@
           "source": "external"
         }
       ],
-      "totalValueUsd": 527156159.3333333,
+      "totalValueUsd": 409065449.3333333,
       "source": "canonical",
       "description": "Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging."
     },
@@ -3602,18 +3595,6 @@
       "category": "third-party-secured",
       "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
       "formulaType": "totalSupply"
-    },
-    {
-      "symbol": "sUSDS",
-      "name": "Savings USDS",
-      "l2Address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-      "valueUsd": 354272130,
-      "amount": 326995420,
-      "bridgeProtocol": "Custom escrow",
-      "issuer": "MakerDAO",
-      "category": "third-party-secured",
-      "categoryReason": "Bridged via Custom escrow (trust model not analyzed)",
-      "formulaType": "calculation"
     },
     {
       "symbol": "rsETH",
@@ -4263,23 +4244,25 @@
     }
   ],
   "summary": {
-    "totalTvl": 18637977185.90999,
-    "canonicalTvl": 4652095134.837925,
-    "externalTvl": 8512270622.222066,
+    "totalTvl": 18283705055.90999,
+    "canonicalTvl": 4587387333.813333,
+    "externalTvl": 8255677012.250002,
     "nativeTvl": 5473611428.849999,
-    "canonicalNoAdditionalTrust": 4652095134.837925,
+    "canonicalNoAdditionalTrust": 4587387333.813333,
+    "apiCanonicalTvl": 3916449316.48,
+    "apiExternalTvl": 8893644310.58,
     "rollupSecuredTvl": 3916449316.4799995,
-    "issuerSecuredTvl": 6984781127.333333,
-    "thirdPartySecuredTvl": 2414196742.25,
+    "issuerSecuredTvl": 6866690417.333333,
+    "thirdPartySecuredTvl": 2059924612.2499995,
     "byAdmin": {
       "rollupControlled": 3916449316.4799995,
-      "issuerControlled": 6984781127.333333,
-      "thirdPartyControlled": 2414196742.25
+      "issuerControlled": 6866690417.333333,
+      "thirdPartyControlled": 2059924612.2499995
     }
   },
   "externalTokensSummary": {
-    "totalCount": 41,
-    "totalValue": 8609949142.25,
+    "totalCount": 40,
+    "totalValue": 8255677012.250002,
     "byProtocol": {
       "Circle CCTP": {
         "count": 1,
@@ -4288,10 +4271,6 @@
       "Layer Zero v2 OFT": {
         "count": 7,
         "value": 1343115895.4199998
-      },
-      "Custom escrow": {
-        "count": 2,
-        "value": 454050154
       },
       "The Graph Custom Gateway": {
         "count": 1,
@@ -4308,6 +4287,10 @@
       "Chainlink CCIP": {
         "count": 3,
         "value": 105173127.52
+      },
+      "Custom escrow": {
+        "count": 1,
+        "value": 99778024
       },
       "Axelar (ITS)": {
         "count": 1,
@@ -4360,8 +4343,8 @@
         "value": 6195752400
       },
       "third-party-secured": {
-        "count": 40,
-        "value": 2414196742.25
+        "count": 39,
+        "value": 2059924612.2499995
       }
     }
   }

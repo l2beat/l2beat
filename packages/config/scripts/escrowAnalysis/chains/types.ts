@@ -131,6 +131,9 @@ export interface EscrowReport {
     externalTvl: number
     nativeTvl: number
     canonicalNoAdditionalTrust: number
+    // Current API values for comparison
+    apiCanonicalTvl: number
+    apiExternalTvl: number
     // For visualizer compatibility
     rollupSecuredTvl: number
     issuerSecuredTvl: number

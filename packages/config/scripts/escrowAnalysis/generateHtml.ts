@@ -31,20 +31,39 @@ function generateHtml(reports: EscrowReport[]): string {
   const totalIssuerSecured = reports.reduce((sum, r) => sum + r.summary.issuerSecuredTvl, 0)
   const totalThirdParty = reports.reduce((sum, r) => sum + r.summary.thirdPartySecuredTvl, 0)
 
+  // Get API totals from stored values
+  const totalApiCanonical = reports.reduce((sum, r) => sum + (r.summary.apiCanonicalTvl || 0), 0)
+  const totalApiExternal = reports.reduce((sum, r) => sum + (r.summary.apiExternalTvl || 0), 0)
+
   const chainRows = reports
     .sort((a, b) => b.summary.totalTvl - a.summary.totalTvl)
-    .map(r => `
-      <tr onclick="showChainDetail('${r.projectId}')">
-        <td>${r.projectId}</td>
-        <td>${formatUsd(r.summary.totalTvl)}</td>
-        <td class="canonical">${formatUsd(r.summary.canonicalTvl)}</td>
-        <td class="external">${formatUsd(r.summary.externalTvl)}</td>
-        <td class="native">${formatUsd(r.summary.nativeTvl)}</td>
+    .map(r => {
+      // Use stored API values
+      const apiCanonical = r.summary.apiCanonicalTvl || 0
+      const apiExternal = r.summary.apiExternalTvl || 0
+
+      // Calculate differences
+      const canonicalDiff = r.summary.canonicalTvl - apiCanonical
+      const externalDiff = r.summary.externalTvl - apiExternal
+
+      const diffStr = (diff: number) => {
+        if (Math.abs(diff) < 1000) return ''
+        const sign = diff >= 0 ? '+' : '-'
+        return `<span class="${diff >= 0 ? 'positive' : 'negative'}" style="font-size:11px;margin-left:4px;">(${sign}${formatUsd(Math.abs(diff))})</span>`
+      }
+
+      return `
+      <tr>
+        <td class="clickable" onclick="showChainDetail('${r.projectId}')">${r.projectId}</td>
+        <td class="clickable" onclick="showChainDetail('${r.projectId}')">${formatUsd(r.summary.totalTvl)}</td>
+        <td class="canonical clickable" onclick="showReclassified('${r.projectId}', 'canonical')">${formatUsd(r.summary.canonicalTvl)}${diffStr(canonicalDiff)}</td>
+        <td class="external clickable" onclick="showReclassified('${r.projectId}', 'external')">${formatUsd(r.summary.externalTvl)}${diffStr(externalDiff)}</td>
+        <td class="native separator">${formatUsd(r.summary.nativeTvl)}</td>
         <td class="rollup">${formatUsd(r.summary.rollupSecuredTvl)}</td>
         <td class="issuer">${formatUsd(r.summary.issuerSecuredTvl)}</td>
         <td class="third-party">${formatUsd(r.summary.thirdPartySecuredTvl)}</td>
       </tr>
-    `).join('')
+    `}).join('')
 
   const escrowsJson = JSON.stringify(reports.flatMap(r =>
     r.escrows.map(e => ({ ...e, chain: r.projectId }))
@@ -121,13 +140,30 @@ function generateHtml(reports: EscrowReport[]): string {
       font-size: 12px;
       text-transform: uppercase;
     }
-    tr:hover { background: #21262d; cursor: pointer; }
+    tr:hover { background: #21262d; }
+    td.clickable { cursor: pointer; }
+    td.clickable:hover { text-decoration: underline; }
+    td.separator, th.separator { border-right: 2px solid #30363d; }
     .canonical { color: #3fb950; }
     .external { color: #f0883e; }
     .native { color: #58a6ff; }
     .rollup { color: #3fb950; }
     .issuer { color: #a371f7; }
     .third-party { color: #f85149; }
+    .positive { color: #3fb950; }
+    .negative { color: #f85149; }
+
+    .comparison-table {
+      width: auto;
+      margin-bottom: 32px;
+    }
+    .comparison-table td, .comparison-table th {
+      padding: 12px 24px;
+    }
+    .comparison-table .total-row {
+      font-weight: 600;
+      border-top: 2px solid #30363d;
+    }
 
     .modal {
       display: none;
@@ -200,25 +236,43 @@ function generateHtml(reports: EscrowReport[]): string {
 <body>
   <h1>Escrow Analysis Dashboard</h1>
 
-  <h2>TVL by Messaging Type</h2>
-  <div class="summary-grid">
-    <div class="summary-card">
-      <div class="label">Total TVL</div>
-      <div class="value">${formatUsd(totalTvl)}</div>
-    </div>
-    <div class="summary-card canonical">
-      <div class="label">Canonical</div>
-      <div class="value">${formatUsd(totalCanonical)}</div>
-    </div>
-    <div class="summary-card external">
-      <div class="label">External</div>
-      <div class="value">${formatUsd(totalExternal)}</div>
-    </div>
-    <div class="summary-card native">
-      <div class="label">Native</div>
-      <div class="value">${formatUsd(totalNative)}</div>
-    </div>
-  </div>
+  <h2>Current API vs New Framework</h2>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Current API</th>
+        <th>New Framework</th>
+        <th>Difference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="canonical">Canonical</td>
+        <td>${formatUsd(totalApiCanonical)} (${((totalApiCanonical / totalTvl) * 100).toFixed(1)}%)</td>
+        <td>${formatUsd(totalCanonical)} (${((totalCanonical / totalTvl) * 100).toFixed(1)}%)</td>
+        <td class="${totalCanonical - totalApiCanonical >= 0 ? 'positive' : 'negative'}">${totalCanonical - totalApiCanonical >= 0 ? '+' : '-'}${formatUsd(Math.abs(totalCanonical - totalApiCanonical))}</td>
+      </tr>
+      <tr>
+        <td class="external">External</td>
+        <td>${formatUsd(totalApiExternal)} (${((totalApiExternal / totalTvl) * 100).toFixed(1)}%)</td>
+        <td>${formatUsd(totalExternal)} (${((totalExternal / totalTvl) * 100).toFixed(1)}%)</td>
+        <td class="${totalExternal - totalApiExternal >= 0 ? 'positive' : 'negative'}">${totalExternal - totalApiExternal >= 0 ? '+' : '-'}${formatUsd(Math.abs(totalExternal - totalApiExternal))}</td>
+      </tr>
+      <tr>
+        <td class="native">Native</td>
+        <td>${formatUsd(totalNative)} (${((totalNative / totalTvl) * 100).toFixed(1)}%)</td>
+        <td>${formatUsd(totalNative)} (${((totalNative / totalTvl) * 100).toFixed(1)}%)</td>
+        <td>-</td>
+      </tr>
+      <tr class="total-row">
+        <td>Total</td>
+        <td>${formatUsd(totalTvl)}</td>
+        <td>${formatUsd(totalTvl)}</td>
+        <td>✓</td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>TVL by Governance</h2>
   <div class="breakdown-grid">
@@ -242,12 +296,12 @@ function generateHtml(reports: EscrowReport[]): string {
       <tr>
         <th>Chain</th>
         <th>Total TVL</th>
-        <th>Canonical</th>
-        <th>External</th>
-        <th>Native</th>
-        <th>Rollup</th>
-        <th>Issuer</th>
-        <th>Third-Party</th>
+        <th class="canonical">Canonical</th>
+        <th class="external">External</th>
+        <th class="native separator">Native</th>
+        <th class="rollup">Rollup</th>
+        <th class="issuer">Issuer</th>
+        <th class="third-party">Third-Party</th>
       </tr>
     </thead>
     <tbody>
@@ -320,6 +374,100 @@ function generateHtml(reports: EscrowReport[]): string {
         \`).join('') : '';
 
       document.getElementById('modal-body').innerHTML = escrowHtml + externalHtml;
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function showReclassified(chainId, type) {
+      const report = reports.find(r => r.projectId === chainId);
+      if (!report) return;
+
+      // Find escrows where API source differs from new framework bridgeType
+      // For canonical: escrows that ARE canonical in new framework but were external in API
+      // For external: escrows that ARE external in new framework but were canonical in API
+      let reclassified = [];
+      let totalReclassified = 0;
+
+      if (type === 'canonical') {
+        // Escrows now canonical that were marked external (issuer-controlled canonical bridges)
+        reclassified = report.escrows
+          .filter(e => e.bridgeType === 'canonical' && e.category !== 'rollup-secured')
+          .filter(e => e.totalValueUsd > 10000)
+          .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
+        totalReclassified = reclassified.reduce((sum, e) => sum + e.totalValueUsd, 0);
+      } else {
+        // External tokens (burn/mint bridges)
+        reclassified = (report.externalTokens || [])
+          .filter(t => t.valueUsd > 10000)
+          .sort((a, b) => b.valueUsd - a.valueUsd);
+        totalReclassified = reclassified.reduce((sum, t) => sum + t.valueUsd, 0);
+      }
+
+      document.getElementById('modal-title').textContent = chainId + ' - ' + (type === 'canonical' ? 'Canonical' : 'External') + ' Reclassification';
+
+      if (reclassified.length === 0) {
+        document.getElementById('modal-body').innerHTML = '<p style="color: #8b949e;">No significant reclassifications for this category.</p>';
+      } else if (type === 'canonical') {
+        const tableHtml = \`
+          <table style="width: 100%;">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Escrow</th>
+                <th style="text-align: right;">TVL</th>
+                <th style="text-align: left;">Current API</th>
+                <th style="text-align: left;">New Framework</th>
+              </tr>
+            </thead>
+            <tbody>
+              \${reclassified.map(e => \`
+                <tr>
+                  <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
+                  <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
+                  <td class="external">source: external</td>
+                  <td class="canonical">\${e.bridgeType} + \${e.category}</td>
+                </tr>
+              \`).join('')}
+              <tr style="border-top: 2px solid #30363d; font-weight: 600;">
+                <td>Total reclassified</td>
+                <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        \`;
+        document.getElementById('modal-body').innerHTML = tableHtml;
+      } else {
+        const tableHtml = \`
+          <table style="width: 100%;">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Token</th>
+                <th style="text-align: right;">TVL</th>
+                <th style="text-align: left;">Bridge</th>
+                <th style="text-align: left;">Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              \${reclassified.map(t => \`
+                <tr>
+                  <td>\${t.symbol}</td>
+                  <td style="text-align: right;">\${formatUsd(t.valueUsd)}</td>
+                  <td>\${t.bridgeProtocol}</td>
+                  <td class="\${t.category}">\${t.category}</td>
+                </tr>
+              \`).join('')}
+              <tr style="border-top: 2px solid #30363d; font-weight: 600;">
+                <td>Total</td>
+                <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        \`;
+        document.getElementById('modal-body').innerHTML = tableHtml;
+      }
+
       document.getElementById('modal').classList.add('active');
     }
 

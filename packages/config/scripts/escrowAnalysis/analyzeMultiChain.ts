@@ -254,6 +254,24 @@ async function fetchTvsBreakdown(projectId: string, retries = 3): Promise<TvsTok
   return []
 }
 
+// Dedupe tokens with same symbol+source (API bug: some tokens like sUSDS appear twice)
+// Prefer balanceOfEscrow formula type as it's the direct escrow measurement
+function dedupeTokens(tokens: TvsToken[]): TvsToken[] {
+  const seen = new Map<string, TvsToken>()
+  for (const token of tokens) {
+    const key = `${token.symbol}:${token.source}`
+    const existing = seen.get(key)
+    if (!existing) {
+      seen.set(key, token)
+    } else if (token.formula.type === 'balanceOfEscrow' && existing.formula.type !== 'balanceOfEscrow') {
+      // Prefer balanceOfEscrow over other formula types
+      seen.set(key, token)
+    }
+    // Otherwise keep the first entry
+  }
+  return Array.from(seen.values())
+}
+
 // ===== Analysis Functions =====
 
 function findEntryByAddress(
@@ -485,11 +503,13 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   }
 
   // Fetch TVS data
-  const tvsData = await fetchTvsBreakdown(projectId)
-  if (tvsData.length === 0) {
+  const tvsDataRaw = await fetchTvsBreakdown(projectId)
+  if (tvsDataRaw.length === 0) {
     console.log(chalk.yellow(`  No TVS data found for ${projectId}`))
     return null
   }
+  // Dedupe tokens with same symbol+source (API has duplicates like sUSDS)
+  const tvsData = dedupeTokens(tvsDataRaw)
 
   const tvsConfig = loadTvsConfig(projectId)
 
@@ -535,18 +555,19 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   const escrowCanonicalTvl = escrows.filter((e) => e.bridgeType === 'canonical').reduce((sum, e) => sum + e.totalValueUsd, 0)
   const escrowExternalTvl = escrows.filter((e) => e.bridgeType === 'external').reduce((sum, e) => sum + e.totalValueUsd, 0)
   const externalTokensTvl = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
-  const totalBridgedFromEscrows = escrowCanonicalTvl + escrowExternalTvl + externalTokensTvl
 
-  const canonicalPct = totalBridgedFromEscrows > 0 ? escrowCanonicalTvl / totalBridgedFromEscrows : 0
-  const externalPct = totalBridgedFromEscrows > 0 ? (escrowExternalTvl + externalTokensTvl) / totalBridgedFromEscrows : 0
-
-  const canonicalTvl = apiBridgedTvl * canonicalPct
-  const externalTvl = apiBridgedTvl * externalPct
+  // Use raw escrow values directly (no proportional scaling)
+  // These match what you'd see on Etherscan
+  const canonicalTvl = escrowCanonicalTvl
+  const externalTvl = escrowExternalTvl + externalTokensTvl
 
   const noTrustEscrowTvl = escrows
     .filter((e) => e.bridgeType === 'canonical' && (e.category === 'rollup-secured' || e.category === 'issuer-secured'))
     .reduce((sum, e) => sum + e.totalValueUsd, 0)
-  const noTrustPct = escrowCanonicalTvl > 0 ? noTrustEscrowTvl / escrowCanonicalTvl : 0
+
+  // Calculate Current API classification for comparison
+  const apiCanonicalTvl = tvsData.filter((t) => t.source === 'canonical').reduce((sum, t) => sum + t.value, 0)
+  const apiExternalTvl = tvsData.filter((t) => t.source === 'external').reduce((sum, t) => sum + t.value, 0)
 
   const report: EscrowReport = {
     projectId,
@@ -558,7 +579,10 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
       canonicalTvl,
       externalTvl,
       nativeTvl: apiNativeTvl,
-      canonicalNoAdditionalTrust: canonicalTvl * noTrustPct,
+      canonicalNoAdditionalTrust: noTrustEscrowTvl,
+      // Current API values for comparison
+      apiCanonicalTvl,
+      apiExternalTvl,
       // For visualizer compatibility
       rollupSecuredTvl: escrows.filter((e) => e.category === 'rollup-secured').reduce((sum, e) => sum + e.totalValueUsd, 0),
       issuerSecuredTvl: escrows.filter((e) => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
@@ -595,10 +619,6 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     report.externalTokensSummary.byCategory[token.category].count++
     report.externalTokensSummary.byCategory[token.category].value += token.valueUsd
   }
-
-  // Calculate Current API classification for comparison
-  const apiCanonicalTvl = tvsData.filter((t) => t.source === 'canonical').reduce((sum, t) => sum + t.value, 0)
-  const apiExternalTvl = tvsData.filter((t) => t.source === 'external').reduce((sum, t) => sum + t.value, 0)
 
   // Print comparison table
   console.log('')
