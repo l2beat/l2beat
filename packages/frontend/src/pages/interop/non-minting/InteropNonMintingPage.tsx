@@ -9,6 +9,7 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
+import { AllProtocolsCard } from '../summary/components/table-widgets/AllProtocolsCard'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
@@ -48,7 +49,7 @@ export function InteropNonMintingPage({
                 interopChains={interopChains}
                 type="nonMinting"
               />
-              {/*  <AllProtocolsCard /> */}
+              <AllProtocolsCard type="nonMinting" />
             </div>
           </InteropSelectedChainsProvider>
         </SideNavLayout>
