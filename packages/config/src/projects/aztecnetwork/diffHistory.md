@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9cb9da88fbca3aa08a9a22a59da1dd570cee0d4f
+Generated with discovered.json: 0x07fa245479aa701d832a287655c12852208bc187
 
-# Diff at Wed, 21 Jan 2026 10:10:47 GMT:
+# Diff at Wed, 21 Jan 2026 12:58:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@d0478ccb5233cc8c759ed14dd71e0594e480b53d block: 1767796183
-- current timestamp: 1768990180
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1767796183
+- current timestamp: 1769000209
 
 ## Description
 
@@ -53,7 +53,7 @@ entry queue flush increase payload was executed.
 ```diff
 +   Status: CREATED
     contract ATPWithdrawableAndClaimableStakerV2 (eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95)
-    +++ description: None
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
 ```
 
 ```diff
