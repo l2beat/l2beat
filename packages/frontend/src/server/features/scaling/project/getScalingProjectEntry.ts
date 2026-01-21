@@ -11,6 +11,7 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -46,7 +47,7 @@ import {
 } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
+import { getProjectIcon, getStaticAsset } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
@@ -347,6 +348,8 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
+  const chartProject = getChartProject(project)
+
   if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
     sections.push({
       type: 'ScalingTvsSection',
@@ -357,7 +360,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
-        project,
+        project: chartProject,
         ...scalingTvsSection,
       },
     })
@@ -371,7 +374,7 @@ export async function getScalingProjectEntry(
         title: 'Activity',
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
-        project,
+        project: chartProject,
         ...activitySection,
       },
     })
@@ -384,7 +387,7 @@ export async function getScalingProjectEntry(
         id: 'onchain-costs',
         title: 'Onchain costs',
         milestones: sortedMilestones,
-        project,
+        project: chartProject,
         ...costsSection,
       },
     })
@@ -397,7 +400,7 @@ export async function getScalingProjectEntry(
         id: 'data-posted',
         title: 'Data posted',
         milestones: sortedMilestones,
-        project,
+        project: chartProject,
         ...dataPostedSection,
       },
     })
@@ -416,7 +419,7 @@ export async function getScalingProjectEntry(
         id: 'liveness',
         title: 'Liveness',
         milestones: sortedMilestones,
-        project,
+        project: chartProject,
         ...livenessSection,
       },
     })
@@ -654,6 +657,17 @@ export async function getScalingProjectEntry(
     contractUtils,
     projectsChangeReport,
   )
+
+  const discoUi = common.discoUiHref
+    ? {
+        href: common.discoUiHref,
+        images: {
+          desktop: getStaticAsset('/images/disco-ui-desktop.png'),
+          mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+        },
+      }
+    : undefined
+
   if (permissionsSection) {
     const permissionedEntities = project.customDa?.dac?.knownMembers
 
@@ -664,7 +678,7 @@ export async function getScalingProjectEntry(
         id: 'permissions',
         title: 'Permissions',
         permissionedEntities,
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
   }
@@ -690,7 +704,7 @@ export async function getScalingProjectEntry(
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
   }

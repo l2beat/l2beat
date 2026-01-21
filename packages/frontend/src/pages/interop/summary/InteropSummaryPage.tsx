@@ -14,9 +14,11 @@ import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocol
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
 
+type InteropChainWithIcon = InteropChain & { iconUrl: string }
+
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
-  interopChains: InteropChain[]
+  interopChains: InteropChainWithIcon[]
 }
 
 export function InteropSummaryPage({

@@ -3,6 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { getCollection } from '~/content/getCollection'
 import { getEcosystemLogo } from '~/server/features/ecosystems/getEcosystemLogo'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -37,7 +38,7 @@ export async function getDonateData(
         ...appLayoutProps,
         partners,
         gitcoinOption: false,
-        qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
+        qrCodeUrl: getStaticAsset('/images/qr-codes/donate.png'),
       },
     },
   }

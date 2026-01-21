@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ChartProject } from '../Chart'
 
 export function getChartProject<
@@ -11,8 +12,8 @@ export function getChartProject<
 >(project: T): ChartProject {
   return {
     id: project.id,
-    slug: project.slug,
     name: project.name,
     shortName: project.shortName,
+    iconUrl: getProjectIcon(project.slug),
   }
 }

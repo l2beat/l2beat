@@ -9,10 +9,12 @@ import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
+type InteropChainWithIcon = InteropChain & { iconUrl: string }
+
 export function TopPathsWidget({
   interopChains,
 }: {
-  interopChains: InteropChain[]
+  interopChains: InteropChainWithIcon[]
 }) {
   const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
@@ -27,7 +29,7 @@ export function TopPathsWidget({
     return {
       id: chain.id,
       name: chain.name,
-      iconSlug: chain.iconSlug ?? chain.id,
+      iconUrl: chain.iconUrl,
     }
   }
 
@@ -78,8 +80,8 @@ function PathItem({
   setPath,
   isOnlyPath,
 }: {
-  from: { id: string; name: string; iconSlug: string }
-  to: { id: string; name: string; iconSlug: string }
+  from: { id: string; name: string; iconUrl: string }
+  to: { id: string; name: string; iconUrl: string }
   volume: number
   setPath: (paths: { from: string; to: string }) => void
   isOnlyPath: boolean
@@ -89,7 +91,7 @@ function PathItem({
       <td className="rounded-l-lg border-divider border-t border-b border-l py-2 pl-2.5 leading-none">
         <div className="flex items-center gap-1.5">
           <img
-            src={`/icons/${from.iconSlug}.png`}
+            src={from.iconUrl}
             alt={from.name}
             className="size-5"
           />
@@ -98,7 +100,7 @@ function PathItem({
           </div>
           <ArrowRightIcon className="size-5 fill-brand" />
           <img
-            src={`/icons/${to.iconSlug}.png`}
+            src={to.iconUrl}
             alt={to.name}
             className="size-5"
           />

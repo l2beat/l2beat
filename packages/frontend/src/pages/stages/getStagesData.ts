@@ -1,5 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollectionEntry } from '~/content/getCollection'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { formatPublicationDate } from '~/utils/dates'
@@ -13,6 +14,16 @@ export async function getStagesData(
   const content = getCollectionEntry('pages', 'stages')
   if (!content) {
     return undefined
+  }
+
+  // Replace image path in markdown content with hashed URL
+  const stagesImageUrl = getStaticAsset('/images/stages/optimal_stage.jpeg')
+  const processedContent = {
+    ...content,
+    content: content.content.replace(
+      /src="\/images\/stages\/optimal_stage\.jpeg"/g,
+      `src="${stagesImageUrl}"`,
+    ),
   }
 
   return {
@@ -32,7 +43,7 @@ export async function getStagesData(
       page: 'StagesPage',
       props: {
         ...appLayoutProps,
-        content,
+        content: processedContent,
         lastUpdated: formatPublicationDate(content.data.lastUpdated),
       },
     },

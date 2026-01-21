@@ -8,8 +8,10 @@ import {
 import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 
+type InteropChainWithIcon = InteropChain & { iconUrl: string }
+
 interface Props {
-  chains: InteropChain[]
+  chains: InteropChainWithIcon[]
 }
 
 export function ChainSelector({ chains }: Props) {
@@ -54,14 +56,14 @@ function ChainSelectorButton({
   toggleSelected,
 }: {
   selectedChains: string[]
-  allChains: InteropChain[]
+  allChains: InteropChainWithIcon[]
   toggleSelected: (chainId: string) => void
 }) {
-  const chainsWithDetails = allChains.map(({ id, iconSlug, name }) => ({
-    id,
-    iconSlug: iconSlug ?? id,
-    name,
-    isSelected: selectedChains.includes(id),
+  const chainsWithDetails = allChains.map((chain) => ({
+    id: chain.id,
+    iconUrl: chain.iconUrl,
+    name: chain.name,
+    isSelected: selectedChains.includes(chain.id),
   }))
 
   return (
@@ -78,7 +80,7 @@ function ChainSelectorButton({
               .map((chain, i) => (
                 <img
                   key={chain.id}
-                  src={`/icons/${chain.iconSlug}.png`}
+                  src={chain.iconUrl}
                   alt={chain.name}
                   className="size-5"
                   style={{ zIndex: selectedChains.length - i }}
@@ -112,7 +114,7 @@ function ChainSelectorItem({
 }: {
   chain: {
     id: string
-    iconSlug: string
+    iconUrl: string
     name: string
     isSelected: boolean
   }
@@ -126,11 +128,7 @@ function ChainSelectorItem({
       )}
       onClick={() => toggleSelected(chain.id)}
     >
-      <img
-        src={`/icons/${chain.iconSlug}.png`}
-        alt={chain.name}
-        className="size-5"
-      />
+      <img src={chain.iconUrl} alt={chain.name} className="size-5" />
       <div className="font-medium text-label-value-16 leading-none">
         {chain.name}
       </div>

@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 
 export type TokenData = {
   id: string
@@ -12,6 +13,7 @@ export type TokenData = {
 
 type CommonProtocolEntry = {
   iconSlug: string
+  iconUrl: string
   protocolName: string
 }
 
@@ -97,6 +99,7 @@ export function getProtocolsByType(
     return {
       protocolName: project?.interopConfig.name ?? project.name,
       iconSlug: project?.slug,
+      iconUrl: getProjectIcon(project.slug),
     }
   }
 

@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ActivityLeaderboard } from '~/server/features/monthly-reports/getActivityLeaderboard'
 import type { TvsLeaderboard } from '~/server/features/monthly-reports/getTvsLeaderboard'
 import type { EcosystemMonthlyUpdateEntry } from '../getEcosystemEntries'
@@ -27,6 +28,7 @@ export function getEcosystemTvsLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
+        iconUrl: getProjectIcon(project.slug),
         tvs: data.tvs,
         change: data.change,
       }
@@ -37,6 +39,7 @@ export function getEcosystemTvsLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
+        iconUrl: getProjectIcon(project.slug),
         tvs: data.tvs,
         change: data.change,
       }
@@ -67,6 +70,7 @@ export function getEcosystemActivityLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
+        iconUrl: getProjectIcon(project.slug),
         uops: data.uops,
         change: data.change,
       }
@@ -77,6 +81,7 @@ export function getEcosystemActivityLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
+        iconUrl: getProjectIcon(project.slug),
         uops: data.uops,
         change: data.change,
       }

@@ -1,8 +1,10 @@
 import type { Project } from '@l2beat/config'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
+import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -141,7 +143,7 @@ export async function getRegularDaProjectSections({
       type: 'LivenessSection',
       props: {
         milestones: [],
-        project: bridge,
+        project: getChartProject(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
         title: 'Liveness',
@@ -182,6 +184,13 @@ export async function getRegularDaProjectSections({
   })
 
   const discoUiHref = `https://disco.l2beat.com/ui/p/${bridge?.id}`
+  const discoUi = {
+    href: discoUiHref,
+    images: {
+      desktop: getStaticAsset('/images/disco-ui-desktop.png'),
+      mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+    },
+  }
   if (permissionsSection) {
     daBridgeItems.push({
       type: 'PermissionsSection',
@@ -190,7 +199,7 @@ export async function getRegularDaProjectSections({
         permissionedEntities: bridge.daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
-        discoUiHref,
+        discoUi,
       },
     })
   }
@@ -202,7 +211,7 @@ export async function getRegularDaProjectSections({
         ...contractsSection,
         id: 'da-bridge-contracts',
         title: 'Contracts',
-        discoUiHref,
+        discoUi,
       },
     })
   }

@@ -77,9 +77,9 @@ const chartContainerClassNames = cn(
 
 export interface ChartProject {
   id: ProjectId
-  slug: string
   name: string
   shortName: string | undefined
+  iconUrl: string
 }
 
 function ChartContainer<T extends { timestamp: number }>({

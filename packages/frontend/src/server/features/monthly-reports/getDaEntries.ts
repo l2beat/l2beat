@@ -7,6 +7,7 @@ import type {
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { DataAvailabilityUpdate } from '~/content/monthly-updates'
+import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
@@ -22,6 +23,7 @@ export interface DaMonthlyUpdateEntry
   id: string
   daLayerId: string
   name: string
+  iconUrl: string
   colors: ProjectCustomColors
   daProjects: ProjectId[]
   bannerImg?: string
@@ -34,6 +36,7 @@ export interface DaMonthlyUpdateEntry
     name: string
     stage: ProjectScalingStage
     slug: string
+    iconUrl: string
     description: string
     category: ProjectScalingCategory | undefined
     tvs?: number
@@ -114,6 +117,7 @@ function getDaMonthlyUpdateEntry(
     id: daUpdateEntry.id,
     daLayerId: daLayer.id,
     name: daUpdateEntry.name ?? daLayer.name,
+    iconUrl: getProjectIcon(daLayer.slug),
     news: daUpdateEntry.news,
     type: daUpdateEntry.type,
     bannerImg,
@@ -131,6 +135,7 @@ function getDaMonthlyUpdateEntry(
           id: project.id,
           name: project.name,
           slug: project.slug,
+          iconUrl: getProjectIcon(project.slug),
           stage: project.scalingStage,
           description: project.display.description,
           category: project.scalingInfo.type,

@@ -7,7 +7,11 @@ import type { NonMintingRow } from './NonMintingTable'
 import type { OmniChainRow } from './OmniChainTable'
 
 function getCommonColumns<
-  T extends { iconSlug: string; protocolName: string; volume: number },
+  T extends {
+    iconUrl: string
+    protocolName: string
+    volume: number
+  },
 >(columnHelper: ColumnHelper<T>) {
   return [
     columnHelper.display({
@@ -15,7 +19,7 @@ function getCommonColumns<
       cell: (ctx) => (
         <img
           className="min-h-[20px] min-w-[20px]"
-          src={`/icons/${ctx.row.original.iconSlug}.png`}
+          src={ctx.row.original.iconUrl}
           width={20}
           height={20}
           alt={`${ctx.row.original.protocolName} logo`}

@@ -29,7 +29,7 @@ import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
+import { getProjectIcon, getStaticAsset } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string
@@ -276,6 +276,17 @@ export async function getBridgesProjectEntry(
     contractUtils,
     projectsChangeReport,
   )
+
+  const discoUi = common.discoUiHref
+    ? {
+        href: common.discoUiHref,
+        images: {
+          desktop: getStaticAsset('/images/disco-ui-desktop.png'),
+          mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+        },
+      }
+    : undefined
+
   if (permissionsSection) {
     sections.push({
       type: 'PermissionsSection',
@@ -283,7 +294,7 @@ export async function getBridgesProjectEntry(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
   }
@@ -308,7 +319,7 @@ export async function getBridgesProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         ...contractsSection,
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
 

@@ -2,6 +2,7 @@ import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/Pro
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { TvsChartControlsContextProvider } from '~/components/chart/tvs/TvsChartControlsContext'
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
+import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartControls } from '~/components/projects/sections/tvs/ChartControls'
 import { TokenChart } from '~/components/projects/sections/tvs/TokenChart'
@@ -33,6 +34,7 @@ export function ScalingProjectTvsBreakdownPage({
   defaultRange,
   ...props
 }: Props) {
+  const chartProject = getChartProject(project)
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -52,17 +54,17 @@ export function ScalingProjectTvsBreakdownPage({
                 <PrimaryCard>
                   <ChartControls projectId={project.id} />
                   <ProjectBridgeTypeTvsChart
-                    project={project}
+                    project={chartProject}
                     milestones={milestones}
                   />
                   <ProjectAssetCategoryTvsChart
-                    project={project}
+                    project={chartProject}
                     milestones={milestones}
                   />
                   <div>
                     <section id="token-chart" className="scroll-mt-2">
                       <TokensControls tokens={entries} />
-                      <TokenChart project={project} milestones={milestones} />
+                      <TokenChart project={chartProject} milestones={milestones} />
                     </section>
                   </div>
                   <TvsProjectStats
