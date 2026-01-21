@@ -109,6 +109,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsAndLatestTimestamp(
     srcChains: string[],
     dstChains: string[],
+    protocolIds?: string[],
   ): Promise<AggregatedInteropTransferRecord[]> {
     if (srcChains.length === 0 || dstChains.length === 0) {
       return []
@@ -119,7 +120,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
       .as('latest_timestamp')
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .innerJoin(latestTimestampSubquery, (join) =>
         join.onRef(
@@ -131,7 +132,12 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectAll('AggregatedInteropTransfer')
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
-      .execute()
+
+    if (protocolIds && protocolIds.length > 0) {
+      query = query.where('id', 'in', protocolIds)
+    }
+
+    const rows = await query.execute()
 
     return rows.map(toRecord)
   }

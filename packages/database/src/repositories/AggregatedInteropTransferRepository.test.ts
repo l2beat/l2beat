@@ -659,6 +659,104 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         expect(result).toEqual([])
       })
+
+      it('filters by protocolIds when provided', async () => {
+        const record1 = record(
+          'protocol1',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const record3 = record(
+          'protocol3',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          7,
+          3000,
+        )
+        const records = [record1, record2, record3]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          ['ethereum'],
+          ['arbitrum'],
+          ['protocol1', 'protocol3'],
+        )
+
+        expect(result).toEqualUnsorted([record1, record3])
+      })
+
+      it('returns all matching records when protocolIds is undefined', async () => {
+        const record1 = record(
+          'protocol1',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const records = [record1, record2]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          ['ethereum'],
+          ['arbitrum'],
+          undefined,
+        )
+
+        expect(result).toEqualUnsorted([record1, record2])
+      })
+
+      it('returns all matching records when protocolIds is empty array', async () => {
+        const record1 = record(
+          'protocol1',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const records = [record1, record2]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsAndLatestTimestamp(
+          ['ethereum'],
+          ['arbitrum'],
+          [],
+        )
+
+        expect(result).toEqualUnsorted([record1, record2])
+      })
     },
   )
 })
