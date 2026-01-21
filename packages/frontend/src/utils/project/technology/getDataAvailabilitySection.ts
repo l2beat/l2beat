@@ -9,7 +9,7 @@ import {
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/getDaLayerRisks'
 import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolutions'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import { getDiagramParams } from '../getDiagramParams'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import { getTechnologyChoicesSectionProps } from './getTechnologyChoicesSectionProps'
@@ -123,7 +123,9 @@ function getPublicDaSection(
               text: 'Learn more about the DA layer here:',
               project: {
                 name: daSolutions[index].layerName,
-                icon: getProjectIcon(daSolutions[index].layerSlug),
+                icon: manifest.getUrl(
+                  `/icons/${daSolutions[index].layerSlug}.png`,
+                ),
               },
               href: `/data-availability/projects/${daSolutions[index].layerSlug}/${daSolutions[index].bridgeSlug}`,
             }

@@ -2,7 +2,6 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -33,7 +32,7 @@ export async function getInteropSummaryData(
 
   const interopChainsWithIcons = INTEROP_CHAINS.map((chain) => ({
     ...chain,
-    iconUrl: getProjectIcon(chain.iconSlug ?? chain.id),
+    iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
   }))
 
   return {

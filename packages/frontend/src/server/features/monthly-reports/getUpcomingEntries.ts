@@ -1,5 +1,5 @@
 import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import { getImageParams } from '~/utils/project/getImageParams'
 
 export interface UpcomingProjectUpdateEntry
@@ -27,7 +27,7 @@ function getUpcomingMonthlyUpdateEntry(
   return {
     ...upcomingUpdateEntry,
     id: upcomingUpdateEntry.projectId,
-    iconUrl: getProjectIcon(upcomingUpdateEntry.projectId),
+    iconUrl: manifest.getUrl(`/icons/${upcomingUpdateEntry.projectId}.png`),
     bannerImg,
   }
 }

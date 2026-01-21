@@ -64,7 +64,10 @@ export function ScalingProjectTvsBreakdownPage({
                   <div>
                     <section id="token-chart" className="scroll-mt-2">
                       <TokensControls tokens={entries} />
-                      <TokenChart project={chartProject} milestones={milestones} />
+                      <TokenChart
+                        project={chartProject}
+                        milestones={milestones}
+                      />
                     </section>
                   </div>
                   <TvsProjectStats

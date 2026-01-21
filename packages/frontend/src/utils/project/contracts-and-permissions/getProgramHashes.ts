@@ -3,7 +3,7 @@ import type {
   ProjectScalingContractsProgramHash,
 } from '@l2beat/config'
 import type { StateValidationProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 
 export function getProgramHashes(
   programHashes: ProjectScalingContractsProgramHash[] | undefined,
@@ -28,12 +28,12 @@ export function getProgramHashes(
           ? {
               name: zkCatalogProject.name,
               href: `/zk-catalog/${zkCatalogProject.slug}`,
-              icon: getProjectIcon(zkCatalogProject.slug),
+              icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
             }
           : undefined,
         usedIn: usedIn.map((project) => ({
           ...project,
-          icon: getProjectIcon(project.slug),
+          icon: manifest.getUrl(`/icons/${project.slug}.png`),
           url: `/scaling/projects/${project.slug}`,
         })),
       }

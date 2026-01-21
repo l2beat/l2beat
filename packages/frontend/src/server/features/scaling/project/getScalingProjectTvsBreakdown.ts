@@ -1,7 +1,7 @@
 import type { Milestone, Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getProjectIcon } from '../../utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import {
   getProjectTokensEntries as getProjectTokensEntries,
   type ProjectTvsBreakdownTokenEntry,
@@ -51,7 +51,7 @@ export async function getScalingProjectTvsBreakdown(
 
   return {
     project,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     dataTimestamp: getTvsTargetTimestamp(),
     entries,
     project7dData,

@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { ActivityLeaderboard } from '~/server/features/monthly-reports/getActivityLeaderboard'
 import type { TvsLeaderboard } from '~/server/features/monthly-reports/getTvsLeaderboard'
+import { manifest } from '~/utils/Manifest'
 import type { EcosystemMonthlyUpdateEntry } from '../getEcosystemEntries'
 
 export function getEcosystemTvsLeaderboard(
@@ -28,7 +28,7 @@ export function getEcosystemTvsLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
-        iconUrl: getProjectIcon(project.slug),
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         tvs: data.tvs,
         change: data.change,
       }
@@ -39,7 +39,7 @@ export function getEcosystemTvsLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
-        iconUrl: getProjectIcon(project.slug),
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         tvs: data.tvs,
         change: data.change,
       }
@@ -70,7 +70,7 @@ export function getEcosystemActivityLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
-        iconUrl: getProjectIcon(project.slug),
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         uops: data.uops,
         change: data.change,
       }
@@ -81,7 +81,7 @@ export function getEcosystemActivityLeaderboard(
       return {
         slug: project.slug,
         name: project.name,
-        iconUrl: getProjectIcon(project.slug),
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         uops: data.uops,
         change: data.change,
       }

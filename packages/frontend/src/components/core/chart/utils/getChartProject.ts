@@ -1,5 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import type { ChartProject } from '../Chart'
 
 export function getChartProject<
@@ -14,6 +14,6 @@ export function getChartProject<
     id: project.id,
     name: project.name,
     shortName: project.shortName,
-    iconUrl: getProjectIcon(project.slug),
+    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
   }
 }

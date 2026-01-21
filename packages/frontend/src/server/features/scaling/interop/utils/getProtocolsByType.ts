@@ -2,7 +2,6 @@ import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 
@@ -103,7 +102,7 @@ export function getProtocolsByType(
     return {
       protocolName: project?.interopConfig.name ?? project.name,
       iconSlug: project?.slug,
-      iconUrl: getProjectIcon(project.slug),
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     }
   }
 

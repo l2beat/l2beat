@@ -48,7 +48,6 @@ import {
 } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
@@ -278,7 +277,7 @@ export async function getScalingProjectEntry(
     name: project.name,
     shortName: project.shortName,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
@@ -333,7 +332,7 @@ export async function getScalingProjectEntry(
     ? {
         hostChainName: hostChain.name,
         hostChainSlug: hostChain.slug,
-        hostChainIcon: getProjectIcon(hostChain.slug),
+        hostChainIcon: manifest.getUrl(`/icons/${hostChain.slug}.png`),
       }
     : undefined
   const hostChainRisksSummary =
@@ -343,7 +342,7 @@ export async function getScalingProjectEntry(
       ? {
           hostChainName: hostChain.name,
           hostChainSlug: hostChain.slug,
-          hostChainIcon: getProjectIcon(hostChain.slug),
+          hostChainIcon: manifest.getUrl(`/icons/${hostChain.slug}.png`),
           riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
             .length,
         }
@@ -526,7 +525,7 @@ export async function getScalingProjectEntry(
         title: 'Rollup stage',
         stageConfig: project.scalingStage,
         name: project.name,
-        icon: getProjectIcon(project.slug),
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
         type: project.scalingInfo.type,
         isUnderReview: !!project.statuses.reviewStatus,
         isAppchain: project.scalingInfo.capability === 'appchain',
