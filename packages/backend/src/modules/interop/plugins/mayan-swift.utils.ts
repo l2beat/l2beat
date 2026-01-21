@@ -53,6 +53,53 @@ export function getMayanSwiftSettlementMsgType(
   }
 }
 
+// Extract the Wormhole emitter chain ID from transaction input data
+// The transaction calls unlockOrder(bytes encodedVm) or unlockBatch(bytes encodedVm)
+// VAA structure: version(1) + guardianSetIndex(4) + numSigs(1) + sigs(66*n) + timestamp(4) + nonce(4) + emitterChain(2) + ...
+export function extractWormholeEmitterChainFromTxData(
+  txData: string | undefined,
+): number | undefined {
+  try {
+    if (!txData || txData.length < 2) return undefined
+
+    // Remove 0x prefix
+    const data = txData.startsWith('0x') ? txData.slice(2) : txData
+
+    // ABI: selector(4) + offset(32) + length(32) + vaaData
+    // In hex chars: selector(8) + offset(64) + length(64) + vaaData
+    // VAA starts at char position 136 (68 bytes * 2)
+    if (data.length < 136) return undefined
+
+    const vaaStart = 136
+
+    // VAA header: version(1) + guardianSetIndex(4) + numSignatures(1) = 6 bytes = 12 chars
+    if (data.length < vaaStart + 12) return undefined
+
+    // Read numSignatures at byte 5 (char 10-11 relative to VAA start)
+    const numSignatures = Number.parseInt(
+      data.slice(vaaStart + 10, vaaStart + 12),
+      16,
+    )
+
+    // Skip signatures: 66 bytes each = 132 chars each
+    const signaturesSize = numSignatures * 132
+
+    // After signatures: timestamp(4) + nonce(4) = 8 bytes = 16 chars
+    // Then emitterChain(2 bytes = 4 chars)
+    const emitterChainOffset = vaaStart + 12 + signaturesSize + 16
+
+    if (data.length < emitterChainOffset + 4) return undefined
+
+    const emitterChainHex = data.slice(
+      emitterChainOffset,
+      emitterChainOffset + 4,
+    )
+    return Number.parseInt(emitterChainHex, 16)
+  } catch {
+    return undefined
+  }
+}
+
 // Extract all order keys from Mayan Swift BATCH_UNLOCK payload
 // Payload format: 0x04 + count(2 bytes) + [orderKey(32) + destChainId(2) + tokenAddr(32) + recipient(32)] * count
 // Each entry is 98 bytes (32 + 2 + 32 + 32)

@@ -20,6 +20,7 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
+  extractWormholeEmitterChainFromTxData,
   getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT,
   MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
@@ -44,9 +45,12 @@ const parseLogMessagePublished = createEventParser(
 const parseOrderUnlocked = createEventParser('event OrderUnlocked(bytes32 key)')
 
 // OrderUnlocked event emitted on source chain when settlement is processed
+// $srcChain is the chain where SettlementSent was emitted (the transfer destination chain)
+// It's extracted from the Wormhole VAA in the transaction input and used to mark events
+// as unsupported when the settlement source chain is not in our supported chains list
 export const OrderUnlocked = createInteropEventType<{
   key: string
-  // TODO: $srcChain could be inferred from matching SettlementSent, but needs investigation
+  $srcChain?: string
 }>('mayan-swift.OrderUnlocked')
 
 export class MayanSwiftSettlementPlugin implements InteropPlugin {
@@ -61,9 +65,19 @@ export class MayanSwiftSettlementPlugin implements InteropPlugin {
     // Capture OrderUnlocked events
     const orderUnlocked = parseOrderUnlocked(input.log, [MAYAN_SWIFT])
     if (orderUnlocked) {
+      // Extract emitter chain from the Wormhole VAA in transaction input
+      // This tells us which chain the settlement message came from
+      const txData =
+        typeof input.tx.data === 'string' ? input.tx.data : undefined
+      const emitterChainId = extractWormholeEmitterChainFromTxData(txData)
+      const $srcChain = emitterChainId
+        ? findChain(wormholeNetworks, (x) => x.wormholeChainId, emitterChainId)
+        : undefined
+
       return [
         OrderUnlocked.create(input, {
           key: orderUnlocked.key,
+          $srcChain,
         }),
       ]
     }
