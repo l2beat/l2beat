@@ -1,9 +1,11 @@
-import type { Project } from '@l2beat/config'
+import type { Logger } from '@l2beat/backend-tools'
+import type { InteropConfig, Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
   id: string
@@ -23,10 +25,22 @@ export type NonMintingProtocolEntry = CommonProtocolEntry & {
   tokens: TokenData[]
 }
 
+export type DurationSplit = {
+  type: 'split'
+  in: {
+    label: string
+    duration: number | null
+  }
+  out: {
+    label: string
+    duration: number | null
+  }
+}
+
 export type LockAndMintProtocolEntry = CommonProtocolEntry & {
   volume: number
   tokens: TokenData[]
-  averageDuration: number
+  averageDuration: { type: 'single'; duration: number } | DurationSplit
 }
 
 export type OmniChainProtocolEntry = CommonProtocolEntry & {
@@ -46,36 +60,18 @@ export function getProtocolsByType(
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolsByType {
   const logger = getLogger().for('getProtocolsByType')
-  const protocolsDataMap = new Map<
+
+  const durationSplitMap = new Map<
     string,
-    {
-      volume: number
-      tokens: Map<string, number>
-      transferCount: number
-      totalDurationSum: number
-    }
+    NonNullable<InteropConfig['durationSplit']>
   >()
-
-  for (const record of records) {
-    const current = protocolsDataMap.get(record.id) ?? {
-      volume: 0,
-      tokens: new Map<string, number>(),
-      transferCount: 0,
-      totalDurationSum: 0,
+  for (const project of interopProjects) {
+    if (project.interopConfig.durationSplit) {
+      durationSplitMap.set(project.id, project.interopConfig.durationSplit)
     }
-
-    for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
-      current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
-    }
-
-    protocolsDataMap.set(record.id, {
-      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-      tokens: current.tokens,
-      transferCount: current.transferCount + (record.transferCount ?? 0),
-      totalDurationSum:
-        current.totalDurationSum + (record.totalDurationSum ?? 0),
-    })
   }
+
+  const protocolsDataMap = getProtocolsDataMap(records, durationSplitMap)
 
   const protocolsByType = groupBy(
     interopProjects,
@@ -106,53 +102,98 @@ export function getProtocolsByType(
     }
   }
 
-  const getTokensData = (tokens: Map<string, number>) => {
-    return Array.from(tokens.entries())
-      .map(([tokenId, volume]) => {
-        const tokenDetails = tokensDetailsMap.get(tokenId)
-
-        if (!tokenDetails) {
-          logger.warn(`Token not found: ${tokenId}`)
-          return undefined
-        }
-
-        return {
-          id: tokenId,
-          symbol: tokenDetails.symbol,
-          iconUrl:
-            tokenDetails.iconUrl ??
-            manifest.getUrl('/images/token-placeholder.png'),
-          volume,
-        }
-      })
-      .filter(notUndefined)
-      .toSorted((a, b) => b.volume - a.volume)
-  }
-
   return {
     nonMinting: nonMintingData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
         volume,
-        tokens: getTokensData(tokens),
+        tokens: getTokensData(tokens, tokensDetailsMap, logger),
       }
     }),
-    lockAndMint: lockAndMintData.map(
-      ([key, { volume, tokens, transferCount, totalDurationSum }]) => {
-        return {
-          ...getProjectCommon(key),
-          volume,
-          tokens: getTokensData(tokens),
-          averageDuration: Math.floor(totalDurationSum / transferCount),
-        }
-      },
-    ),
+    lockAndMint: lockAndMintData.map(([key, data]) => {
+      return {
+        ...getProjectCommon(key),
+        volume: data.volume,
+        tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
+        averageDuration: getAverageDuration(key, data, durationSplitMap),
+      }
+    }),
     omniChain: omniChainData.map(([key, { volume, tokens }]) => {
       return {
         ...getProjectCommon(key),
         volume,
-        tokens: getTokensData(tokens),
+        tokens: getTokensData(tokens, tokensDetailsMap, logger),
       }
     }),
+  }
+}
+
+function getTokensData(
+  tokens: Map<string, number>,
+  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  logger: Logger,
+) {
+  return Array.from(tokens.entries())
+    .map(([tokenId, volume]) => {
+      const tokenDetails = tokensDetailsMap.get(tokenId)
+
+      if (!tokenDetails) {
+        logger.warn(`Token not found: ${tokenId}`)
+        return undefined
+      }
+
+      return {
+        id: tokenId,
+        symbol: tokenDetails.symbol,
+        iconUrl:
+          tokenDetails.iconUrl ??
+          manifest.getUrl('/images/token-placeholder.png'),
+        volume,
+      }
+    })
+    .filter(notUndefined)
+    .toSorted((a, b) => b.volume - a.volume)
+}
+
+function getAverageDuration(
+  key: string,
+  data: {
+    transferCount: number
+    totalDurationSum: number
+    inTransferCount: number
+    inDurationSum: number
+    outTransferCount: number
+    outDurationSum: number
+  },
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+): LockAndMintProtocolEntry['averageDuration'] {
+  const durationSplit = durationSplitMap.get(key)
+
+  if (durationSplit) {
+    return {
+      type: 'split',
+      in: {
+        label: durationSplit.in.label,
+        duration:
+          data.inTransferCount > 0
+            ? Math.floor(data.inDurationSum / data.inTransferCount)
+            : null,
+      },
+      out: {
+        label: durationSplit.out.label,
+        duration:
+          data.outTransferCount > 0
+            ? Math.floor(data.outDurationSum / data.outTransferCount)
+            : null,
+      },
+    }
+  }
+
+  return {
+    type: 'single',
+    duration:
+      data.transferCount > 0
+        ? Math.floor(data.totalDurationSum / data.transferCount)
+        : 0,
   }
 }

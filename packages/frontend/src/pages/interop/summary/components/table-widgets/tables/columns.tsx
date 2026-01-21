@@ -1,6 +1,6 @@
-import { formatSeconds } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { AvgDurationCell } from '../AvgDurationCell'
 import { TopTokensCell } from '../TopTokensCell'
 import type { LockAndMintRow } from './LockAndMintTable'
 import type { NonMintingRow } from './NonMintingTable'
@@ -81,9 +81,7 @@ export const lockAndMintColumns = [
       headClassName: 'text-2xs',
     },
     cell: (ctx) => (
-      <div className="font-medium text-label-value-15">
-        {formatSeconds(ctx.row.original.averageDuration)}
-      </div>
+      <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
     ),
   }),
   lockAndMintColumnHelper.accessor('tokens', {
