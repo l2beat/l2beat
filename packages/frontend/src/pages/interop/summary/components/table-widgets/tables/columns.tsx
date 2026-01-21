@@ -30,7 +30,7 @@ const commonColumns = [
     size: 28,
     enableHiding: false,
   }),
-  columnHelper.accessor((row) => row.protocolName, {
+  columnHelper.accessor('protocolName', {
     header: 'Name',
     cell: (ctx) => (
       <div className="max-w-[76px] break-words font-bold text-label-value-15">
@@ -44,7 +44,7 @@ const commonColumns = [
   }),
 ]
 
-const last24hVolumeColumn = columnHelper.accessor((row) => row.volume, {
+const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
   cell: (ctx) => (
     <span className="font-medium text-label-value-15">
@@ -66,18 +66,26 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
   cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
 })
 
-const averageDurationColumn = columnHelper.accessor('averageDuration', {
-  header: 'last 24h avg.\ntransfer time',
-  meta: {
-    headClassName: 'text-2xs',
+const averageDurationColumn = columnHelper.accessor(
+  (row) =>
+    row.averageDuration.type === 'single'
+      ? row.averageDuration.duration
+      : (row.averageDuration.in.duration ??
+        row.averageDuration.out.duration ??
+        Number.POSITIVE_INFINITY),
+  {
+    header: 'last 24h avg.\ntransfer time',
+    invertSorting: true,
+    meta: {
+      headClassName: 'text-2xs',
+    },
+    cell: (ctx) => (
+      <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
+    ),
   },
-  cell: (ctx) => (
-    <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-  ),
-})
+)
 
-const transferCountColumn = columnHelper.display({
-  id: 'token count',
+const tokenCountColumn = columnHelper.accessor((row) => row.tokens.length, {
   header: 'Token\ncount',
   cell: (ctx) => (
     <div className="font-medium text-label-value-15">
@@ -106,7 +114,7 @@ export const lockAndMintColumns = [
 export const omniChainColumns = [
   ...commonColumns,
   last24hVolumeColumn,
-  transferCountColumn,
+  tokenCountColumn,
   tokensByVolumeColumn,
 ]
 
@@ -139,7 +147,7 @@ export const allProtocolsColumns = [
     cell: (ctx) => <TopChainsCell chains={ctx.row.original.chains} />,
   }),
   last24hVolumeColumn,
-  transferCountColumn,
+  tokenCountColumn,
   averageDurationColumn,
   columnHelper.accessor('averageValue', {
     header: 'last 24h avg.\ntransfer value',

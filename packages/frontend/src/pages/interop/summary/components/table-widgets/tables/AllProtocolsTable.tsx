@@ -1,4 +1,4 @@
-import { getCoreRowModel } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
@@ -9,13 +9,18 @@ export function AllProtocolsTable({ entries }: { entries: ProtocolEntry[] }) {
     data: entries,
     columns: allProtocolsColumns,
     getCoreRowModel: getCoreRowModel(),
-    enableSorting: false,
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       columnPinning: {
         left: ['#', 'logo'],
       },
-      sorting: [],
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
+        },
+      ],
     },
   })
 
