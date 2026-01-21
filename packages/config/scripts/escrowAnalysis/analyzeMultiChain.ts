@@ -176,6 +176,31 @@ const BRIDGE_SECURITY_INFO: Record<string, { category: SecurityCategory; trusted
   },
 }
 
+// Bridge protocol to operator mapping (for issuer == bridge operator check)
+const BRIDGE_OPERATORS: Record<string, string> = {
+  'Layer Zero': 'Layer Zero',
+  'Layer Zero v2': 'Layer Zero',
+  'Layer Zero v2 OFT': 'Layer Zero',
+  'Layer Zero OFT': 'Layer Zero',
+  'Frax Ferry': 'Frax',
+  'The Graph Custom Gateway': 'The Graph',
+  'Wormhole': 'Wormhole',
+  'Wormhole NTT': 'Wormhole',
+  'Chainlink CCIP': 'Chainlink',
+  'Axelar': 'Axelar',
+  'Axelar (ITS)': 'Axelar',
+  'Connext (xERC20)': 'Connext',
+  'Maker Teleport': 'MakerDAO',
+  'Sky Teleport': 'MakerDAO',
+}
+
+// Known issuer-operated bridges (symbol -> issuer runs bridge)
+const ISSUER_OPERATED_TOKENS: Record<string, boolean> = {
+  'USDS': true,   // MakerDAO operates their own bridge
+  'sUSDS': true,  // MakerDAO operates their own bridge
+  'DAI': true,    // MakerDAO Teleport
+}
+
 // ===== Data Loading Functions =====
 
 const PROJECTS_DIR = join(__dirname, '../../src/projects')
@@ -446,6 +471,26 @@ function analyzeExternalTokens(
       } else {
         category = 'third-party-secured'
         categoryReason = `Bridged via ${bridgeProtocol} (trust model not analyzed)`
+      }
+
+      // Check if issuer is the same as bridge operator - if so, it's issuer-secured
+      const bridgeOperator = BRIDGE_OPERATORS[bridgeFromConfig]
+      const issuerRunsBridge = bridgeOperator && issuer !== 'Unknown' && issuer === bridgeOperator
+      // Also check if bridge name contains issuer name (e.g., "Frax Ferry" contains "Frax")
+      const bridgeNameContainsIssuer = issuer !== 'Unknown' &&
+        bridgeFromConfig.toLowerCase().includes(issuer.toLowerCase().split(' ')[0])
+      // Check known issuer-operated tokens
+      const knownIssuerOperated = ISSUER_OPERATED_TOKENS[token.symbol] === true
+
+      if (issuerRunsBridge || bridgeNameContainsIssuer || knownIssuerOperated) {
+        category = 'issuer-secured'
+        categoryReason = `${issuer} operates both the token and the bridge`
+        trustedParties = [{
+          name: issuer,
+          role: 'Token Issuer & Bridge Operator',
+          powers: ['mint/burn tokens', 'control bridge'],
+          riskDescription: `Full control over ${token.symbol} - no additional trust beyond holding the token`,
+        }]
       }
     } else {
       bridgeProtocol = 'Unknown Bridge'

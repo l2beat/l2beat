@@ -59,9 +59,9 @@ function generateHtml(reports: EscrowReport[]): string {
         <td class="canonical clickable" onclick="showReclassified('${r.projectId}', 'canonical')">${formatUsd(r.summary.canonicalTvl)}${diffStr(canonicalDiff)}</td>
         <td class="external clickable" onclick="showReclassified('${r.projectId}', 'external')">${formatUsd(r.summary.externalTvl)}${diffStr(externalDiff)}</td>
         <td class="native separator">${formatUsd(r.summary.nativeTvl)}</td>
-        <td class="rollup">${formatUsd(r.summary.rollupSecuredTvl)}</td>
-        <td class="issuer">${formatUsd(r.summary.issuerSecuredTvl)}</td>
-        <td class="third-party">${formatUsd(r.summary.thirdPartySecuredTvl)}</td>
+        <td class="rollup clickable" onclick="showCategoryDetail('${r.projectId}', 'rollup-secured')">${formatUsd(r.summary.rollupSecuredTvl)}</td>
+        <td class="issuer clickable" onclick="showCategoryDetail('${r.projectId}', 'issuer-secured')">${formatUsd(r.summary.issuerSecuredTvl)}</td>
+        <td class="third-party clickable" onclick="showCategoryDetail('${r.projectId}', 'third-party-secured')">${formatUsd(r.summary.thirdPartySecuredTvl)}</td>
       </tr>
     `}).join('')
 
@@ -158,7 +158,7 @@ function generateHtml(reports: EscrowReport[]): string {
       margin-bottom: 32px;
     }
     .comparison-table td, .comparison-table th {
-      padding: 12px 24px;
+      padding: 12px 16px;
     }
     .comparison-table .total-row {
       font-weight: 600;
@@ -236,7 +236,8 @@ function generateHtml(reports: EscrowReport[]): string {
 <body>
   <h1>Escrow Analysis Dashboard</h1>
 
-  <h2>Current API vs New Framework</h2>
+  <h2>Messaging Classification</h2>
+  <p style="color: #8b949e; font-size: 13px; margin-bottom: 16px;">How messages being passed between L1 and L2: Canonical (rollup messaging), External (non-rollup external messaging), Native (issued on L2 directly)</p>
   <table class="comparison-table">
     <thead>
       <tr>
@@ -274,7 +275,32 @@ function generateHtml(reports: EscrowReport[]): string {
     </tbody>
   </table>
 
-  <h2>TVL by Governance</h2>
+  <h2>Trust Assumptions</h2>
+  <div class="summary-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="summary-card" style="border-left: 4px solid #3fb950;">
+      <div class="label">No Additional Trust</div>
+      <div class="value" style="color: #3fb950;">${formatUsd(totalRollupSecured + totalIssuerSecured)}</div>
+      <div style="color: #8b949e; font-size: 12px; margin-top: 8px;">
+        Rollup-secured (${formatUsd(totalRollupSecured)}) + Issuer-secured (${formatUsd(totalIssuerSecured)})
+      </div>
+      <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">
+        You already trust the rollup governance and token issuers
+      </div>
+    </div>
+    <div class="summary-card" style="border-left: 4px solid #f85149;">
+      <div class="label">Additional Trust Required</div>
+      <div class="value" style="color: #f85149;">${formatUsd(totalThirdParty)}</div>
+      <div style="color: #8b949e; font-size: 12px; margin-top: 8px;">
+        Third-party bridges (LayerZero, Wormhole, etc.)
+      </div>
+      <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">
+        Requires trusting external validators/guardians
+      </div>
+    </div>
+  </div>
+
+  <h2>Trust Assumptions Breakdown</h2>
+  <p style="color: #8b949e; font-size: 13px; margin-bottom: 16px;">Who secures the bridge: Rollup governance, Token issuer, or Third-party validators</p>
   <div class="breakdown-grid">
     <div class="breakdown-card rollup">
       <div class="label">Rollup-Secured</div>
@@ -294,8 +320,12 @@ function generateHtml(reports: EscrowReport[]): string {
   <table>
     <thead>
       <tr>
-        <th>Chain</th>
-        <th>Total TVL</th>
+        <th rowspan="2">Chain</th>
+        <th rowspan="2">Total TVL</th>
+        <th colspan="3" class="separator" style="text-align: center; color: #58a6ff;">Messaging Classification</th>
+        <th colspan="3" style="text-align: center; color: #a371f7;">Trust Assumptions</th>
+      </tr>
+      <tr>
         <th class="canonical">Canonical</th>
         <th class="external">External</th>
         <th class="native separator">Native</th>
@@ -381,93 +411,225 @@ function generateHtml(reports: EscrowReport[]): string {
       const report = reports.find(r => r.projectId === chainId);
       if (!report) return;
 
-      // Find escrows where API source differs from new framework bridgeType
-      // For canonical: escrows that ARE canonical in new framework but were external in API
-      // For external: escrows that ARE external in new framework but were canonical in API
-      let reclassified = [];
-      let totalReclassified = 0;
-
       if (type === 'canonical') {
         // Escrows now canonical that were marked external (issuer-controlled canonical bridges)
-        reclassified = report.escrows
+        const reclassified = report.escrows
           .filter(e => e.bridgeType === 'canonical' && e.category !== 'rollup-secured')
           .filter(e => e.totalValueUsd > 10000)
           .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
-        totalReclassified = reclassified.reduce((sum, e) => sum + e.totalValueUsd, 0);
+        const totalReclassified = reclassified.reduce((sum, e) => sum + e.totalValueUsd, 0);
+
+        document.getElementById('modal-title').textContent = chainId + ' - Canonical Reclassification';
+
+        if (reclassified.length === 0) {
+          document.getElementById('modal-body').innerHTML = '<p style="color: #8b949e;">No significant reclassifications for this category.</p>';
+        } else {
+          const tableHtml = \`
+            <table style="width: 100%;">
+              <thead>
+                <tr>
+                  <th style="text-align: left;">Escrow</th>
+                  <th style="text-align: right;">TVL</th>
+                  <th style="text-align: left;">Current API</th>
+                  <th style="text-align: left;">New Framework</th>
+                </tr>
+              </thead>
+              <tbody>
+                \${reclassified.map(e => \`
+                  <tr>
+                    <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
+                    <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
+                    <td class="external">source: external</td>
+                    <td class="canonical">\${e.bridgeType} + \${e.category}</td>
+                  </tr>
+                \`).join('')}
+                <tr style="border-top: 2px solid #30363d; font-weight: 600;">
+                  <td>Total reclassified</td>
+                  <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          \`;
+          document.getElementById('modal-body').innerHTML = tableHtml;
+        }
       } else {
-        // External tokens (burn/mint bridges)
-        reclassified = (report.externalTokens || [])
-          .filter(t => t.valueUsd > 10000)
-          .sort((a, b) => b.valueUsd - a.valueUsd);
-        totalReclassified = reclassified.reduce((sum, t) => sum + t.valueUsd, 0);
+        // External summary view
+        const apiExternal = report.summary.apiExternalTvl || 0;
+        const newExternal = report.summary.externalTvl;
+        const diff = newExternal - apiExternal;
+
+        // Break down by category
+        const externalTokens = report.externalTokens || [];
+        const issuerSecured = externalTokens.filter(t => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0);
+        const thirdPartySecured = externalTokens.filter(t => t.category === 'third-party-secured').reduce((sum, t) => sum + t.valueUsd, 0);
+
+        // Count by bridge protocol
+        const byProtocol = {};
+        externalTokens.forEach(t => {
+          byProtocol[t.bridgeProtocol] = (byProtocol[t.bridgeProtocol] || 0) + t.valueUsd;
+        });
+        const topProtocols = Object.entries(byProtocol)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+
+        document.getElementById('modal-title').textContent = chainId + ' - External TVL Summary';
+
+        const tableHtml = \`
+          <table style="width: 100%; margin-bottom: 24px;">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Metric</th>
+                <th style="text-align: right;">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Current API External</td>
+                <td style="text-align: right;">\${formatUsd(apiExternal)}</td>
+              </tr>
+              <tr>
+                <td>New Framework External</td>
+                <td style="text-align: right;">\${formatUsd(newExternal)}</td>
+              </tr>
+              <tr style="border-top: 2px solid #30363d; font-weight: 600;">
+                <td>Difference</td>
+                <td style="text-align: right;" class="\${diff >= 0 ? 'positive' : 'negative'}">\${diff >= 0 ? '+' : '-'}\${formatUsd(Math.abs(diff))}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="color: #8b949e; margin-bottom: 12px;">External Tokens by Security</h3>
+          <table style="width: 100%; margin-bottom: 24px;">
+            <tbody>
+              <tr>
+                <td class="issuer">Issuer-Secured</td>
+                <td style="text-align: right;">\${formatUsd(issuerSecured)}</td>
+              </tr>
+              <tr>
+                <td class="third-party">Third-Party-Secured</td>
+                <td style="text-align: right;">\${formatUsd(thirdPartySecured)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="color: #8b949e; margin-bottom: 12px;">Top Bridge Protocols</h3>
+          <table style="width: 100%;">
+            <tbody>
+              \${topProtocols.map(([protocol, value]) => \`
+                <tr>
+                  <td>\${protocol}</td>
+                  <td style="text-align: right;">\${formatUsd(value)}</td>
+                </tr>
+              \`).join('')}
+            </tbody>
+          </table>
+        \`;
+        document.getElementById('modal-body').innerHTML = tableHtml;
       }
 
-      document.getElementById('modal-title').textContent = chainId + ' - ' + (type === 'canonical' ? 'Canonical' : 'External') + ' Reclassification';
+      document.getElementById('modal').classList.add('active');
+    }
 
-      if (reclassified.length === 0) {
-        document.getElementById('modal-body').innerHTML = '<p style="color: #8b949e;">No significant reclassifications for this category.</p>';
-      } else if (type === 'canonical') {
-        const tableHtml = \`
-          <table style="width: 100%;">
+    function showCategoryDetail(chainId, category) {
+      const report = reports.find(r => r.projectId === chainId);
+      if (!report) return;
+
+      const categoryNames = {
+        'rollup-secured': 'Rollup-Secured',
+        'issuer-secured': 'Issuer-Secured',
+        'third-party-secured': 'Third-Party-Secured'
+      };
+
+      document.getElementById('modal-title').textContent = chainId + ' - ' + categoryNames[category] + ' Assets';
+
+      // Get escrows for this category
+      const escrows = report.escrows
+        .filter(e => e.category === category)
+        .filter(e => e.totalValueUsd > 10000)
+        .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
+
+      // Get external tokens for this category
+      const externalTokens = (report.externalTokens || [])
+        .filter(t => t.category === category)
+        .filter(t => t.valueUsd > 10000)
+        .sort((a, b) => b.valueUsd - a.valueUsd);
+
+      const escrowTotal = escrows.reduce((sum, e) => sum + e.totalValueUsd, 0);
+      const tokenTotal = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0);
+
+      let html = '';
+
+      if (escrows.length > 0) {
+        html += \`
+          <h3 style="color: #8b949e; margin-bottom: 12px;">Escrows (L1 Locked)</h3>
+          <table style="width: 100%; margin-bottom: 24px;">
             <thead>
               <tr>
                 <th style="text-align: left;">Escrow</th>
                 <th style="text-align: right;">TVL</th>
-                <th style="text-align: left;">Current API</th>
-                <th style="text-align: left;">New Framework</th>
+                <th style="text-align: left;">Bridge Type</th>
               </tr>
             </thead>
             <tbody>
-              \${reclassified.map(e => \`
+              \${escrows.map(e => \`
                 <tr>
                   <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
                   <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
-                  <td class="external">source: external</td>
-                  <td class="canonical">\${e.bridgeType} + \${e.category}</td>
+                  <td>\${e.bridgeType}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
-                <td>Total reclassified</td>
-                <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
-                <td></td>
+                <td>Subtotal</td>
+                <td style="text-align: right;">\${formatUsd(escrowTotal)}</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
         \`;
-        document.getElementById('modal-body').innerHTML = tableHtml;
-      } else {
-        const tableHtml = \`
+      }
+
+      if (externalTokens.length > 0) {
+        html += \`
+          <h3 style="color: #8b949e; margin-bottom: 12px;">External Tokens (Burn/Mint)</h3>
           <table style="width: 100%;">
             <thead>
               <tr>
                 <th style="text-align: left;">Token</th>
                 <th style="text-align: right;">TVL</th>
                 <th style="text-align: left;">Bridge</th>
-                <th style="text-align: left;">Category</th>
               </tr>
             </thead>
             <tbody>
-              \${reclassified.map(t => \`
+              \${externalTokens.map(t => \`
                 <tr>
                   <td>\${t.symbol}</td>
                   <td style="text-align: right;">\${formatUsd(t.valueUsd)}</td>
                   <td>\${t.bridgeProtocol}</td>
-                  <td class="\${t.category}">\${t.category}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
-                <td>Total</td>
-                <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
-                <td></td>
+                <td>Subtotal</td>
+                <td style="text-align: right;">\${formatUsd(tokenTotal)}</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
         \`;
-        document.getElementById('modal-body').innerHTML = tableHtml;
       }
 
+      if (escrows.length === 0 && externalTokens.length === 0) {
+        html = '<p style="color: #8b949e;">No significant assets in this category.</p>';
+      } else {
+        html += \`
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 2px solid #30363d; font-weight: 600;">
+            Total: \${formatUsd(escrowTotal + tokenTotal)}
+          </div>
+        \`;
+      }
+
+      document.getElementById('modal-body').innerHTML = html;
       document.getElementById('modal').classList.add('active');
     }
 
