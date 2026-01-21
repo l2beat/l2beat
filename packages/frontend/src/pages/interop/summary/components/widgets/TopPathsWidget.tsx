@@ -1,4 +1,3 @@
-import type { InteropChain } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import uniq from 'lodash/uniq'
@@ -8,8 +7,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-
-type InteropChainWithIcon = InteropChain & { iconUrl: string }
+import type { InteropChainWithIcon } from '../chain-selector/types'
 
 export function TopPathsWidget({
   interopChains,
@@ -34,9 +32,11 @@ export function TopPathsWidget({
   }
 
   return (
-    <PrimaryCard className="@container z-10 h-[213px]">
-      <h2 className="font-bold text-heading-20">Top 3 paths by volume</h2>
-      <div className="mt-0.5 font-medium text-label-value-14 text-secondary">
+    <PrimaryCard className="@container max-md:rounded-lg max-[1024px]:h-full min-[1024px]:h-[213px]">
+      <h2 className="font-bold text-heading-16 md:text-heading-20">
+        Top 3 paths by volume
+      </h2>
+      <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         Between {uniqChains.length} selected chains
       </div>
       <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
@@ -90,20 +90,12 @@ function PathItem({
     <tr>
       <td className="rounded-l-lg border-divider border-t border-b border-l py-2 pl-2.5 leading-none">
         <div className="flex items-center gap-1.5">
-          <img
-            src={from.iconUrl}
-            alt={from.name}
-            className="size-5"
-          />
+          <img src={from.iconUrl} alt={from.name} className="size-5" />
           <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {from.name}
           </div>
           <ArrowRightIcon className="size-5 fill-brand" />
-          <img
-            src={to.iconUrl}
-            alt={to.name}
-            className="size-5"
-          />
+          <img src={to.iconUrl} alt={to.name} className="size-5" />
           <div className="@max-[465px]:hidden font-medium text-label-value-15">
             {to.name}
           </div>

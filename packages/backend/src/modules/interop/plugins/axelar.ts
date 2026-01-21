@@ -1,11 +1,11 @@
-/* axelar
-
-For general message passing:
-    - ContractCall on SRC chain
-    - ContractCallApproved on DST chain
-    - ContractCallExecuted on DST chain
-*/
-
+/**
+ * Axelar AMB and token bridge
+ * this token bridge is confusingly branded under 'Squid'
+ * together with the intent protocol
+ * the squid frontend supports the tokenbridge and intents/swaps
+ * MINTING (tokenbridge/squid)
+ * NON-MINTING (intents/squid)
+ */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { findParsedAround } from './hyperlane-hwr'
 import {
@@ -363,12 +363,12 @@ export class AxelarPlugin implements InteropPlugin {
         return [
           // TODO: do we want to count intent fill AND settlement as message/transfer?
           // INTENT FILL
-          Result.Message('squid.Message', {
-            app: 'axelar-squid-express',
+          Result.Message('axelar-squid.Message', {
+            app: 'axelar-squid',
             srcEvent: contractCallWithToken,
             dstEvent: expressExecuted,
           }),
-          Result.Transfer('axelar-squid-express.Transfer', {
+          Result.Transfer('axelar-squid.Transfer', {
             srcEvent: contractCallWithToken,
             srcTokenAddress: contractCallWithToken.args.tokenAddress,
             srcAmount: contractCallWithToken.args.amount,
@@ -377,13 +377,15 @@ export class AxelarPlugin implements InteropPlugin {
             dstAmount: expressExecuted.args.amount,
           }),
           // SETTLEMENT
+          // we count the transfer because it is using the
+          // axelar tokenbridge to settle at the destination
           Result.Message('axelar.Message', {
-            app: 'axelar-squid-express-settlement',
+            app: 'axelar-tokenbridge-squid-settlement',
             srcEvent: contractCallWithToken,
             dstEvent: contractCallExecuted,
             extraEvents: [contractCallApprovedWithMint],
           }),
-          Result.Transfer('axelar-squid-express-settlement.Transfer', {
+          Result.Transfer('axelar.Transfer', {
             srcEvent: contractCallWithToken,
             srcTokenAddress: contractCallWithToken.args.tokenAddress,
             srcAmount: contractCallWithToken.args.amount,
@@ -399,12 +401,12 @@ export class AxelarPlugin implements InteropPlugin {
       }
       return [
         Result.Message('axelar.Message', {
-          app: 'axelar-contractCallWithToken',
+          app: 'axelar-tokenbridge',
           srcEvent: contractCallWithToken,
           dstEvent: contractCallExecuted,
           extraEvents: [contractCallApprovedWithMint],
         }),
-        Result.Transfer('axelar-contractCallWithToken.Transfer', {
+        Result.Transfer('axelar.Transfer', {
           srcEvent: contractCallWithToken,
           srcTokenAddress: contractCallWithToken.args.tokenAddress,
           srcAmount: contractCallWithToken.args.amount,

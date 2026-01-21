@@ -1,3 +1,9 @@
+/**
+ * Merkly tokenbridge via Hyperlane AMB (there are other merkly bridges)
+ * in practice Merkly is only used to bridge ETH/WETH (liquidity pool)
+ * does not emit at the destination, so for matching it behaves like a half-HWR with ETH as the asset
+ * NON-MINTING
+ */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { Dispatch, Process, parseDispatch, parseDispatchId } from './hyperlane'
 import { findParsedAround, parseSentTransferRemote } from './hyperlane-hwr'
@@ -12,11 +18,6 @@ import {
   type MatchResult,
   Result,
 } from './types'
-
-/**
- * Tracks the Merkly Tokenbridge, which in practice is only used to bridge ETH via Hyperlane messaging.
- * Merkly Tokenbridge does not emit any events at the destination, so it behaves like a half-HWR with ETH as the asset
- */
 
 const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
   'hyperlane-merkly-tokenbridge',
@@ -143,11 +144,12 @@ export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
 
       return [
         Result.Message('hyperlane.Message', {
-          app: 'merkly-tokenbridge',
+          // there are non-hyperlane merkly bridges
+          app: 'merkly-tokenbridge-hyperlane',
           srcEvent: dispatch,
           dstEvent: process,
         }),
-        Result.Transfer('hyperlaneMerklyTokenbridge.Transfer', {
+        Result.Transfer('merkly-tokenbridge-hyperlane.Transfer', {
           srcEvent: hwrSentMerkly,
           srcTokenAddress: hwrSentMerkly.args.tokenAddress,
           srcAmount: hwrSentMerkly.args.amount,

@@ -187,14 +187,18 @@ export class DeBridgePlugin implements InteropPlugin {
         )
         if (!sentOrderUnlock) continue
 
-        results.push(
-          Result.Transfer('debridge-dln-settlement.Transfer', {
-            srcEvent: sentOrderUnlock,
-            dstEvent: claimedUnlock,
-            dstTokenAddress: claimedUnlock.args.giveTokenAddress,
-            dstAmount: claimedUnlock.args.giveAmount,
-          }),
-        )
+        // TODO: it is not really necessary to match the individual settlements here
+        // but it might be interesting to match intent fill to its settlement at some point
+        extraEvents.push(sentOrderUnlock, claimedUnlock)
+        // would doublecount settlement transfers
+        // results.push(
+        //   Result.Transfer('debridge-dln-settlement.Transfer', {
+        //     srcEvent: sentOrderUnlock,
+        //     dstEvent: claimedUnlock,
+        //     dstTokenAddress: claimedUnlock.args.giveTokenAddress,
+        //     dstAmount: claimedUnlock.args.giveAmount,
+        //   }),
+        // )
       }
     }
     // cancellation: works like settlement but without the fill/transfer

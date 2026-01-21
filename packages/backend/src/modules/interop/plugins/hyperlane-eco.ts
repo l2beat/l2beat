@@ -1,3 +1,7 @@
+/**
+ * Intent settlement using Hyperlane AMB
+ * this only tracks the settlement leg, not the fill/transfer
+ */
 import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
@@ -22,9 +26,6 @@ import {
 } from './types'
 
 /**
- * INTENT SETTLEMENT PLUGIN (not fill)
- * This plugin tracks Hyperlane Eco contracts which *settle*
- * intents on the via the hyperlane message bridge.
  * 'proving' here just refers to messaging / settling
  * we are tracking the fill as the origin and the settlement as the destination
  *
@@ -33,9 +34,9 @@ import {
  * 2. HyperInstant: Immediately sends a message via Hyperlane to the Source Chain (HyperInstantFulfillment event on old contract, IntentProven (source) on new)
  * 3. Storage: Relies on standard storage proofs (no message back needed)
  *
- * we only track 1 and 2 as hyperlane messages, and an old IntentProven
+ * we track 1 and 2 as hyperlane messages, and an old IntentProven
  *
- * the new 'portal' contract can also sent via other bridges than hyperlane
+ * the new 'portal' contract can also send via other bridges than hyperlane
  */
 
 const parseBatchSent = createEventParser(

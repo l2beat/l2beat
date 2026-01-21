@@ -1,3 +1,6 @@
+/**
+ * For tagging apps that use Hyperlane AMB
+ */
 import {
   Dispatch,
   HYPERLANE_NETWORKS,

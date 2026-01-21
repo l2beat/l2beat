@@ -27,5 +27,5 @@ export function OmniChainTable({
 
   if (!entries) return null
 
-  return <BasicTable table={table} />
+  return <BasicTable table={table} tableWrapperClassName="pb-0" />
 }

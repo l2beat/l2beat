@@ -1,5 +1,5 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
-import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../TopTokensCell'
 import type { LockAndMintRow } from './LockAndMintTable'
@@ -35,10 +35,14 @@ function getCommonColumns<
     columnHelper.accessor((row) => row.protocolName, {
       header: 'Name',
       cell: (ctx) => (
-        <span className="font-bold text-label-value-15">
+        <div className="max-w-[76px] break-words font-bold text-label-value-15">
           {ctx.row.original.protocolName}
-        </span>
+        </div>
       ),
+      meta: {
+        cellClassName: 'whitespace-normal',
+        headClassName: 'text-2xs',
+      },
     }),
     columnHelper.accessor((row) => row.volume, {
       header: 'Last 24h\nVolume',
@@ -47,26 +51,47 @@ function getCommonColumns<
           {formatCurrency(ctx.row.original.volume, 'usd')}
         </span>
       ),
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs text-right',
+      },
     }),
   ]
 }
 
 const nonMintingColumnHelper = createColumnHelper<NonMintingRow>()
-export const nonMintingColumns = [...getCommonColumns(nonMintingColumnHelper)]
+export const nonMintingColumns = [
+  ...getCommonColumns(nonMintingColumnHelper),
+  nonMintingColumnHelper.accessor('tokens', {
+    header: 'tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
+    },
+    cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
+  }),
+]
 
 const lockAndMintColumnHelper = createColumnHelper<LockAndMintRow>()
 export const lockAndMintColumns = [
   ...getCommonColumns(lockAndMintColumnHelper),
   lockAndMintColumnHelper.accessor('averageDuration', {
-    header: 'last 24h\navg. transfer time',
+    header: 'last 24h avg.\ntransfer time',
+    meta: {
+      headClassName: 'text-2xs',
+    },
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
-        {formatDuration(ctx.row.original.averageDuration)}
+        {formatSeconds(ctx.row.original.averageDuration)}
       </div>
     ),
   }),
   lockAndMintColumnHelper.accessor('tokens', {
-    header: 'tokens by volume',
+    header: 'tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
+    },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
 ]
@@ -82,9 +107,17 @@ export const omniChainColumns = [
         {ctx.row.original.tokens.length}
       </div>
     ),
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
+    },
   }),
   omniChainColumnHelper.accessor('tokens', {
-    header: 'tokens by volume',
+    header: 'tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
+    },
     cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
   }),
 ]

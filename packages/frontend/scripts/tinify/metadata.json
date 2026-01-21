@@ -1538,5 +1538,8 @@
   "static/meta-images/scaling/projects/ethscriptions/opengraph-image.png": "0cf0e72f6817db338d5be25cadf9a506",
   "static/icons/usdt0.png": "f71eb7b2b8f93ab39659e93d785eab22",
   "static/meta-images/interop/summary/opengraph-image.png": "35acc244bcfb82129411bd8ba4c79410",
-  "static/meta-images/publications/governance-review-81.png": "728a3bd6e029a4e1b7a1f23059c301e7"
+  "static/meta-images/publications/governance-review-81.png": "728a3bd6e029a4e1b7a1f23059c301e7",
+  "static/icons/debridge-dln.png": "b8c49ca34500a71ea59a9fa344ff129d",
+  "static/icons/hyperlane-hwr.png": "8c7985d1882abfd7f11be6291b252074",
+  "static/meta-images/publications/governance-review-82.png": "5731ceb10e7368206815dc57996c7232"
 }

@@ -8,11 +8,19 @@ import { TableTooltip } from './TableTooltip'
 
 const Table = ({
   className,
+  tableWrapperClassName,
   ...props
-}: React.HTMLAttributes<HTMLTableElement>) => {
+}: React.HTMLAttributes<HTMLTableElement> & {
+  tableWrapperClassName?: string
+}) => {
   return (
     <div className="max-md:-mr-4">
-      <div className={cn('relative w-full overflow-auto pb-3 max-md:pr-4')}>
+      <div
+        className={cn(
+          'relative w-full overflow-auto pb-3 max-md:pr-4',
+          tableWrapperClassName,
+        )}
+      >
         <HighlightedTableRowProvider>
           <table
             className={cn('w-full border-collapse text-left', className)}
