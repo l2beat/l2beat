@@ -93,6 +93,21 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
       //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       // },
       {
+        hash: '0x5593b4a1aea71939da571a74d7276acc3588189c73287297f98cecd56962b2d8',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x023B02ad3b8f9045595Ac7139FdBA643b562cfe3',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'unsuccessful',
+        verificationSteps:
+          'At the time of writing, the sources for this version of the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+      },
+      {
         // ZKLighterVerifier
         hash: '0x3851046274646dacb2a19e53e45ef7f69f78f052f2033db62cb9c6024d6cd42f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
