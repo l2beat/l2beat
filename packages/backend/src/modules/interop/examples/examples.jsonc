@@ -1311,73 +1311,137 @@
       {
         "name": "base -> ethereum (erc20)",
         "txs": [
-          { "chain": "ethereum", "tx": "0x8dac7daf5e7ba2aeaea92d41fef0d27045618008c4661319f19f8ccb06ae37e8" },
-          { "chain": "base", "tx": "0x4ceca5feb2bb493b2aa06fe3ae2c2fd502ca379afacffad2b156f857b9d4dbb5" }
+          {
+            "chain": "ethereum",
+            "tx": "0x8dac7daf5e7ba2aeaea92d41fef0d27045618008c4661319f19f8ccb06ae37e8"
+          },
+          {
+            "chain": "base",
+            "tx": "0x4ceca5feb2bb493b2aa06fe3ae2c2fd502ca379afacffad2b156f857b9d4dbb5"
+          }
         ],
-        "messages": [{ "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
         "name": "base -> ethereum (eth)",
         "txs": [
-          { "chain": "ethereum", "tx": "0x8b8212452123e1ad00513dbb439374ea53e0a693b82a2e2918a25f1f378c4d88" },
-          { "chain": "base", "tx": "0xd1d7438ac477a0f0e31c88276f068a7cb1ec6431d7417193e7954e37c2f92f41" }
+          {
+            "chain": "ethereum",
+            "tx": "0x8b8212452123e1ad00513dbb439374ea53e0a693b82a2e2918a25f1f378c4d88"
+          },
+          {
+            "chain": "base",
+            "tx": "0xd1d7438ac477a0f0e31c88276f068a7cb1ec6431d7417193e7954e37c2f92f41"
+          }
         ],
-        "messages": [{ "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
         "name": "ethereum -> base (eth)",
         "txs": [
-          { "chain": "base", "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac" },
-          { "chain": "ethereum", "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc" }
+          {
+            "chain": "base",
+            "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc"
+          }
         ],
-        "messages": [{ "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
       {
         "name": "ethereum -> base (erc20)",
         "txs": [
-          { "chain": "base", "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac" },
-          { "chain": "ethereum", "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771" }
+          {
+            "chain": "base",
+            "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771"
+          }
         ],
-        "messages": [{ "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
       {
         "name": "optimism -> ethereum (erc20)",
         "txs": [
-          { "chain": "ethereum", "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3" },
-          { "chain": "optimism", "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687" }
+          {
+            "chain": "ethereum",
+            "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687"
+          }
         ],
-        "messages": [{ "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
         "name": "ethereum -> optimism (erc20)",
         "txs": [
-          { "chain": "optimism", "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4" },
-          { "chain": "ethereum", "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f" }
+          {
+            "chain": "optimism",
+            "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f"
+          }
         ],
-        "messages": [{ "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
       {
         "name": "ethereum -> optimism (eth)",
         "txs": [
-          { "chain": "optimism", "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a" },
-          { "chain": "ethereum", "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95" }
+          {
+            "chain": "optimism",
+            "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95"
+          }
         ],
-        "messages": [{ "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
       {
         "name": "optimism -> ethereum (eth)",
         "txs": [
-          { "chain": "ethereum", "tx": "0x0e22ba8740b08a455bbd187d6937ae8f40b6ef1c61a9cccd22f5ea8f1f6bcceb" },
-          { "chain": "optimism", "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240" }
+          {
+            "chain": "ethereum",
+            "tx": "0x0e22ba8740b08a455bbd187d6937ae8f40b6ef1c61a9cccd22f5ea8f1f6bcceb"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240"
+          }
         ],
-        "messages": [{ "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
         "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       }
     ]

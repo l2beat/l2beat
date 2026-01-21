@@ -382,7 +382,11 @@ async function runExample(
       .filter((x) => x !== undefined),
   )
 
-  const tokenInfos = await getTokenInfos(allTokenIds, tokenDbClient, Logger.SILENT)
+  const tokenInfos = await getTokenInfos(
+    allTokenIds,
+    tokenDbClient,
+    Logger.SILENT,
+  )
 
   const prices = await coingecko.getLatestMarketData(
     unique(
@@ -461,9 +465,12 @@ function checkGroupedExample(
 
     // Print group header
     const groupName =
-      group.name ?? `Group ${i + 1}: ${group.txs.map((t) => t.tx.slice(0, 10)).join(', ')}`
+      group.name ??
+      `Group ${i + 1}: ${group.txs.map((t) => t.tx.slice(0, 10)).join(', ')}`
     console.log(`\n--- ${groupName} ---`)
-    console.log(`    Txs: ${group.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`)
+    console.log(
+      `    Txs: ${group.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
+    )
 
     const eventsOk = checkEvents(
       'Event   ',
