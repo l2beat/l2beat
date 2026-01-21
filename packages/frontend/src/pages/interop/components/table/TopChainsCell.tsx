@@ -1,6 +1,5 @@
 import type { ChainData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import type { TopItem } from './TopItemsCell'
-import { TopItemsCell } from './TopItemsCell'
+import { type TopItem, TopItemsCell } from './TopItemsCell'
 
 export function TopChainsCell({ chains }: { chains: ChainData[] }) {
   const items: TopItem[] = chains.map((chain) => ({

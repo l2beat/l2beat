@@ -1,6 +1,6 @@
 import type { TokenData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import type { TopItem } from '../../../components/table/TopItemsCell'
-import { TopItemsCell } from '../../../components/table/TopItemsCell'
+import type { TopItem } from './TopItemsCell'
+import { TopItemsCell } from './TopItemsCell'
 
 export function TopTokensCell({ tokens }: { tokens: TokenData[] }) {
   const items: TopItem[] = tokens.map((token) => ({

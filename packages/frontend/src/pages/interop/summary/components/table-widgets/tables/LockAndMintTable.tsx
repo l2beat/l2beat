@@ -2,7 +2,10 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import { lockAndMintColumns, type ProtocolRow } from './columns'
+import {
+  lockAndMintColumns,
+  type ProtocolRow,
+} from '../../../../components/table/columns'
 
 export function LockAndMintTable({ entries }: { entries: ProtocolEntry[] }) {
   const table = useTable<ProtocolRow>({

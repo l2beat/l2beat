@@ -3,8 +3,8 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
-import { NoResultsInfo } from '../NoResultsInfo'
-import { AllProtocolsTable } from './tables/AllProtocolsTable'
+import { NoResultsInfo } from '../summary/components/NoResultsInfo'
+import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
   type,

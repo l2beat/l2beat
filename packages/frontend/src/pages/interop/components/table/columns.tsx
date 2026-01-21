@@ -4,10 +4,10 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { AvgDurationCell } from '../AvgDurationCell'
-import { BridgeTypeBadge } from '../BridgeTypeBadge'
-import { TopChainsCell } from '../TopChainsCell'
-import { TopTokensCell } from '../TopTokensCell'
+import { AvgDurationCell } from './AvgDurationCell'
+import { BridgeTypeBadge } from './BridgeTypeBadge'
+import { TopChainsCell } from './TopChainsCell'
+import { TopTokensCell } from './TopTokensCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
 const columnHelper = createColumnHelper<ProtocolRow>()
