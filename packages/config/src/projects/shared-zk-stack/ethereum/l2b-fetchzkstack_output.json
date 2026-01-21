@@ -24,7 +24,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "697",
+    "totalBlocksExecuted": "698",
     "txFilterer": "Yes"
   },
   {
@@ -38,7 +38,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "37560",
+    "totalBlocksExecuted": "37567",
     "txFilterer": "Yes"
   },
   {
@@ -52,7 +52,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "1790",
+    "totalBlocksExecuted": "1793",
     "txFilterer": "No"
   },
   {
@@ -66,7 +66,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "47913",
+    "totalBlocksExecuted": "47994",
     "txFilterer": "No"
   },
   {
@@ -80,7 +80,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "38923",
+    "totalBlocksExecuted": "39157",
     "txFilterer": "Yes"
   },
   {
@@ -136,7 +136,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "4831",
+    "totalBlocksExecuted": "4835",
     "txFilterer": "No"
   },
   {
@@ -150,7 +150,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "8341",
+    "totalBlocksExecuted": "8344",
     "txFilterer": "No"
   },
   {
@@ -162,9 +162,9 @@
     "baseTokenName": "ETH",
     "pubdataPricingMode": 1,
     "pubdataModeName": "validium",
-    "daValidatorType": "Validium",
+    "daValidatorType": "Unknown",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "348",
+    "totalBlocksExecuted": "357",
     "txFilterer": "No"
   },
   {
@@ -206,7 +206,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.28.0",
-    "totalBlocksExecuted": "437",
+    "totalBlocksExecuted": "440",
     "txFilterer": "Yes"
   },
   {
@@ -220,7 +220,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "2535",
+    "totalBlocksExecuted": "2545",
     "txFilterer": "Yes"
   },
   {
@@ -234,7 +234,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.30.1",
-    "totalBlocksExecuted": "1429",
+    "totalBlocksExecuted": "1451",
     "txFilterer": "No"
   },
   {

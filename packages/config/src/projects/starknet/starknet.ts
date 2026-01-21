@@ -103,14 +103,6 @@ const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
-const escrowWBTCMaxTotalBalanceString = 'There is no bridge cap.'
-// maxTotalBalance value was removed from this bridge
-// formatMaxTotalBalanceString(
-//   'WBTC',
-//   discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
-//   8,
-// )
-
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
   discovery.getContractValue<number>('USDCBridge', 'maxTotalBalance'),
