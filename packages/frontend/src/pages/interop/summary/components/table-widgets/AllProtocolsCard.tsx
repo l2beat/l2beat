@@ -22,7 +22,7 @@ export function AllProtocolsCard() {
         consectetur adipiscing elit. Aliquam nec dolor nec enim maximus viverra
         nec quis nisi.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
+      {isLoading && <Skeleton className="mt-2 h-[400px] w-full rounded-sm" />}
       {data?.entries ? (
         data.entries.length === 0 ? (
           <NoResultsInfo />
