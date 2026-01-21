@@ -3,9 +3,10 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { ChainSelector } from '../components/chain-selector/ChainSelector'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
+import { ChainSelector } from './components/chain-selector/ChainSelector'
+import type { InteropChainWithIcon } from './components/chain-selector/types'
+import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
@@ -48,6 +49,7 @@ export function InteropSummaryPage({
               <NonMintingCard />
               <LockAndMintCard />
               <OmniChainCard />
+              <AllProtocolsCard />
             </div>
           </InteropSelectedChainsProvider>
         </SideNavLayout>

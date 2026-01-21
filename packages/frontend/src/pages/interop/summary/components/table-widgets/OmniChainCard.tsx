@@ -11,7 +11,7 @@ export function OmniChainCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.protocolsByType.omniChain
+  const entries = data?.entries.filter((p) => p.bridgeType === 'omnichain')
 
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
@@ -23,11 +23,13 @@ export function OmniChainCard() {
         chains. Flow limits might be applied.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length === 0 ? (
-        <NoResultsInfo />
-      ) : (
-        <OmniChainTable entries={entries} />
-      )}
+      {entries ? (
+        entries.length === 0 ? (
+          <NoResultsInfo />
+        ) : (
+          <OmniChainTable entries={entries} />
+        )
+      ) : null}
     </PrimaryCard>
   )
 }

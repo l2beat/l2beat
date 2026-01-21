@@ -11,7 +11,7 @@ export function LockAndMintCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.protocolsByType.lockAndMint
+  const entries = data?.entries.filter((p) => p.bridgeType === 'lockAndMint')
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
@@ -23,11 +23,13 @@ export function LockAndMintCard() {
         and the bridge risk is removed.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length === 0 ? (
-        <NoResultsInfo />
-      ) : (
-        <LockAndMintTable entries={entries} />
-      )}
+      {entries ? (
+        entries.length === 0 ? (
+          <NoResultsInfo />
+        ) : (
+          <LockAndMintTable entries={entries} />
+        )
+      ) : null}
     </PrimaryCard>
   )
 }

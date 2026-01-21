@@ -1,8 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { InteropConfig, Project } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  type InteropConfig,
+  type Project,
+} from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
@@ -14,15 +17,11 @@ export type TokenData = {
   volume: number
 }
 
-type CommonProtocolEntry = {
-  iconSlug: string
+export type ChainData = {
+  id: string
+  name: string
   iconUrl: string
-  protocolName: string
-}
-
-export type NonMintingProtocolEntry = CommonProtocolEntry & {
   volume: number
-  tokens: TokenData[]
 }
 
 export type DurationSplit = {
@@ -37,28 +36,23 @@ export type DurationSplit = {
   }
 }
 
-export type LockAndMintProtocolEntry = CommonProtocolEntry & {
+export type ProtocolEntry = {
+  iconUrl: string
+  protocolName: string
+  bridgeType: 'nonMinting' | 'lockAndMint' | 'omnichain'
   volume: number
   tokens: TokenData[]
+  chains: ChainData[]
+  transferCount: number
+  averageValue: number
   averageDuration: { type: 'single'; duration: number } | DurationSplit
 }
 
-export type OmniChainProtocolEntry = CommonProtocolEntry & {
-  volume: number
-  tokens: TokenData[]
-}
-
-export type ProtocolsByType = {
-  nonMinting: NonMintingProtocolEntry[]
-  lockAndMint: LockAndMintProtocolEntry[]
-  omniChain: OmniChainProtocolEntry[]
-}
-
-export function getProtocolsByType(
+export function getProtocolEntries(
   records: AggregatedInteropTransferRecord[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
-): ProtocolsByType {
+): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
 
   const durationSplitMap = new Map<
@@ -73,59 +67,31 @@ export function getProtocolsByType(
 
   const protocolsDataMap = getProtocolsDataMap(records, durationSplitMap)
 
-  const protocolsByType = groupBy(
-    interopProjects,
-    (p) => p.interopConfig.bridgeType,
-  )
-
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
     (a, b) => b[1].volume - a[1].volume,
   )
 
-  const nonMintingData = protocolsData.filter(([key]) =>
-    protocolsByType.nonMinting?.some((p) => p.id === key),
-  )
-  const lockAndMintData = protocolsData.filter(([key]) =>
-    protocolsByType.lockAndMint?.some((p) => p.id === key),
-  )
-  const omniChainData = protocolsData.filter(([key]) =>
-    protocolsByType.omnichain?.some((p) => p.id === key),
-  )
+  return protocolsData
+    .map(([key, data]) => {
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+      const bridgeType = project.interopConfig.bridgeType
 
-  const getProjectCommon = (key: string): CommonProtocolEntry => {
-    const project = interopProjects.find((p) => p.id === key)
-    assert(project, `Project not found: ${key}`)
-    return {
-      protocolName: project?.interopConfig.name ?? project.name,
-      iconSlug: project?.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    }
-  }
-
-  return {
-    nonMinting: nonMintingData.map(([key, { volume, tokens }]) => {
       return {
-        ...getProjectCommon(key),
-        volume,
-        tokens: getTokensData(tokens, tokensDetailsMap, logger),
-      }
-    }),
-    lockAndMint: lockAndMintData.map(([key, data]) => {
-      return {
-        ...getProjectCommon(key),
+        iconSlug: project.slug,
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        protocolName: project.interopConfig.name ?? project.name,
+        bridgeType,
         volume: data.volume,
         tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
+        chains: getChainsData(data.chains, logger),
+        transferCount: data.transferCount,
+        averageValue:
+          data.transferCount > 0 ? data.volume / data.transferCount : 0,
         averageDuration: getAverageDuration(key, data, durationSplitMap),
       }
-    }),
-    omniChain: omniChainData.map(([key, { volume, tokens }]) => {
-      return {
-        ...getProjectCommon(key),
-        volume,
-        tokens: getTokensData(tokens, tokensDetailsMap, logger),
-      }
-    }),
-  }
+    })
+    .sort((a, b) => b.volume - a.volume)
 }
 
 function getTokensData(
@@ -155,6 +121,29 @@ function getTokensData(
     .toSorted((a, b) => b.volume - a.volume)
 }
 
+function getChainsData(
+  chains: Map<string, number>,
+  logger: Logger,
+): ChainData[] {
+  return Array.from(chains.entries())
+    .map(([chainId, volume]) => {
+      const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
+      if (!chain) {
+        logger.warn(`Chain not found: ${chainId}`)
+        return undefined
+      }
+
+      return {
+        id: chainId,
+        name: chain.name,
+        iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+        volume,
+      }
+    })
+    .filter(notUndefined)
+    .toSorted((a, b) => b.volume - a.volume)
+}
+
 function getAverageDuration(
   key: string,
   data: {
@@ -166,7 +155,7 @@ function getAverageDuration(
     outDurationSum: number
   },
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
-): LockAndMintProtocolEntry['averageDuration'] {
+): ProtocolEntry['averageDuration'] {
   const durationSplit = durationSplitMap.get(key)
 
   if (durationSplit) {
