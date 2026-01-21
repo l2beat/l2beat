@@ -4,7 +4,11 @@ import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
-import { createInteropPlugins } from '../plugins'
+import {
+  createInteropPlugins,
+  flattenClusters,
+  pluginsAsClusters,
+} from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropTransferAggregatingIndexer } from './aggregation/InteropTransferAggregatingIndexer'
@@ -45,7 +49,7 @@ export function createInteropModule({
   })
 
   const syncersManager = new InteropSyncersManager(
-    plugins.eventPlugins.flat(),
+    pluginsAsClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
     config.chainConfig,
     eventStore,
@@ -60,7 +64,7 @@ export function createInteropModule({
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
         chain.id,
-        plugins.eventPlugins.flat(),
+        flattenClusters(plugins.eventPlugins),
         eventStore,
         logger,
       )
@@ -75,7 +79,7 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
-    plugins.eventPlugins.flat(),
+    flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
     transferStream,
@@ -183,7 +187,7 @@ export function createInteropModule({
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
-      eventPlugins: plugins.eventPlugins.flat().length,
+      eventPlugins: flattenClusters(plugins.eventPlugins).length,
     })
 
     if (config.interop && config.interop.capture.enabled) {

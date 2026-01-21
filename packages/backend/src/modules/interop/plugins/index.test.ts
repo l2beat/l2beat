@@ -2,9 +2,15 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { mockObject } from 'earl'
+import { expect, mockObject } from 'earl'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { createInteropPlugins } from './index'
+import {
+  createInteropPlugins,
+  flattenClusters,
+  type PluginCluster,
+  pluginsAsClusters,
+} from './index'
+import type { InteropPlugin } from './types'
 import { definedNetworks } from './types'
 
 describe('Interop Plugins', async () => {
@@ -28,7 +34,7 @@ describe('Interop Plugins', async () => {
   describe('every plugin name is unique', () => {
     const kwnon = new Set<string>()
 
-    for (const plugin of plugins.eventPlugins.flat()) {
+    for (const plugin of flattenClusters(plugins.eventPlugins)) {
       it(plugin.name, () => {
         assert(
           !kwnon.has(plugin.name),
@@ -40,7 +46,7 @@ describe('Interop Plugins', async () => {
   })
 
   describe('matchTypes check', () => {
-    for (const plugin of plugins.eventPlugins.flat()) {
+    for (const plugin of flattenClusters(plugins.eventPlugins)) {
       if (plugin.match) {
         it(plugin.name, () => {
           assert(plugin.matchTypes, `matchTypes missing for ${plugin.name}`)
@@ -58,4 +64,31 @@ describe('Interop Plugins', async () => {
       }
     })
   }
+
+  describe('flattenClusters', () => {
+    it('flattens plugins and plugin clusters in order', () => {
+      const pluginA = mockObject<InteropPlugin>({ name: 'across' })
+      const pluginB = mockObject<InteropPlugin>({ name: 'celer' })
+      const pluginC = mockObject<InteropPlugin>({ name: 'ccip' })
+      const cluster: PluginCluster = {
+        name: 'cluster',
+        plugins: [pluginB, pluginC],
+      }
+
+      const result = flattenClusters([pluginA, cluster])
+      expect(result).toEqual([pluginA, pluginB, pluginC])
+    })
+  })
+
+  describe('pluginsAsClusters', () => {
+    it('wraps single plugins in clusters and preserves cluster objects', () => {
+      const pluginA = mockObject<InteropPlugin>({ name: 'across' })
+      const pluginB = mockObject<InteropPlugin>({ name: 'celer' })
+      const cluster: PluginCluster = { name: 'cluster', plugins: [pluginB] }
+
+      const result = pluginsAsClusters([pluginA, cluster])
+
+      expect(result).toEqual([{ name: 'across', plugins: [pluginA] }, cluster])
+    })
+  })
 })

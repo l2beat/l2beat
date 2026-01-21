@@ -24,7 +24,7 @@ import {
   toDeployedId,
 } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from '../plugins'
+import { createInteropPlugins, flattenClusters } from '../plugins'
 import type {
   InteropEvent,
   InteropMessage,
@@ -301,7 +301,7 @@ async function runExample(
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
 
-      for (const plugin of plugins.eventPlugins.flat()) {
+      for (const plugin of flattenClusters(plugins.eventPlugins)) {
         if (!plugin.captureTx) {
           continue
         }
@@ -318,7 +318,7 @@ async function runExample(
       }
 
       for (const log of txLogs) {
-        for (const plugin of plugins.eventPlugins.flat()) {
+        for (const plugin of flattenClusters(plugins.eventPlugins)) {
           if (!plugin.capture) {
             continue
           }
@@ -347,7 +347,7 @@ async function runExample(
       (type) => events.filter((x) => x.type === type),
       [...new Set(events.map((x) => x.type))],
       events.length,
-      plugins.eventPlugins.flat(),
+      flattenClusters(plugins.eventPlugins),
       group.txs.map((x) => x.chain),
       logger,
     )
