@@ -11,9 +11,7 @@ export function LockAndMintCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.allProtocols.filter(
-    (p) => p.bridgeType === 'lockAndMint',
-  )
+  const entries = data?.entries.filter((p) => p.bridgeType === 'lockAndMint')
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">

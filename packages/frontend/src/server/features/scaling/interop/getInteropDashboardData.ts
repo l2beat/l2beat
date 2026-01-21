@@ -5,9 +5,9 @@ import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams } from './types'
 import {
-  getProtocolsByType,
+  getProtocolEntries,
   type ProtocolEntry,
-} from './utils/getProtocolsByType'
+} from './utils/getProtocolEntries'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
@@ -17,7 +17,7 @@ import {
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
-  allProtocols: ProtocolEntry[]
+  entries: ProtocolEntry[]
 }
 
 export async function getInteropDashboardData(
@@ -49,11 +49,7 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records),
     topProtocols: getTopProtocols(records, interopProjects),
-    allProtocols: getProtocolsByType(
-      records,
-      tokensDetailsDataMap,
-      interopProjects,
-    ),
+    entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
 
@@ -124,6 +120,6 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   return {
     top3Paths,
     topProtocols,
-    allProtocols,
+    entries: allProtocols,
   }
 }

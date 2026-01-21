@@ -30,7 +30,7 @@ export type ProtocolEntry = {
   averageDuration: number
 }
 
-export function getProtocolsByType(
+export function getProtocolEntries(
   records: AggregatedInteropTransferRecord[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],

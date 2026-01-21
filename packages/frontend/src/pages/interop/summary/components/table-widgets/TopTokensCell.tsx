@@ -1,4 +1,4 @@
-import type { TokenData } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import type { TokenData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import type { TopItem } from './TopItemsCell'
 import { TopItemsCell } from './TopItemsCell'
 

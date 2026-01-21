@@ -11,7 +11,6 @@ export function AllProtocolsCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.allProtocols
 
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
@@ -24,11 +23,11 @@ export function AllProtocolsCard() {
         nec quis nisi.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries ? (
-        entries.length === 0 ? (
+      {data?.entries ? (
+        data.entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <AllProtocolsTable entries={entries} />
+          <AllProtocolsTable entries={data.entries} />
         )
       ) : null}
     </PrimaryCard>

@@ -1,7 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { BridgeTypeBadge } from '../BridgeTypeBadge'
 import { TopChainsCell } from '../TopChainsCell'

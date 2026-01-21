@@ -11,9 +11,7 @@ export function NonMintingCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.allProtocols.filter(
-    (p) => p.bridgeType === 'nonMinting',
-  )
+  const entries = data?.entries.filter((p) => p.bridgeType === 'nonMinting')
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">

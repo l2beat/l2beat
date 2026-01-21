@@ -1,4 +1,4 @@
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { cn } from '~/utils/cn'
 
 const typeToLabel = {
