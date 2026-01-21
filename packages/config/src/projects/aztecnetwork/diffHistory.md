@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x9cb9da88fbca3aa08a9a22a59da1dd570cee0d4f
+
+# Diff at Wed, 21 Jan 2026 10:10:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d0478ccb5233cc8c759ed14dd71e0594e480b53d block: 1767796183
+- current timestamp: 1768990180
+
+## Description
+
+add TGEPayload for verification by governance.
+
+entry queue flush increase payload was executed.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
++++ description: number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed
+      values.getEntryQueueFlushSize:
+-        1
++        4
+    }
+```
+
+```diff
+    contract TGEPayload (eth:0x77A5EEF319E23615B848a09Ebd151744547b959C) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "TGEPayload"
+      template:
++        "aztecnetwork/TGEPayload"
+      sourceHashes:
++        ["0xc2410dd48add80f68a5d7e354ca701a42d52f1a651c686a180e524179a08ed12"]
+      sinceTimestamp:
++        1768592243
+      sinceBlock:
++        24249428
+      values:
++        {"$immutable":true,"ATP_REGISTRY":"eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde","AZTEC_TOKEN":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","DATE_GATED_RELAYER_SHORT":"eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e","END_DAY":3,"END_OF_WORKDAY":54000,"getURI":"https://github.com/AztecProtocol/ignition-contracts/","JAN_1_2026_CET":1767222000,"ROLLUP":"eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12","ROLLUP_REGISTRY":"eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298","STAKER":"eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95","STAKING_REGISTRY":"eth:0x042dF8f42790d6943F41C25C2132400fd727f452","START_DAY":1,"START_OF_WORKDAY":28800,"VIRTUAL_LBP_STRATEGY":"eth:0xd53006d1e3110fD319a79AEEc4c527a0d265E080"}
+      implementationNames:
++        {"eth:0x77A5EEF319E23615B848a09Ebd151744547b959C":"TGEPayload"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ATPWithdrawableAndClaimableStakerV2 (eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseStaker (eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceAcceleratedLock (eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/ATPWithdrawableAndClaimableStakerV2.sol  | 1630 ++++++++++++++++++++
+ ...0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde.sol} |    0
+ ...:0x8F778768aDed86AB778a47cd81b3b42B4b3F655B.sol |  830 ++++++++++
+ ...0x0Cb8fe28D35fD4763C4f3E3761904bAcF829BbF8.sol} |    0
+ ...:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9.sol |  635 ++++++++
+ .../.flat/GovernanceAcceleratedLock.sol            |  340 ++++
+ .../src/projects/aztecnetwork/.flat/TGEPayload.sol |  142 ++
+ 7 files changed, 3577 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796183 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      fieldMeta.getEntryQueueFlushSize:
++        {"description":"number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"}
+    }
+```
+
 Generated with discovered.json: 0x81ec4de1642da7c445f9d9fe819d793bdb31b9a7
 
 # Diff at Wed, 07 Jan 2026 14:30:47 GMT:
