@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xfd9818cc3e94c3e677db5401b91255dc9bc3d5e1
+
+# Diff at Wed, 21 Jan 2026 08:43:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1767971493
+- current timestamp: 1768984927
+
+## Description
+
+New member conduit msig2.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.$members.1:
++        "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.$members.5:
+-        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0x487fb70F28cEb4f320f2D72ed859cEEdC1B8C648"
+      values.executors.1:
++        "arb1:0x487fb70F28cEb4f320f2D72ed859cEEdC1B8C648"
+    }
+```
+
 Generated with discovered.json: 0x2fc072826ee51d7ebcf20c64b383c0efd16ee42c
 
 # Diff at Fri, 09 Jan 2026 15:12:53 GMT:

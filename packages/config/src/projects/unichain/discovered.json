@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1767970592,
+  "timestamp": 1768990397,
   "configHash": "0xa2083dbd95fb347cf31e6a6952b59bf592825b334919dca5ea378a7ce69c5c89",
   "entries": [
     {
@@ -192,8 +192,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 515958,
-          "prevBlockNum": 24197834
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 24282414
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -263,7 +263,7 @@
         "proxyAdminOwner": "eth:0x6d5B183F538ABB8572F5cD17109c617b994D5833",
         "symbol": "WETH",
         "systemConfig": "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "totalSupply": "20400000000000000000",
+        "totalSupply": "20080000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -383,12 +383,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0xCecB7B6A9904513A0e2E4981D316aAb224813Df5",
+        "anchorGame": "eth:0x6bf8355A71d512B104d9Dc2CFa8061E61b0a55cd",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xf5e677b3d5daf5e2280589fb05183af559dcf15c7d3f88b442d6cfc099058e70",
-          36612283
+          "0x26137fa88b7b828180d72c407b76ad063676ed068962bd405b43d4168c636add",
+          37634782
         ],
         "initVersion": 1,
         "paused": false,
@@ -465,7 +465,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 10218,
+        "gameCount": 10500,
         "gameImpls": [
           "eth:0x6D0462850F7B87403660CC9f4F89346483108512",
           "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
@@ -671,7 +671,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 91,
+        "nonce": 93,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1391,7 +1391,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1551,7 +1551,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292652819",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653497",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1866,7 +1866,7 @@
         "l1StandardBridge": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "l2ChainId": 130,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 500000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -2248,7 +2248,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "unichain:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622721",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622777",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -4792,6 +4792,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 24197860, "unichain": 37222233 },
+  "usedBlockNumbers": { "ethereum": 24282489, "unichain": 38242038 },
   "permissionsConfigHash": "0x6c8a1abe578bae6e31bd4ec82dab5d11ad3ba099693cfb986edea4e88da408a7"
 }
