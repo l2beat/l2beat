@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xe429fe158314631a755b3a719ed5203f36746963
+
+# Diff at Wed, 21 Jan 2026 11:44:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1765978050
+- current timestamp: 1768995818
+
+## Description
+
+Switched to use Avail with bridge.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ description: l1da, l2da
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "eth:0x907b30407249949521Bf0c89A43558dae200146A"
++        "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120"
++++ description: l1da, l2da
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
++        "eth:0xE2d2AFe5956F3bdA5514B46D8655aD7c744da780"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (eth:0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120)
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+```
+
+## Source code changes
+
+```diff
+.../AvailL1DAValidator.sol}                        | 60 +++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0xac5cad100e8f63b5cf2645f893b188655db6a985
 
 # Diff at Wed, 17 Dec 2025 14:34:44 GMT:

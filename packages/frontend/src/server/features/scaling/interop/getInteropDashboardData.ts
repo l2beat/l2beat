@@ -44,6 +44,14 @@ export async function getInteropDashboardData(
       filteredProjects.map((p) => p.id),
     )
 
+  if (records.length === 0) {
+    return {
+      top3Paths: [],
+      topProtocols: [],
+      entries: [],
+    }
+  }
+
   const tokensDetailsData = await tokenDb.abstractToken.getByIds(
     records.flatMap((r) => Object.keys(r.tokensByVolume)),
   )
