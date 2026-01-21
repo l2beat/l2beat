@@ -8,11 +8,11 @@ import type {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -24,12 +24,12 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/getTechno
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { optionToRange } from '~/utils/range/range'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string
@@ -123,7 +123,7 @@ export async function getBridgesProjectEntry(
     name: project.name,
     shortName: project.shortName,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
@@ -174,7 +174,7 @@ export async function getBridgesProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        project: getChartProject(project),
+        project: withProjectIcon(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
         defaultRange: project.archivedAt
@@ -276,6 +276,17 @@ export async function getBridgesProjectEntry(
     contractUtils,
     projectsChangeReport,
   )
+
+  const discoUi = common.discoUiHref
+    ? {
+        href: common.discoUiHref,
+        images: {
+          desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+          mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
+        },
+      }
+    : undefined
+
   if (permissionsSection) {
     sections.push({
       type: 'PermissionsSection',
@@ -283,7 +294,7 @@ export async function getBridgesProjectEntry(
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
   }
@@ -308,7 +319,7 @@ export async function getBridgesProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         ...contractsSection,
-        discoUiHref: common.discoUiHref,
+        discoUi,
       },
     })
 

@@ -3,6 +3,7 @@ import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tv
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
@@ -40,7 +41,7 @@ export function getZkCatalogTvsSection(
     defaultRange: optionToRange('1y'),
     milestones: project.milestones ?? [],
     tvsInfo: project.tvsInfo,
-    project,
+    project: withProjectIcon(project),
     projectsForTvs,
   }
 }

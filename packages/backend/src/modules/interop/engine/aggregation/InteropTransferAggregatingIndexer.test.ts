@@ -191,9 +191,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         {
           id: 'config2',
           bridgeType: 'lockAndMint',
-          plugins: [
-            { filterBy: 'chain', chain: 'ethereum', plugin: 'cctp-v1' },
-          ],
+          plugins: [{ chain: 'ethereum', plugin: 'cctp-v1' }],
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc, src is eth)
         {
@@ -201,7 +199,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           bridgeType: 'lockAndMint',
           plugins: [
             {
-              filterBy: 'abstractTokenId',
               abstractTokenId: 'eth',
               plugin: 'stargate',
             },

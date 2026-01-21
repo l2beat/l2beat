@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
+import { manifest } from '~/utils/Manifest'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getProjectIcon } from '../utils/getProjectIcon'
 
 export interface CommonDaEntry extends CommonProjectEntry {
   tab: 'public' | 'custom'
@@ -26,7 +26,7 @@ export function getCommonDaEntry({
   return {
     id: project.id,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     name: project.name,
     nameSecondLine: project.daLayer.type,
     href,
@@ -53,7 +53,7 @@ export function getCommonDacDaEntry({
   return {
     id: project.id,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     name: project.customDa.name ?? `${project.name} DAC`,
     nameSecondLine: project.customDa.type,
     href: `/scaling/projects/${project.slug}`,

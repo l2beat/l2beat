@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { getCollectionEntry } from '~/content/getCollection'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { VerifiersStatuses } from '~/server/features/zk-catalog/getVerifiers'
+import { manifest } from '~/utils/Manifest'
 import { getProofVerification } from '../../utils/getProofVerification'
 import { getTrustedSetup } from '../../utils/getTrustedSetup'
 import type { ZkCatalogProofVerification } from '../../utils/types'
@@ -27,7 +27,7 @@ export function getZkCatalogProjectDetails(
 
   return {
     title: project.name,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     linkToMainProjectDetails: project.isScaling
       ? `/scaling/projects/${project.slug}`
       : undefined,

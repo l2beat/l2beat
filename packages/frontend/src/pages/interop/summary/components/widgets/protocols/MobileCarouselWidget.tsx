@@ -1,6 +1,6 @@
-import type { InteropChain } from '@l2beat/config'
 import { useState } from 'react'
 import { cn } from '~/utils/cn'
+import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { TopPathsWidget } from '../TopPathsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'
@@ -10,7 +10,7 @@ type View = 'paths' | 'volume' | 'transfers'
 export function MobileCarouselWidget({
   interopChains,
 }: {
-  interopChains: InteropChain[]
+  interopChains: InteropChainWithIcon[]
 }) {
   const [view, setView] = useState<View>('paths')
 

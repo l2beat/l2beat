@@ -7,8 +7,8 @@ export function ChainSelectorChainToggle({
 }: {
   chain: {
     id: string
-    iconSlug: string
     name: string
+    iconUrl: string
   }
   isSelected: boolean
   toggleSelected: (chainId: string) => void
@@ -21,11 +21,7 @@ export function ChainSelectorChainToggle({
       )}
       onClick={() => toggleSelected(chain.id)}
     >
-      <img
-        src={`/icons/${chain.iconSlug}.png`}
-        alt={chain.name}
-        className="size-5"
-      />
+      <img src={chain.iconUrl} alt={chain.name} className="size-5" />
       <div className="font-medium text-label-value-16 leading-none">
         {chain.name}
       </div>

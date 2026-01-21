@@ -1,9 +1,9 @@
-import type { InteropChain } from '@l2beat/config'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorButton } from './ChainSelectorButton'
+import type { InteropChainWithIcon } from './types'
 
 interface Props {
-  chains: InteropChain[]
+  chains: InteropChainWithIcon[]
 }
 
 export function ChainSelector({ chains }: Props) {

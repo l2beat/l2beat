@@ -1,4 +1,3 @@
-import type { InteropChain } from '@l2beat/config'
 import { pluralize } from '@l2beat/shared-pure'
 import { Button } from '~/components/core/Button'
 import {
@@ -17,21 +16,22 @@ import {
 } from '~/components/core/Popover'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
+import type { InteropChainWithIcon } from './types'
 
 export function ChainSelectorButton({
   allChains,
   type,
 }: {
-  allChains: InteropChain[]
+  allChains: InteropChainWithIcon[]
   type: 'from' | 'to'
 }) {
   const { selectedChains, toggleFrom, toggleTo, isDirty, reset } =
     useInteropSelectedChains()
 
-  const chainsWithDetails = allChains.map(({ id, iconSlug, name }) => ({
+  const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
-    iconSlug: iconSlug ?? id,
     name,
+    iconUrl,
     isSelected: {
       from: selectedChains.from.includes(id),
       to: selectedChains.to.includes(id),
@@ -51,7 +51,7 @@ export function ChainSelectorButton({
           .map((chain, i) => (
             <img
               key={chain.id}
-              src={`/icons/${chain.iconSlug}.png`}
+              src={chain.iconUrl}
               alt={chain.name}
               className="size-5 rounded-full bg-white shadow"
               style={{ zIndex: selectedChainsCount - i }}
