@@ -1,0 +1,50 @@
+{
+  "projectId": "popboss",
+  "timestamp": 1769016404911,
+  "escrows": [
+    {
+      "address": "arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 0,
+    "canonicalTvl": 0,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 0,
+    "rollupSecuredTvl": 0,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 0,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "projectId": "winr",
+  "timestamp": 1769016498585,
+  "escrows": [
+    {
+      "address": "arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x802c7B6585d20cb69524EF23fCbF919F671F808a",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "WINR",
+          "valueUsd": 461633.94,
+          "amount": 243715890,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 461633.94,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "0x6adfba9e45b5c1685007fe48a784e971e412f839",
+      "name": "Escrow 0x6adfba9e...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": null,
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 9.08,
+          "amount": 9.09,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 9.08,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x0ae2f220ce9698b1c9853f7288ac882150291dca",
+      "name": "Escrow 0x0ae2f220...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 0.02,
+          "amount": 0,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0.02,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x3222f0f281f1630c50f86ffaa29a29a06559eca8",
+      "name": "Escrow 0x3222f0f2...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by token issuer (Tether)",
+      "admin": null,
+      "adminName": "Tether",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 0.01,
+          "amount": 0.01,
+          "issuer": "Tether",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0.01,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x023d27390aed70aa39823a1e1e06a0b075400214",
+      "name": "Escrow 0x023d2739...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "ARB",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x8e83aed64a0ad5d7d3a57b6172f14fca5bfade56",
+      "name": "Escrow 0x8e83aed6...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC.e",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x8b961a67f49bc6334cba09dbd70a2f14fc8226a1",
+      "name": "Escrow 0x8b961a67...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "WETH",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 461643.05000000005,
+    "canonicalTvl": 461643.05000000005,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 461643.03,
+    "rollupSecuredTvl": 461633.94,
+    "issuerSecuredTvl": 9.09,
+    "thirdPartySecuredTvl": 0.02,
+    "byAdmin": {
+      "rollupControlled": 461633.94,
+      "issuerControlled": 9.09,
+      "thirdPartyControlled": 0.02
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

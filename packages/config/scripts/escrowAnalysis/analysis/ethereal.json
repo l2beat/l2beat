@@ -1,0 +1,50 @@
+{
+  "projectId": "ethereal",
+  "timestamp": 1769016213544,
+  "escrows": [],
+  "externalTokens": [
+    {
+      "symbol": "WUSDe",
+      "name": "Wrapped USDe",
+      "l2Address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",
+      "valueUsd": 73889770,
+      "amount": 73920984,
+      "bridgeProtocol": "Layer Zero v2 (OrbitNativeOFT)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via Layer Zero v2 (OrbitNativeOFT) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 73889770,
+    "canonicalTvl": 0,
+    "externalTvl": 73889770,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 0,
+    "rollupSecuredTvl": 0,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 73889770,
+    "byAdmin": {
+      "rollupControlled": 0,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 73889770
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 1,
+    "totalValue": 73889770,
+    "byProtocol": {
+      "Layer Zero v2 (OrbitNativeOFT)": {
+        "count": 1,
+        "value": 73889770
+      }
+    },
+    "byCategory": {
+      "third-party-secured": {
+        "count": 1,
+        "value": 73889770
+      }
+    }
+  }
+}

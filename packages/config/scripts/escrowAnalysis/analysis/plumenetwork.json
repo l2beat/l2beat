@@ -1,0 +1,207 @@
+{
+  "projectId": "plumenetwork",
+  "timestamp": 1769016397671,
+  "escrows": [
+    {
+      "address": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "PLUME",
+          "valueUsd": 41456685,
+          "amount": 2765743350,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 41456685,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "eth:0xE2C902BC61296531e556962ffC81A082b82f5F28",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "PLUME",
+          "valueUsd": 41456685,
+          "amount": 2765743350,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 151.46,
+          "amount": 151.5,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 78.06,
+          "amount": 0.03,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 41456914.52,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    },
+    {
+      "address": "0xdddd73f5df1f0dc31373357beac77545dc5a6f3f",
+      "name": "Escrow 0xdddd73f5...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "pUSD",
+          "valueUsd": 6640402,
+          "amount": 6637102.5,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 6640402,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xcab283e4bb527aa9b157bae7180fef19e2aaa71a",
+      "name": "Escrow 0xcab283e4...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "pETH",
+          "valueUsd": 102269.53,
+          "amount": 34.16,
+          "issuer": null,
+          "source": "native"
+        }
+      ],
+      "totalValueUsd": 102269.53,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xc8c8f8bea5631a8af26440af32a55002138cb76a",
+      "name": "Escrow 0xc8c8f8be...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "superOETHp",
+          "valueUsd": 12497.14,
+          "amount": 4.17,
+          "issuer": null,
+          "source": "native"
+        }
+      ],
+      "totalValueUsd": 12497.14,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "pUSD",
+      "name": "Plume USD",
+      "l2Address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "valueUsd": 13280804,
+      "amount": 13274205,
+      "bridgeProtocol": "LayerZero OFT v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via LayerZero OFT v2 (trust model not analyzed)",
+      "formulaType": "calculation"
+    },
+    {
+      "symbol": "XAUM",
+      "name": "Matrixdock Gold",
+      "l2Address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+      "valueUsd": 4857557.5,
+      "amount": 1001.19,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "l2Address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "valueUsd": 1263233.4,
+      "amount": 1263730.2,
+      "bridgeProtocol": "Stargate v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via Stargate v2 (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 122967955.09,
+    "canonicalTvl": 84115218.75279166,
+    "externalTvl": 18199975.667208355,
+    "nativeTvl": 20652760.67,
+    "canonicalNoAdditionalTrust": 77778424.99663049,
+    "rollupSecuredTvl": 82913599.52000001,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 26156763.57,
+    "byAdmin": {
+      "rollupControlled": 82913599.52000001,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 26156763.57
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 3,
+    "totalValue": 19401594.9,
+    "byProtocol": {
+      "LayerZero OFT v2": {
+        "count": 1,
+        "value": 13280804
+      },
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 4857557.5
+      },
+      "Stargate v2": {
+        "count": 1,
+        "value": 1263233.4
+      }
+    },
+    "byCategory": {
+      "third-party-secured": {
+        "count": 3,
+        "value": 19401594.9
+      }
+    }
+  }
+}

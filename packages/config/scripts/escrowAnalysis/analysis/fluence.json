@@ -1,0 +1,79 @@
+{
+  "projectId": "fluence",
+  "timestamp": 1769016220874,
+  "escrows": [
+    {
+      "address": "eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "FLT",
+          "valueUsd": 177028.485,
+          "amount": 30948852,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 177028.485,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "FLT",
+          "valueUsd": 177028.485,
+          "amount": 30948852,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 71497.05,
+          "amount": 71514.04,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 248525.53499999997,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 425554.01999999996,
+    "canonicalTvl": 425554.01999999996,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 425554.01999999996,
+    "rollupSecuredTvl": 425554.01999999996,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 425554.01999999996,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

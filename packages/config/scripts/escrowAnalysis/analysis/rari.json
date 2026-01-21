@@ -1,0 +1,164 @@
+{
+  "projectId": "rari",
+  "timestamp": 1769016473735,
+  "escrows": [
+    {
+      "address": "arb1:0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x003e70B041abb993006C03E56c8515622a02928C",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 390253.6333333333,
+          "amount": 130.08,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 390253.6333333333,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "arb1:0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x003e70B041abb993006C03E56c8515622a02928C",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 390253.6333333333,
+          "amount": 130.08,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 193.595,
+          "amount": 193.64,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 27.73,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ARB",
+          "valueUsd": 20.825,
+          "amount": 109.785,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC.e",
+          "valueUsd": 6.985,
+          "amount": 6.985,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 0.03,
+          "amount": 0.005,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 390502.7983333333,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    },
+    {
+      "address": "arb1:0x8bE956aB42274056ef4471BEb211b33e258b7324",
+      "name": "CustomGateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x003e70B041abb993006C03E56c8515622a02928C",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 390253.6333333333,
+          "amount": 130.08,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 193.595,
+          "amount": 193.64,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 27.73,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ARB",
+          "valueUsd": 20.825,
+          "amount": 109.785,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC.e",
+          "valueUsd": 6.985,
+          "amount": 6.985,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 0.03,
+          "amount": 0.005,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 390502.7983333333,
+      "source": "canonical",
+      "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 1221673.1399999997,
+    "canonicalTvl": 1221673.1399999997,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 1221673.1399999997,
+    "rollupSecuredTvl": 1171259.23,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 1171259.23,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

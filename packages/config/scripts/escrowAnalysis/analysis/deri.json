@@ -1,0 +1,50 @@
+{
+  "projectId": "deri",
+  "timestamp": 1769016085375,
+  "escrows": [
+    {
+      "address": "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 17302.37,
+          "amount": 5.77,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 17302.37,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 17302.37,
+    "canonicalTvl": 17302.37,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 17302.37,
+    "rollupSecuredTvl": 17302.37,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 17302.37,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

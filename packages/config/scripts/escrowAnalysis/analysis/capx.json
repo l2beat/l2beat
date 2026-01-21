@@ -1,0 +1,50 @@
+{
+  "projectId": "capx",
+  "timestamp": 1769015984011,
+  "escrows": [
+    {
+      "address": "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xCEe383Aa9287D349aa965DF9Ed6e0B582970B2c3",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "CAPX",
+          "valueUsd": 17291346,
+          "amount": 82505810,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 17291346,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 17291346,
+    "canonicalTvl": 17291346,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 17291346,
+    "rollupSecuredTvl": 17291346,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 17291346,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

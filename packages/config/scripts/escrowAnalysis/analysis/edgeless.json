@@ -1,0 +1,86 @@
+{
+  "projectId": "edgeless",
+  "timestamp": 1769016099502,
+  "escrows": [
+    {
+      "address": "eth:0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
+      "name": "EthStrategy",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xa5f13fbc57f14Bf322C900Cae0F67b4819364281",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 16323.49,
+          "amount": 5.44,
+          "issuer": null,
+          "source": "external"
+        },
+        {
+          "symbol": "stETH",
+          "valueUsd": 180.8,
+          "amount": 0.06,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 16504.29,
+      "source": "canonical",
+      "description": "Deposits funds into the Lido protocol."
+    },
+    {
+      "address": "eth:0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9",
+      "name": "RenzoStrategy",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xa5f13fbc57f14Bf322C900Cae0F67b4819364281",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 16323.49,
+          "amount": 5.44,
+          "issuer": null,
+          "source": "external"
+        },
+        {
+          "symbol": "ezETH",
+          "valueUsd": 1336.21,
+          "amount": 0.42,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 17659.7,
+      "source": "canonical",
+      "description": "Deposits funds into the Renzo protocol."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 34163.990000000005,
+    "canonicalTvl": 34163.990000000005,
+    "externalTvl": 0,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 34163.990000000005,
+    "rollupSecuredTvl": 34163.990000000005,
+    "issuerSecuredTvl": 0,
+    "thirdPartySecuredTvl": 0,
+    "byAdmin": {
+      "rollupControlled": 34163.990000000005,
+      "issuerControlled": 0,
+      "thirdPartyControlled": 0
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byCategory": {}
+  }
+}

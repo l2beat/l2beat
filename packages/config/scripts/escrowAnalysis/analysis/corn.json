@@ -1,0 +1,107 @@
+{
+  "projectId": "corn",
+  "timestamp": 1769016080897,
+  "escrows": [
+    {
+      "address": "eth:0x00943b11764176C3a8323aEFCBd6fE70CFb6272d",
+      "name": "wBTC Escrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by token issuer (BitGo)",
+      "admin": "eth:0x0000000000000000000000000000000000000000",
+      "adminName": "BitGo",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "WBTC",
+          "valueUsd": 1005984,
+          "amount": 11.19,
+          "issuer": "BitGo",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1005984,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "eth:0x957C9DC25DE6B8E46a7Fa0D081bA749DD005B54f",
+      "name": "cbBTC Escrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "categoryReason": "Escrow controlled by token issuer (Coinbase)",
+      "admin": "eth:0x0000000000000000000000000000000000000000",
+      "adminName": "Coinbase",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "cbBTC",
+          "valueUsd": 6.31,
+          "amount": 0,
+          "issuer": "Coinbase",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 6.31,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "CORN",
+      "name": "Corn",
+      "l2Address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+      "valueUsd": 37171056,
+      "amount": 525030020,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "circulatingSupply"
+    },
+    {
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "l2Address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "valueUsd": 11812712,
+      "amount": 11829944,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 50097325.9,
+    "canonicalTvl": 1008154.9924643361,
+    "externalTvl": 49089170.90753566,
+    "nativeTvl": 0,
+    "canonicalNoAdditionalTrust": 1008154.9924643361,
+    "rollupSecuredTvl": 0,
+    "issuerSecuredTvl": 1005990.31,
+    "thirdPartySecuredTvl": 48983768,
+    "byAdmin": {
+      "rollupControlled": 0,
+      "issuerControlled": 1005990.31,
+      "thirdPartyControlled": 48983768
+    }
+  },
+  "externalTokensSummary": {
+    "totalCount": 2,
+    "totalValue": 48983768,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 2,
+        "value": 48983768
+      }
+    },
+    "byCategory": {
+      "third-party-secured": {
+        "count": 2,
+        "value": 48983768
+      }
+    }
+  }
+}
