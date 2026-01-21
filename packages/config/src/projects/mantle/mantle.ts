@@ -127,7 +127,6 @@ export const mantle: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      sinceTimestamp: UnixTime(1768986539),
       inbox: ChainSpecificAddress.address(
         discovery.getContractValue('SystemConfig', 'sequencerInbox'),
       ),
@@ -153,7 +152,7 @@ export const mantle: ScalingProject = opStackL2({
       url: 'https://etherscan.io/tx/0x7234302dd8c359a14681a03f1d948369d45c00fd4a61683c449839f051e4ddb8',
       date: '2026-01-21T09:08:59.00Z',
       description:
-        'Mantle migrates data availability from EigenDA to Ethereum blobs.',
+        'Mantle moves to the Rollup category by switching data availability from EigenDA to Ethereum blobs.',
       type: 'general',
     },
     {
