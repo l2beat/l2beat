@@ -1,18 +1,14 @@
 import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { LockAndMintProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
 import { lockAndMintColumns } from './columns'
 
-export type LockAndMintRow = LockAndMintProtocolEntry & BasicTableRow
+export type LockAndMintRow = ProtocolEntry & BasicTableRow
 
-export function LockAndMintTable({
-  entries,
-}: {
-  entries: LockAndMintProtocolEntry[] | undefined
-}) {
+export function LockAndMintTable({ entries }: { entries: ProtocolEntry[] }) {
   const table = useTable<LockAndMintRow>({
-    data: entries ?? [],
+    data: entries,
     columns: lockAndMintColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
@@ -24,8 +20,6 @@ export function LockAndMintTable({
       sorting: [],
     },
   })
-
-  if (!entries) return null
 
   return <BasicTable table={table} tableWrapperClassName="pb-0" />
 }

@@ -13,6 +13,7 @@ import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProto
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
+import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -48,6 +49,7 @@ export function InteropSummaryPage({
               <NonMintingCard />
               <LockAndMintCard />
               <OmniChainCard />
+              <AllProtocolsCard />
             </div>
           </InteropSelectedChainsProvider>
         </SideNavLayout>

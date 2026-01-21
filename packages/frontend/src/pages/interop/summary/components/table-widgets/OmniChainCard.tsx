@@ -11,7 +11,7 @@ export function OmniChainCard() {
     from: selectedChains.from,
     to: selectedChains.to,
   })
-  const entries = data?.protocolsByType.omniChain
+  const entries = data?.allProtocols.filter((p) => p.bridgeType === 'omnichain')
 
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">

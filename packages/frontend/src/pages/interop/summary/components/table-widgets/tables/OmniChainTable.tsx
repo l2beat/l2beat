@@ -1,15 +1,15 @@
 import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { OmniChainProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
 import { omniChainColumns } from './columns'
 
-export type OmniChainRow = OmniChainProtocolEntry & BasicTableRow
+export type OmniChainRow = ProtocolEntry & BasicTableRow
 
 export function OmniChainTable({
   entries,
 }: {
-  entries: OmniChainProtocolEntry[] | undefined
+  entries: ProtocolEntry[] | undefined
 }) {
   const table = useTable<OmniChainRow>({
     data: entries ?? [],

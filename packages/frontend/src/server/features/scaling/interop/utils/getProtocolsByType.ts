@@ -1,7 +1,6 @@
-import type { Project } from '@l2beat/config'
+import { INTEROP_CHAINS, type Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 
@@ -12,45 +11,37 @@ export type TokenData = {
   volume: number
 }
 
-type CommonProtocolEntry = {
-  iconSlug: string
+export type ChainData = {
+  id: string
+  name: string
+  iconUrl: string
+  volume: number
+}
+
+export type ProtocolEntry = {
   iconUrl: string
   protocolName: string
-}
-
-export type NonMintingProtocolEntry = CommonProtocolEntry & {
+  bridgeType: 'nonMinting' | 'lockAndMint' | 'omnichain'
   volume: number
   tokens: TokenData[]
-}
-
-export type LockAndMintProtocolEntry = CommonProtocolEntry & {
-  volume: number
-  tokens: TokenData[]
+  chains: ChainData[]
+  transferCount: number
+  averageValue: number
   averageDuration: number
-}
-
-export type OmniChainProtocolEntry = CommonProtocolEntry & {
-  volume: number
-  tokens: TokenData[]
-}
-
-export type ProtocolsByType = {
-  nonMinting: NonMintingProtocolEntry[]
-  lockAndMint: LockAndMintProtocolEntry[]
-  omniChain: OmniChainProtocolEntry[]
 }
 
 export function getProtocolsByType(
   records: AggregatedInteropTransferRecord[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
-): ProtocolsByType {
+): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
   const protocolsDataMap = new Map<
     string,
     {
       volume: number
       tokens: Map<string, number>
+      chains: Map<string, number>
       transferCount: number
       totalDurationSum: number
     }
@@ -60,6 +51,7 @@ export function getProtocolsByType(
     const current = protocolsDataMap.get(record.id) ?? {
       volume: 0,
       tokens: new Map<string, number>(),
+      chains: new Map<string, number>(),
       transferCount: 0,
       totalDurationSum: 0,
     }
@@ -68,43 +60,35 @@ export function getProtocolsByType(
       current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
     }
 
+    // Track chains volume (both src and dst contribute)
+    if (record.srcChain) {
+      const srcValue = record.srcValueUsd ?? 0
+      current.chains.set(
+        record.srcChain,
+        (current.chains.get(record.srcChain) ?? 0) + srcValue,
+      )
+    }
+    if (record.dstChain) {
+      const dstValue = record.dstValueUsd ?? 0
+      current.chains.set(
+        record.dstChain,
+        (current.chains.get(record.dstChain) ?? 0) + dstValue,
+      )
+    }
+
     protocolsDataMap.set(record.id, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: current.tokens,
+      chains: current.chains,
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
     })
   }
 
-  const protocolsByType = groupBy(
-    interopProjects,
-    (p) => p.interopConfig.bridgeType,
-  )
-
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
     (a, b) => b[1].volume - a[1].volume,
   )
-
-  const nonMintingData = protocolsData.filter(([key]) =>
-    protocolsByType.nonMinting?.some((p) => p.id === key),
-  )
-  const lockAndMintData = protocolsData.filter(([key]) =>
-    protocolsByType.lockAndMint?.some((p) => p.id === key),
-  )
-  const omniChainData = protocolsData.filter(([key]) =>
-    protocolsByType.omnichain?.some((p) => p.id === key),
-  )
-
-  const getProjectCommon = (key: string): CommonProtocolEntry => {
-    const project = interopProjects.find((p) => p.id === key)
-    assert(project, `Project not found: ${key}`)
-    return {
-      protocolName: project?.interopConfig.name ?? project.name,
-      iconSlug: project?.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    }
-  }
 
   const getTokensData = (tokens: Map<string, number>) => {
     return Array.from(tokens.entries())
@@ -129,30 +113,46 @@ export function getProtocolsByType(
       .toSorted((a, b) => b.volume - a.volume)
   }
 
-  return {
-    nonMinting: nonMintingData.map(([key, { volume, tokens }]) => {
-      return {
-        ...getProjectCommon(key),
-        volume,
-        tokens: getTokensData(tokens),
-      }
-    }),
-    lockAndMint: lockAndMintData.map(
-      ([key, { volume, tokens, transferCount, totalDurationSum }]) => {
-        return {
-          ...getProjectCommon(key),
-          volume,
-          tokens: getTokensData(tokens),
-          averageDuration: Math.floor(totalDurationSum / transferCount),
+  const getChainsData = (chains: Map<string, number>): ChainData[] => {
+    return Array.from(chains.entries())
+      .map(([chainId, volume]) => {
+        const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
+        if (!chain) {
+          logger.warn(`Chain not found: ${chainId}`)
+          return undefined
         }
-      },
-    ),
-    omniChain: omniChainData.map(([key, { volume, tokens }]) => {
-      return {
-        ...getProjectCommon(key),
-        volume,
-        tokens: getTokensData(tokens),
-      }
-    }),
+
+        return {
+          id: chainId,
+          name: chain.name,
+          iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+          volume,
+        }
+      })
+      .filter(notUndefined)
+      .toSorted((a, b) => b.volume - a.volume)
   }
+
+  return protocolsData.map(([key, data]) => {
+    const project = interopProjects.find((p) => p.id === key)
+    assert(project, `Project not found: ${key}`)
+    const bridgeType = project.interopConfig.bridgeType
+
+    return {
+      iconSlug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      protocolName: project.interopConfig.name ?? project.name,
+      bridgeType,
+      volume: data.volume,
+      tokens: getTokensData(data.tokens),
+      chains: getChainsData(data.chains),
+      transferCount: data.transferCount,
+      averageValue:
+        data.transferCount > 0 ? data.volume / data.transferCount : 0,
+      averageDuration:
+        data.transferCount > 0
+          ? Math.floor(data.totalDurationSum / data.transferCount)
+          : 0,
+    }
+  })
 }

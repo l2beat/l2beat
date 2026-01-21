@@ -2,18 +2,18 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolsByType'
-import { nonMintingColumns } from './columns'
+import { allProtocolsColumns } from './columns'
 
-export type NonMintingRow = ProtocolEntry & BasicTableRow
+export type AllProtocolsRow = ProtocolEntry & BasicTableRow
 
-export function NonMintingTable({
+export function AllProtocolsTable({
   entries,
 }: {
   entries: ProtocolEntry[] | undefined
 }) {
-  const table = useTable<NonMintingRow>({
+  const table = useTable<AllProtocolsRow>({
     data: entries ?? [],
-    columns: nonMintingColumns,
+    columns: allProtocolsColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
     manualFiltering: true,
