@@ -1242,27 +1242,13 @@ export interface InteropConfig {
   plugins: InteropPlugin[]
 }
 
-export type InteropPlugin =
-  | InteropByChainPlugin
-  | InteropByTokenIdPlugin
-  | InteropPlainPlugin
-
-export type InteropByChainPlugin = {
-  filterBy: 'chain'
-  chain: string
+export type InteropPlugin = {
   plugin: InteropPluginName
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
 }
 
-export type InteropByTokenIdPlugin = {
-  filterBy: 'abstractTokenId'
-  abstractTokenId: string
-  plugin: InteropPluginName
-}
-
-export type InteropPlainPlugin = {
-  plugin: InteropPluginName
-  filterBy?: undefined
-}
 // #endregion
 
 // #region TVS
