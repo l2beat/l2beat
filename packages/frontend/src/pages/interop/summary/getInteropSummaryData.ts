@@ -30,6 +30,11 @@ export async function getInteropSummaryData(
     },
   )
 
+  const interopChainsWithIcons = INTEROP_CHAINS.map((chain) => ({
+    ...chain,
+    iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+  }))
+
   return {
     head: {
       manifest,
@@ -45,7 +50,7 @@ export async function getInteropSummaryData(
       props: {
         ...appLayoutProps,
         queryState,
-        interopChains: INTEROP_CHAINS,
+        interopChains: interopChainsWithIcons,
       },
     },
   }

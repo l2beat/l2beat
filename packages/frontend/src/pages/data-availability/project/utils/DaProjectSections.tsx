@@ -5,12 +5,14 @@ import type { ProjectsChangeReport } from '~/server/features/projects-change-rep
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
 
@@ -141,7 +143,7 @@ export async function getRegularDaProjectSections({
       type: 'LivenessSection',
       props: {
         milestones: [],
-        project: bridge,
+        project: withProjectIcon(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
         title: 'Liveness',
@@ -182,6 +184,13 @@ export async function getRegularDaProjectSections({
   })
 
   const discoUiHref = `https://disco.l2beat.com/ui/p/${bridge?.id}`
+  const discoUi = {
+    href: discoUiHref,
+    images: {
+      desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+      mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
+    },
+  }
   if (permissionsSection) {
     daBridgeItems.push({
       type: 'PermissionsSection',
@@ -190,7 +199,7 @@ export async function getRegularDaProjectSections({
         permissionedEntities: bridge.daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
-        discoUiHref,
+        discoUi,
       },
     })
   }
@@ -202,7 +211,7 @@ export async function getRegularDaProjectSections({
         ...contractsSection,
         id: 'da-bridge-contracts',
         title: 'Contracts',
-        discoUiHref,
+        discoUi,
       },
     })
   }

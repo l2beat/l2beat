@@ -35,7 +35,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   ].map((item) => ({
     id: item.id,
     title: item.name,
-    icon: <img src={`/icons/${item.id}.png`} alt={item.name} />,
+    icon: <img src={item.iconUrl} alt={item.name} />,
   }))
   return (
     <AppLayout {...props}>

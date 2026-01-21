@@ -4,7 +4,7 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
 
@@ -56,7 +56,7 @@ export function getSearchBarProjectEntries<
     type: 'project',
     id: project.id,
     name: project.name,
-    iconUrl: getProjectIcon(project.slug),
+    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     kind: getSearchBarProjectKind(project),
     isUpcoming: false,
     projectAddresses: extractProjectAddresses(

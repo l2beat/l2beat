@@ -1,9 +1,4 @@
 import type {
-  InteropByChainPlugin,
-  InteropByTokenIdPlugin,
-  InteropPlainPlugin,
-} from '@l2beat/config'
-import type {
   AggregatedInteropTransferRecord,
   Database,
   InteropTransferRecord,
@@ -37,7 +32,7 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
     for (const config of this.$.configs) {
       const conditions = this.txMatchers(config)
       const filtered = transfers.filter((transfer) =>
-        conditions.some((condition) => condition(transfer)),
+        conditions.some((pConditions) => pConditions.every((c) => c(transfer))),
       )
       const grouped = groupBy(filtered, (x) => `${x.srcChain}-${x.dstChain}`)
 
@@ -77,13 +72,22 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
 
     const tokensByVolume: Record<string, number> = {}
     let totalDurationSum = 0
-    let srcValueUsd = 0
-    let dstValueUsd = 0
+    let srcValueUsd: number | undefined = undefined
+    let dstValueUsd: number | undefined = undefined
 
     for (const transfer of group) {
       totalDurationSum += transfer.duration
-      srcValueUsd += transfer.srcValueUsd ?? 0
-      dstValueUsd += transfer.dstValueUsd ?? 0
+      if (srcValueUsd === undefined) {
+        srcValueUsd = transfer.srcValueUsd
+      } else {
+        srcValueUsd += transfer.srcValueUsd ?? 0
+      }
+
+      if (dstValueUsd === undefined) {
+        dstValueUsd = transfer.dstValueUsd
+      } else {
+        dstValueUsd += transfer.dstValueUsd ?? 0
+      }
 
       if (transfer.srcAbstractTokenId === transfer.dstAbstractTokenId) {
         if (transfer.srcAbstractTokenId) {
@@ -108,62 +112,55 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
     return {
       srcChain: first.srcChain,
       dstChain: first.dstChain,
-      tokensByVolume,
+      tokensByVolume: Object.fromEntries(
+        Object.entries(tokensByVolume).map(([key, value]) => [
+          key,
+          Math.round(value * 100) / 100,
+        ]),
+      ),
       transferCount: group.length,
       totalDurationSum,
-      srcValueUsd,
-      dstValueUsd,
+      srcValueUsd: srcValueUsd
+        ? Math.round(srcValueUsd * 100) / 100
+        : undefined,
+      dstValueUsd: dstValueUsd
+        ? Math.round(dstValueUsd * 100) / 100
+        : undefined,
     }
   }
 
   private txMatchers(config: InteropAggregationConfig) {
-    const conditions: ((transfer: InteropTransferRecord) => boolean)[] = []
-    const { plain, byChain, byTokenId } = this.groupPlugins(config)
+    const conditions: ((transfer: InteropTransferRecord) => boolean)[][] = []
 
-    for (const plugin of plain) {
-      conditions.push((transfer) => plugin.plugin === transfer.plugin)
-    }
+    for (const plugin of config.plugins) {
+      const pluginConditions: ((transfer: InteropTransferRecord) => boolean)[] =
+        []
+      pluginConditions.push((transfer) => plugin.plugin === transfer.plugin)
+      if (plugin.chain) {
+        pluginConditions.push(
+          (transfer) =>
+            plugin.chain === transfer.srcChain ||
+            plugin.chain === transfer.dstChain,
+        )
+      }
 
-    for (const plugin of byChain) {
-      conditions.push(
-        (transfer) =>
-          (plugin.chain === transfer.srcChain ||
-            plugin.chain === transfer.dstChain) &&
-          plugin.plugin === transfer.plugin,
-      )
-    }
+      if (plugin.abstractTokenId) {
+        pluginConditions.push(
+          (transfer) =>
+            plugin.abstractTokenId === transfer.srcAbstractTokenId ||
+            plugin.abstractTokenId === transfer.dstAbstractTokenId,
+        )
+      }
 
-    for (const plugin of byTokenId) {
-      conditions.push(
-        (transfer) =>
-          (plugin.abstractTokenId === transfer.srcAbstractTokenId ||
-            plugin.abstractTokenId === transfer.dstAbstractTokenId) &&
-          plugin.plugin === transfer.plugin,
-      )
+      if (plugin.transferType) {
+        pluginConditions.push(
+          (transfer) => plugin.transferType === transfer.type,
+        )
+      }
+
+      conditions.push(pluginConditions)
     }
 
     return conditions
-  }
-
-  private groupPlugins(config: InteropAggregationConfig) {
-    const plain: InteropPlainPlugin[] = []
-    const byChain: InteropByChainPlugin[] = []
-    const byTokenId: InteropByTokenIdPlugin[] = []
-
-    for (const plugin of config.plugins) {
-      switch (plugin.filterBy) {
-        case 'chain':
-          byChain.push(plugin)
-          break
-        case 'abstractTokenId':
-          byTokenId.push(plugin)
-          break
-        default:
-          plain.push(plugin)
-          break
-      }
-    }
-
-    return { plain, byChain, byTokenId }
   }
 }

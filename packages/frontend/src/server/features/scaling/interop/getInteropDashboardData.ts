@@ -2,6 +2,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
+import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams } from './types'
 import {
   getProtocolsByType,
@@ -102,6 +103,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     const data = {
       protocolName: project.interopConfig.name ?? project.name,
       iconSlug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       volume: 15_000_000,
       tokens: mockTokens,
     }

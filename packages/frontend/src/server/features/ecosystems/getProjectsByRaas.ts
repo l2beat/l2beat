@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import { getProjectIcon } from '../utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 
 export type ProjectByRaas = Record<
   string,
@@ -14,13 +14,13 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
     if (!acc[raas]) {
       acc[raas] = {
         projects: [],
-        icon: getProjectIcon(raas.toLowerCase()),
+        icon: manifest.getUrl(`/icons/${raas.toLowerCase()}.png`),
       }
     }
     acc[raas].projects.push({
       id: curr.id,
       slug: curr.slug.toString(),
-      icon: getProjectIcon(curr.slug),
+      icon: manifest.getUrl(`/icons/${curr.slug}.png`),
       name: curr.name,
       url: `/scaling/projects/${curr.slug}`,
     })
