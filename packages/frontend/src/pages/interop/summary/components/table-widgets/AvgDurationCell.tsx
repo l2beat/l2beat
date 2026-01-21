@@ -7,13 +7,13 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import type {
   DurationSplit,
-  LockAndMintProtocolEntry,
-} from '~/server/features/scaling/interop/utils/getProtocolsByType'
+  ProtocolEntry,
+} from '~/server/features/scaling/interop/utils/getProtocolEntries'
 
 export function AvgDurationCell({
   averageDuration,
 }: {
-  averageDuration: LockAndMintProtocolEntry['averageDuration']
+  averageDuration: ProtocolEntry['averageDuration']
 }) {
   if (averageDuration.type === 'single') {
     return (
