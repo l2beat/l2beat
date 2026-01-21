@@ -1,6 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
-import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -45,7 +44,9 @@ export async function getPublicationsData(
       props: {
         ...appLayoutProps,
         publications,
-        newsletterBgUrl: getStaticAsset('/images/publications/newsletter-box.png'),
+        newsletterBgUrl: manifest.getUrl(
+          '/images/publications/newsletter-box.png',
+        ),
       },
     },
   }

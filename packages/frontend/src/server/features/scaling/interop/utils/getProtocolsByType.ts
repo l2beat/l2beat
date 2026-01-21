@@ -2,11 +2,9 @@ import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import {
-  getProjectIcon,
-  getStaticAsset,
-} from '~/server/features/utils/getProjectIcon'
+import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getLogger } from '~/server/utils/logger'
+import { manifest } from '~/utils/Manifest'
 
 export type TokenData = {
   id: string
@@ -124,7 +122,7 @@ export function getProtocolsByType(
           symbol: tokenDetails.symbol,
           iconUrl:
             tokenDetails.iconUrl ??
-            getStaticAsset('/images/token-placeholder.png'),
+            manifest.getUrl('/images/token-placeholder.png'),
           volume,
         }
       })

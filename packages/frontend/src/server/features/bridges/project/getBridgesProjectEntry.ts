@@ -13,6 +13,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -29,7 +30,7 @@ import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon, getStaticAsset } from '../../utils/getProjectIcon'
+import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string
@@ -281,8 +282,8 @@ export async function getBridgesProjectEntry(
     ? {
         href: common.discoUiHref,
         images: {
-          desktop: getStaticAsset('/images/disco-ui-desktop.png'),
-          mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+          desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+          mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
         },
       }
     : undefined

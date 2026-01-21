@@ -4,9 +4,9 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
-import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -187,8 +187,8 @@ export async function getRegularDaProjectSections({
   const discoUi = {
     href: discoUiHref,
     images: {
-      desktop: getStaticAsset('/images/disco-ui-desktop.png'),
-      mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+      desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+      mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
     },
   }
   if (permissionsSection) {

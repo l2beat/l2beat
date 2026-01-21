@@ -22,6 +22,7 @@ import {
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
@@ -47,7 +48,7 @@ import {
 } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon, getStaticAsset } from '../../utils/getProjectIcon'
+import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
@@ -662,8 +663,8 @@ export async function getScalingProjectEntry(
     ? {
         href: common.discoUiHref,
         images: {
-          desktop: getStaticAsset('/images/disco-ui-desktop.png'),
-          mobile: getStaticAsset('/images/disco-ui-mobile.png'),
+          desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+          mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
         },
       }
     : undefined
