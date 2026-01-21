@@ -114,7 +114,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     chains: mockChains,
     transferCount: 5000,
     averageValue: 3000,
-    averageDuration: 100_000,
+    averageDuration: { type: 'single', duration: 100_000 },
   }))
 
   return {
