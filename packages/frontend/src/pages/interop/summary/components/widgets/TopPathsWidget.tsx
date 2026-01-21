@@ -1,3 +1,4 @@
+import type { InteropConfig } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import uniq from 'lodash/uniq'
@@ -5,20 +6,23 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 
 export function TopPathsWidget({
   interopChains,
+  type,
 }: {
   interopChains: InteropChainWithIcon[]
+  type?: InteropConfig['bridgeType']
 }) {
   const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
+    type,
   })
 
   const getChainDetails = (id: string) => {

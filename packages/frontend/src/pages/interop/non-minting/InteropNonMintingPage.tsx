@@ -5,6 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { TopPathsWidget } from '../summary/components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {
@@ -28,10 +29,13 @@ export function InteropNonMintingPage({
               className="mt-5 grid grid-cols-1 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
               data-hide-overflow-x
             >
-              {/* <div className="z-10 max-[1024px]:hidden">
-                <TopPathsWidget interopChains={interopChains} />
+              <div className="z-10 max-[1024px]:hidden">
+                <TopPathsWidget
+                  interopChains={interopChains}
+                  type="nonMinting"
+                />
               </div>
-              <div className="h-full max-[1600px]:hidden">
+              {/* <div className="h-full max-[1600px]:hidden">
                 <TopProtocolsByVolume />
               </div>
               <div className="h-full max-[1600px]:hidden">

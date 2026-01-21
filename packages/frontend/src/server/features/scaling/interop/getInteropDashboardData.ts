@@ -27,16 +27,22 @@ export async function getInteropDashboardData(
     return getMockInteropDashboardData()
   }
   const tokenDb = getTokenDb()
+
+  const interopProjects = await ps.getProjects({
+    select: ['interopConfig'],
+  })
+
+  const filteredProjects = params.type
+    ? interopProjects.filter((p) => p.interopConfig?.bridgeType === params.type)
+    : []
+
   const db = getDb()
   const records =
     await db.aggregatedInteropTransfer.getByChainsAndLatestTimestamp(
       params.from,
       params.to,
+      filteredProjects.map((p) => p.id),
     )
-
-  const interopProjects = await ps.getProjects({
-    select: ['interopConfig'],
-  })
 
   const tokensDetailsData = await tokenDb.abstractToken.getByIds(
     records.flatMap((r) => Object.keys(r.tokensByVolume)),

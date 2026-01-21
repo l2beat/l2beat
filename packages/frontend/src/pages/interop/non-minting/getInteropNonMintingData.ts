@@ -25,6 +25,7 @@ export async function getInteropNonMintingData(
       await helpers.interop.dashboard.prefetch({
         from: interopChainsIds,
         to: interopChainsIds,
+        type: 'nonMinting',
       })
       return helpers.dehydrate()
     },
