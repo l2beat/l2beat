@@ -5,7 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import { TopPathsWidget } from '../summary/components/widgets/TopPathsWidget'
+import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 
 interface Props extends AppLayoutProps {

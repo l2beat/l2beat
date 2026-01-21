@@ -8,7 +8,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TopPathsWidget({
   interopChains,
