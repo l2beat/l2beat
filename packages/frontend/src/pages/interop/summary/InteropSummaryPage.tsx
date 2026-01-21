@@ -49,7 +49,7 @@ export function InteropSummaryPage({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, isDirty } = useInteropSelectedChains()
-  const { data } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
   })
@@ -68,19 +68,27 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10 max-[1024px]:hidden">
-        <TopPathsWidget interopChains={interopChains} />
+        <TopPathsWidget
+          interopChains={interopChains}
+          isLoading={isLoading}
+          data={data}
+        />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByVolume />
+        <TopProtocolsByVolume data={data} isLoading={isLoading} />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByTransfers />
+        <TopProtocolsByTransfers data={data} isLoading={isLoading} />
       </div>
-      <MobileCarouselWidget interopChains={interopChains} />
-      <NonMintingCard />
-      <LockAndMintCard />
-      <OmniChainCard />
-      <AllProtocolsCard />
+      <MobileCarouselWidget
+        interopChains={interopChains}
+        data={data}
+        isLoading={isLoading}
+      />
+      <NonMintingCard data={data} isLoading={isLoading} />
+      <LockAndMintCard data={data} isLoading={isLoading} />
+      <OmniChainCard data={data} isLoading={isLoading} />
+      <AllProtocolsCard data={data} isLoading={isLoading} />
     </div>
   )
 }

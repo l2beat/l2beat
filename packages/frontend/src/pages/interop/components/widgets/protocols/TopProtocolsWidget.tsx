@@ -1,12 +1,11 @@
-import type { InteropConfig } from '@l2beat/config'
 import times from 'lodash/times'
 import uniq from 'lodash/uniq'
 import { useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
-import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
@@ -22,21 +21,19 @@ type TopProtocolsWidgetProps = {
   metricType: 'volume' | 'transfers'
   heading: string
   formatValue: (value: number) => string
-  type?: InteropConfig['bridgeType']
+  data: InteropDashboardData | undefined
+  isLoading: boolean
 }
 
 export function TopProtocolsWidget({
   metricType,
   heading,
   formatValue,
-  type,
+  data,
+  isLoading,
 }: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-    type,
-  })
+
   const containerRef = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref: containerRef })
 

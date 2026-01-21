@@ -1,6 +1,6 @@
-import type { InteropConfig } from '@l2beat/config'
 import { useState } from 'react'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { TopPathsWidget } from '../TopPathsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
@@ -10,10 +10,12 @@ type View = 'paths' | 'volume' | 'transfers'
 
 export function MobileCarouselWidget({
   interopChains,
-  type,
+  data,
+  isLoading,
 }: {
   interopChains: InteropChainWithIcon[]
-  type?: InteropConfig['bridgeType']
+  data: InteropDashboardData | undefined
+  isLoading: boolean
 }) {
   const [view, setView] = useState<View>('paths')
 
@@ -29,7 +31,11 @@ export function MobileCarouselWidget({
             view === 'transfers' && '-translate-x-[calc(200%+2.5rem)]',
           )}
         >
-          <TopPathsWidget interopChains={interopChains} type={type} />
+          <TopPathsWidget
+            interopChains={interopChains}
+            data={data}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
         <WidgetWrapper
           className={cn(
@@ -41,7 +47,7 @@ export function MobileCarouselWidget({
             view === 'transfers' && '-translate-x-[calc(100%+1.25rem)]',
           )}
         >
-          <TopProtocolsByVolume type={type} />
+          <TopProtocolsByVolume data={data} isLoading={isLoading} />
         </WidgetWrapper>
         <WidgetWrapper
           className={cn(
@@ -53,7 +59,7 @@ export function MobileCarouselWidget({
             view === 'transfers' && 'translate-x-0',
           )}
         >
-          <TopProtocolsByTransfers type={type} />
+          <TopProtocolsByTransfers data={data} isLoading={isLoading} />
         </WidgetWrapper>
       </div>
       <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">

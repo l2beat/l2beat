@@ -1,17 +1,20 @@
-import type { InteropConfig } from '@l2beat/config'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByTransfers({
-  type,
+  data,
+  isLoading,
 }: {
-  type?: InteropConfig['bridgeType']
+  data: InteropDashboardData | undefined
+  isLoading: boolean
 }) {
   return (
     <TopProtocolsWidget
       metricType="transfers"
       heading="Last 24 hours transfers"
-      type={type}
+      data={data}
+      isLoading={isLoading}
       formatValue={formatNumber}
     />
   )

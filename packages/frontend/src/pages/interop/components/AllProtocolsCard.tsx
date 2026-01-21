@@ -1,23 +1,18 @@
-import type { InteropConfig } from '@l2beat/config'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
-import { api } from '~/trpc/React'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
-  type,
+  data,
+  isLoading,
+  hideTypeColumn,
 }: {
-  type?: InteropConfig['bridgeType']
+  data: InteropDashboardData | undefined
+  isLoading: boolean
+  hideTypeColumn?: boolean
 }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-    type,
-  })
-
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
       <h2 className="font-bold text-heading-20 md:text-heading-24">
@@ -28,7 +23,10 @@ export function AllProtocolsCard({
         data.entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <AllProtocolsTable entries={data.entries} hideTypeColumn={!!type} />
+          <AllProtocolsTable
+            entries={data.entries}
+            hideTypeColumn={hideTypeColumn}
+          />
         )
       ) : null}
     </PrimaryCard>

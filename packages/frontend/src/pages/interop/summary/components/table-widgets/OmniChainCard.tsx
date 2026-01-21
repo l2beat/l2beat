@@ -1,16 +1,16 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { OmniChainTable } from './tables/OmniChainTable'
 
-export function OmniChainCard() {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-  })
+export function OmniChainCard({
+  data,
+  isLoading,
+}: {
+  data: InteropDashboardData | undefined
+  isLoading: boolean
+}) {
   const entries = data?.entries.filter((p) => p.bridgeType === 'omnichain')
 
   return (

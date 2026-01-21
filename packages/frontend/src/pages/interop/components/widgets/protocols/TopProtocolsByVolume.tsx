@@ -1,17 +1,20 @@
-import type { InteropConfig } from '@l2beat/config'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByVolume({
-  type,
+  data,
+  isLoading,
 }: {
-  type?: InteropConfig['bridgeType']
+  data: InteropDashboardData | undefined
+  isLoading: boolean
 }) {
   return (
     <TopProtocolsWidget
       metricType="volume"
       heading="Last 24 hours volume"
-      type={type}
+      data={data}
+      isLoading={isLoading}
       formatValue={(value) =>
         formatCurrency(value, 'usd', {
           decimals: 1,
