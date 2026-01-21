@@ -1,14 +1,12 @@
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { EmptyStateIcon } from '~/icons/EmptyState'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { api } from '~/trpc/React'
 import { ChainSelector } from './components/chain-selector/ChainSelector'
-import { ChainSelectorResetButton } from './components/chain-selector/ChainSelectorResetButton'
 import type { InteropChainWithIcon } from './components/chain-selector/types'
+import { InteropEmptyState } from './components/InteropEmptyState'
 import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
@@ -61,21 +59,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return (
-      <PrimaryCard className="mt-5 mb-12 flex w-full grow items-center justify-center">
-        <div className="flex flex-col items-center justify-center">
-          <EmptyStateIcon className="size-9 fill-yellow-700 dark:fill-yellow-200" />
-          <span className="mt-4 text-heading-24">
-            No data for selected chains
-          </span>
-          <span className="mt-4 mb-6 font-medium text-label-value-16 text-secondary">
-            We couldn&apos;t find data for this path. Select another route or
-            adjust your filters.
-          </span>
-          {isDirty && <ChainSelectorResetButton />}
-        </div>
-      </PrimaryCard>
-    )
+    return <InteropEmptyState isDirty={isDirty} />
   }
 
   return (
