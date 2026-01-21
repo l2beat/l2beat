@@ -150,7 +150,7 @@ export const mantle: ScalingProject = opStackL2({
     {
       title: 'Migration to Ethereum blobs',
       url: 'https://etherscan.io/tx/0x7234302dd8c359a14681a03f1d948369d45c00fd4a61683c449839f051e4ddb8',
-      date: '2026-01-21T09:08:59.00Z',
+      date: '2026-01-21T00:00:00.00Z',
       description:
         'Mantle moves to the Rollup category by switching data availability from EigenDA to Ethereum blobs.',
       type: 'general',
