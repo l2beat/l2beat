@@ -45,6 +45,7 @@ const delayedExecutorDelaySeconds = discovery.getContractValue<number>(
 )
 
 const ESCROW_ETH_ADDRESS = 'eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
+const ESCROW_WBTC_ADDRESS = 'eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
 const ESCROW_USDC_ADDRESS = 'eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
 const ESCROW_USDT_ADDRESS = 'eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
 const ESCROW_WSTETH_ADDRESS = 'eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
@@ -58,6 +59,7 @@ const ESCROW_LORDS_ADDRESS = 'eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = 'eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 const ESCROW_MULTIBRIDGE_ADDRESS =
   'eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
+const ESCROW_SOLVBTC_ADDRESS = 'eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10'
 const ESCROW_LBTC_ADDRESS = 'eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e'
 
 const escrowETHDelaySeconds = discovery.getContractValue<number>(
@@ -101,6 +103,12 @@ const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'ETH',
   discovery.getContractValue<number>('ETHBridge', 'maxTotalBalance'),
   18,
+)
+
+const escrowWBTCMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'WBTC',
+  discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
+  8,
 )
 
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
@@ -513,6 +521,14 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           escrowDAIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_WBTC_ADDRESS),
+        sinceTimestamp: UnixTime(1657137600),
+        untilTimestamp: UnixTime(1768848455),
+        tokens: ['WBTC'],
+        description:
+          'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
+      }),
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: UnixTime(1657137639),
         tokens: [], // removed due to custom config in starknet.json
@@ -593,6 +609,12 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
+      }),
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(ESCROW_SOLVBTC_ADDRESS),
+        untilTimestamp: UnixTime(1768848971),
+        tokens: ['SolvBTC'],
+        description: 'StarkGate bridge for SolvBTC.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
