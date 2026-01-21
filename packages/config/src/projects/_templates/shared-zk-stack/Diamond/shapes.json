@@ -39,5 +39,16 @@
     ],
     "chain": "ethereum",
     "blockNumber": 24038982
+  },
+  "Diamond_v30_0_ADI": {
+    "hash": "0x33ec87bcda0bcb30b842846b09d0c7c222129732c34db1ae495d82f3daccadb0",
+    "address": [
+      "eth:0xf9DD56364E3878056654C756cEBA692e577f8466",
+      "eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07",
+      "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
+      "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24275768
   }
 }

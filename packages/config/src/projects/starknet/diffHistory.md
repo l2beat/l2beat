@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xc1a283e1b58e773f37dff0428cc3c0720dafe4a4
+
+# Diff at Tue, 20 Jan 2026 16:05:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5d37b36a43301b2def017b94f066897f111cc32 block: 1768824106
+- current timestamp: 1768921358
+
+## Description
+
+Halted WBTC and SolvBTC bridges, sweeped tokens to respective clearing addresses. See this tweet: https://x.com/starknet/status/2012177863353815198.
+
+## Watched changes
+
+```diff
+    contract Starkware Multisig 2 (eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.27.delay:
+-        259200
+    }
+```
+
+```diff
+    contract WBTCBridge (eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      template:
+-        "starknet/StarknetERC20Bridge"
++        "starknet/StarknetMultiBridge_haltable"
+      sourceHashes.1:
+-        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
++        "0x75f2a8488acf6abb9e13f53441969f226aebd93a943aae7e6051a2cbfea0b7d0"
+      description:
+-        "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
++        "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt."
+      values.$implementation:
+-        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0xE0D1fab527A85D955d4c05323250367E61bA3f18"
+      values.$pastUpgrades.8:
++        ["2026-01-19T15:01:23.000Z","0xdb7a4f9c3e38994d167d6943b6b7f247972ac3c7564febba428a407cf0e89e5b",["eth:0xE0D1fab527A85D955d4c05323250367E61bA3f18"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.bridgedToken:
+-        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      values.depositStatus:
+-        "active"
+      values.getUpgradeActivationDelay:
+-        259200
++        0
+      values.identify:
+-        "StarkWare_StarknetERC20Bridge_2.0_5"
++        "StarkWare_StarknetTokenBridge_2.0_6-halt"
+      values.implementation:
+-        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0xE0D1fab527A85D955d4c05323250367E61bA3f18"
+      values.maxTotalBalance:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.StarkWareProxy_upgradeDelay:
+-        259200
++        0
++++ description: empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited.
++++ severity: HIGH
+      values.withdrawalLimitStatus:
+-        "inactive"
++        []
+      values.cleareanceAddress:
++        "eth:0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+      values.getL2Bridge:
++        "3475252094465534150446669812792040965529065299943233505330779571674053440258"
++++ description: The maximum total escrow balance per token (can limit deposits) is listed here if modified.
+      values.maxTotalTokenBalance:
++        {}
++++ description: Bridge halt was completed for these tokens.
++++ severity: HIGH
+      values.tokenHaltCompleted:
++        ["eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
++++ description: Bridge halt was signalled for these tokens.
++++ severity: HIGH
+      values.tokenHaltSignalled:
++        ["eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+      fieldMeta.$admin.description:
+-        "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
++        "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+      fieldMeta.withdrawalLimitStatus.description:
+-        "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
++        "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
+      fieldMeta.maxTotalBalance:
+-        {"description":"The maximum total balance that can be locked in the bridge."}
+      fieldMeta.depositStatus:
+-        {"severity":"HIGH","description":"Token status managed by the Manager. Only affects deposits."}
+      fieldMeta.maxTotalTokenBalance:
++        {"description":"The maximum total escrow balance per token (can limit deposits) is listed here if modified."}
+      fieldMeta.tokenHaltSignalled:
++        {"severity":"HIGH","description":"Bridge halt was signalled for these tokens."}
+      fieldMeta.tokenHaltCompleted:
++        {"severity":"HIGH","description":"Bridge halt was completed for these tokens."}
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xE0D1fab527A85D955d4c05323250367E61bA3f18:
++        "StarknetTokenBridge"
+      usedTypes:
+-        [{"typeCaster":"Mapping","arg":{"115792089237316195423570985008687907853269984665640564039457584007913129639935":"inactive"}},{"typeCaster":"Mapping","arg":{"0":"unknown","1":"pending","2":"active","3":"deactivated"}}]
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      template:
+-        "starknet/StarknetMultiBridge"
++        "starknet/StarknetMultiBridge_haltable"
+      sourceHashes.1:
+-        "0x066d78e6d7d8dd603e76a970521e74980c0853d848c55f014c7867ecac8be211"
++        "0x75f2a8488acf6abb9e13f53441969f226aebd93a943aae7e6051a2cbfea0b7d0"
+      description:
+-        "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
++        "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt."
+      values.$implementation:
+-        "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
++        "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7"
+      values.$pastUpgrades.3:
++        ["2026-01-19T14:07:59.000Z","0xa0ae9228abd03f1701caf995520b4ad4f9998bf46376e5f8cea39a24d0ee461a",["eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.identify:
+-        "StarkWare_StarknetTokenBridge_2.0_6"
++        "StarkWare_StarknetTokenBridge_2.0_6-halt"
+      values.implementation:
+-        "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
++        "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7"
+      values.cleareanceAddress:
++        "eth:0xd6FD2d2B18207a3b1A3d45C1ccA8c5624Ca82041"
++++ description: Bridge halt was completed for these tokens.
++++ severity: HIGH
+      values.tokenHaltCompleted:
++        ["eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97"]
++++ description: Bridge halt was signalled for these tokens.
++++ severity: HIGH
+      values.tokenHaltSignalled:
++        ["eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97"]
+      fieldMeta.tokenHaltSignalled:
++        {"severity":"HIGH","description":"Bridge halt was signalled for these tokens."}
+      fieldMeta.tokenHaltCompleted:
++        {"severity":"HIGH","description":"Bridge halt was completed for these tokens."}
+      implementationNames.eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff:
+-        "StarknetTokenBridge"
+      implementationNames.eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7:
++        "StarknetTokenBridge"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xd6FD2d2B18207a3b1A3d45C1ccA8c5624Ca82041)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/starknet/.flat/Safe/Safe.sol      | 1088 +++++++
+ .../projects/starknet/.flat/Safe/SafeProxy.p.sol   |   37 +
+ .../SolvBTCBridge/StarknetTokenBridge.sol          |  893 +++---
+ .../WBTCBridge/StarknetTokenBridge.sol}            | 3013 ++++++++++----------
+ 4 files changed, 3155 insertions(+), 1876 deletions(-)
+```
+
 Generated with discovered.json: 0x777d5996e0322392f055e2efab53510c9a851f2f
 
 # Diff at Mon, 19 Jan 2026 12:03:00 GMT:
