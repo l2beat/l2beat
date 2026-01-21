@@ -25,7 +25,7 @@ export function AvgDurationCell({
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex flex-col items-start gap-1.5 font-medium text-label-value-15">
+        <div className="flex flex-col items-start gap-0.5 font-medium text-label-value-15">
           <DurationCellItem averageDuration={averageDuration} type="in" />
           <DurationCellItem averageDuration={averageDuration} type="out" />
         </div>
