@@ -40,11 +40,27 @@ export class LogQuery {
   }
 }
 
-export function buildLogQueryForPlugin(
-  plugin: InteropPluginResyncable,
+export interface ResyncablePluginCluster {
+  name: string
+  plugins: InteropPluginResyncable[]
+}
+
+export function buildLogQueryForCluster(
+  cluster: ResyncablePluginCluster,
   chain: LongChainName,
 ): LogQuery {
   const result = new LogQuery()
+  for (const plugin of cluster.plugins) {
+    addPluginDataRequests(result, plugin, chain)
+  }
+  return result
+}
+
+function addPluginDataRequests(
+  result: LogQuery,
+  plugin: InteropPluginResyncable,
+  chain: LongChainName,
+) {
   const eventRequests = plugin
     .getDataRequests()
     .filter((r) => r.type === 'event')
@@ -75,8 +91,6 @@ export function buildLogQueryForPlugin(
       }
     }
   }
-
-  return result
 }
 
 export type SyncerState = TimeloopState | BlockProcessorState
@@ -100,8 +114,7 @@ export class InteropEventSyncer extends TimeLoop {
 
   constructor(
     readonly chain: LongChainName,
-    readonly plugin: InteropPluginResyncable,
-    readonly clusterPlugins: InteropPluginResyncable[],
+    readonly cluster: ResyncablePluginCluster,
     readonly rpcClient: EthRpcClient,
     readonly store: InteropEventStore,
     readonly db: Database,
@@ -127,7 +140,7 @@ export class InteropEventSyncer extends TimeLoop {
       }
     } catch (error) {
       this.logger.error('Error syncing chain', error, {
-        pluginName: this.plugin.name,
+        pluginName: this.cluster.name,
         chain: this.chain,
         syncerState: this.state.name,
       })
@@ -153,14 +166,10 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   captureLog(logToCapture: LogToCapture) {
-    // If you're in a cluster, go through plugins in order
-    const pluginsToRun =
-      this.clusterPlugins.length > 0 ? this.clusterPlugins : [this.plugin]
-
-    for (const plugin of pluginsToRun) {
+    for (const plugin of this.cluster.plugins) {
       const produced = plugin.capture(logToCapture)
       if (produced) {
-        return produced.map((p) => ({ ...p, plugin: this.plugin.name }))
+        return produced.map((p) => ({ ...p, plugin: plugin.name }))
       }
     }
   }
@@ -172,15 +181,15 @@ export class InteropEventSyncer extends TimeLoop {
     await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.db.interopPluginSyncedRange.upsert({
-        pluginName: this.plugin.name,
+        pluginName: this.cluster.name,
         chain: this.chain,
         ...fullRange,
       })
       await this.clearChainSyncError()
     })
 
-    this.logger.info('Events captured for resyncable plugin', {
-      plugin: this.plugin.name,
+    this.logger.info('Events captured for resyncable cluster', {
+      plugin: this.cluster.name,
       chain: this.chain,
       blockNumber: fullRange.toBlock,
       events: interopEvents.length,
@@ -189,7 +198,7 @@ export class InteropEventSyncer extends TimeLoop {
 
   async clearChainSyncError() {
     await this.db.interopPluginSyncState.setLastError(
-      this.plugin.name,
+      this.cluster.name,
       this.chain,
       null,
     )
@@ -197,7 +206,7 @@ export class InteropEventSyncer extends TimeLoop {
 
   async saveChainSyncError(error: unknown) {
     await this.db.interopPluginSyncState.setLastError(
-      this.plugin.name,
+      this.cluster.name,
       this.chain,
       errorToString(error),
     )
@@ -206,14 +215,14 @@ export class InteropEventSyncer extends TimeLoop {
   async isResyncRequestedFrom(): Promise<UnixTime | undefined> {
     const syncState =
       await this.db.interopPluginSyncState.findByPluginNameAndChain(
-        this.plugin.name,
+        this.cluster.name,
         this.chain,
       )
     return syncState?.resyncRequestedFrom ?? undefined
   }
 
   buildLogQuery() {
-    return buildLogQueryForPlugin(this.plugin, this.chain)
+    return buildLogQueryForCluster(this.cluster, this.chain)
   }
 
   protected runInTransaction<T>(fn: () => Promise<T>): Promise<T> {
@@ -239,15 +248,35 @@ export class InteropEventSyncer extends TimeLoop {
 
   getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {
     return this.db.interopPluginSyncedRange.findByPluginNameAndChain(
-      this.plugin.name,
+      this.cluster.name,
       this.chain,
     )
   }
 
-  getOldestEventForPluginAndChain(): Promise<InteropEventRecord | undefined> {
-    return this.db.interopEvent.getOldestEventForPluginAndChain(
-      this.plugin.name,
-      this.chain,
+  async getOldestEventForPluginAndChain(): Promise<
+    InteropEventRecord | undefined
+  > {
+    const oldestEvents = await Promise.all(
+      this.cluster.plugins
+        .map((p) => p.name)
+        .map((pluginName) =>
+          this.db.interopEvent.getOldestEventForPluginAndChain(
+            pluginName,
+            this.chain,
+          ),
+        ),
+    )
+    return oldestEvents.reduce<InteropEventRecord | undefined>(
+      (oldest, current) => {
+        if (!current) {
+          return oldest
+        }
+        if (!oldest || current.timestamp < oldest.timestamp) {
+          return current
+        }
+        return oldest
+      },
+      undefined,
     )
   }
 
@@ -256,11 +285,8 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async deleteAllClusterData() {
-    const pluginsToWipe =
-      this.clusterPlugins.length > 0 ? this.clusterPlugins : [this.plugin]
-
     await this.db.transaction(async () => {
-      for (const plugin of pluginsToWipe) {
+      for (const plugin of this.cluster.plugins) {
         // Delete messages:
         await this.db.interopMessage.deleteForPlugin(plugin.name)
         // Delete transfers:
