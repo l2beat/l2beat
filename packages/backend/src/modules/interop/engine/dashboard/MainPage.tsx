@@ -86,6 +86,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -115,7 +116,8 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/messages/${t.type}`}>{t.count}</a>
@@ -183,6 +185,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -220,7 +223,8 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
