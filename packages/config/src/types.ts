@@ -1240,6 +1240,22 @@ export interface InteropConfig {
   name?: string
   bridgeType: 'lockAndMint' | 'nonMinting' | 'omnichain'
   plugins: InteropPlugin[]
+  /** If configured avg. duration it able will be split into two parts, depending on the config.
+   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  durationSplit?: {
+    in: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+    out: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+  }
 }
 
 export type InteropPlugin =
