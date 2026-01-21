@@ -2215,7 +2215,7 @@
         "tx": "0x4f628e8ce1a25a509e7ee27b052dede2dbf44b11ff89df499cace4e674ea28c4"
       }
     ],
-    "events": ["sky-bridge.DepositSentMessage", "sky-bridge.DepositFinalized"],
+    "events": ["sky-bridge.DepositBridgeInitiated", "sky-bridge.DepositBridgeFinalized"],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
   }
