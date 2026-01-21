@@ -26,7 +26,12 @@ export function InteropNonMintingPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout fullWidth>
-          <MainPageHeader>Non-minting Protocols</MainPageHeader>
+          <MainPageHeader
+            description="In-light risk only. Tokens are therefore first bridged using a different
+        minting bridge that needs to be separately assessed."
+          >
+            Non-minting Protocols
+          </MainPageHeader>
           <InteropSelectedChainsProvider interopChains={interopChains}>
             <ChainSelector chains={interopChains} />
             <div
