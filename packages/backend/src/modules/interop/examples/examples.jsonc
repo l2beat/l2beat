@@ -2164,7 +2164,7 @@
         "tx": "0xd9c83b94ce77aa1f8a6f2688a0d352b31918f5999eafcb3fd2e1b8a22ab9be17"
       }
     ],
-    "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
+    "events": ["zklink-nova.MessageForwarded", "zklink-nova.MessageForwarded"],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" },
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
