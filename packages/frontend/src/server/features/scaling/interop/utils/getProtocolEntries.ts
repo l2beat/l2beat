@@ -71,25 +71,27 @@ export function getProtocolEntries(
     (a, b) => b[1].volume - a[1].volume,
   )
 
-  return protocolsData.map(([key, data]) => {
-    const project = interopProjects.find((p) => p.id === key)
-    assert(project, `Project not found: ${key}`)
-    const bridgeType = project.interopConfig.bridgeType
+  return protocolsData
+    .map(([key, data]) => {
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+      const bridgeType = project.interopConfig.bridgeType
 
-    return {
-      iconSlug: project.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      protocolName: project.interopConfig.name ?? project.name,
-      bridgeType,
-      volume: data.volume,
-      tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
-      chains: getChainsData(data.chains, logger),
-      transferCount: data.transferCount,
-      averageValue:
-        data.transferCount > 0 ? data.volume / data.transferCount : 0,
-      averageDuration: getAverageDuration(key, data, durationSplitMap),
-    }
-  })
+      return {
+        iconSlug: project.slug,
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        protocolName: project.interopConfig.name ?? project.name,
+        bridgeType,
+        volume: data.volume,
+        tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
+        chains: getChainsData(data.chains, logger),
+        transferCount: data.transferCount,
+        averageValue:
+          data.transferCount > 0 ? data.volume / data.transferCount : 0,
+        averageDuration: getAverageDuration(key, data, durationSplitMap),
+      }
+    })
+    .sort((a, b) => b.volume - a.volume)
 }
 
 function getTokensData(
