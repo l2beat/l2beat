@@ -55,11 +55,11 @@ export const base: ScalingProject = opStackL2({
       in: {
         label: 'L1 -> L2',
         from: 'ethereum',
-        to: 'optimism',
+        to: 'base',
       },
       out: {
         label: 'L2 -> L1',
-        from: 'optimism',
+        from: 'base',
         to: 'ethereum',
       },
     },
