@@ -24,5 +24,11 @@
     "address": "eth:0x5C9B360aB320a23692c9E81006ddB15de991ab65",
     "chain": "ethereum",
     "blockNumber": 24038982
+  },
+  "L1GenesisUpgrade_v30_0_ADI": {
+    "hash": "0xdabd17d82509137683ca1251589cb2b5daee701c795cbf6c0fc0554d0d97977c",
+    "address": "eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28",
+    "chain": "ethereum",
+    "blockNumber": 24275768
   }
 }

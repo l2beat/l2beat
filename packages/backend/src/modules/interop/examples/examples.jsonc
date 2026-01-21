@@ -356,6 +356,110 @@
     ],
     "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
   },
+  "mayan-swift-settlement-non-batched": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Flow 1: AMBER transfer polygonpos → ethereum (non-batched)
+      // 1a. Source: OrderCreated + MayanForwarded on Polygon
+      {
+        "chain": "polygonpos",
+        "tx": "0x12470c42db9447477eceaa92bdfaed789b4a6e68b8762b01115bdaed1e7deb66"
+      },
+      // 1b. Destination: OrderFulfilled + SettlementSent on Ethereum (batch=false)
+      {
+        "chain": "ethereum",
+        "tx": "0xe056ef54cb7b734e5cc42bb88c9fcd2a8389450f77f712e1ae4f25a00451ea18"
+      },
+      // 1c. Source: OrderUnlocked on Polygon
+      {
+        "chain": "polygonpos",
+        "tx": "0x1d66f8b36511656e23e3a6da0cf0327ad6cca7e5b411ee6fbfca22d81c0fa376"
+      },
+      // Flow 2: base → ethereum (non-batched)
+      // Order key: 0x2f75bfd6f85957172d781f46c499e1e7538e234626d0f8d8bb7f5dcb5ca2db45
+      // 2a. Source: OrderCreated on Base
+      {
+        "chain": "base",
+        "tx": "0x1007c0ebd089c5031a33ad548aae5b1174a6f567e5cc634804d3570397cd719d"
+      },
+      // 2b. Destination: OrderFulfilled + SettlementSent on Ethereum (batch=false)
+      {
+        "chain": "ethereum",
+        "tx": "0x5c3528f7361927df329916eb77f35e22d7763c56f0ac4734eaf2fcf443c6c177"
+      },
+      // 2c. Source: OrderUnlocked on Base
+      {
+        "chain": "base",
+        "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
+      }
+    ],
+    "events": [
+      "mayan-swift.OrderCreated",
+      "mayan-forwarder.MayanForwarded",
+      "mayan-swift.OrderFulfilled",
+      "mayan-swift.SettlementSent",
+      "mayan-swift.OrderUnlocked"
+    ],
+    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+    "transfers": ["mayan-swift.Transfer"]
+  },
+  "mayan-swift-settlement-batched": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Flow 1: Ethereum → BSC batch (8 orders)
+      // Order key: 0xa2178dd759b8ca5aa843e4f541b6dc8b10bf2ec40da84cd501659150731e6528
+      // 1a. Source: OrderCreated on Ethereum
+      {
+        "chain": "ethereum",
+        "tx": "0x34159463576341493f46076a0305f38f1d18d59977f2f2176efe8e62b6aefdc1"
+      },
+      // 1b. Destination: OrderFulfilled on BSC (batch=true)
+      {
+        "chain": "bsc",
+        "tx": "0xf7013ed60eed20e6959a19d1c19465e1231a846bb3862a19e32270cdb205c738"
+      },
+      // 1c. Destination: postBatch on BSC (8 SettlementSent to Ethereum)
+      {
+        "chain": "bsc",
+        "tx": "0x736fc9c506f27a576b1fd2fdc8b472a527428a5bab4e9528ce42871d1e6cc58e"
+      },
+      // 1d. Source: unlockBatch on Ethereum (8 OrderUnlocked)
+      {
+        "chain": "ethereum",
+        "tx": "0x443fc3a3286b832d38e1811a1c2b17ca78c8a32206c26c58fa3ea3cb2a58386f"
+      },
+      // Flow 2: Arbitrum → Base batch (8 orders)
+      // Order key: 0x43c0c4285690ae648d3482b42e9060159f6076ddb1ea56c6b910752a12286a63
+      // 2a. Source: OrderCreated on Arbitrum
+      {
+        "chain": "arbitrum",
+        "tx": "0xad5dda95f31cf81a1e2140d74838259dcb1b6062b39c7cd2dd9f4519cb6019a2"
+      },
+      // 2b. Destination: OrderFulfilled on Base (batch=true)
+      {
+        "chain": "base",
+        "tx": "0x20031fb2921b006c6e52b8de6e34385fe97d95dffcce1174cb659531b48d026f"
+      },
+      // 2c. Destination: postBatch on Base (8 SettlementSent to Arbitrum)
+      {
+        "chain": "base",
+        "tx": "0xb6487cd0106f85f35e75ecf561a7593356a2d60a5b76f739d286277d4482472b"
+      },
+      // 2d. Source: unlockBatch on Arbitrum (8 OrderUnlocked)
+      {
+        "chain": "arbitrum",
+        "tx": "0x1cce878d867321728632a6e4d898e1b029e208dd9ae3d1e92f500dd4405abc5c"
+      }
+    ],
+    "events": [
+      "mayan-swift.OrderCreated",
+      "mayan-swift.OrderFulfilled",
+      "mayan-swift.SettlementSent",
+      "mayan-swift.OrderUnlocked"
+    ],
+    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+    "transfers": ["mayan-swift.Transfer"]
+  },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],
     "txs": [
@@ -1203,89 +1307,143 @@
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge": {
-    "txs": [
-      // base -> ethereum (erc20)
+    "groups": [
       {
-        "chain": "ethereum",
-        "tx": "0x8dac7daf5e7ba2aeaea92d41fef0d27045618008c4661319f19f8ccb06ae37e8"
+        "name": "base -> ethereum (erc20)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x8dac7daf5e7ba2aeaea92d41fef0d27045618008c4661319f19f8ccb06ae37e8"
+          },
+          {
+            "chain": "base",
+            "tx": "0x4ceca5feb2bb493b2aa06fe3ae2c2fd502ca379afacffad2b156f857b9d4dbb5"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
-        "chain": "base",
-        "tx": "0x4ceca5feb2bb493b2aa06fe3ae2c2fd502ca379afacffad2b156f857b9d4dbb5"
-      },
-      // base -> ethereum (eth)
-      {
-        "chain": "ethereum",
-        "tx": "0x8b8212452123e1ad00513dbb439374ea53e0a693b82a2e2918a25f1f378c4d88"
-      },
-      {
-        "chain": "base",
-        "tx": "0xd1d7438ac477a0f0e31c88276f068a7cb1ec6431d7417193e7954e37c2f92f41"
-      },
-      // ethereum -> base (eth)
-      {
-        "chain": "base",
-        "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc"
-      },
-      // ethereum -> base (erc20)
-      {
-        "chain": "base",
-        "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
+        "name": "base -> ethereum (eth)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x8b8212452123e1ad00513dbb439374ea53e0a693b82a2e2918a25f1f378c4d88"
+          },
+          {
+            "chain": "base",
+            "tx": "0xd1d7438ac477a0f0e31c88276f068a7cb1ec6431d7417193e7954e37c2f92f41"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
-        "chain": "ethereum",
-        "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771"
-      },
-      // optimism -> ethereum (erc20)
-      {
-        "chain": "ethereum",
-        "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3"
-      },
-      {
-        "chain": "optimism",
-        "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687"
-      },
-      // ethereum -> optimism (erc20)
-      {
-        "chain": "optimism",
-        "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f"
-      },
-      // ethereum -> optimism (eth)
-      {
-        "chain": "optimism",
-        "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
+        "name": "ethereum -> base (eth)",
+        "txs": [
+          {
+            "chain": "base",
+            "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
       {
-        "chain": "ethereum",
-        "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95"
+        "name": "ethereum -> base (erc20)",
+        "txs": [
+          {
+            "chain": "base",
+            "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
       },
-      // optimism -> ethereum (eth)
       {
-        "chain": "ethereum",
-        "tx": "0x0e22ba8740b08a455bbd187d6937ae8f40b6ef1c61a9cccd22f5ea8f1f6bcceb"
+        "name": "optimism -> ethereum (erc20)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x365e200d99d5ada389d4723f80813a59d0ad85457b3f63075116d88a5957b0b3"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0x17155a2b8f3660594348882dec3025a0df670c0015b68b092aadfa765fab1687"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       },
       {
-        "chain": "optimism",
-        "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240"
+        "name": "ethereum -> optimism (erc20)",
+        "txs": [
+          {
+            "chain": "optimism",
+            "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+      },
+      {
+        "name": "ethereum -> optimism (eth)",
+        "txs": [
+          {
+            "chain": "optimism",
+            "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+      },
+      {
+        "name": "optimism -> ethereum (eth)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x0e22ba8740b08a455bbd187d6937ae8f40b6ef1c61a9cccd22f5ea8f1f6bcceb"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0xb3c71047a8bc3a2d9d860fe87b5407c3b3c0f460ff1ad82c325f109c9c401240"
+          }
+        ],
+        "messages": [
+          { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+        ],
+        "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
       }
-    ],
-    "messages": [
-      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ]
   },
   "orbitstack": {

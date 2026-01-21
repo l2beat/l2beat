@@ -147,7 +147,7 @@
     "eth:0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2",
     "gno:0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2",
     //Taiko SC Agents
-    "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55": "Daniel Wang Agent",
+    "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163": "Gustavo Gonzalez Agent",
     "eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4": "Chainbound Agent",
     "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8": "L2BEAT Agent",
     "eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678": "Aragon Agent",
@@ -155,6 +155,7 @@
     "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A": "Nethermind Agent",
     "eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656": "Drew Van der Werff Agent",
     "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6": "Toni Wahrstätter Agent",
+    "eth:0xc4414B079bC4A013916B3dc241555F6f505c1619": "Gattaca Agent",
     // mapping contracts in this chain-specific config instead of the global config (EOAs though are multichain in EVM)
     "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": "Avail Multisig 1",
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": "Avail Multisig 2",
@@ -272,7 +273,7 @@
     "eth:0xBE634B030FEAaB661300667EaF82510a3a025413": "Stargate Multisig 2",
     "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b": "Mint Multisig",
     // Taiko SC
-    "eth:0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",
+    "eth:0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Gustavo Gonzalez Taiko",
     "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "Chainbound",
     "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": "L2BEAT",
     "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701": "Aragon",
@@ -280,6 +281,7 @@
     "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": "Nethermind",
     "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": "Drew Van der Werff",
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": "Toni Wahrstätter",
+    "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": "Gattaca",
     "base:0x871e290d5447b958131F6d44f915F10032436ee6": "AlchemyMultisig2",
     "base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "Conduit Multisig 3",
     "base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2",

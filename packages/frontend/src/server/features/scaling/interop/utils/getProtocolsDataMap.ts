@@ -10,6 +10,7 @@ export function getProtocolsDataMap(
     {
       volume: number
       tokens: Map<string, number>
+      chains: Map<string, number>
       transferCount: number
       totalDurationSum: number
       // Split duration tracking (only used when durationSplit is configured)
@@ -24,6 +25,7 @@ export function getProtocolsDataMap(
     const current = protocolsDataMap.get(record.id) ?? {
       volume: 0,
       tokens: new Map<string, number>(),
+      chains: new Map<string, number>(),
       transferCount: 0,
       totalDurationSum: 0,
       inTransferCount: 0,
@@ -34,6 +36,21 @@ export function getProtocolsDataMap(
 
     for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
       current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
+    }
+
+    if (record.srcChain) {
+      const srcValue = record.srcValueUsd ?? 0
+      current.chains.set(
+        record.srcChain,
+        (current.chains.get(record.srcChain) ?? 0) + srcValue,
+      )
+    }
+    if (record.dstChain) {
+      const dstValue = record.dstValueUsd ?? 0
+      current.chains.set(
+        record.dstChain,
+        (current.chains.get(record.dstChain) ?? 0) + dstValue,
+      )
     }
 
     // Check if this record matches a durationSplit direction
@@ -63,6 +80,7 @@ export function getProtocolsDataMap(
     protocolsDataMap.set(record.id, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: current.tokens,
+      chains: current.chains,
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),

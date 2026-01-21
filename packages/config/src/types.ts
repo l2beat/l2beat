@@ -1215,6 +1215,7 @@ export type InteropPluginName =
   | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
+  | 'mayan-swift-settlement'
   | 'oneinch-fusion-plus'
   | 'opstack'
   | 'opstack-standardbridge'

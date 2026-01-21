@@ -40,6 +40,9 @@
     "getManaLimit": {
       "severity": "HIGH",
       "description": "gas limit, currently 0 to prevent transactions"
+    },
+    "getEntryQueueFlushSize": {
+      "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
     }
   }
 }

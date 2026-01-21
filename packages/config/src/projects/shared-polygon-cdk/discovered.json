@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1765280943,
+  "timestamp": 1768997932,
   "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
   "entries": [
     {
@@ -406,7 +406,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 95,
+        "nonce": 96,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -460,7 +460,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xc30da45431d7b57d7a1b49dd8f987b4affea8d1a061184afd56413e295f9feb7",
+        "getRoot": "0x2fada5c882791a3d87eb5209b10f73e6702274dfd98d00df88554c3ac15b1532",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -719,10 +719,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xcf9153c0e2d78892de71e048775120ce0d92794459f50442974cd95182efec32",
+        "getRollupExitRoot": "0xb2ff300841460cbd848e52d9a9fa6593cd20b4bf5bf734eecb19992f251dd9ed",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1765279847,
+        "lastAggregationTimestamp": 1768996859,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
           14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
@@ -1081,8 +1081,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 843619,
-        "totalVerifiedBatches": 843154,
+        "totalSequencedBatches": 852958,
+        "totalVerifiedBatches": 852475,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1163,9 +1163,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 81615,
+        "depositCount": 85716,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0x999974da86bea185c803d6bcff7c5ce703a1855901ee61670b4a44e548bda891",
+        "getRoot": "0x5b54326dc4c1e39c7750014006cceaecfcc3eebf4177f701e821049cf1154cea",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -2597,6 +2597,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23975025 },
+  "usedBlockNumbers": { "ethereum": 24283116 },
   "permissionsConfigHash": "0xace2d8b8f73deb05db8db2e0c8347706b0d2c0109310f061d0da28ebfb0bb785"
 }
