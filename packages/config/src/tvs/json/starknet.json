@@ -273,26 +273,6 @@
     },
     {
       "mode": "custom",
-      "id": "starknet-SolvBTC-old",
-      "priceId": "solv-btc",
-      "symbol": "SolvBTC",
-      "name": "Solv BTC",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
-        "chain": "ethereum",
-        "escrowAddress": "0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
-        "decimals": 18,
-        "sinceTimestamp": 1750859519,
-        "untilTimestamp": 1768848971
-      },
-      "category": "btc",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "custom",
       "id": "starknet-SolvBTC",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
@@ -316,6 +296,26 @@
           }
         ]
       }
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-SolvBTC-old",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+        "chain": "ethereum",
+        "escrowAddress": "0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+        "decimals": 18,
+        "sinceTimestamp": 1750859519,
+        "untilTimestamp": 1768848971
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -501,26 +501,6 @@
     },
     {
       "mode": "custom",
-      "id": "starknet-WBTC-old",
-      "priceId": "wrapped-bitcoin",
-      "symbol": "WBTC",
-      "name": "Wrapped BTC",
-      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "chain": "ethereum",
-        "escrowAddress": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-        "decimals": 8,
-        "sinceTimestamp": 1657137600,
-        "untilTimestamp": 1768848455
-      },
-      "category": "btc",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "custom",
       "id": "starknet-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
@@ -544,6 +524,26 @@
           }
         ]
       }
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-WBTC-old",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+        "decimals": 8,
+        "sinceTimestamp": 1657137600,
+        "untilTimestamp": 1768848455
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
