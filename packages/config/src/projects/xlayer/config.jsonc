@@ -7,7 +7,8 @@
     "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433"
   ],
   "names": {
-    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "OwnerContract"
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "OwnerContract",
+    "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": "Xlayer Multisig"
   },
   "sharedModules": ["shared-polygon-cdk"],
   "overrides": {

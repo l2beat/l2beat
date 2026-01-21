@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x17dd3740d04ee41c971654c4b477ba031e228eab
+
+# Diff at Wed, 21 Jan 2026 12:39:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768816709
+- current timestamp: 1768999073
+
+## Description
+
+UMA Multisig change.
+
+## Watched changes
+
+```diff
+    contract UMA Multisig (eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766"
+    }
+```
+
 Generated with discovered.json: 0x5f5ffe9d52db6f5941dd2818d9f8b7d9b6acbc73
 
 # Diff at Mon, 19 Jan 2026 10:09:18 GMT:

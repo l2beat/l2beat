@@ -1,3 +1,140 @@
+Generated with discovered.json: 0x2b08ca5e024af2e6e49a8a082b771cce22b5344e
+
+# Diff at Wed, 21 Jan 2026 12:37:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1767003202
+- current timestamp: 1768998877
+
+## Description
+
+move to new multisig owner.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) {
+    +++ description: None
+      values.owner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge_neutered (eth:0x85d37236f063C687d056b3604CBEe4B60d124858) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract L1StandardBridge_neutered (eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a) {
+    +++ description: This OP stack bridge contract has been modified to disallow ETH and ERC-20 bridging.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0xE88CfA9D4a4fae1413914baD9796A72D13d035b9","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x62e1Aaeba9A8AA4654980653dB4B21FC82C61c15","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x85d37236f063C687d056b3604CBEe4B60d124858","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3","role":"admin","via":[{"address":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"}]}
+      directlyReceivedPermissions.0:
+-        {"permission":"act","from":"eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6","role":".owner"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF94B553F3602a03931e5D10CaB343C0968D793e3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.proxyAdminOwner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Xlayer Multisig (eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../xlayer/.flat/Xlayer Multisig/GnosisSafe.sol    | 953 +++++++++++++++++++++
+ .../.flat/Xlayer Multisig/GnosisSafeProxy.p.sol    |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
 Generated with discovered.json: 0x0b907d154e8769bd7ae9bc6fc0d883cd5ddfcadc
 
 # Diff at Mon, 29 Dec 2025 10:14:26 GMT:

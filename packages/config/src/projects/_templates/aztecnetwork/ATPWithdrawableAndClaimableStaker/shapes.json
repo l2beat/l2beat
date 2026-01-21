@@ -4,5 +4,11 @@
     "address": "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42",
     "chain": "ethereum",
     "blockNumber": 23867964
+  },
+  "ATPWithdrawableAndClaimableStakerV2.sol": {
+    "hash": "0xdbe19cd7f53b8c978b7b4fdb849f158f916d347912ce37296c14163a8c0c7296",
+    "address": "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95",
+    "chain": "ethereum",
+    "blockNumber": 24283306
   }
 }
