@@ -13,12 +13,10 @@ export const usdt0: BaseProject = {
     bridgeType: 'omnichain',
     plugins: [
       {
-        filterBy: 'abstractTokenId',
         abstractTokenId: ABSTRACT_TOKEN_ID,
         plugin: 'layerzero-v2',
       },
       {
-        filterBy: 'abstractTokenId',
         abstractTokenId: ABSTRACT_TOKEN_ID,
         plugin: 'layerzero-v2-ofts',
       },

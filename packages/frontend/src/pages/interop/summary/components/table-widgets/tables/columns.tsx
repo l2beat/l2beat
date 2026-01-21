@@ -1,8 +1,8 @@
-import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { AvgDurationCell } from '../AvgDurationCell'
 import { BridgeTypeBadge } from '../BridgeTypeBadge'
 import { TopChainsCell } from '../TopChainsCell'
 import { TopTokensCell } from '../TopTokensCell'
@@ -68,13 +68,10 @@ const tokensByVolumeColumn = protocolColumnHelper.accessor('tokens', {
 const averageDurationColumn = protocolColumnHelper.accessor('averageDuration', {
   header: 'last 24h avg.\ntransfer time',
   meta: {
-    align: 'right',
     headClassName: 'text-2xs',
   },
   cell: (ctx) => (
-    <div className="font-medium text-label-value-15">
-      {formatSeconds(ctx.row.original.averageDuration)}
-    </div>
+    <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
   ),
 })
 

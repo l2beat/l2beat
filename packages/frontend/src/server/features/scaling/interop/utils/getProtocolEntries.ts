@@ -1,8 +1,14 @@
-import { INTEROP_CHAINS, type Project } from '@l2beat/config'
+import type { Logger } from '@l2beat/backend-tools'
+import {
+  INTEROP_CHAINS,
+  type InteropConfig,
+  type Project,
+} from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
   id: string
@@ -18,6 +24,18 @@ export type ChainData = {
   volume: number
 }
 
+export type DurationSplit = {
+  type: 'split'
+  in: {
+    label: string
+    duration: number | null
+  }
+  out: {
+    label: string
+    duration: number | null
+  }
+}
+
 export type ProtocolEntry = {
   iconUrl: string
   protocolName: string
@@ -27,7 +45,7 @@ export type ProtocolEntry = {
   chains: ChainData[]
   transferCount: number
   averageValue: number
-  averageDuration: number
+  averageDuration: { type: 'single'; duration: number } | DurationSplit
 }
 
 export function getProtocolEntries(
@@ -36,102 +54,22 @@ export function getProtocolEntries(
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
-  const protocolsDataMap = new Map<
+
+  const durationSplitMap = new Map<
     string,
-    {
-      volume: number
-      tokens: Map<string, number>
-      chains: Map<string, number>
-      transferCount: number
-      totalDurationSum: number
-    }
+    NonNullable<InteropConfig['durationSplit']>
   >()
-
-  for (const record of records) {
-    const current = protocolsDataMap.get(record.id) ?? {
-      volume: 0,
-      tokens: new Map<string, number>(),
-      chains: new Map<string, number>(),
-      transferCount: 0,
-      totalDurationSum: 0,
+  for (const project of interopProjects) {
+    if (project.interopConfig.durationSplit) {
+      durationSplitMap.set(project.id, project.interopConfig.durationSplit)
     }
-
-    for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
-      current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
-    }
-
-    // Track chains volume (both src and dst contribute)
-    if (record.srcChain) {
-      const srcValue = record.srcValueUsd ?? 0
-      current.chains.set(
-        record.srcChain,
-        (current.chains.get(record.srcChain) ?? 0) + srcValue,
-      )
-    }
-    if (record.dstChain) {
-      const dstValue = record.dstValueUsd ?? 0
-      current.chains.set(
-        record.dstChain,
-        (current.chains.get(record.dstChain) ?? 0) + dstValue,
-      )
-    }
-
-    protocolsDataMap.set(record.id, {
-      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-      tokens: current.tokens,
-      chains: current.chains,
-      transferCount: current.transferCount + (record.transferCount ?? 0),
-      totalDurationSum:
-        current.totalDurationSum + (record.totalDurationSum ?? 0),
-    })
   }
+
+  const protocolsDataMap = getProtocolsDataMap(records, durationSplitMap)
 
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
     (a, b) => b[1].volume - a[1].volume,
   )
-
-  const getTokensData = (tokens: Map<string, number>) => {
-    return Array.from(tokens.entries())
-      .map(([tokenId, volume]) => {
-        const tokenDetails = tokensDetailsMap.get(tokenId)
-
-        if (!tokenDetails) {
-          logger.warn(`Token not found: ${tokenId}`)
-          return undefined
-        }
-
-        return {
-          id: tokenId,
-          symbol: tokenDetails.symbol,
-          iconUrl:
-            tokenDetails.iconUrl ??
-            manifest.getUrl('/images/token-placeholder.png'),
-          volume,
-        }
-      })
-      .filter(notUndefined)
-      .toSorted((a, b) => b.volume - a.volume)
-  }
-
-  const getChainsData = (chains: Map<string, number>): ChainData[] => {
-    return Array.from(chains.entries())
-      .map(([chainId, volume]) => {
-        const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
-        if (!chain) {
-          logger.warn(`Chain not found: ${chainId}`)
-          return undefined
-        }
-
-        return {
-          id: chainId,
-          name: chain.name,
-          iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-          volume,
-        }
-      })
-      .filter(notUndefined)
-      .toSorted((a, b) => b.volume - a.volume)
-  }
 
   return protocolsData.map(([key, data]) => {
     const project = interopProjects.find((p) => p.id === key)
@@ -144,15 +82,105 @@ export function getProtocolEntries(
       protocolName: project.interopConfig.name ?? project.name,
       bridgeType,
       volume: data.volume,
-      tokens: getTokensData(data.tokens),
-      chains: getChainsData(data.chains),
+      tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
+      chains: getChainsData(data.chains, logger),
       transferCount: data.transferCount,
       averageValue:
         data.transferCount > 0 ? data.volume / data.transferCount : 0,
-      averageDuration:
-        data.transferCount > 0
-          ? Math.floor(data.totalDurationSum / data.transferCount)
-          : 0,
+      averageDuration: getAverageDuration(key, data, durationSplitMap),
     }
   })
+}
+
+function getTokensData(
+  tokens: Map<string, number>,
+  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  logger: Logger,
+) {
+  return Array.from(tokens.entries())
+    .map(([tokenId, volume]) => {
+      const tokenDetails = tokensDetailsMap.get(tokenId)
+
+      if (!tokenDetails) {
+        logger.warn(`Token not found: ${tokenId}`)
+        return undefined
+      }
+
+      return {
+        id: tokenId,
+        symbol: tokenDetails.symbol,
+        iconUrl:
+          tokenDetails.iconUrl ??
+          manifest.getUrl('/images/token-placeholder.png'),
+        volume,
+      }
+    })
+    .filter(notUndefined)
+    .toSorted((a, b) => b.volume - a.volume)
+}
+
+function getChainsData(
+  chains: Map<string, number>,
+  logger: Logger,
+): ChainData[] {
+  return Array.from(chains.entries())
+    .map(([chainId, volume]) => {
+      const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
+      if (!chain) {
+        logger.warn(`Chain not found: ${chainId}`)
+        return undefined
+      }
+
+      return {
+        id: chainId,
+        name: chain.name,
+        iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+        volume,
+      }
+    })
+    .filter(notUndefined)
+    .toSorted((a, b) => b.volume - a.volume)
+}
+
+function getAverageDuration(
+  key: string,
+  data: {
+    transferCount: number
+    totalDurationSum: number
+    inTransferCount: number
+    inDurationSum: number
+    outTransferCount: number
+    outDurationSum: number
+  },
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+): ProtocolEntry['averageDuration'] {
+  const durationSplit = durationSplitMap.get(key)
+
+  if (durationSplit) {
+    return {
+      type: 'split',
+      in: {
+        label: durationSplit.in.label,
+        duration:
+          data.inTransferCount > 0
+            ? Math.floor(data.inDurationSum / data.inTransferCount)
+            : null,
+      },
+      out: {
+        label: durationSplit.out.label,
+        duration:
+          data.outTransferCount > 0
+            ? Math.floor(data.outDurationSum / data.outTransferCount)
+            : null,
+      },
+    }
+  }
+
+  return {
+    type: 'single',
+    duration:
+      data.transferCount > 0
+        ? Math.floor(data.totalDurationSum / data.transferCount)
+        : 0,
+  }
 }
