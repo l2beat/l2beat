@@ -1,3 +1,4 @@
+import type { InteropConfig } from '@l2beat/config'
 import times from 'lodash/times'
 import uniq from 'lodash/uniq'
 import { useMemo, useRef } from 'react'
@@ -21,17 +22,20 @@ type TopProtocolsWidgetProps = {
   metricType: 'volume' | 'transfers'
   heading: string
   formatValue: (value: number) => string
+  type?: InteropConfig['bridgeType']
 }
 
 export function TopProtocolsWidget({
   metricType,
   heading,
   formatValue,
+  type,
 }: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
+    type,
   })
   const containerRef = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref: containerRef })

@@ -5,6 +5,9 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
+import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
+import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 
@@ -35,17 +38,17 @@ export function InteropNonMintingPage({
                   type="nonMinting"
                 />
               </div>
-              {/* <div className="h-full max-[1600px]:hidden">
-                <TopProtocolsByVolume />
+              <div className="h-full max-[1600px]:hidden">
+                <TopProtocolsByVolume type="nonMinting" />
               </div>
               <div className="h-full max-[1600px]:hidden">
-                <TopProtocolsByTransfers />
+                <TopProtocolsByTransfers type="nonMinting" />
               </div>
-              <MobileCarouselWidget interopChains={interopChains} />
-              <NonMintingCard />
-              <LockAndMintCard />
-              <OmniChainCard />
-              <AllProtocolsCard /> */}
+              <MobileCarouselWidget
+                interopChains={interopChains}
+                type="nonMinting"
+              />
+              {/*  <AllProtocolsCard /> */}
             </div>
           </InteropSelectedChainsProvider>
         </SideNavLayout>
