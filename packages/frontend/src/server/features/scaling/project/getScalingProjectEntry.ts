@@ -11,7 +11,6 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -46,6 +45,7 @@ import {
   getUnderReviewStatus,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -348,7 +348,7 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  const chartProject = getChartProject(project)
+  const projectWithIcon = withProjectIcon(project)
 
   if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
     sections.push({
@@ -360,7 +360,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
-        project: chartProject,
+        project: projectWithIcon,
         ...scalingTvsSection,
       },
     })
@@ -374,7 +374,7 @@ export async function getScalingProjectEntry(
         title: 'Activity',
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
-        project: chartProject,
+        project: projectWithIcon,
         ...activitySection,
       },
     })
@@ -387,7 +387,7 @@ export async function getScalingProjectEntry(
         id: 'onchain-costs',
         title: 'Onchain costs',
         milestones: sortedMilestones,
-        project: chartProject,
+        project: projectWithIcon,
         ...costsSection,
       },
     })
@@ -400,7 +400,7 @@ export async function getScalingProjectEntry(
         id: 'data-posted',
         title: 'Data posted',
         milestones: sortedMilestones,
-        project: chartProject,
+        project: projectWithIcon,
         ...dataPostedSection,
       },
     })
@@ -419,7 +419,7 @@ export async function getScalingProjectEntry(
         id: 'liveness',
         title: 'Liveness',
         milestones: sortedMilestones,
-        project: chartProject,
+        project: projectWithIcon,
         ...livenessSection,
       },
     })

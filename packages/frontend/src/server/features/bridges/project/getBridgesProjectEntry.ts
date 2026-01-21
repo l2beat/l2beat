@@ -8,7 +8,6 @@ import type {
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
@@ -25,6 +24,7 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/getTechno
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { optionToRange } from '~/utils/range/range'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
@@ -174,7 +174,7 @@ export async function getBridgesProjectEntry(
       props: {
         id: 'tvs',
         title: 'Value Secured',
-        project: getChartProject(project),
+        project: withProjectIcon(project),
         tokens: tokens,
         milestones: project.milestones ?? [],
         defaultRange: project.archivedAt

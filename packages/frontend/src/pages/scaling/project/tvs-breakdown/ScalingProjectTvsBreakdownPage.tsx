@@ -2,7 +2,6 @@ import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/Pro
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { TvsChartControlsContextProvider } from '~/components/chart/tvs/TvsChartControlsContext'
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartControls } from '~/components/projects/sections/tvs/ChartControls'
 import { TokenChart } from '~/components/projects/sections/tvs/TokenChart'
@@ -26,7 +25,6 @@ interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
 
 export function ScalingProjectTvsBreakdownPage({
   project,
-  icon,
   dataTimestamp,
   entries,
   project7dData,
@@ -34,14 +32,13 @@ export function ScalingProjectTvsBreakdownPage({
   defaultRange,
   ...props
 }: Props) {
-  const chartProject = getChartProject(project)
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <TvsBreakdownPageHeader
           title={project.name}
           slug={project.slug}
-          icon={icon}
+          icon={project.iconUrl}
           tvsBreakdownTimestamp={dataTimestamp}
         />
         <div
@@ -54,20 +51,17 @@ export function ScalingProjectTvsBreakdownPage({
                 <PrimaryCard>
                   <ChartControls projectId={project.id} />
                   <ProjectBridgeTypeTvsChart
-                    project={chartProject}
+                    project={project}
                     milestones={milestones}
                   />
                   <ProjectAssetCategoryTvsChart
-                    project={chartProject}
+                    project={project}
                     milestones={milestones}
                   />
                   <div>
                     <section id="token-chart" className="scroll-mt-2">
                       <TokensControls tokens={entries} />
-                      <TokenChart
-                        project={chartProject}
-                        milestones={milestones}
-                      />
+                      <TokenChart project={project} milestones={milestones} />
                     </section>
                   </div>
                   <TvsProjectStats

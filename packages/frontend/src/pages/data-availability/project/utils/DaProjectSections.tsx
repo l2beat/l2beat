@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -13,6 +12,7 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
 
@@ -143,7 +143,7 @@ export async function getRegularDaProjectSections({
       type: 'LivenessSection',
       props: {
         milestones: [],
-        project: getChartProject(bridge),
+        project: withProjectIcon(bridge),
         ...livenessSection,
         id: 'da-bridge-liveness',
         title: 'Liveness',
