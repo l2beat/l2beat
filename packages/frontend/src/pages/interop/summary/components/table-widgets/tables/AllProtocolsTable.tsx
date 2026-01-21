@@ -1,4 +1,4 @@
-import { getCoreRowModel } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
@@ -21,13 +21,18 @@ export function AllProtocolsTable({
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    enableSorting: false,
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       columnPinning: {
         left: ['#', 'logo'],
       },
-      sorting: [],
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
+        },
+      ],
     },
   })
 

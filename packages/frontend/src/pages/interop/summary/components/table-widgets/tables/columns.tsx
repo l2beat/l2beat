@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
@@ -31,7 +30,7 @@ const commonColumns = [
     size: 28,
     enableHiding: false,
   }),
-  columnHelper.accessor((row) => row.protocolName, {
+  columnHelper.accessor('protocolName', {
     header: 'Name',
     cell: (ctx) => (
       <div className="max-w-[76px] break-words font-bold text-label-value-15">
@@ -45,7 +44,7 @@ const commonColumns = [
   }),
 ]
 
-const last24hVolumeColumn = columnHelper.accessor((row) => row.volume, {
+const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
   cell: (ctx) => (
     <span className="font-medium text-label-value-15">
@@ -67,18 +66,26 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
   cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
 })
 
-const averageDurationColumn = columnHelper.accessor('averageDuration', {
-  header: 'last 24h avg.\ntransfer time',
-  meta: {
-    headClassName: 'text-2xs',
+const averageDurationColumn = columnHelper.accessor(
+  (row) =>
+    row.averageDuration.type === 'single'
+      ? row.averageDuration.duration
+      : (row.averageDuration.in.duration ??
+        row.averageDuration.out.duration ??
+        Number.POSITIVE_INFINITY),
+  {
+    header: 'last 24h avg.\ntransfer time',
+    invertSorting: true,
+    meta: {
+      headClassName: 'text-2xs',
+    },
+    cell: (ctx) => (
+      <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
+    ),
   },
-  cell: (ctx) => (
-    <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-  ),
-})
+)
 
-const transferCountColumn = columnHelper.display({
-  id: 'token count',
+const tokenCountColumn = columnHelper.accessor((row) => row.tokens.length, {
   header: 'Token\ncount',
   cell: (ctx) => (
     <div className="font-medium text-label-value-15">
@@ -107,12 +114,12 @@ export const lockAndMintColumns = [
 export const omniChainColumns = [
   ...commonColumns,
   last24hVolumeColumn,
-  transferCountColumn,
+  tokenCountColumn,
   tokensByVolumeColumn,
 ]
 
-export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
-  return compact([
+export function getallProtocolsColumns(hideTypeColumn?: boolean) {
+  return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
       cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
@@ -124,16 +131,15 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
       size: 48,
     }),
     ...commonColumns,
-    !hideTypeColumn &&
-      columnHelper.accessor('bridgeType', {
-        header: 'Type',
-        cell: (ctx) => (
-          <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />
-        ),
-        meta: {
-          headClassName: 'text-2xs',
-        },
-      }),
+    columnHelper.accessor('bridgeType', {
+      header: 'Type',
+      cell: (ctx) => (
+        <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />
+      ),
+      meta: {
+        headClassName: 'text-2xs',
+      },
+    }),
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'chains\nby volume',
@@ -144,7 +150,7 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
       cell: (ctx) => <TopChainsCell chains={ctx.row.original.chains} />,
     }),
     last24hVolumeColumn,
-    transferCountColumn,
+    tokenCountColumn,
     averageDurationColumn,
     columnHelper.accessor('averageValue', {
       header: 'last 24h avg.\ntransfer value',
@@ -158,5 +164,5 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         </span>
       ),
     }),
-  ])
+  ]
 }
