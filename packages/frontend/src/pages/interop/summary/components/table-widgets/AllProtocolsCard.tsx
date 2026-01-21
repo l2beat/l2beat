@@ -24,11 +24,13 @@ export function AllProtocolsCard() {
         nec quis nisi.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length === 0 ? (
-        <NoResultsInfo />
-      ) : (
-        <AllProtocolsTable entries={entries} />
-      )}
+      {entries ? (
+        entries.length === 0 ? (
+          <NoResultsInfo />
+        ) : (
+          <AllProtocolsTable entries={entries} />
+        )
+      ) : null}
     </PrimaryCard>
   )
 }

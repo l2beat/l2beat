@@ -23,11 +23,13 @@ export function OmniChainCard() {
         chains. Flow limits might be applied.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length === 0 ? (
-        <NoResultsInfo />
-      ) : (
-        <OmniChainTable entries={entries} />
-      )}
+      {entries ? (
+        entries.length === 0 ? (
+          <NoResultsInfo />
+        ) : (
+          <OmniChainTable entries={entries} />
+        )
+      ) : null}
     </PrimaryCard>
   )
 }

@@ -25,11 +25,13 @@ export function NonMintingCard() {
         minting bridge that needs to be separately assessed.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length === 0 ? (
-        <NoResultsInfo />
-      ) : (
-        <NonMintingTable entries={entries} />
-      )}
+      {entries ? (
+        entries.length === 0 ? (
+          <NoResultsInfo />
+        ) : (
+          <NonMintingTable entries={entries} />
+        )
+      ) : null}
     </PrimaryCard>
   )
 }
