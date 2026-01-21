@@ -34,6 +34,14 @@ export async function getInteropDashboardData(
       params.to,
     )
 
+  if (records.length === 0) {
+    return {
+      top3Paths: [],
+      topProtocols: [],
+      entries: [],
+    }
+  }
+
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
