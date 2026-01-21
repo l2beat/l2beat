@@ -400,10 +400,7 @@
       "mayan-swift.SettlementSent",
       "mayan-swift.OrderUnlocked"
     ],
-    "messages": [
-      "mayan-swift.Message",
-      "mayan-swift.SettlementMessage"
-    ],
+    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
     "transfers": ["mayan-swift.Transfer"]
   },
   "mayan-swift-settlement-batched": {
