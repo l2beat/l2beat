@@ -4,10 +4,10 @@ import uniq from 'lodash/uniq'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import type { InteropChainWithIcon } from '../chain-selector/types'
 
 export function TopPathsWidget({
   interopChains,
