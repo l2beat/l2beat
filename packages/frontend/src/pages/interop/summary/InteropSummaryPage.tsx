@@ -5,6 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ChainSelector } from './components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from './components/chain-selector/types'
+import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
@@ -13,7 +14,6 @@ import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProto
 import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from './components/widgets/TopPathsWidget'
 import { InteropSelectedChainsProvider } from './utils/InteropSelectedChainsContext'
-import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
