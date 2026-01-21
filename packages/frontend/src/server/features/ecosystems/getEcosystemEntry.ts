@@ -12,6 +12,7 @@ import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -31,7 +32,6 @@ import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
 } from '../scaling/upcoming/getScalingUpcomingEntries'
-import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
@@ -293,8 +293,8 @@ export async function getEcosystemEntry(
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {
-      buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
-      delegateToL2BEAT: getStaticAsset(
+      buildOn: manifest.getUrl(`/partners/${slug}/build-on.png`),
+      delegateToL2BEAT: manifest.getUrl(
         '/partners/governance-delegate-to-l2beat.png',
       ),
     },

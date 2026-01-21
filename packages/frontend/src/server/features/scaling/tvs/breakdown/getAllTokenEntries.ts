@@ -15,9 +15,9 @@ import capitalize from 'lodash/capitalize'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
-import { getStaticAsset } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
+import { manifest } from '~/utils/Manifest'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import {
   type Address,
@@ -109,7 +109,7 @@ function getEntries(
           project.contracts?.addresses,
         ),
         iconUrl:
-          token.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
+          token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
         priceUsd: tokenValue.priceUsd,
         valueForProject: tokenValue.valueForProject,
         value: tokenValue.value,

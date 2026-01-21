@@ -2,7 +2,6 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { getGovernanceEventEntries } from '~/pages/governance/utils/getGovernanceEventEntries'
 import { getGovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -29,7 +28,7 @@ export async function getGovernanceData(
   const delegatedProjects = getCollection('delegated-projects').map(
     (project) => ({
       ...project,
-      icon: getProjectIcon(project.data.slug),
+      icon: manifest.getUrl(`/icons/${project.data.slug}.png`),
     }),
   )
 

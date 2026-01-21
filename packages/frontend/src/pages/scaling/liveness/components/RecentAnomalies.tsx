@@ -16,6 +16,7 @@ import { NoAnomaliesState } from './NoRecentAnomaliesState'
 export interface ProjectWithAnomaly {
   name: string
   slug: string
+  iconUrl: string
   recentAnomalies: LivenessAnomaly[]
 }
 
@@ -92,7 +93,7 @@ function AnomalyCollapsible({
       <CollapsibleTrigger className="group flex w-full items-center justify-between rounded px-4 py-3">
         <div className="flex items-center gap-2">
           <img
-            src={`/icons/${projectWithAnomalies.slug}.png`}
+            src={projectWithAnomalies.iconUrl}
             alt={projectWithAnomalies.name}
             className="size-5"
           />

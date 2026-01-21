@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -13,7 +14,6 @@ import {
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -99,7 +99,7 @@ export async function getZkCatalogProjectEntry(
     creator: project.zkCatalogInfo.creator,
     shortName: project.shortName,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: false,

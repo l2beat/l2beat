@@ -25,7 +25,6 @@ interface Props extends AppLayoutProps, ScalingProjectTvsBreakdown {
 
 export function ScalingProjectTvsBreakdownPage({
   project,
-  icon,
   dataTimestamp,
   entries,
   project7dData,
@@ -39,7 +38,7 @@ export function ScalingProjectTvsBreakdownPage({
         <TvsBreakdownPageHeader
           title={project.name}
           slug={project.slug}
-          icon={icon}
+          icon={project.iconUrl}
           tvsBreakdownTimestamp={dataTimestamp}
         />
         <div

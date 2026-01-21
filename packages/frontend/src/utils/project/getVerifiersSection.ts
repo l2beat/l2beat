@@ -2,9 +2,9 @@ import type { Project } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/VerifiersSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
 
@@ -31,7 +31,7 @@ export async function getVerifiersSection(
 
     const attesters = verifier.attesters?.map((attester) => ({
       ...attester,
-      icon: getProjectIcon(attester.id),
+      icon: manifest.getUrl(`/icons/${attester.id}.png`),
     }))
 
     const knownDeployments = verifier.knownDeployments.map((d) => {
