@@ -36,7 +36,7 @@ export const form: ScalingProject = opStackL2({
       explorers: ['https://explorer.form.network'],
       socialMedia: [
         'https://x.com/0xform',
-        'https://discord.com/invite/formnetwork',
+        'https://discord.com/invite/pJ9wdCca3u',
         'https://t.me/formnetwork',
         'https://mirror.xyz/formnetwork.eth',
       ],
