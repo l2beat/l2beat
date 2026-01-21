@@ -1,11 +1,6 @@
-import { formatSeconds } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { AvgDurationCell } from '../AvgDurationCell'
 import { TopTokensCell } from '../TopTokensCell'
 import type { LockAndMintRow } from './LockAndMintTable'
 import type { NonMintingRow } from './NonMintingTable'
@@ -81,52 +76,9 @@ export const lockAndMintColumns = [
     meta: {
       headClassName: 'text-2xs',
     },
-    cell: (ctx) => {
-      const averageDuration = ctx.row.original.averageDuration
-      if (averageDuration.type === 'single') {
-        return (
-          <div className="font-medium text-label-value-15">
-            {formatSeconds(averageDuration.duration)}
-          </div>
-        )
-      }
-      return (
-        <Tooltip>
-          <TooltipTrigger>
-            <div className="flex flex-col items-start gap-1.5 font-medium text-label-value-15">
-              <div>
-                <span className="text-[13px] text-secondary leading-none">
-                  In:{' '}
-                </span>
-                {formatSeconds(averageDuration.in.duration)}
-              </div>
-              <div>
-                <span className="text-[13px] text-secondary leading-none">
-                  Out:{' '}
-                </span>
-                {formatSeconds(averageDuration.out.duration)}
-              </div>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="flex flex-col gap-1.5 font-medium text-label-value-15">
-              <div>
-                <span className="text-[13px] text-secondary leading-none">
-                  {averageDuration.in.label}:{' '}
-                </span>
-                {formatSeconds(averageDuration.in.duration)}
-              </div>
-              <div>
-                <span className="text-[13px] text-secondary leading-none">
-                  {averageDuration.out.label}:{' '}
-                </span>
-                {formatSeconds(averageDuration.out.duration)}
-              </div>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      )
-    },
+    cell: (ctx) => (
+      <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
+    ),
   }),
   lockAndMintColumnHelper.accessor('tokens', {
     header: 'tokens\nby volume',

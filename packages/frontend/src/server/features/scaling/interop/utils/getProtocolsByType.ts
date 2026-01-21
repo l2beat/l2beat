@@ -26,11 +26,11 @@ export type DurationSplit = {
   type: 'split'
   in: {
     label: string
-    duration: number
+    duration: number | null
   }
   out: {
     label: string
-    duration: number
+    duration: number | null
   }
 }
 
@@ -208,14 +208,14 @@ export function getProtocolsByType(
           duration:
             data.inTransferCount > 0
               ? Math.floor(data.inDurationSum / data.inTransferCount)
-              : 0,
+              : null,
         },
         out: {
           label: durationSplit.out.label,
           duration:
             data.outTransferCount > 0
               ? Math.floor(data.outDurationSum / data.outTransferCount)
-              : 0,
+              : null,
         },
       }
     }
