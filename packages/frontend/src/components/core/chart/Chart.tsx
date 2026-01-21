@@ -205,8 +205,8 @@ function SimpleChartContainer({
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
-  width?: string | number | undefined
-  height?: string | number | undefined
+  width?: number | `${number}%` | undefined
+  height?: number | `${number}%` | undefined
 }) {
   return (
     <ChartContext.Provider value={{ meta }}>
@@ -221,6 +221,10 @@ function SimpleChartContainer({
 SimpleChartContainer.displayName = 'Chart'
 
 const ChartTooltip = RechartsPrimitive.Tooltip
+type CustomChartTooltipProps = Omit<
+  RechartsPrimitive.DefaultTooltipContentProps<number, string>,
+  'accessibilityLayer'
+>
 
 function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   return <div className={tooltipContentVariants()}>{children}</div>
@@ -234,10 +238,9 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   children,
-}: React.ComponentProps<'div'> &
-  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-    nameKey?: string
-  }) {
+}: RechartsPrimitive.DefaultLegendContentProps & {
+  nameKey?: string
+}) {
   const id = React.useId()
 
   const contentRef = React.useRef<HTMLDivElement>(null)
@@ -386,6 +389,7 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  type CustomChartTooltipProps,
   ChartTooltipWrapper,
   SimpleChartContainer,
 }

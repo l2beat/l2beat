@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { AreaChart, type TooltipProps } from 'recharts'
+import { AreaChart } from 'recharts'
 import {
   ChartContainer,
   ChartLegend,
@@ -9,7 +9,9 @@ import {
   type ChartMeta,
   ChartTooltip,
   ChartTooltipWrapper,
+  type CustomChartTooltipProps,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -27,8 +29,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   type ActivityMetric,
@@ -149,8 +150,8 @@ export function ScalingRecategorizedActivityChart({
           <EthereumStrokeGradientDef id="ethereum-stroke" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: [
+        <ChartStrokeOverFillAreaComponents
+          data={[
             {
               dataKey: 'rollups',
               stroke: 'url(#rollups-stroke)',
@@ -175,8 +176,8 @@ export function ScalingRecategorizedActivityChart({
               fill: 'url(#ethereum-fill)',
               hide: !dataKeys.includes('ethereum'),
             },
-          ],
-        })}
+          ]}
+        />
         <ChartTooltip
           content={
             <CustomTooltip
@@ -186,33 +187,32 @@ export function ScalingRecategorizedActivityChart({
             />
           }
         />
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'uops' ? ' UOPS' : ' TPS',
-          },
-          syncedUntil: data?.syncedUntil,
-        })}
+          }}
+          syncedUntil={data?.syncedUntil}
+        />
       </AreaChart>
     </ChartContainer>
   )
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   syncedUntil,
   metric,
   chartMeta,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   syncedUntil: number | undefined
   metric: ActivityMetric
   chartMeta: ChartMeta
 }) {
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>
