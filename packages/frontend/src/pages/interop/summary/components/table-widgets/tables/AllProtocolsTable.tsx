@@ -1,13 +1,25 @@
 import { getCoreRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import { allProtocolsColumns, type ProtocolRow } from './columns'
+import { getAllProtocolsColumns, type ProtocolRow } from './columns'
 
-export function AllProtocolsTable({ entries }: { entries: ProtocolEntry[] }) {
+export function AllProtocolsTable({
+  hideTypeColumn,
+  entries,
+}: {
+  entries: ProtocolEntry[]
+  hideTypeColumn?: boolean
+}) {
+  const columns = useMemo(
+    () => getAllProtocolsColumns(hideTypeColumn),
+    [hideTypeColumn],
+  )
+
   const table = useTable<ProtocolRow>({
     data: entries,
-    columns: allProtocolsColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
     manualFiltering: true,

@@ -28,7 +28,7 @@ export function AllProtocolsCard({
         data.entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <AllProtocolsTable entries={data.entries} />
+          <AllProtocolsTable entries={data.entries} hideTypeColumn={!!type} />
         )
       ) : null}
     </PrimaryCard>
