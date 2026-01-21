@@ -65,7 +65,7 @@ import { ZklinkNovaPlugin } from './zklink-nova'
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
   configPlugins: InteropConfigPlugin[]
-  eventPlugins: InteropPlugin[]
+  eventPlugins: InteropPlugin[][]
 }
 
 export interface InteropPluginDependencies {
@@ -108,55 +108,69 @@ export function createInteropPlugins(
       ),
     ],
     eventPlugins: [
-      new SquidCoralPlugin(),
-      new DeBridgePlugin(),
-      new DeBridgeDlnPlugin(),
-      new MayanForwarderPlugin(deps.configs),
-      new CircleGatewayPlugIn(deps.configs),
-      new CelerPlugIn(),
-      new CCIPPlugIn(),
-      new CentriFugePlugin(),
-      new MayanSwiftPlugin(deps.configs), // should be run before CCTP
-      new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
-      new MayanMctpPlugin(), // should be run before CCTP
-      new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
-      new CCTPV1Plugin(deps.configs),
-      new CCTPV2Plugin(deps.configs),
-      new StargatePlugin(deps.configs), // should be run before ofts, lzv2
-      new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
-      new LayerZeroV2Plugin(deps.configs),
-      new LayerZeroV1Plugin(deps.configs),
-      new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
-      new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
-      new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
-      new WormholePlugin(deps.configs),
-      new AllbridgePlugIn(),
-      new AxelarITSPlugin(), // should be run before Axelar
-      new AxelarPlugin(),
-      new AcrossPlugin(deps.configs),
-      new AcrossSettlementPlugin(), // should be run before OrbitStack and OpStack
-      new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
-      new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
-      new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
-      new OrbitStackPlugin(),
-      new ZklinkNovaPlugin(), // should be run before OpStack
-      new WorldIdPlugin(), // should be run before OpStack
-      new LidoWstethPlugin(), // should be run before OpStack
-      new SorareBasePlugin(), // should be run before OpStackStandardBridge
-      new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
-      new MakerBridgePlugin(), // should be run before OpStackStandardBridge
-      new SkyBridgePlugin(), // should be run before OpStackStandardBridge
-      new OpStackStandardBridgePlugin(), // should be run before OpStack
-      new OpStackPlugin(),
-      new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
-      new HyperlaneHwrPlugin(), // should be run before Hyperlane
-      new HyperlaneEcoPlugin(), // should be run before Hyperlane
-      new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
-      new HyperlanePlugIn(),
-      new OneinchFusionPlusPlugin(),
-      new RelayPlugin(),
-      new RelaySimplePlugIn(),
-      new GasZipPlugin(deps.logger),
+      [new SquidCoralPlugin()],
+      [new DeBridgePlugin()],
+      [new DeBridgeDlnPlugin()],
+      [new MayanForwarderPlugin(deps.configs)],
+      [new CircleGatewayPlugIn(deps.configs)],
+      [new CelerPlugIn()],
+      [new CCIPPlugIn()],
+      [new CentriFugePlugin()],
+      [
+        new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+        new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
+        new MayanMctpPlugin(), // should be run before CCTP
+        new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
+        new CCTPV1Plugin(deps.configs),
+        new CCTPV2Plugin(deps.configs),
+      ],
+      [
+        new StargatePlugin(deps.configs), // should be run before ofts, lzv2
+        new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+        new LayerZeroV2Plugin(deps.configs),
+        new LayerZeroV1Plugin(deps.configs),
+      ],
+      [
+        new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
+        new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
+        new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
+        new WormholePlugin(deps.configs),
+      ],
+      [new AllbridgePlugIn()],
+      [
+        new AxelarITSPlugin(), // should be run before Axelar
+        new AxelarPlugin(),
+      ],
+      [new AcrossPlugin(deps.configs)],
+      [
+        new AcrossSettlementPlugin(), // should be run before OrbitStack and OpStack
+        new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
+        new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
+        new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
+        new OrbitStackPlugin(),
+      ],
+      [
+        new ZklinkNovaPlugin(), // should be run before OpStack
+        new WorldIdPlugin(), // should be run before OpStack
+        new LidoWstethPlugin(), // should be run before OpStack
+        new SorareBasePlugin(), // should be run before OpStackStandardBridge
+        new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
+        new MakerBridgePlugin(), // should be run before OpStackStandardBridge
+        new SkyBridgePlugin(), // should be run before OpStackStandardBridge
+        new OpStackStandardBridgePlugin(), // should be run before OpStack
+        new OpStackPlugin(),
+      ],
+      [
+        new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
+        new HyperlaneHwrPlugin(), // should be run before Hyperlane
+        new HyperlaneEcoPlugin(), // should be run before Hyperlane
+        new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
+        new HyperlanePlugIn(),
+      ],
+      [new OneinchFusionPlusPlugin()],
+      [new RelayPlugin()],
+      [new RelaySimplePlugIn()],
+      [new GasZipPlugin(deps.logger)],
     ],
   }
 }

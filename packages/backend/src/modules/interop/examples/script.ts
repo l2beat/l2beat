@@ -301,7 +301,7 @@ async function runExample(
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
 
-      for (const plugin of plugins.eventPlugins) {
+      for (const plugin of plugins.eventPlugins.flat()) {
         if (!plugin.captureTx) {
           continue
         }
@@ -318,7 +318,7 @@ async function runExample(
       }
 
       for (const log of txLogs) {
-        for (const plugin of plugins.eventPlugins) {
+        for (const plugin of plugins.eventPlugins.flat()) {
           if (!plugin.capture) {
             continue
           }
@@ -347,7 +347,7 @@ async function runExample(
       (type) => events.filter((x) => x.type === type),
       [...new Set(events.map((x) => x.type))],
       events.length,
-      plugins.eventPlugins,
+      plugins.eventPlugins.flat(),
       group.txs.map((x) => x.chain),
       logger,
     )

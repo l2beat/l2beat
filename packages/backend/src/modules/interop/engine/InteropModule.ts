@@ -45,7 +45,7 @@ export function createInteropModule({
   })
 
   const syncersManager = new InteropSyncersManager(
-    plugins.eventPlugins,
+    plugins.eventPlugins.flat(),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
     config.chainConfig,
     eventStore,
@@ -60,7 +60,7 @@ export function createInteropModule({
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
         chain.id,
-        plugins.eventPlugins,
+        plugins.eventPlugins.flat(),
         eventStore,
         logger,
       )
@@ -75,7 +75,7 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
-    plugins.eventPlugins,
+    plugins.eventPlugins.flat(),
     config.interop.capture.chains.map((c) => c.id),
     logger,
     transferStream,
@@ -183,7 +183,7 @@ export function createInteropModule({
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
-      eventPlugins: plugins.eventPlugins.length,
+      eventPlugins: plugins.eventPlugins.flat().length,
     })
 
     if (config.interop && config.interop.capture.enabled) {

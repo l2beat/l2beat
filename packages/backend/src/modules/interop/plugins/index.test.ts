@@ -28,7 +28,7 @@ describe('Interop Plugins', async () => {
   describe('every plugin name is unique', () => {
     const kwnon = new Set<string>()
 
-    for (const plugin of plugins.eventPlugins) {
+    for (const plugin of plugins.eventPlugins.flat()) {
       it(plugin.name, () => {
         assert(
           !kwnon.has(plugin.name),
@@ -40,7 +40,7 @@ describe('Interop Plugins', async () => {
   })
 
   describe('matchTypes check', () => {
-    for (const plugin of plugins.eventPlugins) {
+    for (const plugin of plugins.eventPlugins.flat()) {
       if (plugin.match) {
         it(plugin.name, () => {
           assert(plugin.matchTypes, `matchTypes missing for ${plugin.name}`)
