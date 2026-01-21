@@ -26,14 +26,14 @@ export function InteropNonMintingPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout fullWidth>
-          <MainPageHeader
-            description="In-light risk only. Tokens are therefore first bridged using a different
-        minting bridge that needs to be separately assessed."
-          >
-            Non-minting Protocols
-          </MainPageHeader>
+          <div className="max-md:hidden">
+            <HeaderWithDescription />
+          </div>
           <InteropSelectedChainsProvider interopChains={interopChains}>
             <ChainSelector chains={interopChains} />
+            <div className="md:hidden">
+              <HeaderWithDescription />
+            </div>
             <div
               className="mt-5 grid grid-cols-1 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
               data-hide-overflow-x
@@ -60,5 +60,16 @@ export function InteropNonMintingPage({
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
+  )
+}
+
+function HeaderWithDescription() {
+  return (
+    <MainPageHeader
+      description="In-light risk only. Tokens are therefore first bridged using a different
+        minting bridge that needs to be separately assessed."
+    >
+      Non-minting Protocols
+    </MainPageHeader>
   )
 }
