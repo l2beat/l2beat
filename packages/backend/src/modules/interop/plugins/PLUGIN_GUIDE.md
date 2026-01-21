@@ -271,11 +271,14 @@ import { MyPlugin } from './my-plugin'
 // In createInteropPlugins(), add to eventPlugins array:
 eventPlugins: [
   // ... other plugin clusters ...
-  [new MyPlugin()], // Add as single cluster if it doesn't depend on other plugins
-  [
-    new OpStackStandardBridgePlugin(), // or Add into a cluster, BEFORE more generic plugins it builds on 
-    new OpStackPlugin(),
-  ]
+  new MyPlugin(), // Add as single item if it doesn't depend on other plugins
+  {
+    clusterName: 'opstack',
+    plugins: [
+      new MyPlugin(), // or add into a cluster, BEFORE more generic plugins it builds on in the cluster
+      new OpStackPlugin()
+    ]
+  },
   // ...
 ]
 ```
