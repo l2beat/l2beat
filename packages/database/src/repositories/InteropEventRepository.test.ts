@@ -89,7 +89,7 @@ describeDatabase(InteropEventRepository.name, (db) => {
   describe(
     InteropEventRepository.prototype.getOldestEventForPluginAndChain.name,
     () => {
-      it('returns the oldest event by timestamp for a plugin and chain', async () => {
+      it('returns the oldest event by timestamp for plugins and chain', async () => {
         await repository.insertMany([
           event('plugin1', 'event1', 'deposit', UnixTime(200), UnixTime(300), {
             chain: 'chainA',
@@ -103,14 +103,17 @@ describeDatabase(InteropEventRepository.name, (db) => {
           event('plugin2', 'event4', 'withdraw', UnixTime(25), UnixTime(125), {
             chain: 'chainA',
           }),
+          event('plugin3', 'event5', 'withdraw', UnixTime(10), UnixTime(110), {
+            chain: 'chainA',
+          }),
         ])
 
         const result = await repository.getOldestEventForPluginAndChain(
-          'plugin1',
+          ['plugin1', 'plugin2'],
           'chainA',
         )
 
-        expect(result?.eventId).toEqual('event2')
+        expect(result?.eventId).toEqual('event4')
       })
 
       it('returns undefined when there are no events for plugin and chain', async () => {
@@ -119,12 +122,21 @@ describeDatabase(InteropEventRepository.name, (db) => {
             chain: 'chainB',
           }),
           event('plugin2', 'event2', 'deposit', UnixTime(50), UnixTime(150), {
-            chain: 'chainA',
+            chain: 'chainB',
           }),
         ])
 
         const result = await repository.getOldestEventForPluginAndChain(
-          'plugin1',
+          ['plugin1', 'plugin2'],
+          'chainA',
+        )
+
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined when plugin list is empty', async () => {
+        const result = await repository.getOldestEventForPluginAndChain(
+          [],
           'chainA',
         )
 

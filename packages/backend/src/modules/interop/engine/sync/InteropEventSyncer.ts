@@ -253,30 +253,10 @@ export class InteropEventSyncer extends TimeLoop {
     )
   }
 
-  async getOldestEventForPluginAndChain(): Promise<
-    InteropEventRecord | undefined
-  > {
-    const oldestEvents = await Promise.all(
-      this.cluster.plugins
-        .map((p) => p.name)
-        .map((pluginName) =>
-          this.db.interopEvent.getOldestEventForPluginAndChain(
-            pluginName,
-            this.chain,
-          ),
-        ),
-    )
-    return oldestEvents.reduce<InteropEventRecord | undefined>(
-      (oldest, current) => {
-        if (!current) {
-          return oldest
-        }
-        if (!oldest || current.timestamp < oldest.timestamp) {
-          return current
-        }
-        return oldest
-      },
-      undefined,
+  getOldestEventForPluginAndChain(): Promise<InteropEventRecord | undefined> {
+    return this.db.interopEvent.getOldestEventForPluginAndChain(
+      this.cluster.plugins.map((plugin) => plugin.name),
+      this.chain,
     )
   }
 

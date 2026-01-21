@@ -142,7 +142,7 @@ describe(InteropEventSyncer.name, () => {
       const capture = mockFn().returns([event])
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [makePlugin({ name: 'across', capture })],
         }),
       })
@@ -160,7 +160,7 @@ describe(InteropEventSyncer.name, () => {
 
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [
             makePlugin({ name: 'across', capture: firstCapture }),
             makePlugin({ name: 'wormhole', capture: secondCapture }),
@@ -178,7 +178,7 @@ describe(InteropEventSyncer.name, () => {
     it('returns undefined when no plugin produces', () => {
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [
             makePlugin({
               name: 'across',
@@ -201,7 +201,7 @@ describe(InteropEventSyncer.name, () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
         store: mockObject<InteropEventStore>({ saveNewEvents }),
@@ -227,11 +227,11 @@ describe(InteropEventSyncer.name, () => {
       expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
       expect(upsert).toHaveBeenCalledWith({
-        pluginName: 'cluster',
+        pluginName: 'clusterName',
         chain: 'ethereum',
         ...makeSyncedRange(),
       })
-      expect(setLastError).toHaveBeenCalledWith('cluster', 'ethereum', null)
+      expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
   })
 
@@ -402,7 +402,7 @@ describe(InteropEventSyncer.name, () => {
       const transaction = mockFn().executes(async (cb) => await cb())
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [
             makePlugin({ name: 'across' }),
             makePlugin({ name: 'wormhole' }),
@@ -439,8 +439,8 @@ describe(InteropEventSyncer.name, () => {
       const transaction = mockFn().executes(async (cb) => await cb())
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'base',
-          plugins: [makePlugin({ name: 'base' as InteropPluginName })],
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across' })],
         }),
         db: mockObject<InteropEventSyncer['db']>({
           transaction,
@@ -468,6 +468,7 @@ describe(InteropEventSyncer.name, () => {
     it('returns last synced range and oldest event', async () => {
       const lastRange = makeSyncedRangeRecord()
       const oldestEvent = makeInteropEventRecord()
+      const getOldestEventForPluginAndChain = mockFn().resolvesTo(oldestEvent)
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
@@ -476,7 +477,7 @@ describe(InteropEventSyncer.name, () => {
             findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
           }),
           interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
-            getOldestEventForPluginAndChain: mockFn().resolvesTo(oldestEvent),
+            getOldestEventForPluginAndChain,
           }),
         }),
       })
@@ -486,26 +487,20 @@ describe(InteropEventSyncer.name, () => {
 
       expect(resultRange).toEqual(lastRange)
       expect(resultEvent).toEqual(oldestEvent)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
+        ['across'],
+        'ethereum',
+      )
     })
 
-    it('returns the oldest event across cluster plugin names', async () => {
-      const eventCluster = makeInteropEventRecord({ timestamp: UnixTime(10) })
+    it('returns the oldest event for cluster plugin names', async () => {
       const eventA = makeInteropEventRecord({ timestamp: UnixTime(5) })
-      const getOldestEventForPluginAndChain = mockFn().executes(
-        async (pluginName: string) => {
-          if (pluginName === 'cluster') {
-            return eventCluster
-          }
-          if (pluginName === 'across') {
-            return eventA
-          }
-          return undefined
-        },
-      )
+      const getOldestEventForPluginAndChain = mockFn().resolvesTo(eventA)
 
       const syncer = createSyncer({
         cluster: makeCluster({
-          name: 'cluster',
+          name: 'clusterName',
           plugins: [
             makePlugin({ name: 'across' }),
             makePlugin({ name: 'wormhole' }),
@@ -521,6 +516,11 @@ describe(InteropEventSyncer.name, () => {
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
 
       expect(resultEvent).toEqual(eventA)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
+        ['across', 'wormhole'],
+        'ethereum',
+      )
     })
   })
 
@@ -585,10 +585,10 @@ class TestSyncer extends InteropEventSyncer {
 }
 
 function createSyncer(overrides: Partial<TestSyncer> = {}) {
-  const plugin = makePlugin({ name: 'base' as InteropPluginName })
+  const plugin = makePlugin({ name: 'across' })
   const syncer = new TestSyncer(
     'ethereum',
-    makeCluster({ name: 'base', plugins: [plugin] }),
+    makeCluster({ name: 'clusterName', plugins: [plugin] }),
     mockRpcClient(),
     mockStore(),
     mockDb(),
@@ -602,7 +602,7 @@ function makeCluster(
   params: { name?: string; plugins?: InteropPluginResyncable[] } = {},
 ): InteropEventSyncer['cluster'] {
   return {
-    name: params.name ?? 'base',
+    name: params.name ?? 'clusterName',
     plugins: params.plugins ?? [makePlugin()],
   }
 }
