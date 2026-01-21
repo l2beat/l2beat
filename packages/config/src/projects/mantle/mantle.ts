@@ -4,7 +4,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -16,12 +15,11 @@ export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   discovery,
   genesisTimestamp: UnixTime(1688314886),
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Mantle',
     slug: 'mantle',
     description:
-      'Mantle is a ZK Rollup based on the OP Stack that uses SP1 proofs for state validation. It posts transaction data to Ethereum blobs and aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
+      'Mantle is a ZK Rollup based on the OP Stack that uses SP1 proofs for state validation. It aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     links: {
       websites: ['https://mantle.xyz/'],
       bridges: ['https://bridge.mantle.xyz'],
@@ -30,7 +28,7 @@ export const mantle: ScalingProject = opStackL2({
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
-        'https://twitter.com/0xMantle',
+        'https://x.com/Mantle_Official',
         'https://medium.com/0xmantle',
         'https://t.me/mantlenetwork',
       ],
@@ -129,6 +127,7 @@ export const mantle: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      sinceTimestamp: UnixTime(1768986539),
       inbox: ChainSpecificAddress.address(
         discovery.getContractValue('SystemConfig', 'sequencerInbox'),
       ),
@@ -151,8 +150,8 @@ export const mantle: ScalingProject = opStackL2({
   milestones: [
     {
       title: 'Migration to Ethereum blobs',
-      url: 'https://x.com/0xMantle',
-      date: '2026-01-21T00:00:00.00Z',
+      url: 'https://etherscan.io/tx/0x7234302dd8c359a14681a03f1d948369d45c00fd4a61683c449839f051e4ddb8',
+      date: '2026-01-21T09:08:59.00Z',
       description:
         'Mantle migrates data availability from EigenDA to Ethereum blobs.',
       type: 'general',
