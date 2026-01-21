@@ -1282,10 +1282,10 @@
       }
     ],
     "events": [
-      "sorare-base.TransferRegisteredSentMessage",
-      "sorare-base.FactRegisteredRelayedMessage"
+      "sorare-base.TransferRegistered",
+      "sorare-base.FactRegistered"
     ],
-    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare-base" }],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
   "beefy-bridge": {
