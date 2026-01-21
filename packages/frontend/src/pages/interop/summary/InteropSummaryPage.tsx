@@ -4,21 +4,21 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { api } from '~/trpc/React'
-import { ChainSelector } from './components/chain-selector/ChainSelector'
-import type { InteropChainWithIcon } from './components/chain-selector/types'
-import { InteropEmptyState } from './components/InteropEmptyState'
-import { AllProtocolsCard } from './components/table-widgets/AllProtocolsCard'
-import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
-import { NonMintingCard } from './components/table-widgets/NonMintingCard'
-import { OmniChainCard } from './components/table-widgets/OmniChainCard'
-import { MobileCarouselWidget } from './components/widgets/protocols/MobileCarouselWidget'
-import { TopProtocolsByTransfers } from './components/widgets/protocols/TopProtocolsByTransfers'
-import { TopProtocolsByVolume } from './components/widgets/protocols/TopProtocolsByVolume'
-import { TopPathsWidget } from './components/widgets/TopPathsWidget'
+import { AllProtocolsCard } from '../components/AllProtocolsCard'
+import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
+import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
+import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
+import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
-} from './utils/InteropSelectedChainsContext'
+} from '../utils/InteropSelectedChainsContext'
+import { InteropEmptyState } from './components/InteropEmptyState'
+import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
+import { NonMintingCard } from './components/table-widgets/NonMintingCard'
+import { OmniChainCard } from './components/table-widgets/OmniChainCard'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
