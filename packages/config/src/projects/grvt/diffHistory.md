@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc67fbca1e48d65863ab053fdc941896bac4a9ac6
 
 ## Description
 
-Scheduled and executed two proposals (https://etherscan.io/tx/0xb2ed029ae644311610a5c4bc16245ce1212b47763c5046f862e2e1bd8423a6a8#eventlog, https://etherscan.io/tx/0xdecb938d6e5f7e75786e854ded5d52eda3bc916cf536950baa6ba5f5167ae830#eventlog). Looks like these proposals transferred GBT tokens from L1 to L2 via burn bridge. Amounts are very small: 0.0313 GBT and 0.0404 GBT.
+Scheduled and executed two proposals (https://etherscan.io/tx/0xb2ed029ae644311610a5c4bc16245ce1212b47763c5046f862e2e1bd8423a6a8#eventlog, https://etherscan.io/tx/0xdecb938d6e5f7e75786e854ded5d52eda3bc916cf536950baa6ba5f5167ae830#eventlog). These proposals initiated calls to L2.
 
 ## Watched changes
 
