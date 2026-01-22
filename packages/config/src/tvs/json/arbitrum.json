@@ -8202,7 +8202,7 @@
         "type": "const",
         "value": "0",
         "decimals": 18,
-        "sinceTimestamp": 1679679015
+        "sinceTimestamp": 1734048000
       },
       "category": "stablecoin",
       "source": "external",
