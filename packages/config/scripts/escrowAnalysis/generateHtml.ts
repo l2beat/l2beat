@@ -390,9 +390,9 @@ function generateHtml(reports: EscrowReport[]): string {
       if (!report) return;
 
       if (type === 'canonical') {
-        // Escrows now canonical that were marked external (issuer-controlled canonical bridges)
+        // Escrows now canonical that were marked external in the API
         const reclassified = report.escrows
-          .filter(e => e.bridgeType === 'canonical' && e.category !== 'rollup-secured')
+          .filter(e => e.bridgeType === 'canonical' && e.tokens?.some(t => t.source === 'external'))
           .filter(e => e.totalValueUsd > 10000)
           .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
         const totalReclassified = reclassified.reduce((sum, e) => sum + e.totalValueUsd, 0);
