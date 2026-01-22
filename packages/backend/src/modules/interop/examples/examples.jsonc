@@ -1156,34 +1156,58 @@
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement": {
-    "txs": [
-      // L1 -> Optimism + Base + Arbitrum (single L1 tx)
+    "groups": [
       {
-        "chain": "ethereum",
-        "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+        "name": "L1 → Optimism (OpStack)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f"
+          }
+        ],
+        "events": ["across-settlement.MessageRelayedOP"],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "across-settlement" }
+        ]
       },
       {
-        "chain": "optimism",
-        "tx": "0x27f475c2852fa31445a0f8a6bdfb490680299c74c64d6f3520ae49c33bc9891f"
+        "name": "L1 → Base (OpStack)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+          },
+          {
+            "chain": "base",
+            "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
+          }
+        ],
+        "events": ["across-settlement.MessageRelayedOP"],
+        "messages": [
+          { "type": "opstack.L1ToL2Message", "app": "across-settlement" }
+        ]
       },
       {
-        "chain": "base",
-        "tx": "0xf20abd56a5555bb9e84a30450bd6e6e2f7c6e1a1b076ad93b1fb757ab439858c"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
+        "name": "L1 → Arbitrum (OrbitStack)",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
+          },
+          {
+            "chain": "arbitrum",
+            "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
+          }
+        ],
+        "events": ["across-settlement.RelayedMessageOrbit"],
+        "messages": [
+          { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
+        ]
       }
-    ],
-    "events": [
-      "across-settlement.RelayedMessageOP",
-      "across-settlement.RelayedMessageOP",
-      "across-settlement.RelayedMessageOrbit"
-    ],
-    "messages": [
-      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
-      { "type": "opstack.L1ToL2Message", "app": "across-settlement" },
-      { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
   "world-id": {
@@ -1197,69 +1221,87 @@
         "tx": "0xed2b5b8a91383f8cb9ec22f4cd74e2e764eb6ec64286c9abe0ac76f5743b36b8"
       }
     ],
-    "events": ["world-id.SentMessage"],
+    "events": ["world-id.RootPropagated"],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "world-id" }]
   },
   "lido-wsteth": {
-    "txs": [
-      // Base: L1 → L2 deposit
+    "groups": [
       {
-        "chain": "ethereum",
-        "tx": "0x837426f102ee40d3075fcf4e8240716c101f3a10d9c0a46705b55b37a46fe997"
+        "name": "Base L1 → L2 deposit",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0x837426f102ee40d3075fcf4e8240716c101f3a10d9c0a46705b55b37a46fe997"
+          },
+          {
+            "chain": "base",
+            "tx": "0x2e0b3dc2e1b6916ae7a0964d32271d2ee2bbd272926bacca192a7b5d39bc41e1"
+          }
+        ],
+        "events": [
+          "lido-wsteth.DepositInitiated",
+          "lido-wsteth.DepositFinalized"
+        ],
+        "messages": [{ "type": "opstack.L1ToL2Message", "app": "lido-wsteth" }],
+        "transfers": ["lido-wsteth.L1ToL2Transfer"]
       },
       {
-        "chain": "base",
-        "tx": "0x2e0b3dc2e1b6916ae7a0964d32271d2ee2bbd272926bacca192a7b5d39bc41e1"
-      },
-      // Base: L2 → L1 withdrawal
-      {
-        "chain": "base",
-        "tx": "0x3f229f122d45a816acf3f9c2aaf504d142770bc45182004d0e878c166e76c901"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x9020dba0f5c191d690532cf8ecbd139b1a101478374b02800be2709a120e84ed"
-      },
-      // Optimism: L1 → L2 deposit
-      {
-        "chain": "ethereum",
-        "tx": "0xa346b62dda93356175fb770a44c18e8734ade43756fa4f73409cff2b02545671"
-      },
-      {
-        "chain": "optimism",
-        "tx": "0x4c99754dd29596fae0bd1d25f498af6ff42f869b9d721167d04da1117bf6bea1"
-      },
-      // Optimism: L2 → L1 withdrawal
-      {
-        "chain": "optimism",
-        "tx": "0x8f4823bee16fb17d68e954b933a42eacb637aec0de8097fc747f5e2984d00a7b"
+        "name": "Base L2 → L1 withdrawal",
+        "txs": [
+          {
+            "chain": "base",
+            "tx": "0x3f229f122d45a816acf3f9c2aaf504d142770bc45182004d0e878c166e76c901"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x9020dba0f5c191d690532cf8ecbd139b1a101478374b02800be2709a120e84ed"
+          }
+        ],
+        "events": [
+          "lido-wsteth.WithdrawalInitiated",
+          "lido-wsteth.ERC20WithdrawalFinalized"
+        ],
+        "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
+        "transfers": ["lido-wsteth.L2ToL1Transfer"]
       },
       {
-        "chain": "ethereum",
-        "tx": "0x3556112dd681a7a4d32192579726fc9b882b657d745023dcef4836d88b18f846"
+        "name": "Optimism L1 → L2 deposit",
+        "txs": [
+          {
+            "chain": "ethereum",
+            "tx": "0xa346b62dda93356175fb770a44c18e8734ade43756fa4f73409cff2b02545671"
+          },
+          {
+            "chain": "optimism",
+            "tx": "0x4c99754dd29596fae0bd1d25f498af6ff42f869b9d721167d04da1117bf6bea1"
+          }
+        ],
+        "events": [
+          "lido-wsteth.DepositInitiated",
+          "lido-wsteth.DepositFinalized"
+        ],
+        "messages": [{ "type": "opstack.L1ToL2Message", "app": "lido-wsteth" }],
+        "transfers": ["lido-wsteth.L1ToL2Transfer"]
+      },
+      {
+        "name": "Optimism L2 → L1 withdrawal",
+        "txs": [
+          {
+            "chain": "optimism",
+            "tx": "0x8f4823bee16fb17d68e954b933a42eacb637aec0de8097fc747f5e2984d00a7b"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x3556112dd681a7a4d32192579726fc9b882b657d745023dcef4836d88b18f846"
+          }
+        ],
+        "events": [
+          "lido-wsteth.WithdrawalInitiated",
+          "lido-wsteth.ERC20WithdrawalFinalized"
+        ],
+        "messages": [{ "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }],
+        "transfers": ["lido-wsteth.L2ToL1Transfer"]
       }
-    ],
-    "events": [
-      "lido-wsteth.DepositSentMessage",
-      "lido-wsteth.DepositSentMessage",
-      "lido-wsteth.DepositFinalized",
-      "lido-wsteth.DepositFinalized",
-      "lido-wsteth.WithdrawalMessagePassed",
-      "lido-wsteth.WithdrawalMessagePassed",
-      "lido-wsteth.WithdrawalFinalized",
-      "lido-wsteth.WithdrawalFinalized"
-    ],
-    "messages": [
-      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
-      { "type": "opstack.L1ToL2Message", "app": "lido-wsteth" },
-      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" },
-      { "type": "opstack.L2ToL1Message", "app": "lido-wsteth" }
-    ],
-    "transfers": [
-      "lido-wsteth.L1ToL2Transfer",
-      "lido-wsteth.L1ToL2Transfer",
-      "lido-wsteth.L2ToL1Transfer",
-      "lido-wsteth.L2ToL1Transfer"
     ]
   },
   "sorare-base": {
@@ -1281,11 +1323,8 @@
         "tx": "0x3b6867710390de4ffab9c898a1fcc664216505b46a1c6b9e0d3704401333cd6c"
       }
     ],
-    "events": [
-      "sorare-base.TransferRegisteredSentMessage",
-      "sorare-base.FactRegisteredRelayedMessage"
-    ],
-    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare-base" }],
+    "events": ["sorare-base.TransferRegistered", "sorare-base.FactRegistered"],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
   "beefy-bridge": {
@@ -2164,7 +2203,7 @@
         "tx": "0xd9c83b94ce77aa1f8a6f2688a0d352b31918f5999eafcb3fd2e1b8a22ab9be17"
       }
     ],
-    "events": ["zklink-nova.SentMessage", "zklink-nova.SentMessage"],
+    "events": ["zklink-nova.MessageForwarded", "zklink-nova.MessageForwarded"],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" },
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
@@ -2215,7 +2254,10 @@
         "tx": "0x4f628e8ce1a25a509e7ee27b052dede2dbf44b11ff89df499cace4e674ea28c4"
       }
     ],
-    "events": ["sky-bridge.DepositSentMessage", "sky-bridge.DepositFinalized"],
+    "events": [
+      "sky-bridge.DepositBridgeInitiated",
+      "sky-bridge.DepositBridgeFinalized"
+    ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
   }

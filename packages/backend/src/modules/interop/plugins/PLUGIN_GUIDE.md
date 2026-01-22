@@ -285,21 +285,39 @@ Edit `src/modules/interop/examples/examples.jsonc`:
 ```jsonc
 "my-plugin": {
   "txs": [
-    {
-      "chain": "ethereum",
-      "tx": "0x..."  // L1 tx hash
-    },
-    {
-      "chain": "base",
-      "tx": "0x..."  // L2 tx hash
-    }
+    { "chain": "ethereum", "tx": "0x..." },
+    { "chain": "base", "tx": "0x..." }
   ],
-  "events": [
-    "my-plugin.L1Event",
-    "my-plugin.L2Event"
-  ],
+  "events": ["my-plugin.L1Event", "my-plugin.L2Event"],
   "messages": ["my-plugin.L1ToL2Message"],
   "transfers": ["my-plugin.L1ToL2Transfer"]
+}
+```
+
+For plugins with multiple test cases, use groups:
+
+```jsonc
+"my-plugin": {
+  "groups": [
+    {
+      "name": "L1 -> L2 deposit",
+      "txs": [
+        { "chain": "ethereum", "tx": "0x..." },
+        { "chain": "base", "tx": "0x..." }
+      ],
+      "messages": ["my-plugin.L1ToL2Message"],
+      "transfers": ["my-plugin.L1ToL2Transfer"]
+    },
+    {
+      "name": "L2 -> L1 withdrawal",
+      "txs": [
+        { "chain": "base", "tx": "0x..." },
+        { "chain": "ethereum", "tx": "0x..." }
+      ],
+      "messages": ["my-plugin.L2ToL1Message"],
+      "transfers": ["my-plugin.L2ToL1Transfer"]
+    }
+  ]
 }
 ```
 
@@ -316,6 +334,13 @@ pnpm typecheck
 
 Expected output:
 ```
+[XTRA] [MTCH] Event    my-plugin.L1Event
+[XTRA] [MTCH] Event    my-plugin.L2Event
+[PASS] Message  my-plugin.L1ToL2Message
+[PASS] Transfer my-plugin.L1ToL2Transfer
+
+SUMMARY
+
 Events:
     my-plugin.L1Event 1
     my-plugin.L2Event 1
@@ -332,31 +357,87 @@ Transfers:
 For apps using OpStack's CrossDomainMessenger:
 
 1. Import and reuse OpStack's event types and parsers
-2. Capture your app-specific event + find the underlying `SentMessage`/`RelayedMessage`
-3. Compute `msgHash` using `hashCrossDomainMessageV1()`
-4. Match using `msgHash`
+2. Capture your app-specific event independently (don't combine in capture phase)
+3. In match phase, use `sameTxBefore`/`sameTxAfter` to find related events
+4. Use `msgHash` or `withdrawalHash` to correlate events across chains
 
 See `opstack-standardbridge.ts` and `sorare-base.ts` for examples.
 
 ### Finding Related Events in Same Transaction
 
+**Preferred approach**: Use `sameTxBefore`/`sameTxAfter` queries in the match phase:
+
+```typescript
+// Capture phase: capture each event independently
+capture(input: LogToCapture) {
+  const myEvent = parseMyEvent(input.log, [MY_CONTRACT])
+  if (myEvent) {
+    return [MyEvent.create(input, { /* only data from this event */ })]
+  }
+}
+
+// Match phase: find related events using sameTxBefore/sameTxAfter
+match(event: InteropEvent, db: InteropEventDb) {
+  if (MyEvent.checkType(event)) {
+    // Find event that comes AFTER this one in the same tx
+    const laterEvent = db.find(OtherEvent, {
+      sameTxAfter: event,
+      chain: event.args.chain,
+    })
+
+    // Find event that comes BEFORE this one in the same tx
+    const earlierEvent = db.find(AnotherEvent, {
+      sameTxBefore: event,
+      chain: event.args.chain,
+    })
+  }
+}
+```
+
+**Important**: `sameTxBefore` finds events with **lower** logIndex, `sameTxAfter` finds events with **higher** logIndex. To determine the correct direction, check actual log indices in transaction receipts (see "Determining Event Order" below).
+
+**Legacy approach** (use only when you need data from multiple events in a single captured event):
+
 ```typescript
 capture(input: LogToCapture) {
   const myEvent = parseMyEvent(input.log, [MY_CONTRACT])
   if (myEvent) {
-    // Find another event in same tx
     const relatedLog = input.txLogs.find(log => {
       const parsed = parseOtherEvent(log, [OTHER_CONTRACT])
       return parsed !== undefined
     })
-
-    if (relatedLog) {
-      const related = parseOtherEvent(relatedLog, [OTHER_CONTRACT])
-      // Combine data from both events
-    }
+    // Combine data from both events into one InteropEvent
   }
 }
 ```
+
+### Determining Event Order
+
+When using `sameTxBefore`/`sameTxAfter`, you must know which event comes first. Check actual log indices:
+
+```bash
+# Get transaction receipt and look at logIndex for each event
+cast receipt <TX_HASH> --rpc-url <RPC_URL>
+```
+
+Example output (relevant fields):
+```json
+{
+  "logs": [
+    { "logIndex": "0x1a6", "address": "0x...", "topics": ["0xddf252ad..."] },
+    { "logIndex": "0x1a7", "address": "0x...", "topics": ["0x3ceee06c..."] },
+    { "logIndex": "0x1a8", "address": "0x...", "topics": ["0xd59c65b3..."] }
+  ]
+}
+```
+
+Lower `logIndex` = emitted earlier in the transaction.
+
+**Common OpStack patterns:**
+- L1 withdrawal finalization: `BridgeFinalized` → `WithdrawalFinalized` (portal event comes last)
+- L2 deposit finalization: `DepositFinalized` → `RelayedMessage` (messenger event comes last)
+- L1 deposit initiation: `BridgeInitiated` → `SentMessage` (messenger event comes last)
+- L2 withdrawal initiation: `BridgeInitiated` → `MessagePassed` (message passer event comes last)
 
 ### Event with TTL (Time-To-Live)
 
@@ -383,12 +464,15 @@ const MyEvent = createInteropEventType<{ ... }>('my-plugin.Event', {
 1. **Missing matchTypes**: Add your event type to `matchTypes` array
 2. **Wrong db.find parameters**: Check the field names match event args
 3. **Plugin order**: Ensure your plugin runs before generic ones
+4. **Wrong sameTxBefore/sameTxAfter direction**: Check actual log indices in the transaction receipt. Use `sameTxAfter` to find events with higher logIndex, `sameTxBefore` for lower logIndex
 
 ### Test Shows FAIL
 
 - `[FAIL] Event X` = Event not captured (check capture logic)
-- `[XTRA] Event X` = Extra event captured (expected if testing subset)
+- `[XTRA] Event X` = Extra event captured (not in expected list, may be fine)
 - `[PASS] Event X` = Event captured as expected
+- `[MTCH]` = Event was matched (used by a plugin's match function)
+- `[UNMT]` = Event was captured but not matched (may indicate match logic issue)
 
 ## Useful Commands
 
