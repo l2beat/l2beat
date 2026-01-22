@@ -4,10 +4,10 @@ import {
   type InteropConfig,
   type Project,
 } from '@l2beat/config'
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
@@ -49,7 +49,7 @@ export type ProtocolEntry = {
 }
 
 export function getProtocolEntries(
-  records: AggregatedInteropTransferRecord[],
+  records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
