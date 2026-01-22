@@ -1,3 +1,8 @@
+/**
+ * gaszip (standalone) plugin based on tx calldata in addition to logs
+ * good API available at https://backend.gas.zip/v2/search/TXHASH for checking
+ */
+
 import type { Logger } from '@l2beat/backend-tools'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
