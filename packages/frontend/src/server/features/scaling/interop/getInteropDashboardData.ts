@@ -34,13 +34,13 @@ export async function getInteropDashboardData(
 
   const filteredProjects = params.type
     ? interopProjects.filter((p) => p.interopConfig?.bridgeType === params.type)
-    : []
+    : undefined
 
   const db = getDb()
   const records = await db.aggregatedInteropTransfer.getLatest(
     params.from,
     params.to,
-    filteredProjects.map((p) => p.id),
+    filteredProjects?.map((p) => p.id),
   )
 
   if (records.length === 0) {
