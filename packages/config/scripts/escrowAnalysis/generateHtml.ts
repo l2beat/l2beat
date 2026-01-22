@@ -365,7 +365,7 @@ function generateHtml(reports: EscrowReport[]): string {
         \`).join('');
 
       const externalHtml = report.externalTokens && report.externalTokens.length > 0 ?
-        '<h3 style="color: #8b949e; margin: 24px 0 12px;">External Tokens (burn/mint)</h3>' +
+        '<h3 style="color: #8b949e; margin: 24px 0 12px;">External Tokens (No Escrow)</h3>' +
         report.externalTokens
         .sort((a, b) => b.valueUsd - a.valueUsd)
         .map(t => \`
@@ -604,7 +604,7 @@ function generateHtml(reports: EscrowReport[]): string {
 
       if (externalTokens.length > 0) {
         html += \`
-          <h3 style="color: #8b949e; margin-bottom: 12px;">External Tokens (Burn/Mint)</h3>
+          <h3 style="color: #8b949e; margin-bottom: 12px;">External Tokens (No Escrow)</h3>
           <table style="width: 100%;">
             <thead>
               <tr>
