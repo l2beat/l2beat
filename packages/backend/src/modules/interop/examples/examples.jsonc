@@ -2131,7 +2131,7 @@
       }
     ]
   },
-  "gaszip-v2": {
+  "gaszip": {
     "txs": [
       {
         "chain": "ethereum",
@@ -2185,6 +2185,15 @@
       {
         "chain": "arbitrum",
         "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
+      },
+      // same-chain transfer, >5% tolerance needed on the amount
+      {
+        "chain": "base",
+        "tx": "0x55aea9285bf98a898e5dbde152a69f26dd3c367e6ea2dc7191668d3f9e0ac7d8"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
       }
     ]
   },
