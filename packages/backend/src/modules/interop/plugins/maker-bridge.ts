@@ -156,12 +156,8 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
           DepositInitiated.create(input, {
             chain: makerNetwork.chain,
             amount: depositInitiated._amount,
-            l1Token: Address32.from(
-              EthereumAddress(depositInitiated._l1Token),
-            ),
-            l2Token: Address32.from(
-              EthereumAddress(depositInitiated._l2Token),
-            ),
+            l1Token: Address32.from(EthereumAddress(depositInitiated._l1Token)),
+            l2Token: Address32.from(EthereumAddress(depositInitiated._l2Token)),
           }),
         ]
       }
@@ -198,12 +194,8 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
           DepositFinalized.create(input, {
             chain: makerNetwork.chain,
             amount: depositFinalized._amount,
-            l1Token: Address32.from(
-              EthereumAddress(depositFinalized._l1Token),
-            ),
-            l2Token: Address32.from(
-              EthereumAddress(depositFinalized._l2Token),
-            ),
+            l1Token: Address32.from(EthereumAddress(depositFinalized._l1Token)),
+            l2Token: Address32.from(EthereumAddress(depositFinalized._l2Token)),
           }),
         ]
       }
