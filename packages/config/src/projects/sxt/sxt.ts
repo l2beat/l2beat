@@ -13,6 +13,7 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1744071776) // 2025-04-07T19:22:56Z
 const chainId = 1217
 const discovery = new ProjectDiscovery('sxt')
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
@@ -118,6 +119,23 @@ export const sxt: ScalingProject = zkStackL2({
       },
     ],
   },
+  nonTemplateEscrows: [
+      discovery.getEscrowDetails({
+        address: bridge.address,
+        tokens: '*',
+        description:
+          'Shared bridge for depositing tokens to various ZK stack chains.',
+        sharedEscrow: {
+          type: 'ElasticChain',
+          l2BridgeAddress: EthereumAddress(
+            '0x000000000000000000000000000000000000800D',
+          ),
+          l2EtherAddress: EthereumAddress(
+            '0x000000000000000000000000000000000000800A',
+          ),
+        },
+      }),
+    ],
   discovery,
   milestones: [
     {

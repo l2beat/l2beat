@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xec83f31853708da3055355ff883bd57d4e0b89c1
+
+# Diff at Thu, 22 Jan 2026 10:53:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3631b00e6106b5beda70e7b3b1099dbdae92c817 block: 1768908272
+- current timestamp: 1769079097
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768908272 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
++        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+    }
+```
+
 Generated with discovered.json: 0x35e4dd6ad3a04189f48c66d125a920f3392695ea
 
 # Diff at Tue, 20 Jan 2026 11:25:43 GMT:
