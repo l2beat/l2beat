@@ -30,7 +30,7 @@ export function InteropNonMintingPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout fullWidth>
+        <SideNavLayout maxWidth="wide">
           <div className="max-md:hidden">
             <HeaderWithDescription />
           </div>
