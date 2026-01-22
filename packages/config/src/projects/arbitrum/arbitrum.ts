@@ -162,6 +162,40 @@ export const arbitrum: ScalingProject = orbitStackL2({
       )} after it has been posted.`,
     },
   },
+  interopConfig: {
+    name: 'Arbitrum Canonical',
+    bridgeType: 'lockAndMint',
+    durationSplit: {
+      in: {
+        label: 'L1 -> L2',
+        from: 'ethereum',
+        to: 'arbitrum',
+      },
+      out: {
+        label: 'L2 -> L1',
+        from: 'arbitrum',
+        to: 'ethereum',
+      },
+    },
+    plugins: [
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-standardgateway',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-wethgateway',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-customgateway',
+      },
+    ],
+  },
   chainConfig: {
     name: 'arbitrum',
     chainId,
