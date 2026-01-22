@@ -151,6 +151,10 @@ const groups = compact<NavGroup>([
         href: '/interop/non-minting',
       },
       {
+        title: 'Lock & Mint protocols',
+        href: '/interop/lock-and-mint',
+      },
+      {
         title: 'Omnichain tokens',
         href: '/interop/omnichain',
       },

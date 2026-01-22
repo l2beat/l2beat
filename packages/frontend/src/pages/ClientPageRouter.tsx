@@ -15,6 +15,7 @@ import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
+import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
 import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
 import { InteropOmnichainPage } from './interop/omnichain/InteropOmnichainPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
@@ -69,6 +70,7 @@ const pages = {
   // Interop
   InteropSummaryPage,
   InteropNonMintingPage,
+  InteropLockAndMintPage,
   InteropOmnichainPage,
   // Bridges
   BridgesSummaryPage,
