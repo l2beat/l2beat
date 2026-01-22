@@ -310,7 +310,6 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ERC20BridgeFinalized.checkType(event)) {
-      // L1: ERC20BridgeFinalized (N) → ERC20WithdrawalFinalized (N+1) → RelayedMessage (N+2) → WithdrawalFinalized (N+3)
       // L1: ERC20BridgeFinalized (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
         sameTxAtOffset: { event, offset: 2 },
