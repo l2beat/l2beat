@@ -88,7 +88,6 @@ const cmd = command({
       transfers: [],
     }
 
-    console.log('To Run', examplesToRun)
     console.log('Running examples:', examplesToRun.join(', '))
 
     for (const exampleId of examplesToRun) {
