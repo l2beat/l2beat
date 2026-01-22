@@ -52,6 +52,10 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'interop',
+    title: 'Lock & Mint',
+  },
+  {
+    type: 'interop',
     title: 'Omnichain',
   },
   {
