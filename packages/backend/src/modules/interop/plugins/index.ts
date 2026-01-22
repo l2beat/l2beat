@@ -10,7 +10,8 @@ import { OneinchFusionPlusPlugin } from './1inchfusionplus'
 import { AcrossComparePlugin } from './across/across.compare'
 import { AcrossConfigPlugin } from './across/across.config'
 import { AcrossPlugin } from './across/across.plugin'
-import { AcrossSettlementPlugin } from './across-settlement'
+import { AcrossSettlementOpPlugin } from './across-settlement-op'
+import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -134,7 +135,8 @@ export function createInteropPlugins(
       new AxelarITSPlugin(), // should be run before Axelar
       new AxelarPlugin(),
       new AcrossPlugin(deps.configs),
-      new AcrossSettlementPlugin(), // should be run before OrbitStack and OpStack
+      new AcrossSettlementOpPlugin(), // should be run before OpStack
+      new AcrossSettlementOrbitPlugin(), // should be run before OrbitStack
       new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack

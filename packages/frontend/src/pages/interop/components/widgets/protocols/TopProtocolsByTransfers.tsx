@@ -1,5 +1,5 @@
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { formatNumber } from '~/utils/number-format/formatNumber'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByTransfers({
@@ -15,7 +15,7 @@ export function TopProtocolsByTransfers({
       heading="Last 24 hours transfers"
       topProtocols={topProtocols}
       isLoading={isLoading}
-      formatValue={formatNumber}
+      formatValue={formatInteger}
     />
   )
 }

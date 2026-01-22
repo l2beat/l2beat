@@ -4,6 +4,7 @@ import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
@@ -11,6 +12,7 @@ import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
@@ -23,6 +25,7 @@ import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { payy } from '../projects/payy/payy-zk-catalog'
+import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { risczero } from '../projects/risczero/risczero'
 import { soulwallet } from '../projects/soulwallet/soulwallet'
@@ -87,4 +90,7 @@ export const refactored: BaseProject[] = [
   usdt0,
   debridgeDln,
   hyperlaneHwr,
+  cctpv2,
+  relay,
+  gaszip,
 ]
