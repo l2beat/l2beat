@@ -133,7 +133,11 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
 
-    if (protocolIds && protocolIds.length > 0) {
+    if (protocolIds && protocolIds.length === 0) {
+      return []
+    }
+
+    if (protocolIds) {
       query = query.where('id', 'in', protocolIds)
     }
 

@@ -707,7 +707,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       expect(result).toEqualUnsorted([record1, record2])
     })
 
-    it('returns all matching records when protocolIds is empty array', async () => {
+    it('returns empty array when protocolIds is empty array', async () => {
       const record1 = record(
         'protocol1',
         UnixTime(300),
@@ -730,7 +730,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       const result = await repository.getLatest(['ethereum'], ['arbitrum'], [])
 
-      expect(result).toEqualUnsorted([record1, record2])
+      expect(result).toEqual([])
     })
   })
 })
