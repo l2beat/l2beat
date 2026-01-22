@@ -7,8 +7,8 @@ import {
   type SevenDayTvsBreakdown,
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import {
   type ContractUtils,
   getContractUtils,
@@ -83,7 +83,7 @@ function getZkCatalogEntry(
     backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
     tvs: {
       value: tvsForProject,

@@ -295,15 +295,20 @@ async function getMessagesStats(db: Database) {
   const detailedStats = await db.interopMessage.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: Number(overall.count),
     avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
     chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
+      .filter(
+        (chain) =>
+          chain.plugin === overall.plugin && chain.type === overall.type,
+      )
       .map((chain) => {
         assert(chain.srcChain && chain.dstChain)
         return {
+          plugin: chain.plugin,
           type: chain.type,
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
@@ -319,11 +324,14 @@ async function getTransfersStats(db: Database) {
   const detailedStats = await db.interopTransfer.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: overall.count,
     avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter((chain) => chain.type === overall.type),
+    chains: detailedStats.filter(
+      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
+    ),
   }))
 }

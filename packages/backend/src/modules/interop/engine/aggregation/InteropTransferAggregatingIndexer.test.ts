@@ -41,7 +41,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [{ plugin: 'across' }],
         },
       ]
@@ -83,6 +83,9 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
+        to,
+      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         {
           timestamp: to,
@@ -181,24 +184,21 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         // Config1: Plain plugin filter - should match msg1 (across)
         {
           id: 'config1',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [{ plugin: 'across' }],
         },
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum) and msg5 (arbitrum->ethereum)
         {
           id: 'config2',
-          bridgeType: 'canonical',
-          plugins: [
-            { filterBy: 'chain', chain: 'ethereum', plugin: 'cctp-v1' },
-          ],
+          bridgeType: 'lockAndMint',
+          plugins: [{ chain: 'ethereum', plugin: 'cctp-v1' }],
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc, src is eth)
         {
           id: 'config3',
-          bridgeType: 'canonical',
+          bridgeType: 'lockAndMint',
           plugins: [
             {
-              filterBy: 'abstractTokenId',
               abstractTokenId: 'eth',
               plugin: 'stargate',
             },
@@ -215,10 +215,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn(async (x) => {
-          console.log('dupa', x)
-          return Promise.resolve(5)
-        }),
+        insertMany: mockFn().resolvesTo(5),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -243,6 +240,9 @@ describe(InteropTransferAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
+        to,
+      )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
         // Config1: Plain plugin filter - should match msg1 (across)
         {

@@ -50,6 +50,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   insideMainPageCard?: boolean
   getHighlightId?: (ctx: T) => string
+  tableWrapperClassName?: string
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
@@ -71,7 +72,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   }
 
   return (
-    <Table>
+    <Table tableWrapperClassName={props.tableWrapperClassName}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader &&

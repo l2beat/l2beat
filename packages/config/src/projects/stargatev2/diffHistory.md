@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe8d5c6c3975773a85616b167715001c83f9af8e8
+
+# Diff at Wed, 21 Jan 2026 12:43:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768371339
+- current timestamp: 1768999360
+
+## Description
+
+nethermind dvn signerSize +1. works like a 1/5 multisig.
+
+## Watched changes
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0xc5531b542687d6a4f7833fa9b5888de4138dc2be
 
 # Diff at Wed, 14 Jan 2026 06:16:53 GMT:

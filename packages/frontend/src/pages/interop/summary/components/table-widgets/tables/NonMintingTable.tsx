@@ -1,32 +1,31 @@
-import { getCoreRowModel } from '@tanstack/react-table'
-import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { nonMintingColumns } from './columns'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import {
+  nonMintingColumns,
+  type ProtocolRow,
+} from '../../../../components/table/columns'
 
-export type NonMintingRow =
-  InteropDashboardData['protocolsByType']['nonMinting'][number] & BasicTableRow
-
-export function NonMintingTable({
-  entries,
-}: {
-  entries: InteropDashboardData['protocolsByType']['nonMinting'] | undefined
-}) {
-  const table = useTable<NonMintingRow>({
-    data: entries ?? [],
+export function NonMintingTable({ entries }: { entries: ProtocolEntry[] }) {
+  const table = useTable<ProtocolRow>({
+    data: entries,
     columns: nonMintingColumns,
     getCoreRowModel: getCoreRowModel(),
-    enableSorting: false,
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
       columnPinning: {
         left: ['#', 'logo'],
       },
-      sorting: [],
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
+        },
+      ],
     },
   })
 
-  if (!entries) return null
-
-  return <BasicTable table={table} />
+  return <BasicTable table={table} tableWrapperClassName="pb-0" />
 }

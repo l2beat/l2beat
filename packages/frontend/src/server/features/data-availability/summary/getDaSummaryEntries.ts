@@ -14,6 +14,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
@@ -21,7 +22,6 @@ import {
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { LivenessResponse } from '../../scaling/liveness/types'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -150,7 +150,7 @@ function getDaSummaryEntry(
         .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
         .map((project) => ({
           ...project,
-          icon: getProjectIcon(project.slug),
+          icon: manifest.getUrl(`/icons/${project.slug}.png`),
           url: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
@@ -171,7 +171,7 @@ function getDaSummaryEntry(
         .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
         .map((project) => ({
           ...project,
-          icon: getProjectIcon(project.slug),
+          icon: manifest.getUrl(`/icons/${project.slug}.png`),
           url: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
@@ -234,7 +234,7 @@ function getDacEntry(
     dacInfo,
     usedIn: usedIn.map((project) => ({
       ...project,
-      icon: getProjectIcon(project.slug),
+      icon: manifest.getUrl(`/icons/${project.slug}.png`),
       url: `/scaling/projects/${project.slug}`,
     })),
   }
@@ -265,7 +265,7 @@ function getEthereumEntry(
   return {
     id: ProjectId.ETHEREUM,
     slug: layer.slug,
-    icon: getProjectIcon(layer.slug),
+    icon: manifest.getUrl(`/icons/${layer.slug}.png`),
     name: layer.name,
     nameSecondLine: layer.daLayer.type,
     href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
@@ -287,7 +287,7 @@ function getEthereumEntry(
           .sort((a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest)
           .map((project) => ({
             ...project,
-            icon: getProjectIcon(project.slug),
+            icon: manifest.getUrl(`/icons/${project.slug}.png`),
             url: `/scaling/projects/${project.slug}`,
           })),
       },

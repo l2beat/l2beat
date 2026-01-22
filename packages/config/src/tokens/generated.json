@@ -10131,6 +10131,28 @@
       }
     },
     {
+      "name": "Gate Wrapped BTC",
+      "coingeckoId": "gate-wrapped-btc",
+      "address": "0x0035b877C3aB50cFFA9eD52bA05282c7045f78dd",
+      "symbol": "gtBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1765353322,
+      "coingeckoListingTimestamp": 1755907200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68496/large/17557587474808c2d3f7d34aaa2709dc3e07c62305.png?1755935255",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Noot Noot",
       "coingeckoId": "noot-noot",
       "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",

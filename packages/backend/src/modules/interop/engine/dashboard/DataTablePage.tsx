@@ -27,6 +27,7 @@ export function DataTablePage(props: DataTablePageProps) {
         'pageLength',
         'csv',
       ],
+      fixedHeader: true, // Enable fixed header
       ...globalDataTableOptions,
       ...tableOptions,
     }
@@ -55,6 +56,13 @@ export function DataTablePage(props: DataTablePageProps) {
           href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"
         />
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" />
+
+        {/* DataTables FixedHeader Extension */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"
+        />
+        <script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js" />
 
         {/* DataTables Buttons Extension */}
         <link

@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x35e4dd6ad3a04189f48c66d125a920f3392695ea
+
+# Diff at Tue, 20 Jan 2026 11:25:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5d37b36a43301b2def017b94f066897f111cc32 block: 1768825040
+- current timestamp: 1768908272
+
+## Description
+
+Added a new chain with ID 2787. It uses L1 governance, Airbender prover, v30.1 of zk stack, rollup DA manager, ETH gas token. Its diamond proxy was deployed ~1 day ago.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.18:
++        {"chainId":2787,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x13454c399B9a4Fb6AEeaDD1D8b7A817eB89d9c3f"}
+      values.getAllZKChainChainIDs.18:
++        2787
+      values.getAllZKChains.18:
++        "eth:0xD366689A90253757f5a7432Df805E50Ff206d692"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        19
++        20
+    }
+```
+
+Generated with discovered.json: 0x9d307655ca4557ebb80d33b38a882391537921ef
+
+# Diff at Mon, 19 Jan 2026 12:20:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7fd8e6c42f2f1cc03bcf6ecae4818cfa02672b07 block: 1766146814
+- current timestamp: 1768825040
+
+## Description
+
+No actual change in the contracts. I think this is caused by switching explorer to zksync native explorer. This proxy admin contract is marked as partially verified there: https://explorer.zksync.io/address/0xdB1E46B448e68a5E35CB693a99D59f784aD115CC#contract, this could be a reason.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766146814 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+    }
+```
+
 Generated with discovered.json: 0xc440fd1d02b23efff7574feda951f565885e3665
 
 # Diff at Fri, 19 Dec 2025 12:27:53 GMT:

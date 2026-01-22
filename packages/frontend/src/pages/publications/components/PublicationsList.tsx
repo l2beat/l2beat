@@ -10,8 +10,10 @@ import type { PublicationEntry } from '../utils/getPublicationEntry'
 
 export function PublicationsList({
   publications,
+  newsletterBgUrl,
 }: {
   publications: PublicationEntry[]
+  newsletterBgUrl: string
 }) {
   const filterPublications = useFilterEntries()
 
@@ -24,7 +26,10 @@ export function PublicationsList({
     <>
       <TableFilters entries={publications} />
       <PrimaryCard className="mt-4 grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 md:p-8 lg:grid-cols-3">
-        <div className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-[url(/images/publications/newsletter-box.png)] bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col">
+        <div
+          className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"
+          style={{ backgroundImage: `url(${newsletterBgUrl})` }}
+        >
           <div className="space-y-3">
             <div className="font-bold text-heading-24">
               Want to get notified about new publications?

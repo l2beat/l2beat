@@ -145,6 +145,10 @@ const groups = compact<NavGroup>([
         title: 'Summary',
         href: '/interop/summary',
       },
+      {
+        title: 'Non-minting protocols',
+        href: '/interop/non-minting',
+      },
     ],
   },
   !env.CLIENT_SIDE_INTEROP_ENABLED && {

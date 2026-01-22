@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { VerifiersStatuses } from '~/server/features/zk-catalog/getVerifiers'
+import { manifest } from '~/utils/Manifest'
 import { getProofVerification } from './getProofVerification'
 import type { TrustedSetup } from './getTrustedSetup'
 import { getTrustedSetup } from './getTrustedSetup'
@@ -25,7 +25,7 @@ export function getZkCatalogV1Entries(
       return {
         name: project.name,
         slug: project.slug,
-        icon: getProjectIcon(project.slug),
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
         trustedSetup: getTrustedSetup(proofVerification.verifiers),
         ...proofVerification,
       }

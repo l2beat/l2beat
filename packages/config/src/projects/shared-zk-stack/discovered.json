@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1766146814,
+  "timestamp": 1768908272,
   "configHash": "0x2a97090a1f82df157cf39326ea5d38bd428032ba90248499c341e4e15917100f",
   "entries": [
     {
@@ -452,11 +452,16 @@
             "chainId": 5010405,
             "chainTypeManager": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
             "chainGovernance": "eth:0x27c3e74A53885afa564334abA5a7A336C8411Db2"
+          },
+          {
+            "chainId": 2787,
+            "chainTypeManager": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+            "chainGovernance": "eth:0x13454c399B9a4Fb6AEeaDD1D8b7A817eB89d9c3f"
           }
         ],
         "getAllZKChainChainIDs": [
           324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217,
-          2904, 375, 51888, 9075, 30715, 5010405
+          2904, 375, 51888, 9075, 30715, 5010405, 2787
         ],
         "getAllZKChains": [
           "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -476,7 +481,8 @@
           "eth:0xD231E2fD0DeC5993fCeae3E504930631876e8C63",
           "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "eth:0xb6d615084d7a72bF98C2BD35DD6aBE824feb2dc7",
-          "eth:0xD08FE81c77860E66525b773fDBeB0b171b9E9e91"
+          "eth:0xD08FE81c77860E66525b773fDBeB0b171b9E9e91",
+          "eth:0xD366689A90253757f5a7432Df805E50Ff206d692"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -755,7 +761,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 237,
+        "nonce": 238,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -907,13 +913,13 @@
         ],
         "$upgradeCount": 3,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 19,
-        "getAggregatedRoot": "0xecbfdf36ff134c3c823b26dc315cc0c5263fe2f997a7ece2dfcb90125145f1b2",
+        "chainCount": 20,
+        "getAggregatedRoot": "0x1db276a4807e94246a2fe5c2b2dd8cd63e88e39d2e00a95aa6800970a8903e2d",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
         "L1_CHAIN_ID": 1,
-        "sharedTree": { "_height": 5, "_leafNumber": 19 }
+        "sharedTree": { "_height": 5, "_leafNumber": 20 }
       },
       "implementationNames": {
         "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD": "TransparentUpgradeableProxy",
@@ -2613,7 +2619,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1766146805,
+        "clock": 1768908271,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2635,7 +2641,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "13962159723564200761030249774"
+        "totalSupply": "13966495864564200761030249774"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2720,7 +2726,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1766146805,
+        "clock": 1768908271,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2829,7 +2835,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1766146805,
+        "clock": 1768908271,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2947,7 +2953,7 @@
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
@@ -3097,7 +3103,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1766146805,
+        "clock": 1768908271,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -4528,6 +4534,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 24046599, "zksync2": 67268031 },
+  "usedBlockNumbers": { "ethereum": 24275669, "zksync2": 67945459 },
   "permissionsConfigHash": "0x05cdb07baa973d193849c0dbd86e9f9e84d65cb6bf4f65ec788b8993aaa08446"
 }

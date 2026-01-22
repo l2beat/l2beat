@@ -1,17 +1,7 @@
-/* axelar Interchain Transfer Service (ITS) plugin
-
-This plugin handles all ITS tokens
-SRC:
-- InterchainTransfer event
-- ContractCall event
-DST APPROVE:
-- ContractCallApproved event
-DST EXECUTE:
-- Gateway.ContractCallExecuted event
-- InterchainTransferReceived event
-
-*/
-
+/**
+ * Axelar Interchain Token Service
+ * OMNICHAIN token standard
+ */
 import { Address32 } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,

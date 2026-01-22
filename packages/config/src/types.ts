@@ -4,6 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
+  type InteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -1215,6 +1216,7 @@ export type InteropPluginName =
   | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
+  | 'mayan-swift-settlement'
   | 'oneinch-fusion-plus'
   | 'opstack'
   | 'opstack-standardbridge'
@@ -1238,31 +1240,33 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
-  bridgeType: 'canonical' | 'nonMinting' | 'omnichain'
+  bridgeType: InteropBridgeType
   plugins: InteropPlugin[]
+  /** If configured avg. duration it able will be split into two parts, depending on the config.
+   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  durationSplit?: {
+    in: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+    out: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+  }
 }
 
-export type InteropPlugin =
-  | InteropByChainPlugin
-  | InteropByTokenIdPlugin
-  | InteropPlainPlugin
-
-export type InteropByChainPlugin = {
-  filterBy: 'chain'
-  chain: string
+export type InteropPlugin = {
   plugin: InteropPluginName
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
 }
 
-export type InteropByTokenIdPlugin = {
-  filterBy: 'abstractTokenId'
-  abstractTokenId: string
-  plugin: InteropPluginName
-}
-
-export type InteropPlainPlugin = {
-  plugin: InteropPluginName
-  filterBy?: undefined
-}
 // #endregion
 
 // #region TVS
