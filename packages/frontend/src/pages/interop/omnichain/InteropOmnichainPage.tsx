@@ -30,7 +30,7 @@ export function InteropOmnichainPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout fullWidth>
+        <SideNavLayout edgeToEdge>
           <div className="max-md:hidden">
             <HeaderWithDescription />
           </div>

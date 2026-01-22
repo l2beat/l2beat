@@ -25,13 +25,13 @@ const LOGO_LINK = '/scaling/summary'
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
-  fullWidth?: boolean
+  edgeToEdge?: boolean
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
-  fullWidth = false,
+  edgeToEdge = false,
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
   const isMobile = useIsMobile()
@@ -63,7 +63,7 @@ export function SideNavLayout({
           <div
             className={cn(
               'mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-5 lg:pl-0',
-              fullWidth && 'max-w-full',
+              edgeToEdge && 'max-w-412',
             )}
           >
             {children}
