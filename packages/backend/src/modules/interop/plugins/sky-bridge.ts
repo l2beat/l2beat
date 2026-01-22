@@ -1,4 +1,9 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   MessagePassed,
   RelayedMessage,
@@ -8,21 +13,29 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
+// == Event signatures ==
+
+const erc20BridgeInitiatedLog =
+  'event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)'
+const erc20BridgeFinalizedLog =
+  'event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)'
+
 // Sky bridge addresses (Base only)
 // Supports USDS token
-const L1_SKY_BRIDGE = EthereumAddress(
-  '0xa5874756416fa632257eea380cabd2e87ced352a',
+const L1_SKY_BRIDGE = ChainSpecificAddress(
+  'eth:0xa5874756416fa632257eea380cabd2e87ced352a',
 )
-const L2_SKY_BRIDGE = EthereumAddress(
-  '0xee44cdb68d618d58f75d9fe0818b640bd7b8a7b7',
+const L2_SKY_BRIDGE = ChainSpecificAddress(
+  'base:0xee44cdb68d618d58f75d9fe0818b640bd7b8a7b7',
 )
 
 // L1 → L2: ERC20BridgeInitiated from Sky bridge
@@ -57,22 +70,44 @@ const WithdrawalBridgeFinalized = createInteropEventType<{
 
 // Event parsers
 // Note: on L1 localToken=L1, remoteToken=L2; on L2 localToken=L2, remoteToken=L1
-const parseERC20BridgeInitiated = createEventParser(
-  'event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)',
-)
+const parseERC20BridgeInitiated = createEventParser(erc20BridgeInitiatedLog)
+const parseERC20BridgeFinalized = createEventParser(erc20BridgeFinalizedLog)
 
-const parseERC20BridgeFinalized = createEventParser(
-  'event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)',
-)
-
-export class SkyBridgePlugin implements InteropPlugin {
+export class SkyBridgePlugin implements InteropPluginResyncable {
   readonly name = 'sky-bridge'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      // L1: ERC20BridgeInitiated, ERC20BridgeFinalized from L1_SKY_BRIDGE
+      {
+        type: 'event',
+        signature: erc20BridgeInitiatedLog,
+        addresses: [L1_SKY_BRIDGE],
+      },
+      {
+        type: 'event',
+        signature: erc20BridgeFinalizedLog,
+        addresses: [L1_SKY_BRIDGE],
+      },
+      // L2: ERC20BridgeInitiated, ERC20BridgeFinalized from L2_SKY_BRIDGE
+      {
+        type: 'event',
+        signature: erc20BridgeInitiatedLog,
+        addresses: [L2_SKY_BRIDGE],
+      },
+      {
+        type: 'event',
+        signature: erc20BridgeFinalizedLog,
+        addresses: [L2_SKY_BRIDGE],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1: Capture ERC20BridgeInitiated (L1 → L2 deposit)
       const bridgeInitiated = parseERC20BridgeInitiated(input.log, [
-        L1_SKY_BRIDGE,
+        ChainSpecificAddress.address(L1_SKY_BRIDGE),
       ])
       if (bridgeInitiated) {
         return [
@@ -90,7 +125,7 @@ export class SkyBridgePlugin implements InteropPlugin {
 
       // L1: Capture ERC20BridgeFinalized (L2 → L1 withdrawal finalization)
       const bridgeFinalized = parseERC20BridgeFinalized(input.log, [
-        L1_SKY_BRIDGE,
+        ChainSpecificAddress.address(L1_SKY_BRIDGE),
       ])
       if (bridgeFinalized) {
         return [
@@ -108,7 +143,7 @@ export class SkyBridgePlugin implements InteropPlugin {
     } else if (input.chain === 'base') {
       // L2: Capture ERC20BridgeFinalized (L1 → L2 deposit relay)
       const bridgeFinalized = parseERC20BridgeFinalized(input.log, [
-        L2_SKY_BRIDGE,
+        ChainSpecificAddress.address(L2_SKY_BRIDGE),
       ])
       if (bridgeFinalized) {
         return [
@@ -126,7 +161,7 @@ export class SkyBridgePlugin implements InteropPlugin {
 
       // L2: Capture ERC20BridgeInitiated (L2 → L1 withdrawal)
       const bridgeInitiated = parseERC20BridgeInitiated(input.log, [
-        L2_SKY_BRIDGE,
+        ChainSpecificAddress.address(L2_SKY_BRIDGE),
       ])
       if (bridgeInitiated) {
         return [
@@ -149,9 +184,9 @@ export class SkyBridgePlugin implements InteropPlugin {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (DepositBridgeFinalized.checkType(event)) {
-      // L2: DepositBridgeFinalized → RelayedMessage
+      // L2: DepositBridgeFinalized → RelayedMessage (offset +1)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 1 },
         chain: 'base',
       })
       if (!relayedMessage) return
@@ -163,9 +198,9 @@ export class SkyBridgePlugin implements InteropPlugin {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → DepositBridgeInitiated
+      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → DepositBridgeInitiated (N+2)
       const depositBridgeInitiated = db.find(DepositBridgeInitiated, {
-        sameTxAfter: sentMessage,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!depositBridgeInitiated) return
 
@@ -189,9 +224,9 @@ export class SkyBridgePlugin implements InteropPlugin {
 
     // L2 → L1 withdrawal matching
     if (WithdrawalBridgeFinalized.checkType(event)) {
-      // L1: WithdrawalBridgeFinalized → WithdrawalFinalized
+      // L1: WithdrawalBridgeFinalized (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: 'base',
       })
       if (!withdrawalFinalized) return
@@ -203,9 +238,9 @@ export class SkyBridgePlugin implements InteropPlugin {
       })
       if (!messagePassed) return
 
-      // L2: MessagePassed → WithdrawalBridgeInitiated
+      // L2: MessagePassed (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → WithdrawalBridgeInitiated (N+3)
       const withdrawalBridgeInitiated = db.find(WithdrawalBridgeInitiated, {
-        sameTxAfter: messagePassed,
+        sameTxAtOffset: { event: messagePassed, offset: 3 },
       })
       if (!withdrawalBridgeInitiated) return
 

@@ -1155,10 +1155,10 @@
     ],
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
-  "across-settlement": {
+  "across-settlement-op": {
     "groups": [
       {
-        "name": "L1 → Optimism (OpStack)",
+        "name": "L1 → Optimism",
         "txs": [
           {
             "chain": "ethereum",
@@ -1175,7 +1175,7 @@
         ]
       },
       {
-        "name": "L1 → Base (OpStack)",
+        "name": "L1 → Base",
         "txs": [
           {
             "chain": "ethereum",
@@ -1190,24 +1190,23 @@
         "messages": [
           { "type": "opstack.L1ToL2Message", "app": "across-settlement" }
         ]
+      }
+    ]
+  },
+  "across-settlement-orbit": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
       },
       {
-        "name": "L1 → Arbitrum (OrbitStack)",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0x05a03c0f655733e2052a0631df41f4392b7fb6788779d659565077bc34cdb06d"
-          },
-          {
-            "chain": "arbitrum",
-            "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
-          }
-        ],
-        "events": ["across-settlement.RelayedMessageOrbit"],
-        "messages": [
-          { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
-        ]
+        "chain": "arbitrum",
+        "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
+    ],
+    "events": ["across-settlement.RelayedMessageOrbit"],
+    "messages": [
+      { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
   "world-id": {
@@ -1338,10 +1337,7 @@
         "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
       }
     ],
-    "events": [
-      "beefy-bridge.BridgedOutSentMessage",
-      "beefy-bridge.BridgedInRelayedMessage"
-    ],
+    "events": ["beefy-bridge.BridgedOut", "beefy-bridge.BridgedIn"],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
@@ -2240,10 +2236,10 @@
       }
     ],
     "events": [
-      "maker-bridge.DepositSentMessage",
+      "maker-bridge.DepositInitiated",
       "maker-bridge.DepositFinalized",
-      "maker-bridge.WithdrawalMessagePassed",
-      "maker-bridge.WithdrawalFinalized"
+      "maker-bridge.WithdrawalInitiated",
+      "maker-bridge.ERC20WithdrawalFinalized"
     ],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "maker-bridge" },

@@ -14,39 +14,39 @@ import {
 
 // == Event signatures ==
 
-const messageForwardedLog =
-  'event MessageForwarded(address indexed gateway, uint256 value, bytes callData)'
+const messageRelayedLog = 'event MessageRelayed(address target, bytes message)'
 
-const ZKLINK_ARBITRATOR = ChainSpecificAddress(
-  'eth:0x1ee09a2caa0813a5183f90f5a6d0e4871f4c6002',
+// Across HubPool address on Ethereum
+const HUB_POOL = ChainSpecificAddress(
+  'eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda',
 )
 
-const MessageForwarded = createInteropEventType<object>(
-  'zklink-nova.MessageForwarded',
+const MessageRelayedOP = createInteropEventType<object>(
+  'across-settlement.MessageRelayedOP',
 )
 
-const parseMessageForwarded = createEventParser(messageForwardedLog)
+const parseMessageRelayed = createEventParser(messageRelayedLog)
 
-export class ZklinkNovaPlugin implements InteropPluginResyncable {
-  readonly name = 'zklink-nova'
+export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
+  readonly name = 'across-settlement-op'
 
   getDataRequests(): DataRequest[] {
     return [
       {
         type: 'event',
-        signature: messageForwardedLog,
-        addresses: [ZKLINK_ARBITRATOR],
+        signature: messageRelayedLog,
+        addresses: [HUB_POOL],
       },
     ]
   }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
-      const messageForwarded = parseMessageForwarded(input.log, [
-        ChainSpecificAddress.address(ZKLINK_ARBITRATOR),
+      const messageRelayed = parseMessageRelayed(input.log, [
+        ChainSpecificAddress.address(HUB_POOL),
       ])
-      if (messageForwarded) {
-        return [MessageForwarded.create(input, {})]
+      if (messageRelayed) {
+        return [MessageRelayedOP.create(input, {})]
       }
     }
   }
@@ -55,38 +55,40 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (RelayedMessage.checkType(event)) {
+      // Find SentMessage by msgHash
       const sentMessage = db.find(SentMessage, {
         msgHash: event.args.msgHash,
         chain: event.args.chain,
       })
       if (!sentMessage) return
 
-      // Find MessageForwarded at exact offset from SentMessage
-      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageForwarded (N+2)
-      const messageForwarded = db.find(MessageForwarded, {
+      // Find MessageRelayedOP at exact offset from SentMessage
+      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageRelayed (N+2)
+      const messageRelayed = db.find(MessageRelayedOP, {
         sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
-      if (!messageForwarded) return
+      if (!messageRelayed) return
 
       const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
-          app: 'zklink-nova',
+          app: 'across-settlement',
           srcEvent: sentMessage,
           dstEvent: event,
-          extraEvents: [messageForwarded],
+          extraEvents: [messageRelayed],
         }),
       ]
 
+      // If ETH was sent via CrossDomainMessenger, also create a Transfer
       if (sentMessage.args.value > 0n) {
         results.push(
-          Result.Transfer('zklink-nova.L1ToL2Transfer', {
+          Result.Transfer('across-settlement.L1ToL2Transfer', {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
-            extraEvents: [messageForwarded],
+            extraEvents: [messageRelayed],
           }),
         )
       }

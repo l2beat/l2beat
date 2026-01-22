@@ -1,11 +1,5 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
-  OPSTACK_NETWORKS,
-  parseSentMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
-import {
   MessageDelivered,
   ORBITSTACK_NETWORKS,
   parseMessageDelivered,
@@ -25,20 +19,10 @@ import {
 // Across HubPool address on Ethereum
 const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
 
-// Build lookup map from L1CrossDomainMessenger address to network (OpStack)
-const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
-)
-
 // Build lookup map from bridge address to network (OrbitStack)
 const ORBIT_BRIDGE_TO_NETWORK = new Map(
   ORBITSTACK_NETWORKS.map((n) => [n.bridge.toString(), n]),
 )
-
-// L1 event: MessageRelayed from HubPool (OpStack)
-const MessageRelayedOP = createInteropEventType<{
-  chain: string
-}>('across-settlement.MessageRelayedOP')
 
 // L1 event: MessageRelayed from HubPool + MessageDelivered combined (OrbitStack)
 // Keep msgHash for OrbitStack as it needs messageNum for matching
@@ -52,44 +36,24 @@ const parseMessageRelayed = createEventParser(
   'event MessageRelayed(address target, bytes message)',
 )
 
-export class AcrossSettlementPlugin implements InteropPlugin {
-  readonly name = 'across-settlement'
+export class AcrossSettlementOrbitPlugin implements InteropPlugin {
+  readonly name = 'across-settlement-orbit'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1: Capture MessageRelayed from HubPool
       const messageRelayed = parseMessageRelayed(input.log, [HUB_POOL])
       if (messageRelayed) {
-        const targetAddress = messageRelayed.target.toLowerCase()
         const currentLogIndex = input.log.logIndex ?? -1
 
-        // The bridge event (SentMessage or MessageDelivered) is always at logIndex - 2
-        // Pattern: BridgeEvent (N-2) -> Extension (N-1) -> MessageRelayed (N)
+        // The bridge event (MessageDelivered) is always at logIndex - 2
+        // Pattern: MessageDelivered (N-2) -> InboxMessageDelivered (N-1) -> MessageRelayed (N)
         const bridgeLog = input.txLogs.find(
           (log) => log.logIndex === currentLogIndex - 2,
         )
         if (!bridgeLog) return
 
-        // Try OpStack: Check if bridgeLog is a SentMessage from a known L1CrossDomainMessenger
-        const opNetwork = L1_CDM_TO_NETWORK.get(bridgeLog.address)
-        if (opNetwork) {
-          const sentMessage = parseSentMessage(bridgeLog, [
-            opNetwork.l1CrossDomainMessenger,
-          ])
-          if (
-            !sentMessage ||
-            sentMessage.target.toLowerCase() !== targetAddress
-          )
-            return
-
-          return [
-            MessageRelayedOP.create(input, {
-              chain: opNetwork.chain,
-            }),
-          ]
-        }
-
-        // Try OrbitStack: Check if bridgeLog is a MessageDelivered from a known Arbitrum bridge
+        // Check if bridgeLog is a MessageDelivered from a known Arbitrum bridge
         const orbitNetwork = ORBIT_BRIDGE_TO_NETWORK.get(bridgeLog.address)
         if (orbitNetwork) {
           const messageDelivered = parseMessageDelivered(bridgeLog, [
@@ -106,57 +70,13 @@ export class AcrossSettlementPlugin implements InteropPlugin {
         }
       }
     }
-    // No L2 event capture - we match on opstack's RelayedMessage or orbitstack's RedeemScheduled
+    // No L2 event capture - we match on orbitstack's RedeemScheduled
   }
 
-  // Match on opstack's RelayedMessage or orbitstack's RedeemScheduled
-  matchTypes = [RelayedMessage, RedeemScheduled]
+  // Match on orbitstack's RedeemScheduled
+  matchTypes = [RedeemScheduled]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    // OpStack matching
-    if (RelayedMessage.checkType(event)) {
-      // Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      // L1: SentMessage → MessageRelayedOP (MessageRelayed comes after SentMessage)
-      const messageRelayed = db.find(MessageRelayedOP, {
-        sameTxAfter: sentMessage,
-        chain: event.args.chain,
-      })
-      if (!messageRelayed) return
-
-      const results: MatchResult = [
-        Result.Message('opstack.L1ToL2Message', {
-          app: 'across-settlement',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [messageRelayed],
-        }),
-      ]
-
-      // If ETH was sent via CrossDomainMessenger, also create a Transfer
-      if (sentMessage.args.value > 0n) {
-        results.push(
-          Result.Transfer('across-settlement.L1ToL2Transfer', {
-            srcEvent: sentMessage,
-            srcAmount: sentMessage.args.value,
-            srcTokenAddress: Address32.NATIVE,
-            dstEvent: event,
-            dstAmount: sentMessage.args.value,
-            dstTokenAddress: Address32.NATIVE,
-            extraEvents: [messageRelayed],
-          }),
-        )
-      }
-
-      return results
-    }
-
-    // OrbitStack matching (unchanged - still uses messageNum)
     if (RedeemScheduled.checkType(event)) {
       // Check if there's a corresponding AcrossSettlementRelayedMessageOrbit
       const acrossEvent = db.find(AcrossSettlementRelayedMessageOrbit, {
