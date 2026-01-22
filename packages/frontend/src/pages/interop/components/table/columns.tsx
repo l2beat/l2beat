@@ -78,6 +78,7 @@ const averageDurationColumn = columnHelper.accessor(
     header: 'last 24h avg.\ntransfer time',
     invertSorting: true,
     meta: {
+      align: 'right',
       headClassName: 'text-2xs',
     },
     cell: (ctx) => (
@@ -142,17 +143,19 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
           headClassName: 'text-2xs',
         },
       }),
-    tokensByVolumeColumn,
-    columnHelper.accessor('chains', {
-      header: 'chains\nby volume',
+    last24hVolumeColumn,
+    columnHelper.accessor((row) => row.transferCount, {
+      header: 'Last 24h\ntransfer count',
+      cell: (ctx) => (
+        <div className="font-medium text-label-value-15">
+          {ctx.row.original.transferCount}
+        </div>
+      ),
       meta: {
-        cellClassName: '!pr-0',
+        align: 'right',
         headClassName: 'text-2xs',
       },
-      cell: (ctx) => <TopChainsCell chains={ctx.row.original.chains} />,
     }),
-    last24hVolumeColumn,
-    tokenCountColumn,
     averageDurationColumn,
     columnHelper.accessor('averageValue', {
       header: 'last 24h avg.\ntransfer value',
@@ -165,6 +168,15 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
           {formatCurrency(ctx.row.original.averageValue, 'usd')}
         </span>
       ),
+    }),
+    tokensByVolumeColumn,
+    columnHelper.accessor('chains', {
+      header: 'chains\nby volume',
+      meta: {
+        cellClassName: '!pr-0',
+        headClassName: 'text-2xs',
+      },
+      cell: (ctx) => <TopChainsCell chains={ctx.row.original.chains} />,
     }),
   ])
 }
