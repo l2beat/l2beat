@@ -752,6 +752,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BabyDoge",
+      "priceId": "baby-doge-coin",
+      "symbol": "BabyDoge",
+      "name": "Baby Doge Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16125/large/babydoge.jpg?1696515731",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 9,
+            "sinceTimestamp": 1636297637
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 9,
+            "sinceTimestamp": 1636297637
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BADGER",
       "priceId": "badger-dao",
       "symbol": "BADGER",
@@ -8159,19 +8192,17 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "arbitrum-sUSDS-2",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+        "type": "const",
+        "value": "0",
         "decimals": 18,
-        "sinceTimestamp": 1734048000
+        "sinceTimestamp": 1679679015
       },
       "category": "stablecoin",
       "source": "external",
