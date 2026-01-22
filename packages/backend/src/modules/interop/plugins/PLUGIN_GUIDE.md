@@ -358,14 +358,14 @@ For apps using OpStack's CrossDomainMessenger:
 
 1. Import and reuse OpStack's event types and parsers
 2. Capture your app-specific event independently (don't combine in capture phase)
-3. In match phase, use `sameTxBefore`/`sameTxAfter` to find related events
+3. In match phase, use `sameTxBefore`/`sameTxAfter`/`sameTxAtOffset` to find related events
 4. Use `msgHash` or `withdrawalHash` to correlate events across chains
 
 See `opstack-standardbridge.ts` and `sorare-base.ts` for examples.
 
 ### Finding Related Events in Same Transaction
 
-**Preferred approach**: Use `sameTxBefore`/`sameTxAfter` queries in the match phase:
+**Preferred approach**: Use `sameTxBefore`/`sameTxAfter`/`sameTxAtOffset` queries in the match phase:
 
 ```typescript
 // Capture phase: capture each event independently
@@ -376,7 +376,7 @@ capture(input: LogToCapture) {
   }
 }
 
-// Match phase: find related events using sameTxBefore/sameTxAfter
+// Match phase: find related events using sameTxBefore/sameTxAfter/sameTxAtOffset
 match(event: InteropEvent, db: InteropEventDb) {
   if (MyEvent.checkType(event)) {
     // Find event that comes AFTER this one in the same tx
@@ -390,11 +390,17 @@ match(event: InteropEvent, db: InteropEventDb) {
       sameTxBefore: event,
       chain: event.args.chain,
     })
+
+    // Find event at a fixed logIndex offset in the same tx
+    const offsetEvent = db.find(OffsetEvent, {
+      sameTxAtOffset: { event, offset: 2 },
+      chain: event.args.chain,
+    })
   }
 }
 ```
 
-**Important**: `sameTxBefore` finds events with **lower** logIndex, `sameTxAfter` finds events with **higher** logIndex. To determine the correct direction, check actual log indices in transaction receipts (see "Determining Event Order" below).
+**Important**: `sameTxBefore` finds events with **lower** logIndex, `sameTxAfter` finds events with **higher** logIndex, and `sameTxAtOffset` matches the exact `logIndex` offset (negative offsets go backward). To determine the correct direction, check actual log indices in transaction receipts (see "Determining Event Order" below).
 
 **Legacy approach** (use only when you need data from multiple events in a single captured event):
 
@@ -413,7 +419,7 @@ capture(input: LogToCapture) {
 
 ### Determining Event Order
 
-When using `sameTxBefore`/`sameTxAfter`, you must know which event comes first. Check actual log indices:
+When using `sameTxBefore`/`sameTxAfter` or calculating `sameTxAtOffset`, you must know which event comes first. Check actual log indices:
 
 ```bash
 # Get transaction receipt and look at logIndex for each event
@@ -464,7 +470,7 @@ const MyEvent = createInteropEventType<{ ... }>('my-plugin.Event', {
 1. **Missing matchTypes**: Add your event type to `matchTypes` array
 2. **Wrong db.find parameters**: Check the field names match event args
 3. **Plugin order**: Ensure your plugin runs before generic ones
-4. **Wrong sameTxBefore/sameTxAfter direction**: Check actual log indices in the transaction receipt. Use `sameTxAfter` to find events with higher logIndex, `sameTxBefore` for lower logIndex
+4. **Wrong sameTxBefore/sameTxAfter direction or sameTxAtOffset sign**: Check actual log indices in the transaction receipt. Use `sameTxAfter` to find events with higher logIndex, `sameTxBefore` for lower logIndex, and `sameTxAtOffset` with a positive or negative offset as needed
 
 ### Test Shows FAIL
 
