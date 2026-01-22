@@ -1,4 +1,8 @@
-import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   OPSTACK_NETWORKS,
   parseSentMessage,
@@ -57,45 +61,29 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
-      // L1: Capture MessageRelayed from HubPool
       const messageRelayed = parseMessageRelayed(input.log, [
         ChainSpecificAddress.address(HUB_POOL),
       ])
       if (messageRelayed) {
         const targetAddress = messageRelayed.target.toLowerCase()
-        const currentLogIndex = input.log.logIndex ?? -1
-
-        // The bridge event (SentMessage) is always at logIndex - 2
-        // Pattern: SentMessage (N-2) -> SentMessageExtension1 (N-1) -> MessageRelayed (N)
-        const bridgeLog = input.txLogs.find(
-          (log) => log.logIndex === currentLogIndex - 2,
-        )
-        if (!bridgeLog) return
-
-        // Check if bridgeLog is a SentMessage from a known L1CrossDomainMessenger
-        const opNetwork = L1_CDM_TO_NETWORK.get(bridgeLog.address)
-        if (opNetwork) {
-          const sentMessage = parseSentMessage(bridgeLog, [
-            ChainSpecificAddress.address(opNetwork.l1CrossDomainMessenger),
-          ])
-          if (
-            !sentMessage ||
-            sentMessage.target.toLowerCase() !== targetAddress
+        // Find SentMessage where target matches to determine chain
+        for (const log of input.txLogs) {
+          const network = L1_CDM_TO_NETWORK.get(
+            EthereumAddress(log.address).toString(),
           )
-            return
+          if (!network) continue
 
-          return [
-            MessageRelayedOP.create(input, {
-              chain: opNetwork.chain,
-            }),
-          ]
+          const sentMessage = parseSentMessage(log, [
+            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
+          ])
+          if (sentMessage?.target.toLowerCase() === targetAddress) {
+            return [MessageRelayedOP.create(input, { chain: network.chain })]
+          }
         }
       }
     }
-    // No L2 event capture - we match on opstack's RelayedMessage
   }
 
-  // Match on opstack's RelayedMessage
   matchTypes = [RelayedMessage]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
@@ -107,7 +95,7 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → MessageRelayedOP (MessageRelayed comes after SentMessage)
+      // Find MessageRelayedOP that comes after SentMessage in the same tx
       const messageRelayed = db.find(MessageRelayedOP, {
         sameTxAfter: sentMessage,
         chain: event.args.chain,
