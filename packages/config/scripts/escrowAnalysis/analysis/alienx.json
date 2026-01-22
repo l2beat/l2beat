@@ -1,6 +1,6 @@
 {
   "projectId": "alienx",
-  "timestamp": 1769015968507,
+  "timestamp": 1769022263001,
   "escrows": [
     {
       "address": "eth:0x69aB55146Bc52A0b31F74dBDc527b8B7e9c7C27c",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 190515.75,
+          "valueUsd": 184038.06,
           "amount": 63.505,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 190515.75,
+      "totalValueUsd": 184038.06,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,50 +36,52 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 190515.75,
+          "valueUsd": 184038.06,
           "amount": 63.505,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDC",
-          "valueUsd": 13687.03,
+          "valueUsd": 13685.03,
           "amount": 13690.28,
           "issuer": "Circle",
           "source": "canonical"
         },
         {
           "symbol": "USDT",
-          "valueUsd": 10579.64,
+          "valueUsd": 10579.9,
           "amount": 10588.74,
           "issuer": "Tether",
           "source": "canonical"
         },
         {
           "symbol": "ARB",
-          "valueUsd": 1089.44,
+          "valueUsd": 1045.82,
           "amount": 5742.93,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 215871.86,
+      "totalValueUsd": 209348.81,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 406387.61000000004,
-    "canonicalTvl": 406387.61000000004,
+    "totalTvl": 393386.87000000005,
+    "canonicalTvl": 393386.87,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 406387.61000000004,
-    "rollupSecuredTvl": 406387.61,
+    "canonicalNoAdditionalTrust": 393386.87,
+    "apiCanonicalTvl": 393386.87000000005,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 393386.87,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 406387.61,
+      "rollupControlled": 393386.87,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

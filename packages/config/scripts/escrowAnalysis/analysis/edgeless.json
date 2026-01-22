@@ -1,6 +1,6 @@
 {
   "projectId": "edgeless",
-  "timestamp": 1769016099502,
+  "timestamp": 1769022364487,
   "escrows": [
     {
       "address": "eth:0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
@@ -14,20 +14,20 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 16323.49,
+          "valueUsd": 15768.48,
           "amount": 5.44,
           "issuer": null,
           "source": "external"
         },
         {
           "symbol": "stETH",
-          "valueUsd": 180.8,
+          "valueUsd": 174.69,
           "amount": 0.06,
           "issuer": "Lido DAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 16504.29,
+      "totalValueUsd": 15943.17,
       "source": "canonical",
       "description": "Deposits funds into the Lido protocol."
     },
@@ -43,36 +43,38 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 16323.49,
+          "valueUsd": 15768.48,
           "amount": 5.44,
           "issuer": null,
           "source": "external"
         },
         {
           "symbol": "ezETH",
-          "valueUsd": 1336.21,
+          "valueUsd": 1292.25,
           "amount": 0.42,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 17659.7,
+      "totalValueUsd": 17060.73,
       "source": "canonical",
       "description": "Deposits funds into the Renzo protocol."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 34163.990000000005,
-    "canonicalTvl": 34163.990000000005,
+    "totalTvl": 33003.9,
+    "canonicalTvl": 33003.9,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 34163.990000000005,
-    "rollupSecuredTvl": 34163.990000000005,
+    "canonicalNoAdditionalTrust": 33003.9,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 33003.9,
+    "rollupSecuredTvl": 33003.9,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 34163.990000000005,
+      "rollupControlled": 33003.9,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

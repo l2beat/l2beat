@@ -1,6 +1,6 @@
 {
   "projectId": "sanko",
-  "timestamp": 1769016486087,
+  "timestamp": 1769022626092,
   "escrows": [
     {
       "address": "arb1:0x2f285781B8d58678a3483de52D618198E4d27532",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "DMT",
-          "valueUsd": 1193829.25,
+          "valueUsd": 1166733.5,
           "amount": 271537.15,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 1193829.25,
+      "totalValueUsd": 1166733.5,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,42 +36,42 @@
       "tokens": [
         {
           "symbol": "DMT",
-          "valueUsd": 1193829.25,
+          "valueUsd": 1166733.5,
           "amount": 271537.15,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDC",
-          "valueUsd": 59490.67,
+          "valueUsd": 59481.99,
           "amount": 59504.81,
           "issuer": "Circle",
           "source": "canonical"
         },
         {
           "symbol": "WETH",
-          "valueUsd": 27697.47,
+          "valueUsd": 26710.77,
           "amount": 9.23,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "wBTC",
-          "valueUsd": 52.46,
+          "valueUsd": 50.99,
           "amount": 0,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "BOOP",
-          "valueUsd": 16.32,
+          "valueUsd": 16,
           "amount": 2038438.4,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "ARB",
-          "valueUsd": 10.58,
+          "valueUsd": 10.16,
           "amount": 55.77,
           "issuer": null,
           "source": "canonical"
@@ -91,23 +91,25 @@
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 1281097.21,
+      "totalValueUsd": 1253003.8699999999,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 2526544.1,
-    "canonicalTvl": 2474926.46,
+    "totalTvl": 2471355.0100000007,
+    "canonicalTvl": 2419737.37,
     "externalTvl": 0,
     "nativeTvl": 51617.64,
-    "canonicalNoAdditionalTrust": 2474926.46,
-    "rollupSecuredTvl": 2474926.46,
+    "canonicalNoAdditionalTrust": 2419737.37,
+    "apiCanonicalTvl": 2419737.3700000006,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 2419737.37,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 2474926.46,
+      "rollupControlled": 2419737.37,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

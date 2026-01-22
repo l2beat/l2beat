@@ -1,6 +1,6 @@
 {
   "projectId": "l3x",
-  "timestamp": 1769016303616,
+  "timestamp": 1769022452591,
   "escrows": [
     {
       "address": "arb1:0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 2055.86,
+          "valueUsd": 1985.96,
           "amount": 0.685,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 2055.86,
+      "totalValueUsd": 1985.96,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,7 +36,7 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 2055.86,
+          "valueUsd": 1985.96,
           "amount": 0.685,
           "issuer": null,
           "source": "canonical"
@@ -49,7 +49,7 @@
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 2057.88,
+      "totalValueUsd": 1987.98,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     },
@@ -65,31 +65,33 @@
       "tokens": [
         {
           "symbol": "ezETH",
-          "valueUsd": 227.15,
+          "valueUsd": 219.68,
           "amount": 0.07,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 227.15,
+      "totalValueUsd": 219.68,
       "source": "canonical",
       "description": null
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 4340.89,
-    "canonicalTvl": 4340.89,
+    "totalTvl": 4193.620000000001,
+    "canonicalTvl": 4193.62,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 4113.740000000001,
-    "rollupSecuredTvl": 4113.74,
+    "canonicalNoAdditionalTrust": 3973.94,
+    "apiCanonicalTvl": 3973.94,
+    "apiExternalTvl": 219.68,
+    "rollupSecuredTvl": 3973.94,
     "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 227.15,
+    "thirdPartySecuredTvl": 219.68,
     "byAdmin": {
-      "rollupControlled": 4113.74,
+      "rollupControlled": 3973.94,
       "issuerControlled": 0,
-      "thirdPartyControlled": 227.15
+      "thirdPartyControlled": 219.68
     }
   },
   "externalTokensSummary": {

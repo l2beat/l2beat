@@ -1,6 +1,6 @@
 {
   "projectId": "kinto",
-  "timestamp": 1769016299857,
+  "timestamp": 1769022448587,
   "escrows": [
     {
       "address": "0xbe60cc82a67ac7bba8f41408b0c6833ce73e0e4d",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "cbBTC",
-          "valueUsd": 5.08,
+          "valueUsd": 4.95,
           "amount": 0,
           "issuer": "Coinbase",
           "source": "external"
         }
       ],
-      "totalValueUsd": 5.08,
+      "totalValueUsd": 4.95,
       "source": "canonical",
       "description": null
     },
@@ -36,13 +36,13 @@
       "tokens": [
         {
           "symbol": "WETH",
-          "valueUsd": 0.17,
+          "valueUsd": 0.16333333333333333,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.17,
+      "totalValueUsd": 0.16333333333333333,
       "source": "canonical",
       "description": null
     },
@@ -58,13 +58,13 @@
       "tokens": [
         {
           "symbol": "WETH",
-          "valueUsd": 0.17,
+          "valueUsd": 0.16333333333333333,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.17,
+      "totalValueUsd": 0.16333333333333333,
       "source": "canonical",
       "description": null
     },
@@ -80,13 +80,13 @@
       "tokens": [
         {
           "symbol": "WETH",
-          "valueUsd": 0.17,
+          "valueUsd": 0.16333333333333333,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.17,
+      "totalValueUsd": 0.16333333333333333,
       "source": "canonical",
       "description": null
     },
@@ -234,13 +234,13 @@
       "tokens": [
         {
           "symbol": "weETH",
-          "valueUsd": 0.05666666666666667,
+          "valueUsd": 0.05333333333333334,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.05666666666666667,
+      "totalValueUsd": 0.05333333333333334,
       "source": "canonical",
       "description": null
     },
@@ -256,13 +256,13 @@
       "tokens": [
         {
           "symbol": "weETH",
-          "valueUsd": 0.05666666666666667,
+          "valueUsd": 0.05333333333333334,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.05666666666666667,
+      "totalValueUsd": 0.05333333333333334,
       "source": "canonical",
       "description": null
     },
@@ -278,13 +278,13 @@
       "tokens": [
         {
           "symbol": "weETH",
-          "valueUsd": 0.05666666666666667,
+          "valueUsd": 0.05333333333333334,
           "amount": 0,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.05666666666666667,
+      "totalValueUsd": 0.05333333333333334,
       "source": "canonical",
       "description": null
     },
@@ -454,13 +454,13 @@
       "tokens": [
         {
           "symbol": "wstETH",
-          "valueUsd": 0.006666666666666667,
+          "valueUsd": 0.0033333333333333335,
           "amount": 0,
           "issuer": "Lido DAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.006666666666666667,
+      "totalValueUsd": 0.0033333333333333335,
       "source": "canonical",
       "description": null
     },
@@ -476,13 +476,13 @@
       "tokens": [
         {
           "symbol": "wstETH",
-          "valueUsd": 0.006666666666666667,
+          "valueUsd": 0.0033333333333333335,
           "amount": 0,
           "issuer": "Lido DAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.006666666666666667,
+      "totalValueUsd": 0.0033333333333333335,
       "source": "canonical",
       "description": null
     },
@@ -498,13 +498,13 @@
       "tokens": [
         {
           "symbol": "wstETH",
-          "valueUsd": 0.006666666666666667,
+          "valueUsd": 0.0033333333333333335,
           "amount": 0,
           "issuer": "Lido DAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 0.006666666666666667,
+      "totalValueUsd": 0.0033333333333333335,
       "source": "canonical",
       "description": null
     },
@@ -775,18 +775,20 @@
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 18968.36,
-    "canonicalTvl": 7,
+    "totalTvl": 18968.190000000002,
+    "canonicalTvl": 6.830000000000002,
     "externalTvl": 0,
     "nativeTvl": 18961.36,
-    "canonicalNoAdditionalTrust": 5.38,
+    "canonicalNoAdditionalTrust": 5.24,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 6.829999999999999,
     "rollupSecuredTvl": 0,
-    "issuerSecuredTvl": 5.380000000000002,
-    "thirdPartySecuredTvl": 1.6199999999999997,
+    "issuerSecuredTvl": 5.24,
+    "thirdPartySecuredTvl": 1.5899999999999994,
     "byAdmin": {
       "rollupControlled": 0,
-      "issuerControlled": 5.380000000000002,
-      "thirdPartyControlled": 1.6199999999999997
+      "issuerControlled": 5.24,
+      "thirdPartyControlled": 1.5899999999999994
     }
   },
   "externalTokensSummary": {

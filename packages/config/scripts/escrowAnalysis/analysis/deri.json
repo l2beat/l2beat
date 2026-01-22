@@ -1,6 +1,6 @@
 {
   "projectId": "deri",
-  "timestamp": 1769016085375,
+  "timestamp": 1769022352319,
   "escrows": [
     {
       "address": "arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
@@ -14,29 +14,31 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 17302.37,
+          "valueUsd": 16714.07,
           "amount": 5.77,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 17302.37,
+      "totalValueUsd": 16714.07,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 17302.37,
-    "canonicalTvl": 17302.37,
+    "totalTvl": 16714.07,
+    "canonicalTvl": 16714.07,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 17302.37,
-    "rollupSecuredTvl": 17302.37,
+    "canonicalNoAdditionalTrust": 16714.07,
+    "apiCanonicalTvl": 16714.07,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 16714.07,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 17302.37,
+      "rollupControlled": 16714.07,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

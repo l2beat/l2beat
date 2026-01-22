@@ -1,6 +1,6 @@
 {
   "projectId": "earnm",
-  "timestamp": 1769016090339,
+  "timestamp": 1769022356528,
   "escrows": [
     {
       "address": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "EARNM",
-          "valueUsd": 17.515,
+          "valueUsd": 17.595,
           "amount": 102588.525,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 17.515,
+      "totalValueUsd": 17.595,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,31 +36,33 @@
       "tokens": [
         {
           "symbol": "EARNM",
-          "valueUsd": 17.515,
+          "valueUsd": 17.595,
           "amount": 102588.525,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 17.515,
+      "totalValueUsd": 17.595,
       "source": "canonical",
       "description": null
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 35.03,
-    "canonicalTvl": 35.03,
+    "totalTvl": 35.19,
+    "canonicalTvl": 35.19,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 17.515,
-    "rollupSecuredTvl": 17.515,
+    "canonicalNoAdditionalTrust": 17.595,
+    "apiCanonicalTvl": 35.19,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 17.595,
     "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 17.515,
+    "thirdPartySecuredTvl": 17.595,
     "byAdmin": {
-      "rollupControlled": 17.515,
+      "rollupControlled": 17.595,
       "issuerControlled": 0,
-      "thirdPartyControlled": 17.515
+      "thirdPartyControlled": 17.595
     }
   },
   "externalTokensSummary": {

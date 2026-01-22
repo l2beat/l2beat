@@ -1,6 +1,6 @@
 {
   "projectId": "winr",
-  "timestamp": 1769016498585,
+  "timestamp": 1769022637924,
   "escrows": [
     {
       "address": "arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "WINR",
-          "valueUsd": 461633.94,
+          "valueUsd": 460785.62,
           "amount": 243715890,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 461633.94,
+      "totalValueUsd": 460785.62,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -159,16 +159,18 @@
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 461643.05000000005,
-    "canonicalTvl": 461643.05000000005,
+    "totalTvl": 460794.73000000004,
+    "canonicalTvl": 460794.73000000004,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 461643.03,
-    "rollupSecuredTvl": 461633.94,
+    "canonicalNoAdditionalTrust": 460794.71,
+    "apiCanonicalTvl": 460785.62,
+    "apiExternalTvl": 9.11,
+    "rollupSecuredTvl": 460785.62,
     "issuerSecuredTvl": 9.09,
     "thirdPartySecuredTvl": 0.02,
     "byAdmin": {
-      "rollupControlled": 461633.94,
+      "rollupControlled": 460785.62,
       "issuerControlled": 9.09,
       "thirdPartyControlled": 0.02
     }

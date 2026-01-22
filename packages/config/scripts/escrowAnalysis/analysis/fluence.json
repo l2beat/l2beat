@@ -1,6 +1,6 @@
 {
   "projectId": "fluence",
-  "timestamp": 1769016220874,
+  "timestamp": 1769022376318,
   "escrows": [
     {
       "address": "eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "FLT",
-          "valueUsd": 177028.485,
+          "valueUsd": 172715.69,
           "amount": 30948852,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 177028.485,
+      "totalValueUsd": 172715.69,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,36 +36,38 @@
       "tokens": [
         {
           "symbol": "FLT",
-          "valueUsd": 177028.485,
+          "valueUsd": 172715.69,
           "amount": 30948852,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDC",
-          "valueUsd": 71497.05,
+          "valueUsd": 71486.61,
           "amount": 71514.04,
           "issuer": "Circle",
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 248525.53499999997,
+      "totalValueUsd": 244202.3,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 425554.01999999996,
-    "canonicalTvl": 425554.01999999996,
+    "totalTvl": 416917.99,
+    "canonicalTvl": 416917.99,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 425554.01999999996,
-    "rollupSecuredTvl": 425554.01999999996,
+    "canonicalNoAdditionalTrust": 416917.99,
+    "apiCanonicalTvl": 416917.99,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 416917.99,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 425554.01999999996,
+      "rollupControlled": 416917.99,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

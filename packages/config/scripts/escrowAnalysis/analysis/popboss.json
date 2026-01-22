@@ -1,6 +1,6 @@
 {
   "projectId": "popboss",
-  "timestamp": 1769016404911,
+  "timestamp": 1769022549331,
   "escrows": [
     {
       "address": "arb1:0x53D82686BC9827fEc03bcEe661B37b855A18EcA9",
@@ -32,6 +32,8 @@
     "externalTvl": 0,
     "nativeTvl": 0,
     "canonicalNoAdditionalTrust": 0,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 0,
     "rollupSecuredTvl": 0,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,

@@ -1,6 +1,6 @@
 {
   "projectId": "popapex",
-  "timestamp": 1769016401258,
+  "timestamp": 1769022545303,
   "escrows": [
     {
       "address": "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
@@ -32,6 +32,8 @@
     "externalTvl": 0,
     "nativeTvl": 0,
     "canonicalNoAdditionalTrust": 0,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 0,
     "rollupSecuredTvl": 0,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,

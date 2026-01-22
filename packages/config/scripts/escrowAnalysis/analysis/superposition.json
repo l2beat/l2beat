@@ -1,6 +1,6 @@
 {
   "projectId": "superposition",
-  "timestamp": 1769016489950,
+  "timestamp": 1769022629988,
   "escrows": [
     {
       "address": "arb1:0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 231310.33,
+          "valueUsd": 223445.61,
           "amount": 77.1,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 231310.33,
+      "totalValueUsd": 223445.61,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -36,14 +36,14 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 231310.33,
+          "valueUsd": 223445.61,
           "amount": 77.1,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "wBTC",
-          "valueUsd": 44120.71,
+          "valueUsd": 42890.34,
           "amount": 0.49,
           "issuer": null,
           "source": "canonical"
@@ -57,7 +57,7 @@
         },
         {
           "symbol": "ARB",
-          "valueUsd": 7826.05,
+          "valueUsd": 7512.66,
           "amount": 41254.56,
           "issuer": null,
           "source": "canonical"
@@ -77,7 +77,7 @@
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 293454.76999999996,
+      "totalValueUsd": 284046.2899999999,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     }
@@ -87,8 +87,8 @@
       "symbol": "USDC.e",
       "name": "Bridged USDC (Stargate)",
       "l2Address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
-      "valueUsd": 209544.23,
-      "amount": 209594.06,
+      "valueUsd": 209383.7,
+      "amount": 209464.06,
       "bridgeProtocol": "Stargate v2 (Hydra mode)",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -97,33 +97,35 @@
     }
   ],
   "summary": {
-    "totalTvl": 734309.3300000001,
-    "canonicalTvl": 524765.1,
-    "externalTvl": 209544.23000000004,
+    "totalTvl": 716875.6,
+    "canonicalTvl": 507491.8999999999,
+    "externalTvl": 209383.7,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 524765.1,
-    "rollupSecuredTvl": 524765.1,
+    "canonicalNoAdditionalTrust": 507491.8999999999,
+    "apiCanonicalTvl": 507491.8999999999,
+    "apiExternalTvl": 209383.7,
+    "rollupSecuredTvl": 507491.8999999999,
     "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 209544.23,
+    "thirdPartySecuredTvl": 209383.7,
     "byAdmin": {
-      "rollupControlled": 524765.1,
+      "rollupControlled": 507491.8999999999,
       "issuerControlled": 0,
-      "thirdPartyControlled": 209544.23
+      "thirdPartyControlled": 209383.7
     }
   },
   "externalTokensSummary": {
     "totalCount": 1,
-    "totalValue": 209544.23,
+    "totalValue": 209383.7,
     "byProtocol": {
       "Stargate v2 (Hydra mode)": {
         "count": 1,
-        "value": 209544.23
+        "value": 209383.7
       }
     },
     "byCategory": {
       "third-party-secured": {
         "count": 1,
-        "value": 209544.23
+        "value": 209383.7
       }
     }
   }

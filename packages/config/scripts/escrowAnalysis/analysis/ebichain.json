@@ -1,6 +1,6 @@
 {
   "projectId": "ebichain",
-  "timestamp": 1769016095016,
+  "timestamp": 1769022360477,
   "escrows": [
     {
       "address": "eth:0x73CF739b0233027cd516998e177d473D0a45E037",
@@ -14,29 +14,31 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 68151.96,
+          "valueUsd": 65834.75,
           "amount": 22.72,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 68151.96,
+      "totalValueUsd": 65834.75,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 68151.96,
-    "canonicalTvl": 68151.96,
+    "totalTvl": 65834.75,
+    "canonicalTvl": 65834.75,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 68151.96,
-    "rollupSecuredTvl": 68151.96,
+    "canonicalNoAdditionalTrust": 65834.75,
+    "apiCanonicalTvl": 65834.75,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 65834.75,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 68151.96,
+      "rollupControlled": 65834.75,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

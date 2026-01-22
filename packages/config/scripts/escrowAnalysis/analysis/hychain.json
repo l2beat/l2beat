@@ -1,6 +1,6 @@
 {
   "projectId": "hychain",
-  "timestamp": 1769016296136,
+  "timestamp": 1769022444567,
   "escrows": [
     {
       "address": "eth:0x73C6af7029E714DFf1F1554F88b79B335011Da68",
@@ -32,6 +32,8 @@
     "externalTvl": 0,
     "nativeTvl": 0,
     "canonicalNoAdditionalTrust": 1094.05,
+    "apiCanonicalTvl": 1094.05,
+    "apiExternalTvl": 0,
     "rollupSecuredTvl": 1094.05,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,

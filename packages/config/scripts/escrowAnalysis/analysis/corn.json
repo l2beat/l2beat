@@ -1,6 +1,6 @@
 {
   "projectId": "corn",
-  "timestamp": 1769016080897,
+  "timestamp": 1769022283908,
   "escrows": [
     {
       "address": "eth:0x00943b11764176C3a8323aEFCBd6fE70CFb6272d",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "WBTC",
-          "valueUsd": 1005984,
+          "valueUsd": 977930.6,
           "amount": 11.19,
           "issuer": "BitGo",
           "source": "external"
         }
       ],
-      "totalValueUsd": 1005984,
+      "totalValueUsd": 977930.6,
       "source": "canonical",
       "description": null
     },
@@ -36,13 +36,13 @@
       "tokens": [
         {
           "symbol": "cbBTC",
-          "valueUsd": 6.31,
+          "valueUsd": 6.14,
           "amount": 0,
           "issuer": "Coinbase",
           "source": "external"
         }
       ],
-      "totalValueUsd": 6.31,
+      "totalValueUsd": 6.14,
       "source": "canonical",
       "description": null
     }
@@ -52,8 +52,8 @@
       "symbol": "CORN",
       "name": "Corn",
       "l2Address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
-      "valueUsd": 37171056,
-      "amount": 525030020,
+      "valueUsd": 36856692,
+      "amount": 524950020,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -64,7 +64,7 @@
       "symbol": "USD₮0",
       "name": "USD₮0",
       "l2Address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
-      "valueUsd": 11812712,
+      "valueUsd": 11824088,
       "amount": 11829944,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "Unknown",
@@ -74,33 +74,35 @@
     }
   ],
   "summary": {
-    "totalTvl": 50097325.9,
-    "canonicalTvl": 1008154.9924643361,
-    "externalTvl": 49089170.90753566,
+    "totalTvl": 49765010.279999994,
+    "canonicalTvl": 977936.74,
+    "externalTvl": 48680780,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 1008154.9924643361,
+    "canonicalNoAdditionalTrust": 977936.74,
+    "apiCanonicalTvl": 0,
+    "apiExternalTvl": 49765010.279999994,
     "rollupSecuredTvl": 0,
-    "issuerSecuredTvl": 1005990.31,
-    "thirdPartySecuredTvl": 48983768,
+    "issuerSecuredTvl": 977936.74,
+    "thirdPartySecuredTvl": 48680780,
     "byAdmin": {
       "rollupControlled": 0,
-      "issuerControlled": 1005990.31,
-      "thirdPartyControlled": 48983768
+      "issuerControlled": 977936.74,
+      "thirdPartyControlled": 48680780
     }
   },
   "externalTokensSummary": {
     "totalCount": 2,
-    "totalValue": 48983768,
+    "totalValue": 48680780,
     "byProtocol": {
       "Layer Zero v2 OFT": {
         "count": 2,
-        "value": 48983768
+        "value": 48680780
       }
     },
     "byCategory": {
       "third-party-secured": {
         "count": 2,
-        "value": 48983768
+        "value": 48680780
       }
     }
   }

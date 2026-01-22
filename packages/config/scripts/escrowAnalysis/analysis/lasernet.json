@@ -1,6 +1,6 @@
 {
   "projectId": "lasernet",
-  "timestamp": 1769016307325,
+  "timestamp": 1769022456544,
   "escrows": [
     {
       "address": "eth:0x1eeE9b9F024188E54930D2927d7a28e66E7649a7",
@@ -14,29 +14,31 @@
       "tokens": [
         {
           "symbol": "DIA",
-          "valueUsd": 1366130.2,
+          "valueUsd": 1324473.6,
           "amount": 5049928,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 1366130.2,
+      "totalValueUsd": 1324473.6,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 1366130.2,
-    "canonicalTvl": 1366130.2,
+    "totalTvl": 1324473.6,
+    "canonicalTvl": 1324473.6,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 1366130.2,
-    "rollupSecuredTvl": 1366130.2,
+    "canonicalNoAdditionalTrust": 1324473.6,
+    "apiCanonicalTvl": 1324473.6,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 1324473.6,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 1366130.2,
+      "rollupControlled": 1324473.6,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

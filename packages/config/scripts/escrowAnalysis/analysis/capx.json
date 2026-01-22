@@ -1,6 +1,6 @@
 {
   "projectId": "capx",
-  "timestamp": 1769015984011,
+  "timestamp": 1769022279959,
   "escrows": [
     {
       "address": "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72",
@@ -14,29 +14,31 @@
       "tokens": [
         {
           "symbol": "CAPX",
-          "valueUsd": 17291346,
+          "valueUsd": 17271586,
           "amount": 82505810,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 17291346,
+      "totalValueUsd": 17271586,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 17291346,
-    "canonicalTvl": 17291346,
+    "totalTvl": 17271586,
+    "canonicalTvl": 17271586,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 17291346,
-    "rollupSecuredTvl": 17291346,
+    "canonicalNoAdditionalTrust": 17271586,
+    "apiCanonicalTvl": 17271586,
+    "apiExternalTvl": 0,
+    "rollupSecuredTvl": 17271586,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 17291346,
+      "rollupControlled": 17271586,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

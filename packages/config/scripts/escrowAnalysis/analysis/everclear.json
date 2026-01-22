@@ -1,6 +1,6 @@
 {
   "projectId": "everclear",
-  "timestamp": 1769016217237,
+  "timestamp": 1769022372336,
   "escrows": [
     {
       "address": "eth:0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
@@ -14,29 +14,31 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 206006.12,
+          "valueUsd": 199001.77,
           "amount": 68.67,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 206006.12,
+      "totalValueUsd": 199001.77,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 287208.24,
-    "canonicalTvl": 287208.24,
+    "totalTvl": 278258.19,
+    "canonicalTvl": 199001.77,
     "externalTvl": 0,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 287208.24,
-    "rollupSecuredTvl": 206006.12,
+    "canonicalNoAdditionalTrust": 199001.77,
+    "apiCanonicalTvl": 199001.77,
+    "apiExternalTvl": 79256.42,
+    "rollupSecuredTvl": 199001.77,
     "issuerSecuredTvl": 0,
     "thirdPartySecuredTvl": 0,
     "byAdmin": {
-      "rollupControlled": 206006.12,
+      "rollupControlled": 199001.77,
       "issuerControlled": 0,
       "thirdPartyControlled": 0
     }

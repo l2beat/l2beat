@@ -1,6 +1,6 @@
 {
   "projectId": "reya",
-  "timestamp": 1769016482420,
+  "timestamp": 1769022622090,
   "escrows": [
     {
       "address": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -14,13 +14,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 307140.6,
+          "valueUsd": 296697.6,
           "amount": 102.38,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 307140.6,
+      "totalValueUsd": 296697.6,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
@@ -30,8 +30,8 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "l2Address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
-      "valueUsd": 4748565,
-      "amount": 4749694,
+      "valueUsd": 4749722.5,
+      "amount": 4751545,
       "bridgeProtocol": "Socket",
       "issuer": "Circle",
       "category": "third-party-secured",
@@ -40,33 +40,35 @@
     }
   ],
   "summary": {
-    "totalTvl": 5055717.68,
-    "canonicalTvl": 307141.3338754946,
-    "externalTvl": 4748576.346124506,
+    "totalTvl": 5046432.18,
+    "canonicalTvl": 296697.6,
+    "externalTvl": 4749722.5,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 307141.3338754946,
-    "rollupSecuredTvl": 307140.6,
+    "canonicalNoAdditionalTrust": 296697.6,
+    "apiCanonicalTvl": 296697.6,
+    "apiExternalTvl": 4749734.58,
+    "rollupSecuredTvl": 296697.6,
     "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 4748565,
+    "thirdPartySecuredTvl": 4749722.5,
     "byAdmin": {
-      "rollupControlled": 307140.6,
+      "rollupControlled": 296697.6,
       "issuerControlled": 0,
-      "thirdPartyControlled": 4748565
+      "thirdPartyControlled": 4749722.5
     }
   },
   "externalTokensSummary": {
     "totalCount": 1,
-    "totalValue": 4748565,
+    "totalValue": 4749722.5,
     "byProtocol": {
       "Socket": {
         "count": 1,
-        "value": 4748565
+        "value": 4749722.5
       }
     },
     "byCategory": {
       "third-party-secured": {
         "count": 1,
-        "value": 4748565
+        "value": 4749722.5
       }
     }
   }
