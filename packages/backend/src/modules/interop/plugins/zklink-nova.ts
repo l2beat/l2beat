@@ -1,14 +1,5 @@
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
-import {
-  OPSTACK_NETWORKS,
-  parseSentMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { RelayedMessage, SentMessage } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -30,16 +21,9 @@ const ZKLINK_ARBITRATOR = ChainSpecificAddress(
   'eth:0x1ee09a2caa0813a5183f90f5a6d0e4871f4c6002',
 )
 
-const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [
-    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
-    n,
-  ]),
+const MessageForwarded = createInteropEventType<object>(
+  'zklink-nova.MessageForwarded',
 )
-
-const MessageForwarded = createInteropEventType<{
-  chain: string
-}>('zklink-nova.MessageForwarded')
 
 const parseMessageForwarded = createEventParser(messageForwardedLog)
 
@@ -62,21 +46,7 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(ZKLINK_ARBITRATOR),
       ])
       if (messageForwarded) {
-        const gatewayAddress = messageForwarded.gateway.toLowerCase()
-        // Find SentMessage where sender matches the gateway to determine chain
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(
-            EthereumAddress(log.address).toString(),
-          )
-          if (!network) continue
-
-          const sentMessage = parseSentMessage(log, [
-            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
-          ])
-          if (sentMessage?.sender.toLowerCase() === gatewayAddress) {
-            return [MessageForwarded.create(input, { chain: network.chain })]
-          }
-        }
+        return [MessageForwarded.create(input, {})]
       }
     }
   }
@@ -91,10 +61,10 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → MessageForwarded (MessageForwarded comes after)
+      // Find MessageForwarded at exact offset from SentMessage
+      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageForwarded (N+2)
       const messageForwarded = db.find(MessageForwarded, {
-        sameTxAfter: sentMessage,
-        chain: event.args.chain,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!messageForwarded) return
 

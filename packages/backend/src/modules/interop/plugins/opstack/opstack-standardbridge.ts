@@ -310,8 +310,10 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (ERC20BridgeFinalized.checkType(event)) {
+      // L1: ERC20BridgeFinalized (N) → ERC20WithdrawalFinalized (N+1) → RelayedMessage (N+2) → WithdrawalFinalized (N+3)
+      // L1: ERC20BridgeFinalized (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: event.args.chain,
       })
       if (!withdrawalFinalized) return
@@ -322,8 +324,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       })
       if (!messagePassed) return
 
+      // L2: ERC20BridgeInitiated (N) → MessagePassed (N+1)
       const erc20BridgeInitiated = db.find(ERC20BridgeInitiated, {
-        sameTxBefore: messagePassed,
+        sameTxAtOffset: { event: messagePassed, offset: -1 },
         chain: event.args.chain,
       })
       if (!erc20BridgeInitiated) return
@@ -346,8 +349,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     }
 
     if (ETHBridgeFinalizedL1.checkType(event)) {
+      // L1: ETHBridgeFinalizedL1 (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: event.args.chain,
       })
       if (!withdrawalFinalized) return
@@ -358,8 +362,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       })
       if (!messagePassed) return
 
+      // L2: ETHBridgeInitiatedL2 (N) → MessagePassed (N+1)
       const ethBridgeInitiated = db.find(ETHBridgeInitiatedL2, {
-        sameTxBefore: messagePassed,
+        sameTxAtOffset: { event: messagePassed, offset: -1 },
         chain: event.args.chain,
       })
       if (!ethBridgeInitiated) return
@@ -382,8 +387,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     }
 
     if (ETHBridgeFinalizedL2.checkType(event)) {
+      // L2: ETHBridgeFinalizedL2 (N) → RelayedMessage (N+1)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 1 },
         chain: event.args.chain,
       })
       if (!relayedMessage) return
@@ -394,14 +400,16 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
+      // L1: ETHBridgeInitiatedL1 → ... → SentMessage (offset varies: -2 for Base, -3 for Optimism due to ETHLocked)
       const ethBridgeInitiated = db.find(ETHBridgeInitiatedL1, {
         sameTxBefore: sentMessage,
         chain: event.args.chain,
       })
       if (!ethBridgeInitiated) return
 
+      // L2: DepositFinalized (N) → ETHBridgeFinalizedL2 (N+1) → RelayedMessage (N+2)
       const depositFinalized = db.find(DepositFinalized, {
-        sameTxBefore: relayedMessage,
+        sameTxAtOffset: { event: relayedMessage, offset: -2 },
         chain: event.args.chain,
       })
 
@@ -430,8 +438,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     }
 
     if (DepositFinalized.checkType(event)) {
+      // L2: DepositFinalized (N) → ERC20BridgeFinalized (N+1) → RelayedMessage (N+2)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: event.args.chain,
       })
       if (!relayedMessage) return
@@ -442,8 +451,9 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
+      // L1: ERC20DepositInitiated (N) → ERC20BridgeInitiated (N+1) → TransactionDeposited (N+2) → SentMessage (N+3)
       const erc20DepositInitiated = db.find(ERC20DepositInitiated, {
-        sameTxBefore: sentMessage,
+        sameTxAtOffset: { event: sentMessage, offset: -3 },
         chain: event.args.chain,
       })
       // If not found, this might be an ETH deposit (DepositFinalized is also emitted for ETH)

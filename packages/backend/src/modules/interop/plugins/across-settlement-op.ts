@@ -1,14 +1,5 @@
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
-import {
-  OPSTACK_NETWORKS,
-  parseSentMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { RelayedMessage, SentMessage } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -30,20 +21,10 @@ const HUB_POOL = ChainSpecificAddress(
   'eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda',
 )
 
-// Build lookup map from L1CrossDomainMessenger address to network (OpStack)
-const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [
-    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
-    n,
-  ]),
+const MessageRelayedOP = createInteropEventType<object>(
+  'across-settlement.MessageRelayedOP',
 )
 
-// L1 event: MessageRelayed from HubPool (OpStack)
-const MessageRelayedOP = createInteropEventType<{
-  chain: string
-}>('across-settlement.MessageRelayedOP')
-
-// Event parser for MessageRelayed from HubPool
 const parseMessageRelayed = createEventParser(messageRelayedLog)
 
 export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
@@ -65,21 +46,7 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(HUB_POOL),
       ])
       if (messageRelayed) {
-        const targetAddress = messageRelayed.target.toLowerCase()
-        // Find SentMessage where target matches to determine chain
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(
-            EthereumAddress(log.address).toString(),
-          )
-          if (!network) continue
-
-          const sentMessage = parseSentMessage(log, [
-            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
-          ])
-          if (sentMessage?.target.toLowerCase() === targetAddress) {
-            return [MessageRelayedOP.create(input, { chain: network.chain })]
-          }
-        }
+        return [MessageRelayedOP.create(input, {})]
       }
     }
   }
@@ -95,10 +62,10 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // Find MessageRelayedOP that comes after SentMessage in the same tx
+      // Find MessageRelayedOP at exact offset from SentMessage
+      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageRelayed (N+2)
       const messageRelayed = db.find(MessageRelayedOP, {
-        sameTxAfter: sentMessage,
-        chain: event.args.chain,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!messageRelayed) return
 

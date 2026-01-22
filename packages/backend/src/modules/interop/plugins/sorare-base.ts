@@ -86,9 +86,9 @@ export class SorareBasePlugin implements InteropPluginResyncable {
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (FactRegistered.checkType(event)) {
-      // L2: FactRegistered → RelayedMessage
+      // L2: FactRegistered → RelayedMessage (offset +1)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 1 },
         chain: 'base',
       })
       if (!relayedMessage) return
@@ -100,9 +100,9 @@ export class SorareBasePlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → TransferRegistered
+      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → TransferRegistered (N+2)
       const transferRegistered = db.find(TransferRegistered, {
-        sameTxAfter: sentMessage,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!transferRegistered) return
 

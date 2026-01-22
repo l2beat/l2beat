@@ -1,13 +1,5 @@
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
-import {
-  OPSTACK_NETWORKS,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { RelayedMessage, SentMessage } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -28,16 +20,7 @@ const WORLD_ID_BRIDGE = ChainSpecificAddress(
   'eth:0xa6d85f3b3be6ff6dc52c3aabe9a35d0ce252b79f',
 )
 
-const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [
-    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
-    n,
-  ]),
-)
-
-const RootPropagated = createInteropEventType<{
-  chain: string
-}>('world-id.RootPropagated')
+const RootPropagated = createInteropEventType<object>('world-id.RootPropagated')
 
 const parseRootPropagated = createEventParser(rootPropagatedLog)
 
@@ -60,14 +43,7 @@ export class WorldIdPlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(WORLD_ID_BRIDGE),
       ])
       if (rootPropagated) {
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(
-            EthereumAddress(log.address).toString(),
-          )
-          if (network) {
-            return [RootPropagated.create(input, { chain: network.chain })]
-          }
-        }
+        return [RootPropagated.create(input, {})]
       }
     }
   }
@@ -82,9 +58,10 @@ export class WorldIdPlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
+      // Find RootPropagated at exact offset from SentMessage
+      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → RootPropagated (N+2)
       const rootPropagated = db.find(RootPropagated, {
-        sameTxAfter: sentMessage,
-        chain: event.args.chain,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!rootPropagated) return
 

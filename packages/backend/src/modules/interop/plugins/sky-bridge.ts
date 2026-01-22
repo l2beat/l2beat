@@ -184,9 +184,9 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (DepositBridgeFinalized.checkType(event)) {
-      // L2: DepositBridgeFinalized → RelayedMessage
+      // L2: DepositBridgeFinalized → RelayedMessage (offset +1)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 1 },
         chain: 'base',
       })
       if (!relayedMessage) return
@@ -198,9 +198,9 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → DepositBridgeInitiated
+      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → DepositBridgeInitiated (N+2)
       const depositBridgeInitiated = db.find(DepositBridgeInitiated, {
-        sameTxAfter: sentMessage,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
       })
       if (!depositBridgeInitiated) return
 
@@ -224,9 +224,9 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
 
     // L2 → L1 withdrawal matching
     if (WithdrawalBridgeFinalized.checkType(event)) {
-      // L1: WithdrawalBridgeFinalized → WithdrawalFinalized
+      // L1: WithdrawalBridgeFinalized (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: 'base',
       })
       if (!withdrawalFinalized) return
@@ -238,9 +238,9 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
       })
       if (!messagePassed) return
 
-      // L2: MessagePassed → WithdrawalBridgeInitiated
+      // L2: MessagePassed (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → WithdrawalBridgeInitiated (N+3)
       const withdrawalBridgeInitiated = db.find(WithdrawalBridgeInitiated, {
-        sameTxAfter: messagePassed,
+        sameTxAtOffset: { event: messagePassed, offset: 3 },
       })
       if (!withdrawalBridgeInitiated) return
 

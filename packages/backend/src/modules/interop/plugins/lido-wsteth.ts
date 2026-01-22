@@ -228,9 +228,9 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (DepositFinalized.checkType(event)) {
-      // L2: DepositFinalized → RelayedMessage
+      // L2: DepositFinalized → RelayedMessage (offset +1)
       const relayedMessage = db.find(RelayedMessage, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 1 },
         chain: event.args.chain,
       })
       if (!relayedMessage) return
@@ -242,9 +242,9 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
       })
       if (!sentMessage) return
 
-      // L1: SentMessage → DepositInitiated
+      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → DepositInitiated (N+2)
       const depositInitiated = db.find(DepositInitiated, {
-        sameTxAfter: sentMessage,
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
         chain: event.args.chain,
       })
       if (!depositInitiated) return
@@ -269,9 +269,9 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
 
     // L2 → L1 withdrawal matching
     if (ERC20WithdrawalFinalized.checkType(event)) {
-      // L1: ERC20WithdrawalFinalized → WithdrawalFinalized
+      // L1: ERC20WithdrawalFinalized (N) → RelayedMessage (N+1) → WithdrawalFinalized (N+2)
       const withdrawalFinalized = db.find(WithdrawalFinalized, {
-        sameTxAfter: event,
+        sameTxAtOffset: { event, offset: 2 },
         chain: event.args.chain,
       })
       if (!withdrawalFinalized) return
@@ -283,9 +283,9 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
       })
       if (!messagePassed) return
 
-      // L2: MessagePassed → WithdrawalInitiated
+      // L2: MessagePassed (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → WithdrawalInitiated (N+3)
       const withdrawalInitiated = db.find(WithdrawalInitiated, {
-        sameTxAfter: messagePassed,
+        sameTxAtOffset: { event: messagePassed, offset: 3 },
         chain: event.args.chain,
       })
       if (!withdrawalInitiated) return
