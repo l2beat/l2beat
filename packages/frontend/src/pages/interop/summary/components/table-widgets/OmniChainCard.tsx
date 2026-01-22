@@ -11,8 +11,6 @@ export function OmniChainCard({
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
-  const filteredEntries = entries?.filter((p) => p.bridgeType === 'omnichain')
-
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
       <h2 className="font-bold text-heading-20 md:text-heading-24">
@@ -23,11 +21,11 @@ export function OmniChainCard({
         chains. Flow limits might be applied.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {filteredEntries ? (
-        filteredEntries.length === 0 ? (
+      {entries ? (
+        entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <OmniChainTable entries={filteredEntries} />
+          <OmniChainTable entries={entries} />
         )
       ) : null}
     </PrimaryCard>

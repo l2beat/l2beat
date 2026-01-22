@@ -11,8 +11,6 @@ export function LockAndMintCard({
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
-  const filteredEntries = entries?.filter((p) => p.bridgeType === 'lockAndMint')
-
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
       <h2 className="font-bold text-heading-20 md:text-heading-24">
@@ -23,11 +21,11 @@ export function LockAndMintCard({
         and the bridge risk is removed.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {filteredEntries ? (
-        filteredEntries.length === 0 ? (
+      {entries ? (
+        entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <LockAndMintTable entries={filteredEntries} />
+          <LockAndMintTable entries={entries} />
         )
       ) : null}
     </PrimaryCard>

@@ -1,8 +1,10 @@
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
+import groupBy from 'lodash/groupBy'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
@@ -62,6 +64,11 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     return <InteropEmptyState isDirty={isDirty} />
   }
 
+  const groupedEntries = groupBy(data?.entries, (e) => e.bridgeType) as Record<
+    ProtocolEntry['bridgeType'],
+    ProtocolEntry[]
+  >
+
   return (
     <div
       className="mt-5 grid grid-cols-1 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
@@ -92,9 +99,15 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <NonMintingCard entries={data?.entries} isLoading={isLoading} />
-      <LockAndMintCard entries={data?.entries} isLoading={isLoading} />
-      <OmniChainCard entries={data?.entries} isLoading={isLoading} />
+      <NonMintingCard
+        entries={groupedEntries.nonMinting}
+        isLoading={isLoading}
+      />
+      <LockAndMintCard
+        entries={groupedEntries.lockAndMint}
+        isLoading={isLoading}
+      />
+      <OmniChainCard entries={groupedEntries.omnichain} isLoading={isLoading} />
       <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )
