@@ -1,68 +1,68 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import type { AggregatedInteropTransferToken } from '../kysely/generated/types'
 
-export interface AggregatedInteropTransferRecord {
+export interface AggregatedInteropTransferTokenRecord {
   timestamp: UnixTime
   id: string
   srcChain: string
   dstChain: string
+  abstractTokenId: string
   transferCount: number
   totalDurationSum: number
-  srcValueUsd: number | undefined
-  dstValueUsd: number | undefined
+  volume: number
 }
 
 export function toRecord(
-  row: Selectable<AggregatedInteropTransfer>,
-): AggregatedInteropTransferRecord {
+  row: Selectable<AggregatedInteropTransferToken>,
+): AggregatedInteropTransferTokenRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
+    abstractTokenId: row.abstractTokenId,
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
-    srcValueUsd: row.srcValueUsd ?? undefined,
-    dstValueUsd: row.dstValueUsd ?? undefined,
+    volume: row.volume,
   }
 }
 
 export function toRow(
-  record: AggregatedInteropTransferRecord,
-): Insertable<AggregatedInteropTransfer> {
+  record: AggregatedInteropTransferTokenRecord,
+): Insertable<AggregatedInteropTransferToken> {
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
+    abstractTokenId: record.abstractTokenId,
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
-    srcValueUsd: record.srcValueUsd,
-    dstValueUsd: record.dstValueUsd,
+    volume: record.volume,
   }
 }
 
-export class AggregatedInteropTransferRepository extends BaseRepository {
+export class AggregatedInteropTransferTokenRepository extends BaseRepository {
   async insertMany(
-    records: AggregatedInteropTransferRecord[],
+    records: AggregatedInteropTransferTokenRecord[],
   ): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('AggregatedInteropTransfer')
+        .insertInto('AggregatedInteropTransferToken')
         .values(batch)
         .execute()
     })
     return rows.length
   }
 
-  async getAll(): Promise<AggregatedInteropTransferRecord[]> {
+  async getAll(): Promise<AggregatedInteropTransferTokenRecord[]> {
     const rows = await this.db
-      .selectFrom('AggregatedInteropTransfer')
+      .selectFrom('AggregatedInteropTransferToken')
       .selectAll()
       .execute()
 
@@ -73,11 +73,11 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     const query = this.db
       .with('earliest_timestamp_by_day', (eb) =>
         eb
-          .selectFrom('AggregatedInteropTransfer')
+          .selectFrom('AggregatedInteropTransferToken')
           .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
           .groupBy(sql`date_trunc('day', timestamp)`),
       )
-      .deleteFrom('AggregatedInteropTransfer')
+      .deleteFrom('AggregatedInteropTransferToken')
       .where('timestamp', '<', UnixTime.toDate(timestamp))
       .where('timestamp', 'not in', (eb) =>
         eb.selectFrom('earliest_timestamp_by_day').select('min_timestamp'),
@@ -90,7 +90,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async deleteByTimestamp(timestamp: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('AggregatedInteropTransfer')
+      .deleteFrom('AggregatedInteropTransferToken')
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -98,48 +98,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('AggregatedInteropTransfer')
+      .deleteFrom('AggregatedInteropTransferToken')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getLatest(
-    srcChains: string[],
-    dstChains: string[],
-    protocolIds?: string[],
-  ): Promise<AggregatedInteropTransferRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    const latestTimestampSubquery = this.db
-      .selectFrom('AggregatedInteropTransfer')
-      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
-      .as('latest_timestamp')
-
-    let query = this.db
-      .selectFrom('AggregatedInteropTransfer')
-      .innerJoin(latestTimestampSubquery, (join) =>
-        join.onRef(
-          'AggregatedInteropTransfer.timestamp',
-          '=',
-          'latest_timestamp.max_timestamp',
-        ),
-      )
-      .selectAll('AggregatedInteropTransfer')
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
-
-    if (protocolIds && protocolIds.length === 0) {
-      return []
-    }
-
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
-    }
-
-    const rows = await query.execute()
-
-    return rows.map(toRecord)
   }
 }
