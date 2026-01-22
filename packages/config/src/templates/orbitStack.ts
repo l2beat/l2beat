@@ -30,6 +30,7 @@ import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -528,6 +529,7 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
