@@ -7,6 +7,7 @@ export const dcamonster: ScalingProject = upcomingL2({
   capability: 'universal',
   hasTestnet: true,
   addedAt: UnixTime(1712577740), // 2024-04-08T12:02:20Z
+  archivedAt: UnixTime(1769066353),
   display: {
     name: 'DCA.Monster',
     slug: 'dcamonster',
