@@ -1542,5 +1542,6 @@
   "static/icons/debridge-dln.png": "b8c49ca34500a71ea59a9fa344ff129d",
   "static/icons/hyperlane-hwr.png": "8c7985d1882abfd7f11be6291b252074",
   "static/meta-images/publications/governance-review-82.png": "5731ceb10e7368206815dc57996c7232",
-  "static/meta-images/interop/non-minting/opengraph-image.png": "47ea6d22cb62448d90a093c8010ac3bf"
+  "static/meta-images/interop/non-minting/opengraph-image.png": "47ea6d22cb62448d90a093c8010ac3bf",
+  "static/meta-images/interop/omnichain/opengraph-image.png": "8c4cb371fc3e5c8618ebcf4abff854d0"
 }

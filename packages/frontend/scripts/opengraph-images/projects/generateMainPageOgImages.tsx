@@ -51,6 +51,10 @@ const mainPages: MainPage[] = [
     title: 'Non-minting',
   },
   {
+    type: 'interop',
+    title: 'Omnichain',
+  },
+  {
     type: 'bridges',
     title: 'Summary',
   },
