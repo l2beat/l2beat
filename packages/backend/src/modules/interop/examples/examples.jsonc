@@ -1338,8 +1338,8 @@
       }
     ],
     "events": [
-      "beefy-bridge.BridgedOutSentMessage",
-      "beefy-bridge.BridgedInRelayedMessage"
+      "beefy-bridge.BridgedOut",
+      "beefy-bridge.BridgedIn"
     ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
