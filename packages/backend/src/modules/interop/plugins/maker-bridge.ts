@@ -19,21 +19,33 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
+// == Event signatures ==
+
+const erc20DepositInitiatedLog =
+  'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)'
+const depositFinalizedLog =
+  'event DepositFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)'
+const withdrawalInitiatedLog =
+  'event WithdrawalInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)'
+const erc20WithdrawalFinalizedLog =
+  'event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)'
+
 // Maker bridge addresses (Optimism only)
 // Supports DAI, USDS, and sUSDS tokens
-const L1_MAKER_BRIDGE = EthereumAddress(
-  '0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
+const L1_MAKER_BRIDGE = ChainSpecificAddress(
+  'eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
 )
-const L2_MAKER_BRIDGE = EthereumAddress(
-  '0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+const L2_MAKER_BRIDGE = ChainSpecificAddress(
+  'oeth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
 )
 
 // OpStack network config for Optimism
@@ -75,20 +87,11 @@ const MakerWithdrawalFinalized = createInteropEventType<{
 }>('maker-bridge.WithdrawalFinalized')
 
 // Event parsers
-const parseERC20DepositInitiated = createEventParser(
-  'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-)
-
-const parseDepositFinalized = createEventParser(
-  'event DepositFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-)
-
-const parseWithdrawalInitiated = createEventParser(
-  'event WithdrawalInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-)
-
+const parseERC20DepositInitiated = createEventParser(erc20DepositInitiatedLog)
+const parseDepositFinalized = createEventParser(depositFinalizedLog)
+const parseWithdrawalInitiated = createEventParser(withdrawalInitiatedLog)
 const parseERC20WithdrawalFinalized = createEventParser(
-  'event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
+  erc20WithdrawalFinalizedLog,
 )
 
 // MessagePassed event parser (from L2ToL1MessagePasser)
@@ -96,14 +99,41 @@ const parseMessagePassed = createEventParser(
   'event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)',
 )
 
-export class MakerBridgePlugin implements InteropPlugin {
+export class MakerBridgePlugin implements InteropPluginResyncable {
   readonly name = 'maker-bridge'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      // L1: ERC20DepositInitiated, ERC20WithdrawalFinalized from L1_MAKER_BRIDGE
+      {
+        type: 'event',
+        signature: erc20DepositInitiatedLog,
+        addresses: [L1_MAKER_BRIDGE],
+      },
+      {
+        type: 'event',
+        signature: erc20WithdrawalFinalizedLog,
+        addresses: [L1_MAKER_BRIDGE],
+      },
+      // L2: DepositFinalized, WithdrawalInitiated from L2_MAKER_BRIDGE
+      {
+        type: 'event',
+        signature: depositFinalizedLog,
+        addresses: [L2_MAKER_BRIDGE],
+      },
+      {
+        type: 'event',
+        signature: withdrawalInitiatedLog,
+        addresses: [L2_MAKER_BRIDGE],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1: Capture ERC20DepositInitiated (L1 → L2 deposit)
       const depositInitiated = parseERC20DepositInitiated(input.log, [
-        L1_MAKER_BRIDGE,
+        ChainSpecificAddress.address(L1_MAKER_BRIDGE),
       ])
       if (depositInitiated) {
         // Find SentMessage from Optimism L1CrossDomainMessenger in the same tx
@@ -153,7 +183,7 @@ export class MakerBridgePlugin implements InteropPlugin {
 
       // L1: Capture ERC20WithdrawalFinalized (L2 → L1 withdrawal finalization)
       const withdrawalFinalized = parseERC20WithdrawalFinalized(input.log, [
-        L1_MAKER_BRIDGE,
+        ChainSpecificAddress.address(L1_MAKER_BRIDGE),
       ])
       if (withdrawalFinalized) {
         // Find WithdrawalFinalized event from OptimismPortal in same tx
@@ -189,7 +219,7 @@ export class MakerBridgePlugin implements InteropPlugin {
     } else if (input.chain === 'optimism') {
       // L2: Capture DepositFinalized (L1 → L2 deposit relay)
       const depositFinalized = parseDepositFinalized(input.log, [
-        L2_MAKER_BRIDGE,
+        ChainSpecificAddress.address(L2_MAKER_BRIDGE),
       ])
       if (depositFinalized) {
         // Find RelayedMessage in same tx
@@ -222,7 +252,7 @@ export class MakerBridgePlugin implements InteropPlugin {
 
       // L2: Capture WithdrawalInitiated (L2 → L1 withdrawal)
       const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
-        L2_MAKER_BRIDGE,
+        ChainSpecificAddress.address(L2_MAKER_BRIDGE),
       ])
       if (withdrawalInitiated) {
         // Find MessagePassed in same tx

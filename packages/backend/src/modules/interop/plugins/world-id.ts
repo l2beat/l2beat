@@ -1,4 +1,8 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   OPSTACK_NETWORKS,
   RelayedMessage,
@@ -7,36 +11,54 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const WORLD_ID_BRIDGE = EthereumAddress(
-  '0xa6d85f3b3be6ff6dc52c3aabe9a35d0ce252b79f',
+// == Event signatures ==
+
+const rootPropagatedLog = 'event RootPropagated(uint256 root)'
+
+const WORLD_ID_BRIDGE = ChainSpecificAddress(
+  'eth:0xa6d85f3b3be6ff6dc52c3aabe9a35d0ce252b79f',
 )
 
 const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
+  OPSTACK_NETWORKS.map((n) => [
+    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
+    n,
+  ]),
 )
 
 const RootPropagated = createInteropEventType<{
   chain: string
 }>('world-id.RootPropagated')
 
-const parseRootPropagated = createEventParser(
-  'event RootPropagated(uint256 root)',
-)
+const parseRootPropagated = createEventParser(rootPropagatedLog)
 
-export class WorldIdPlugin implements InteropPlugin {
+export class WorldIdPlugin implements InteropPluginResyncable {
   readonly name = 'world-id'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: rootPropagatedLog,
+        addresses: [WORLD_ID_BRIDGE],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
-      const rootPropagated = parseRootPropagated(input.log, [WORLD_ID_BRIDGE])
+      const rootPropagated = parseRootPropagated(input.log, [
+        ChainSpecificAddress.address(WORLD_ID_BRIDGE),
+      ])
       if (rootPropagated) {
         for (const log of input.txLogs) {
           const network = L1_CDM_TO_NETWORK.get(

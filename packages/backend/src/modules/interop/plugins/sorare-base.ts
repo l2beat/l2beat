@@ -1,21 +1,28 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { RelayedMessage, SentMessage } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const L1_SORARE_BRIDGE = EthereumAddress(
-  '0xDAB785F7719108390A26ff8d167e40aE4789F8D7',
+// == Event signatures ==
+
+const transferRegisteredLog =
+  'event TransferRegistered(bytes32 ticketHash, address indexed sender, address recipient, uint256 amount, bytes32 messageHash)'
+const factRegisteredLog = 'event FactRegistered(bytes32 ticketHash)'
+
+const L1_SORARE_BRIDGE = ChainSpecificAddress(
+  'eth:0xDAB785F7719108390A26ff8d167e40aE4789F8D7',
 )
-const L2_SORARE_BRIDGE = EthereumAddress(
-  '0xba78a06459a85b6d01a613294fe91cf9ce8326cb',
+const L2_SORARE_BRIDGE = ChainSpecificAddress(
+  'base:0xba78a06459a85b6d01a613294fe91cf9ce8326cb',
 )
 
 const TransferRegistered = createInteropEventType<{
@@ -27,21 +34,31 @@ const FactRegistered = createInteropEventType<{
   ticketHash: string
 }>('sorare-base.FactRegistered')
 
-const parseTransferRegistered = createEventParser(
-  'event TransferRegistered(bytes32 ticketHash, address indexed sender, address recipient, uint256 amount, bytes32 messageHash)',
-)
+const parseTransferRegistered = createEventParser(transferRegisteredLog)
+const parseFactRegistered = createEventParser(factRegisteredLog)
 
-const parseFactRegistered = createEventParser(
-  'event FactRegistered(bytes32 ticketHash)',
-)
-
-export class SorareBasePlugin implements InteropPlugin {
+export class SorareBasePlugin implements InteropPluginResyncable {
   readonly name = 'sorare-base'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: transferRegisteredLog,
+        addresses: [L1_SORARE_BRIDGE],
+      },
+      {
+        type: 'event',
+        signature: factRegisteredLog,
+        addresses: [L2_SORARE_BRIDGE],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       const transferRegistered = parseTransferRegistered(input.log, [
-        L1_SORARE_BRIDGE,
+        ChainSpecificAddress.address(L1_SORARE_BRIDGE),
       ])
       if (transferRegistered) {
         return [
@@ -52,7 +69,9 @@ export class SorareBasePlugin implements InteropPlugin {
         ]
       }
     } else if (input.chain === 'base') {
-      const factRegistered = parseFactRegistered(input.log, [L2_SORARE_BRIDGE])
+      const factRegistered = parseFactRegistered(input.log, [
+        ChainSpecificAddress.address(L2_SORARE_BRIDGE),
+      ])
       if (factRegistered) {
         return [
           FactRegistered.create(input, {

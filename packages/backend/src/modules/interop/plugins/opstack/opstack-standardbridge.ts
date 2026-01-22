@@ -7,9 +7,10 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -21,6 +22,21 @@ import {
   SentMessage,
   WithdrawalFinalized,
 } from './opstack'
+
+// == Event signatures ==
+
+const erc20BridgeInitiatedLog =
+  'event ERC20BridgeInitiated(address indexed l2Token, address indexed l1Token, address indexed from, address to, uint256 amount, bytes extraData)'
+const erc20BridgeFinalizedLog =
+  'event ERC20BridgeFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)'
+const erc20DepositInitiatedLog =
+  'event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)'
+const depositFinalizedLog =
+  'event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)'
+const ethBridgeInitiatedLog =
+  'event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)'
+const ethBridgeFinalizedLog =
+  'event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)'
 
 // ============= L2 -> L1 Events =============
 
@@ -34,9 +50,7 @@ const ERC20BridgeInitiated = createInteropEventType<{
   ttl: 14 * UnixTime.DAY,
 })
 
-const parseERC20BridgeInitiated = createEventParser(
-  'event ERC20BridgeInitiated(address indexed l2Token, address indexed l1Token, address indexed from, address to, uint256 amount, bytes extraData)',
-)
+const parseERC20BridgeInitiated = createEventParser(erc20BridgeInitiatedLog)
 
 // L1: ERC20 withdrawal finalized
 const ERC20BridgeFinalized = createInteropEventType<{
@@ -46,9 +60,7 @@ const ERC20BridgeFinalized = createInteropEventType<{
   amount: bigint
 }>('opstack.ERC20BridgeFinalized')
 
-const parseERC20BridgeFinalized = createEventParser(
-  'event ERC20BridgeFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)',
-)
+const parseERC20BridgeFinalized = createEventParser(erc20BridgeFinalizedLog)
 
 // L2: ETH withdrawal initiated
 const ETHBridgeInitiatedL2 = createInteropEventType<{
@@ -74,9 +86,7 @@ const ERC20DepositInitiated = createInteropEventType<{
   amount: bigint
 }>('opstack.ERC20DepositInitiated')
 
-const parseERC20DepositInitiated = createEventParser(
-  'event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)',
-)
+const parseERC20DepositInitiated = createEventParser(erc20DepositInitiatedLog)
 
 // L2: ERC20 deposit finalized (legacy event, also emitted for ETH)
 const DepositFinalized = createInteropEventType<{
@@ -86,9 +96,7 @@ const DepositFinalized = createInteropEventType<{
   amount: bigint
 }>('opstack.DepositFinalized')
 
-const parseDepositFinalized = createEventParser(
-  'event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)',
-)
+const parseDepositFinalized = createEventParser(depositFinalizedLog)
 
 // L1: ETH deposit initiated
 const ETHBridgeInitiatedL1 = createInteropEventType<{
@@ -96,9 +104,7 @@ const ETHBridgeInitiatedL1 = createInteropEventType<{
   amount: bigint
 }>('opstack.ETHBridgeInitiatedL1')
 
-const parseETHBridgeInitiated = createEventParser(
-  'event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)',
-)
+const parseETHBridgeInitiated = createEventParser(ethBridgeInitiatedLog)
 
 // L2: ETH deposit finalized
 const ETHBridgeFinalizedL2 = createInteropEventType<{
@@ -106,12 +112,59 @@ const ETHBridgeFinalizedL2 = createInteropEventType<{
   amount: bigint
 }>('opstack.ETHBridgeFinalizedL2')
 
-const parseETHBridgeFinalized = createEventParser(
-  'event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)',
-)
+const parseETHBridgeFinalized = createEventParser(ethBridgeFinalizedLog)
 
-export class OpStackStandardBridgePlugin implements InteropPlugin {
+export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
   readonly name = 'opstack-standardbridge'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      // L2: ERC20BridgeInitiated, ETHBridgeInitiated from L2StandardBridge
+      {
+        type: 'event',
+        signature: erc20BridgeInitiatedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
+      },
+      {
+        type: 'event',
+        signature: ethBridgeInitiatedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
+      },
+      // L2: DepositFinalized, ETHBridgeFinalized from L2StandardBridge
+      {
+        type: 'event',
+        signature: depositFinalizedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
+      },
+      {
+        type: 'event',
+        signature: ethBridgeFinalizedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2StandardBridge),
+      },
+      // L1: ERC20BridgeFinalized, ETHBridgeFinalized from L1StandardBridge
+      {
+        type: 'event',
+        signature: erc20BridgeFinalizedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
+      },
+      {
+        type: 'event',
+        signature: ethBridgeFinalizedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
+      },
+      // L1: ERC20DepositInitiated, ETHBridgeInitiated from L1StandardBridge
+      {
+        type: 'event',
+        signature: erc20DepositInitiatedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
+      },
+      {
+        type: 'event',
+        signature: ethBridgeInitiatedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l1StandardBridge),
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain !== 'ethereum') {

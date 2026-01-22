@@ -12,16 +12,22 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const ZKLINK_ARBITRATOR = EthereumAddress(
-  '0x1ee09a2caa0813a5183f90f5a6d0e4871f4c6002',
+// == Event signatures ==
+
+const messageForwardedLog =
+  'event MessageForwarded(address indexed gateway, uint256 value, bytes callData)'
+
+const ZKLINK_ARBITRATOR = ChainSpecificAddress(
+  'eth:0x1ee09a2caa0813a5183f90f5a6d0e4871f4c6002',
 )
 
 const L1_CDM_TO_NETWORK = new Map(
@@ -35,17 +41,25 @@ const MessageForwarded = createInteropEventType<{
   chain: string
 }>('zklink-nova.MessageForwarded')
 
-const parseMessageForwarded = createEventParser(
-  'event MessageForwarded(address indexed gateway, uint256 value, bytes callData)',
-)
+const parseMessageForwarded = createEventParser(messageForwardedLog)
 
-export class ZklinkNovaPlugin implements InteropPlugin {
+export class ZklinkNovaPlugin implements InteropPluginResyncable {
   readonly name = 'zklink-nova'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: messageForwardedLog,
+        addresses: [ZKLINK_ARBITRATOR],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       const messageForwarded = parseMessageForwarded(input.log, [
-        ZKLINK_ARBITRATOR,
+        ChainSpecificAddress.address(ZKLINK_ARBITRATOR),
       ])
       if (messageForwarded) {
         const gatewayAddress = messageForwarded.gateway.toLowerCase()
