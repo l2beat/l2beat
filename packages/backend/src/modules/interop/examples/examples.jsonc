@@ -2230,10 +2230,10 @@
       }
     ],
     "events": [
-      "maker-bridge.DepositSentMessage",
+      "maker-bridge.DepositInitiated",
       "maker-bridge.DepositFinalized",
-      "maker-bridge.WithdrawalMessagePassed",
-      "maker-bridge.WithdrawalFinalized"
+      "maker-bridge.WithdrawalInitiated",
+      "maker-bridge.ERC20WithdrawalFinalized"
     ],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "maker-bridge" },
