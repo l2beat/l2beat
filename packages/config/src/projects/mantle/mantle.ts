@@ -14,7 +14,7 @@ const discovery = new ProjectDiscovery('mantle')
 
 export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
-  isUnderReview: true,
+  reviewStatus: 'inReview',
   discovery,
   genesisTimestamp: UnixTime(1688314886),
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
