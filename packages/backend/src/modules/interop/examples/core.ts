@@ -1,6 +1,5 @@
-import type { Logger } from '@l2beat/backend-tools'
-import type { HttpClient, IRpcClient, MulticallV3Client } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
+import type { Type } from 'cmd-ts'
 import { readFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
@@ -32,19 +31,6 @@ export interface TransactionSpec {
   tx: string
 }
 
-export interface CoreExample {
-  loadConfigs?: string[]
-}
-
-export interface RunExampleCoreOptions {
-  makeRpcClient: (params: {
-    chain: string
-    multicallClient?: MulticallV3Client
-  }) => IRpcClient
-  logger?: Logger
-  httpClient?: HttpClient
-}
-
 const TxEntry = v.object({
   chain: v.string(),
   tx: v.string(),
@@ -53,6 +39,7 @@ const TxEntry = v.object({
 export type Example = v.infer<typeof Example>
 export const Example = v.object({
   description: v.string().optional(),
+  tags: v.array(v.string()).optional(),
   loadConfigs: v.array(v.string()).optional(),
   txs: v.array(TxEntry),
   events: v.array(v.string()).optional(),
@@ -76,4 +63,17 @@ export function readExamples(): Record<string, Example> {
   return v
     .record(v.string(), Example)
     .validate(readJsonc(join(__dirname, 'examples.jsonc')))
+}
+
+export function Separated<T>(
+  type: Type<string, T>,
+  separator = ',',
+): Type<string, T[]> {
+  return {
+    async from(str) {
+      const values = str.split(separator)
+      const parsed = await Promise.all(values.map(type.from))
+      return parsed
+    },
+  }
 }

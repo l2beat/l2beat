@@ -4,9 +4,18 @@ import {
   CoingeckoQueryService,
   HttpClient,
 } from '@l2beat/shared'
-import { CoingeckoId, unique } from '@l2beat/shared-pure'
+import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
-import { boolean, command, flag, positional, run, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { join } from 'path'
 import type { DeployedTokenId } from '../engine/financials/DeployedTokenId'
 import {
@@ -19,6 +28,7 @@ import {
   type Example,
   type ExpectedMessageType,
   readExamples,
+  Separated,
 } from './core'
 import { ExampleRunner } from './runner'
 import { hashExampleDefinition, SnapshotService } from './snapshot/service'
@@ -26,8 +36,8 @@ import { hashExampleDefinition, SnapshotService } from './snapshot/service'
 const cmd = command({
   name: 'interop:example',
   args: {
-    name: positional({ type: string, displayName: 'name' }),
-    simple: flag({ type: boolean, long: 'simple' }),
+    name: positional({ type: optional(string), displayName: 'name' }),
+    simple: flag({ type: boolean, long: 'simple', defaultValue: () => false }),
     seal: flag({
       type: boolean,
       long: 'seal',
@@ -41,56 +51,66 @@ const cmd = command({
       defaultValue: () => false,
       description: 'Do not compress the snapshot files',
     }),
+    tags: option({
+      type: optional(Separated(string)),
+      long: 'tags',
+      short: 't',
+      description: 'tags to filter examples, comma separated.',
+    }),
   },
   handler: async (args) => {
     const examples = readExamples()
 
-    if (args.name === 'all') {
-      const bigResult: CoreResult = {
-        events: [],
-        matchedEventIds: new Set(),
-        messages: [],
-        transfers: [],
+    function getExamplesToRun() {
+      if (args.name === 'all') {
+        return Object.keys(examples)
       }
 
-      let success = true
-      for (const [key, example] of Object.entries(examples)) {
-        console.log('\nExample:', key, '\n')
-        const result = await runExample(key, example, {
-          seal: args.seal,
-          uncompressed: args.uncompressed,
-        })
-        bigResult.events.push(...result.events)
-        for (const id of result.matchedEventIds) {
-          bigResult.matchedEventIds.add(id)
-        }
-        bigResult.messages.push(...result.messages)
-        bigResult.transfers.push(...result.transfers)
-        const partial = checkExample(key, example, result, false)
-        success &&= partial
+      if (args.tags) {
+        return Object.entries(examples)
+          .filter(([, { tags }]) =>
+            tags?.some((tag) => args.tags?.includes(tag)),
+          )
+          .map(([key]) => key)
       }
-      summarize(bigResult)
-      if (!success) {
-        console.log('Tests failed')
-        process.exit(1)
-      }
-    } else {
-      const example = examples[args.name as keyof typeof examples]
-      if (!example) {
-        console.log(`${args.name}: example not found, see examples.jsonc`)
-        return
-      }
-      const result = await runExample(args.name, example, {
+      assert(args.name, 'name is required if tags are not provided')
+
+      return [args.name]
+    }
+
+    const examplesToRun = getExamplesToRun()
+
+    let success = true
+    const bigResult: CoreResult = {
+      events: [],
+      matchedEventIds: new Set(),
+      messages: [],
+      transfers: [],
+    }
+
+    console.log('To Run', examplesToRun)
+    console.log('Running examples:', examplesToRun.join(', '))
+
+    for (const exampleId of examplesToRun) {
+      const example = examples[exampleId]
+      console.log('\nExample:', exampleId, '\n')
+      const result = await runExample(exampleId, example, {
         seal: args.seal,
         uncompressed: args.uncompressed,
       })
-      const success = checkExample(args.name, example, result, !args.simple)
-
-      summarize(result)
-      if (!success) {
-        console.log('Tests failed')
-        process.exit(1)
+      bigResult.events.push(...result.events)
+      for (const id of result.matchedEventIds) {
+        bigResult.matchedEventIds.add(id)
       }
+      bigResult.messages.push(...result.messages)
+      bigResult.transfers.push(...result.transfers)
+      const partial = checkExample(exampleId, example, result, !args.simple)
+      success &&= partial
+    }
+    summarize(bigResult)
+    if (!success) {
+      console.log('Tests failed')
+      process.exit(1)
     }
   },
 })

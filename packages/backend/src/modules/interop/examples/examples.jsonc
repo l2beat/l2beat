@@ -1,5 +1,6 @@
 {
   "allbridge": {
+    "tags": ["allbridge"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -1089,6 +1090,7 @@
     ]
   },
   "opstack": {
+    "tags": ["opstack"],
     "txs": [
       // base related txs
       {
@@ -1156,6 +1158,7 @@
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
   "across-settlement-l1-optimism": {
+    "tags": ["across", "opstack"],
     "name": "L1 → Optimism (OpStack)",
     "txs": [
       {
@@ -1173,6 +1176,7 @@
     ]
   },
   "across-settlement-l1-base": {
+    "tags": ["across", "opstack"],
     "name": "L1 → Base (OpStack)",
     "txs": [
       {
@@ -1190,6 +1194,7 @@
     ]
   },
   "across-settlement-l1-arbitrum": {
+    "tags": ["across", "orbitstack"],
     "name": "L1 → Arbitrum (OrbitStack)",
     "txs": [
       {
@@ -1206,7 +1211,6 @@
       { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
-
   "world-id": {
     "txs": [
       {
@@ -1222,6 +1226,7 @@
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "world-id" }]
   },
   "lido-wsteth-base-ethereum-deposit": {
+    "tags": ["lido"],
     "name": "Base L1 → L2 deposit",
     "txs": [
       {
@@ -1238,6 +1243,7 @@
     "transfers": ["lido-wsteth.L1ToL2Transfer"]
   },
   "lido-wsteth-base-ethereum-withdrawal": {
+    "tags": ["lido"],
     "name": "Base L2 → L1 withdrawal",
     "txs": [
       {
@@ -1257,6 +1263,7 @@
     "transfers": ["lido-wsteth.L2ToL1Transfer"]
   },
   "lido-wsteth-optimism-ethereum-deposit": {
+    "tags": ["lido"],
     "name": "Optimism L1 → L2 deposit",
     "txs": [
       {
@@ -1273,6 +1280,7 @@
     "transfers": ["lido-wsteth.L1ToL2Transfer"]
   },
   "lido-wsteth-optimism-ethereum-withdrawal": {
+    "tags": ["lido"],
     "name": "Optimism L2 → L1 withdrawal",
     "txs": [
       {
@@ -1333,6 +1341,7 @@
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-optimism-ethereum-erc20": {
+    "tags": ["opstack"],
     "name": "optimism -> ethereum (erc20)",
     "txs": [
       {
@@ -1350,6 +1359,7 @@
     "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
   },
   "opstack-standardbridge-ethereum-optimism-erc20": {
+    "tags": ["opstack"],
     "name": "ethereum -> optimism (erc20)",
     "txs": [
       {
@@ -1367,6 +1377,7 @@
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-ethereum-optimism-eth": {
+    "tags": ["opstack"],
     "name": "ethereum -> optimism (eth)",
     "txs": [
       {
@@ -1384,6 +1395,7 @@
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-optimism-ethereum-eth": {
+    "tags": ["opstack"],
     "name": "optimism -> ethereum (eth)",
     "txs": [
       {
@@ -1400,7 +1412,8 @@
     ],
     "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
   },
-  "opstack-standardbridge-base-ethereum": {
+  "opstack-standardbridge-base-ethereum-erc20": {
+    "tags": ["opstack"],
     "name": "base -> ethereum (erc20)",
     "txs": [
       {
@@ -1418,6 +1431,7 @@
     "transfers": ["opstack-standardbridge.L2ToL1Transfer"]
   },
   "opstack-standardbridge-ethereum-base-eth": {
+    "tags": ["opstack"],
     "name": "ethereum -> base (eth)",
     "txs": [
       {
@@ -1435,6 +1449,7 @@
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-ethereum-base-erc20": {
+    "tags": ["opstack"],
     "name": "ethereum -> base (erc20)",
     "txs": [
       {
