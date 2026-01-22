@@ -21,8 +21,12 @@ const L2_BEEFY_BRIDGE = ChainSpecificAddress(
 )
 
 // Token addresses
-const L1_BIFI_TOKEN = Address32.from('0xbEEF8e0982874e0292E6C5751C5a4092b3e1bEEF')
-const L2_BIFI_TOKEN = Address32.from('0xc55e93c62874d8100dbd2dfe307edc1036ad5434')
+const L1_BIFI_TOKEN = Address32.from(
+  '0xbEEF8e0982874e0292E6C5751C5a4092b3e1bEEF',
+)
+const L2_BIFI_TOKEN = Address32.from(
+  '0xc55e93c62874d8100dbd2dfe307edc1036ad5434',
+)
 
 // Event signatures
 const bridgedOutLog =

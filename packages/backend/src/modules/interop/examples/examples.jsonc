@@ -1337,10 +1337,7 @@
         "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
       }
     ],
-    "events": [
-      "beefy-bridge.BridgedOut",
-      "beefy-bridge.BridgedIn"
-    ],
+    "events": ["beefy-bridge.BridgedOut", "beefy-bridge.BridgedIn"],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
