@@ -1188,6 +1188,8 @@ export interface ProjectDiscoveryInfo {
 export type InteropPluginName =
   | 'across'
   | 'across-settlement'
+  | 'across-settlement-op'
+  | 'across-settlement-orbit'
   | 'allbridge'
   | 'aori'
   | 'axelar'
