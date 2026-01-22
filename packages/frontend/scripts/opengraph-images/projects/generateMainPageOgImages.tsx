@@ -47,6 +47,10 @@ const mainPages: MainPage[] = [
     title: 'Summary',
   },
   {
+    type: 'interop',
+    title: 'Non-minting',
+  },
+  {
     type: 'bridges',
     title: 'Summary',
   },

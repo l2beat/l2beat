@@ -4,22 +4,22 @@ import uniq from 'lodash/uniq'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { api } from '~/trpc/React'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import type { InteropChainWithIcon } from '../chain-selector/types'
 
 export function TopPathsWidget({
   interopChains,
+  isLoading,
+  top3Paths,
 }: {
   interopChains: InteropChainWithIcon[]
+  isLoading: boolean
+  top3Paths: InteropDashboardData['top3Paths'] | undefined
 }) {
   const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-  })
 
   const getChainDetails = (id: string) => {
     const chain = interopChains.find((c) => c.id === id)
@@ -49,19 +49,19 @@ export function TopPathsWidget({
                 </td>
               </tr>
             ))}
-          {data?.top3Paths.map((path) => (
+          {top3Paths?.map((path) => (
             <PathItem
               key={path.srcChain + path.dstChain}
               from={getChainDetails(path.srcChain)}
               to={getChainDetails(path.dstChain)}
               volume={path.volume}
               setPath={setPath}
-              isOnlyPath={data.top3Paths.length === 1}
+              isOnlyPath={top3Paths.length === 1}
             />
           ))}
         </tbody>
       </table>
-      {data && data.top3Paths.length < 3 && (
+      {top3Paths && top3Paths.length < 3 && (
         <button
           onClick={reset}
           className="text-label-value-14 text-link underline"

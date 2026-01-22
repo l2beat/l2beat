@@ -27,12 +27,21 @@ export async function getInteropDashboardData(
     return getMockInteropDashboardData()
   }
   const tokenDb = getTokenDb()
+
+  const interopProjects = await ps.getProjects({
+    select: ['interopConfig'],
+  })
+
+  const filteredProjects = params.type
+    ? interopProjects.filter((p) => p.interopConfig?.bridgeType === params.type)
+    : undefined
+
   const db = getDb()
-  const records =
-    await db.aggregatedInteropTransfer.getByChainsAndLatestTimestamp(
-      params.from,
-      params.to,
-    )
+  const records = await db.aggregatedInteropTransfer.getLatest(
+    params.from,
+    params.to,
+    filteredProjects?.map((p) => p.id),
+  )
 
   if (records.length === 0) {
     return {
@@ -41,10 +50,6 @@ export async function getInteropDashboardData(
       entries: [],
     }
   }
-
-  const interopProjects = await ps.getProjects({
-    select: ['interopConfig'],
-  })
 
   const tokensDetailsData = await tokenDb.abstractToken.getByIds(
     records.flatMap((r) => Object.keys(r.tokensByVolume)),

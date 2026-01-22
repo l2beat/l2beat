@@ -1,18 +1,16 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { LockAndMintTable } from './tables/LockAndMintTable'
 
-export function LockAndMintCard() {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-  })
-  const entries = data?.entries.filter((p) => p.bridgeType === 'lockAndMint')
-
+export function LockAndMintCard({
+  entries,
+  isLoading,
+}: {
+  entries: InteropDashboardData['entries'] | undefined
+  isLoading: boolean
+}) {
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
       <h2 className="font-bold text-heading-20 md:text-heading-24">

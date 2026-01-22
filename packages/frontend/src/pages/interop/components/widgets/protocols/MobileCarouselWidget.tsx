@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { TopPathsWidget } from '../TopPathsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'
@@ -9,8 +10,14 @@ type View = 'paths' | 'volume' | 'transfers'
 
 export function MobileCarouselWidget({
   interopChains,
+  top3Paths,
+  topProtocols,
+  isLoading,
 }: {
   interopChains: InteropChainWithIcon[]
+  top3Paths: InteropDashboardData['top3Paths'] | undefined
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
+  isLoading: boolean
 }) {
   const [view, setView] = useState<View>('paths')
 
@@ -26,7 +33,11 @@ export function MobileCarouselWidget({
             view === 'transfers' && '-translate-x-[calc(200%+2.5rem)]',
           )}
         >
-          <TopPathsWidget interopChains={interopChains} />
+          <TopPathsWidget
+            interopChains={interopChains}
+            top3Paths={top3Paths}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
         <WidgetWrapper
           className={cn(
@@ -38,7 +49,10 @@ export function MobileCarouselWidget({
             view === 'transfers' && '-translate-x-[calc(100%+1.25rem)]',
           )}
         >
-          <TopProtocolsByVolume />
+          <TopProtocolsByVolume
+            topProtocols={topProtocols}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
         <WidgetWrapper
           className={cn(
@@ -50,7 +64,10 @@ export function MobileCarouselWidget({
             view === 'transfers' && 'translate-x-0',
           )}
         >
-          <TopProtocolsByTransfers />
+          <TopProtocolsByTransfers
+            topProtocols={topProtocols}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
       </div>
       <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">

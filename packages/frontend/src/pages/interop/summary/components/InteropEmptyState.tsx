@@ -1,6 +1,6 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EmptyStateIcon } from '~/icons/EmptyState'
-import { ChainSelectorResetButton } from './chain-selector/ChainSelectorResetButton'
+import { ChainSelectorResetButton } from '../../components/chain-selector/ChainSelectorResetButton'
 
 interface Props {
   isDirty: boolean
