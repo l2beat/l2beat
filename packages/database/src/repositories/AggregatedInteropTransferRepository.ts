@@ -103,7 +103,16 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getLatest(
+  async getLatestTimestamp() {
+    const result = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
+      .executeTakeFirst()
+    return result ? UnixTime.fromDate(result.max_timestamp) : undefined
+  }
+
+  async getByChainsTimestampAndId(
+    timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
     protocolIds?: string[],
@@ -112,27 +121,16 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       return []
     }
 
-    const latestTimestampSubquery = this.db
-      .selectFrom('AggregatedInteropTransfer')
-      .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
-      .as('latest_timestamp')
-
-    let query = this.db
-      .selectFrom('AggregatedInteropTransfer')
-      .innerJoin(latestTimestampSubquery, (join) =>
-        join.onRef(
-          'AggregatedInteropTransfer.timestamp',
-          '=',
-          'latest_timestamp.max_timestamp',
-        ),
-      )
-      .selectAll('AggregatedInteropTransfer')
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
-
     if (protocolIds && protocolIds.length === 0) {
       return []
     }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
 
     if (protocolIds) {
       query = query.where('id', 'in', protocolIds)

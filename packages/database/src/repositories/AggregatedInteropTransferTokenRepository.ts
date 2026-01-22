@@ -69,6 +69,35 @@ export class AggregatedInteropTransferTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByChainsTimestampAndId(
+    timestamp: UnixTime,
+    srcChains: string[],
+    dstChains: string[],
+    protocolIds?: string[],
+  ): Promise<AggregatedInteropTransferTokenRecord[]> {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return []
+    }
+
+    if (protocolIds && protocolIds.length === 0) {
+      return []
+    }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransferToken')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
+
+    if (protocolIds) {
+      query = query.where('id', 'in', protocolIds)
+    }
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
     const query = this.db
       .with('earliest_timestamp_by_day', (eb) =>
