@@ -3,17 +3,17 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByVolume({
-  data,
+  topProtocols,
   isLoading,
 }: {
-  data: InteropDashboardData | undefined
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
 }) {
   return (
     <TopProtocolsWidget
       metricType="volume"
       heading="Last 24 hours volume"
-      data={data}
+      topProtocols={topProtocols}
       isLoading={isLoading}
       formatValue={(value) =>
         formatCurrency(value, 'usd', {

@@ -21,7 +21,7 @@ type TopProtocolsWidgetProps = {
   metricType: 'volume' | 'transfers'
   heading: string
   formatValue: (value: number) => string
-  data: InteropDashboardData | undefined
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
 }
 
@@ -29,7 +29,7 @@ export function TopProtocolsWidget({
   metricType,
   heading,
   formatValue,
-  data,
+  topProtocols,
   isLoading,
 }: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
@@ -39,15 +39,11 @@ export function TopProtocolsWidget({
 
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
-  const protocolColorMap = useProtocolColorMap(data?.topProtocols)
+  const protocolColorMap = useProtocolColorMap(topProtocols)
   const protocolsWithOthers = useMemo(
     () =>
-      getProtocolsDataWithOthers(
-        data?.topProtocols,
-        protocolColorMap,
-        metricType,
-      ),
-    [data?.topProtocols, metricType, protocolColorMap],
+      getProtocolsDataWithOthers(topProtocols, protocolColorMap, metricType),
+    [topProtocols, metricType, protocolColorMap],
   )
 
   return (

@@ -12,11 +12,11 @@ import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsConte
 export function TopPathsWidget({
   interopChains,
   isLoading,
-  data,
+  top3Paths,
 }: {
   interopChains: InteropChainWithIcon[]
   isLoading: boolean
-  data: InteropDashboardData | undefined
+  top3Paths: InteropDashboardData['top3Paths'] | undefined
 }) {
   const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
@@ -49,19 +49,19 @@ export function TopPathsWidget({
                 </td>
               </tr>
             ))}
-          {data?.top3Paths.map((path) => (
+          {top3Paths?.map((path) => (
             <PathItem
               key={path.srcChain + path.dstChain}
               from={getChainDetails(path.srcChain)}
               to={getChainDetails(path.dstChain)}
               volume={path.volume}
               setPath={setPath}
-              isOnlyPath={data.top3Paths.length === 1}
+              isOnlyPath={top3Paths.length === 1}
             />
           ))}
         </tbody>
       </table>
-      {data && data.top3Paths.length < 3 && (
+      {top3Paths && top3Paths.length < 3 && (
         <button
           onClick={reset}
           className="text-label-value-14 text-link underline"

@@ -71,24 +71,31 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         <TopPathsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          data={data}
+          top3Paths={data?.top3Paths}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByVolume data={data} isLoading={isLoading} />
+        <TopProtocolsByVolume
+          topProtocols={data?.topProtocols}
+          isLoading={isLoading}
+        />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByTransfers data={data} isLoading={isLoading} />
+        <TopProtocolsByTransfers
+          topProtocols={data?.topProtocols}
+          isLoading={isLoading}
+        />
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        data={data}
+        top3Paths={data?.top3Paths}
+        topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <NonMintingCard data={data} isLoading={isLoading} />
-      <LockAndMintCard data={data} isLoading={isLoading} />
-      <OmniChainCard data={data} isLoading={isLoading} />
-      <AllProtocolsCard data={data} isLoading={isLoading} />
+      <NonMintingCard entries={data?.entries} isLoading={isLoading} />
+      <LockAndMintCard entries={data?.entries} isLoading={isLoading} />
+      <OmniChainCard entries={data?.entries} isLoading={isLoading} />
+      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )
 }

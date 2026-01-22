@@ -10,11 +10,13 @@ type View = 'paths' | 'volume' | 'transfers'
 
 export function MobileCarouselWidget({
   interopChains,
-  data,
+  top3Paths,
+  topProtocols,
   isLoading,
 }: {
   interopChains: InteropChainWithIcon[]
-  data: InteropDashboardData | undefined
+  top3Paths: InteropDashboardData['top3Paths'] | undefined
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
 }) {
   const [view, setView] = useState<View>('paths')
@@ -33,7 +35,7 @@ export function MobileCarouselWidget({
         >
           <TopPathsWidget
             interopChains={interopChains}
-            data={data}
+            top3Paths={top3Paths}
             isLoading={isLoading}
           />
         </WidgetWrapper>
@@ -47,7 +49,10 @@ export function MobileCarouselWidget({
             view === 'transfers' && '-translate-x-[calc(100%+1.25rem)]',
           )}
         >
-          <TopProtocolsByVolume data={data} isLoading={isLoading} />
+          <TopProtocolsByVolume
+            topProtocols={topProtocols}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
         <WidgetWrapper
           className={cn(
@@ -59,7 +64,10 @@ export function MobileCarouselWidget({
             view === 'transfers' && 'translate-x-0',
           )}
         >
-          <TopProtocolsByTransfers data={data} isLoading={isLoading} />
+          <TopProtocolsByTransfers
+            topProtocols={topProtocols}
+            isLoading={isLoading}
+          />
         </WidgetWrapper>
       </div>
       <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">

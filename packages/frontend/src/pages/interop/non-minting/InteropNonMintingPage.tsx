@@ -72,21 +72,32 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         <TopPathsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          data={data}
+          top3Paths={data?.top3Paths}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByVolume data={data} isLoading={isLoading} />
+        <TopProtocolsByVolume
+          topProtocols={data?.topProtocols}
+          isLoading={isLoading}
+        />
       </div>
       <div className="h-full max-[1600px]:hidden">
-        <TopProtocolsByTransfers data={data} isLoading={isLoading} />
+        <TopProtocolsByTransfers
+          topProtocols={data?.topProtocols}
+          isLoading={isLoading}
+        />
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        data={data}
+        top3Paths={data?.top3Paths}
+        topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <AllProtocolsCard data={data} isLoading={isLoading} hideTypeColumn />
+      <AllProtocolsCard
+        entries={data?.entries}
+        isLoading={isLoading}
+        hideTypeColumn
+      />
     </div>
   )
 }

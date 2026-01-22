@@ -5,11 +5,11 @@ import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
-  data,
+  entries,
   isLoading,
   hideTypeColumn,
 }: {
-  data: InteropDashboardData | undefined
+  entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
 }) {
@@ -19,12 +19,12 @@ export function AllProtocolsCard({
         All Protocols
       </h2>
       {isLoading && <Skeleton className="mt-2 h-[400px] w-full rounded-sm" />}
-      {data?.entries ? (
-        data.entries.length === 0 ? (
+      {entries ? (
+        entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
           <AllProtocolsTable
-            entries={data.entries}
+            entries={entries}
             hideTypeColumn={hideTypeColumn}
           />
         )

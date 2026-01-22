@@ -3,17 +3,17 @@ import { formatNumber } from '~/utils/number-format/formatNumber'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByTransfers({
-  data,
+  topProtocols,
   isLoading,
 }: {
-  data: InteropDashboardData | undefined
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
 }) {
   return (
     <TopProtocolsWidget
       metricType="transfers"
       heading="Last 24 hours transfers"
-      data={data}
+      topProtocols={topProtocols}
       isLoading={isLoading}
       formatValue={formatNumber}
     />

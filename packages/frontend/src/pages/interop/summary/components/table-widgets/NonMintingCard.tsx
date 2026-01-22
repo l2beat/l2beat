@@ -6,13 +6,13 @@ import { NoResultsInfo } from '../NoResultsInfo'
 import { NonMintingTable } from './tables/NonMintingTable'
 
 export function NonMintingCard({
-  data,
+  entries,
   isLoading,
 }: {
-  data: InteropDashboardData | undefined
+  entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
-  const entries = data?.entries.filter((p) => p.bridgeType === 'nonMinting')
+  const filteredEntries = entries?.filter((p) => p.bridgeType === 'nonMinting')
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
@@ -35,11 +35,11 @@ export function NonMintingCard({
         minting bridge that needs to be separately assessed.
       </div>
       {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries ? (
-        entries.length === 0 ? (
+      {filteredEntries ? (
+        filteredEntries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <NonMintingTable entries={entries} />
+          <NonMintingTable entries={filteredEntries} />
         )
       ) : null}
     </PrimaryCard>
