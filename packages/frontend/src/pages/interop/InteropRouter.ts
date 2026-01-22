@@ -3,6 +3,7 @@ import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
+import { getInteropOmnichainData } from './omnichain/getInteropOmnichainData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
 export function createInteropRouter(
@@ -24,6 +25,12 @@ export function createInteropRouter(
 
   router.get('/interop/non-minting', async (req, res) => {
     const data = await getInteropNonMintingData(req, manifest, cache)
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/interop/omnichain', async (req, res) => {
+    const data = await getInteropOmnichainData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
