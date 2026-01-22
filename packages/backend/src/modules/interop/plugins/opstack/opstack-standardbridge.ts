@@ -1,4 +1,9 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -113,10 +118,13 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
       // L2 side
       const network = OPSTACK_NETWORKS.find((x) => x.chain === input.chain)
       if (!network) return
+      const l2StandardBridge = ChainSpecificAddress.address(
+        network.l2StandardBridge,
+      )
 
       // L2 -> L1: ERC20 withdrawal initiated
       const erc20BridgeInitiated = parseERC20BridgeInitiated(input.log, [
-        network.l2StandardBridge,
+        l2StandardBridge,
       ])
       if (erc20BridgeInitiated) {
         return [
@@ -131,7 +139,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L2 -> L1: ETH withdrawal initiated
       const ethBridgeInitiatedL2 = parseETHBridgeInitiated(input.log, [
-        network.l2StandardBridge,
+        l2StandardBridge,
       ])
       if (ethBridgeInitiatedL2) {
         return [
@@ -144,7 +152,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L1 -> L2: ERC20/ETH deposit finalized (legacy event)
       const depositFinalized = parseDepositFinalized(input.log, [
-        network.l2StandardBridge,
+        l2StandardBridge,
       ])
       if (depositFinalized) {
         return [
@@ -159,7 +167,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L1 -> L2: ETH deposit finalized
       const ethBridgeFinalizedL2 = parseETHBridgeFinalized(input.log, [
-        network.l2StandardBridge,
+        l2StandardBridge,
       ])
       if (ethBridgeFinalizedL2) {
         return [
@@ -173,13 +181,16 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
       // L1 side
       const logAddress = EthereumAddress(input.log.address)
       const network = OPSTACK_NETWORKS.find(
-        (n) => n.l1StandardBridge === logAddress,
+        (n) => ChainSpecificAddress.address(n.l1StandardBridge) === logAddress,
       )
       if (!network) return
+      const l1StandardBridge = ChainSpecificAddress.address(
+        network.l1StandardBridge,
+      )
 
       // L2 -> L1: ERC20 withdrawal finalized
       const erc20BridgeFinalized = parseERC20BridgeFinalized(input.log, [
-        network.l1StandardBridge,
+        l1StandardBridge,
       ])
       if (erc20BridgeFinalized) {
         return [
@@ -194,7 +205,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L2 -> L1: ETH withdrawal finalized
       const ethBridgeFinalizedL1 = parseETHBridgeFinalized(input.log, [
-        network.l1StandardBridge,
+        l1StandardBridge,
       ])
       if (ethBridgeFinalizedL1) {
         return [
@@ -207,7 +218,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L1 -> L2: ERC20 deposit initiated
       const erc20DepositInitiated = parseERC20DepositInitiated(input.log, [
-        network.l1StandardBridge,
+        l1StandardBridge,
       ])
       if (erc20DepositInitiated) {
         return [
@@ -222,7 +233,7 @@ export class OpStackStandardBridgePlugin implements InteropPlugin {
 
       // L1 -> L2: ETH deposit initiated
       const ethBridgeInitiatedL1 = parseETHBridgeInitiated(input.log, [
-        network.l1StandardBridge,
+        l1StandardBridge,
       ])
       if (ethBridgeInitiatedL1) {
         return [

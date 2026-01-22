@@ -1,4 +1,9 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   hashCrossDomainMessageV1,
   MessagePassed,
@@ -102,17 +107,16 @@ export class MakerBridgePlugin implements InteropPlugin {
       ])
       if (depositInitiated) {
         // Find SentMessage from Optimism L1CrossDomainMessenger in the same tx
+        const l1CDM = ChainSpecificAddress.address(
+          OPTIMISM_NETWORK.l1CrossDomainMessenger,
+        )
         const sentMessageLog = input.txLogs.find((log) => {
-          const parsed = parseSentMessage(log, [
-            OPTIMISM_NETWORK.l1CrossDomainMessenger,
-          ])
+          const parsed = parseSentMessage(log, [l1CDM])
           return parsed !== undefined
         })
 
         if (sentMessageLog) {
-          const sentMessage = parseSentMessage(sentMessageLog, [
-            OPTIMISM_NETWORK.l1CrossDomainMessenger,
-          ])
+          const sentMessage = parseSentMessage(sentMessageLog, [l1CDM])
           if (sentMessage) {
             // Find SentMessageExtension1
             const nextLog = input.txLogs.find(
@@ -120,10 +124,7 @@ export class MakerBridgePlugin implements InteropPlugin {
               (x) => x.logIndex === sentMessageLog.logIndex! + 1,
             )
             const extension =
-              nextLog &&
-              parseSentMessageExtension1(nextLog, [
-                OPTIMISM_NETWORK.l1CrossDomainMessenger,
-              ])
+              nextLog && parseSentMessageExtension1(nextLog, [l1CDM])
 
             const msgHash = hashCrossDomainMessageV1(
               sentMessage.messageNonce,
@@ -156,17 +157,18 @@ export class MakerBridgePlugin implements InteropPlugin {
       ])
       if (withdrawalFinalized) {
         // Find WithdrawalFinalized event from OptimismPortal in same tx
+        const optimismPortal = ChainSpecificAddress.address(
+          OPTIMISM_NETWORK.optimismPortal,
+        )
         const withdrawalFinalizedLog = input.txLogs.find((log) => {
-          const parsed = parseWithdrawalFinalized(log, [
-            OPTIMISM_NETWORK.optimismPortal,
-          ])
+          const parsed = parseWithdrawalFinalized(log, [optimismPortal])
           return parsed !== undefined
         })
 
         if (withdrawalFinalizedLog) {
           const portalWithdrawalFinalized = parseWithdrawalFinalized(
             withdrawalFinalizedLog,
-            [OPTIMISM_NETWORK.optimismPortal],
+            [optimismPortal],
           )
           if (portalWithdrawalFinalized) {
             return [
@@ -191,17 +193,16 @@ export class MakerBridgePlugin implements InteropPlugin {
       ])
       if (depositFinalized) {
         // Find RelayedMessage in same tx
+        const l2CDM = ChainSpecificAddress.address(
+          OPTIMISM_NETWORK.l2CrossDomainMessenger,
+        )
         const relayedMessageLog = input.txLogs.find((log) => {
-          const parsed = parseRelayedMessage(log, [
-            OPTIMISM_NETWORK.l2CrossDomainMessenger,
-          ])
+          const parsed = parseRelayedMessage(log, [l2CDM])
           return parsed !== undefined
         })
 
         if (relayedMessageLog) {
-          const relayedMessage = parseRelayedMessage(relayedMessageLog, [
-            OPTIMISM_NETWORK.l2CrossDomainMessenger,
-          ])
+          const relayedMessage = parseRelayedMessage(relayedMessageLog, [l2CDM])
           if (relayedMessage) {
             return [
               MakerDepositFinalized.create(input, {
@@ -225,16 +226,17 @@ export class MakerBridgePlugin implements InteropPlugin {
       ])
       if (withdrawalInitiated) {
         // Find MessagePassed in same tx
+        const l2ToL1MessagePasser = ChainSpecificAddress.address(
+          OPTIMISM_NETWORK.l2ToL1MessagePasser,
+        )
         const messagePassedLog = input.txLogs.find((log) => {
-          const parsed = parseMessagePassed(log, [
-            OPTIMISM_NETWORK.l2ToL1MessagePasser,
-          ])
+          const parsed = parseMessagePassed(log, [l2ToL1MessagePasser])
           return parsed !== undefined
         })
 
         if (messagePassedLog) {
           const messagePassed = parseMessagePassed(messagePassedLog, [
-            OPTIMISM_NETWORK.l2ToL1MessagePasser,
+            l2ToL1MessagePasser,
           ])
           if (messagePassed) {
             return [

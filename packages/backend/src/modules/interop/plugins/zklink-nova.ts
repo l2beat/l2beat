@@ -1,4 +1,8 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   OPSTACK_NETWORKS,
   parseSentMessage,
@@ -21,7 +25,10 @@ const ZKLINK_ARBITRATOR = EthereumAddress(
 )
 
 const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
+  OPSTACK_NETWORKS.map((n) => [
+    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
+    n,
+  ]),
 )
 
 const MessageForwarded = createInteropEventType<{
@@ -50,7 +57,7 @@ export class ZklinkNovaPlugin implements InteropPlugin {
           if (!network) continue
 
           const sentMessage = parseSentMessage(log, [
-            network.l1CrossDomainMessenger,
+            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
           ])
           if (sentMessage?.sender.toLowerCase() === gatewayAddress) {
             return [MessageForwarded.create(input, { chain: network.chain })]

@@ -20,14 +20,14 @@ import {
 
 // == Event signatures ==
 
-const MessagePassedSignature =
+const messagePassedLog =
   'event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)'
-const WithdrawalFinalizedSignature =
+const withdrawalFinalizedLog =
   'event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)'
-const RelayedMessageSignature = 'event RelayedMessage(bytes32 indexed msgHash)'
-const SentMessageSignature =
+const relayedMessageLog = 'event RelayedMessage(bytes32 indexed msgHash)'
+const sentMessageLog =
   'event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)'
-const SentMessageExtension1Signature =
+const sentMessageExtension1Log =
   'event SentMessageExtension1(address indexed sender, uint256 value)'
 
 // == L2->L1 messages, all of them. ==
@@ -39,7 +39,7 @@ export const MessagePassed = createInteropEventType<{
   value: bigint
 }>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY }) // needs to go through the challenge period
 
-export const parseMessagePassed = createEventParser(MessagePassedSignature)
+export const parseMessagePassed = createEventParser(messagePassedLog)
 
 // L1 event
 export const WithdrawalFinalized = createInteropEventType<{
@@ -48,7 +48,7 @@ export const WithdrawalFinalized = createInteropEventType<{
 }>('opstack.WithdrawalFinalized')
 
 export const parseWithdrawalFinalized = createEventParser(
-  WithdrawalFinalizedSignature,
+  withdrawalFinalizedLog,
 )
 
 // == L1->L2 messages, only those triggered via the CrossDomainMessengers. Notable exception is ETH deposits. ==
@@ -59,7 +59,7 @@ export const RelayedMessage = createInteropEventType<{
   msgHash: string
 }>('opstack.RelayedMessage')
 
-export const parseRelayedMessage = createEventParser(RelayedMessageSignature)
+export const parseRelayedMessage = createEventParser(relayedMessageLog)
 
 // L1 event: this will be a combination of two logs
 export const SentMessage = createInteropEventType<{
@@ -68,9 +68,9 @@ export const SentMessage = createInteropEventType<{
   value: bigint
 }>('opstack.SentMessage')
 
-export const parseSentMessage = createEventParser(SentMessageSignature)
+export const parseSentMessage = createEventParser(sentMessageLog)
 export const parseSentMessageExtension1 = createEventParser(
-  SentMessageExtension1Signature,
+  sentMessageExtension1Log,
 )
 
 // Interface for encoding the cross-domain message hash
@@ -97,47 +97,59 @@ export function hashCrossDomainMessageV1(
   return utils.keccak256(encoded)
 }
 
-export const OPSTACK_NETWORKS = defineNetworks('opstack', [
+interface OpStackNetwork {
+  chain: string
+  // L2 contracts
+  l2ToL1MessagePasser: ChainSpecificAddress
+  l2CrossDomainMessenger: ChainSpecificAddress
+  l2StandardBridge: ChainSpecificAddress
+  // L1 contracts
+  optimismPortal: ChainSpecificAddress
+  l1CrossDomainMessenger: ChainSpecificAddress
+  l1StandardBridge: ChainSpecificAddress
+}
+
+export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
   {
     chain: 'base',
-    l2ToL1MessagePasser: EthereumAddress(
-      '0x4200000000000000000000000000000000000016',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'base:0x4200000000000000000000000000000000000016',
     ),
-    optimismPortal: EthereumAddress(
-      '0x49048044d57e1c92a77f79988d21fa8faf74e97e',
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'base:0x4200000000000000000000000000000000000007',
     ),
-    l1CrossDomainMessenger: EthereumAddress(
-      '0x866E82a600A1414e583f7F13623F1aC5d58b0Afa',
+    l2StandardBridge: ChainSpecificAddress(
+      'base:0x4200000000000000000000000000000000000010',
     ),
-    l2CrossDomainMessenger: EthereumAddress(
-      '0x4200000000000000000000000000000000000007',
+    optimismPortal: ChainSpecificAddress(
+      'eth:0x49048044d57e1c92a77f79988d21fa8faf74e97e',
     ),
-    l1StandardBridge: EthereumAddress(
-      '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa',
     ),
-    l2StandardBridge: EthereumAddress(
-      '0x4200000000000000000000000000000000000010',
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
     ),
   },
   {
     chain: 'optimism',
-    l2ToL1MessagePasser: EthereumAddress(
-      '0x4200000000000000000000000000000000000016',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'oeth:0x4200000000000000000000000000000000000016',
     ),
-    optimismPortal: EthereumAddress(
-      '0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'oeth:0x4200000000000000000000000000000000000007',
     ),
-    l1CrossDomainMessenger: EthereumAddress(
-      '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
+    l2StandardBridge: ChainSpecificAddress(
+      'oeth:0x4200000000000000000000000000000000000010',
     ),
-    l2CrossDomainMessenger: EthereumAddress(
-      '0x4200000000000000000000000000000000000007',
+    optimismPortal: ChainSpecificAddress(
+      'eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed',
     ),
-    l1StandardBridge: EthereumAddress(
-      '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
     ),
-    l2StandardBridge: EthereumAddress(
-      '0x4200000000000000000000000000000000000010',
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
     ),
   },
 ])
@@ -150,35 +162,27 @@ export class OpStackPlugin implements InteropPluginResyncable {
       // L1: WithdrawalFinalized from OptimismPortal
       {
         type: 'event',
-        signature: WithdrawalFinalizedSignature,
-        addresses: OPSTACK_NETWORKS.map((n) =>
-          ChainSpecificAddress(`eth:${n.optimismPortal}`),
-        ),
+        signature: withdrawalFinalizedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.optimismPortal),
       },
       // L1: SentMessage from L1CrossDomainMessenger (with SentMessageExtension1)
       {
         type: 'event',
-        signature: SentMessageSignature,
-        includeTxEvents: [SentMessageExtension1Signature],
-        addresses: OPSTACK_NETWORKS.map((n) =>
-          ChainSpecificAddress(`eth:${n.l1CrossDomainMessenger}`),
-        ),
+        signature: sentMessageLog,
+        includeTxEvents: [sentMessageExtension1Log],
+        addresses: OPSTACK_NETWORKS.map((n) => n.l1CrossDomainMessenger),
       },
       // L2: MessagePassed from L2ToL1MessagePasser
       {
         type: 'event',
-        signature: MessagePassedSignature,
-        addresses: OPSTACK_NETWORKS.map((n) =>
-          ChainSpecificAddress(`${n.chain}:${n.l2ToL1MessagePasser}`),
-        ),
+        signature: messagePassedLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2ToL1MessagePasser),
       },
       // L2: RelayedMessage from L2CrossDomainMessenger
       {
         type: 'event',
-        signature: RelayedMessageSignature,
-        addresses: OPSTACK_NETWORKS.map((n) =>
-          ChainSpecificAddress(`${n.chain}:${n.l2CrossDomainMessenger}`),
-        ),
+        signature: relayedMessageLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2CrossDomainMessenger),
       },
     ]
   }
@@ -189,14 +193,14 @@ export class OpStackPlugin implements InteropPluginResyncable {
       const logAddress = EthereumAddress(input.log.address)
       const network = OPSTACK_NETWORKS.find(
         (n) =>
-          n.optimismPortal === logAddress ||
-          n.l1CrossDomainMessenger === logAddress,
+          ChainSpecificAddress.address(n.optimismPortal) === logAddress ||
+          ChainSpecificAddress.address(n.l1CrossDomainMessenger) === logAddress,
       )
       if (!network) return
 
       // check if this is an L2->*L1* message
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
-        network.optimismPortal,
+        ChainSpecificAddress.address(network.optimismPortal),
       ])
       if (withdrawalFinalized) {
         return [
@@ -209,7 +213,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
 
       // check if this is an *L1*->L2 message
       const sentMessage = parseSentMessage(input.log, [
-        network.l1CrossDomainMessenger,
+        ChainSpecificAddress.address(network.l1CrossDomainMessenger),
       ])
       if (sentMessage) {
         // see if we have SentMessageExtension1 event in the same tx
@@ -219,7 +223,9 @@ export class OpStackPlugin implements InteropPluginResyncable {
         )
         const extension =
           nextLog &&
-          parseSentMessageExtension1(nextLog, [network.l1CrossDomainMessenger])
+          parseSentMessageExtension1(nextLog, [
+            ChainSpecificAddress.address(network.l1CrossDomainMessenger),
+          ])
 
         // Calculate the message hash using the same method as the contract
         const value = extension?.value ?? 0n
@@ -246,7 +252,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
       if (!network) return
       // check if this is an *L2*->L1 message
       const messagePassed = parseMessagePassed(input.log, [
-        network.l2ToL1MessagePasser,
+        ChainSpecificAddress.address(network.l2ToL1MessagePasser),
       ])
       if (messagePassed) {
         return [
@@ -259,7 +265,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
       }
       // otherwise check if this is an L1->*L2* message
       const relayedMessage = parseRelayedMessage(input.log, [
-        network.l2CrossDomainMessenger,
+        ChainSpecificAddress.address(network.l2CrossDomainMessenger),
       ])
       if (relayedMessage) {
         return [

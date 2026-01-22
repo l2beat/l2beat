@@ -1,4 +1,8 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   OPSTACK_NETWORKS,
   parseSentMessage,
@@ -27,7 +31,10 @@ const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
 
 // Build lookup map from L1CrossDomainMessenger address to network (OpStack)
 const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
+  OPSTACK_NETWORKS.map((n) => [
+    ChainSpecificAddress.address(n.l1CrossDomainMessenger).toString(),
+    n,
+  ]),
 )
 
 // Build lookup map from bridge address to network (OrbitStack)
@@ -74,7 +81,7 @@ export class AcrossSettlementPlugin implements InteropPlugin {
         const opNetwork = L1_CDM_TO_NETWORK.get(bridgeLog.address)
         if (opNetwork) {
           const sentMessage = parseSentMessage(bridgeLog, [
-            opNetwork.l1CrossDomainMessenger,
+            ChainSpecificAddress.address(opNetwork.l1CrossDomainMessenger),
           ])
           if (
             !sentMessage ||
