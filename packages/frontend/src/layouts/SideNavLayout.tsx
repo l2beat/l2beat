@@ -149,6 +149,10 @@ const groups = compact<NavGroup>([
         title: 'Non-minting protocols',
         href: '/interop/non-minting',
       },
+      {
+        title: 'Omnichain tokens',
+        href: '/interop/omnichain',
+      },
     ],
   },
   !env.CLIENT_SIDE_INTEROP_ENABLED && {
