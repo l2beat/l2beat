@@ -35,7 +35,7 @@ export function InteropSummaryPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout edgeToEdge>
+        <SideNavLayout maxWidth="wide">
           <div className="flex min-h-screen flex-col">
             <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
             <InteropSelectedChainsProvider interopChains={interopChains}>
