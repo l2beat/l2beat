@@ -24,7 +24,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
-  exampleInputs: ExampleInputs
+  inputs: ExampleInputs
 }
 
 export class RpcSnapshotClient extends RpcClientCompat {
@@ -56,7 +56,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const compat = new RpcSnapshotClient(
       client,
       deps.chain,
-      deps.exampleInputs,
+      deps.inputs,
       deps.multicallClient,
     )
     const wrapped = withRetries(compat, {

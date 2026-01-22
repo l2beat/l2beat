@@ -67,7 +67,8 @@ export function withRetries<T extends object>(
       if (
         name !== 'constructor' &&
         typeof value === 'function' &&
-        !options.exclude?.includes(name)
+        !options.exclude?.includes(name) &&
+        !wrapper.has(name) // Don't overwrite child class overrides with parent methods
       ) {
         wrapper.set(
           name,

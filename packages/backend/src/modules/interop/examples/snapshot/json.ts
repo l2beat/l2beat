@@ -77,6 +77,11 @@ export function normalize(obj: unknown): unknown {
       continue
     }
 
+    if (key === 'matchedEventIds') {
+      result[key] = Array.from(value).map(() => 'NORMALIZED_EVENT_ID')
+      continue
+    }
+
     result[key] = normalize(value)
   }
 

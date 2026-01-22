@@ -1,9 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
-import { expect } from 'earl'
+import { type Env, Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
+import { expect, mockObject } from 'earl'
 import { join } from 'path'
-import { type CoreResult, readExamples, runExampleCore } from '../core'
+import { type CoreResult, readExamples } from '../core'
+import { ExampleRunner } from '../runner'
 import { normalize } from '../snapshot/json'
-import { RpcReplay } from '../snapshot/replay'
 import { hashExampleDefinition, SnapshotService } from '../snapshot/service'
 
 describe('interop examples', () => {
@@ -49,16 +50,18 @@ describe('interop examples', () => {
           snapshotService.readOutputs(example),
         ])
 
-        const result = await runExampleCore(definition, {
-          makeRpcClient: ({ chain, multicallClient }) => {
-            return RpcReplay.create({
-              chain,
-              multicallClient,
-              inputs,
-              logger: Logger.SILENT,
-            })
-          },
+        const runner = new ExampleRunner({
+          exampleId: example,
+          example: definition,
+          logger: Logger.SILENT,
+          http: new HttpClient(),
+          snapshotService,
+          env: mockObject<Env>({}),
+          mode: 'replay',
+          inputs,
         })
+
+        const result = await runner.run()
 
         expect(normalize(result)).toEqual(normalize(outputs) as CoreResult)
       })
