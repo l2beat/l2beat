@@ -57,6 +57,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(2),
       })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(2),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -64,6 +71,7 @@ describe(InteropAggregatingIndexer.name, () => {
         transaction,
         interopTransfer,
         aggregatedInteropTransfer,
+        aggregatedInteropToken,
       })
 
       const indexer = new InteropAggregatingIndexer({
@@ -216,12 +224,20 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(5),
       })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(5),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
         interopTransfer,
         aggregatedInteropTransfer,
+        aggregatedInteropToken,
         transaction,
       })
 
