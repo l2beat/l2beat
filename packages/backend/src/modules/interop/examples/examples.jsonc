@@ -1157,9 +1157,9 @@
     ],
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
-  "across-settlement-l1-optimism": {
+  "across-settlement-op": {
     "tags": ["across", "opstack"],
-    "name": "L1 → Optimism (OpStack)",
+    "name": "L1 → Optimism",
     "txs": [
       {
         "chain": "ethereum",
@@ -1175,9 +1175,9 @@
       { "type": "opstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
-  "across-settlement-l1-base": {
+  "across-settlement-base": {
     "tags": ["across", "opstack"],
-    "name": "L1 → Base (OpStack)",
+    "name": "L1 → Base",
     "txs": [
       {
         "chain": "ethereum",
@@ -1193,9 +1193,8 @@
       { "type": "opstack.L1ToL2Message", "app": "across-settlement" }
     ]
   },
-  "across-settlement-l1-arbitrum": {
+  "across-settlement-orbit": {
     "tags": ["across", "orbitstack"],
-    "name": "L1 → Arbitrum (OrbitStack)",
     "txs": [
       {
         "chain": "ethereum",
@@ -1333,10 +1332,7 @@
         "tx": "0x2530394801dcf8331d7761734a899946abc21c0b06208907adbd70ec783a262f"
       }
     ],
-    "events": [
-      "beefy-bridge.BridgedOutSentMessage",
-      "beefy-bridge.BridgedInRelayedMessage"
-    ],
+    "events": ["beefy-bridge.BridgedOut", "beefy-bridge.BridgedIn"],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "beefy-bridge" }],
     "transfers": ["beefy-bridge.L1ToL2Transfer"]
   },
@@ -2112,7 +2108,7 @@
       }
     ]
   },
-  "gaszip-v2": {
+  "gaszip": {
     "txs": [
       {
         "chain": "ethereum",
@@ -2166,6 +2162,15 @@
       {
         "chain": "arbitrum",
         "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
+      },
+      // same-chain transfer, >5% tolerance needed on the amount
+      {
+        "chain": "base",
+        "tx": "0x55aea9285bf98a898e5dbde152a69f26dd3c367e6ea2dc7191668d3f9e0ac7d8"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
       }
     ]
   },
@@ -2212,10 +2217,10 @@
       }
     ],
     "events": [
-      "maker-bridge.DepositSentMessage",
+      "maker-bridge.DepositInitiated",
       "maker-bridge.DepositFinalized",
-      "maker-bridge.WithdrawalMessagePassed",
-      "maker-bridge.WithdrawalFinalized"
+      "maker-bridge.WithdrawalInitiated",
+      "maker-bridge.ERC20WithdrawalFinalized"
     ],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "maker-bridge" },

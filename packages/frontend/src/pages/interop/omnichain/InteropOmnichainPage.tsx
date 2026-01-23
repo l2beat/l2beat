@@ -1,10 +1,7 @@
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
-import groupBy from 'lodash/groupBy'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
@@ -13,21 +10,19 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
+import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import { InteropEmptyState } from './components/InteropEmptyState'
-import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
-import { NonMintingCard } from './components/table-widgets/NonMintingCard'
-import { OmniChainCard } from './components/table-widgets/OmniChainCard'
+import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
 }
 
-export function InteropSummaryPage({
+export function InteropOmnichainPage({
   interopChains,
   queryState,
   ...props
@@ -36,13 +31,16 @@ export function InteropSummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout maxWidth="wide">
-          <div className="flex min-h-screen flex-col">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <InteropSelectedChainsProvider interopChains={interopChains}>
-              <ChainSelector chains={interopChains} />
-              <Widgets interopChains={interopChains} />
-            </InteropSelectedChainsProvider>
+          <div className="max-md:hidden">
+            <HeaderWithDescription />
           </div>
+          <InteropSelectedChainsProvider interopChains={interopChains}>
+            <ChainSelector chains={interopChains} />
+            <div className="md:hidden">
+              <HeaderWithDescription />
+            </div>
+            <Widgets interopChains={interopChains} />
+          </InteropSelectedChainsProvider>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
@@ -54,6 +52,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
+    type: 'omnichain',
   })
 
   if (
@@ -63,11 +62,6 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   ) {
     return <InteropEmptyState isDirty={isDirty} />
   }
-
-  const groupedEntries = groupBy(data?.entries, (e) => e.bridgeType) as Record<
-    ProtocolEntry['bridgeType'],
-    ProtocolEntry[]
-  >
 
   return (
     <div
@@ -99,16 +93,11 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <NonMintingCard
-        entries={groupedEntries.nonMinting}
+      <AllProtocolsCard
+        entries={data?.entries}
         isLoading={isLoading}
+        hideTypeColumn
       />
-      <LockAndMintCard
-        entries={groupedEntries.lockAndMint}
-        isLoading={isLoading}
-      />
-      <OmniChainCard entries={groupedEntries.omnichain} isLoading={isLoading} />
-      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )
 }

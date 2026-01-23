@@ -1,4 +1,4 @@
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
@@ -12,7 +12,7 @@ export function NonMintingTable({ entries }: { entries: ProtocolEntry[] }) {
     data: entries,
     columns: nonMintingColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    enableSorting: false,
     manualFiltering: true,
     initialState: {
       columnPinning: {
