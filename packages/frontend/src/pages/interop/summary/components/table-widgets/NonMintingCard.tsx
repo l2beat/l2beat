@@ -13,9 +13,9 @@ export function NonMintingCard({
   isLoading: boolean
 }) {
   return (
-    <PrimaryCard className="flex flex-col border-t-4 border-t-blue-600 max-md:border-divider max-md:border-b">
+    <PrimaryCard className="flex flex-col border-t-blue-600 max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-heading-20 md:text-heading-24">
+        <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
           Non-minting
         </h2>
         <a href="/interop/non-minting">
