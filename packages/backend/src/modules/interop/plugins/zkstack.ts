@@ -37,11 +37,28 @@ const l2ToL1LogSentLog =
 const bridgeMintLog =
   'event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)'
 
+// BridgeMint (index_topic_1 uint256 chainId, index_topic_2 bytes32 assetId, index_topic_3 address receiver, data uint256 amount)
+
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
+
+// == Parsers ==
+
+const parseNewPriorityRequestId = createEventParser(newPriorityRequestIdLog)
+const parseBridgehubDepositBaseTokenInitiated = createEventParser(
+  bridgehubDepositBaseTokenInitiatedLog,
+)
+const parseBridgehubDepositInitiated = createEventParser(
+  bridgehubDepositInitiatedLog,
+)
+const parseNewPriorityRequest = createEventParser(newPriorityRequestLog)
+const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
+const parseBridgeMint = createEventParser(bridgeMintLog)
+const parseBridgeBurn = createEventParser(bridgeBurnLog)
+const parseTransfer = createEventParser(transferLog)
 
 // == Networks ==
 
@@ -54,6 +71,8 @@ interface ZkStackNetwork {
   l2L1Messenger: ChainSpecificAddress
 }
 
+// this would equally work without all specific addresses except diamond
+// but they are probably good for perf/resyncing
 const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
   {
     chainId: 324,
@@ -65,7 +84,7 @@ const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
       'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
     ),
     l2SharedBridge: ChainSpecificAddress(
-      'zksync:0x000000000000000000000000000000000001000a',
+      'zksync:0x0000000000000000000000000000000000010004',
     ),
     l2L1Messenger: ChainSpecificAddress(
       'zksync:0x0000000000000000000000000000000000008008',
@@ -123,21 +142,6 @@ const BridgeMint = createInteropEventType<{
   dstTokenAddress: Address32
   dstAmount: bigint
 }>('zkstack.BridgeMint', { direction: 'incoming' })
-
-// == Parsers ==
-
-const parseNewPriorityRequestId = createEventParser(newPriorityRequestIdLog)
-const parseBridgehubDepositBaseTokenInitiated = createEventParser(
-  bridgehubDepositBaseTokenInitiatedLog,
-)
-const parseBridgehubDepositInitiated = createEventParser(
-  bridgehubDepositInitiatedLog,
-)
-const parseNewPriorityRequest = createEventParser(newPriorityRequestLog)
-const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
-const parseBridgeMint = createEventParser(bridgeMintLog)
-const parseBridgeBurn = createEventParser(bridgeBurnLog)
-const parseTransfer = createEventParser(transferLog)
 
 export class ZkStackPlugin implements InteropPluginResyncable {
   readonly name = 'zkstack'
