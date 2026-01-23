@@ -267,8 +267,11 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async deleteAllClusterData(forRequest?: UnixTime) {
-    if (forRequest && dbClearedFor.get(this.cluster.name) === forRequest) {
-      return
+    if (forRequest) {
+      if (dbClearedFor.get(this.cluster.name) === forRequest) {
+        return
+      }
+      dbClearedFor.set(this.cluster.name, forRequest)
     }
 
     await this.db.transaction(async () => {
@@ -281,9 +284,5 @@ export class InteropEventSyncer extends TimeLoop {
         await this.store.deleteAllForPlugin(plugin.name)
       }
     })
-
-    if (forRequest) {
-      dbClearedFor.set(this.cluster.name, forRequest)
-    }
   }
 }
