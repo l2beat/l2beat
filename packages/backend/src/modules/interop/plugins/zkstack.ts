@@ -307,6 +307,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       ChainSpecificAddress.address(network.l2SharedBridge),
     ])
     if (bridgeMint) {
+      // bridgeMint is emitted on both sides, we make sure to capture the incoming one
       if (bridgeMint.chainId !== 1n) return
 
       const startLogIndex = input.log.logIndex ?? -1
