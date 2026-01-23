@@ -2,6 +2,8 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
+import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { NonMintingTable } from './tables/NonMintingTable'
 
@@ -12,13 +14,16 @@ export function NonMintingCard({
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/non-minting', selectedChains)
+
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Non-minting
         </h2>
-        <a href="/interop/non-minting">
+        <a href={viewAllUrl}>
           <Button
             variant="outline"
             size="sm"

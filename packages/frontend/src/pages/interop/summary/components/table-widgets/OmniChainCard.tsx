@@ -2,6 +2,8 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
+import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { OmniChainTable } from './tables/OmniChainTable'
 
@@ -12,13 +14,16 @@ export function OmniChainCard({
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/omnichain', selectedChains)
+
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Omnichain
         </h2>
-        <a href="/interop/omnichain">
+        <a href={viewAllUrl}>
           <Button
             variant="outline"
             size="sm"

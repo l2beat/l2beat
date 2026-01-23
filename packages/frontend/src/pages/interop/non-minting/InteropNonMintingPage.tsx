@@ -32,21 +32,21 @@ export function InteropNonMintingPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout maxWidth="wide">
-          <div className="max-md:hidden">
-            <HeaderWithDescription />
-          </div>
-          <InteropSelectedChainsProvider
-            interopChains={interopChains}
-            initialSelectedChains={initialSelectedChains}
-          >
+        <InteropSelectedChainsProvider
+          interopChains={interopChains}
+          initialSelectedChains={initialSelectedChains}
+        >
+          <SideNavLayout maxWidth="wide">
+            <div className="max-md:hidden">
+              <HeaderWithDescription />
+            </div>
             <ChainSelector chains={interopChains} />
             <div className="md:hidden">
               <HeaderWithDescription />
             </div>
             <Widgets interopChains={interopChains} />
-          </InteropSelectedChainsProvider>
-        </SideNavLayout>
+          </SideNavLayout>
+        </InteropSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
   )

@@ -37,18 +37,18 @@ export function InteropSummaryPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout maxWidth="wide">
-          <div className="flex min-h-screen flex-col">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <InteropSelectedChainsProvider
-              interopChains={interopChains}
-              initialSelectedChains={initialSelectedChains}
-            >
+        <InteropSelectedChainsProvider
+          interopChains={interopChains}
+          initialSelectedChains={initialSelectedChains}
+        >
+          <SideNavLayout maxWidth="wide">
+            <div className="flex min-h-screen flex-col">
+              <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
               <ChainSelector chains={interopChains} />
               <Widgets interopChains={interopChains} />
-            </InteropSelectedChainsProvider>
-          </div>
-        </SideNavLayout>
+            </div>
+          </SideNavLayout>
+        </InteropSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
   )

@@ -25,7 +25,7 @@ interface InteropSelectedChainsContextType {
   setPath: (paths: { from: string; to: string }) => void
 }
 
-const InteropSelectedChainsContext = createContext<
+export const InteropSelectedChainsContext = createContext<
   InteropSelectedChainsContextType | undefined
 >(undefined)
 
@@ -40,7 +40,10 @@ export function InteropSelectedChainsProvider({
   interopChains,
   initialSelectedChains,
 }: InteropSelectedChainsProviderProps) {
-  const allChainIds = useMemo(() => interopChains.map((c) => c.id), [interopChains])
+  const allChainIds = useMemo(
+    () => interopChains.map((c) => c.id),
+    [interopChains],
+  )
   const [selectedChains, setSelectedChains] = useState(initialSelectedChains)
 
   // Debounce URL updates (500ms delay)

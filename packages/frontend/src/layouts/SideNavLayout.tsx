@@ -1,4 +1,5 @@
 import compact from 'lodash/compact'
+import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
@@ -17,6 +18,8 @@ import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
+import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -38,6 +41,201 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+  const selectedChainsContext = useContext(InteropSelectedChainsContext)
+
+  const groups = useMemo(
+    () =>
+      compact<NavGroup>([
+        {
+          type: 'multiple',
+          title: 'Scaling',
+          match: 'scaling',
+          icon: (
+            <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: '/scaling/summary',
+            },
+            {
+              title: 'Risk Analysis',
+              shortTitle: 'Risks',
+              href: '/scaling/risk',
+            },
+            {
+              title: 'Value Secured',
+              shortTitle: 'Value',
+              href: '/scaling/tvs',
+            },
+            {
+              title: 'Activity',
+              href: '/scaling/activity',
+            },
+            {
+              title: 'Data Availability',
+              shortTitle: 'DA',
+              href: '/scaling/data-availability',
+            },
+            {
+              title: 'Liveness',
+              href: '/scaling/liveness',
+            },
+            {
+              title: 'Costs',
+              href: '/scaling/costs',
+            },
+          ],
+          secondaryLinks: [
+            {
+              title: 'Upcoming',
+              href: '/scaling/upcoming',
+            },
+            {
+              title: 'Archived',
+              href: '/scaling/archived',
+            },
+          ],
+        },
+        env.CLIENT_SIDE_INTEROP_ENABLED && {
+          type: 'multiple',
+          title: 'Interop',
+          match: 'interop',
+          icon: (
+            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: buildInteropUrl(
+                '/interop/summary',
+                selectedChainsContext?.selectedChains,
+              ),
+            },
+            {
+              title: 'Non-minting protocols',
+              href: buildInteropUrl(
+                '/interop/non-minting',
+                selectedChainsContext?.selectedChains,
+              ),
+            },
+            {
+              title: 'Lock & Mint protocols',
+              href: buildInteropUrl(
+                '/interop/lock-and-mint',
+                selectedChainsContext?.selectedChains,
+              ),
+            },
+            {
+              title: 'Omnichain tokens',
+              href: buildInteropUrl(
+                '/interop/omnichain',
+                selectedChainsContext?.selectedChains,
+              ),
+            },
+          ],
+        },
+        !env.CLIENT_SIDE_INTEROP_ENABLED && {
+          type: 'multiple',
+          title: 'Bridges',
+          match: 'bridges',
+          icon: (
+            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: '/bridges/summary',
+            },
+          ],
+          secondaryLinks: [
+            {
+              title: 'Archived',
+              href: '/bridges/archived',
+            },
+          ],
+        },
+        {
+          type: 'multiple',
+          title: 'Data Availability',
+          match: 'data-availability',
+          icon: (
+            <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: '/data-availability/summary',
+            },
+            {
+              title: 'Risk Analysis',
+              shortTitle: 'Risks',
+              href: '/data-availability/risk',
+            },
+            {
+              title: 'Throughput',
+              shortTitle: 'Throughput',
+              href: '/data-availability/throughput',
+            },
+            {
+              title: 'Liveness',
+              shortTitle: 'Liveness',
+              href: '/data-availability/liveness',
+            },
+          ],
+          secondaryLinks: [
+            {
+              title: 'Archived',
+              href: '/data-availability/archived',
+            },
+          ],
+        },
+        {
+          type: 'single',
+          title: 'ZK Catalog',
+          match: 'zk-catalog',
+          href: '/zk-catalog',
+          icon: (
+            <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+        },
+        {
+          type: 'multiple',
+          title: 'Ecosystems',
+          match: 'ecosystems',
+          disableMobileTabs: true,
+          icon: (
+            <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          preventTitleNavigation: true,
+          links: [
+            {
+              name: 'Agglayer',
+              slug: 'agglayer',
+            },
+            {
+              name: 'Arbitrum Orbit',
+              slug: 'arbitrum-orbit',
+            },
+            {
+              name: 'Superchain',
+              slug: 'superchain',
+            },
+            {
+              name: 'The Elastic Network',
+              slug: 'the-elastic-network',
+            },
+          ]
+            .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
+            .map((ecosystem) => ({
+              title: ecosystem.name,
+              href: `/ecosystems/${ecosystem.slug}`,
+            })),
+        },
+      ]),
+    [selectedChainsContext?.selectedChains],
+  )
+
   return (
     <SidebarProvider>
       <div className="relative flex flex-col lg:flex-row">
@@ -81,183 +279,6 @@ export function SideNavLayout({
     </SidebarProvider>
   )
 }
-
-const groups = compact<NavGroup>([
-  {
-    type: 'multiple',
-    title: 'Scaling',
-    match: 'scaling',
-    icon: (
-      <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/scaling/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/scaling/risk',
-      },
-      {
-        title: 'Value Secured',
-        shortTitle: 'Value',
-        href: '/scaling/tvs',
-      },
-      {
-        title: 'Activity',
-        href: '/scaling/activity',
-      },
-      {
-        title: 'Data Availability',
-        shortTitle: 'DA',
-        href: '/scaling/data-availability',
-      },
-      {
-        title: 'Liveness',
-        href: '/scaling/liveness',
-      },
-      {
-        title: 'Costs',
-        href: '/scaling/costs',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Upcoming',
-        href: '/scaling/upcoming',
-      },
-      {
-        title: 'Archived',
-        href: '/scaling/archived',
-      },
-    ],
-  },
-  env.CLIENT_SIDE_INTEROP_ENABLED && {
-    type: 'multiple',
-    title: 'Interop',
-    match: 'interop',
-    icon: (
-      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/interop/summary',
-      },
-      {
-        title: 'Non-minting protocols',
-        href: '/interop/non-minting',
-      },
-      {
-        title: 'Lock & Mint protocols',
-        href: '/interop/lock-and-mint',
-      },
-      {
-        title: 'Omnichain tokens',
-        href: '/interop/omnichain',
-      },
-    ],
-  },
-  !env.CLIENT_SIDE_INTEROP_ENABLED && {
-    type: 'multiple',
-    title: 'Bridges',
-    match: 'bridges',
-    icon: (
-      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/bridges/summary',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/bridges/archived',
-      },
-    ],
-  },
-  {
-    type: 'multiple',
-    title: 'Data Availability',
-    match: 'data-availability',
-    icon: (
-      <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/data-availability/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/data-availability/risk',
-      },
-      {
-        title: 'Throughput',
-        shortTitle: 'Throughput',
-        href: '/data-availability/throughput',
-      },
-      {
-        title: 'Liveness',
-        shortTitle: 'Liveness',
-        href: '/data-availability/liveness',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/data-availability/archived',
-      },
-    ],
-  },
-  {
-    type: 'single',
-    title: 'ZK Catalog',
-    match: 'zk-catalog',
-    href: '/zk-catalog',
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  {
-    type: 'multiple',
-    title: 'Ecosystems',
-    match: 'ecosystems',
-    disableMobileTabs: true,
-    icon: (
-      <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    preventTitleNavigation: true,
-    links: [
-      {
-        name: 'Agglayer',
-        slug: 'agglayer',
-      },
-      {
-        name: 'Arbitrum Orbit',
-        slug: 'arbitrum-orbit',
-      },
-      {
-        name: 'Superchain',
-        slug: 'superchain',
-      },
-      {
-        name: 'The Elastic Network',
-        slug: 'the-elastic-network',
-      },
-    ]
-      .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
-      .map((ecosystem) => ({
-        title: ecosystem.name,
-        href: `/ecosystems/${ecosystem.slug}`,
-      })),
-  },
-])
 
 const sideLinks = compact([
   {
