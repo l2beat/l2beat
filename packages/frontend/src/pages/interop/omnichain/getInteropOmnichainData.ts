@@ -24,8 +24,12 @@ export async function getInteropOmnichainData(
   const appLayoutProps = await getAppLayoutProps()
   const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
   const initialSelectedChains = {
-    from: req.query.from?.filter((id) => interopChainsIds.includes(id)) ?? interopChainsIds,
-    to: req.query.to?.filter((id) => interopChainsIds.includes(id)) ?? interopChainsIds,
+    from:
+      req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
+      interopChainsIds,
+    to:
+      req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
+      interopChainsIds,
   }
   const queryState = await cache.get(
     {

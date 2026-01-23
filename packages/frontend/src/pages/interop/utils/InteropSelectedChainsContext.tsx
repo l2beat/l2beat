@@ -55,7 +55,6 @@ export function InteropSelectedChainsProvider({
 
   // Sync debounced state to URL
   useEffect(() => {
-    if (typeof window === 'undefined') return
     if (skipNextUrlUpdate.current) {
       skipNextUrlUpdate.current = false
       return

@@ -2,8 +2,8 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { LockAndMintTable } from './tables/LockAndMintTable'
 
@@ -15,7 +15,11 @@ export function LockAndMintCard({
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl('/interop/lock-and-mint', selectedChains, allChainIds)
+  const viewAllUrl = buildInteropUrl(
+    '/interop/lock-and-mint',
+    selectedChains,
+    allChainIds,
+  )
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
