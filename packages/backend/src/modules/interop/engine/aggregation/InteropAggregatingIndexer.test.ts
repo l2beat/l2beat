@@ -124,7 +124,7 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
     })
 
-    it.only('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
+    it('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
       const transfers: InteropTransferRecord[] = [
         // Plain plugin filter: across (should match config1)
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
