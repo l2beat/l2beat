@@ -2259,18 +2259,18 @@
     "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
-      // {
-      //   "chain": "zksync2",
-      //   "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
-      // },
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
-      // },
+      {
+        "chain": "zksync2",
+        "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
+      },
       // ZK token withdrawal (native to L2)
       {
         "chain": "zksync2",
-        "tx": "0x4a43dee45ba4a574f725cdc58769be3a91ed111a77d969da537ac30dbfd004f4"
+        "tx": "0x51daad3713a5387b23e00c1bbd4f999095427d507da07fd927a8116a16f2c623"
       },
       {
         "chain": "ethereum",
@@ -2280,10 +2280,16 @@
     "events": [
       "zkstack.L1MessageSent",
       "zkstack.BridgeBurn",
+      "zkstack.BridgeMintL1",
+      "zkstack.L1MessageSent",
+      "zkstack.BridgeBurn",
       "zkstack.BridgeMintL1"
     ],
-    "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
-    "transfers": ["canonical-erc20.Transfer"]
+    "messages": [
+      { "type": "zksync.Message", "app": "canonical-erc20" },
+      { "type": "zksync.Message", "app": "canonical-erc20" }
+    ],
+    "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
   },
   "zklink-nova": {
     "txs": [

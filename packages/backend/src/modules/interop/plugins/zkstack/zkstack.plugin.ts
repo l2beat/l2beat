@@ -16,10 +16,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import {
-  ZkStackAssetsConfig,
-  type ZkStackAssetMapping,
-} from './zkstack.config'
+import { type ZkStackAssetMapping, ZkStackAssetsConfig } from './zkstack.config'
 import {
   getNetworkByChainId,
   getNetworkByDiamondAddress,
@@ -57,7 +54,7 @@ const bridgeMintLog =
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
-  // == Parsers ==
+// == Parsers ==
 
 const parseNewPriorityRequestId = createEventParser(newPriorityRequestIdLog)
 const parseBridgehubDepositBaseTokenInitiated = createEventParser(

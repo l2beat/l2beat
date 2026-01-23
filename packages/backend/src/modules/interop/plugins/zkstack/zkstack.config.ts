@@ -7,13 +7,13 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { isEqual } from 'earl'
 import {
   decodeFunctionResult,
   encodeFunctionData,
   type Hex,
   parseAbi,
 } from 'viem'
-import { isEqual } from 'earl'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   defineConfig,
@@ -100,11 +100,7 @@ export class ZkStackConfigPlugin
     const l1Vault = ChainSpecificAddress.address(l2Network.l1NativeTokenVault)
     const l2Bridge = ChainSpecificAddress.address(l2Network.l2SharedBridge)
 
-    const l1AssetIdsByToken = await this.fetchAssetIds(
-      l1Rpc,
-      l1Vault,
-      l1Tokens,
-    )
+    const l1AssetIdsByToken = await this.fetchAssetIds(l1Rpc, l1Vault, l1Tokens)
     const l2AssetIdsByToken = await this.fetchAssetIds(
       l2Rpc,
       l2Bridge,
@@ -115,13 +111,13 @@ export class ZkStackConfigPlugin
       throw new Error('No assetIds resolved from L1 or L2')
     }
 
-    const assetIdSet = new Set<string>()
-    for (const assetId of l1AssetIdsByToken.values()) {
-      assetIdSet.add(assetId)
-    }
-    for (const assetId of l2AssetIdsByToken.values()) {
-      assetIdSet.add(assetId)
-    }
+    const l1TokensByAssetId = this.buildTokensByAssetId(l1AssetIdsByToken)
+    const l2TokensByAssetId = this.buildTokensByAssetId(l2AssetIdsByToken)
+
+    const assetIdSet = new Set<string>([
+      ...l1TokensByAssetId.keys(),
+      ...l2TokensByAssetId.keys(),
+    ])
 
     const assetIds = [...assetIdSet]
     const originChainIds = await this.fetchOriginChainIds(
@@ -130,16 +126,33 @@ export class ZkStackConfigPlugin
       assetIds,
     )
 
-    const l1TokensByAssetId = await this.fetchTokenAddressesByAssetId(
-      l1Rpc,
-      l1Vault,
-      assetIds,
-    )
-    const l2TokensByAssetId = await this.fetchTokenAddressesByAssetId(
-      l2Rpc,
-      l2Bridge,
-      assetIds,
-    )
+    const l1Missing = assetIds.filter((assetId) => {
+      return !l1TokensByAssetId.has(assetId)
+    })
+    if (l1Missing.length > 0) {
+      const filled = await this.fetchTokenAddressesByAssetId(
+        l1Rpc,
+        l1Vault,
+        l1Missing,
+      )
+      for (const [assetId, token] of filled) {
+        l1TokensByAssetId.set(assetId, token)
+      }
+    }
+
+    const l2Missing = assetIds.filter((assetId) => {
+      return !l2TokensByAssetId.has(assetId)
+    })
+    if (l2Missing.length > 0) {
+      const filled = await this.fetchTokenAddressesByAssetId(
+        l2Rpc,
+        l2Bridge,
+        l2Missing,
+      )
+      for (const [assetId, token] of filled) {
+        l2TokensByAssetId.set(assetId, token)
+      }
+    }
 
     const mappings: ZkStackAssetMapping[] = []
 
@@ -150,10 +163,7 @@ export class ZkStackConfigPlugin
       const l1Token = l1TokensByAssetId.get(assetId)
       const l2Token = l2TokensByAssetId.get(assetId)
       if (!l1Token || !l2Token) continue
-      if (
-        l1Token === EthereumAddress.ZERO ||
-        l2Token === EthereumAddress.ZERO
-      )
+      if (l1Token === EthereumAddress.ZERO || l2Token === EthereumAddress.ZERO)
         continue
 
       mappings.push({
@@ -186,6 +196,16 @@ export class ZkStackConfigPlugin
     }
 
     return [...unique.values()]
+  }
+
+  private buildTokensByAssetId(
+    assetIdsByToken: Map<EthereumAddress, `0x${string}`>,
+  ): Map<string, EthereumAddress> {
+    const tokensByAssetId = new Map<string, EthereumAddress>()
+    for (const [token, assetId] of assetIdsByToken.entries()) {
+      tokensByAssetId.set(assetId, token)
+    }
+    return tokensByAssetId
   }
 
   private async fetchAssetIds(
