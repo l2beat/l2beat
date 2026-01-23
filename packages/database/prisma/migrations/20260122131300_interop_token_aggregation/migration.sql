@@ -18,5 +18,5 @@ CREATE TABLE "AggregatedInteropToken" (
     "totalDurationSum" INTEGER NOT NULL,
     "volume" REAL NOT NULL,
 
-    CONSTRAINT "AggregatedInteropToken_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","abstractTokenId","id")
+    CONSTRAINT "AggregatedInteropToken_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","id","abstractTokenId")
 );

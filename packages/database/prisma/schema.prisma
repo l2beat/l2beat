@@ -560,5 +560,5 @@ model AggregatedInteropToken {
   totalDurationSum Int
   volume           Float    @db.Real
 
-  @@id([timestamp, srcChain, dstChain, abstractTokenId, id])
+  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
 }
