@@ -14,8 +14,8 @@ export function OmniChainCard({
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl('/interop/omnichain', selectedChains)
+  const { selectedChains, allChainIds } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/omnichain', selectedChains, allChainIds)
 
   return (
     <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">

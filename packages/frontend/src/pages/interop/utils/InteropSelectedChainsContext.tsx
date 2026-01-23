@@ -18,6 +18,7 @@ interface InteropSelectedChainsContextType {
     from: string[]
     to: string[]
   }
+  allChainIds: string[]
   toggleFrom: (chainId: string) => void
   toggleTo: (chainId: string) => void
   reset: () => void
@@ -132,7 +133,15 @@ export function InteropSelectedChainsProvider({
 
   return (
     <InteropSelectedChainsContext.Provider
-      value={{ selectedChains, toggleFrom, toggleTo, reset, isDirty, setPath }}
+      value={{
+        selectedChains,
+        allChainIds,
+        toggleFrom,
+        toggleTo,
+        reset,
+        isDirty,
+        setPath,
+      }}
     >
       {children}
     </InteropSelectedChainsContext.Provider>
