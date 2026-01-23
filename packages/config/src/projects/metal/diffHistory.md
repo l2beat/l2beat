@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x29c189c6039676380fe33dbab75559de881fe012
+
+# Diff at Fri, 23 Jan 2026 14:46:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1768989976
+- current timestamp: 1769179534
+
+## Description
+
+SaferSafes module added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe - this is a module that adds extra safety checks for Safe operations.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/metal/.flat/SaferSafes.sol        | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x9e080e55e234d59b7da225d3744254a136e6f9f3
 
 # Diff at Wed, 21 Jan 2026 10:07:45 GMT:

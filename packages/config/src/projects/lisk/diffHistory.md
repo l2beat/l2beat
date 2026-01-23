@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xd05c36a2c075df01ad3c3b9b0271ffa6a857dbdf
+
+# Diff at Fri, 23 Jan 2026 14:46:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048190
+- current timestamp: 1769179520
+
+## Description
+
+SaferSafes module added to OpFoundationUpgradeSafe - this is a module that adds extra safety checks for Safe operations.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/lisk/.flat/SaferSafes.sol         | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x8654624b8b34c59ad30457a4bf988dfb78b570ce
 
 # Diff at Thu, 18 Dec 2025 08:57:58 GMT:

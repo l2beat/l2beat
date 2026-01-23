@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xfeeaf990223f8074bb9e752b61ab37fe78370a9d
+
+# Diff at Fri, 23 Jan 2026 14:42:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766405804
+- current timestamp: 1769179262
+
+## Description
+
+Gas parameter changes (daFootprintGasScalar, minBaseFee) on SystemConfig. GnosisSafe member rotation in base FeeDisburser admin. SaferSafes module added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe - this is a module that adds extra safety checks for Safe operations.
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.daFootprintGasScalar:
+-        325
++        139
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05) {
+    +++ description: None
+      values.$members.1:
+-        "base:0x4d494C5F61b60752D3A10062276a0eFC22596151"
++        "base:0xe4149Acb6F5DA74b760a1007F05FB5514F3351ea"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.daFootprintGasScalar:
+-        325
++        139
+      values.minBaseFee:
+-        500000
++        1000000
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/base/.flat/SaferSafes.sol         | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x14ace90c2e224e69046e314c458ade0dd7f007af
 
 # Diff at Mon, 22 Dec 2025 12:18:06 GMT:

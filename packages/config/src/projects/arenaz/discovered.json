@@ -1,6 +1,6 @@
 {
   "name": "arenaz",
-  "timestamp": 1766048003,
+  "timestamp": 1769179255,
   "configHash": "0xf525444c6f8b22c17c504549d50f51dbc65db9214f536b8248c9f42afbfdd058",
   "entries": [
     {
@@ -156,7 +156,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620492",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620505",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -591,7 +591,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 91,
+        "nonce": 93,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1033,7 +1033,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 420,
+        "gameCount": 456,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x63BD36A7E8f5f1774F692EF2ef4B0743A2262D47",
@@ -1047,7 +1047,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 420,
+        "permissionedGamesTotal": 456,
         "proxyAdmin": "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.3.0"
@@ -1173,9 +1173,11 @@
         "$threshold": 5,
         "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
         "getChainId": 1,
-        "GnosisSafe_modules": [],
+        "GnosisSafe_modules": [
+          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+        ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 48,
+        "nonce": 49,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1293,9 +1295,11 @@
         "$threshold": 5,
         "domainSeparator": "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76",
         "getChainId": 1,
-        "GnosisSafe_modules": [],
+        "GnosisSafe_modules": [
+          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+        ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 113,
+        "nonce": 114,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1352,6 +1356,57 @@
       }
     },
     {
+      "name": "SaferSafes",
+      "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x63BD36A7E8f5f1774F692EF2ef4B0743A2262D47",
+          "role": ".challenger",
+          "via": [
+            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            },
+            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "role": ".GnosisSafe_modules"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1764596735,
+      "sinceBlock": 23919014,
+      "values": { "$immutable": true, "version": "1.10.1" },
+      "implementationNames": {
+        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": "SaferSafes"
+      }
+    },
+    {
       "name": "OptimismPortal2",
       "address": "eth:0xB20f99b598E8d888d1887715439851BC68806b22",
       "type": "Contract",
@@ -1405,8 +1460,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 517494,
-          "prevBlockNum": 24030422
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 24261212
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2528,6 +2583,66 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": [
+      "error LivenessModule2_ChallengeAlreadyExists()",
+      "error LivenessModule2_ChallengeDoesNotExist()",
+      "error LivenessModule2_InvalidFallbackOwner()",
+      "error LivenessModule2_InvalidResponsePeriod()",
+      "error LivenessModule2_InvalidVersion()",
+      "error LivenessModule2_ModuleNotConfigured()",
+      "error LivenessModule2_ModuleNotEnabled()",
+      "error LivenessModule2_ModuleStillEnabled()",
+      "error LivenessModule2_OwnershipTransferFailed()",
+      "error LivenessModule2_ResponsePeriodActive()",
+      "error LivenessModule2_ResponsePeriodEnded()",
+      "error LivenessModule2_UnauthorizedCaller()",
+      "error SaferSafes_InsufficientLivenessResponsePeriod()",
+      "error SemverComp_InvalidSemverParts()",
+      "error TimelockGuard_GuardNotConfigured()",
+      "error TimelockGuard_GuardNotEnabled()",
+      "error TimelockGuard_GuardStillEnabled()",
+      "error TimelockGuard_InvalidTimelockDelay()",
+      "error TimelockGuard_InvalidVersion()",
+      "error TimelockGuard_NotOwner()",
+      "error TimelockGuard_TransactionAlreadyCancelled()",
+      "error TimelockGuard_TransactionAlreadyExecuted()",
+      "error TimelockGuard_TransactionAlreadyScheduled()",
+      "error TimelockGuard_TransactionNotReady()",
+      "error TimelockGuard_TransactionNotScheduled()",
+      "event CancellationThresholdUpdated(address indexed safe, uint256 oldThreshold, uint256 newThreshold)",
+      "event ChallengeCancelled(address indexed safe)",
+      "event ChallengeStarted(address indexed safe, uint256 challengeStartTime)",
+      "event ChallengeSucceeded(address indexed safe, address fallbackOwner)",
+      "event GuardConfigured(address indexed safe, uint256 timelockDelay)",
+      "event Message(string message)",
+      "event ModuleCleared(address indexed safe)",
+      "event ModuleConfigured(address indexed safe, uint256 livenessResponsePeriod, address fallbackOwner)",
+      "event TransactionCancelled(address indexed safe, bytes32 indexed txHash)",
+      "event TransactionExecuted(address indexed safe, bytes32 indexed txHash)",
+      "event TransactionScheduled(address indexed safe, bytes32 indexed txHash, uint256 executionTime)",
+      "function cancelTransaction(address _safe, bytes32 _txHash, uint256 _nonce, bytes _signatures)",
+      "function cancellationThreshold(address _safe) view returns (uint256)",
+      "function challenge(address _safe)",
+      "function challengeStartTime(address) view returns (uint256)",
+      "function changeOwnershipToFallback(address _safe)",
+      "function checkAfterExecution(bytes32 _txHash, bool _success)",
+      "function checkTransaction(address _to, uint256 _value, bytes _data, uint8 _operation, uint256 _safeTxGas, uint256 _baseGas, uint256 _gasPrice, address _gasToken, address _refundReceiver, bytes, address _msgSender)",
+      "function clearLivenessModule()",
+      "function clearTimelockGuard()",
+      "function configureLivenessModule(tuple(uint256 livenessResponsePeriod, address fallbackOwner) _config)",
+      "function configureTimelockGuard(uint256 _timelockDelay)",
+      "function getChallengePeriodEnd(address _safe) view returns (uint256)",
+      "function livenessSafeConfiguration(address _safe) view returns (tuple(uint256 livenessResponsePeriod, address fallbackOwner))",
+      "function maxCancellationThreshold(address _safe) view returns (uint256)",
+      "function pendingTransactions(address _safe) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce)[])",
+      "function respond()",
+      "function scheduleTransaction(address _safe, uint256 _nonce, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) _params, bytes _signatures)",
+      "function scheduledTransaction(address _safe, bytes32 _txHash) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce))",
+      "function signCancellation(bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function timelockDelay(address _safe) view returns (uint256)",
+      "function version() view returns (string)"
+    ],
     "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -2778,6 +2893,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 24038420 },
-  "permissionsConfigHash": "0xac1d17b8aaf88bdaa2f0cf4c8317c5f5ecee1f8391b230c81f45f826d74d594d"
+  "usedBlockNumbers": { "ethereum": 24298142 },
+  "permissionsConfigHash": "0xde74599ca4f24dc80e1dff66e80b1aec3c9cdafccfea75f010abc1a902d599c9"
 }
