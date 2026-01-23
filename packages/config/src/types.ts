@@ -1238,6 +1238,7 @@ export type InteropPluginName =
   | 'wormhole-ntt'
   | 'wormhole-relayer'
   | 'wormhole-token-bridge'
+  | 'zkstack'
   | 'zklink-nova'
 
 export interface InteropConfig {

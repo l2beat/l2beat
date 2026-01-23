@@ -62,6 +62,7 @@ import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 import { ZklinkNovaPlugin } from './zklink-nova'
+import { ZkStackPlugin } from './zkstack'
 
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
@@ -141,6 +142,7 @@ export function createInteropPlugins(
       new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
       new OrbitStackPlugin(),
+      new ZkStackPlugin(),
       new ZklinkNovaPlugin(), // should be run before OpStack
       new WorldIdPlugin(), // should be run before OpStack
       new LidoWstethPlugin(), // should be run before OpStack
