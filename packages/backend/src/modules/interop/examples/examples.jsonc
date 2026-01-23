@@ -2174,106 +2174,102 @@
       }
     ]
   },
-  "zkstack": {
-    "groups": [
+  "zksync-deposit-eth": {
+    "tags": ["zkstack"],
+    "txs": [
       {
-        "name": "ETH deposit",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0x78331db84246c1130ef0baca31af4521f4a6b6796201470ba250ac8f3b9acca0"
-          },
-          {
-            "chain": "zksync2",
-            "tx": "0x066c1933d22acba355fc020fe7c041156b0d74d66fed18ada3056495c41dccbf"
-          }
-        ],
-        "events": [
-          "zkstack.NewPriorityRequestId",
-          "zkstack.BridgehubDepositBaseTokenInitiated",
-          "zkstack.L2ToL1LogSent"
-        ],
-        "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
-        "transfers": ["canonical-gas.Transfer"]
+        "chain": "ethereum",
+        "tx": "0x78331db84246c1130ef0baca31af4521f4a6b6796201470ba250ac8f3b9acca0"
       },
       {
-        "name": "ERC-20 deposit",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0x0f1ded18e3a269374df77823a05f74007e60bbab480b01cb168c328fd19c8024"
-          },
-          {
-            "chain": "zksync2",
-            "tx": "0x1B97B83556530393331DD44AE51D2B45FCC74E800042FE3D231AC5AB96AC3D33"
-          }
-        ],
-        "events": [
-          "zkstack.NewPriorityRequestId",
-          "zkstack.BridgehubDepositBaseTokenInitiated",
-          "zkstack.BridgehubDepositInitiated",
-          "zkstack.L2ToL1LogSent",
-          "zkstack.BridgeMint"
-        ],
-        "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
-        "transfers": ["canonical-erc20.Transfer"]
-      },
-      // TODO: needs better example, this is contaminated with across noise
-      {
-        "name": "Message-only",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0xb3eda84985d454039c03eecdc7c54851f4fcb8c447bc81340e952a58796c2789"
-          },
-          {
-            "chain": "zksync2",
-            "tx": "0x3e8e107fc8f7c301a4ba26fe5c981a189a55fd052deced8f2a065a87f041288f"
-          }
-        ],
-        "messages": [{ "type": "zksync.Message", "app": "unknown" }]
-      },
-      {
-        "name": "ETH withdrawal",
-        "txs": [
-          {
-            "chain": "zksync2",
-            "tx": "0xef8bfff49b224b9d0b650002b72f2371202287fb3739d953a1bf7a30f2a8a3b5"
-          },
-          {
-            "chain": "ethereum",
-            "tx": "0x2cfe47cd8054d5075968df7b0b55a1c87912a49c2dfc36e50486dfc6ce9715df"
-          }
-        ],
-        "events": [
-          "zkstack.L1MessageSent",
-          "zkstack.Withdrawal",
-          "zkstack.BridgeMintL1"
-        ],
-        "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
-        "transfers": ["canonical-gas.Transfer"]
-      },
-      {
-        "name": "ERC-20 withdrawal",
-        "txs": [
-          {
-            "chain": "zksync2",
-            "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
-          },
-          {
-            "chain": "ethereum",
-            "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
-          }
-        ],
-        "events": [
-          "zkstack.L1MessageSent",
-          "zkstack.BridgeBurn",
-          "zkstack.BridgeMintL1"
-        ],
-        "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
-        "transfers": ["canonical-erc20.Transfer"]
+        "chain": "zksync2",
+        "tx": "0x066c1933d22acba355fc020fe7c041156b0d74d66fed18ada3056495c41dccbf"
       }
-    ]
+    ],
+    "events": [
+      "zkstack.NewPriorityRequestId",
+      "zkstack.BridgehubDepositBaseTokenInitiated",
+      "zkstack.L2ToL1LogSent"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
+    "transfers": ["canonical-gas.Transfer"]
+  },
+  "zksync-deposit-erc20": {
+    "tags": ["zkstack"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x0f1ded18e3a269374df77823a05f74007e60bbab480b01cb168c328fd19c8024"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x1B97B83556530393331DD44AE51D2B45FCC74E800042FE3D231AC5AB96AC3D33"
+      }
+    ],
+    "events": [
+      "zkstack.NewPriorityRequestId",
+      "zkstack.BridgehubDepositBaseTokenInitiated",
+      "zkstack.BridgehubDepositInitiated",
+      "zkstack.L2ToL1LogSent",
+      "zkstack.BridgeMint"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
+    "transfers": ["canonical-erc20.Transfer"]
+  },
+  // TODO: needs better example, this is contaminated with across noise
+  "zksync-deposit-message": {
+    "tags": ["zkstack"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xb3eda84985d454039c03eecdc7c54851f4fcb8c447bc81340e952a58796c2789"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x3e8e107fc8f7c301a4ba26fe5c981a189a55fd052deced8f2a065a87f041288f"
+      }
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "unknown" }]
+  },
+  "zksync-withdrawal-eth": {
+    "tags": ["zkstack"],
+    "txs": [
+      {
+        "chain": "zksync2",
+        "tx": "0xef8bfff49b224b9d0b650002b72f2371202287fb3739d953a1bf7a30f2a8a3b5"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2cfe47cd8054d5075968df7b0b55a1c87912a49c2dfc36e50486dfc6ce9715df"
+      }
+    ],
+    "events": [
+      "zkstack.L1MessageSent",
+      "zkstack.Withdrawal",
+      "zkstack.BridgeMintL1"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
+    "transfers": ["canonical-gas.Transfer"]
+  },
+  "zksync-withdrawal-erc20": {
+    "tags": ["zkstack"],
+    "txs": [
+      {
+        "chain": "zksync2",
+        "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
+      }
+    ],
+    "events": [
+      "zkstack.L1MessageSent",
+      "zkstack.BridgeBurn",
+      "zkstack.BridgeMintL1"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
+    "transfers": ["canonical-erc20.Transfer"]
   },
   "zklink-nova": {
     "txs": [
