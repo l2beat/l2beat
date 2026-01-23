@@ -13,9 +13,8 @@ import { useTableFilterContext } from '~/components/table/filters/TableFilterCon
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import { api } from '~/trpc/React'
-import type { ChartRange } from '~/utils/range/range'
-import { optionToRange } from '~/utils/range/range'
 import { ChartTabs } from '../../summary/components/ChartTabs'
+import { useScalingTvsTimeRangeContext } from './ScalingTvsTimeRangeContext'
 
 interface Props {
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
@@ -26,7 +25,7 @@ interface Props {
 export function ScalingTvsCharts({ tab, entries, milestones }: Props) {
   const { display } = useTvsDisplayControlsContext()
   const { state: filters } = useTableFilterContext()
-  const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const { range, setRange } = useScalingTvsTimeRangeContext()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {
