@@ -25,10 +25,10 @@ const bridgehubDepositInitiatedLog =
   'event BridgehubDepositInitiated(uint256 indexed chainId, bytes32 indexed txDataHash, address indexed from, bytes32 assetId, bytes bridgeMintCalldata)'
 
 const newPriorityRequestLog =
-  'event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, (uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)'
+  'event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, (uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)'
 
 const l2ToL1LogSentLog =
-  'event L2ToL1LogSent(tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _l2log)'
+  'event L2ToL1LogSent((uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _l2log)'
 
 const bridgeMintLog =
   'event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)'
@@ -60,10 +60,10 @@ const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
       'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
     ),
     l2SharedBridge: ChainSpecificAddress(
-      'zksync2:0x000000000000000000000000000000000001000a',
+      'zksync:0x000000000000000000000000000000000001000a',
     ),
     l2L1Messenger: ChainSpecificAddress(
-      'zksync2:0x0000000000000000000000000000000000008008',
+      'zksync:0x0000000000000000000000000000000000008008',
     ),
   },
 ])
