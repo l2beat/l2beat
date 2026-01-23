@@ -542,11 +542,23 @@ model AggregatedInteropTransfer {
   id               String   @db.VarChar(255)
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
-  tokensByVolume   Json
   transferCount    Int
   totalDurationSum Int
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
 
   @@id([timestamp, srcChain, dstChain, id])
+}
+
+model AggregatedInteropToken {
+  timestamp        DateTime @db.Timestamp(6)
+  id               String   @db.VarChar(255)
+  srcChain         String   @db.VarChar(255)
+  dstChain         String   @db.VarChar(255)
+  abstractTokenId  String   @db.VarChar(6)
+  transferCount    Int
+  totalDurationSum Int
+  volume           Float    @db.Real
+
+  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
 }

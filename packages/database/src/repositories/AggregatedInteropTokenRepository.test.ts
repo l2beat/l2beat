@@ -2,59 +2,18 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type AggregatedInteropTransferRecord,
-  AggregatedInteropTransferRepository,
-} from './AggregatedInteropTransferRepository'
+  type AggregatedInteropTokenRecord,
+  AggregatedInteropTokenRepository,
+} from './AggregatedInteropTokenRepository'
 
-describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
-  const repository = db.aggregatedInteropTransfer
+describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
+  const repository = db.aggregatedInteropToken
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(
-    AggregatedInteropTransferRepository.prototype.insertMany.name,
-    () => {
-      it('adds new rows', async () => {
-        const records = [
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'arbitrum', 'ethereum', 3, 2000),
-        ]
-
-        const inserted = await repository.insertMany(records)
-        expect(inserted).toEqual(2)
-
-        const result = await repository.getAll()
-        expect(result).toEqualUnsorted(records)
-      })
-
-      it('handles empty array', async () => {
-        const inserted = await repository.insertMany([])
-        expect(inserted).toEqual(0)
-
-        const result = await repository.getAll()
-        expect(result).toEqual([])
-      })
-
-      it('performs batch insert when more than 1000 records', async () => {
-        const records = []
-        for (let i = 0; i < 1500; i++) {
-          records.push(
-            record(`id${i}`, UnixTime(i), 'ethereum', 'arbitrum', 1, 100),
-          )
-        }
-
-        const inserted = await repository.insertMany(records)
-        expect(inserted).toEqual(1500)
-
-        const result = await repository.getAll()
-        expect(result).toHaveLength(1500)
-      })
-    },
-  )
-
-  describe(AggregatedInteropTransferRepository.prototype.getAll.name, () => {
+  describe(AggregatedInteropTokenRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
       expect(result).toEqual([])
@@ -62,9 +21,36 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
     it('returns all records', async () => {
       const records = [
-        record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-        record('id2', UnixTime(200), 'arbitrum', 'ethereum', 3, 2000),
-        record('id3', UnixTime(300), 'polygon', 'ethereum', 7, 3000),
+        record(
+          'id1',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          'token1',
+          5,
+          1000,
+          5000,
+        ),
+        record(
+          'id2',
+          UnixTime(200),
+          'arbitrum',
+          'ethereum',
+          'token2',
+          3,
+          2000,
+          6000,
+        ),
+        record(
+          'id3',
+          UnixTime(300),
+          'polygon',
+          'ethereum',
+          'token3',
+          7,
+          3000,
+          7000,
+        ),
       ]
 
       await repository.insertMany(records)
@@ -75,8 +61,8 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   })
 
   describe(
-    AggregatedInteropTransferRepository.prototype
-      .deleteAllButEarliestPerDayBefore.name,
+    AggregatedInteropTokenRepository.prototype.deleteAllButEarliestPerDayBefore
+      .name,
     () => {
       it('keeps earliest record per day and deletes others before timestamp', async () => {
         // Day 1: timestamps at 100, 200, 300 - should keep 100
@@ -92,13 +78,51 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           day1Early,
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
-        const record2 = record('id2', day1Mid, 'arbitrum', 'ethereum', 3, 2000)
-        const record3 = record('id3', day1Late, 'polygon', 'ethereum', 7, 3000)
-        const record4 = record('id4', day2Early, 'ethereum', 'polygon', 2, 4000)
-        const record5 = record('id5', day2Mid, 'arbitrum', 'polygon', 4, 5000)
+        const record2 = record(
+          'id2',
+          day1Mid,
+          'arbitrum',
+          'ethereum',
+          'token2',
+          3,
+          2000,
+          6000,
+        )
+        const record3 = record(
+          'id3',
+          day1Late,
+          'polygon',
+          'ethereum',
+          'token3',
+          7,
+          3000,
+          7000,
+        )
+        const record4 = record(
+          'id4',
+          day2Early,
+          'ethereum',
+          'polygon',
+          'token4',
+          2,
+          4000,
+          8000,
+        )
+        const record5 = record(
+          'id5',
+          day2Mid,
+          'arbitrum',
+          'polygon',
+          'token5',
+          4,
+          5000,
+          9000,
+        )
         const records = [record1, record2, record3, record4, record5]
 
         await repository.insertMany(records)
@@ -124,13 +148,51 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           day1Early,
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
-        const record2 = record('id2', day1Mid, 'arbitrum', 'ethereum', 3, 2000)
-        const record3 = record('id3', day2Early, 'polygon', 'ethereum', 7, 3000)
-        const record4 = record('id4', day2Mid, 'ethereum', 'polygon', 2, 4000)
-        const record5 = record('id5', day3Early, 'arbitrum', 'polygon', 4, 5000)
+        const record2 = record(
+          'id2',
+          day1Mid,
+          'arbitrum',
+          'ethereum',
+          'token2',
+          3,
+          2000,
+          6000,
+        )
+        const record3 = record(
+          'id3',
+          day2Early,
+          'polygon',
+          'ethereum',
+          'token3',
+          7,
+          3000,
+          7000,
+        )
+        const record4 = record(
+          'id4',
+          day2Mid,
+          'ethereum',
+          'polygon',
+          'token4',
+          2,
+          4000,
+          8000,
+        )
+        const record5 = record(
+          'id5',
+          day3Early,
+          'arbitrum',
+          'polygon',
+          'token5',
+          4,
+          5000,
+          9000,
+        )
         const records = [record1, record2, record3, record4, record5]
 
         await repository.insertMany(records)
@@ -159,8 +221,26 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const day2Early = UnixTime(100 + 2 * UnixTime.DAY)
 
         await repository.insertMany([
-          record('id1', day1Early, 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', day2Early, 'arbitrum', 'ethereum', 3, 2000),
+          record(
+            'id1',
+            day1Early,
+            'ethereum',
+            'arbitrum',
+            'token1',
+            5,
+            1000,
+            5000,
+          ),
+          record(
+            'id2',
+            day2Early,
+            'arbitrum',
+            'ethereum',
+            'token2',
+            3,
+            2000,
+            6000,
+          ),
         ])
 
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
@@ -182,18 +262,31 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           day1Early,
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
           'id2',
           day2Early,
           'arbitrum',
           'ethereum',
+          'token2',
           3,
           2000,
+          6000,
         )
-        const record3 = record('id3', day3Early, 'polygon', 'ethereum', 7, 3000)
+        const record3 = record(
+          'id3',
+          day3Early,
+          'polygon',
+          'ethereum',
+          'token3',
+          7,
+          3000,
+          7000,
+        )
         const records = [record1, record2, record3]
 
         await repository.insertMany(records)
@@ -219,11 +312,31 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           day1Early,
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
-        const record2 = record('id2', day1Mid, 'arbitrum', 'ethereum', 3, 2000)
-        const record3 = record('id3', day1Late, 'polygon', 'ethereum', 7, 3000)
+        const record2 = record(
+          'id2',
+          day1Mid,
+          'arbitrum',
+          'ethereum',
+          'token2',
+          3,
+          2000,
+          6000,
+        )
+        const record3 = record(
+          'id3',
+          day1Late,
+          'polygon',
+          'ethereum',
+          'token3',
+          7,
+          3000,
+          7000,
+        )
         const records = [record1, record2, record3]
 
         await repository.insertMany(records)
@@ -237,140 +350,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const remaining = await repository.getAll()
         expect(remaining).toEqualUnsorted([record1])
       })
-
-      it('handles records spanning multiple days with earliest preserved', async () => {
-        // Create records across 3 days, multiple per day
-        const day1Early = UnixTime(100)
-        const day1Mid = UnixTime(200)
-        const day2Early = UnixTime(100 + UnixTime.DAY)
-        const day2Mid = UnixTime(200 + UnixTime.DAY)
-        const day2Late = UnixTime(300 + UnixTime.DAY)
-        const day3Early = UnixTime(100 + 2 * UnixTime.DAY)
-        const day3Mid = UnixTime(200 + 2 * UnixTime.DAY)
-
-        const record1 = record(
-          'id1',
-          day1Early,
-          'ethereum',
-          'arbitrum',
-          5,
-          1000,
-        )
-        const record2 = record('id2', day1Mid, 'arbitrum', 'ethereum', 3, 2000)
-        const record3 = record('id3', day2Early, 'polygon', 'ethereum', 7, 3000)
-        const record4 = record('id4', day2Mid, 'ethereum', 'polygon', 2, 4000)
-        const record5 = record('id5', day2Late, 'arbitrum', 'polygon', 4, 5000)
-        const record6 = record(
-          'id6',
-          day3Early,
-          'ethereum',
-          'arbitrum',
-          6,
-          6000,
-        )
-        const record7 = record('id7', day3Mid, 'arbitrum', 'ethereum', 8, 7000)
-        const records = [
-          record1,
-          record2,
-          record3,
-          record4,
-          record5,
-          record6,
-          record7,
-        ]
-
-        await repository.insertMany(records)
-
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + 2 * UnixTime.DAY),
-        )
-        // Should keep: record1 (earliest day1), record3 (earliest day2), record6 (earliest day3)
-        // Should delete: record2, record4, record5, record7
-        expect(deleted).toEqual(4)
-
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([record1, record3, record6])
-      })
     },
   )
 
   describe(
-    AggregatedInteropTransferRepository.prototype
-      .deleteAllButEarliestPerDayBefore.name,
-    () => {
-      it('keeps earliest record per day and deletes others before timestamp', async () => {
-        const day1Early = UnixTime(100)
-        const day1Mid = UnixTime(200)
-        const day1Late = UnixTime(300)
-        const day2Early = UnixTime(100 + UnixTime.DAY)
-        const day2Mid = UnixTime(200 + UnixTime.DAY)
-        const day3Early = UnixTime(100 + 2 * UnixTime.DAY)
-        const day3Mid = UnixTime(200 + 2 * UnixTime.DAY)
-
-        const record1 = record(
-          'id1',
-          day1Early,
-          'ethereum',
-          'arbitrum',
-          5,
-          1000,
-        )
-        const record2 = record('id2', day1Mid, 'arbitrum', 'ethereum', 3, 2000)
-        const record3 = record('id3', day1Late, 'polygon', 'ethereum', 7, 3000)
-        const record4 = record('id4', day2Early, 'ethereum', 'polygon', 2, 4000)
-        const record5 = record('id5', day2Mid, 'arbitrum', 'polygon', 4, 5000)
-        const record6 = record(
-          'id6',
-          day3Early,
-          'ethereum',
-          'arbitrum',
-          6,
-          6000,
-        )
-        const record7 = record('id7', day3Mid, 'arbitrum', 'ethereum', 8, 7000)
-        const records = [
-          record1,
-          record2,
-          record3,
-          record4,
-          record5,
-          record6,
-          record7,
-        ]
-
-        await repository.insertMany(records)
-
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + UnixTime.DAY),
-        )
-        expect(deleted).toEqual(3) // Should delete record2, record3, record5
-
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([record1, record4, record6, record7])
-      })
-
-      it('returns 0 when no records are matched', async () => {
-        const day1Early = UnixTime(100 + UnixTime.DAY)
-        const day2Early = UnixTime(100 + 2 * UnixTime.DAY)
-
-        await repository.insertMany([
-          record('id1', day1Early, 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', day2Early, 'arbitrum', 'ethereum', 3, 2000),
-        ])
-
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(50),
-        )
-        expect(deleted).toEqual(0)
-
-        const remaining = await repository.getAll()
-        expect(remaining).toHaveLength(2)
-      })
-    },
-  )
-
-  describe(
-    AggregatedInteropTransferRepository.prototype.deleteByTimestamp.name,
+    AggregatedInteropTokenRepository.prototype.deleteByTimestamp.name,
     () => {
       it('deletes records with matching timestamp and returns count', async () => {
         const record1 = record(
@@ -378,32 +362,40 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
           'id2',
           UnixTime(200),
           'arbitrum',
           'ethereum',
+          'token2',
           3,
           2000,
+          6000,
         )
         const record3 = record(
           'id3',
           UnixTime(200),
           'polygon',
           'ethereum',
+          'token3',
           7,
           3000,
+          7000,
         )
         const record4 = record(
           'id4',
           UnixTime(300),
           'ethereum',
           'polygon',
+          'token4',
           2,
           4000,
+          8000,
         )
         const records = [record1, record2, record3, record4]
 
@@ -418,8 +410,26 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       it('returns 0 when no records match timestamp', async () => {
         await repository.insertMany([
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'arbitrum', 'ethereum', 3, 2000),
+          record(
+            'id1',
+            UnixTime(100),
+            'ethereum',
+            'arbitrum',
+            'token1',
+            5,
+            1000,
+            5000,
+          ),
+          record(
+            'id2',
+            UnixTime(200),
+            'arbitrum',
+            'ethereum',
+            'token2',
+            3,
+            2000,
+            6000,
+          ),
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
@@ -433,141 +443,119 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
         expect(deleted).toEqual(0)
       })
-
-      it('deletes only records with exact timestamp match', async () => {
-        const record1 = record(
-          'id1',
-          UnixTime(100),
-          'ethereum',
-          'arbitrum',
-          5,
-          1000,
-        )
-        const record2 = record(
-          'id2',
-          UnixTime(200),
-          'arbitrum',
-          'ethereum',
-          3,
-          2000,
-        )
-        const record3 = record(
-          'id3',
-          UnixTime(300),
-          'polygon',
-          'ethereum',
-          7,
-          3000,
-        )
-        const records = [record1, record2, record3]
-
-        await repository.insertMany(records)
-
-        const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(1)
-
-        const remaining = await repository.getAll()
-        expect(remaining).toEqualUnsorted([record1, record3])
-      })
     },
   )
 
   describe(
-    AggregatedInteropTransferRepository.prototype.getByChainsTimestampAndId
-      .name,
+    AggregatedInteropTokenRepository.prototype.getByChainsTimestampAndId.name,
     () => {
-      it('returns records matching timestamp, srcChains and dstChains', async () => {
+      it('returns records matching timestamp, srcChains, dstChains, and protocolIds', async () => {
         const record1 = record(
-          'id1',
+          'protocol1',
           UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
-          'id2',
+          'protocol2',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          'token2',
+          3,
+          2000,
+          6000,
+        )
+        const record3 = record(
+          'protocol1',
           UnixTime(200),
           'ethereum',
           'arbitrum',
-          3,
-          2000,
-        )
-        const record3 = record(
-          'id3',
-          UnixTime(300),
-          'ethereum',
-          'arbitrum',
+          'token3',
           7,
           3000,
+          7000,
         )
         const record4 = record(
-          'id4',
-          UnixTime(150),
+          'protocol3',
+          UnixTime(100),
           'polygon',
           'ethereum',
+          'token4',
           2,
           4000,
+          8000,
         )
         const records = [record1, record2, record3, record4]
 
         await repository.insertMany(records)
 
         const result = await repository.getByChainsTimestampAndId(
-          UnixTime(300),
+          UnixTime(100),
           ['ethereum'],
           ['arbitrum'],
+          ['protocol1'],
         )
 
-        // Should only return record3 which matches timestamp 300
-        expect(result).toEqual([record3])
+        expect(result).toEqualUnsorted([record1])
       })
 
-      it('returns records matching multiple srcChains and dstChains at same timestamp', async () => {
+      it('returns records matching multiple srcChains and dstChains', async () => {
         const record1 = record(
-          'id1',
+          'protocol1',
           UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
-          'id2',
-          UnixTime(200),
+          'protocol2',
+          UnixTime(100),
           'polygon',
           'optimism',
+          'token2',
           3,
           2000,
+          6000,
         )
         const record3 = record(
-          'id3',
-          UnixTime(300),
+          'protocol1',
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token3',
           7,
           3000,
+          7000,
         )
         const record4 = record(
-          'id4',
-          UnixTime(300),
+          'protocol2',
+          UnixTime(100),
           'polygon',
           'optimism',
+          'token4',
           2,
           4000,
+          8000,
         )
         const records = [record1, record2, record3, record4]
 
         await repository.insertMany(records)
 
         const result = await repository.getByChainsTimestampAndId(
-          UnixTime(300),
+          UnixTime(100),
           ['ethereum', 'polygon'],
           ['arbitrum', 'optimism'],
         )
 
-        // Should return record3 and record4 which match timestamp 300
-        expect(result).toEqualUnsorted([record3, record4])
+        expect(result).toEqualUnsorted([record1, record2, record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
@@ -583,34 +571,40 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       it('filters by protocolIds when provided', async () => {
         const record1 = record(
           'protocol1',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
           'protocol2',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token2',
           3,
           2000,
+          6000,
         )
         const record3 = record(
           'protocol3',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token3',
           7,
           3000,
+          7000,
         )
         const records = [record1, record2, record3]
 
         await repository.insertMany(records)
 
         const result = await repository.getByChainsTimestampAndId(
-          UnixTime(300),
+          UnixTime(100),
           ['ethereum'],
           ['arbitrum'],
           ['protocol1', 'protocol3'],
@@ -622,26 +616,30 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       it('returns all matching records when protocolIds is undefined', async () => {
         const record1 = record(
           'protocol1',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
           'protocol2',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token2',
           3,
           2000,
+          6000,
         )
         const records = [record1, record2]
 
         await repository.insertMany(records)
 
         const result = await repository.getByChainsTimestampAndId(
-          UnixTime(300),
+          UnixTime(100),
           ['ethereum'],
           ['arbitrum'],
           undefined,
@@ -653,26 +651,30 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       it('returns empty array when protocolIds is empty array', async () => {
         const record1 = record(
           'protocol1',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token1',
           5,
           1000,
+          5000,
         )
         const record2 = record(
           'protocol2',
-          UnixTime(300),
+          UnixTime(100),
           'ethereum',
           'arbitrum',
+          'token2',
           3,
           2000,
+          6000,
         )
         const records = [record1, record2]
 
         await repository.insertMany(records)
 
         const result = await repository.getByChainsTimestampAndId(
-          UnixTime(300),
+          UnixTime(100),
           ['ethereum'],
           ['arbitrum'],
           [],
@@ -689,20 +691,19 @@ function record(
   timestamp: UnixTime,
   srcChain: string,
   dstChain: string,
+  abstractTokenId: string,
   transferCount = 1,
   totalDurationSum = 0,
-  srcValueUsd?: number,
-  dstValueUsd?: number,
-  tokensByVolume: Record<string, number> = {},
-): AggregatedInteropTransferRecord {
+  volume = 1000,
+): AggregatedInteropTokenRecord {
   return {
     timestamp,
     id,
     srcChain,
     dstChain,
+    abstractTokenId,
     transferCount,
     totalDurationSum,
-    srcValueUsd,
-    dstValueUsd,
+    volume,
   }
 }

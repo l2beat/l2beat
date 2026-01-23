@@ -37,11 +37,47 @@ export async function getInteropDashboardData(
     : undefined
 
   const db = getDb()
-  const records = await db.aggregatedInteropTransfer.getLatest(
-    params.from,
-    params.to,
-    filteredProjects?.map((p) => p.id),
-  )
+  const latestTimestamp =
+    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  if (!latestTimestamp) {
+    return {
+      top3Paths: [],
+      topProtocols: [],
+      entries: [],
+    }
+  }
+
+  const [transfers, tokens] = await Promise.all([
+    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
+      latestTimestamp,
+      params.from,
+      params.to,
+      filteredProjects?.map((p) => p.id),
+    ),
+    db.aggregatedInteropToken.getByChainsTimestampAndId(
+      latestTimestamp,
+      params.from,
+      params.to,
+      filteredProjects?.map((p) => p.id),
+    ),
+  ])
+
+  const records = transfers.map((transfer) => ({
+    ...transfer,
+    tokens: tokens
+      .filter(
+        (token) =>
+          token.id === transfer.id &&
+          token.srcChain === transfer.srcChain &&
+          token.dstChain === transfer.dstChain,
+      )
+      .map((token) => ({
+        abstractTokenId: token.abstractTokenId,
+        transferCount: token.transferCount,
+        totalDurationSum: token.totalDurationSum,
+        volume: token.volume,
+      })),
+  }))
 
   if (records.length === 0) {
     return {
@@ -52,7 +88,7 @@ export async function getInteropDashboardData(
   }
 
   const tokensDetailsData = await tokenDb.abstractToken.getByIds(
-    records.flatMap((r) => Object.keys(r.tokensByVolume)),
+    records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
   const tokensDetailsDataMap = new Map<
     string,

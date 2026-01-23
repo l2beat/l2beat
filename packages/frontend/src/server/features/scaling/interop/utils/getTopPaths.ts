@@ -1,5 +1,5 @@
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropPathData = {
   srcChain: string
@@ -8,7 +8,7 @@ export type InteropPathData = {
 }
 
 export function getTopPaths(
-  records: AggregatedInteropTransferRecord[],
+  records: AggregatedInteropTransferWithTokens[],
 ): InteropPathData[] {
   const map = new Map<string, number>()
 

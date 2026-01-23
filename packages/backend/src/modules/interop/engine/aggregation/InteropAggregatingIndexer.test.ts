@@ -6,16 +6,16 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import { InteropTransferAggregatingIndexer } from './InteropTransferAggregatingIndexer'
+import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 
-describe(InteropTransferAggregatingIndexer.name, () => {
+describe(InteropAggregatingIndexer.name, () => {
   const to = 1768484645
   const from = to - UnixTime.DAY
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 
-  describe(InteropTransferAggregatingIndexer.prototype.update.name, () => {
+  describe(InteropAggregatingIndexer.prototype.update.name, () => {
     it('aggregates transfers and saves to database', async () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
@@ -57,6 +57,13 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(2),
       })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(2),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -64,9 +71,10 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         transaction,
         interopTransfer,
         aggregatedInteropTransfer,
+        aggregatedInteropToken,
       })
 
-      const indexer = new InteropTransferAggregatingIndexer({
+      const indexer = new InteropAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -92,13 +100,28 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config1',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { eth: 5000 },
           transferCount: 2,
           totalDurationSum: 11000,
           srcValueUsd: 5000,
           dstValueUsd: 5000,
         },
       ])
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 2,
+          totalDurationSum: 11000,
+          volume: 5000,
+        },
+      ])
+      expect(
+        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
     })
 
     it('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
@@ -176,7 +199,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           dstAbstractTokenId: 'usdc',
           duration: 12000,
           srcValueUsd: 3500,
-          dstValueUsd: 3500,
+          dstValueUsd: 3000,
         }),
       ]
 
@@ -217,16 +240,24 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(5),
       })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(5),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
         interopTransfer,
         aggregatedInteropTransfer,
+        aggregatedInteropToken,
         transaction,
       })
 
-      const indexer = new InteropTransferAggregatingIndexer({
+      const indexer = new InteropAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -250,7 +281,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config1',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { eth: 2000 },
           transferCount: 1,
           totalDurationSum: 5000,
           srcValueUsd: 2000,
@@ -262,7 +292,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config2',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { usdc: 1000 },
           transferCount: 1,
           totalDurationSum: 7000,
           srcValueUsd: 1000,
@@ -274,7 +303,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config2',
           srcChain: 'arbitrum',
           dstChain: 'ethereum',
-          tokensByVolume: { usdc: 2500 },
           transferCount: 1,
           totalDurationSum: 9000,
           srcValueUsd: 2500,
@@ -286,14 +314,62 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config3',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: {
-            eth: 10500,
-            usdc: 3500,
-          },
           transferCount: 3,
           totalDurationSum: 28000,
           srcValueUsd: 10500,
-          dstValueUsd: 10500,
+          dstValueUsd: 10000,
+        },
+      ])
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 1,
+          totalDurationSum: 5000,
+          volume: 2000,
+        },
+        {
+          timestamp: to,
+          id: 'config2',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 7000,
+          volume: 1000,
+        },
+        {
+          timestamp: to,
+          id: 'config2',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 9000,
+          volume: 2500,
+        },
+        {
+          timestamp: to,
+          id: 'config3',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 3,
+          totalDurationSum: 28000,
+          volume: 10500,
+        },
+        {
+          timestamp: to,
+          id: 'config3',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 12000,
+          volume: 3000,
         },
       ])
     })
@@ -311,8 +387,8 @@ function createTransfer(
     srcAbstractTokenId: string
     dstAbstractTokenId: string
     duration: number
-    srcValueUsd: number
-    dstValueUsd: number
+    srcValueUsd?: number
+    dstValueUsd?: number
   },
 ): InteropTransferRecord {
   return {
@@ -341,6 +417,12 @@ function createTransfer(
     dstAmount: undefined,
     dstPrice: undefined,
     isProcessed: false,
-    ...overrides,
+    srcChain: overrides.srcChain,
+    dstChain: overrides.dstChain,
+    srcAbstractTokenId: overrides.srcAbstractTokenId,
+    dstAbstractTokenId: overrides.dstAbstractTokenId,
+    duration: overrides.duration,
+    srcValueUsd: overrides.srcValueUsd,
+    dstValueUsd: overrides.dstValueUsd,
   }
 }

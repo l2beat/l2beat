@@ -1,5 +1,4 @@
 import type { ColumnHelper } from '@tanstack/react-table'
-import { EM_DASH } from '~/consts/characters'
 import { IndexCell } from '../../cells/IndexCell'
 
 export interface CommonProjectColumnsEntry {
@@ -9,7 +8,6 @@ export interface CommonProjectColumnsEntry {
 }
 
 export interface CommonProjectColumnsOptions {
-  activity?: boolean
   ignoreUnderReviewIcon?: boolean
 }
 
@@ -21,15 +19,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
   return [
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
-      cell: (ctx) => (
-        <IndexCell>
-          {opts?.activity
-            ? ctx.row.index === 0
-              ? EM_DASH
-              : ctx.row.index
-            : ctx.row.index + 1}
-        </IndexCell>
-      ),
+      cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
       sortDescFirst: false,
       meta: {
         headClassName: 'w-0',
