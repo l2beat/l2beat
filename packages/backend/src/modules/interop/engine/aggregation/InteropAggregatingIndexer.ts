@@ -1,24 +1,26 @@
 import type {
+  AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   Database,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
+import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 
-export interface InteropTransferAggregatingIndexerDeps
+export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
 }
 
-export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: InteropTransferAggregatingIndexerDeps) {
+export class InteropAggregatingIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: InteropAggregatingIndexerDeps) {
     super({ ...$, name: 'interop_aggregating' })
   }
 
@@ -27,7 +29,8 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const aggregatedRecords: AggregatedInteropTransferRecord[] = []
+    const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
+    const aggregatedTokens: AggregatedInteropTokenRecord[] = []
 
     for (const config of this.$.configs) {
       const conditions = this.txMatchers(config)
@@ -37,11 +40,19 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
       const grouped = groupBy(filtered, (x) => `${x.srcChain}-${x.dstChain}`)
 
       for (const group of Object.values(grouped)) {
-        aggregatedRecords.push({
+        aggregatedTransfers.push({
           timestamp: to,
           id: config.id,
-          ...this.mergeGroup(group),
+          ...getAggregatedTransfer(group),
         })
+
+        aggregatedTokens.push(
+          ...getAggregatedTokens(group).map((token) => ({
+            timestamp: to,
+            id: config.id,
+            ...token,
+          })),
+        )
       }
     }
 
@@ -49,11 +60,17 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,
       )
+      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
+        from,
+      )
+      await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
-      await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedRecords)
+      await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
+      await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
     })
     this.logger.info('Aggregated interop transfers saved to db', {
-      aggregatedRecords: aggregatedRecords.length,
+      aggregatedRecords: aggregatedTransfers.length,
+      aggregatedTokens: aggregatedTokens.length,
     })
 
     return to
@@ -62,71 +79,6 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
   // Invalidate on every restart
   override invalidate(_: number): Promise<number> {
     return Promise.resolve(0)
-  }
-
-  private mergeGroup(
-    group: InteropTransferRecord[],
-  ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
-    const first = group[0]
-    assert(first, 'Group is empty')
-
-    const tokensByVolume: Record<string, number> = {}
-    let totalDurationSum = 0
-    let srcValueUsd: number | undefined = undefined
-    let dstValueUsd: number | undefined = undefined
-
-    for (const transfer of group) {
-      totalDurationSum += transfer.duration
-      if (srcValueUsd === undefined) {
-        srcValueUsd = transfer.srcValueUsd
-      } else {
-        srcValueUsd += transfer.srcValueUsd ?? 0
-      }
-
-      if (dstValueUsd === undefined) {
-        dstValueUsd = transfer.dstValueUsd
-      } else {
-        dstValueUsd += transfer.dstValueUsd ?? 0
-      }
-
-      if (transfer.srcAbstractTokenId === transfer.dstAbstractTokenId) {
-        if (transfer.srcAbstractTokenId) {
-          tokensByVolume[transfer.srcAbstractTokenId] =
-            (tokensByVolume[transfer.srcAbstractTokenId] ?? 0) +
-            (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0)
-        }
-      } else {
-        if (transfer.srcAbstractTokenId) {
-          tokensByVolume[transfer.srcAbstractTokenId] =
-            (tokensByVolume[transfer.srcAbstractTokenId] ?? 0) +
-            (transfer.srcValueUsd ?? 0)
-        }
-        if (transfer.dstAbstractTokenId) {
-          tokensByVolume[transfer.dstAbstractTokenId] =
-            (tokensByVolume[transfer.dstAbstractTokenId] ?? 0) +
-            (transfer.dstValueUsd ?? 0)
-        }
-      }
-    }
-
-    return {
-      srcChain: first.srcChain,
-      dstChain: first.dstChain,
-      tokensByVolume: Object.fromEntries(
-        Object.entries(tokensByVolume).map(([key, value]) => [
-          key,
-          Math.round(value * 100) / 100,
-        ]),
-      ),
-      transferCount: group.length,
-      totalDurationSum,
-      srcValueUsd: srcValueUsd
-        ? Math.round(srcValueUsd * 100) / 100
-        : undefined,
-      dstValueUsd: dstValueUsd
-        ? Math.round(dstValueUsd * 100) / 100
-        : undefined,
-    }
   }
 
   private txMatchers(config: InteropAggregationConfig) {

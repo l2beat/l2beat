@@ -11,7 +11,7 @@ import {
 } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
-import { InteropTransferAggregatingIndexer } from './aggregation/InteropTransferAggregatingIndexer'
+import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -137,11 +137,9 @@ export function createInteropModule({
     logger,
   )
 
-  let interopTransferAggregatingIndexer:
-    | InteropTransferAggregatingIndexer
-    | undefined
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
-    interopTransferAggregatingIndexer = new InteropTransferAggregatingIndexer({
+    interopAggregatingIndexer = new InteropAggregatingIndexer({
       db,
       configs: config.interop.aggregation.configs,
       logger,
@@ -172,7 +170,7 @@ export function createInteropModule({
     }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
-      await interopTransferAggregatingIndexer?.start()
+      await interopAggregatingIndexer?.start()
     }
     if (config.interop && config.interop.financials.enabled) {
       await recentPricesIndexer.start()

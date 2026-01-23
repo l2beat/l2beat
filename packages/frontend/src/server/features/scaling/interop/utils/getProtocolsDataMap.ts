@@ -1,8 +1,8 @@
 import type { InteropConfig } from '@l2beat/config'
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export function getProtocolsDataMap(
-  records: AggregatedInteropTransferRecord[],
+  records: AggregatedInteropTransferWithTokens[],
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
 ) {
   const protocolsDataMap = new Map<
@@ -34,8 +34,11 @@ export function getProtocolsDataMap(
       outDurationSum: 0,
     }
 
-    for (const [tokenId, volume] of Object.entries(record.tokensByVolume)) {
-      current.tokens.set(tokenId, (current.tokens.get(tokenId) ?? 0) + volume)
+    for (const token of record.tokens) {
+      current.tokens.set(
+        token.abstractTokenId,
+        (current.tokens.get(token.abstractTokenId) ?? 0) + token.volume,
+      )
     }
 
     if (record.srcChain) {
