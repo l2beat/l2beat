@@ -2259,13 +2259,22 @@
     "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
+      // {
+      //   "chain": "zksync2",
+      //   "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
+      // },
+      // ZK token withdrawal (native to L2)
       {
         "chain": "zksync2",
-        "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
+        "tx": "0x4a43dee45ba4a574f725cdc58769be3a91ed111a77d969da537ac30dbfd004f4"
       },
       {
         "chain": "ethereum",
-        "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
+        "tx": "0x0b2f560e16561b6a941520e5acdde3f2f60b6185344eb1cb63feced08203cec4"
       }
     ],
     "events": [
