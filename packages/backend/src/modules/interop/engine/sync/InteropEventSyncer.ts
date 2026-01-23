@@ -108,6 +108,8 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
+const dbClearedFor = new Map<string, UnixTime>()
+
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
@@ -264,7 +266,14 @@ export class InteropEventSyncer extends TimeLoop {
     return getItemsToCapture(this.chain, block, logs)
   }
 
-  async deleteAllClusterData() {
+  async deleteAllClusterData(forRequest?: UnixTime) {
+    if (forRequest) {
+      if (dbClearedFor.get(this.cluster.name) === forRequest) {
+        return
+      }
+      dbClearedFor.set(this.cluster.name, forRequest)
+    }
+
     await this.db.transaction(async () => {
       for (const plugin of this.cluster.plugins) {
         // Delete messages:

@@ -55,7 +55,7 @@ export class CatchingUpState implements TimeloopState {
       const resyncFrom = await this.syncer.isResyncRequestedFrom()
       if (resyncFrom !== undefined) {
         this.status = 'deleting all data for resync'
-        await this.syncer.deleteAllClusterData()
+        await this.syncer.deleteAllClusterData(resyncFrom)
       }
 
       this.status = 'syncing'
