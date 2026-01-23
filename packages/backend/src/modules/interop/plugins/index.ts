@@ -68,6 +68,8 @@ export interface PluginCluster {
   plugins: InteropPlugin[]
 }
 
+import { ZkStackPlugin } from './zkstack'
+
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
   configPlugins: InteropConfigPlugin[]
@@ -199,6 +201,7 @@ export function createInteropPlugins(
       new RelayPlugin(),
       new RelaySimplePlugIn(),
       new GasZipPlugin(deps.logger),
+      new ZkStackPlugin(),
     ],
   }
 }
