@@ -55,7 +55,7 @@ export class CatchingUpState implements TimeloopState {
       const resyncFrom = await this.syncer.isResyncRequestedFrom()
       if (resyncFrom !== undefined) {
         this.status = 'deleting all data for resync'
-        await this.syncer.deleteAllClusterData()
+        await this.syncer.deleteAllClusterData(resyncFrom)
       }
 
       this.status = 'syncing'
@@ -98,7 +98,7 @@ export class CatchingUpState implements TimeloopState {
 
     this.logger.info('New range synced', {
       chain: this.syncer.chain,
-      pluginName: this.syncer.plugin.name,
+      pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
     })
   }
@@ -197,7 +197,7 @@ export class CatchingUpState implements TimeloopState {
 
   async clearResyncRequestFlag() {
     await this.syncer.db.interopPluginSyncState.setResyncRequestedFrom(
-      this.syncer.plugin.name,
+      this.syncer.cluster.name,
       this.syncer.chain,
       null,
     )
@@ -237,7 +237,7 @@ export class CatchingUpState implements TimeloopState {
       nextFrom = syncedRange.toBlock + 1n
     } else {
       throw new Error(
-        `Can't resync ${this.syncer.plugin.name} plugin without "from" timestamp`,
+        `Can't resync ${this.syncer.cluster.name} cluster without "from" timestamp`,
       )
     }
 

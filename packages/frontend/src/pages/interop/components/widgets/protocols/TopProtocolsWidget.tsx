@@ -77,9 +77,11 @@ export function TopProtocolsWidget({
                       className="size-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
                     />
-                    {protocol.protocolName === 'Others'
-                      ? `Others (${protocol.othersCount ?? 0})`
-                      : protocol.protocolName}
+                    <div className="max-w-20">
+                      {protocol.protocolName === 'Others'
+                        ? `Others (${protocol.othersCount ?? 0})`
+                        : protocol.protocolName}
+                    </div>
                   </td>
                   <td className="px-2 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%

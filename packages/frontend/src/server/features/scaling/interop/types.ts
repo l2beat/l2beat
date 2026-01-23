@@ -1,3 +1,7 @@
+import type {
+  AggregatedInteropTokenRecord,
+  AggregatedInteropTransferRecord,
+} from '@l2beat/database'
 import { InteropBridgeType } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
@@ -7,3 +11,11 @@ export const InteropDashboardParams = v.object({
   to: v.array(v.string()),
   type: InteropBridgeType.optional(),
 })
+
+export type AggregatedInteropTransferWithTokens =
+  AggregatedInteropTransferRecord & {
+    tokens: Omit<
+      AggregatedInteropTokenRecord,
+      'id' | 'timestamp' | 'srcChain' | 'dstChain'
+    >[]
+  }

@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropProtocolData = {
   protocolName: string
@@ -15,7 +15,7 @@ export type InteropProtocolData = {
 }
 
 export function getTopProtocols(
-  records: AggregatedInteropTransferRecord[],
+  records: AggregatedInteropTransferWithTokens[],
   interopProjects: Project<'interopConfig'>[],
 ): InteropProtocolData[] {
   const map = new Map<string, { volume: number; transfers: number }>()

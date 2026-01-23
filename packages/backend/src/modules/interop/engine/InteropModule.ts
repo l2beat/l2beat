@@ -4,10 +4,14 @@ import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
-import { createInteropPlugins } from '../plugins'
+import {
+  createInteropPlugins,
+  flattenClusters,
+  pluginsAsClusters,
+} from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
-import { InteropTransferAggregatingIndexer } from './aggregation/InteropTransferAggregatingIndexer'
+import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -45,7 +49,7 @@ export function createInteropModule({
   })
 
   const syncersManager = new InteropSyncersManager(
-    plugins.eventPlugins,
+    pluginsAsClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
     config.chainConfig,
     eventStore,
@@ -60,7 +64,7 @@ export function createInteropModule({
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
         chain.id,
-        plugins.eventPlugins,
+        flattenClusters(plugins.eventPlugins),
         eventStore,
         logger,
       )
@@ -75,7 +79,7 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
-    plugins.eventPlugins,
+    flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
     transferStream,
@@ -133,11 +137,9 @@ export function createInteropModule({
     logger,
   )
 
-  let interopTransferAggregatingIndexer:
-    | InteropTransferAggregatingIndexer
-    | undefined
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
-    interopTransferAggregatingIndexer = new InteropTransferAggregatingIndexer({
+    interopAggregatingIndexer = new InteropAggregatingIndexer({
       db,
       configs: config.interop.aggregation.configs,
       logger,
@@ -168,7 +170,7 @@ export function createInteropModule({
     }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
-      await interopTransferAggregatingIndexer?.start()
+      await interopAggregatingIndexer?.start()
     }
     if (config.interop && config.interop.financials.enabled) {
       await recentPricesIndexer.start()
@@ -183,7 +185,7 @@ export function createInteropModule({
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
-      eventPlugins: plugins.eventPlugins.length,
+      eventPlugins: flattenClusters(plugins.eventPlugins).length,
     })
 
     if (config.interop && config.interop.capture.enabled) {

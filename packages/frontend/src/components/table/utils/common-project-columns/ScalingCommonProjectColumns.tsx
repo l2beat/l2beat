@@ -31,11 +31,6 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
           <TableLink href={getHref(ctx.row.original)}>{projectName}</TableLink>
         )
       },
-      meta: opts?.activity
-        ? {
-            headClassName: 'w-0 min-w-[154px]',
-          }
-        : undefined,
       enableHiding: false,
     }),
   ]
