@@ -18,6 +18,7 @@ export const puffer: ScalingProject = upcomingL2({
       bridges: ['https://quest.puffer.fi/unifi'],
       documentation: ['https://docs-unifi.puffer.fi/'],
       repositories: ['https://github.com/PufferFinance'],
+      explorers: ['https://testnet-unifi-rpc.puffer.fi'],
       socialMedia: [
         'https://x.com/puffer_unifi',
         'https://discord.com/invite/pufferfi',
