@@ -11,7 +11,7 @@ import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from '../plugins'
+import { createInteropPlugins, flattenClusters } from '../plugins'
 import type { InteropEvent } from '../plugins/types'
 import type { Example } from './core'
 import { RpcReplay } from './snapshot/replay'
@@ -90,7 +90,7 @@ export class ExampleRunner {
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
 
-      for (const plugin of plugins.eventPlugins) {
+      for (const plugin of flattenClusters(plugins.eventPlugins)) {
         if (!plugin.captureTx) {
           continue
         }
@@ -107,7 +107,7 @@ export class ExampleRunner {
       }
 
       for (const log of txLogs) {
-        for (const plugin of plugins.eventPlugins) {
+        for (const plugin of flattenClusters(plugins.eventPlugins)) {
           if (!plugin.capture) {
             continue
           }
@@ -136,7 +136,7 @@ export class ExampleRunner {
       (type) => events.filter((x) => x.type === type),
       [...new Set(events.map((x) => x.type))],
       events.length,
-      plugins.eventPlugins,
+      flattenClusters(plugins.eventPlugins),
       this.$.example.txs.map((x) => x.chain),
       this.$.logger,
     )
