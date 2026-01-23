@@ -41,8 +41,7 @@ export function PluginsResyncControls(props: {
                     </button>
                     {index < resyncDaysOptions.length - 1 ? ' ' : null}
                   </React.Fragment>
-                ))}
-                {' '}
+                ))}{' '}
                 <button
                   type="button"
                   className="interop-resync-button"
