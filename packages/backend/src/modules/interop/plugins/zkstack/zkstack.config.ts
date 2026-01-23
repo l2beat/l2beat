@@ -13,36 +13,32 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
+import { isEqual } from 'earl'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   defineConfig,
   type InteropConfigPlugin,
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
-import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
-import { ZKSTACK_SUPPORTED, ZKSYNC_GAS_ASSET_ID } from './zkstack.networks'
+import { ZKSTACK_SUPPORTED } from './zkstack.networks'
 
-interface ZkStackAssetEntry {
+export interface ZkStackAssetMapping {
   assetId: `0x${string}`
-  tokenAddress: Address32
-}
-
-export interface ZkStackChainAssets {
-  chain: string
-  chainId: number
-  assets: ZkStackAssetEntry[]
+  originChainId: number
+  l1TokenAddress: Address32
+  l2TokenAddress: Address32
 }
 
 export const ZkStackAssetsConfig =
-  defineConfig<ZkStackChainAssets[]>('zkstack-assets')
+  defineConfig<ZkStackAssetMapping[]>('zkstack-assets')
 
 const ASSET_ABI = parseAbi([
   'function assetId(address tokenAddress) view returns (bytes32)',
-  'function calculateCreate2TokenAddress(uint256 _originChainId, address _nonNativeToken) view returns (address)',
+  'function originChainId(bytes32 assetId) view returns (uint256)',
+  'function tokenAddress(bytes32 assetId) view returns (address)',
 ])
 
 const L1_CHAIN = 'ethereum'
-const L1_CHAIN_ID = 1n
 const MULTICALL_CHUNK = 400
 const ZERO_ASSET_ID = `0x${'0'.repeat(64)}` as const
 
@@ -66,88 +62,113 @@ export class ZkStackConfigPlugin
     try {
       const latest = await this.getLatestAssets()
       const previous = this.store.get(ZkStackAssetsConfig)
-      const reconciled = reconcileNetworks(previous, latest)
-
-      if (reconciled.removed.length > 0) {
-        this.logger.error('Networks removed', {
-          plugin: ZkStackAssetsConfig.key,
-          removed: reconciled.removed,
-        })
-      }
-
-      if (reconciled.updated.length > 0) {
+      if (!previous || !isEqual(previous, latest)) {
         this.logger.info('Assets updated', { plugin: ZkStackAssetsConfig.key })
-        this.store.set(ZkStackAssetsConfig, reconciled.updated)
+        this.store.set(ZkStackAssetsConfig, latest)
       }
     } catch (error) {
       this.logger.error('Failed to update assets', { error })
     }
   }
 
-  private async getLatestAssets(): Promise<ZkStackChainAssets[]> {
+  private async getLatestAssets(): Promise<ZkStackAssetMapping[]> {
     const l1Rpc = this.rpcs.get(L1_CHAIN)
     if (!l1Rpc) {
       throw new Error(`Missing RPC client for ${L1_CHAIN}`)
     }
 
-    const l2Networks = ZKSTACK_SUPPORTED.filter((n) => this.rpcs.has(n.chain))
-    if (l2Networks.length === 0) {
-      throw new Error('Missing RPC clients for ZK stack chains')
+    const l2Network = ZKSTACK_SUPPORTED.find((n) => this.rpcs.has(n.chain))
+    if (!l2Network) {
+      throw new Error('Missing RPC client for zksync2')
     }
 
-    const l1Tokens = await this.getL1TokenAddresses()
+    const l2Rpc = this.rpcs.get(l2Network.chain)
+    if (!l2Rpc) {
+      throw new Error(`Missing RPC client for ${l2Network.chain}`)
+    }
+
+    const l1Tokens = await this.getTokenAddresses(L1_CHAIN)
     if (l1Tokens.length === 0) {
       throw new Error('No L1 tokens found in token database')
     }
 
-    const l1Vault = ChainSpecificAddress.address(
-      l2Networks[0].l1NativeTokenVault,
-    )
-    const assetIdsByToken = await this.fetchAssetIds(l1Rpc, l1Vault, l1Tokens)
-    if (assetIdsByToken.size === 0) {
-      throw new Error('No assetIds resolved from L1 vault')
+    const l2Tokens = await this.getTokenAddresses(l2Network.chain)
+    if (l2Tokens.length === 0) {
+      throw new Error('No L2 tokens found in token database')
     }
 
-    const l1Assets = this.buildAssets(
-      assetIdsByToken,
-      new Map(l1Tokens.map((token) => [token, token] as const)),
+    const l1Vault = ChainSpecificAddress.address(l2Network.l1NativeTokenVault)
+    const l2Bridge = ChainSpecificAddress.address(l2Network.l2SharedBridge)
+
+    const l1AssetIdsByToken = await this.fetchAssetIds(
+      l1Rpc,
+      l1Vault,
+      l1Tokens,
+    )
+    const l2AssetIdsByToken = await this.fetchAssetIds(
+      l2Rpc,
+      l2Bridge,
+      l2Tokens,
     )
 
-    const configs: ZkStackChainAssets[] = [
-      {
-        chain: L1_CHAIN,
-        chainId: Number(L1_CHAIN_ID),
-        assets: this.withGasAsset(l1Assets),
-      },
-    ]
+    if (l1AssetIdsByToken.size === 0 && l2AssetIdsByToken.size === 0) {
+      throw new Error('No assetIds resolved from L1 or L2')
+    }
 
-    for (const network of l2Networks) {
-      const l2Rpc = this.rpcs.get(network.chain)
-      if (!l2Rpc) continue
+    const assetIdSet = new Set<string>()
+    for (const assetId of l1AssetIdsByToken.values()) {
+      assetIdSet.add(assetId)
+    }
+    for (const assetId of l2AssetIdsByToken.values()) {
+      assetIdSet.add(assetId)
+    }
 
-      const l2Bridge = ChainSpecificAddress.address(network.l2SharedBridge)
-      const l2TokensByL1 = await this.fetchL2TokenAddresses(
-        l2Rpc,
-        l2Bridge,
-        l1Tokens,
+    const assetIds = [...assetIdSet]
+    const originChainIds = await this.fetchOriginChainIds(
+      l1Rpc,
+      l1Vault,
+      assetIds,
+    )
+
+    const l1TokensByAssetId = await this.fetchTokenAddressesByAssetId(
+      l1Rpc,
+      l1Vault,
+      assetIds,
+    )
+    const l2TokensByAssetId = await this.fetchTokenAddressesByAssetId(
+      l2Rpc,
+      l2Bridge,
+      assetIds,
+    )
+
+    const mappings: ZkStackAssetMapping[] = []
+
+    for (const assetId of assetIds) {
+      const originChainId = originChainIds.get(assetId)
+      if (!originChainId) continue
+
+      const l1Token = l1TokensByAssetId.get(assetId)
+      const l2Token = l2TokensByAssetId.get(assetId)
+      if (!l1Token || !l2Token) continue
+      if (
+        l1Token === EthereumAddress.ZERO ||
+        l2Token === EthereumAddress.ZERO
       )
-      if (l2TokensByL1.size === 0) {
-        throw new Error(`No L2 token addresses resolved for ${network.chain}`)
-      }
+        continue
 
-      const l2Assets = this.buildAssets(assetIdsByToken, l2TokensByL1)
-
-      configs.push({
-        chain: network.chain,
-        chainId: network.chainId,
-        assets: this.withGasAsset(l2Assets),
+      mappings.push({
+        assetId: assetId as `0x${string}`,
+        originChainId,
+        l1TokenAddress: Address32.from(l1Token),
+        l2TokenAddress: Address32.from(l2Token),
       })
     }
 
-    return configs
+    mappings.sort((a, b) => a.assetId.localeCompare(b.assetId))
+    return mappings
   }
 
-  private async getL1TokenAddresses(): Promise<EthereumAddress[]> {
+  private async getTokenAddresses(chain: string): Promise<EthereumAddress[]> {
     const { abstractTokens, deployedWithoutAbstractTokens } =
       await this.tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
 
@@ -158,7 +179,7 @@ export class ZkStackConfigPlugin
 
     const unique = new Map<string, EthereumAddress>()
     for (const token of deployed) {
-      if (token.chain !== L1_CHAIN) continue
+      if (token.chain !== chain) continue
       if (!token.address.startsWith('0x') || token.address.length !== 42)
         continue
       unique.set(token.address.toLowerCase(), EthereumAddress(token.address))
@@ -169,11 +190,11 @@ export class ZkStackConfigPlugin
 
   private async fetchAssetIds(
     rpc: IRpcClient,
-    l1Vault: EthereumAddress,
+    contract: EthereumAddress,
     tokens: EthereumAddress[],
   ): Promise<Map<EthereumAddress, `0x${string}`>> {
     const calls: CallParameters[] = tokens.map((token) => ({
-      to: l1Vault,
+      to: contract,
       data: Bytes.fromHex(
         encodeFunctionData({
           abi: ASSET_ABI,
@@ -221,18 +242,18 @@ export class ZkStackConfigPlugin
     return assetIds
   }
 
-  private async fetchL2TokenAddresses(
+  private async fetchOriginChainIds(
     rpc: IRpcClient,
-    l2Bridge: EthereumAddress,
-    tokens: EthereumAddress[],
-  ): Promise<Map<EthereumAddress, EthereumAddress>> {
-    const calls: CallParameters[] = tokens.map((token) => ({
-      to: l2Bridge,
+    l1Vault: EthereumAddress,
+    assetIds: string[],
+  ): Promise<Map<string, number>> {
+    const calls: CallParameters[] = assetIds.map((assetId) => ({
+      to: l1Vault,
       data: Bytes.fromHex(
         encodeFunctionData({
           abi: ASSET_ABI,
-          functionName: 'calculateCreate2TokenAddress',
-          args: [L1_CHAIN_ID, token as `0x${string}`],
+          functionName: 'originChainId',
+          args: [assetId as `0x${string}`],
         }),
       ),
     }))
@@ -240,7 +261,7 @@ export class ZkStackConfigPlugin
     const latest = await rpc.getLatestBlockNumber()
     const results = await this.multicallInChunks(rpc, calls, latest)
 
-    const l2Tokens = new Map<EthereumAddress, EthereumAddress>()
+    const originChainIds = new Map<string, number>()
     let failed = 0
 
     for (const [i, result] of results.entries()) {
@@ -249,57 +270,69 @@ export class ZkStackConfigPlugin
         continue
       }
 
-      const l2Token = decodeFunctionResult({
+      const originChainId = decodeFunctionResult({
         abi: ASSET_ABI,
-        functionName: 'calculateCreate2TokenAddress',
+        functionName: 'originChainId',
         data: result.data.toString() as Hex,
-      }) as `0x${string}`
+      }) as bigint
 
-      l2Tokens.set(tokens[i], EthereumAddress(l2Token))
+      if (originChainId === 0n) continue
+      originChainIds.set(assetIds[i], Number(originChainId))
     }
 
-    this.logger.info('Resolved L2 token addresses', {
-      total: tokens.length,
-      resolved: l2Tokens.size,
+    this.logger.info('Resolved origin chain ids', {
+      total: assetIds.length,
+      resolved: originChainIds.size,
       failed,
     })
 
-    return l2Tokens
+    return originChainIds
   }
 
-  private buildAssets(
-    assetIdsByToken: Map<EthereumAddress, `0x${string}`>,
-    tokenAddresses: Map<EthereumAddress, EthereumAddress>,
-  ): ZkStackAssetEntry[] {
-    const assets: ZkStackAssetEntry[] = []
+  private async fetchTokenAddressesByAssetId(
+    rpc: IRpcClient,
+    contract: EthereumAddress,
+    assetIds: string[],
+  ): Promise<Map<string, EthereumAddress>> {
+    const calls: CallParameters[] = assetIds.map((assetId) => ({
+      to: contract,
+      data: Bytes.fromHex(
+        encodeFunctionData({
+          abi: ASSET_ABI,
+          functionName: 'tokenAddress',
+          args: [assetId as `0x${string}`],
+        }),
+      ),
+    }))
 
-    for (const [token, assetId] of assetIdsByToken) {
-      const tokenAddress = tokenAddresses.get(token)
-      if (!tokenAddress) continue
-      assets.push({
-        assetId,
-        tokenAddress: Address32.from(tokenAddress),
-      })
+    const latest = await rpc.getLatestBlockNumber()
+    const results = await this.multicallInChunks(rpc, calls, latest)
+
+    const tokensByAssetId = new Map<string, EthereumAddress>()
+    let failed = 0
+
+    for (const [i, result] of results.entries()) {
+      if (!result.success || result.data.toString() === '0x') {
+        failed++
+        continue
+      }
+
+      const token = decodeFunctionResult({
+        abi: ASSET_ABI,
+        functionName: 'tokenAddress',
+        data: result.data.toString() as Hex,
+      }) as `0x${string}`
+
+      tokensByAssetId.set(assetIds[i], EthereumAddress(token))
     }
 
-    assets.sort((a, b) => a.assetId.localeCompare(b.assetId))
-    return assets
-  }
+    this.logger.info('Resolved tokenAddress by assetId', {
+      total: assetIds.length,
+      resolved: tokensByAssetId.size,
+      failed,
+    })
 
-  private withGasAsset(assets: ZkStackAssetEntry[]): ZkStackAssetEntry[] {
-    const gasAssetId = ZKSYNC_GAS_ASSET_ID as `0x${string}`
-    const next = assets.some((asset) => asset.assetId === gasAssetId)
-      ? [...assets]
-      : [
-          ...assets,
-          {
-            assetId: gasAssetId,
-            tokenAddress: Address32.NATIVE,
-          },
-        ]
-
-    next.sort((a, b) => a.assetId.localeCompare(b.assetId))
-    return next
+    return tokensByAssetId
   }
 
   private async multicallInChunks(

@@ -16,7 +16,10 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { ZkStackAssetsConfig, type ZkStackChainAssets } from './zkstack.config'
+import {
+  ZkStackAssetsConfig,
+  type ZkStackAssetMapping,
+} from './zkstack.config'
 import {
   getNetworkByChainId,
   getNetworkByDiamondAddress,
@@ -54,7 +57,7 @@ const bridgeMintLog =
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
-// == Parsers ==
+  // == Parsers ==
 
 const parseNewPriorityRequestId = createEventParser(newPriorityRequestIdLog)
 const parseBridgehubDepositBaseTokenInitiated = createEventParser(
@@ -69,7 +72,10 @@ const parseWithdrawal = createEventParser(withdrawalLog)
 const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
 const parseBridgeMint = createEventParser(bridgeMintLog)
 const parseBridgeBurn = createEventParser(bridgeBurnLog)
-type AssetLookup = Map<string, Map<string, Address32>>
+type AssetLookup = Map<
+  string,
+  { l1TokenAddress: Address32; l2TokenAddress: Address32 }
+>
 
 function zkstackWithdrawMatchId(
   assetId: `0x${string}`,
@@ -147,7 +153,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
   readonly name = 'zkstack'
 
   private assetCache?: {
-    source: ZkStackChainAssets[]
+    source: ZkStackAssetMapping[]
     assets: AssetLookup
   }
 
@@ -580,9 +586,9 @@ export class ZkStackPlugin implements InteropPluginResyncable {
   ): Address32 | undefined {
     const assets = this.getAssetLookup()
     if (!assets) return
-    const chainAssets = assets.get(chain)
-    if (!chainAssets) return
-    return chainAssets.get(assetId.toLowerCase())
+    const entry = assets.get(assetId.toLowerCase())
+    if (!entry) return
+    return chain === 'ethereum' ? entry.l1TokenAddress : entry.l2TokenAddress
   }
 
   private getAssetLookup(): AssetLookup | undefined {
@@ -591,12 +597,11 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
     if (this.assetCache?.source !== config) {
       const lookup: AssetLookup = new Map()
-      for (const chainConfig of config) {
-        const chainMap = new Map<string, Address32>()
-        for (const asset of chainConfig.assets) {
-          chainMap.set(asset.assetId.toLowerCase(), asset.tokenAddress)
-        }
-        lookup.set(chainConfig.chain, chainMap)
+      for (const asset of config) {
+        lookup.set(asset.assetId.toLowerCase(), {
+          l1TokenAddress: asset.l1TokenAddress,
+          l2TokenAddress: asset.l2TokenAddress,
+        })
       }
       this.assetCache = { source: config, assets: lookup }
     }
