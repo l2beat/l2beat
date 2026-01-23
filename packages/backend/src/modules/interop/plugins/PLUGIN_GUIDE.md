@@ -43,7 +43,7 @@ export PRISMA_DB_URL=$(grep "^PRISMA_DB_URL=" /packages/backend/.env | cut -d= -
 # Get receipt with logs
 cast receipt <TX_HASH> --rpc-url $ETHEREUM_RPC_URL
 
-# Decode event signature
+# Decode event signature from topic0 (crucial for correct indexed params / tuple syntax)
 cast 4byte-event <TOPIC0_HASH>
 
 # Get contract source (shows indexed params)
@@ -110,6 +110,23 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example my-plugin --si
 
 ## Common Patterns
 
+### When You Need Other Logs in the Same Tx
+
+`input.txLogs` only contains **all logs from the transaction** if you request them.
+Otherwise, `txLogs` only includes logs that match your own subscribed signatures.
+
+Use `includeTxEvents` in `getDataRequests()` whenever you need to correlate with
+auxiliary logs (e.g. `Transfer`, `BridgeBurn`, `BridgeMint`, etc.):
+
+```ts
+{
+  type: 'event',
+  signature: myPrimaryEventLog,
+  includeTxEvents: [transferLog, bridgeBurnLog],
+  addresses: [L1_BRIDGE],
+}
+```
+
 ### Building on OpStack
 
 1. Import OpStack event types: `SentMessage`, `RelayedMessage`, `MessagePassed`, `WithdrawalFinalized`
@@ -142,7 +159,7 @@ Example: Optimism ETH deposits have an extra `ETHLocked` event that Base doesn't
 # Get log indices
 cast receipt <TX_HASH> --rpc-url $ETHEREUM_RPC_URL --json | jq '.logs[] | {logIndex, address, topic0: .topics[0]}'
 
-# Decode event signature
+# Decode event signature (make sure indexed params + tuple syntax are correct)
 cast 4byte-event <TOPIC0>
 ```
 
@@ -154,6 +171,7 @@ Convert hex logIndex to decimal and calculate offset.
 - Wrong event signature (check indexed params)
 - Wrong contract address
 - Wrong chain check in `capture()`
+- `includeTxEvents` missing when relying on `txLogs` for same-tx matching
 
 ### Match Not Working
 - Missing event in `matchTypes` array
