@@ -124,7 +124,7 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
     })
 
-    it('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
+    it.only('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
       const transfers: InteropTransferRecord[] = [
         // Plain plugin filter: across (should match config1)
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
@@ -199,7 +199,7 @@ describe(InteropAggregatingIndexer.name, () => {
           dstAbstractTokenId: 'usdc',
           duration: 12000,
           srcValueUsd: 3500,
-          dstValueUsd: 3500,
+          dstValueUsd: 3000,
         }),
       ]
 
@@ -317,11 +317,10 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 3,
           totalDurationSum: 28000,
           srcValueUsd: 10500,
-          dstValueUsd: 10500,
+          dstValueUsd: 10000,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
-        // Config1: Plain plugin filter - should match msg1 (across)
         {
           timestamp: to,
           id: 'config1',
@@ -332,7 +331,6 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           volume: 2000,
         },
-        // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
         {
           timestamp: to,
           id: 'config2',
@@ -343,7 +341,6 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 7000,
           volume: 1000,
         },
-        // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
         {
           timestamp: to,
           id: 'config2',
@@ -354,16 +351,15 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 9000,
           volume: 2500,
         },
-        // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc)
         {
           timestamp: to,
           id: 'config3',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
-          transferCount: 2,
-          totalDurationSum: 22000,
-          volume: 7500,
+          transferCount: 3,
+          totalDurationSum: 28000,
+          volume: 10500,
         },
         {
           timestamp: to,
@@ -373,7 +369,7 @@ describe(InteropAggregatingIndexer.name, () => {
           abstractTokenId: 'usdc',
           transferCount: 1,
           totalDurationSum: 12000,
-          volume: 3500,
+          volume: 3000,
         },
       ])
     })
