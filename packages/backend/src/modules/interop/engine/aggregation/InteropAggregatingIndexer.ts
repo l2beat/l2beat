@@ -29,7 +29,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const aggregatedRecords: AggregatedInteropTransferRecord[] = []
+    const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
     const aggregatedTokens: AggregatedInteropTokenRecord[] = []
 
     for (const config of this.$.configs) {
@@ -40,7 +40,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       const grouped = groupBy(filtered, (x) => `${x.srcChain}-${x.dstChain}`)
 
       for (const group of Object.values(grouped)) {
-        aggregatedRecords.push({
+        aggregatedTransfers.push({
           timestamp: to,
           id: config.id,
           ...getAggregatedTransfer(group),
@@ -65,11 +65,11 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
-      await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedRecords)
+      await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
       await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
     })
     this.logger.info('Aggregated interop transfers saved to db', {
-      aggregatedRecords: aggregatedRecords.length,
+      aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
     })
 
