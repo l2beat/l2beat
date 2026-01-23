@@ -256,9 +256,9 @@ function checkExample(
     verbose,
   )
 
-  console.log(
-    `\n--- ${exampleId}${example.description ? `: ${example.description}` : ''} ---`,
-  )
+  const header = example.name ? `${example.name} (${exampleId})` : exampleId
+
+  console.log(`\n--- ${header} ---`)
   console.log(
     `    Txs: ${example.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
   )
