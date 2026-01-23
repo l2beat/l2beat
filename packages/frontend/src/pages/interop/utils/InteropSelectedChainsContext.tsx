@@ -5,9 +5,13 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { useEventListener } from '~/hooks/useEventListener'
 
 interface InteropSelectedChainsContextType {
   selectedChains: {
@@ -28,15 +32,64 @@ const InteropSelectedChainsContext = createContext<
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChain[]
+  initialSelectedChains: { from: string[]; to: string[] }
 }
 
 export function InteropSelectedChainsProvider({
   children,
   interopChains,
+  initialSelectedChains,
 }: InteropSelectedChainsProviderProps) {
-  const [selectedChains, setSelectedChains] = useState({
-    from: interopChains.map((chain) => chain.id),
-    to: interopChains.map((chain) => chain.id),
+  const allChainIds = useMemo(() => interopChains.map((c) => c.id), [interopChains])
+  const [selectedChains, setSelectedChains] = useState(initialSelectedChains)
+
+  // Debounce URL updates (500ms delay)
+  const debouncedChains = useDebouncedValue(selectedChains, 500)
+
+  // Track if change came from popstate (to skip URL update)
+  const skipNextUrlUpdate = useRef(false)
+
+  // Sync debounced state to URL
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (skipNextUrlUpdate.current) {
+      skipNextUrlUpdate.current = false
+      return
+    }
+
+    const params = new URLSearchParams(window.location.search)
+
+    if (debouncedChains.from.length < allChainIds.length) {
+      params.set('from', debouncedChains.from.join(','))
+    } else {
+      params.delete('from')
+    }
+
+    if (debouncedChains.to.length < allChainIds.length) {
+      params.set('to', debouncedChains.to.join(','))
+    } else {
+      params.delete('to')
+    }
+
+    const newUrl =
+      params.size > 0
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname
+
+    const currentUrl = window.location.pathname + window.location.search
+    if (newUrl !== currentUrl) {
+      window.history.pushState({}, '', newUrl)
+    }
+  }, [debouncedChains, allChainIds])
+
+  // Listen for browser back/forward
+  useEventListener('popstate', () => {
+    skipNextUrlUpdate.current = true
+    const params = new URLSearchParams(window.location.search)
+    setSelectedChains({
+      from: parseChainIdsFromUrl(params.get('from'), allChainIds),
+      to: parseChainIdsFromUrl(params.get('to'), allChainIds),
+    })
   })
 
   const toggleFrom = useCallback((chainId: string) => {
@@ -55,17 +108,17 @@ export function InteropSelectedChainsProvider({
 
   const reset = useCallback(() => {
     setSelectedChains({
-      from: interopChains.map((chain) => chain.id),
-      to: interopChains.map((chain) => chain.id),
+      from: allChainIds,
+      to: allChainIds,
     })
-  }, [interopChains])
+  }, [allChainIds])
 
   const isDirty = useMemo(() => {
     return (
-      selectedChains.from.length !== interopChains.length ||
-      selectedChains.to.length !== interopChains.length
+      selectedChains.from.length !== allChainIds.length ||
+      selectedChains.to.length !== allChainIds.length
     )
-  }, [selectedChains, interopChains])
+  }, [selectedChains, allChainIds])
 
   const setPath = useCallback((paths: { from: string; to: string }) => {
     setSelectedChains({
@@ -81,6 +134,15 @@ export function InteropSelectedChainsProvider({
       {children}
     </InteropSelectedChainsContext.Provider>
   )
+}
+
+function parseChainIdsFromUrl(
+  param: string | null,
+  allChainIds: string[],
+): string[] {
+  if (!param) return allChainIds
+  const ids = param.split(',').filter((id) => allChainIds.includes(id))
+  return ids.length > 0 ? ids : allChainIds
 }
 
 export function useInteropSelectedChains() {

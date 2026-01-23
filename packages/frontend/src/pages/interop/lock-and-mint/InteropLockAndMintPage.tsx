@@ -20,11 +20,13 @@ import { HeaderWithDescription } from './components/HeaderWithDescription'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  initialSelectedChains: { from: string[]; to: string[] }
 }
 
 export function InteropLockAndMintPage({
   interopChains,
   queryState,
+  initialSelectedChains,
   ...props
 }: Props) {
   return (
@@ -34,7 +36,10 @@ export function InteropLockAndMintPage({
           <div className="max-md:hidden">
             <HeaderWithDescription />
           </div>
-          <InteropSelectedChainsProvider interopChains={interopChains}>
+          <InteropSelectedChainsProvider
+            interopChains={interopChains}
+            initialSelectedChains={initialSelectedChains}
+          >
             <ChainSelector chains={interopChains} />
             <div className="md:hidden">
               <HeaderWithDescription />

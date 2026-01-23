@@ -1,11 +1,24 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { validateRoute } from '~/utils/validateRoute'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropOmnichainData } from './omnichain/getInteropOmnichainData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+
+const fromToQuerySchema = v.object({
+  from: v
+    .string()
+    .optional()
+    .transform((v) => v?.split(',')),
+  to: v
+    .string()
+    .optional()
+    .transform((v) => v?.split(',')),
+})
 
 export function createInteropRouter(
   manifest: Manifest,
@@ -18,29 +31,53 @@ export function createInteropRouter(
     res.redirect('/interop/summary')
   })
 
-  router.get('/interop/summary', async (req, res) => {
-    const data = await getInteropSummaryData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/interop/summary',
+    validateRoute({
+      query: fromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropSummaryData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
-  router.get('/interop/non-minting', async (req, res) => {
-    const data = await getInteropNonMintingData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/interop/non-minting',
+    validateRoute({
+      query: fromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropNonMintingData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
-  router.get('/interop/lock-and-mint', async (req, res) => {
-    const data = await getInteropLockAndMintData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/interop/lock-and-mint',
+    validateRoute({
+      query: fromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropLockAndMintData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
-  router.get('/interop/omnichain', async (req, res) => {
-    const data = await getInteropOmnichainData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/interop/omnichain',
+    validateRoute({
+      query: fromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropOmnichainData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   return router
 }
