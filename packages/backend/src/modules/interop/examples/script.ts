@@ -1,198 +1,149 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
-  MulticallV3Client,
-  RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
-import { v } from '@l2beat/validate'
-import { boolean, command, flag, positional, run, string } from 'cmd-ts'
-import { readFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { join } from 'path'
-import { logToViemLog } from '../engine/capture/getItemsToCapture'
-import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
-import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { DeployedTokenId } from '../engine/financials/DeployedTokenId'
 import {
   getTokenInfos,
   type TokenInfos,
-  toDeployedId,
 } from '../engine/financials/InteropFinancialsLoop'
-import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from '../plugins'
-import type {
-  InteropEvent,
-  InteropMessage,
-  InteropTransfer,
-} from '../plugins/types'
-
-export function readJsonc(path: string): JSON {
-  const contents = readFileSync(path, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(contents, errors, {
-    allowTrailingComma: true,
-  }) as JSON
-  if (errors.length !== 0) {
-    throw new Error(`Cannot parse file ${path}`)
-  }
-  return parsed
-}
-
-// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
-const ExpectedMessage = v.union([
-  v.string(),
-  v.object({
-    type: v.string(),
-    app: v.string().optional(),
-  }),
-])
-
-const TxEntry = v.object({
-  chain: v.string(),
-  tx: v.string(),
-})
-
-// A group of related transactions that should match together
-const TxGroup = v.object({
-  name: v.string().optional(),
-  txs: v.array(TxEntry),
-  events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
-  transfers: v.array(v.string()).optional(),
-})
-
-type TxGroup = v.infer<typeof TxGroup>
-
-// Support both old format (flat txs) and new format (groups)
-type Example = v.infer<typeof Example>
-const Example = v.object({
-  loadConfigs: v.array(v.string()).optional(),
-  // Old format: flat list of txs with global expectations
-  txs: v.array(TxEntry).optional(),
-  events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
-  transfers: v.array(v.string()).optional(),
-  // New format: grouped txs with per-group expectations
-  groups: v.array(TxGroup).optional(),
-})
-
-// Convert old format to new format for unified processing
-function normalizeExample(example: Example): TxGroup[] {
-  if (example.groups && example.groups.length > 0) {
-    return example.groups
-  }
-  // Old format: single group with all txs
-  return [
-    {
-      txs: example.txs ?? [],
-      events: example.events,
-      messages: example.messages,
-      transfers: example.transfers,
-    },
-  ]
-}
+import type { InteropEvent } from '../plugins/types'
+import {
+  type CoreResult,
+  type Example,
+  type ExpectedMessageType,
+  readExamples,
+  Separated,
+} from './core'
+import { ExampleRunner } from './runner'
+import { hashExampleDefinition, SnapshotService } from './snapshot/service'
 
 const cmd = command({
   name: 'interop:example',
   args: {
-    name: positional({ type: string, displayName: 'name' }),
-    simple: flag({ type: boolean, long: 'simple' }),
+    name: positional({ type: optional(string), displayName: 'name' }),
+    simple: flag({ type: boolean, long: 'simple', defaultValue: () => false }),
+    seal: flag({
+      type: boolean,
+      long: 'seal',
+      short: 's',
+      defaultValue: () => false,
+    }),
+    uncompressed: flag({
+      type: boolean,
+      long: 'uncompressed',
+      short: 'u',
+      defaultValue: () => false,
+      description: 'Do not compress the snapshot files',
+    }),
+    tags: option({
+      type: optional(Separated(string)),
+      long: 'tags',
+      short: 't',
+      description: 'tags to filter examples, comma separated.',
+    }),
   },
   handler: async (args) => {
-    const examples = v
-      .record(v.string(), Example)
-      .validate(readJsonc(join(__dirname, 'examples.jsonc')))
+    const examples = readExamples()
 
-    if (args.name === 'all') {
-      const bigResult: GroupResult = {
-        events: [],
-        matchedEventIds: new Set(),
-        messages: [],
-        transfers: [],
+    function getExamplesToRun() {
+      if (args.name === 'all') {
+        return Object.keys(examples)
       }
 
-      let success = true
-      for (const [key, example] of Object.entries(examples)) {
-        console.log('\nExample:', key, '\n')
-        const groups = normalizeExample(example)
-        const result = await runExample(example, groups)
-        // Merge all group results
-        for (const groupResult of result.groupResults) {
-          bigResult.events.push(...groupResult.events)
-          for (const id of groupResult.matchedEventIds) {
-            bigResult.matchedEventIds.add(id)
-          }
-          bigResult.messages.push(...groupResult.messages)
-          bigResult.transfers.push(...groupResult.transfers)
-        }
-        const partial = checkGroupedExample(groups, result, false)
-        success &&= partial
+      if (args.tags) {
+        return Object.entries(examples)
+          .filter(([, { tags }]) =>
+            tags?.some((tag) => args.tags?.includes(tag)),
+          )
+          .map(([key]) => key)
       }
-      summarizeGroupResult(bigResult)
-      if (!success) {
-        console.error('Tests failed')
-        process.exit(1)
+      assert(args.name, 'name is required if tags are not provided')
+
+      return [args.name]
+    }
+
+    const examplesToRun = getExamplesToRun()
+
+    let success = true
+    const bigResult: CoreResult = {
+      events: [],
+      matchedEventIds: new Set(),
+      messages: [],
+      transfers: [],
+    }
+
+    console.log('Running examples:', examplesToRun.join(', '))
+
+    for (const exampleId of examplesToRun) {
+      const example = examples[exampleId]
+      console.log('\nExample:', exampleId, '\n')
+      const result = await runExample(exampleId, example, {
+        seal: args.seal,
+        uncompressed: args.uncompressed,
+      })
+      bigResult.events.push(...result.events)
+      for (const id of result.matchedEventIds) {
+        bigResult.matchedEventIds.add(id)
       }
-    } else {
-      const example = examples[args.name as keyof typeof examples]
-      if (!example) {
-        console.error(`${args.name}: example not found, see examples.jsonc`)
-        return
-      }
-      const groups = normalizeExample(example)
-      const result = await runExample(example, groups)
-      const success = checkGroupedExample(groups, result, !args.simple)
-      // Summarize all groups combined
-      const combinedResult: GroupResult = {
-        events: [],
-        matchedEventIds: new Set(),
-        messages: [],
-        transfers: [],
-      }
-      for (const groupResult of result.groupResults) {
-        combinedResult.events.push(...groupResult.events)
-        for (const id of groupResult.matchedEventIds) {
-          combinedResult.matchedEventIds.add(id)
-        }
-        combinedResult.messages.push(...groupResult.messages)
-        combinedResult.transfers.push(...groupResult.transfers)
-      }
-      summarizeGroupResult(combinedResult)
-      if (!success) {
-        console.error('Tests failed')
-        process.exit(1)
-      }
+      bigResult.messages.push(...result.messages)
+      bigResult.transfers.push(...result.transfers)
+      const partial = checkExample(exampleId, example, result, !args.simple)
+      success &&= partial
+    }
+    summarize(bigResult)
+    if (!success) {
+      console.log('Tests failed')
+      process.exit(1)
     }
   },
 })
 
-interface GroupResult {
-  events: InteropEvent[]
-  matchedEventIds: Set<string>
-  messages: InteropMessage[]
-  transfers: InteropTransfer[]
-}
-
-interface RunResult {
-  groupResults: GroupResult[]
-}
-
 async function runExample(
+  exampleId: string,
   example: Example,
-  groups: TxGroup[],
-): Promise<RunResult> {
-  const logger = Logger.ERROR
-  const http = new HttpClient()
+  opts: {
+    seal: boolean
+    uncompressed: boolean
+  },
+) {
   const env = getEnv()
   const tokenDbClient = getTokenDbClient({
     apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
     authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
     callSource: 'interop',
+  })
+
+  const snapshotService = new SnapshotService({
+    rootDir: join(__dirname, 'snapshots'),
+    noCompression: opts.uncompressed,
+  })
+  const exampleInputs = snapshotService.createEmptyExampleInputs()
+
+  const runner = new ExampleRunner({
+    exampleId,
+    example,
+    logger: Logger.ERROR,
+    http: new HttpClient(),
+    snapshotService,
+    env: getEnv(),
+    mode: opts.seal ? 'capture' : 'live',
+    inputs: exampleInputs,
   })
 
   const coingecko = new CoingeckoQueryService(
@@ -206,178 +157,20 @@ async function runExample(
     }),
   )
 
-  const ps = new ProjectService()
-  const psChains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
-  )
-  const pluginChains = psChains
-    .filter((c) => c.chainId !== undefined)
-    .map((c) => ({ name: c.name, id: c.chainId as number }))
+  const coreResult = await runner.run()
 
-  const rpcClientCache = new Map<string, RpcClientCompat>()
-  const makeRpcClient = (chain: string) => {
-    const cached = rpcClientCache.get(chain)
-    if (cached) return cached
-
-    let multicallClient: MulticallV3Client | undefined
-    const multicallConfig = psChains
-      .find((c) => c.name === chain)
-      ?.multicallContracts?.find((c) => c.version === '3')
-    if (multicallConfig) {
-      multicallClient = new MulticallV3Client(
-        multicallConfig.address,
-        multicallConfig.sinceBlock,
-        multicallConfig.batchSize,
-      )
+  if (opts.seal) {
+    await snapshotService.saveInputs(exampleId, exampleInputs)
+    await snapshotService.saveOutputs(exampleId, coreResult)
+    if (!opts.uncompressed) {
+      const definitionHash = hashExampleDefinition(example)
+      await snapshotService.updateManifest(exampleId, definitionHash)
     }
-    const client = RpcClientCompat.create({
-      url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-      chain: chain,
-      http,
-      logger,
-      callsPerMinute: 600,
-      retryStrategy: 'SCRIPT',
-      multicallClient,
-    })
-    rpcClientCache.set(chain, client)
-    return client
-  }
-
-  // Collect all unique chains from all groups
-  const allChains = unique(groups.flatMap((g) => g.txs.map((t) => t.chain)))
-  const rpcClients = allChains.map(makeRpcClient)
-  if (!rpcClients.some((x) => x.chain === 'ethereum')) {
-    rpcClients.push(makeRpcClient('ethereum'))
-  }
-
-  const configs = new InteropConfigStore(undefined)
-
-  const plugins = createInteropPlugins({
-    chains: pluginChains,
-    configs,
-    httpClient: new HttpClient(),
-    logger,
-    rpcClients,
-  })
-
-  if (example.loadConfigs && example.loadConfigs.length > 0) {
-    for (const key of example.loadConfigs) {
-      const config = plugins.configPlugins.find((x) =>
-        x.provides.map((k) => k.key).includes(key),
-      )
-      if (!config) {
-        throw new Error(`Cannot load configs: ${key}`)
-      }
-      console.log('LOADING CONFIG:', key)
-      await config.run()
-    }
-  }
-
-  // Process each group separately - first pass: capture and match
-  interface GroupMatchResult {
-    events: InteropEvent[]
-    matchedEventIds: Set<string>
-    messages: InteropMessage[]
-    transfers: {
-      transfer: InteropTransfer
-      srcId: DeployedTokenId | undefined
-      dstId: DeployedTokenId | undefined
-    }[]
-  }
-
-  const groupMatchResults: GroupMatchResult[] = []
-
-  for (const group of groups) {
-    const events: InteropEvent[] = []
-
-    for (const txEntry of group.txs) {
-      const rpc = makeRpcClient(txEntry.chain)
-      const tx = await rpc.getTransaction(txEntry.tx)
-      assert(tx.blockNumber)
-
-      const block = await rpc.getBlockWithTransactions(tx.blockNumber)
-      const logs = await rpc.getLogs(block.number, block.number)
-      const txLogs = logs
-        .filter((l) => l.transactionHash === tx.hash)
-        .map(logToViemLog)
-
-      for (const plugin of plugins.eventPlugins) {
-        if (!plugin.captureTx) {
-          continue
-        }
-        const captured = plugin.captureTx({
-          chain: txEntry.chain,
-          tx,
-          block,
-          txLogs,
-        })
-        if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-          break
-        }
-      }
-
-      for (const log of txLogs) {
-        for (const plugin of plugins.eventPlugins) {
-          if (!plugin.capture) {
-            continue
-          }
-          const captured = plugin.capture({
-            chain: txEntry.chain,
-            log: log,
-            tx,
-            block,
-            txLogs,
-          })
-          if (captured) {
-            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-            break
-          }
-        }
-      }
-    }
-
-    const eventDb = new InMemoryEventDb()
-    for (const event of events) {
-      eventDb.addEvent(event)
-    }
-
-    const result = await match(
-      eventDb,
-      (type) => events.filter((x) => x.type === type),
-      [...new Set(events.map((x) => x.type))],
-      events.length,
-      plugins.eventPlugins,
-      group.txs.map((x) => x.chain),
-      logger,
-    )
-
-    const transfers = result.transfers.map((u) => ({
-      transfer: u,
-      srcId: toDeployedId(
-        INTEROP_CHAINS,
-        u.src.event.ctx.chain,
-        u.src.tokenAddress,
-      ),
-      dstId: toDeployedId(
-        INTEROP_CHAINS,
-        u.dst.event.ctx.chain,
-        u.dst.tokenAddress,
-      ),
-    }))
-
-    groupMatchResults.push({
-      events,
-      matchedEventIds: new Set(result.matched.map((e) => e.eventId)),
-      messages: result.messages,
-      transfers,
-    })
   }
 
   // Second pass: batch fetch token info and prices for all groups
   const allTokenIds = unique(
-    groupMatchResults
-      .flatMap((g) => g.transfers)
+    coreResult.transfers
       .flatMap((t) => [t.srcId, t.dstId])
       .filter((x) => x !== undefined),
   )
@@ -397,50 +190,35 @@ async function runExample(
   )
 
   // Third pass: enrich transfers with financials and build final results
-  const groupResults: GroupResult[] = groupMatchResults.map((groupMatch) => {
-    const transfersWithFinancials = groupMatch.transfers.map((transfer) => ({
-      ...transfer.transfer,
-      src: {
-        ...transfer.transfer.src,
-        financials: calculateFinancials(
-          transfer.srcId,
-          transfer.transfer.src.tokenAmount,
-          tokenInfos,
-          prices,
-        ),
-      },
-      dst: {
-        ...transfer.transfer.dst,
-        financials: calculateFinancials(
-          transfer.dstId,
-          transfer.transfer.dst.tokenAmount,
-          tokenInfos,
-          prices,
-        ),
-      },
-    }))
+  const transfersWithFinancials = coreResult.transfers.map((transfer) => ({
+    ...transfer.transfer,
+    src: {
+      ...transfer.transfer.src,
+      financials: calculateFinancials(
+        transfer.srcId,
+        transfer.transfer.src.tokenAmount,
+        tokenInfos,
+        prices,
+      ),
+    },
+    dst: {
+      ...transfer.transfer.dst,
+      financials: calculateFinancials(
+        transfer.dstId,
+        transfer.transfer.dst.tokenAmount,
+        tokenInfos,
+        prices,
+      ),
+    },
+  }))
 
-    return {
-      events: groupMatch.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-      matchedEventIds: groupMatch.matchedEventIds,
-      messages: groupMatch.messages.map((m) => ({
-        ...m,
-        src: { ...m.src, chain: m.src.ctx.chain },
-        dst: { ...m.dst, chain: m.dst.ctx.chain },
-      })),
-      transfers: transfersWithFinancials.map((t) => ({
-        ...t,
-        events: t.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-        src: { ...t.src, chain: t.src.event.ctx.chain },
-        dst: { ...t.dst, chain: t.dst.event.ctx.chain },
-      })),
-    }
-  })
-
-  return { groupResults }
+  return {
+    events: coreResult.events,
+    matchedEventIds: coreResult.matchedEventIds,
+    messages: coreResult.messages,
+    transfers: transfersWithFinancials,
+  }
 }
-
-type ExpectedMessageType = v.infer<typeof ExpectedMessage>
 
 function normalizeExpectedMessage(item: ExpectedMessageType): {
   type: string
@@ -452,50 +230,39 @@ function normalizeExpectedMessage(item: ExpectedMessageType): {
   return item
 }
 
-function checkGroupedExample(
-  groups: TxGroup[],
-  result: RunResult,
+function checkExample(
+  exampleId: string,
+  example: Example,
+  result: CoreResult,
   verbose: boolean,
 ): boolean {
-  let allOk = true
+  const eventsOk = checkEvents(
+    'Event   ',
+    [...(example.events ?? [])],
+    result.events,
+    result.matchedEventIds,
+    verbose,
+  )
+  const messagesOk = checkTypedWithApp(
+    'Message ',
+    [...(example.messages ?? [])].map(normalizeExpectedMessage),
+    result.messages,
+    verbose,
+  )
+  const transfersOk = checkTypedSimple(
+    'Transfer',
+    [...(example.transfers ?? [])],
+    result.transfers,
+    verbose,
+  )
 
-  for (let i = 0; i < groups.length; i++) {
-    const group = groups[i]
-    const groupResult = result.groupResults[i]
+  const header = example.name ? `${example.name} (${exampleId})` : exampleId
 
-    // Print group header
-    const groupName =
-      group.name ??
-      `Group ${i + 1}: ${group.txs.map((t) => t.tx.slice(0, 10)).join(', ')}`
-    console.log(`\n--- ${groupName} ---`)
-    console.log(
-      `    Txs: ${group.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
-    )
-
-    const eventsOk = checkEvents(
-      'Event   ',
-      [...(group.events ?? [])],
-      groupResult.events,
-      groupResult.matchedEventIds,
-      verbose,
-    )
-    const messagesOk = checkTypedWithApp(
-      'Message ',
-      [...(group.messages ?? [])].map(normalizeExpectedMessage),
-      groupResult.messages,
-      verbose,
-    )
-    const transfersOk = checkTypedSimple(
-      'Transfer',
-      [...(group.transfers ?? [])],
-      groupResult.transfers,
-      verbose,
-    )
-
-    allOk = allOk && eventsOk && messagesOk && transfersOk
-  }
-
-  return allOk
+  console.log(`\n--- ${header} ---`)
+  console.log(
+    `    Txs: ${example.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
+  )
+  return eventsOk && messagesOk && transfersOk
 }
 
 const PASS = '[\x1B[1;32mPASS\x1B[0m]'
@@ -576,7 +343,7 @@ function checkTypedWithApp(
   return expected.length === 0
 }
 
-function summarizeGroupResult(result: GroupResult) {
+function summarize(result: CoreResult) {
   console.log('\nSUMMARY\n')
   summarizeType('Events', result.events)
   summarizeType('Messages', result.messages)
