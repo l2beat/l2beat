@@ -1,6 +1,6 @@
 import type {
-  AggregatedInteropTransferRecord,
   AggregatedInteropTokenRecord,
+  AggregatedInteropTransferRecord,
   Database,
   InteropTransferRecord,
 } from '@l2beat/database'
@@ -11,10 +11,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
-import {
-  getAggregatedTransfer,
-  getAggregatedTokens,
-} from './aggregation'
+import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
