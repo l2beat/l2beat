@@ -2207,59 +2207,59 @@
             "tx": "0x066c1933d22acba355fc020fe7c041156b0d74d66fed18ada3056495c41dccbf"
           }
         ],
-        "events": [
-          "zkstack.NewPriorityRequestId",
-          "zkstack.BridgehubDepositBaseTokenInitiated",
-          "zkstack.L2ToL1LogSent"
-        ],
-        "messages": [
-          { "type": "zkstack.L1ToL2Message", "app": "canonical-gas" }
-        ],
-        "transfers": ["zkstack.L1ToL2Transfer.canonical-gas"]
-      },
-      {
-        "name": "ERC-20 deposit",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0x0f1ded18e3a269374df77823a05f74007e60bbab480b01cb168c328fd19c8024"
-          },
-          {
-            "chain": "zksync2",
-            "tx": "0x1B97B83556530393331DD44AE51D2B45FCC74E800042FE3D231AC5AB96AC3D33"
-          }
-        ],
-        "events": [
-          "zkstack.NewPriorityRequestId",
-          "zkstack.BridgehubDepositBaseTokenInitiated",
-          "zkstack.BridgehubDepositInitiated",
-          "zkstack.L2ToL1LogSent",
-          "zkstack.BridgeMint"
-        ],
-        "messages": [
-          { "type": "zkstack.L1ToL2Message", "app": "canonical-erc20" }
-        ],
-        "transfers": ["zkstack.L1ToL2Transfer.canonical-erc20"]
-      },
-      {
-        "name": "Message-only",
-        "txs": [
-          {
-            "chain": "ethereum",
-            "tx": "0xb3eda84985d454039c03eecdc7c54851f4fcb8c447bc81340e952a58796c2789"
-          },
-          {
-            "chain": "zksync2",
-            "tx": "0x3e8e107fc8f7c301a4ba26fe5c981a189a55fd052deced8f2a065a87f041288f"
-          }
-        ],
-        "events": [
-          "zkstack.NewPriorityRequestId",
-          "zkstack.BridgehubDepositBaseTokenInitiated",
-          "zkstack.L2ToL1LogSent"
-        ],
-        "messages": [{ "type": "zkstack.L1ToL2Message", "app": "unknown" }]
+        // "events": [
+        //   "zkstack.NewPriorityRequestId",
+        //   "zkstack.BridgehubDepositBaseTokenInitiated",
+        //   "zkstack.L2ToL1LogSent"
+        // ],
+        // "messages": [
+        //   { "type": "zkstack.L1ToL2Message", "app": "canonical-gas" }
+        // ],
+        // "transfers": ["zkstack.L1ToL2Transfer.canonical-gas"]
       }
+      // {
+      //   "name": "ERC-20 deposit",
+      //   "txs": [
+      //     {
+      //       "chain": "ethereum",
+      //       "tx": "0x0f1ded18e3a269374df77823a05f74007e60bbab480b01cb168c328fd19c8024"
+      //     },
+      //     {
+      //       "chain": "zksync2",
+      //       "tx": "0x1B97B83556530393331DD44AE51D2B45FCC74E800042FE3D231AC5AB96AC3D33"
+      //     }
+      //   ],
+      //   "events": [
+      //     "zkstack.NewPriorityRequestId",
+      //     "zkstack.BridgehubDepositBaseTokenInitiated",
+      //     "zkstack.BridgehubDepositInitiated",
+      //     "zkstack.L2ToL1LogSent",
+      //     "zkstack.BridgeMint"
+      //   ],
+      //   "messages": [
+      //     { "type": "zkstack.L1ToL2Message", "app": "canonical-erc20" }
+      //   ],
+      //   "transfers": ["zkstack.L1ToL2Transfer.canonical-erc20"]
+      // },
+      // {
+      //   "name": "Message-only",
+      //   "txs": [
+      //     {
+      //       "chain": "ethereum",
+      //       "tx": "0xb3eda84985d454039c03eecdc7c54851f4fcb8c447bc81340e952a58796c2789"
+      //     },
+      //     {
+      //       "chain": "zksync2",
+      //       "tx": "0x3e8e107fc8f7c301a4ba26fe5c981a189a55fd052deced8f2a065a87f041288f"
+      //     }
+      //   ],
+      //   "events": [
+      //     "zkstack.NewPriorityRequestId",
+      //     "zkstack.BridgehubDepositBaseTokenInitiated",
+      //     "zkstack.L2ToL1LogSent"
+      //   ],
+      //   "messages": [{ "type": "zkstack.L1ToL2Message", "app": "unknown" }]
+      // }
     ]
   },
   "zklink-nova": {

@@ -1,10 +1,14 @@
-import { Address32, ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
-  defineNetworks,
   type DataRequest,
+  defineNetworks,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -25,7 +29,7 @@ const bridgehubDepositInitiatedLog =
   'event BridgehubDepositInitiated(uint256 indexed chainId, bytes32 indexed txDataHash, address indexed from, bytes32 assetId, bytes bridgeMintCalldata)'
 
 const newPriorityRequestLog =
-  'event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, (uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)'
+  'event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, (uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)'
 
 const l2ToL1LogSentLog =
   'event L2ToL1LogSent((uint8 l2ShardId, bool isService, uint16 txNumberInBlock, address sender, bytes32 key, bytes32 value) _l2log)'
@@ -36,7 +40,8 @@ const bridgeMintLog =
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
-const transferLog = 'event Transfer(address indexed from, address indexed to, uint256 value)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 // == Networks ==
 
@@ -90,7 +95,7 @@ const NewPriorityRequestId = createInteropEventType<{
   txId: bigint
   txHash: `0x${string}`
   $dstChain: string
-}>('zkstack.NewPriorityRequestId')
+}>('zkstack.NewPriorityRequestId', { direction: 'outgoing' })
 
 const BridgehubDepositBaseTokenInitiated = createInteropEventType<{
   chainId: number
@@ -98,7 +103,7 @@ const BridgehubDepositBaseTokenInitiated = createInteropEventType<{
   srcTokenAddress?: Address32
   srcAmount?: bigint
   $dstChain: string
-}>('zkstack.BridgehubDepositBaseTokenInitiated')
+}>('zkstack.BridgehubDepositBaseTokenInitiated', { direction: 'outgoing' })
 
 const BridgehubDepositInitiated = createInteropEventType<{
   chainId: number
@@ -106,16 +111,18 @@ const BridgehubDepositInitiated = createInteropEventType<{
   srcTokenAddress: Address32
   srcAmount: bigint
   $dstChain: string
-}>('zkstack.BridgehubDepositInitiated')
+}>('zkstack.BridgehubDepositInitiated', { direction: 'outgoing' })
 
-const L2ToL1LogSent = createInteropEventType<object>('zkstack.L2ToL1LogSent')
+const L2ToL1LogSent = createInteropEventType<object>('zkstack.L2ToL1LogSent', {
+  direction: 'incoming', // TODO: for now incoming
+})
 
 const BridgeMint = createInteropEventType<{
   chainId: number
   assetId: `0x${string}`
   dstTokenAddress: Address32
   dstAmount: bigint
-}>('zkstack.BridgeMint')
+}>('zkstack.BridgeMint', { direction: 'incoming' })
 
 // == Parsers ==
 
@@ -192,7 +199,11 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
       const baseTokenDeposit = parseBridgehubDepositBaseTokenInitiated(
         input.log,
-        [...ZKSTACK_SUPPORTED.map((n) => ChainSpecificAddress.address(n.l1AssetRouter))],
+        [
+          ...ZKSTACK_SUPPORTED.map((n) =>
+            ChainSpecificAddress.address(n.l1AssetRouter),
+          ),
+        ],
       )
       if (baseTokenDeposit) {
         const network = getNetworkByChainId(baseTokenDeposit.chainId)
@@ -227,7 +238,9 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       }
 
       const depositInitiated = parseBridgehubDepositInitiated(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) => ChainSpecificAddress.address(n.l1AssetRouter)),
+        ...ZKSTACK_SUPPORTED.map((n) =>
+          ChainSpecificAddress.address(n.l1AssetRouter),
+        ),
       ])
       if (depositInitiated) {
         const network = getNetworkByChainId(depositInitiated.chainId)
@@ -345,12 +358,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       if (!bridgeMint) return
 
       return [
-        Result.Message('zkstack.L1ToL2Message', {
+        Result.Message('zksync', {
           app: 'canonical-erc20',
           srcEvent: event,
           dstEvent: l2LogSent,
         }),
-        Result.Transfer('zkstack.L1ToL2Transfer.canonical-erc20', {
+        Result.Transfer('canonical-erc20', {
           srcEvent: depositInitiated,
           srcTokenAddress: depositInitiated.args.srcTokenAddress,
           srcAmount: depositInitiated.args.srcAmount,
@@ -366,12 +379,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       baseTokenDeposit.args.srcTokenAddress !== undefined
     ) {
       return [
-        Result.Message('zkstack.L1ToL2Message', {
+        Result.Message('zksync', {
           app: 'canonical-gas',
           srcEvent: event,
           dstEvent: l2LogSent,
         }),
-        Result.Transfer('zkstack.L1ToL2Transfer.canonical-gas', {
+        Result.Transfer('canonical-gas', {
           srcEvent: baseTokenDeposit,
           srcTokenAddress: baseTokenDeposit.args.srcTokenAddress,
           srcAmount: baseTokenDeposit.args.srcAmount,
@@ -383,7 +396,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
 
     return [
-      Result.Message('zkstack.L1ToL2Message', {
+      Result.Message('zksync', {
         app: 'unknown',
         srcEvent: event,
         dstEvent: l2LogSent,
