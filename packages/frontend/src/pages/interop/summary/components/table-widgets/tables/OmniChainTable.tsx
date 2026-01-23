@@ -1,15 +1,18 @@
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import { omniChainColumns, type ProtocolRow } from './columns'
+import {
+  omniChainColumns,
+  type ProtocolRow,
+} from '../../../../components/table/columns'
 
 export function OmniChainTable({ entries }: { entries: ProtocolEntry[] }) {
   const table = useTable<ProtocolRow>({
     data: entries,
     columns: omniChainColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    enableSorting: false,
     manualFiltering: true,
     initialState: {
       columnPinning: {

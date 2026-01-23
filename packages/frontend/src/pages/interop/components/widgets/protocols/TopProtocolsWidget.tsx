@@ -4,8 +4,8 @@ import { useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
-import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
@@ -21,32 +21,29 @@ type TopProtocolsWidgetProps = {
   metricType: 'volume' | 'transfers'
   heading: string
   formatValue: (value: number) => string
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
+  isLoading: boolean
 }
 
 export function TopProtocolsWidget({
   metricType,
   heading,
   formatValue,
+  topProtocols,
+  isLoading,
 }: TopProtocolsWidgetProps) {
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-  })
+
   const containerRef = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref: containerRef })
 
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
-  const protocolColorMap = useProtocolColorMap(data?.topProtocols)
+  const protocolColorMap = useProtocolColorMap(topProtocols)
   const protocolsWithOthers = useMemo(
     () =>
-      getProtocolsDataWithOthers(
-        data?.topProtocols,
-        protocolColorMap,
-        metricType,
-      ),
-    [data?.topProtocols, metricType, protocolColorMap],
+      getProtocolsDataWithOthers(topProtocols, protocolColorMap, metricType),
+    [topProtocols, metricType, protocolColorMap],
   )
 
   return (

@@ -175,10 +175,16 @@ export type MatchResult = (
   | InteropIgnore
 )[]
 
+export interface SameTxAtOffsetQuery {
+  event: InteropEvent
+  offset: number
+}
+
 export type InteropEventQuery<T> = Partial<T> & {
   ctx?: Partial<InteropEventContext>
   sameTxBefore?: InteropEvent
   sameTxAfter?: InteropEvent
+  sameTxAtOffset?: SameTxAtOffsetQuery
 }
 
 export interface InteropApproximateQuery<T> {

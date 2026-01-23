@@ -1,3 +1,8 @@
+/**
+ * gaszip (standalone) plugin based on tx calldata in addition to logs
+ * good API available at https://backend.gas.zip/v2/search/TXHASH for checking
+ */
+
 import type { Logger } from '@l2beat/backend-tools'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
@@ -65,7 +70,7 @@ export class GasZipPlugin implements InteropPlugin {
       }))
 
       const destinationAddress =
-        decoded.destinationAddress ?? Address32(input.tx.from)
+        decoded.destinationAddress ?? Address32.from(input.tx.from)
       const events = []
 
       for (const dc of destinationChains) {
@@ -153,7 +158,7 @@ export class GasZipPlugin implements InteropPlugin {
       {
         key: 'amount',
         valueBigInt: gasZipFill.args.amount,
-        toleranceUp: 0.05,
+        toleranceUp: 0.1, // see examples, 5% was too low
       },
     )
     const gasZipDeposit = gasZipDeposits[0]

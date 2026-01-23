@@ -4,6 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
+  type InteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -1187,6 +1188,8 @@ export interface ProjectDiscoveryInfo {
 export type InteropPluginName =
   | 'across'
   | 'across-settlement'
+  | 'across-settlement-op'
+  | 'across-settlement-orbit'
   | 'allbridge'
   | 'aori'
   | 'axelar'
@@ -1239,7 +1242,7 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
-  bridgeType: 'lockAndMint' | 'nonMinting' | 'omnichain'
+  bridgeType: InteropBridgeType
   plugins: InteropPlugin[]
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
