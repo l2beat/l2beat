@@ -2237,6 +2237,7 @@
         "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
         "transfers": ["canonical-erc20.Transfer"]
       },
+      // TODO: needs better example, this is contaminated with across noise
       {
         "name": "Message-only",
         "txs": [
@@ -2250,6 +2251,46 @@
           }
         ],
         "messages": [{ "type": "zksync.Message", "app": "unknown" }]
+      },
+      {
+        "name": "ETH withdrawal",
+        "txs": [
+          {
+            "chain": "zksync2",
+            "tx": "0xef8bfff49b224b9d0b650002b72f2371202287fb3739d953a1bf7a30f2a8a3b5"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x2cfe47cd8054d5075968df7b0b55a1c87912a49c2dfc36e50486dfc6ce9715df"
+          }
+        ],
+        "events": [
+          "zkstack.L1MessageSent",
+          "zkstack.Withdrawal",
+          "zkstack.BridgeMintL1"
+        ],
+        "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
+        "transfers": ["canonical-gas.Transfer"]
+      },
+      {
+        "name": "ERC-20 withdrawal",
+        "txs": [
+          {
+            "chain": "zksync2",
+            "tx": "0x43e5e5d4de77a8160e504ef7aa9ecd9cb647e64934d4a3e68c01dceadc4162ee"
+          },
+          {
+            "chain": "ethereum",
+            "tx": "0x8e2285ae8e7f7eabe7093f3c291fb4ccb5cc42eab1bf29723188aa906c60f0fb"
+          }
+        ],
+        "events": [
+          "zkstack.L1MessageSent",
+          "zkstack.BridgeBurn",
+          "zkstack.BridgeMintL1"
+        ],
+        "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
+        "transfers": ["canonical-erc20.Transfer"]
       }
     ]
   },
