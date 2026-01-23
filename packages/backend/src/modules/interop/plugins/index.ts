@@ -163,8 +163,7 @@ export function createInteropPlugins(
       {
         name: 'orbitstack',
         plugins: [
-          new AcrossSettlementOpPlugin(), // should be run before OpStack
-      new AcrossSettlementOrbitPlugin(), // should be run before OrbitStack
+          new AcrossSettlementOrbitPlugin(), // should be run before OrbitStack
           new OrbitStackWethGatewayPlugin(), // should be run before OrbitStackStandardGateway and OrbitStack
           new OrbitStackStandardGatewayPlugin(), // should be run before OrbitStack
           new OrbitStackCustomGatewayPlugin(), // should be run before OrbitStack
@@ -174,6 +173,7 @@ export function createInteropPlugins(
       {
         name: 'opstack',
         plugins: [
+          new AcrossSettlementOpPlugin(), // should be run before OpStack
           new ZklinkNovaPlugin(), // should be run before OpStack
           new WorldIdPlugin(), // should be run before OpStack
           new LidoWstethPlugin(), // should be run before OpStack
