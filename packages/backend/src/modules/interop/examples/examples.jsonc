@@ -2175,6 +2175,7 @@
     ]
   },
   "zksync-deposit-eth": {
+    "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2195,6 +2196,7 @@
     "transfers": ["canonical-gas.Transfer"]
   },
   "zksync-deposit-erc20": {
+    "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2218,6 +2220,7 @@
   },
   // TODO: needs better example, this is contaminated with across noise
   "zksync-deposit-message": {
+    "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2232,6 +2235,7 @@
     "messages": [{ "type": "zksync.Message", "app": "unknown" }]
   },
   "zksync-withdrawal-eth": {
+    "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2252,6 +2256,7 @@
     "transfers": ["canonical-gas.Transfer"]
   },
   "zksync-withdrawal-erc20": {
+    "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],
     "txs": [
       {
