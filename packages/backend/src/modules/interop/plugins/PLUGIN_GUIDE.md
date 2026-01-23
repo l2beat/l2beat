@@ -84,7 +84,25 @@ export class MyPlugin implements InteropPluginResyncable {
 
 ### 3. Register Plugin
 
-In `src/modules/interop/plugins/index.ts`, add before generic plugins.
+In `src/modules/interop/plugins/index.ts`, add before generic plugins, e.g.:
+
+```typescript
+import { MyPlugin } from './my-plugin'
+
+// In createInteropPlugins(), add to eventPlugins array:
+eventPlugins: [
+  // ... other plugin clusters ...
+  new MyPlugin(), // Add as single item if it doesn't depend on other plugins
+  {
+    clusterName: 'opstack',
+    plugins: [
+      new MyPlugin(), // or add into a cluster, BEFORE more generic plugins it builds on in the cluster
+      new OpStackPlugin()
+    ]
+  },
+  // ...
+]
+```
 
 ### 4. Add Test Examples
 

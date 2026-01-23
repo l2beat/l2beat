@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { InteropPluginName } from '@l2beat/config'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
@@ -11,7 +10,7 @@ import type { InteropEventSyncer } from './InteropEventSyncer'
 import { LogQuery } from './InteropEventSyncer'
 
 const CHAIN = 'ethereum'
-const PLUGIN_NAME = 'mock-plugin' as InteropPluginName
+const CLUSTER_NAME = 'mock-cluster'
 
 describe(CatchingUpState.name, () => {
   describe(CatchingUpState.prototype.catchUp.name, () => {
@@ -68,7 +67,7 @@ describe(CatchingUpState.name, () => {
         toTimestamp: UnixTime(10),
       })
       expect(setResyncRequestedFrom).toHaveBeenCalledWith(
-        PLUGIN_NAME,
+        CLUSTER_NAME,
         CHAIN,
         null,
       )
@@ -287,7 +286,7 @@ describe(CatchingUpState.name, () => {
       const state = new CatchingUpState(syncer, Logger.SILENT)
 
       await expect(async () => await state.catchUp()).toBeRejectedWith(
-        `Can't resync ${PLUGIN_NAME} plugin without "from" timestamp`,
+        `Can't resync ${CLUSTER_NAME} cluster without "from" timestamp`,
       )
     })
   })
@@ -298,8 +297,10 @@ function createSyncer(
 ): InteropEventSyncer {
   return mockObject<InteropEventSyncer>({
     chain: CHAIN as InteropEventSyncer['chain'],
-    plugin: { name: PLUGIN_NAME } as InteropEventSyncer['plugin'],
-    clusterPlugins: [],
+    cluster: {
+      name: CLUSTER_NAME,
+      plugins: [],
+    } as InteropEventSyncer['cluster'],
     latestBlockNumber: 10n,
     isResyncRequestedFrom: mockFn().resolvesTo(undefined),
     deleteAllClusterData: mockFn().resolvesTo(undefined),

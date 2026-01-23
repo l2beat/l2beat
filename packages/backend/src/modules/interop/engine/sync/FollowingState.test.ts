@@ -199,6 +199,10 @@ function createSyncer(
   overrides: Partial<InteropEventSyncer> = {},
 ): InteropEventSyncer {
   return mockObject<InteropEventSyncer>({
+    cluster: {
+      name: 'mock-cluster',
+      plugins: [],
+    } as InteropEventSyncer['cluster'],
     isResyncRequestedFrom: mockFn().resolvesTo(undefined),
     getLastSyncedRange: mockFn().resolvesTo(undefined),
     getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
