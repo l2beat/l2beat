@@ -178,7 +178,7 @@ Bernard [published an update](https://gov.uniswap.org/t/uniswap-arbitrum-grant-p
 
 - [Revert Finance](https://revert.finance/) - 70,000 ARB
 - [Oku](https://oku.trade/index.html) - 35,000 ARB
-- [Slash Payments](https://slash.fi/) - 10,000 ARB
+- [Slash Payments](https://slash.com/) - 10,000 ARB
 - [RabbitHole](https://rabbithole.gg/) - 30,000 ARB
 - [Ephema](https://www.ephema.io/) - 60,000 ARB
 
