@@ -1,5 +1,6 @@
 import type {
   AggregatedInteropTransferRecord,
+  AggregatedInteropTokenRecord,
   Database,
   InteropTransferRecord,
 } from '@l2beat/database'
@@ -11,14 +12,14 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 
-export interface InteropTransferAggregatingIndexerDeps
+export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
 }
 
-export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: InteropTransferAggregatingIndexerDeps) {
+export class InteropAggregatingIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: InteropAggregatingIndexerDeps) {
     super({ ...$, name: 'interop_aggregating' })
   }
 
@@ -28,6 +29,7 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
     const aggregatedRecords: AggregatedInteropTransferRecord[] = []
+    const aggregatedTokens: AggregatedInteropTokenRecord[] = []
 
     for (const config of this.$.configs) {
       const conditions = this.txMatchers(config)
@@ -40,8 +42,16 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
         aggregatedRecords.push({
           timestamp: to,
           id: config.id,
-          ...this.mergeGroup(group),
+          ...this.getAggregatedTransfer(group),
         })
+
+        aggregatedTokens.push(
+          ...this.getAggregatedTokens(group).map((token) => ({
+            timestamp: to,
+            id: config.id,
+            ...token,
+          })),
+        )
       }
     }
 
@@ -49,11 +59,17 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,
       )
+      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
+        from,
+      )
+      await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedRecords)
+      await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
     })
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedRecords.length,
+      aggregatedTokens: aggregatedTokens.length,
     })
 
     return to
@@ -64,13 +80,12 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
     return Promise.resolve(0)
   }
 
-  private mergeGroup(
+  private getAggregatedTransfer(
     group: InteropTransferRecord[],
   ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
     const first = group[0]
     assert(first, 'Group is empty')
 
-    const tokensByVolume: Record<string, number> = {}
     let totalDurationSum = 0
     let srcValueUsd: number | undefined = undefined
     let dstValueUsd: number | undefined = undefined
@@ -88,36 +103,11 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
       } else {
         dstValueUsd += transfer.dstValueUsd ?? 0
       }
-
-      if (transfer.srcAbstractTokenId === transfer.dstAbstractTokenId) {
-        if (transfer.srcAbstractTokenId) {
-          tokensByVolume[transfer.srcAbstractTokenId] =
-            (tokensByVolume[transfer.srcAbstractTokenId] ?? 0) +
-            (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0)
-        }
-      } else {
-        if (transfer.srcAbstractTokenId) {
-          tokensByVolume[transfer.srcAbstractTokenId] =
-            (tokensByVolume[transfer.srcAbstractTokenId] ?? 0) +
-            (transfer.srcValueUsd ?? 0)
-        }
-        if (transfer.dstAbstractTokenId) {
-          tokensByVolume[transfer.dstAbstractTokenId] =
-            (tokensByVolume[transfer.dstAbstractTokenId] ?? 0) +
-            (transfer.dstValueUsd ?? 0)
-        }
-      }
     }
 
     return {
       srcChain: first.srcChain,
       dstChain: first.dstChain,
-      tokensByVolume: Object.fromEntries(
-        Object.entries(tokensByVolume).map(([key, value]) => [
-          key,
-          Math.round(value * 100) / 100,
-        ]),
-      ),
       transferCount: group.length,
       totalDurationSum,
       srcValueUsd: srcValueUsd
@@ -127,6 +117,57 @@ export class InteropTransferAggregatingIndexer extends ManagedChildIndexer {
         ? Math.round(dstValueUsd * 100) / 100
         : undefined,
     }
+  }
+
+  private getAggregatedTokens(
+    group: InteropTransferRecord[],
+  ): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp'>[] {
+    const first = group[0]
+    assert(first, 'Group is empty')
+    const tokens: Record<
+      string,
+      { transferCount: number; totalDurationSum: number; volume: number }
+    > = {}
+
+    for (const transfer of group) {
+      if (transfer.srcAbstractTokenId) {
+        tokens[transfer.srcAbstractTokenId] = {
+          transferCount:
+            (tokens[transfer.srcAbstractTokenId]?.transferCount ?? 0) + 1,
+          totalDurationSum:
+            (tokens[transfer.srcAbstractTokenId]?.totalDurationSum ?? 0) +
+            transfer.duration,
+          volume:
+            (tokens[transfer.srcAbstractTokenId]?.volume ?? 0) +
+            (transfer.srcValueUsd ?? 0),
+        }
+      }
+
+      if (
+        transfer.dstAbstractTokenId &&
+        transfer.dstAbstractTokenId !== transfer.srcAbstractTokenId
+      ) {
+        tokens[transfer.dstAbstractTokenId] = {
+          transferCount:
+            (tokens[transfer.dstAbstractTokenId]?.transferCount ?? 0) + 1,
+          totalDurationSum:
+            (tokens[transfer.dstAbstractTokenId]?.totalDurationSum ?? 0) +
+            transfer.duration,
+          volume:
+            (tokens[transfer.dstAbstractTokenId]?.volume ?? 0) +
+            (transfer.dstValueUsd ?? 0),
+        }
+      }
+    }
+
+    return Object.entries(tokens).map(([abstractTokenId, data]) => ({
+      srcChain: first.srcChain,
+      dstChain: first.dstChain,
+      abstractTokenId: abstractTokenId,
+      transferCount: data.transferCount,
+      totalDurationSum: data.totalDurationSum,
+      volume: data.volume,
+    }))
   }
 
   private txMatchers(config: InteropAggregationConfig) {
