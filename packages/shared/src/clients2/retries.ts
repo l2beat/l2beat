@@ -68,7 +68,15 @@ export function withRetries<T extends object>(
         name !== 'constructor' &&
         typeof value === 'function' &&
         !options.exclude?.includes(name) &&
-        !wrapper.has(name) // Don't overwrite child class overrides with parent methods
+        // This loop walks the prototype chain from the instance *upward*, so
+        // without the following line a parent method can overwrite a child
+        // override in the wrapper map. The goal of withRetries is to be
+        // behavior‑preserving (except for retry), so it should respect normal JS
+        // method lookup: the most‑derived property wins. Because the wrapper map
+        // is built by walking the prototype chain, you need !wrapper.has(name) to
+        // ensure "first found wins". Without it, a parent method can replace a
+        // child override and you’d change what actually runs.
+        !wrapper.has(name)
       ) {
         wrapper.set(
           name,
