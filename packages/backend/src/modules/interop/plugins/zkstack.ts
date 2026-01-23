@@ -358,12 +358,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       if (!bridgeMint) return
 
       return [
-        Result.Message('zksync', {
+        Result.Message('zksync.Message', {
           app: 'canonical-erc20',
           srcEvent: event,
           dstEvent: l2LogSent,
         }),
-        Result.Transfer('canonical-erc20', {
+        Result.Transfer('canonical-erc20.Transfer', {
           srcEvent: depositInitiated,
           srcTokenAddress: depositInitiated.args.srcTokenAddress,
           srcAmount: depositInitiated.args.srcAmount,
@@ -379,12 +379,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       baseTokenDeposit.args.srcTokenAddress !== undefined
     ) {
       return [
-        Result.Message('zksync', {
+        Result.Message('zksync.Message', {
           app: 'canonical-gas',
           srcEvent: event,
           dstEvent: l2LogSent,
         }),
-        Result.Transfer('canonical-gas', {
+        Result.Transfer('canonical-gas.Transfer', {
           srcEvent: baseTokenDeposit,
           srcTokenAddress: baseTokenDeposit.args.srcTokenAddress,
           srcAmount: baseTokenDeposit.args.srcAmount,
@@ -396,7 +396,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
 
     return [
-      Result.Message('zksync', {
+      Result.Message('zksync.Message', {
         app: 'unknown',
         srcEvent: event,
         dstEvent: l2LogSent,
