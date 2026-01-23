@@ -13,7 +13,7 @@ export function LockAndMintCard({
   isLoading: boolean
 }) {
   return (
-    <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
+    <PrimaryCard className="flex flex-col border-t-4 border-t-yellow-700 max-md:border-divider max-md:border-b">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Lock & Mint

@@ -13,7 +13,7 @@ export function OmniChainCard({
   isLoading: boolean
 }) {
   return (
-    <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
+    <PrimaryCard className="col-span-1 flex flex-col border-t-4 border-t-teal-500 max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Omnichain
