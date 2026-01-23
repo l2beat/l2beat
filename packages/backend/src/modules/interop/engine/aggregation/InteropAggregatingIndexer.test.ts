@@ -6,16 +6,16 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import { InteropTransferAggregatingIndexer } from './InteropTransferAggregatingIndexer'
+import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 
-describe(InteropTransferAggregatingIndexer.name, () => {
+describe(InteropAggregatingIndexer.name, () => {
   const to = 1768484645
   const from = to - UnixTime.DAY
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 
-  describe(InteropTransferAggregatingIndexer.prototype.update.name, () => {
+  describe(InteropAggregatingIndexer.prototype.update.name, () => {
     it('aggregates transfers and saves to database', async () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
@@ -66,7 +66,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         aggregatedInteropTransfer,
       })
 
-      const indexer = new InteropTransferAggregatingIndexer({
+      const indexer = new InteropAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -92,7 +92,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config1',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { eth: 5000 },
           transferCount: 2,
           totalDurationSum: 11000,
           srcValueUsd: 5000,
@@ -226,7 +225,7 @@ describe(InteropTransferAggregatingIndexer.name, () => {
         transaction,
       })
 
-      const indexer = new InteropTransferAggregatingIndexer({
+      const indexer = new InteropAggregatingIndexer({
         db,
         configs,
         parents: [],
@@ -250,7 +249,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config1',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { eth: 2000 },
           transferCount: 1,
           totalDurationSum: 5000,
           srcValueUsd: 2000,
@@ -262,7 +260,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config2',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: { usdc: 1000 },
           transferCount: 1,
           totalDurationSum: 7000,
           srcValueUsd: 1000,
@@ -274,7 +271,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config2',
           srcChain: 'arbitrum',
           dstChain: 'ethereum',
-          tokensByVolume: { usdc: 2500 },
           transferCount: 1,
           totalDurationSum: 9000,
           srcValueUsd: 2500,
@@ -286,10 +282,6 @@ describe(InteropTransferAggregatingIndexer.name, () => {
           id: 'config3',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokensByVolume: {
-            eth: 10500,
-            usdc: 3500,
-          },
           transferCount: 3,
           totalDurationSum: 28000,
           srcValueUsd: 10500,
