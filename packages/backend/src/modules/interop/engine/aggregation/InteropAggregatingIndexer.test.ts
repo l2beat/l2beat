@@ -106,6 +106,22 @@ describe(InteropAggregatingIndexer.name, () => {
           dstValueUsd: 5000,
         },
       ])
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 2,
+          totalDurationSum: 11000,
+          volume: 5000,
+        },
+      ])
+      expect(
+        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from)
+      expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
     })
 
     it('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
@@ -304,6 +320,62 @@ describe(InteropAggregatingIndexer.name, () => {
           dstValueUsd: 10500,
         },
       ])
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
+        // Config1: Plain plugin filter - should match msg1 (across)
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 1,
+          totalDurationSum: 5000,
+          volume: 2000,
+        },
+        // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
+        {
+          timestamp: to,
+          id: 'config2',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 7000,
+          volume: 1000,
+        },
+        // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
+        {
+          timestamp: to,
+          id: 'config2',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 9000,
+          volume: 2500,
+        },
+        // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc)
+        {
+          timestamp: to,
+          id: 'config3',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 2,
+          totalDurationSum: 22000,
+          volume: 7500,
+        },
+        {
+          timestamp: to,
+          id: 'config3',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'usdc',
+          transferCount: 1,
+          totalDurationSum: 12000,
+          volume: 3500,
+        },
+      ])
     })
   })
 })
@@ -319,8 +391,8 @@ function createTransfer(
     srcAbstractTokenId: string
     dstAbstractTokenId: string
     duration: number
-    srcValueUsd: number
-    dstValueUsd: number
+    srcValueUsd?: number
+    dstValueUsd?: number
   },
 ): InteropTransferRecord {
   return {
@@ -349,6 +421,12 @@ function createTransfer(
     dstAmount: undefined,
     dstPrice: undefined,
     isProcessed: false,
-    ...overrides,
+    srcChain: overrides.srcChain,
+    dstChain: overrides.dstChain,
+    srcAbstractTokenId: overrides.srcAbstractTokenId,
+    dstAbstractTokenId: overrides.dstAbstractTokenId,
+    duration: overrides.duration,
+    srcValueUsd: overrides.srcValueUsd,
+    dstValueUsd: overrides.dstValueUsd,
   }
 }
