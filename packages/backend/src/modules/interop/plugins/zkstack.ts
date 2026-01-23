@@ -540,6 +540,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
   matchTypes = [NewPriorityRequestId, BridgeMintL1]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    // DEPOSIT
     if (NewPriorityRequestId.checkType(event)) {
       const l2LogSent = db.find(L2ToL1LogSent, {
         ctx: { txHash: event.args.txHash, chain: event.args.$dstChain },
@@ -607,10 +608,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
           app: 'unknown',
           srcEvent: event,
           dstEvent: l2LogSent,
+          extraEvents: [baseTokenDeposit],
         }),
       ]
     }
 
+    // WITHDRAWAL
     if (BridgeMintL1.checkType(event)) {
       const gasWithdrawal = db.find(Withdrawal, {
         matchId: event.args.matchId,
