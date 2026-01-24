@@ -1023,8 +1023,7 @@ async function fetchOperationsData(
         if (pendingChange && pendingChange.newDelay === currentDelayNum) {
           latestPendingGrantChange.delete(roleId)
         }
-        // FIX: Rename unused error variable
-      } catch (_error) {
+      } catch {
         console.warn(
           // Yellow warning
           chalk.yellow(
