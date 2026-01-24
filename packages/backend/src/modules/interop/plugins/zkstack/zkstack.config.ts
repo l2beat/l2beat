@@ -1,10 +1,15 @@
 /**
+ * assetIds are multichain identifiers (same on all chains)
+ * for unique assets in the zk stack eco
+ * this config maps assetIds to their
+ * implementation addresses and origin chains
+ *
  * recipe
  * 1. get all deployed token addresses per supported chain (e.g. ethereum, zksync2, abstract)
  * 2. for each chain get assetIds for all tokens from (1) by calling assetId(tokenAddress)
- * 3. create a cross-chain set of assetIds and merge in the token addresses we already have from (1)
+ * 3. create a cross-chain set of assetIds and map the token addresses we already have from (1) per chain
  * 4. fill in missing token addresses by calling tokenAddress(assetId) on each chain for missing entries
- * 5. fill in origin chain ids by calling originChainId(assetId) on L1 for all assetIds
+ * 5. fill in origin chain ids by calling originChainId(assetId) on L1 for each assetId
  * 6. ...
  * 7. enjoy the mapping
  */

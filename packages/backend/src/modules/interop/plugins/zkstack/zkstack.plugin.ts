@@ -1,10 +1,14 @@
 /**
  * supports zk stack interop (only L1 <> L2)
- * skips gateway
+ * skips over gateway for gateway L3s
+ * 
  * add new zk stack chains to zkstack.networks.ts
- * the config fetches assetId <> address mappings for all chains via rpc
+ * 
  * undefined src/dstTokens mean we do not have them in tokenDB,
  * check the src/dst txHash for what tokens to add
+ * 
+ * TODO: track state root settlement for withdrawals
+ *       current ver only tracks user execution of withdrawal
  */
 import {
   Address32,
