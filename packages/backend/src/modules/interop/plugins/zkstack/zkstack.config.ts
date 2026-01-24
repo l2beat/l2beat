@@ -1,3 +1,13 @@
+/**
+ * recipe
+ * 1. get all deployed token addresses per supported chain (e.g. ethereum, zksync2, abstract)
+ * 2. for each chain get assetIds for all tokens from (1) by calling assetId(tokenAddress)
+ * 3. create a cross-chain set of assetIds and merge in the token addresses we already have from (1)
+ * 4. fill in missing token addresses by calling tokenAddress(assetId) on each chain for missing entries
+ * 5. fill in origin chain ids by calling originChainId(assetId) on L1 for all assetIds
+ * 6. ...
+ * 7. enjoy the mapping
+ */
 import type { Logger } from '@l2beat/backend-tools'
 import type { CallParameters, IRpcClient } from '@l2beat/shared'
 import {
@@ -41,8 +51,7 @@ const ASSET_ABI = parseAbi([
   'function tokenAddress(bytes32 assetId) view returns (address)',
 ])
 
-const L1_CHAIN = 'ethereum'
-const MULTICALL_CHUNK = 400
+const MULTICALL_CHUNK = 150
 const ZERO_ASSET_ID = `0x${'0'.repeat(64)}` as const
 
 export class ZkStackConfigPlugin
@@ -78,76 +87,84 @@ export class ZkStackConfigPlugin
   }
 
   private async getLatestAssets(): Promise<ZkStackAssetMapping | undefined> {
-    const l1Rpc = this.rpcs.get(L1_CHAIN)
-    if (!l1Rpc) {
-      throw new Error(`Missing RPC client for ${L1_CHAIN}`)
+    const chainDescriptors = [
+      {
+        chain: 'ethereum',
+        contract: ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT),
+      },
+      ...ZKSTACK_SUPPORTED.map((network) => ({
+        chain: network.chain,
+        contract: ChainSpecificAddress.address(network.l2SharedBridge),
+      })),
+    ]
+
+    const ethChainName = chainDescriptors[0]
+    const ethRpc = this.rpcs.get(ethChainName.chain)
+    if (!ethRpc) {
+      throw new Error(`Missing RPC client for ${ethChainName.chain}`)
     }
 
-    const l2Networks = ZKSTACK_SUPPORTED.filter((n) => this.rpcs.has(n.chain))
-    const missingNetworks = ZKSTACK_SUPPORTED.filter(
+    const missingL2Networks = ZKSTACK_SUPPORTED.filter(
       (n) => !this.rpcs.has(n.chain),
     )
-    if (missingNetworks.length > 0) {
-      const missingChains = missingNetworks.map((n) => n.chain)
-      this.logger.warn('Missing RPC clients for zkstack chains', {
-        chains: missingChains,
-      })
+    if (missingL2Networks.length > 0) {
+      const missingChains = missingL2Networks.map((n) => n.chain)
       this.logger
         .for('InteropExamples')
         .warn('Missing zkstack RPC clients for example configs', {
           missingChains,
           expectedChains: ZKSTACK_SUPPORTED.map((n) => n.chain),
-          hint: 'Include a tx for each supported chain when running examples.',
+          hint: 'Include a tx for each zk-assets-supported chain in your example.',
         })
     }
 
-    if (l2Networks.length === 0) {
-      this.logger.warn('No zkstack L2 RPC clients available, skipping update')
+    const missingChains = chainDescriptors
+      .filter((descriptor) => !this.rpcs.has(descriptor.chain))
+      .map((descriptor) => descriptor.chain)
+    if (missingChains.length > 0) {
+      this.logger.warn('Missing RPC clients for zkstack chains', {
+        chains: missingChains,
+      })
+    }
+
+    const chainsWithRpcs = chainDescriptors.flatMap((descriptor) => {
+      const rpc = this.rpcs.get(descriptor.chain)
+      if (!rpc) return []
+      return [{ ...descriptor, rpc }]
+    })
+
+    if (chainsWithRpcs.length < 2) {
+      this.logger.warn(
+        'Need at least two zkstack RPC clients available, skipping update',
+      )
       return
     }
 
-    const l1Vault = ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT)
-
-    const chainsToFetch = [L1_CHAIN, ...l2Networks.map((n) => n.chain)]
-    const contractsByChainEntries: Array<[string, EthereumAddress]> = [
-      [L1_CHAIN, l1Vault],
-      ...l2Networks.map(
-        (network): [string, EthereumAddress] => [
-          network.chain,
-          ChainSpecificAddress.address(network.l2SharedBridge),
-        ],
-      ),
-    ]
-    const contractsByChain = new Map<string, EthereumAddress>(
-      contractsByChainEntries,
+    const tokensByChain = await this.getTokenAddressesByChain(
+      chainsWithRpcs.map((descriptor) => descriptor.chain),
     )
-    const tokensByChain = await this.getTokenAddressesByChain(chainsToFetch)
 
     const tokensByAssetIdByChain = new Map<
       string,
       Map<string, EthereumAddress>
     >()
 
-    for (const chain of chainsToFetch) {
-      const rpc = this.rpcs.get(chain)
-      if (!rpc) continue
-
+    for (const { chain, contract, rpc } of chainsWithRpcs) {
       const tokens = tokensByChain.get(chain) ?? []
       if (tokens.length === 0) {
         this.logger.warn('No tokens found in token database', { chain })
       }
 
-      const contract = contractsByChain.get(chain)
-      if (!contract) continue
       const assetIdsByToken =
         tokens.length > 0
           ? await this.fetchAssetIds(rpc, contract, tokens, chain)
           : new Map<EthereumAddress, `0x${string}`>()
 
-      tokensByAssetIdByChain.set(
-        chain,
-        this.buildTokensByAssetId(chain, assetIdsByToken),
-      )
+      const tokensByAssetId = new Map<string, EthereumAddress>()
+      for (const [token, assetId] of assetIdsByToken.entries()) {
+        tokensByAssetId.set(assetId, token)
+      }
+      tokensByAssetIdByChain.set(chain, tokensByAssetId)
     }
 
     const assetIdSet = new Set<string>()
@@ -158,23 +175,20 @@ export class ZkStackConfigPlugin
     }
 
     if (assetIdSet.size === 0) {
-      this.logger.warn('No assetIds resolved from L1 or L2, skipping update')
+      this.logger.warn(
+        'No assetIds resolved from available chains, skipping update',
+      )
       return
     }
 
     const assetIds = [...assetIdSet]
     const originChainIds = await this.fetchOriginChainIds(
-      l1Rpc,
-      l1Vault,
+      ethRpc,
+      ethChainName.contract,
       assetIds,
     )
 
-    for (const chain of chainsToFetch) {
-      const rpc = this.rpcs.get(chain)
-      if (!rpc) continue
-
-      const contract = contractsByChain.get(chain)
-      if (!contract) continue
+    for (const { chain, contract, rpc } of chainsWithRpcs) {
       const tokensByAssetId =
         tokensByAssetIdByChain.get(chain) ?? new Map<string, EthereumAddress>()
       const missing = assetIds.filter((assetId) => {
@@ -188,7 +202,7 @@ export class ZkStackConfigPlugin
           chain,
         )
         for (const [assetId, token] of filled) {
-          this.setTokenForAssetId(chain, tokensByAssetId, assetId, token)
+          tokensByAssetId.set(assetId, token)
         }
       }
       tokensByAssetIdByChain.set(chain, tokensByAssetId)
@@ -203,7 +217,7 @@ export class ZkStackConfigPlugin
       const implementationAddresses: Record<string, Address32> = {}
       let resolvedCount = 0
 
-      for (const chain of chainsToFetch) {
+      for (const { chain } of chainsWithRpcs) {
         const token = tokensByAssetIdByChain.get(chain)?.get(assetId)
         if (!token || token === EthereumAddress.ZERO) continue
         implementationAddresses[chain] = Address32.from(token)
@@ -272,35 +286,6 @@ export class ZkStackConfigPlugin
       result.set(chain, [...tokens.values()])
     }
     return result
-  }
-
-  private buildTokensByAssetId(
-    chain: string,
-    assetIdsByToken: Map<EthereumAddress, `0x${string}`>,
-  ): Map<string, EthereumAddress> {
-    const tokensByAssetId = new Map<string, EthereumAddress>()
-    for (const [token, assetId] of assetIdsByToken.entries()) {
-      this.setTokenForAssetId(chain, tokensByAssetId, assetId, token)
-    }
-    return tokensByAssetId
-  }
-
-  private setTokenForAssetId(
-    chain: string,
-    tokensByAssetId: Map<string, EthereumAddress>,
-    assetId: string,
-    token: EthereumAddress,
-  ) {
-    const existing = tokensByAssetId.get(assetId)
-    if (existing && existing !== token) {
-      this.logger.warn('Duplicate assetId mapping detected', {
-        chain,
-        assetId,
-        previous: existing.toString(),
-        next: token.toString(),
-      })
-    }
-    tokensByAssetId.set(assetId, token)
   }
 
   private async fetchAssetIds(
