@@ -62,6 +62,10 @@ const bridgeMintLog =
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
+//just for tagging
+const relayedRootBundleLog =
+  'event RelayedRootBundle(uint32 indexed rootBundleId, bytes32 indexed relayerRefundRoot, bytes32 indexed slowRelayRoot)'
+
 // == Parsers ==
 
 const parseNewPriorityRequestId = createEventParser(newPriorityRequestIdLog)
@@ -77,6 +81,8 @@ const parseWithdrawal = createEventParser(withdrawalLog)
 const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
 const parseBridgeMint = createEventParser(bridgeMintLog)
 const parseBridgeBurn = createEventParser(bridgeBurnLog)
+const parseRelayedRootBundle = createEventParser(relayedRootBundleLog)
+
 type AssetLookup = Map<
   string,
   { l1TokenAddress: Address32; l2TokenAddresses: Record<string, Address32> }
@@ -114,7 +120,9 @@ const BridgehubDepositInitiated = createInteropEventType<{
   $dstChain: string
 }>('zkstack.BridgehubDepositInitiated', { direction: 'outgoing' })
 
-const L2ToL1LogSent = createInteropEventType<object>('zkstack.L2ToL1LogSent', {
+const L2ToL1LogSent = createInteropEventType<{
+  app: string
+}>('zkstack.L2ToL1LogSent', {
   direction: 'incoming', // TODO: for now incoming
 })
 
@@ -191,6 +199,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: l2ToL1LogSentLog,
+        includeTxEvents: [relayedRootBundleLog], // for tagging
         addresses: ZKSTACK_SUPPORTED.map((n) => n.l2L1Messenger),
       },
       {
@@ -368,12 +377,24 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
 
     // to capture this event seems useless but is needed for gas token deposits to L2
-    // since they do not emit anything else
+    // since they do not emit anything else, and for tagging message stuff
     const l2ToL1LogSent = parseL2ToL1LogSent(input.log, [
       ChainSpecificAddress.address(network.l2L1Messenger),
     ])
     if (l2ToL1LogSent) {
-      return [L2ToL1LogSent.create(input, {})]
+      const relayedRootBundle = findParsedAround(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => {
+          const parsed = parseRelayedRootBundle(log, null)
+          if (parsed) return parsed
+        },
+      )
+      return [
+        L2ToL1LogSent.create(input, {
+          app: relayedRootBundle ? 'across-settlement' : 'unknown',
+        }),
+      ]
     }
 
     const withdrawal = parseWithdrawal(input.log, [
@@ -517,7 +538,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       // message case (no transfer)
       return [
         Result.Message('zksync.Message', {
-          app: 'unknown',
+          app: l2LogSent.args.app,
           srcEvent: event,
           dstEvent: l2LogSent,
           extraEvents: [baseTokenDeposit],
