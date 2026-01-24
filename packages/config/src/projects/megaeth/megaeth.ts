@@ -95,8 +95,8 @@ export const megaeth: ScalingProject = opStackL2({
         url: 'https://mainnet.megaeth.com/rpc',
         callsPerMinute: 300,
       },
-      { type: 'blockscout', url: 'https://megaeth.blockscout.com/api' },
-      { type: 'blockscoutV2', url: 'https://megaeth.blockscout.com/api/v2' },
+      // { type: 'blockscout', url: 'https://megaeth.blockscout.com/api' },
+      // { type: 'blockscoutV2', url: 'https://megaeth.blockscout.com/api/v2' },
     ],
   },
   activityConfig: {
