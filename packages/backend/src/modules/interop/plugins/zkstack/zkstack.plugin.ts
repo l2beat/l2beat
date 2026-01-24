@@ -24,7 +24,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { type ZkStackAssetMapping, ZkStackAssetsConfig } from './zkstack.config'
+import { ZkStackAssetsConfig } from './zkstack.config'
 import {
   ETH_ASSET_ID,
   getNetworkByChainId,
@@ -84,11 +84,6 @@ const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
 const parseBridgeMint = createEventParser(bridgeMintLog)
 const parseBridgeBurn = createEventParser(bridgeBurnLog)
 const parseRelayedRootBundle = createEventParser(relayedRootBundleLog)
-
-type AssetLookup = Map<
-  string,
-  { l1TokenAddress: Address32; l2TokenAddresses: Record<string, Address32> }
->
 
 function zkstackWithdrawMatchId(
   assetId: `0x${string}`,
@@ -166,11 +161,6 @@ const BridgeMintL1 = createInteropEventType<{
 
 export class ZkStackPlugin implements InteropPluginResyncable {
   readonly name = 'zkstack'
-
-  private assetCache?: {
-    source: ZkStackAssetMapping[]
-    assets: AssetLookup
-  }
 
   constructor(private configs: InteropConfigStore) {}
 
@@ -306,7 +296,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         )
         if (!bridgeBurn) return
 
-        const srcTokenAddress = this.getAssetTokenAddress(
+        const srcTokenAddress = this.assetIdToLocalTokenAddress(
           depositInitiated.assetId,
           'ethereum',
         )
@@ -339,7 +329,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         )
 
         const dstTokenAddress =
-          this.getAssetTokenAddress(bridgeMint.assetId, 'ethereum') ??
+          this.assetIdToLocalTokenAddress(bridgeMint.assetId, 'ethereum') ??
           (bridgeMint.assetId.toLowerCase() === ETH_ASSET_ID
             ? Address32.NATIVE
             : undefined)
@@ -418,7 +408,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (bridgeBurn) {
       if (bridgeBurn.chainId !== 1n) return
 
-      const srcTokenAddress = this.getAssetTokenAddress(
+      const srcTokenAddress = this.assetIdToLocalTokenAddress(
         bridgeBurn.assetId,
         network.chain,
       )
@@ -448,7 +438,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       // bridgeMint is emitted on both sides, we make sure to capture the incoming one
       if (bridgeMint.chainId !== 1n) return
 
-      const dstTokenAddress = this.getAssetTokenAddress(
+      const dstTokenAddress = this.assetIdToLocalTokenAddress(
         bridgeMint.assetId,
         network.chain,
       )
@@ -597,37 +587,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
   }
 
-  private getAssetTokenAddress(
+  private assetIdToLocalTokenAddress(
     assetId: `0x${string}`,
     chain: string,
   ): Address32 | undefined {
-    const assets = this.getAssetLookup()
+    const assets = this.configs.get(ZkStackAssetsConfig)
     if (!assets) return
-    const entry = assets.get(assetId.toLowerCase())
+    const entry = assets[assetId.toLowerCase()]
     if (!entry) return
-    if (chain === 'ethereum') {
-      return entry.l1TokenAddress !== Address32.ZERO
-        ? entry.l1TokenAddress
-        : undefined
-    }
-    return entry.l2TokenAddresses[chain]
-  }
-
-  private getAssetLookup(): AssetLookup | undefined {
-    const config = this.configs.get(ZkStackAssetsConfig)
-    if (!config) return
-
-    if (this.assetCache?.source !== config) {
-      const lookup: AssetLookup = new Map()
-      for (const asset of config) {
-        lookup.set(asset.assetId.toLowerCase(), {
-          l1TokenAddress: asset.l1TokenAddress,
-          l2TokenAddresses: asset.l2TokenAddresses,
-        })
-      }
-      this.assetCache = { source: config, assets: lookup }
-    }
-
-    return this.assetCache.assets
+    return entry.implementationAddresses[chain]
   }
 }
