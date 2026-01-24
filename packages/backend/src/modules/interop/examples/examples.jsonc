@@ -2234,6 +2234,51 @@
     ],
     "messages": [{ "type": "zksync.Message", "app": "unknown" }]
   },
+  "abstract-deposit-eth": {
+    "loadConfigs": ["zkstack-assets"],
+    "tags": ["zkstack"],
+    "txs": [
+      // TODO
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0x78331db84246c1130ef0baca31af4521f4a6b6796201470ba250ac8f3b9acca0"
+      // },
+      // {
+      //   "chain": "abstract",
+      //   "tx": "0xf59e76ed598310e60d77ca378deec20ef311ba8fd8d41762f63d17728400f136"
+      // }
+    ],
+    "events": [
+      "zkstack.NewPriorityRequestId",
+      "zkstack.BridgehubDepositBaseTokenInitiated",
+      "zkstack.L2ToL1LogSent"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-gas" }],
+    "transfers": ["canonical-gas.Transfer"]
+  },
+  "abstract-deposit-erc20": {
+    "loadConfigs": ["zkstack-assets"],
+    "tags": ["zkstack"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x9c4dca3c723f4b488af3c9730a71f8cab5c37d8f013b473b585ee721ccdbb9e3"
+      },
+      {
+        "chain": "abstract",
+        "tx": "0xf59e76ed598310e60d77ca378deec20ef311ba8fd8d41762f63d17728400f136"
+      }
+    ],
+    "events": [
+      "zkstack.NewPriorityRequestId",
+      "zkstack.BridgehubDepositBaseTokenInitiated",
+      "zkstack.BridgehubDepositInitiated",
+      "zkstack.L2ToL1LogSent",
+      "zkstack.BridgeMint"
+    ],
+    "messages": [{ "type": "zksync.Message", "app": "canonical-erc20" }],
+    "transfers": ["canonical-erc20.Transfer"]
+  },
   "zksync-withdrawal-eth": {
     "loadConfigs": ["zkstack-assets"],
     "tags": ["zkstack"],

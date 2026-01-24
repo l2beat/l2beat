@@ -37,6 +37,28 @@ export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
       'zksync:0x000000000000000000000000000000000000800A',
     ),
   },
+  {
+    chainId: 2741,
+    chain: 'abstract',
+    diamondAddress: ChainSpecificAddress(
+      'eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9',
+    ),
+    l1AssetRouter: ChainSpecificAddress(
+      'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
+    ),
+    l1NativeTokenVault: ChainSpecificAddress(
+      'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
+    ),
+    l2SharedBridge: ChainSpecificAddress(
+      'abstract:0x0000000000000000000000000000000000010004',
+    ),
+    l2L1Messenger: ChainSpecificAddress(
+      'abstract:0x0000000000000000000000000000000000008008',
+    ),
+    l2EthToken: ChainSpecificAddress(
+      'abstract:0x000000000000000000000000000000000000800A',
+    ),
+  },
 ])
 
 export function getNetworkByChainId(

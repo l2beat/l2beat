@@ -71,7 +71,7 @@ const parseBridgeMint = createEventParser(bridgeMintLog)
 const parseBridgeBurn = createEventParser(bridgeBurnLog)
 type AssetLookup = Map<
   string,
-  { l1TokenAddress: Address32; l2TokenAddress: Address32 }
+  { l1TokenAddress: Address32; l2TokenAddresses: Record<string, Address32> }
 >
 
 function zkstackWithdrawMatchId(
@@ -585,7 +585,12 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (!assets) return
     const entry = assets.get(assetId.toLowerCase())
     if (!entry) return
-    return chain === 'ethereum' ? entry.l1TokenAddress : entry.l2TokenAddress
+    if (chain === 'ethereum') {
+      return entry.l1TokenAddress !== Address32.ZERO
+        ? entry.l1TokenAddress
+        : undefined
+    }
+    return entry.l2TokenAddresses[chain]
   }
 
   private getAssetLookup(): AssetLookup | undefined {
@@ -597,7 +602,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       for (const asset of config) {
         lookup.set(asset.assetId.toLowerCase(), {
           l1TokenAddress: asset.l1TokenAddress,
-          l2TokenAddress: asset.l2TokenAddress,
+          l2TokenAddresses: asset.l2TokenAddresses,
         })
       }
       this.assetCache = { source: config, assets: lookup }
