@@ -1,6 +1,6 @@
 {
   "name": "worldchain",
-  "timestamp": 1769180379,
+  "timestamp": 1769272413,
   "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
@@ -85,7 +85,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9106,
+        "gameCount": 9131,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x305d0ceBB616623AD88Ee9A3ACA56aE5984e8033",
@@ -99,7 +99,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 9106,
+        "permissionedGamesTotal": 9131,
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "version": "1.2.0"
@@ -1316,10 +1316,12 @@
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
+      "template": "gnosisSafeModules/SaferSafes",
       "sourceHashes": [
         "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
       ],
       "proxyType": "immutable",
+      "description": "A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -1546,7 +1548,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1326609,
-          "prevBlockNum": 24298202
+          "prevBlockNum": 24305856
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1760,7 +1762,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292684721",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292684878",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2859,6 +2861,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -2875,6 +2878,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24298236 },
+  "usedBlockNumbers": { "ethereum": 24305873 },
   "permissionsConfigHash": "0xc318f3977974aa4d98fa34be890c05cd99518887088362bfff1c2614acf45861"
 }

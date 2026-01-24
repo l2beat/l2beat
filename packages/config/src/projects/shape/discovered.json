@@ -1,6 +1,6 @@
 {
   "name": "shape",
-  "timestamp": 1769179794,
+  "timestamp": 1769272387,
   "configHash": "0x1b128f0c3e282fa66a26e0599cf25684f1bc5238d97f3f3373608bc9ad8be73a",
   "entries": [
     {
@@ -259,7 +259,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621314",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621315",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -311,7 +311,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6481,
+        "gameCount": 6495,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
@@ -324,7 +324,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 6481,
+        "permissionedGamesTotal": 6495,
         "version": "1.0.0"
       },
       "fieldMeta": {
@@ -1168,10 +1168,12 @@
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
+      "template": "gnosisSafeModules/SaferSafes",
       "sourceHashes": [
         "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
       ],
       "proxyType": "immutable",
+      "description": "A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -1425,7 +1427,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 24279622
+          "prevBlockNum": 24305529
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1555,7 +1557,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "basefeeScalar": 10200,
+        "basefeeScalar": 26812,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0xF7ca543d652E38692fD12f989eb55b5327eC9A20",
         "batchInbox": "eth:0xfF00000000000000000000000000000000000360",
@@ -1599,7 +1601,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279135079729058555864",
+        "scalar": "452312848583266388373324160190187140051835877600158453279135079729058572476",
         "sequencerInbox": "eth:0xfF00000000000000000000000000000000000360",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20369958,
@@ -2460,6 +2462,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -2476,6 +2479,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24298187 },
+  "usedBlockNumbers": { "ethereum": 24305871 },
   "permissionsConfigHash": "0xb944353ab434de032a75e7eac10ef3cb8e711cd550c53df60fad159055e01036"
 }

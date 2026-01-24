@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd05c36a2c075df01ad3c3b9b0271ffa6a857dbdf
+Generated with discovered.json: 0xf199432bdf0861ddd4ea8235f0191e5ef6cec62c
 
-# Diff at Fri, 23 Jan 2026 14:46:25 GMT:
+# Diff at Sat, 24 Jan 2026 16:33:33 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048190
-- current timestamp: 1769179520
+- current timestamp: 1769272346
 
 ## Description
 
-SaferSafes module added to OpFoundationUpgradeSafe - this is a module that adds extra safety checks for Safe operations.
+SaferSafes (TimelockGuard) module added to OpFoundationUpgradeSafe - timelock delays currently 0.
 
 ## Watched changes
 
@@ -23,7 +23,7 @@ SaferSafes module added to OpFoundationUpgradeSafe - this is a module that adds 
 ```diff
 +   Status: CREATED
     contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
-    +++ description: None
+    +++ description: A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.
 ```
 
 ## Source code changes

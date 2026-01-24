@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1769179262,
+  "timestamp": 1769272127,
   "configHash": "0x7e5006a9cd6e910bbcff7795125cf6ccb79bc0029116463ab977215145232266",
   "entries": [
     {
@@ -32,7 +32,7 @@
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
         "lastDisbursementTime": 1769037089,
-        "netFeeRevenue": 0,
+        "netFeeRevenue": "81580421198262734737",
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
         "OPTIMISM_WALLET": "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
@@ -79,7 +79,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669994",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292670035",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -295,10 +295,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 180617454,
+        "basefee": 244964881,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 8011377,
+        "blobBaseFee": 13419153,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 139,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -308,15 +308,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xa61b2207c36f0ae70e54d55518ef33e9ca3c23562d3d54e6cc466c0dfec4ff66",
+        "hash": "0xf4e5c51f4bf0db44ac89a39b4d5439f0f72ba5d3979f549f1e096b3f28c7b49b",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24298128,
+        "number": 24305835,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 3,
-        "timestamp": 1769179079,
+        "sequenceNumber": 1,
+        "timestamp": 1769271947,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1456,7 +1456,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 10760,
+        "gameCount": 10786,
         "gameImpls": [
           "eth:0x979Cb7E329bA213fB9d6c5F7771eC6a3109BDC93",
           "eth:0x6f8c1Ea88CB410571739d36EB00811B250574cB2",
@@ -1571,8 +1571,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 24298141
+          "prevBoughtGas": 310736,
+          "prevBlockNum": 24305849
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2515,7 +2515,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293129789",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293130182",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2594,12 +2594,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x1cec9aA3635c46573e028ECaBeaC6d0aE1C5ec9b",
+        "anchorGame": "eth:0xd79fdC549C75A5063307DeCB72503a9cDD534483",
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xa80e25411d26009b442617dd88d3c9493dac84be98cdfae39ea13550e08dfdd5",
-          40891561
+          "0x055463c753fb2e356a948470343b2fc7a5b2ae218df94fd06a419b8a4989e932",
+          40936680
         ],
         "initVersion": 1,
         "paused": false,
@@ -3049,10 +3049,12 @@
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
+      "template": "gnosisSafeModules/SaferSafes",
       "sourceHashes": [
         "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
       ],
       "proxyType": "immutable",
+      "description": "A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -4921,6 +4923,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -4954,6 +4957,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 41194957, "ethereum": 24298143 },
+  "usedBlockNumbers": { "base": 41241390, "ethereum": 24305850 },
   "permissionsConfigHash": "0xeb2764ed37bd6ebbed1b5adab68a3c99ea6c0fe5a9729b1dd61089a6208f0258"
 }

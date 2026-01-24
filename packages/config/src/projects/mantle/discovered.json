@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1769179526,
+  "timestamp": 1769272354,
   "configHash": "0x4f3ac957f4eae0e424a58d3f3f063a3d53dccb6945b04e474f65dd0c1a6cef23",
   "entries": [
     {
@@ -173,10 +173,10 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 90495746,
-        "latestOutputIndex": 16290,
-        "nextBlockNumber": 90497546,
-        "nextOutputIndex": 16291,
+        "latestBlockNumber": 90567746,
+        "latestOutputIndex": 16330,
+        "nextBlockNumber": 90569546,
+        "nextOutputIndex": 16331,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
@@ -620,7 +620,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292702242",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292702246",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -758,8 +758,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593654,
-          "prevBlockNum": 24298115
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 24304262
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1313,6 +1313,6 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24298165 },
+  "usedBlockNumbers": { "ethereum": 24305868 },
   "permissionsConfigHash": "0x9a7a5139fc1184892b495118a6dca7035f2adcb82142b5b7454b508c256be750"
 }

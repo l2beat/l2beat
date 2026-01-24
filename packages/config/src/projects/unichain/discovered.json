@@ -1,6 +1,6 @@
 {
   "name": "unichain",
-  "timestamp": 1769180367,
+  "timestamp": 1769272161,
   "configHash": "0xa2083dbd95fb347cf31e6a6952b59bf592825b334919dca5ea378a7ce69c5c89",
   "entries": [
     {
@@ -193,7 +193,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24298175
+          "prevBlockNum": 24305724
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -383,12 +383,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anchorGame": "eth:0x36E413D7c5be3F0B7f228485F3F0684B18C8249c",
+        "anchorGame": "eth:0x86CC5AA2ef3e86cbbe1497ee155555411611E486",
         "disputeGameFactory": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xe3dfadb16c7afeaea28de137587cdc919e883f10e532d371fc1e60988266aa6c",
-          37822677
+          "0xb0e81025d7f743692bab3fd45e1e4b49e7c0fdbdb75eff15260752d50234bb67",
+          37916352
         ],
         "initVersion": 1,
         "paused": false,
@@ -465,7 +465,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 10553,
+        "gameCount": 10578,
         "gameImpls": [
           "eth:0x6D0462850F7B87403660CC9f4F89346483108512",
           "eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02",
@@ -1553,7 +1553,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653640",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292653691",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1673,10 +1673,12 @@
       "name": "SaferSafes",
       "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
       "type": "Contract",
+      "template": "gnosisSafeModules/SaferSafes",
       "sourceHashes": [
         "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
       ],
       "proxyType": "immutable",
+      "description": "A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.",
       "receivedPermissions": [
         {
           "permission": "guard",
@@ -4865,6 +4867,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -4899,6 +4902,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "usedBlockNumbers": { "ethereum": 24298235, "unichain": 38432008 },
+  "usedBlockNumbers": { "ethereum": 24305852, "unichain": 38523802 },
   "permissionsConfigHash": "0xfb5899f0aa344d5dca8cd6489eb992e850be87a1cc3f9e996e83cc156fd0c946"
 }
