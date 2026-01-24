@@ -30,6 +30,8 @@ import {
   getNetworkByChainId,
   getNetworkByDiamondAddress,
   getNetworkByL2Chain,
+  ZKSTACK_L1_ASSET_ROUTER,
+  ZKSTACK_L1_NATIVE_TOKEN_VAULT,
   ZKSTACK_SUPPORTED,
 } from './zkstack.networks'
 
@@ -183,18 +185,18 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         type: 'event',
         signature: bridgehubDepositBaseTokenInitiatedLog,
         includeTxEvents: [newPriorityRequestLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1AssetRouter),
+        addresses: [ZKSTACK_L1_ASSET_ROUTER],
       },
       {
         type: 'event',
         signature: bridgehubDepositInitiatedLog,
         includeTxEvents: [bridgeBurnLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1AssetRouter),
+        addresses: [ZKSTACK_L1_ASSET_ROUTER],
       },
       {
         type: 'event',
         signature: bridgeMintLog,
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1NativeTokenVault),
+        addresses: [ZKSTACK_L1_NATIVE_TOKEN_VAULT],
       },
       {
         type: 'event',
@@ -249,11 +251,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
       const baseTokenDeposit = parseBridgehubDepositBaseTokenInitiated(
         input.log,
-        [
-          ...ZKSTACK_SUPPORTED.map((n) =>
-            ChainSpecificAddress.address(n.l1AssetRouter),
-          ),
-        ],
+        [ChainSpecificAddress.address(ZKSTACK_L1_ASSET_ROUTER)],
       )
       if (baseTokenDeposit) {
         const network = getNetworkByChainId(baseTokenDeposit.chainId)
@@ -288,9 +286,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       }
 
       const depositInitiated = parseBridgehubDepositInitiated(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) =>
-          ChainSpecificAddress.address(n.l1AssetRouter),
-        ),
+        ChainSpecificAddress.address(ZKSTACK_L1_ASSET_ROUTER),
       ])
       if (depositInitiated) {
         const network = getNetworkByChainId(depositInitiated.chainId)
@@ -327,9 +323,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       }
 
       const bridgeMint = parseBridgeMint(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) =>
-          ChainSpecificAddress.address(n.l1NativeTokenVault),
-        ),
+        ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT),
       ])
       if (bridgeMint) {
         // must be from supported chain to ethereum

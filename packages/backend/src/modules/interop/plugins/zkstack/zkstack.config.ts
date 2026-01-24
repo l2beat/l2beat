@@ -20,7 +20,10 @@ import {
   type InteropConfigPlugin,
   type InteropConfigStore,
 } from '../../engine/config/InteropConfigStore'
-import { ZKSTACK_SUPPORTED } from './zkstack.networks'
+import {
+  ZKSTACK_L1_NATIVE_TOKEN_VAULT,
+  ZKSTACK_SUPPORTED,
+} from './zkstack.networks'
 
 export interface ZkStackAssetMapping {
   assetId: `0x${string}`
@@ -89,12 +92,13 @@ export class ZkStackConfigPlugin
       this.logger.warn('Missing RPC clients for zkstack chains', {
         chains: missingChains,
       })
-      console.warn(
-        `[zkstack-assets config plugin] Missing RPC clients for zkstack chains: ${missingChains.join(
-          ', ',
-        )}. Expected chains: ${ZKSTACK_SUPPORTED.map((n) => n.chain).join(', ')}. 
-        This likely happened because the example you just ran does not include a transaction from each supported chain.`,
-      )
+      this.logger
+        .for('InteropExamples')
+        .warn('Missing zkstack RPC clients for example configs', {
+          missingChains,
+          expectedChains: ZKSTACK_SUPPORTED.map((n) => n.chain),
+          hint: 'Include a tx for each supported chain when running examples.',
+        })
     }
 
     if (l2Networks.length === 0) {
@@ -102,18 +106,7 @@ export class ZkStackConfigPlugin
       return
     }
 
-    const l1Vaults = [
-      ...new Set(
-        l2Networks.map((n) =>
-          ChainSpecificAddress.address(n.l1NativeTokenVault),
-        ),
-      ),
-    ]
-    const primaryL1Vault = l1Vaults[0]
-    if (!primaryL1Vault) {
-      this.logger.warn('Missing L1 vault address, skipping update')
-      return
-    }
+    const l1Vault = ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT)
 
     const chainsToFetch = [L1_CHAIN, ...l2Networks.map((n) => n.chain)]
     const tokensByChain = await this.getTokenAddressesByChain(chainsToFetch)
@@ -136,7 +129,7 @@ export class ZkStackConfigPlugin
 
     const l1AssetIdsByToken =
       l1Tokens.length > 0
-        ? await this.fetchAssetIds(l1Rpc, primaryL1Vault, l1Tokens, L1_CHAIN)
+        ? await this.fetchAssetIds(l1Rpc, l1Vault, l1Tokens, L1_CHAIN)
         : new Map<EthereumAddress, `0x${string}`>()
 
     const l2AssetIdsByChain = new Map<
@@ -182,7 +175,7 @@ export class ZkStackConfigPlugin
     const assetIds = [...assetIdSet]
     const originChainIds = await this.fetchOriginChainIds(
       l1Rpc,
-      l1Vaults,
+      l1Vault,
       assetIds,
     )
 
@@ -192,7 +185,7 @@ export class ZkStackConfigPlugin
     if (l1Missing.length > 0) {
       const filled = await this.fetchTokenAddressesByAssetId(
         l1Rpc,
-        primaryL1Vault,
+        l1Vault,
         l1Missing,
         L1_CHAIN,
       )
@@ -417,49 +410,40 @@ export class ZkStackConfigPlugin
 
   private async fetchOriginChainIds(
     rpc: IRpcClient,
-    l1Vaults: EthereumAddress[],
+    l1Vault: EthereumAddress,
     assetIds: string[],
   ): Promise<Map<string, number>> {
     const originChainIds = new Map<string, number>()
     let failed = 0
 
-    for (const l1Vault of l1Vaults) {
-      const unresolved = assetIds.filter(
-        (assetId) => !originChainIds.has(assetId),
-      )
-      if (unresolved.length === 0) {
-        break
-      }
-
-      const calls: CallParameters[] = unresolved.map((assetId) => ({
-        to: l1Vault,
-        data: Bytes.fromHex(
-          encodeFunctionData({
-            abi: ASSET_ABI,
-            functionName: 'originChainId',
-            args: [assetId as `0x${string}`],
-          }),
-        ),
-      }))
-
-      const latest = await rpc.getLatestBlockNumber()
-      const results = await this.multicallInChunks(rpc, calls, latest)
-
-      for (const [i, result] of results.entries()) {
-        if (!result.success || result.data.toString() === '0x') {
-          failed++
-          continue
-        }
-
-        const originChainId = decodeFunctionResult({
+    const calls: CallParameters[] = assetIds.map((assetId) => ({
+      to: l1Vault,
+      data: Bytes.fromHex(
+        encodeFunctionData({
           abi: ASSET_ABI,
           functionName: 'originChainId',
-          data: result.data.toString() as Hex,
-        }) as bigint
+          args: [assetId as `0x${string}`],
+        }),
+      ),
+    }))
 
-        if (originChainId === 0n) continue
-        originChainIds.set(unresolved[i], Number(originChainId))
+    const latest = await rpc.getLatestBlockNumber()
+    const results = await this.multicallInChunks(rpc, calls, latest)
+
+    for (const [i, result] of results.entries()) {
+      if (!result.success || result.data.toString() === '0x') {
+        failed++
+        continue
       }
+
+      const originChainId = decodeFunctionResult({
+        abi: ASSET_ABI,
+        functionName: 'originChainId',
+        data: result.data.toString() as Hex,
+      }) as bigint
+
+      if (originChainId === 0n) continue
+      originChainIds.set(assetIds[i], Number(originChainId))
     }
 
     this.logger.info('Resolved origin chain ids', {

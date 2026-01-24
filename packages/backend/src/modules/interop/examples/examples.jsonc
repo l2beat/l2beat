@@ -2264,7 +2264,7 @@
         "tx": "0x3e8e107fc8f7c301a4ba26fe5c981a189a55fd052deced8f2a065a87f041288f"
       }
     ],
-    "messages": [{ "type": "zksync.Message", "app": "across-settlement" }]
+    "messages": [{ "type": "zkstack.Message", "app": "across-settlement" }]
   },
   "zkstack-withdrawal-eth": {
     "loadConfigs": ["zkstack-assets"],

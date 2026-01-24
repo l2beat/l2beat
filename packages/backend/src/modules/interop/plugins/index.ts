@@ -93,7 +93,6 @@ export function createInteropPlugins(
   const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
   assert(ethereumRpc)
   const rpcs = new Map(deps.rpcClients.map((r) => [r.chain, r]))
-
   return {
     comparePlugins: [new AcrossComparePlugin()],
     configPlugins: [

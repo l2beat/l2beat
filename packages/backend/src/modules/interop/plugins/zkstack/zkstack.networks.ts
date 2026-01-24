@@ -5,8 +5,6 @@ export interface ZkStackNetwork {
   chainId: number
   chain: string
   diamondAddress: ChainSpecificAddress
-  l1AssetRouter: ChainSpecificAddress
-  l1NativeTokenVault: ChainSpecificAddress
   l2SharedBridge: ChainSpecificAddress
   l2L1Messenger: ChainSpecificAddress
   l2EthToken: ChainSpecificAddress
@@ -20,12 +18,6 @@ export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
     chain: 'zksync2',
     diamondAddress: ChainSpecificAddress(
       'eth:0x32400084C286CF3E17e7B677ea9583e60a000324',
-    ),
-    l1AssetRouter: ChainSpecificAddress(
-      'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
-    ),
-    l1NativeTokenVault: ChainSpecificAddress(
-      'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
     ),
     l2SharedBridge: ChainSpecificAddress(
       'zksync:0x0000000000000000000000000000000000010004',
@@ -43,12 +35,6 @@ export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
     diamondAddress: ChainSpecificAddress(
       'eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9',
     ),
-    l1AssetRouter: ChainSpecificAddress(
-      'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
-    ),
-    l1NativeTokenVault: ChainSpecificAddress(
-      'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
-    ),
     l2SharedBridge: ChainSpecificAddress(
       'abstract:0x0000000000000000000000000000000000010004',
     ),
@@ -60,6 +46,14 @@ export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
     ),
   },
 ])
+
+export const ZKSTACK_L1_NATIVE_TOKEN_VAULT = ChainSpecificAddress(
+  'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
+)
+
+export const ZKSTACK_L1_ASSET_ROUTER = ChainSpecificAddress(
+  'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
+)
 
 export function getNetworkByChainId(
   chainId: bigint,
