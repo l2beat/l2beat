@@ -16,7 +16,6 @@ export abstract class RootIndexer extends Indexer {
   }
 
   override async setInitialState(): Promise<void> {
-    return await Promise.resolve()
   }
 
   override async setSafeHeight(): Promise<void> {
