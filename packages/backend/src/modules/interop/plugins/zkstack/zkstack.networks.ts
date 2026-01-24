@@ -79,5 +79,5 @@ export function getNetworkByL2Chain(chain: string): ZkStackNetwork | undefined {
   return ZKSTACK_SUPPORTED.find((n) => n.chain === chain)
 }
 
-export const ZKSYNC_GAS_ASSET_ID =
+export const ETH_ASSET_ID =
   '0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609'

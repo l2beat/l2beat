@@ -1,3 +1,11 @@
+/**
+ * supports zk stack interop (only L1 <> L2)
+ * skips gateway
+ * add new zk stack chains to zkstack.networks.ts
+ * the config fetches assetId <> address mappings for all chains via rpc
+ * undefined src/dstTokens mean we do not have them in tokenDB,
+ * check the src/dst txHash for what tokens to add
+ */
 import {
   Address32,
   ChainSpecificAddress,
@@ -18,11 +26,11 @@ import {
 } from '../types'
 import { type ZkStackAssetMapping, ZkStackAssetsConfig } from './zkstack.config'
 import {
+  ETH_ASSET_ID,
   getNetworkByChainId,
   getNetworkByDiamondAddress,
   getNetworkByL2Chain,
   ZKSTACK_SUPPORTED,
-  ZKSYNC_GAS_ASSET_ID,
 } from './zkstack.networks'
 
 // == Event signatures ==
@@ -101,7 +109,7 @@ const BridgehubDepositBaseTokenInitiated = createInteropEventType<{
 const BridgehubDepositInitiated = createInteropEventType<{
   chainId: number
   assetId: `0x${string}`
-  srcTokenAddress: Address32
+  srcTokenAddress?: Address32
   srcAmount: bigint
   $dstChain: string
 }>('zkstack.BridgehubDepositInitiated', { direction: 'outgoing' })
@@ -126,14 +134,14 @@ const BridgeBurn = createInteropEventType<{
   matchId: string
   assetId: `0x${string}`
   receiver: EthereumAddress
-  srcTokenAddress: Address32
+  srcTokenAddress?: Address32
   srcAmount: bigint
 }>('zkstack.BridgeBurn', { direction: 'outgoing' })
 
 const BridgeMint = createInteropEventType<{
   chainId: number
   assetId: `0x${string}`
-  dstTokenAddress: Address32
+  dstTokenAddress?: Address32
   dstAmount: bigint
 }>('zkstack.BridgeMint', { direction: 'incoming' })
 
@@ -297,7 +305,6 @@ export class ZkStackPlugin implements InteropPluginResyncable {
           depositInitiated.assetId,
           'ethereum',
         )
-        if (!srcTokenAddress) return
 
         return [
           BridgehubDepositInitiated.create(input, {
@@ -330,7 +337,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
         const dstTokenAddress =
           this.getAssetTokenAddress(bridgeMint.assetId, 'ethereum') ??
-          (bridgeMint.assetId.toLowerCase() === ZKSYNC_GAS_ASSET_ID
+          (bridgeMint.assetId.toLowerCase() === ETH_ASSET_ID
             ? Address32.NATIVE
             : undefined)
 
@@ -375,14 +382,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (withdrawal) {
       const receiver = EthereumAddress(withdrawal.l1Receiver)
       const matchId = zkstackWithdrawMatchId(
-        ZKSYNC_GAS_ASSET_ID,
+        ETH_ASSET_ID,
         receiver,
         withdrawal.amount,
       )
       return [
         Withdrawal.create(input, {
           matchId,
-          assetId: ZKSYNC_GAS_ASSET_ID,
+          assetId: ETH_ASSET_ID,
           receiver,
           srcTokenAddress: Address32.NATIVE,
           srcAmount: withdrawal.amount,
@@ -400,7 +407,6 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         bridgeBurn.assetId,
         network.chain,
       )
-      if (!srcTokenAddress) return
 
       const receiver = EthereumAddress(bridgeBurn.receiver)
       const matchId = zkstackWithdrawMatchId(
@@ -431,7 +437,6 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         bridgeMint.assetId,
         network.chain,
       )
-      if (!dstTokenAddress) return
 
       return [
         BridgeMint.create(input, {
