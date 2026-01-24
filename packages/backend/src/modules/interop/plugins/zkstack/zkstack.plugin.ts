@@ -497,7 +497,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         if (!bridgeMint) return
 
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-erc20',
             srcEvent: event,
             dstEvent: l2LogSent,
@@ -519,7 +519,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         baseTokenDeposit.args.srcTokenAddress !== undefined
       ) {
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-gas',
             srcEvent: event,
             dstEvent: l2LogSent,
@@ -537,7 +537,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
       // message case (no transfer)
       return [
-        Result.Message('zksync.Message', {
+        Result.Message('zkstack.Message', {
           app: l2LogSent.args.app,
           srcEvent: event,
           dstEvent: l2LogSent,
@@ -558,7 +558,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         if (!l1MessageSent) return
 
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-gas',
             srcEvent: l1MessageSent,
             dstEvent: event,
@@ -586,7 +586,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       if (!l1MessageSent) return
 
       return [
-        Result.Message('zksync.Message', {
+        Result.Message('zkstack.Message', {
           app: 'canonical-erc20',
           srcEvent: l1MessageSent,
           dstEvent: event,
