@@ -85,9 +85,16 @@ export class ZkStackConfigPlugin
       (n) => !this.rpcs.has(n.chain),
     )
     if (missingNetworks.length > 0) {
+      const missingChains = missingNetworks.map((n) => n.chain)
       this.logger.warn('Missing RPC clients for zkstack chains', {
-        chains: missingNetworks.map((n) => n.chain),
+        chains: missingChains,
       })
+      console.warn(
+        `[zkstack-assets config plugin] Missing RPC clients for zkstack chains: ${missingChains.join(
+          ', ',
+        )}. Expected chains: ${ZKSTACK_SUPPORTED.map((n) => n.chain).join(', ')}. 
+        This likely happened because the example you just ran does not include a transaction from each supported chain.`,
+      )
     }
 
     if (l2Networks.length === 0) {
