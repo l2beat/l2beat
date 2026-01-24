@@ -54,6 +54,24 @@ const ASSET_ABI = parseAbi([
 const MULTICALL_CHUNK = 150
 const ZERO_ASSET_ID = `0x${'0'.repeat(64)}` as const
 
+type ChainDescriptor = {
+  chain: string
+  contract: EthereumAddress
+}
+
+type ChainWithRpc = ChainDescriptor & { rpc: IRpcClient }
+
+const ZKSTACK_CHAIN_DESCRIPTORS: ChainDescriptor[] = [
+  {
+    chain: 'ethereum',
+    contract: ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT),
+  },
+  ...ZKSTACK_SUPPORTED.map((network) => ({
+    chain: network.chain,
+    contract: ChainSpecificAddress.address(network.l2SharedBridge),
+  })),
+]
+
 export class ZkStackConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
@@ -87,21 +105,12 @@ export class ZkStackConfigPlugin
   }
 
   private async getLatestAssets(): Promise<ZkStackAssetMapping | undefined> {
-    const chainDescriptors = [
-      {
-        chain: 'ethereum',
-        contract: ChainSpecificAddress.address(ZKSTACK_L1_NATIVE_TOKEN_VAULT),
-      },
-      ...ZKSTACK_SUPPORTED.map((network) => ({
-        chain: network.chain,
-        contract: ChainSpecificAddress.address(network.l2SharedBridge),
-      })),
-    ]
+    const chainDescriptors = ZKSTACK_CHAIN_DESCRIPTORS
 
-    const ethChainName = chainDescriptors[0]
-    const ethRpc = this.rpcs.get(ethChainName.chain)
+    const l1Descriptor = chainDescriptors[0]
+    const ethRpc = this.rpcs.get(l1Descriptor.chain)
     if (!ethRpc) {
-      throw new Error(`Missing RPC client for ${ethChainName.chain}`)
+      throw new Error(`Missing RPC client for ${l1Descriptor.chain}`)
     }
 
     const missingL2Networks = ZKSTACK_SUPPORTED.filter(
@@ -130,7 +139,7 @@ export class ZkStackConfigPlugin
     const chainsWithRpcs = chainDescriptors.flatMap((descriptor) => {
       const rpc = this.rpcs.get(descriptor.chain)
       if (!rpc) return []
-      return [{ ...descriptor, rpc }]
+      return [{ ...descriptor, rpc } satisfies ChainWithRpc]
     })
 
     if (chainsWithRpcs.length < 2) {
@@ -140,7 +149,7 @@ export class ZkStackConfigPlugin
       return
     }
 
-    const tokensByChain = await this.getTokenAddressesByChain(
+    const tokensByChain = await this.getDeployedTokenAddressesByChain(
       chainsWithRpcs.map((descriptor) => descriptor.chain),
     )
 
@@ -149,23 +158,29 @@ export class ZkStackConfigPlugin
       Map<string, EthereumAddress>
     >()
 
-    for (const { chain, contract, rpc } of chainsWithRpcs) {
-      const tokens = tokensByChain.get(chain) ?? []
-      if (tokens.length === 0) {
-        this.logger.warn('No tokens found in token database', { chain })
-      }
+    await Promise.all(
+      chainsWithRpcs.map(async ({ chain, contract, rpc }) => {
+        const tokens = tokensByChain.get(chain) ?? []
+        if (tokens.length === 0) {
+          this.logger.warn('No tokens found in token database', { chain })
+          tokensByAssetIdByChain.set(chain, new Map())
+          return
+        }
 
-      const assetIdsByToken =
-        tokens.length > 0
-          ? await this.fetchAssetIds(rpc, contract, tokens, chain)
-          : new Map<EthereumAddress, `0x${string}`>()
+        const assetIdsByToken = await this.fetchAssetIds(
+          rpc,
+          contract,
+          tokens,
+          chain,
+        )
 
-      const tokensByAssetId = new Map<string, EthereumAddress>()
-      for (const [token, assetId] of assetIdsByToken.entries()) {
-        tokensByAssetId.set(assetId, token)
-      }
-      tokensByAssetIdByChain.set(chain, tokensByAssetId)
-    }
+        const tokensByAssetId = new Map<string, EthereumAddress>()
+        for (const [token, assetId] of assetIdsByToken.entries()) {
+          tokensByAssetId.set(assetId, token)
+        }
+        tokensByAssetIdByChain.set(chain, tokensByAssetId)
+      }),
+    )
 
     const assetIdSet = new Set<string>()
     for (const tokensByAssetId of tokensByAssetIdByChain.values()) {
@@ -182,19 +197,30 @@ export class ZkStackConfigPlugin
     }
 
     const assetIds = [...assetIdSet]
-    const originChainIds = await this.fetchOriginChainIds(
+    const originChainIdsPromise = this.fetchOriginChainIds(
       ethRpc,
-      ethChainName.contract,
+      l1Descriptor.contract,
       assetIds,
     )
 
-    for (const { chain, contract, rpc } of chainsWithRpcs) {
-      const tokensByAssetId =
-        tokensByAssetIdByChain.get(chain) ?? new Map<string, EthereumAddress>()
-      const missing = assetIds.filter((assetId) => {
-        return !tokensByAssetId.has(assetId)
-      })
-      if (missing.length > 0) {
+    await Promise.all(
+      chainsWithRpcs.map(async ({ chain, contract, rpc }) => {
+        const tokensByAssetId =
+          tokensByAssetIdByChain.get(chain) ??
+          new Map<string, EthereumAddress>()
+
+        const missing: string[] = []
+        for (const assetId of assetIds) {
+          if (!tokensByAssetId.has(assetId)) {
+            missing.push(assetId)
+          }
+        }
+
+        if (missing.length === 0) {
+          tokensByAssetIdByChain.set(chain, tokensByAssetId)
+          return
+        }
+
         const filled = await this.fetchTokenAddressesByAssetId(
           rpc,
           contract,
@@ -202,11 +228,14 @@ export class ZkStackConfigPlugin
           chain,
         )
         for (const [assetId, token] of filled) {
+          if (token === EthereumAddress.ZERO) continue
           tokensByAssetId.set(assetId, token)
         }
-      }
-      tokensByAssetIdByChain.set(chain, tokensByAssetId)
-    }
+        tokensByAssetIdByChain.set(chain, tokensByAssetId)
+      }),
+    )
+
+    const originChainIds = await originChainIdsPromise
 
     const mappings: ZkStackAssetMapping = {}
     let skippedInsufficient = 0
@@ -254,31 +283,33 @@ export class ZkStackConfigPlugin
     return mappings
   }
 
-  private async getTokenAddressesByChain(
+  private async getDeployedTokenAddressesByChain(
     chains: string[],
   ): Promise<Map<string, EthereumAddress[]>> {
     const { abstractTokens, deployedWithoutAbstractTokens } =
       await this.tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
 
-    const deployed = [
-      ...deployedWithoutAbstractTokens,
-      ...abstractTokens.flatMap((token) => token.deployedTokens),
-    ]
-
     const chainSet = new Set(chains)
-    const uniqueByChain = new Map<string, Map<string, EthereumAddress>>()
-    for (const chain of chains) {
-      uniqueByChain.set(chain, new Map())
-    }
+    const uniqueByChain = new Map(
+      chains.map((chain) => [chain, new Map<string, EthereumAddress>()]),
+    )
 
-    for (const token of deployed) {
-      if (!chainSet.has(token.chain)) continue
-      if (!token.address.startsWith('0x') || token.address.length !== 42)
-        continue
+    const addToken = (token: { chain: string; address: string }) => {
+      if (!chainSet.has(token.chain)) return
+      if (!token.address.startsWith('0x') || token.address.length !== 42) return
 
       const chainMap = uniqueByChain.get(token.chain)
-      if (!chainMap) continue
+      if (!chainMap) return
       chainMap.set(token.address.toLowerCase(), EthereumAddress(token.address))
+    }
+
+    for (const token of deployedWithoutAbstractTokens) {
+      addToken(token)
+    }
+    for (const abstractToken of abstractTokens) {
+      for (const token of abstractToken.deployedTokens) {
+        addToken(token)
+      }
     }
 
     const result = new Map<string, EthereumAddress[]>()
