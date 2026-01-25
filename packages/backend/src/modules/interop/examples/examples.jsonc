@@ -1923,7 +1923,8 @@
     "transfers": ["hyperlaneHwr.Transfer"]
   },
   "hwr": {
-    // 3 hwr transfers, one is USDC via cctp
+    // 4 hwr transfers, one is USDC via cctp
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1948,6 +1949,14 @@
       {
         "chain": "ethereum",
         "tx": "0x99cc07d4031da67e058a9513a4677307c47a2921c573cafbb5eed22741f26b6b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0544ec200cb3bd270bd9d9246297c4a793fe940c0677a5a5a21597b5af609561"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
       }
     ]
   },
