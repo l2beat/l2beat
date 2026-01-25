@@ -10,9 +10,20 @@ export interface ZkStackNetwork {
   l2EthToken: ChainSpecificAddress
 }
 
+export const ETH_ASSET_ID =
+  '0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609'
+
+export const L1_NATIVE_TOKEN_VAULT = ChainSpecificAddress(
+  'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
+)
+
+export const L1_ASSET_ROUTER = ChainSpecificAddress(
+  'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
+)
+
 // this would equally work without all specific addresses except diamond
 // but they are probably good for perf/resyncing
-export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
+export const SUPPORTED_CHAINS = defineNetworks<ZkStackNetwork>('zkstack', [
   {
     chainId: 324,
     chain: 'zksync2',
@@ -47,31 +58,20 @@ export const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
   },
 ])
 
-export const ZKSTACK_L1_NATIVE_TOKEN_VAULT = ChainSpecificAddress(
-  'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
-)
-
-export const ZKSTACK_L1_ASSET_ROUTER = ChainSpecificAddress(
-  'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
-)
-
 export function getNetworkByChainId(
   chainId: bigint,
 ): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find((n) => BigInt(n.chainId) === chainId)
+  return SUPPORTED_CHAINS.find((n) => BigInt(n.chainId) === chainId)
 }
 
 export function getNetworkByDiamondAddress(
   address: EthereumAddress,
 ): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find(
+  return SUPPORTED_CHAINS.find(
     (n) => ChainSpecificAddress.address(n.diamondAddress) === address,
   )
 }
 
 export function getNetworkByL2Chain(chain: string): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find((n) => n.chain === chain)
+  return SUPPORTED_CHAINS.find((n) => n.chain === chain)
 }
-
-export const ETH_ASSET_ID =
-  '0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609'

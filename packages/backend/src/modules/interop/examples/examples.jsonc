@@ -2175,7 +2175,7 @@
     ]
   },
   "zkstack-deposit-eth": {
-    "loadConfigs": ["zkstack-assets"],
+    "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2213,7 +2213,7 @@
     // important: the example runner only prepares RPCs of the chains in the `txs` array
     // since this config depends on all zkstack RPCs, we always need to group an example
     // of each supported chain or config loading will fail
-    "loadConfigs": ["zkstack-assets"],
+    "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2252,7 +2252,7 @@
     "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
   },
   "zkstack-deposit-message": {
-    "loadConfigs": ["zkstack-assets"],
+    "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2267,7 +2267,7 @@
     "messages": [{ "type": "zkstack.Message", "app": "across-settlement" }]
   },
   "zkstack-withdrawal-eth": {
-    "loadConfigs": ["zkstack-assets"],
+    "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
     "txs": [
       {
@@ -2302,7 +2302,7 @@
     "transfers": ["canonical-gas.Transfer", "canonical-gas.Transfer"]
   },
   "zkstack-withdrawal-erc20": {
-    "loadConfigs": ["zkstack-assets"],
+    "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
     "txs": [
       {
