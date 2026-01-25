@@ -295,7 +295,7 @@ export const allbridge: Bridge = {
               'eth:0xb7C522Adb3429e2C7474df324c7a3744A5803414',
             ),
           ]),
-          'EOA delivering crosschain messages to the WormholeMessenger contract.',
+          'EOA delivering crosschain messages to the CctpBridge contract.',
         ),
       ],
     },
