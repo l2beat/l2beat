@@ -38,8 +38,11 @@ export const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-const parseDepositForBurn = createEventParser(
+const parseDepositForBurnCCTPv1 = createEventParser(
   'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
+)
+const parseDepositForBurnCCTPv2 = createEventParser(
+  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)',
 )
 
 const HwrTransferSent = createInteropEventType<{
@@ -50,6 +53,7 @@ const HwrTransferSent = createInteropEventType<{
   amount: bigint
   tokenAddress: Address32
   cctp: boolean
+  burned: boolean
 }>('hyperlane-hwr.TransferSent')
 
 const HwrTransferReceived = createInteropEventType<{
@@ -59,6 +63,7 @@ const HwrTransferReceived = createInteropEventType<{
   recipient: Address32
   amount: bigint
   tokenAddress: Address32
+  minted: boolean
 }>('hyperlane-hwr.TransferReceived')
 
 export class HyperlaneHwrPlugin implements InteropPlugin {
@@ -95,7 +100,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      const transferMatch = findParsedAround(
+      const matchingTransfer = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -103,17 +108,24 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           const transfer = parseTransfer(log, null)
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
-          if (transfer.value !== sentTransferRemote.amount) return
-          return Address32.from(log.address)
+          if (isWithinTolerance(transfer.value, sentTransferRemote.amount))
+            return {
+              address: Address32.from(log.address),
+              burned: Address32.from(transfer.to) === Address32.ZERO,
+            }
         },
       )
-      const srcTokenAddress = transferMatch
 
       const depositForBurn = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => parseDepositForBurn(log, null),
+        (log, _index) => {
+          return (
+            parseDepositForBurnCCTPv1(log, null) ||
+            parseDepositForBurnCCTPv2(log, null)
+          )
+        },
       )
       if (depositForBurn) {
         return [
@@ -123,8 +135,9 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
             amount: depositForBurn.amount,
             destination: Number(sentTransferRemote.destination),
             recipient: Address32.from(depositForBurn.mintRecipient),
-            tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+            tokenAddress: matchingTransfer?.address ?? Address32.NATIVE,
             cctp: true,
+            burned: true,
           }),
         ]
       }
@@ -136,8 +149,9 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           destination: Number(sentTransferRemote.destination),
           recipient: Address32.from(sentTransferRemote.recipient),
           amount: sentTransferRemote.amount,
-          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+          tokenAddress: matchingTransfer?.address ?? Address32.NATIVE,
           cctp: false,
+          burned: matchingTransfer?.burned ?? false,
         }),
       ]
     }
@@ -178,7 +192,10 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== receivedTransferRemote.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            minted: Address32.from(transfer.from) === Address32.ZERO,
+          }
         },
       )
 
@@ -189,7 +206,8 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           origin: Number(receivedTransferRemote.origin),
           recipient: Address32.from(receivedTransferRemote.recipient),
           amount: receivedTransferRemote.amount,
-          tokenAddress: dstTokenAddress ?? Address32.NATIVE,
+          tokenAddress: dstTokenAddress?.address ?? Address32.NATIVE,
+          minted: dstTokenAddress?.minted ?? false,
         }),
       ]
     }
@@ -218,7 +236,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       return
     }
 
-    if (hwrSent.args.cctp && event.args.tokenAddress === Address32.NATIVE) {
+    if (hwrSent.args.cctp) {
       return [
         Result.Message('hyperlane.Message', {
           app: 'cctp',
@@ -240,8 +258,10 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         srcTokenAddress: hwrSent.args.tokenAddress,
         srcAmount: hwrSent.args.amount,
         dstEvent: event,
-        dstTokenAddress: event.args.tokenAddress, // TODO: not necessarily the token address, can be an adapter or wrapper
+        dstTokenAddress: event.args.tokenAddress,
         dstAmount: event.args.amount,
+        srcWasBurned: hwrSent.args.burned,
+        dstWasMinted: event.args.minted,
       }),
     ]
   }
@@ -272,4 +292,12 @@ export function findParsedAround<T>(
       if (transformed) return transformed
     }
   }
+}
+
+const AMOUNT_FEE_TOLERANCE = 500n // yea this is bIpS
+
+function isWithinTolerance(value: bigint, target: bigint): boolean {
+  if (target === 0n) return value === 0n
+  const delta = (target * AMOUNT_FEE_TOLERANCE) / 10_000n
+  return value >= target - delta && value <= target + delta
 }
