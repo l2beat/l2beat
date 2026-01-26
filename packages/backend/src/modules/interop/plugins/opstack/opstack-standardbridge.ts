@@ -479,9 +479,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     }
 
     if (FailedRelayedMessage.checkType(event)) {
-      const network = OPSTACK_NETWORKS.find(
-        (n) => n.chain === event.args.chain,
-      )
+      const network = OPSTACK_NETWORKS.find((n) => n.chain === event.args.chain)
       if (!network) return
 
       const sentMessage = db.find(SentMessage, {

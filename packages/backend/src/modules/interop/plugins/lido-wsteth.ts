@@ -224,7 +224,11 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [DepositFinalized, ERC20WithdrawalFinalized, FailedRelayedMessage]
+  matchTypes = [
+    DepositFinalized,
+    ERC20WithdrawalFinalized,
+    FailedRelayedMessage,
+  ]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
