@@ -7,7 +7,10 @@ import {
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  InteropGroupedData,
+} from '../types'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
@@ -15,6 +18,9 @@ export type TokenData = {
   symbol: string
   iconUrl: string
   volume: number
+  transferCount: number
+  avgDuration: number
+  avgValue: number
 }
 
 export type ChainData = {
@@ -22,6 +28,9 @@ export type ChainData = {
   name: string
   iconUrl: string
   volume: number
+  transferCount: number
+  avgDuration: number
+  avgValue: number
 }
 
 export type DurationSplit = {
@@ -95,12 +104,12 @@ export function getProtocolEntries(
 }
 
 function getTokensData(
-  tokens: Map<string, number>,
+  tokens: Map<string, InteropGroupedData>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   logger: Logger,
 ) {
   return Array.from(tokens.entries())
-    .map(([tokenId, volume]) => {
+    .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
 
       if (!tokenDetails) {
@@ -114,7 +123,10 @@ function getTokensData(
         iconUrl:
           tokenDetails.iconUrl ??
           manifest.getUrl('/images/token-placeholder.png'),
-        volume,
+        volume: token.volume,
+        transferCount: token.transferCount,
+        avgDuration: token.totalDurationSum / token.transferCount,
+        avgValue: token.volume / token.transferCount,
       }
     })
     .filter(notUndefined)
@@ -122,11 +134,11 @@ function getTokensData(
 }
 
 function getChainsData(
-  chains: Map<string, number>,
+  chains: Map<string, InteropGroupedData>,
   logger: Logger,
 ): ChainData[] {
   return Array.from(chains.entries())
-    .map(([chainId, volume]) => {
+    .map(([chainId, chainData]) => {
       const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
       if (!chain) {
         logger.warn(`Chain not found: ${chainId}`)
@@ -137,7 +149,10 @@ function getChainsData(
         id: chainId,
         name: chain.name,
         iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-        volume,
+        volume: chainData.volume,
+        transferCount: chainData.transferCount,
+        avgDuration: chainData.totalDurationSum / chainData.transferCount,
+        avgValue: chainData.volume / chainData.transferCount,
       }
     })
     .filter(notUndefined)

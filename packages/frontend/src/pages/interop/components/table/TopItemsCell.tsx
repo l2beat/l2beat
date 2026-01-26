@@ -1,51 +1,96 @@
-import { useState } from 'react'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '~/components/core/Command'
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/core/Dialog'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { BasicTable } from '~/components/table/BasicTable'
+import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import {
+  getTopItemsColumns,
+  type TopItem,
+  type TopItemRow,
+  type TopItemType,
+} from './getTopItemsColumns'
 
-export type TopItem = {
-  id: string
-  displayName: string
-  iconUrl: string
-  volume: number
-}
-
-type TopItemsCellProps = {
+type InteropTopItemsCellProps = {
   items: TopItem[]
-  itemType: 'tokens' | 'chains'
+  itemType: TopItemType
+  protocol: {
+    name: string
+    iconUrl: string
+  }
 }
 
-export function TopItemsCell({ items, itemType }: TopItemsCellProps) {
+export function InteropTopItemsCell({
+  items,
+  itemType,
+  protocol,
+}: InteropTopItemsCellProps) {
   const topItems = items.slice(0, 3)
   const restItems = items.slice(3)
 
+  const columns = useMemo(() => {
+    return getTopItemsColumns(itemType)
+  }, [itemType])
+
+  const table = useTable<TopItemRow>({
+    data: items,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualFiltering: true,
+    initialState: {
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
+        },
+      ],
+    },
+  })
+
   return (
-    <div className="grid grid-cols-[46px_30px] gap-1">
-      <div className="-space-x-1.5 flex items-center">
-        {topItems.map((item, i) => (
-          <ItemIconWithTooltip key={item.id} item={item} index={i} />
-        ))}
-      </div>
-      {restItems.length > 0 && (
-        <RestItemsDialog
-          restItems={restItems}
-          allItems={items}
-          itemType={itemType}
-        />
-      )}
-    </div>
+    <Dialog>
+      <DialogTrigger className="group/dialog-trigger grid grid-cols-[46px_30px] items-center gap-1">
+        <div className="-space-x-1.5 flex items-center">
+          {topItems.map((item, i) => (
+            <ItemIconWithTooltip key={item.id} item={item} index={i} />
+          ))}
+        </div>
+        {restItems.length > 0 && (
+          <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
+            +{restItems.length}
+          </span>
+        )}
+      </DialogTrigger>
+
+      <DialogContent className="max-h-[450px] max-w-[800px] gap-0 overflow-y-auto bg-surface-primary pt-0 pb-3">
+        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary pt-6 pb-4">
+          <DialogTitle className="flex items-center">
+            <span>Top {itemType} by volume for </span>
+            <div className="ml-1.5 inline-flex items-center gap-1">
+              <img
+                src={protocol.iconUrl}
+                alt={protocol.name}
+                className="inline-block size-5 min-w-5 rounded-full bg-white shadow"
+              />
+              {protocol.name}
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <BasicTable table={table} tableWrapperClassName="pb-0" />
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -58,7 +103,7 @@ function ItemIconWithTooltip({
 }) {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <img
           key={item.id}
           src={item.iconUrl}
@@ -74,70 +119,5 @@ function ItemIconWithTooltip({
         </p>
       </TooltipContent>
     </Tooltip>
-  )
-}
-
-function RestItemsDialog({
-  restItems,
-  allItems,
-  itemType,
-}: {
-  restItems: TopItem[]
-  allItems: TopItem[]
-  itemType: 'tokens' | 'chains'
-}) {
-  const [open, setOpen] = useState(false)
-  const title = `Top ${itemType} by volume`
-  const description = `Search for ${itemType}`
-  const placeholder = `Start typing to find ${itemType.slice(0, -1)}...`
-  const emptyMessage = `No ${itemType} found.`
-
-  return (
-    <>
-      <button
-        className="font-bold text-label-value-13 hover:underline"
-        onClick={(e) => {
-          e.preventDefault()
-          setOpen(true)
-        }}
-      >
-        +{restItems.length}
-      </button>
-      <CommandDialog
-        open={open}
-        onOpenChange={setOpen}
-        title={title}
-        description={description}
-      >
-        <Command className="rounded-none">
-          <CommandInput placeholder={placeholder} />
-          <CommandList>
-            <CommandEmpty>{emptyMessage}</CommandEmpty>
-            <CommandGroup>
-              {allItems.map((item) => (
-                <CommandItem
-                  key={item.id}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={item.iconUrl}
-                      alt={item.displayName}
-                      className="size-5"
-                    />
-                    <span className="font-bold text-label-value-15">
-                      {item.displayName}
-                    </span>
-                  </div>
-                  <span className="font-medium text-label-value-14 text-secondary">
-                    {formatCurrency(item.volume, 'usd')}
-                  </span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </CommandDialog>
-    </>
   )
 }

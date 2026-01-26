@@ -19,3 +19,9 @@ export type AggregatedInteropTransferWithTokens =
       'id' | 'timestamp' | 'srcChain' | 'dstChain'
     >[]
   }
+
+export type InteropGroupedData = {
+  volume: number
+  transferCount: number
+  totalDurationSum: number
+}

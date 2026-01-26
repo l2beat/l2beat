@@ -1,5 +1,8 @@
 import type { InteropConfig } from '@l2beat/config'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  InteropGroupedData,
+} from '../types'
 
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
@@ -9,8 +12,8 @@ export function getProtocolsDataMap(
     string,
     {
       volume: number
-      tokens: Map<string, number>
-      chains: Map<string, number>
+      tokens: Map<string, InteropGroupedData>
+      chains: Map<string, InteropGroupedData>
       transferCount: number
       totalDurationSum: number
       // Split duration tracking (only used when durationSplit is configured)
@@ -24,8 +27,8 @@ export function getProtocolsDataMap(
   for (const record of records) {
     const current = protocolsDataMap.get(record.id) ?? {
       volume: 0,
-      tokens: new Map<string, number>(),
-      chains: new Map<string, number>(),
+      tokens: new Map<string, InteropGroupedData>(),
+      chains: new Map<string, InteropGroupedData>(),
       transferCount: 0,
       totalDurationSum: 0,
       inTransferCount: 0,
@@ -35,25 +38,40 @@ export function getProtocolsDataMap(
     }
 
     for (const token of record.tokens) {
-      current.tokens.set(
-        token.abstractTokenId,
-        (current.tokens.get(token.abstractTokenId) ?? 0) + token.volume,
-      )
+      const currentToken = current.tokens.get(token.abstractTokenId)
+      current.tokens.set(token.abstractTokenId, {
+        transferCount: currentToken?.transferCount ?? 0 + token.transferCount,
+        totalDurationSum:
+          currentToken?.totalDurationSum ?? 0 + token.totalDurationSum,
+        volume: currentToken?.volume ?? 0 + token.volume,
+      })
     }
 
     if (record.srcChain) {
-      const srcValue = record.srcValueUsd ?? 0
-      current.chains.set(
-        record.srcChain,
-        (current.chains.get(record.srcChain) ?? 0) + srcValue,
-      )
+      const currentChain = current.chains.get(record.srcChain) ?? {
+        volume: 0,
+        transferCount: 0,
+        totalDurationSum: 0,
+      }
+      current.chains.set(record.srcChain, {
+        volume: currentChain.volume + (record.srcValueUsd ?? 0),
+        transferCount: currentChain.transferCount + (record.transferCount ?? 0),
+        totalDurationSum:
+          currentChain.totalDurationSum + (record.totalDurationSum ?? 0),
+      })
     }
-    if (record.dstChain) {
-      const dstValue = record.dstValueUsd ?? 0
-      current.chains.set(
-        record.dstChain,
-        (current.chains.get(record.dstChain) ?? 0) + dstValue,
-      )
+    if (record.dstChain && record.dstChain !== record.srcChain) {
+      const currentChain = current.chains.get(record.dstChain) ?? {
+        volume: 0,
+        transferCount: 0,
+        totalDurationSum: 0,
+      }
+      current.chains.set(record.dstChain, {
+        volume: currentChain.volume + (record.dstValueUsd ?? 0),
+        transferCount: currentChain.transferCount + (record.transferCount ?? 0),
+        totalDurationSum:
+          currentChain.totalDurationSum + (record.totalDurationSum ?? 0),
+      })
     }
 
     // Check if this record matches a durationSplit direction

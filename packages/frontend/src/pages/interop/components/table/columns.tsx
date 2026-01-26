@@ -64,7 +64,15 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
     cellClassName: '!pr-0',
     headClassName: 'text-2xs',
   },
-  cell: (ctx) => <TopTokensCell tokens={ctx.row.original.tokens} />,
+  cell: (ctx) => (
+    <TopTokensCell
+      tokens={ctx.row.original.tokens}
+      protocol={{
+        name: ctx.row.original.protocolName,
+        iconUrl: ctx.row.original.iconUrl,
+      }}
+    />
+  ),
 })
 
 const averageDurationColumn = columnHelper.accessor(
@@ -162,7 +170,15 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         cellClassName: '!pr-0',
         headClassName: 'text-2xs',
       },
-      cell: (ctx) => <TopChainsCell chains={ctx.row.original.chains} />,
+      cell: (ctx) => (
+        <TopChainsCell
+          chains={ctx.row.original.chains}
+          protocol={{
+            name: ctx.row.original.protocolName,
+            iconUrl: ctx.row.original.iconUrl,
+          }}
+        />
+      ),
     }),
   ])
 }

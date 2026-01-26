@@ -69,7 +69,10 @@
         "noUnsafeFinally": "error",
         "noUnsafeOptionalChaining": "error",
         "noUnusedLabels": "error",
-        "noUnusedVariables": "error",
+        "noUnusedVariables": {
+          "level": "error",
+          "fix": "none"
+        },
         "useIsNan": "error",
         "useValidForDirection": "error",
         "useYield": "error",
@@ -108,8 +111,14 @@
           "level": "error",
           "fix": "safe",
           "options": {
-            "attributes": ["className", "classname"],
-            "functions": ["cn", "cva"]
+            "attributes": [
+              "className",
+              "classname"
+            ],
+            "functions": [
+              "cn",
+              "cva"
+            ]
           }
         }
       },
@@ -168,7 +177,10 @@
   },
   "overrides": [
     {
-      "includes": ["**/test/**/*.ts", "**/*.test.ts"],
+      "includes": [
+        "**/test/**/*.ts",
+        "**/*.test.ts"
+      ],
       "linter": {
         "rules": {
           "style": {
@@ -182,7 +194,12 @@
       }
     },
     {
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+      "includes": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts"
+      ],
       "linter": {
         "rules": {
           "correctness": {

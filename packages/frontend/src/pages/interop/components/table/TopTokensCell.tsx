@@ -1,14 +1,28 @@
 import type { TokenData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import type { TopItem } from './TopItemsCell'
-import { TopItemsCell } from './TopItemsCell'
+import type { TopItem } from './getTopItemsColumns'
+import { InteropTopItemsCell } from './TopItemsCell'
 
-export function TopTokensCell({ tokens }: { tokens: TokenData[] }) {
+export function TopTokensCell({
+  tokens,
+  protocol,
+}: {
+  tokens: TokenData[]
+  protocol: {
+    name: string
+    iconUrl: string
+  }
+}) {
   const items: TopItem[] = tokens.map((token) => ({
     id: token.id,
     displayName: token.symbol,
     iconUrl: token.iconUrl,
     volume: token.volume,
+    transferCount: token.transferCount,
+    avgDuration: token.avgDuration,
+    avgValue: token.avgValue,
   }))
 
-  return <TopItemsCell items={items} itemType="tokens" />
+  return (
+    <InteropTopItemsCell items={items} itemType="tokens" protocol={protocol} />
+  )
 }
