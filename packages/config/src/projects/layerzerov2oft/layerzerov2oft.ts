@@ -17,7 +17,7 @@ export const layerzerov2oft: Bridge = {
   id: ProjectId('layerzerov2oft'),
   addedAt: UnixTime(1718891395), // 2024-06-20T13:49:55Z
   display: {
-    name: 'LayerZero',
+    name: 'LayerZero v2 OFTs',
     slug: 'layerzerov2oft',
     warning:
       'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers (OFT/OApp owners).',
