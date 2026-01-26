@@ -38,7 +38,7 @@ export class SnapshotService {
     const path = this.getExampleInputsPath(exampleName)
     const content = await this.read(path)
     const inputs = new ExampleInputs()
-    inputs.writeAll(fromSafeJSON(content))
+    inputs.writeAll(fromSafeJSON<Partial<RawExampleInputs>>(content))
     return inputs
   }
 
@@ -135,25 +135,45 @@ export class SnapshotService {
     )
   }
 }
+type InputSource = 'rpc' | 'config'
+
+export type RawExampleInputs = Record<InputSource, Record<string, unknown>>
 
 export class ExampleInputs {
-  private content: Record<string, unknown> = {}
+  private content: RawExampleInputs = {
+    rpc: {},
+    config: {},
+  }
 
-  read<T>(key: string): Promise<T | undefined> {
-    return Promise.resolve(this.content[key] as T | undefined)
+  readRpc<T>(key: string): Promise<T | undefined> {
+    return Promise.resolve(this.content.rpc[key] as T | undefined)
   }
 
   readAll(): Promise<Record<string, unknown>> {
     return Promise.resolve(this.content)
   }
 
-  write<T>(key: string, value: T): Promise<void> {
-    this.content[key] = value
+  readSpace(source: InputSource): Record<string, unknown> {
+    return this.content[source]
+  }
+
+  writeSpace(source: InputSource, content: Record<string, unknown>): void {
+    this.content[source] = content
+  }
+
+  writeRpc<T>(key: string, value: T): Promise<void> {
+    this.content.rpc[key] = value
     return Promise.resolve()
   }
 
-  writeAll(content: Record<string, unknown>): Promise<void> {
-    this.content = content
+  writeAll(
+    content: Partial<RawExampleInputs> | null | undefined,
+  ): Promise<void> {
+    const safeContent = content ?? {}
+    this.content = {
+      rpc: safeContent.rpc ?? {},
+      config: safeContent.config ?? {},
+    }
     return Promise.resolve()
   }
 }

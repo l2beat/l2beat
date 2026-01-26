@@ -42,4 +42,14 @@ export class InteropConfigStore {
   get<T>(def: InteropConfig<T>): T | undefined {
     return this.configs.get(def.key) as T | undefined
   }
+
+  getAll() {
+    return Object.fromEntries(this.configs.entries())
+  }
+
+  writeAll(configs: Record<string, unknown>) {
+    for (const [key, value] of Object.entries(configs)) {
+      this.configs.set(key, value)
+    }
+  }
 }

@@ -8,6 +8,7 @@ import type {
   InteropMessage,
   InteropTransfer,
 } from '../plugins/types'
+import type { ExampleRunner } from './runner'
 
 // app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
 export const ExpectedMessage = v.union([
@@ -25,6 +26,8 @@ export interface CoreResult {
   messages: InteropMessage[]
   transfers: InteropTransfer[]
 }
+
+export type RunResult = Awaited<ReturnType<ExampleRunner['run']>>
 
 export interface TransactionSpec {
   chain: string
