@@ -118,7 +118,7 @@ export const synapse: Bridge = {
       description: 'Withdraws are validated by EOA.',
       sentiment: 'bad',
     },
-    destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
+    destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   contracts: {
     addresses: {
