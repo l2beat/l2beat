@@ -1,6 +1,6 @@
 {
   "projectId": "nova",
-  "timestamp": 1769421101917,
+  "timestamp": 1769461361701,
   "escrows": [
     {
       "address": "eth:0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -16,13 +16,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 9414224.666666666,
-          "amount": 3244.4466666666667,
+          "valueUsd": 28523296,
+          "amount": 9733.15,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 9414224.666666666,
+      "totalValueUsd": 28523296,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
@@ -39,217 +39,210 @@
       "isRollupControlled": true,
       "tokens": [
         {
-          "symbol": "ETH",
-          "valueUsd": 9414224.666666666,
-          "amount": 3244.4466666666667,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
           "symbol": "USDC",
-          "valueUsd": 230465.235,
-          "amount": 230554.92,
+          "valueUsd": 460972.9,
+          "amount": 461109.84,
           "issuer": "Circle",
           "source": "canonical"
         },
         {
           "symbol": "ARB",
-          "valueUsd": 13620.18,
-          "amount": 79698.65,
+          "valueUsd": 27168.47,
+          "amount": 159397.3,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "WBTC",
-          "valueUsd": 11498.055,
-          "amount": 0.13,
+          "valueUsd": 23158.69,
+          "amount": 0.26,
           "issuer": "BitGo",
           "source": "canonical"
         },
         {
           "symbol": "BUSD",
-          "valueUsd": 2350.78,
-          "amount": 2349.625,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "MAGIC",
-          "valueUsd": 2244.88,
-          "amount": 25218.83,
+          "valueUsd": 4694.22,
+          "amount": 4699.25,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "SUSHI",
-          "valueUsd": 2230.625,
-          "amount": 7602.56,
+          "valueUsd": 4565.15,
+          "amount": 15205.12,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "MAGIC",
+          "valueUsd": 4549.86,
+          "amount": 50437.66,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "AIUS",
-          "valueUsd": 1638.715,
-          "amount": 2740.365,
+          "valueUsd": 3317.34,
+          "amount": 5480.73,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDT",
-          "valueUsd": 1018.1,
-          "amount": 1019.295,
+          "valueUsd": 2036.64,
+          "amount": 2038.59,
           "issuer": "Tether",
           "source": "canonical"
         },
         {
           "symbol": "PMON",
-          "valueUsd": 759.645,
-          "amount": 23901.34,
+          "valueUsd": 1532.86,
+          "amount": 47802.68,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LINK",
-          "valueUsd": 231.425,
-          "amount": 19.535,
+          "valueUsd": 468.16,
+          "amount": 39.07,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "1INCH",
-          "valueUsd": 17.47,
-          "amount": 125.915,
+          "valueUsd": 35.1,
+          "amount": 251.83,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "GRT",
-          "valueUsd": 8.78,
-          "amount": 242.915,
-          "issuer": null,
+          "valueUsd": 17.53,
+          "amount": 485.83,
+          "issuer": "The Graph",
           "source": "canonical"
         },
         {
           "symbol": "UNI",
-          "valueUsd": 6.925,
-          "amount": 1.5,
+          "valueUsd": 14.17,
+          "amount": 3,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "STG",
-          "valueUsd": 4.785,
-          "amount": 29,
-          "issuer": null,
+          "valueUsd": 9.82,
+          "amount": 58,
+          "issuer": "Stargate",
           "source": "canonical"
         },
         {
           "symbol": "APE",
-          "valueUsd": 4.52,
-          "amount": 25,
+          "valueUsd": 9.08,
+          "amount": 50,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LRC",
-          "valueUsd": 4.195,
-          "amount": 89.085,
+          "valueUsd": 8.45,
+          "amount": 178.17,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LPT",
-          "valueUsd": 3.57,
-          "amount": 1.135,
+          "valueUsd": 7.34,
+          "amount": 2.27,
           "issuer": "Livepeer",
           "source": "canonical"
         },
         {
           "symbol": "BLUR",
-          "valueUsd": 2.945,
-          "amount": 100,
+          "valueUsd": 5.91,
+          "amount": 200,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LUSD",
-          "valueUsd": 2.505,
-          "amount": 2.5,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "CRO",
-          "valueUsd": 2.445,
-          "amount": 27,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "DYDX",
-          "valueUsd": 0.935,
-          "amount": 5.665,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "DAI",
-          "valueUsd": 0.5,
-          "amount": 0.5,
-          "issuer": "MakerDAO",
-          "source": "canonical"
-        },
-        {
-          "symbol": "TRADE",
-          "valueUsd": 0.25,
+          "valueUsd": 5.01,
           "amount": 5,
           "issuer": null,
           "source": "canonical"
         },
         {
+          "symbol": "CRO",
+          "valueUsd": 4.9,
+          "amount": 54,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DYDX",
+          "valueUsd": 1.88,
+          "amount": 11.33,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 1,
+          "amount": 1,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRADE",
+          "valueUsd": 0.49,
+          "amount": 10,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
           "symbol": "GTC",
-          "valueUsd": 0.175,
-          "amount": 1.37,
+          "valueUsd": 0.36,
+          "amount": 2.74,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "stETH",
-          "valueUsd": 0.145,
+          "valueUsd": 0.3,
           "amount": 0,
           "issuer": "Lido DAO",
           "source": "canonical"
         },
         {
           "symbol": "YFI",
-          "valueUsd": 0.07,
+          "valueUsd": 0.14,
           "amount": 0,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "SYN",
-          "valueUsd": 0.06,
-          "amount": 1.125,
+          "valueUsd": 0.12,
+          "amount": 2.25,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "DPX",
-          "valueUsd": 0.055,
-          "amount": 0.02,
+          "valueUsd": 0.11,
+          "amount": 0.04,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "rETH",
-          "valueUsd": 0.015,
+          "valueUsd": 0.03,
           "amount": 0,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 9680342.65166667,
+      "totalValueUsd": 532586.03,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     },
@@ -264,219 +257,8 @@
       "admin": "eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
       "adminName": "Arbitrum DAO",
       "isRollupControlled": true,
-      "tokens": [
-        {
-          "symbol": "ETH",
-          "valueUsd": 9414224.666666666,
-          "amount": 3244.4466666666667,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "USDC",
-          "valueUsd": 230465.235,
-          "amount": 230554.92,
-          "issuer": "Circle",
-          "source": "canonical"
-        },
-        {
-          "symbol": "ARB",
-          "valueUsd": 13620.18,
-          "amount": 79698.65,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "WBTC",
-          "valueUsd": 11498.055,
-          "amount": 0.13,
-          "issuer": "BitGo",
-          "source": "canonical"
-        },
-        {
-          "symbol": "BUSD",
-          "valueUsd": 2350.78,
-          "amount": 2349.625,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "MAGIC",
-          "valueUsd": 2244.88,
-          "amount": 25218.83,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "SUSHI",
-          "valueUsd": 2230.625,
-          "amount": 7602.56,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "AIUS",
-          "valueUsd": 1638.715,
-          "amount": 2740.365,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "USDT",
-          "valueUsd": 1018.1,
-          "amount": 1019.295,
-          "issuer": "Tether",
-          "source": "canonical"
-        },
-        {
-          "symbol": "PMON",
-          "valueUsd": 759.645,
-          "amount": 23901.34,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "LINK",
-          "valueUsd": 231.425,
-          "amount": 19.535,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "1INCH",
-          "valueUsd": 17.47,
-          "amount": 125.915,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "GRT",
-          "valueUsd": 8.78,
-          "amount": 242.915,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "UNI",
-          "valueUsd": 6.925,
-          "amount": 1.5,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "STG",
-          "valueUsd": 4.785,
-          "amount": 29,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "APE",
-          "valueUsd": 4.52,
-          "amount": 25,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "LRC",
-          "valueUsd": 4.195,
-          "amount": 89.085,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "LPT",
-          "valueUsd": 3.57,
-          "amount": 1.135,
-          "issuer": "Livepeer",
-          "source": "canonical"
-        },
-        {
-          "symbol": "BLUR",
-          "valueUsd": 2.945,
-          "amount": 100,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "LUSD",
-          "valueUsd": 2.505,
-          "amount": 2.5,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "CRO",
-          "valueUsd": 2.445,
-          "amount": 27,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "DYDX",
-          "valueUsd": 0.935,
-          "amount": 5.665,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "DAI",
-          "valueUsd": 0.5,
-          "amount": 0.5,
-          "issuer": "MakerDAO",
-          "source": "canonical"
-        },
-        {
-          "symbol": "TRADE",
-          "valueUsd": 0.25,
-          "amount": 5,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "GTC",
-          "valueUsd": 0.175,
-          "amount": 1.37,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "stETH",
-          "valueUsd": 0.145,
-          "amount": 0,
-          "issuer": "Lido DAO",
-          "source": "canonical"
-        },
-        {
-          "symbol": "YFI",
-          "valueUsd": 0.07,
-          "amount": 0,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "SYN",
-          "valueUsd": 0.06,
-          "amount": 1.125,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "DPX",
-          "valueUsd": 0.055,
-          "amount": 0.02,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
-          "symbol": "rETH",
-          "valueUsd": 0.015,
-          "amount": 0,
-          "issuer": null,
-          "source": "canonical"
-        }
-      ],
-      "totalValueUsd": 9680342.65166667,
+      "tokens": [],
+      "totalValueUsd": 0,
       "source": "canonical",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
     },
@@ -494,23 +276,23 @@
       "tokens": [
         {
           "symbol": "DAI",
-          "valueUsd": 77787.28,
+          "valueUsd": 77777.62,
           "amount": 77802.89,
           "issuer": "MakerDAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 77787.28,
+      "totalValueUsd": 77777.62,
       "source": "canonical",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 28852697.250000007,
+    "totalTvl": 29133659.65,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 28852697.250000007,
+      "canonicalTrustMinimized": 29133659.650000002,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -518,10 +300,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 28852697.250000007,
+    "canonicalTvl": 29133659.650000002,
     "externalTvl": 0,
-    "apiCanonicalTvl": 28774909.970000006,
-    "apiExternalTvl": 77787.28
+    "apiCanonicalTvl": 29055882.029999997,
+    "apiExternalTvl": 77777.62
   },
   "externalTokensSummary": {
     "totalCount": 0,

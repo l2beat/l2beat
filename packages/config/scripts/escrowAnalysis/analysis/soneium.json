@@ -1,0 +1,417 @@
+{
+  "projectId": "soneium",
+  "timestamp": 1769461422794,
+  "escrows": [
+    {
+      "address": "eth:0x88e529A6ccd302c948689Cd5156C83D4614FAE92",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by soneium Governance",
+      "admin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
+      "adminName": "soneium Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 11414465,
+          "amount": 3895.02,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 11414465,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x67B4de6FfA66EF201Ea6099A89cA397D56622E31",
+      "name": "ETHLockbox",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by soneium Governance",
+      "admin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
+      "adminName": "soneium Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "A simple escrow contract storing ETH for the canonical bridge."
+    },
+    {
+      "address": "eth:0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb",
+      "name": "L1OpUSDCBridgeAdapter",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": "eth:0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75",
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 9239840,
+          "amount": 9242585,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 9239840,
+      "source": "canonical",
+      "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally."
+    },
+    {
+      "address": "eth:0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
+      "name": "L1ERC20TokenBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 380780.66,
+          "amount": 106.12,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 380780.66,
+      "source": "canonical",
+      "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
+    },
+    {
+      "address": "eth:0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by soneium Governance",
+      "admin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
+      "adminName": "soneium Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 283428.47,
+          "amount": 283699.7,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "SUPER",
+          "valueUsd": 10470.32,
+          "amount": 54652.24,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRALA",
+          "valueUsd": 443.08,
+          "amount": 1606941.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 293.05,
+          "amount": 0.1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 33.88,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 294668.8,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "ASTR",
+      "name": "Astar Token",
+      "l2Address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
+      "valueUsd": 3362514.8,
+      "amount": 304381860,
+      "bridgeProtocol": "Chainlink CCIP",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Chainlink CCIP",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Chainlink Node Operators",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages"
+          ],
+          "riskDescription": "Node operator collusion can approve fraudulent transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "KYO",
+      "name": "Kyo",
+      "l2Address": "0xd8bf9997f46dcdA1BE57018eC8E7728e8F7C139A",
+      "valueUsd": 3314626.8,
+      "amount": 122454390,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDSC",
+      "name": "Startale USD",
+      "l2Address": "0x3f99231dD03a9F0E7e3421c92B7b90fbe012985a",
+      "valueUsd": 3226593.5,
+      "amount": 3226685,
+      "bridgeProtocol": "Hyperlane (M Token)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (M Token) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "wstASTR",
+      "name": "Warpped stASTR",
+      "l2Address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+      "valueUsd": 1852447.5,
+      "amount": 155521520,
+      "bridgeProtocol": "Chainlink CCIP",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Chainlink CCIP",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Chainlink Node Operators",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages"
+          ],
+          "riskDescription": "Node operator collusion can approve fraudulent transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "l2Address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "valueUsd": 1711287.2,
+      "amount": 22.65,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Solv Protocol",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "calculation"
+    },
+    {
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "l2Address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "valueUsd": 1131386.1,
+      "amount": 12.84,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "BitGo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USD₮0",
+      "name": "Stargate USD₮0 (Bridged)",
+      "l2Address": "0x102d758f688a4C1C5a80b116bD945d4455460282",
+      "valueUsd": 911562.1,
+      "amount": 912158.25,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "SolvBTC.JUP",
+      "name": "SolvBTC Jupiter",
+      "l2Address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+      "valueUsd": 806486.8,
+      "amount": 8.69,
+      "bridgeProtocol": "Free.tech Bridge (Meson)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Free.tech Bridge (Meson) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "YAYSTONE",
+      "name": "Yay StakeStone Ether",
+      "l2Address": "0x54e86315C03217b76A7466C302245fD10ebEf25A",
+      "valueUsd": 473742.56,
+      "amount": 146.11,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "vASTR",
+      "name": "Bifrost Voucher ASTR",
+      "l2Address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+      "valueUsd": 466736.97,
+      "amount": 32074520,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "YAYAGETH",
+      "name": "Yay Kelp DAO’s Airdrop Gain ETH",
+      "l2Address": "0xda14b3B7aEF494b8c37ed9710d14e44D490316fa",
+      "valueUsd": 420552.03,
+      "amount": 133.17,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USR",
+      "name": "Resolv USD",
+      "l2Address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+      "valueUsd": 249048.45,
+      "amount": 248994.66,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "name": "SolvBTC Babylon",
+      "l2Address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "valueUsd": 215762.53,
+      "amount": 3.05,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "calculation"
+    },
+    {
+      "symbol": "oUSDT",
+      "name": "OpenUSDT",
+      "l2Address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "valueUsd": 178889.3,
+      "amount": 179076.67,
+      "bridgeProtocol": "Hyperlane (xERC-20)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (xERC-20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 41651120.46000001,
+    "nativeTvl": 1933356.8,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 21329754.46,
+      "canonicalAdditionalTrust": 0,
+      "external": 18321636.64
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 18321636.64
+    },
+    "canonicalTvl": 21329754.46,
+    "externalTvl": 18321636.64,
+    "apiCanonicalTvl": 11709133.800000003,
+    "apiExternalTvl": 28008629.860000003
+  },
+  "externalTokensSummary": {
+    "totalCount": 14,
+    "totalValue": 18321636.64,
+    "byProtocol": {
+      "Chainlink CCIP": {
+        "count": 2,
+        "value": 5214962.3
+      },
+      "Layer Zero v2 OFT": {
+        "count": 7,
+        "value": 6967655.01
+      },
+      "Hyperlane (M Token)": {
+        "count": 1,
+        "value": 3226593.5
+      },
+      "Unknown Bridge": {
+        "count": 2,
+        "value": 1927049.73
+      },
+      "Free.tech Bridge (Meson)": {
+        "count": 1,
+        "value": 806486.8
+      },
+      "Hyperlane (xERC-20)": {
+        "count": 1,
+        "value": 178889.3
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 14,
+        "value": 18321636.64
+      }
+    }
+  }
+}

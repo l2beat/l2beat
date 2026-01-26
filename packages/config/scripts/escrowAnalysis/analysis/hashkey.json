@@ -1,0 +1,92 @@
+{
+  "projectId": "hashkey",
+  "timestamp": 1769460677472,
+  "escrows": [
+    {
+      "address": "eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by hashkey Governance",
+      "admin": "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
+      "adminName": "hashkey Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "HSK",
+          "valueUsd": 11183949,
+          "amount": 69081840,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 11183949,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by hashkey Governance",
+      "admin": "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
+      "adminName": "hashkey Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 2130943,
+          "amount": 2132982.2,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 106499.83,
+          "amount": 36.34,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 87.51,
+          "amount": 0,
+          "issuer": "BitGo",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 2237530.34,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 13421479.34,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 13421479.34,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 13421479.34,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 13421479.34,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

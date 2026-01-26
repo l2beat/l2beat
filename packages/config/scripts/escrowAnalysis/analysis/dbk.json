@@ -1,0 +1,70 @@
+{
+  "projectId": "dbk",
+  "timestamp": 1769460613698,
+  "escrows": [
+    {
+      "address": "eth:0x63CA00232F471bE2A3Bf3C4e95Bc1d2B3EA5DB92",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by dbk Governance",
+      "admin": "eth:0x830e68669019a05F41676546417D2A06fdfFF9fB",
+      "adminName": "dbk Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 610483.4,
+          "amount": 208.32,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 610483.4,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0x28f1b9F457CB51E0af56dff1d11CD6CEdFfD1977",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by dbk Governance",
+      "admin": "eth:0x830e68669019a05F41676546417D2A06fdfFF9fB",
+      "adminName": "dbk Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 610483.4,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 610483.4,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 610483.4,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 610483.4,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

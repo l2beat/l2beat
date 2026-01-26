@@ -1,0 +1,70 @@
+{
+  "projectId": "swan",
+  "timestamp": 1769460881324,
+  "escrows": [
+    {
+      "address": "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by swan Governance",
+      "admin": "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
+      "adminName": "swan Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 130293.02,
+          "amount": 44.46,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 130293.02,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0xed7525946A09056C6AaE29941b8323017382050e",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by swan Governance",
+      "admin": "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3",
+      "adminName": "swan Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 130293.02,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 130293.02,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 130293.02,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 130293.02,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

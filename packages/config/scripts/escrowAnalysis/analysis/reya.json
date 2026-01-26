@@ -1,0 +1,79 @@
+{
+  "projectId": "reya",
+  "timestamp": 1769460221082,
+  "escrows": [
+    {
+      "address": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 300019.16,
+          "amount": 102.38,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 300019.16,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "l2Address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
+      "valueUsd": 4544550,
+      "amount": 4545900,
+      "bridgeProtocol": "Socket",
+      "issuer": "Circle",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Socket (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 4844576.99,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 300019.16,
+      "canonicalAdditionalTrust": 0,
+      "external": 4544550
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 4544550
+    },
+    "canonicalTvl": 300019.16,
+    "externalTvl": 4544550,
+    "apiCanonicalTvl": 300019.16,
+    "apiExternalTvl": 4544557.83
+  },
+  "externalTokensSummary": {
+    "totalCount": 1,
+    "totalValue": 4544550,
+    "byProtocol": {
+      "Socket": {
+        "count": 1,
+        "value": 4544550
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 1,
+        "value": 4544550
+      }
+    }
+  }
+}

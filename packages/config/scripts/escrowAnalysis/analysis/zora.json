@@ -1,0 +1,78 @@
+{
+  "projectId": "zora",
+  "timestamp": 1769460946472,
+  "escrows": [
+    {
+      "address": "eth:0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by zora Governance",
+      "admin": "eth:0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
+      "adminName": "zora Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 8014645,
+          "amount": 2734.88,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 8014645,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by zora Governance",
+      "admin": "eth:0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
+      "adminName": "zora Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 167340.31,
+          "amount": 167390.03,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 167340.31,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 8181985.31,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 8181985.31,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 8181985.31,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 8181985.31,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

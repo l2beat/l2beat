@@ -1,0 +1,152 @@
+{
+  "projectId": "aevo",
+  "timestamp": 1769460546244,
+  "escrows": [
+    {
+      "address": "eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by aevo Governance",
+      "admin": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
+      "adminName": "aevo Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 16864082,
+          "amount": 16869092,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "sDAI",
+          "valueUsd": 1689661.1,
+          "amount": 1443097.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 748515.9,
+          "amount": 235.16,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 687788,
+          "amount": 688446.2,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 378312.56,
+          "amount": 4.29,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 149013.62,
+          "amount": 50.85,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 20517373.18,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by aevo Governance",
+      "admin": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
+      "adminName": "aevo Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 123297.85,
+          "amount": 42.07,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 123297.85,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "l2Address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+      "valueUsd": 1507904.8,
+      "amount": 514.56,
+      "bridgeProtocol": "Socket",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Socket (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "l2Address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+      "valueUsd": 1143703,
+      "amount": 1144042.8,
+      "bridgeProtocol": "Socket",
+      "issuer": "Circle",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Socket (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 23292278.830000002,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 20640671.03,
+      "canonicalAdditionalTrust": 0,
+      "external": 2651607.8
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 2651607.8
+    },
+    "canonicalTvl": 20640671.03,
+    "externalTvl": 2651607.8,
+    "apiCanonicalTvl": 20640671.03,
+    "apiExternalTvl": 2651607.8
+  },
+  "externalTokensSummary": {
+    "totalCount": 2,
+    "totalValue": 2651607.8,
+    "byProtocol": {
+      "Socket": {
+        "count": 2,
+        "value": 2651607.8
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 2,
+        "value": 2651607.8
+      }
+    }
+  }
+}

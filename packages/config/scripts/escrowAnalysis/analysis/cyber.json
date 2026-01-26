@@ -1,0 +1,138 @@
+{
+  "projectId": "cyber",
+  "timestamp": 1769460612681,
+  "escrows": [
+    {
+      "address": "eth:0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by cyber Governance",
+      "admin": "eth:0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
+      "adminName": "cyber Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 714383.56,
+          "amount": 243.77,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 714383.56,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x12a580c05466eefb2c467C6b115844cDaF55B255",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by cyber Governance",
+      "admin": "eth:0x7E54107731EC43e78DA678DFa5fB6222Ad036e03",
+      "adminName": "cyber Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 5330.11,
+          "amount": 5335.21,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "ALT",
+          "valueUsd": 5110.53,
+          "amount": 437602.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 4343.14,
+          "amount": 4344.43,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 14783.779999999999,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "CYBER",
+      "name": "CyberConnect",
+      "l2Address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "valueUsd": 5683939,
+      "amount": 7180077.5,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 6413106.340000001,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 729167.3400000001,
+      "canonicalAdditionalTrust": 0,
+      "external": 5683939
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 5683939
+    },
+    "canonicalTvl": 729167.3400000001,
+    "externalTvl": 5683939,
+    "apiCanonicalTvl": 729167.3400000001,
+    "apiExternalTvl": 5683939
+  },
+  "externalTokensSummary": {
+    "totalCount": 1,
+    "totalValue": 5683939,
+    "byProtocol": {
+      "Layer Zero": {
+        "count": 1,
+        "value": 5683939
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 1,
+        "value": 5683939
+      }
+    }
+  }
+}

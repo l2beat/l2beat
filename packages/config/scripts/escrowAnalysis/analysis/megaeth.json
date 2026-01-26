@@ -1,0 +1,110 @@
+{
+  "projectId": "megaeth",
+  "timestamp": 1769460745958,
+  "escrows": [
+    {
+      "address": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by megaeth Governance",
+      "admin": "eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90",
+      "adminName": "megaeth Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 4866914.5,
+          "amount": 1660.76,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 4866914.5,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
+    },
+    {
+      "address": "eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by megaeth Governance",
+      "admin": "eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90",
+      "adminName": "megaeth Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6",
+      "name": "MegaUSDmPreDeposit",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": null,
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071."
+    },
+    {
+      "address": "eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719",
+      "name": "Megaeth Multisig",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 4866914.5,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 4866914.5,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 4866914.5,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 4866914.5,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

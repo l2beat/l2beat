@@ -1,0 +1,295 @@
+{
+  "projectId": "swell",
+  "timestamp": 1769460882533,
+  "escrows": [
+    {
+      "address": "eth:0x758E0EE66102816F5C3Ec9ECc1188860fbb87812",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by swell Governance",
+      "admin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
+      "adminName": "swell Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 7332687.5,
+          "amount": 2502.17,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 7332687.5,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x7aA4960908B13D104bf056B23E2C76B43c5AACc8",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by swell Governance",
+      "admin": "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
+      "adminName": "swell Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0xecf3376512EDAcA4FBB63d2c67d12a0397d24121",
+      "name": "L1ERC20TokenBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 592067.75,
+          "amount": 165,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 592067.75,
+      "source": "canonical",
+      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "rUSDC",
+      "name": "Relend Network USDC",
+      "l2Address": "0x9ab96A4668456896d45c301Bc3A15Cee76AA7B8D",
+      "valueUsd": 6066080.5,
+      "amount": 6069776,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0xA6cB988942610f6731e664379D15fFcfBf282b44",
+      "valueUsd": 3511322.8,
+      "amount": 1103.14,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "l2Address": "0x18d33689AE5d02649a859A1CF16c9f0563975258",
+      "valueUsd": 1459508,
+      "amount": 469.3,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "swBTC",
+      "name": "swBTC",
+      "l2Address": "0x1cf7b5f266A0F39d6f9408B90340E3E71dF8BF7B",
+      "valueUsd": 1368111.1,
+      "amount": 12.76,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "SWELL",
+      "name": "Swell Governance Token",
+      "l2Address": "0x2826D136F5630adA89C1678b64A61620Aab77Aea",
+      "valueUsd": 1224424.8,
+      "amount": 787085000,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "swETH",
+      "name": "swETH",
+      "l2Address": "0x09341022ea237a4DB1644DE7CCf8FA0e489D85B7",
+      "valueUsd": 848390.56,
+      "amount": 261.05,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 439927.38,
+      "amount": 140.74,
+      "bridgeProtocol": "Hyperlane (xERC-20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (xERC-20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0xc3eACf0612346366Db554C991D7858716db09f58",
+      "valueUsd": 397608.1,
+      "amount": 127.66,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "l2Address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "valueUsd": 386187.88,
+      "amount": 317466.2,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "USDe",
+      "name": "USDe",
+      "l2Address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "valueUsd": 190413.23,
+      "amount": 190466.4,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 23924418.490000002,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 7924755.25,
+      "canonicalAdditionalTrust": 0,
+      "external": 15891974.350000003
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 15891974.350000003
+    },
+    "canonicalTvl": 7924755.25,
+    "externalTvl": 15891974.350000003,
+    "apiCanonicalTvl": 7332687.5,
+    "apiExternalTvl": 16591730.990000004
+  },
+  "externalTokensSummary": {
+    "totalCount": 10,
+    "totalValue": 15891974.350000003,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 7,
+        "value": 14875445.860000001
+      },
+      "Hyperlane (xERC-20)": {
+        "count": 1,
+        "value": 439927.38
+      },
+      "Layer Zero v2": {
+        "count": 2,
+        "value": 576601.11
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 10,
+        "value": 15891974.350000003
+      }
+    }
+  }
+}

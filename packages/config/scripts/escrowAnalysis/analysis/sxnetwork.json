@@ -1,0 +1,85 @@
+{
+  "projectId": "sxnetwork",
+  "timestamp": 1769460223126,
+  "escrows": [
+    {
+      "address": "eth:0xa104C0426e95a5538e89131DbB4163d230C35f86",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "SX",
+          "valueUsd": 28473028,
+          "amount": 962897540,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 28473028,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "eth:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 6560041,
+          "amount": 6561990,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 439.86,
+          "amount": 0.15,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 6560480.86,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 35033508.86,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 35033508.86,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 35033508.86,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 35033508.86,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

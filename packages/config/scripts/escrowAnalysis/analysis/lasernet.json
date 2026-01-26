@@ -1,38 +1,38 @@
 {
-  "projectId": "apechain",
-  "timestamp": 1769461361777,
+  "projectId": "lasernet",
+  "timestamp": 1769460152333,
   "escrows": [
     {
-      "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+      "address": "eth:0x1eeE9b9F024188E54930D2927d7a28e66E7649a7",
       "name": "Bridge",
       "category": "rollup-secured",
       "bridgeType": "canonical",
       "nameCategory": "canonical-trust-minimized",
       "additionalTrust": false,
       "categoryReason": "Escrow controlled by Rollup Governance",
-      "admin": "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
+      "admin": "eth:0xF815C4c8A671395dAF5706DCB917CfA60DE7B3f9",
       "adminName": "Rollup Governance",
       "isRollupControlled": true,
       "tokens": [
         {
-          "symbol": "APE",
-          "valueUsd": 27872110,
-          "amount": 1000033700,
+          "symbol": "DIA",
+          "valueUsd": 1312259.9,
+          "amount": 5048887,
           "issuer": null,
-          "source": "external"
+          "source": "canonical"
         }
       ],
-      "totalValueUsd": 27872110,
+      "totalValueUsd": 1312259.9,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 27872110,
+    "totalTvl": 1312259.9,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 27872110,
+      "canonicalTrustMinimized": 1312259.9,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -40,10 +40,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 27872110,
+    "canonicalTvl": 1312259.9,
     "externalTvl": 0,
-    "apiCanonicalTvl": 0,
-    "apiExternalTvl": 27872110
+    "apiCanonicalTvl": 1312259.9,
+    "apiExternalTvl": 0
   },
   "externalTokensSummary": {
     "totalCount": 0,

@@ -1,0 +1,92 @@
+{
+  "projectId": "funki",
+  "timestamp": 1769460676437,
+  "escrows": [
+    {
+      "address": "eth:0xA2C1C1A473250094a6244F2bcf6Cb51F670Ad3aC",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by funki Governance",
+      "admin": "eth:0xD069C4724f9bC15FA53b3b2516594512AEf8c957",
+      "adminName": "funki Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "SIPHER",
+          "valueUsd": 150395.33,
+          "amount": 18999880,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 47.46,
+          "amount": 47.51,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 19.09,
+          "amount": 19.1,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 150461.87999999998,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0x5C9C7f98eD153a2deAA981eB5C97B31744AccF22",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by funki Governance",
+      "admin": "eth:0xD069C4724f9bC15FA53b3b2516594512AEf8c957",
+      "adminName": "funki Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 140066.45,
+          "amount": 47.8,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 140066.45,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 290528.3300000001,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 290528.32999999996,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 290528.32999999996,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 290528.3300000001,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

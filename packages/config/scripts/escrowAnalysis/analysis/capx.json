@@ -1,38 +1,38 @@
 {
-  "projectId": "apechain",
-  "timestamp": 1769461361777,
+  "projectId": "capx",
+  "timestamp": 1769460014509,
   "escrows": [
     {
-      "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+      "address": "eth:0xAAAA894f556D0eE585773190114CED3d491C0F72",
       "name": "Bridge",
       "category": "rollup-secured",
       "bridgeType": "canonical",
       "nameCategory": "canonical-trust-minimized",
       "additionalTrust": false,
       "categoryReason": "Escrow controlled by Rollup Governance",
-      "admin": "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
+      "admin": "eth:0xCEe383Aa9287D349aa965DF9Ed6e0B582970B2c3",
       "adminName": "Rollup Governance",
       "isRollupControlled": true,
       "tokens": [
         {
-          "symbol": "APE",
-          "valueUsd": 27872110,
-          "amount": 1000033700,
+          "symbol": "CAPX",
+          "valueUsd": 17290668,
+          "amount": 82505810,
           "issuer": null,
-          "source": "external"
+          "source": "canonical"
         }
       ],
-      "totalValueUsd": 27872110,
+      "totalValueUsd": 17290668,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 27872110,
+    "totalTvl": 17290668,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 27872110,
+      "canonicalTrustMinimized": 17290668,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -40,10 +40,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 27872110,
+    "canonicalTvl": 17290668,
     "externalTvl": 0,
-    "apiCanonicalTvl": 0,
-    "apiExternalTvl": 27872110
+    "apiCanonicalTvl": 17290668,
+    "apiExternalTvl": 0
   },
   "externalTokensSummary": {
     "totalCount": 0,

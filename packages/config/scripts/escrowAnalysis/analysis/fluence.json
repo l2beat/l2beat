@@ -1,0 +1,78 @@
+{
+  "projectId": "fluence",
+  "timestamp": 1769460012787,
+  "escrows": [
+    {
+      "address": "eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "FLT",
+          "valueUsd": 259639.47,
+          "amount": 62279284,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 259639.47,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 71492.8,
+          "amount": 71514.04,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 71492.8,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 331132.27,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 331132.27,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 331132.27,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 331132.27,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

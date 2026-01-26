@@ -26,6 +26,7 @@ import {
 } from './chains/registry'
 
 import { getOrbitStackConfig, getKnownEscrowAdmin } from './chains/orbitStack'
+import { getOpStackConfig, getKnownOpStackEscrowAdmin } from './chains/opStack'
 
 import type {
   BridgeType,
@@ -80,6 +81,9 @@ const TOKEN_ISSUERS: Record<string, string> = {
   USDT: 'Tether',
   WBTC: 'BitGo',
   cbBTC: 'Coinbase',
+  SNX: 'Synthetix',
+  sUSD: 'Synthetix',
+  EURC: 'Circle',
 }
 
 const EXTENDED_TOKEN_ISSUERS: Record<string, string> = {
@@ -101,10 +105,17 @@ const EXTENDED_TOKEN_ISSUERS: Record<string, string> = {
   sUSDe: 'Ethena',
   USDe: 'Ethena',
   ETHFI: 'EtherFi',
+  weETH: 'EtherFi',
+  eETH: 'EtherFi',
   MOR: 'Morpheus',
   USDY: 'Ondo',
   GHO: 'Aave',
   STG: 'Stargate',
+  sDAI: 'MakerDAO',
+  'USD0++': 'Usual',
+  USD0: 'Usual',
+  SolvBTC: 'Solv Protocol',
+  OP: 'Optimism',
 }
 
 // ===== Bridge Security Info =====
@@ -243,8 +254,19 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+// Map project IDs to API IDs (some projects have different names in the API)
+const PROJECT_ID_TO_API_ID: Record<string, string> = {
+  'optimism': 'op-mainnet',
+  'bobanetwork': 'boba-network',
+}
+
+function getApiProjectId(projectId: string): string {
+  return PROJECT_ID_TO_API_ID[projectId] || projectId
+}
+
 async function fetchTvsBreakdown(projectId: string, retries = 3): Promise<TvsToken[]> {
-  const url = `https://l2beat.com/api/scaling/tvs/${projectId}/breakdown`
+  const apiId = getApiProjectId(projectId)
+  const url = `https://l2beat.com/api/scaling/tvs/${apiId}/breakdown`
 
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
@@ -366,12 +388,18 @@ function mapTvsToTokens(escrowAddress: string, tvsData: TvsToken[]): TokenValue[
   for (const token of tvsData) {
     const escrowAddresses = extractEscrowAddresses(token.formula)
     if (escrowAddresses.includes(normalizedAddress)) {
-      const escrowCount = escrowAddresses.length
+      // For sum formulas with multiple escrows, only attribute to the FIRST escrow
+      // to avoid confusing duplicate entries with identical values
+      const isFirstEscrow = escrowAddresses[0] === normalizedAddress
+      if (escrowAddresses.length > 1 && !isFirstEscrow) {
+        continue // Skip - value will be attributed to first escrow
+      }
+
       tokens.push({
         symbol: token.symbol,
-        valueUsd: token.valueForProject / escrowCount,
-        amount: token.amount / escrowCount,
-        issuer: TOKEN_ISSUERS[token.symbol] || null,
+        valueUsd: token.valueForProject,
+        amount: token.amount,
+        issuer: EXTENDED_TOKEN_ISSUERS[token.symbol] || null,
         source: token.source as BridgeType,
       })
     }
@@ -391,7 +419,7 @@ function classifyEscrow(
   let admin = entry ? getAdminFromEntry(entry) : null
   // Fallback to known escrow admins if not found in discovery
   if (!admin) {
-    admin = getKnownEscrowAdmin(escrowConfig.address)
+    admin = getKnownEscrowAdmin(escrowConfig.address) || getKnownOpStackEscrowAdmin(escrowConfig.address)
   }
   const rollupControlled = isRollupControlled(admin, stackConfig.rollupAdmins)
 
@@ -554,6 +582,8 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   let stackConfig: StackConfig
   if (stack === 'orbit') {
     stackConfig = getOrbitStackConfig(chainInfo)
+  } else if (stack === 'opstack') {
+    stackConfig = getOpStackConfig(chainInfo)
   } else {
     console.log(chalk.yellow(`  Stack '${stack}' not fully supported yet, using auto-detection`))
     stackConfig = {
@@ -746,16 +776,34 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
 
 // ===== CLI =====
 
+// List of chains to analyze when no specific chain is provided
+const DEFAULT_CHAINS = [
+  'arbitrum',
+  'nova',
+  'apechain',
+  'optimism',
+  'base',
+  'lisk',
+  'worldchain',
+  'ink',
+  'soneium',
+  'xchain',
+  'polynomial',
+]
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2)
 
   // Parse arguments
   let targetChain: string | undefined
   let listMode = false
+  let allMode = false
 
   for (const arg of args) {
     if (arg === '--list') {
       listMode = true
+    } else if (arg === '--all') {
+      allMode = true
     } else if (!arg.startsWith('-')) {
       targetChain = arg
     }
@@ -776,30 +824,39 @@ async function main(): Promise<void> {
     return
   }
 
-  // Default to arbitrum if no chain specified
-  if (!targetChain) {
-    targetChain = 'arbitrum'
+  // Determine which chains to analyze
+  const chainsToAnalyze: string[] = targetChain
+    ? [targetChain]
+    : allMode
+      ? DEFAULT_CHAINS
+      : DEFAULT_CHAINS // Default: analyze all chains
+
+  for (const chainId of chainsToAnalyze) {
+    const chain = registry.get(chainId)
+    if (!chain) {
+      console.error(chalk.red(`Chain '${chainId}' not found in registry`))
+      continue
+    }
+
+    // Skip archived chains
+    if (chain.isArchived) {
+      console.log(chalk.gray(`Skipping ${chainId} (archived)`))
+      continue
+    }
+
+    // Analyze the chain
+    const report = await analyzeChain(chain)
+
+    if (!report) {
+      console.log(chalk.yellow(`\nNo report for ${chainId} - check if TVS data is available.`))
+      continue
+    }
+
+    // Save output
+    const outputPath = join(__dirname, 'analysis', `${chainId}.json`)
+    writeFileSync(outputPath, JSON.stringify(report, null, 2))
+    console.log(chalk.gray(`\nFull report saved to ${outputPath}`))
   }
-
-  const chain = registry.get(targetChain)
-  if (!chain) {
-    console.error(chalk.red(`Chain '${targetChain}' not found in registry`))
-    console.log(chalk.gray('Use --list to see available chains'))
-    process.exit(1)
-  }
-
-  // Analyze the chain
-  const report = await analyzeChain(chain)
-
-  if (!report) {
-    console.log(chalk.yellow('\nNo report generated - check if TVS data is available.'))
-    return
-  }
-
-  // Save output
-  const outputPath = join(__dirname, 'analysis', `${targetChain}.json`)
-  writeFileSync(outputPath, JSON.stringify(report, null, 2))
-  console.log(chalk.gray(`\nFull report saved to ${outputPath}`))
 }
 
 main().catch((error) => {

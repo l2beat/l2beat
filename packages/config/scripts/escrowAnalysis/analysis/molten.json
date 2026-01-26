@@ -1,0 +1,85 @@
+{
+  "projectId": "molten",
+  "timestamp": 1769460153315,
+  "escrows": [
+    {
+      "address": "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 8774.22,
+          "amount": 8776.82,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 23.55,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 8797.769999999999,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    },
+    {
+      "address": "arb1:0xE1d32C985825562edAa906fAC39295370Db72195",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "MOLTEN",
+          "valueUsd": 4346.91,
+          "amount": 145754.66,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 4346.91,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 13144.679999999998,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 13144.679999999998,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 13144.679999999998,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 13144.679999999998,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

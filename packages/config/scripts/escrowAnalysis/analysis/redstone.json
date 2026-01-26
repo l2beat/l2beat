@@ -1,0 +1,85 @@
+{
+  "projectId": "redstone",
+  "timestamp": 1769460814432,
+  "escrows": [
+    {
+      "address": "eth:0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by redstone Governance",
+      "admin": "eth:0xCC53b447aFe07926423aB96D5496b1af30485ED2",
+      "adminName": "redstone Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 865955.94,
+          "amount": 295.49,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 865955.94,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by redstone Governance",
+      "admin": "eth:0xCC53b447aFe07926423aB96D5496b1af30485ED2",
+      "adminName": "redstone Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 26670.27,
+          "amount": 26678.19,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "ARPA",
+          "valueUsd": 63.49,
+          "amount": 5001,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 26733.760000000002,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 892689.7,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 892689.7,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 892689.7,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 892689.7,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

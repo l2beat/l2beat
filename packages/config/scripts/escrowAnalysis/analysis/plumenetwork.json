@@ -1,0 +1,146 @@
+{
+  "projectId": "plumenetwork",
+  "timestamp": 1769460157390,
+  "escrows": [
+    {
+      "address": "eth:0x35381f63091926750F43b2A7401B083263aDEF83",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "PLUME",
+          "valueUsd": 84839944,
+          "amount": 5513179600,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 84839944,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "eth:0xE2C902BC61296531e556962ffC81A082b82f5F28",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 151.46,
+          "amount": 151.5,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 76.21,
+          "amount": 0.03,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 227.67000000000002,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "pUSD",
+      "name": "Plume USD",
+      "l2Address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "valueUsd": 11620165,
+      "amount": 12399649,
+      "bridgeProtocol": "LayerZero OFT v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via LayerZero OFT v2 (trust model not analyzed)",
+      "formulaType": "calculation"
+    },
+    {
+      "symbol": "XAUM",
+      "name": "Matrixdock Gold",
+      "l2Address": "0xA0C4F78A29ead4ABf6b7f5B3F0d05C0f3EAb8DDf",
+      "valueUsd": 5099175.5,
+      "amount": 1001.14,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "l2Address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "valueUsd": 1267298.5,
+      "amount": 1267797,
+      "bridgeProtocol": "Stargate v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Stargate v2 (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 123035556.6,
+    "nativeTvl": 20208745.93,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 84840171.67,
+      "canonicalAdditionalTrust": 0,
+      "external": 17986639
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 17986639
+    },
+    "canonicalTvl": 84840171.67,
+    "externalTvl": 17986639,
+    "apiCanonicalTvl": 84840171.66999999,
+    "apiExternalTvl": 17986639
+  },
+  "externalTokensSummary": {
+    "totalCount": 3,
+    "totalValue": 17986639,
+    "byProtocol": {
+      "LayerZero OFT v2": {
+        "count": 1,
+        "value": 11620165
+      },
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 5099175.5
+      },
+      "Stargate v2": {
+        "count": 1,
+        "value": 1267298.5
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 3,
+        "value": 17986639
+      }
+    }
+  }
+}

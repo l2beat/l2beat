@@ -1,0 +1,196 @@
+{
+  "projectId": "lisk",
+  "timestamp": 1769461422477,
+  "escrows": [
+    {
+      "address": "eth:0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by lisk Governance",
+      "admin": "eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+      "adminName": "lisk Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "LSK",
+          "valueUsd": 40297176,
+          "amount": 226240000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 585345.8,
+          "amount": 585905.94,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 381291.7,
+          "amount": 4.33,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 394.63,
+          "amount": 20,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 41264208.13,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf",
+      "name": "L1ERC20TokenBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 16492125,
+          "amount": 4595.99,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 16492125,
+      "source": "canonical",
+      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+    },
+    {
+      "address": "eth:0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by lisk Governance",
+      "admin": "eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+      "adminName": "lisk Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 3112057.5,
+          "amount": 1061.94,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 3112057.5,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
+      "name": "L1OpUSDCBridgeAdapter",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 1321546.6,
+          "amount": 1321939.2,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1321546.6,
+      "source": "canonical",
+      "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally."
+    },
+    {
+      "address": "eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677",
+      "name": "L1OpEURCBridgeAdapter",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": "eth:0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "EURC",
+          "valueUsd": 14547.98,
+          "amount": 12228.07,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 14547.98,
+      "source": "canonical",
+      "description": "Escrow for EURC that uses the canonical bridge for messaging but is governed externally."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USD₮0",
+      "name": "Stargate USD₮0 (Bridged)",
+      "l2Address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
+      "valueUsd": 1378538.4,
+      "amount": 1379439.9,
+      "bridgeProtocol": "Stargate v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Stargate v2 (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 63667239.47,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 62204485.21,
+      "canonicalAdditionalTrust": 0,
+      "external": 1378538.4
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 1378538.4
+    },
+    "canonicalTvl": 62204485.21,
+    "externalTvl": 1378538.4,
+    "apiCanonicalTvl": 44376265.63,
+    "apiExternalTvl": 19290973.840000004
+  },
+  "externalTokensSummary": {
+    "totalCount": 1,
+    "totalValue": 1378538.4,
+    "byProtocol": {
+      "Stargate v2": {
+        "count": 1,
+        "value": 1378538.4
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 1,
+        "value": 1378538.4
+      }
+    }
+  }
+}

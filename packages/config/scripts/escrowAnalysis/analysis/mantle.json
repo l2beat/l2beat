@@ -1,0 +1,370 @@
+{
+  "projectId": "mantle",
+  "timestamp": 1769460744897,
+  "escrows": [
+    {
+      "address": "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by mantle Governance",
+      "admin": "eth:0xca35F8338054739D138884685e08b39EE2217794",
+      "adminName": "mantle Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "MNT",
+          "valueUsd": 302903360,
+          "amount": 350642980,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ETH",
+          "valueUsd": 245807540,
+          "amount": 83878.17,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 548710900,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by mantle Governance",
+      "admin": "eth:0xca35F8338054739D138884685e08b39EE2217794",
+      "adminName": "mantle Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 103964070,
+          "amount": 104063560,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "mETH",
+          "valueUsd": 94293424,
+          "amount": 29698.42,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "Puff",
+          "valueUsd": 70648230,
+          "amount": 888876900,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 24615350,
+          "amount": 24622664,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 4521640,
+          "amount": 51.33,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "PENDLE",
+          "valueUsd": 77442.75,
+          "amount": 39728.84,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 53542.9,
+          "amount": 2249.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "APEX",
+          "valueUsd": 33204.45,
+          "amount": 91522.67,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 12348.1,
+          "amount": 12333.51,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "EQB",
+          "valueUsd": 9032.66,
+          "amount": 49940.58,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BEL",
+          "valueUsd": 1078.07,
+          "amount": 8156.36,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SHIB",
+          "valueUsd": 596.79,
+          "amount": 76920936,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "wstETH",
+          "valueUsd": 582.1,
+          "amount": 0.16,
+          "issuer": "Lido DAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "PEPE",
+          "valueUsd": 135.63,
+          "amount": 27226402,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DODO",
+          "valueUsd": 27.73,
+          "amount": 1454.55,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BIT",
+          "valueUsd": 8.5,
+          "amount": 10,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BabyDoge",
+          "valueUsd": 6.01,
+          "amount": 10404663000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 4.72,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 3.02,
+          "amount": 0.15,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 2.31,
+          "amount": 6.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "crvUSD",
+          "valueUsd": 1,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 298230730.74000007,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USDT0",
+      "name": "USDT0",
+      "l2Address": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+      "valueUsd": 317414430,
+      "amount": 317622020,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "cmETH",
+      "name": "cmETH",
+      "l2Address": "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
+      "valueUsd": 162563860,
+      "amount": 51183.05,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDe",
+      "name": "USDe",
+      "l2Address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "valueUsd": 82813944,
+      "amount": 82837070,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "FBTC",
+      "name": "Fire Bitcoin",
+      "l2Address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "valueUsd": 22764098,
+      "amount": 256.8,
+      "bridgeProtocol": "Fire Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Fire Bridge (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "l2Address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "valueUsd": 7290334.5,
+      "amount": 5993028,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "COOK",
+      "name": "COOK",
+      "l2Address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+      "valueUsd": 3612259.5,
+      "amount": 960000000,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "circulatingSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 1498629930.9,
+    "nativeTvl": 55229374.16,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 846941630.74,
+      "canonicalAdditionalTrust": 0,
+      "external": 596458926
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 596458926
+    },
+    "canonicalTvl": 846941630.74,
+    "externalTvl": 596458926,
+    "apiCanonicalTvl": 846941630.74,
+    "apiExternalTvl": 596458926
+  },
+  "externalTokensSummary": {
+    "totalCount": 6,
+    "totalValue": 596458926,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 3,
+        "value": 483590549.5
+      },
+      "Layer Zero v2": {
+        "count": 2,
+        "value": 90104278.5
+      },
+      "Fire Bridge": {
+        "count": 1,
+        "value": 22764098
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 6,
+        "value": 596458926
+      }
+    }
+  }
+}

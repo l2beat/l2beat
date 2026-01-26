@@ -1,0 +1,92 @@
+{
+  "projectId": "race",
+  "timestamp": 1769460813346,
+  "escrows": [
+    {
+      "address": "eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by race Governance",
+      "admin": "eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
+      "adminName": "race Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 21056.65,
+          "amount": 7.19,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 21056.65,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0x680969A6c58183987c8126ca4DE6b59C6540Cd2a",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by race Governance",
+      "admin": "eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191",
+      "adminName": "race Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 3006.15,
+          "amount": 3007.04,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 4.4,
+          "amount": 0,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 1,
+          "amount": 1,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 3011.55,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 24068.200000000004,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 24068.2,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 24068.2,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 24068.200000000004,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

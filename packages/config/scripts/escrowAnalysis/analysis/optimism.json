@@ -1,0 +1,1136 @@
+{
+  "projectId": "optimism",
+  "timestamp": 1769461362050,
+  "escrows": [
+    {
+      "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Optimism Foundation",
+      "admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "adminName": "Optimism Foundation",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 621728500,
+          "amount": 212155.62,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 621728500,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+    },
+    {
+      "address": "eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43",
+      "name": "ETHLockbox",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Optimism Foundation",
+      "admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "adminName": "Optimism Foundation",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "A simple escrow contract storing ETH for the canonical bridge."
+    },
+    {
+      "address": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Optimism Foundation",
+      "admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "adminName": "Optimism Foundation",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 197609410,
+          "amount": 197798510,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WLD",
+          "valueUsd": 137930800,
+          "amount": 297120700,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PT",
+          "valueUsd": 88027384,
+          "amount": 152000000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 85041330,
+          "amount": 965.46,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 33398724,
+          "amount": 33408646,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 12693905,
+          "amount": 3747.2,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DHT",
+          "valueUsd": 3308810.5,
+          "amount": 19659012,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 2903562.5,
+          "amount": 242291.1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 2150541,
+          "amount": 6041379,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "THALES",
+          "valueUsd": 1601925.8,
+          "amount": 6591546,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 1323138.4,
+          "amount": 8590.88,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "HAIR",
+          "valueUsd": 1293742.2,
+          "amount": 43795.65,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PENDLE",
+          "valueUsd": 958806.56,
+          "amount": 491876.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "crvUSD",
+          "valueUsd": 875990.1,
+          "amount": 875626.44,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 586278.3,
+          "amount": 585585.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 404157.9,
+          "amount": 85566.95,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "EQB",
+          "valueUsd": 361330.06,
+          "amount": 1997753.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "HAN",
+          "valueUsd": 335922.66,
+          "amount": 618336060,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PSP",
+          "valueUsd": 310531.88,
+          "amount": 113511176,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "sDAI",
+          "valueUsd": 209420.72,
+          "amount": 178861.03,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "DOLA",
+          "valueUsd": 207512.92,
+          "amount": 207922.23,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SNT",
+          "valueUsd": 150454.44,
+          "amount": 10780181,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "wstETH",
+          "valueUsd": 145114.5,
+          "amount": 40.44,
+          "issuer": "Lido DAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "ACX",
+          "valueUsd": 143975.4,
+          "amount": 3057469.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LDO",
+          "valueUsd": 138345.9,
+          "amount": 267632.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "cbETH",
+          "valueUsd": 121029.85,
+          "amount": 36.9,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PERP",
+          "valueUsd": 97923.63,
+          "amount": 3143481.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "KNC",
+          "valueUsd": 76307.4,
+          "amount": 363529.12,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 72509.18,
+          "amount": 3046,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "GTC",
+          "valueUsd": 71309.4,
+          "amount": 544443.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PREMIA",
+          "valueUsd": 62283.55,
+          "amount": 834392.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 61663.9,
+          "amount": 61683.94,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "OLAS",
+          "valueUsd": 60582.36,
+          "amount": 1105044,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ZRX",
+          "valueUsd": 55667.91,
+          "amount": 419593.62,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WOO",
+          "valueUsd": 54514.55,
+          "amount": 2229156.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 47209.97,
+          "amount": 96894.61,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 40450.17,
+          "amount": 2050.03,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ENS",
+          "valueUsd": 34225.87,
+          "amount": 3856.55,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "VITA",
+          "valueUsd": 32942.66,
+          "amount": 79417.85,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "RAI",
+          "valueUsd": 31229.6,
+          "amount": 9559.3,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "scrvUSD",
+          "valueUsd": 30403.42,
+          "amount": 28054.26,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BICO",
+          "valueUsd": 27781.59,
+          "amount": 725307.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FOX",
+          "valueUsd": 27142.6,
+          "amount": 2759762.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LYRA",
+          "valueUsd": 24760.84,
+          "amount": 115249110,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "T",
+          "valueUsd": 16797.81,
+          "amount": 1852293.4,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 15479.37,
+          "amount": 4.86,
+          "issuer": "EtherFi",
+          "source": "canonical"
+        },
+        {
+          "symbol": "XYO",
+          "valueUsd": 7206.19,
+          "amount": 1331245.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 5574.57,
+          "amount": 18567.18,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TUSD",
+          "valueUsd": 5044.59,
+          "amount": 5051.19,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "MKR",
+          "valueUsd": 4960.52,
+          "amount": 3.15,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PEPE",
+          "valueUsd": 3144.7,
+          "amount": 631255700,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UMA",
+          "valueUsd": 2925.13,
+          "amount": 4278.49,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "GEAR",
+          "valueUsd": 2025.92,
+          "amount": 3009632,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "RPL",
+          "valueUsd": 1359.97,
+          "amount": 676.66,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "OCEAN",
+          "valueUsd": 921.09,
+          "amount": 6358.51,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "1INCH",
+          "valueUsd": 879.28,
+          "amount": 6307.96,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SIPHER",
+          "valueUsd": 684.61,
+          "amount": 86488.61,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDD",
+          "valueUsd": 496.29,
+          "amount": 496.6,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CTSI",
+          "valueUsd": 407.74,
+          "amount": 12523.43,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "Silo",
+          "valueUsd": 369.19,
+          "amount": 59257.64,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TONCOIN",
+          "valueUsd": 344.79,
+          "amount": 225.59,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "YFI",
+          "valueUsd": 341.8,
+          "amount": 0.1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LRC",
+          "valueUsd": 328.29,
+          "amount": 6922.62,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "APW",
+          "valueUsd": 328.17,
+          "amount": 8654,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SNX",
+          "valueUsd": 185.76,
+          "amount": 446.77,
+          "issuer": "Synthetix",
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRO",
+          "valueUsd": 185.52,
+          "amount": 2044.16,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 172.18,
+          "amount": 0.06,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BITCOIN",
+          "valueUsd": 144.84,
+          "amount": 4529.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ARPA",
+          "valueUsd": 128.22,
+          "amount": 10100,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "MATIC",
+          "valueUsd": 97.38,
+          "amount": 548.07,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DOG",
+          "valueUsd": 83.5,
+          "amount": 113815.03,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "MANA",
+          "valueUsd": 72.09,
+          "amount": 498.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "HOP",
+          "valueUsd": 70.9,
+          "amount": 52450.33,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FIS",
+          "valueUsd": 50.19,
+          "amount": 2307.36,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FRAX",
+          "valueUsd": 50.07,
+          "amount": 62.07,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SAND",
+          "valueUsd": 47.94,
+          "amount": 360.86,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CHZ",
+          "valueUsd": 40.51,
+          "amount": 767.45,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "APE",
+          "valueUsd": 14.29,
+          "amount": 78.71,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ENJ",
+          "valueUsd": 12.91,
+          "amount": 466.63,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PSTAKE",
+          "valueUsd": 8.89,
+          "amount": 11746.21,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FRAX.legacy",
+          "valueUsd": 3.45,
+          "amount": 3.47,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BTRST",
+          "valueUsd": 2.59,
+          "amount": 25.78,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PLA",
+          "valueUsd": 1.73,
+          "amount": 767.15,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CYBER",
+          "valueUsd": 0.79,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "RGT",
+          "valueUsd": 0.64,
+          "amount": 16,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "COW",
+          "valueUsd": 0.21,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 573212047.8099997,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+      "name": "wstETHEscrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 73598130,
+          "amount": 20510.16,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 73598130,
+      "source": "canonical",
+      "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
+    },
+    {
+      "address": "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "name": "L1DAIEscrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (MakerDAO)",
+      "admin": "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+      "adminName": "MakerDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "sUSDS",
+          "valueUsd": 56884000,
+          "amount": 187193790,
+          "issuer": "MakerDAO",
+          "source": "external"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 22194652,
+          "amount": 22201864,
+          "issuer": "MakerDAO",
+          "source": "external"
+        },
+        {
+          "symbol": "USDS",
+          "valueUsd": 129.56,
+          "amount": 100313950,
+          "issuer": "MakerDAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 79078781.56,
+      "source": "canonical",
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
+    },
+    {
+      "address": "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+      "name": "SynthetixBridgeEscrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Synthetix)",
+      "admin": null,
+      "adminName": "Synthetix",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "SNX",
+          "valueUsd": 16592052,
+          "amount": 39904500,
+          "issuer": "Synthetix",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 16592052,
+      "source": "canonical",
+      "description": "Custom escrow for SNX bridged via canonical messaging."
+    },
+    {
+      "address": "0x045e507925d2e05d114534d0810a1abd94aca8d6",
+      "name": "Escrow 0x045e5079...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xcd9d4988c0ae61887b075ba77f08cbfad2b65068",
+      "name": "Escrow 0xcd9d4988...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "l2Address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "valueUsd": 202966560,
+      "amount": 218010590,
+      "bridgeProtocol": "Circle CCTP",
+      "issuer": "Circle",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Circle operates both the token and the bridge",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Circle",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over USDC - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "clBTC",
+      "name": "clBTC",
+      "l2Address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",
+      "valueUsd": 21939600,
+      "amount": 252.8,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "Corn Finance",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Wormhole NTT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "cgETH.hashkey",
+      "name": "cgETH Hashkey Cloud",
+      "l2Address": "0x0Ce45dd53affbb011884EF1866E0738f58AB7969",
+      "valueUsd": 21459802,
+      "amount": 8722,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Wormhole NTT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "l2Address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
+      "valueUsd": 14770490,
+      "amount": 5052,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Frax operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over frxETH - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "l2Address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+      "valueUsd": 10523540,
+      "amount": 10530422,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "l2Address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
+      "valueUsd": 10223444,
+      "amount": 3052,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Frax operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over sfrxETH - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "ZRO",
+      "name": "LayerZero",
+      "l2Address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "valueUsd": 9811924,
+      "amount": 4997939,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Layer Zero",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Layer Zero operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Layer Zero",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over ZRO - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+      "valueUsd": 3286723.2,
+      "amount": 1032.58,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "EtherFi",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "STG",
+      "name": "StargateToken",
+      "l2Address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+      "valueUsd": 2205284.5,
+      "amount": 13031078,
+      "bridgeProtocol": "Stargate",
+      "issuer": "Stargate",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Stargate operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Stargate",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over STG - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "TAROT",
+      "name": "Tarot",
+      "l2Address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
+      "valueUsd": 1839755.5,
+      "amount": 40394148,
+      "bridgeProtocol": "Stargate",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Stargate (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "kBTC",
+      "name": "Kraken Wrapped Bitcoin",
+      "l2Address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "valueUsd": 1761170.1,
+      "amount": 19.99,
+      "bridgeProtocol": "Kraken EOA",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Kraken EOA (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "tBTC",
+      "name": "Optimism tBTC v2",
+      "l2Address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "valueUsd": 1212514.2,
+      "amount": 13.82,
+      "bridgeProtocol": "Wormhole",
+      "issuer": "Threshold",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Wormhole",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Wormhole Guardians",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Guardian collusion can approve fraudulent transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 844077.44,
+      "amount": 270.04,
+      "bridgeProtocol": "Hyperlane (xERC-20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (xERC-20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "FRAX",
+      "name": "Frax",
+      "l2Address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+      "valueUsd": 576205.7,
+      "amount": 580081.5,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Frax Ferry (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "l2Address": "0xC5d43A94e26fCa47A9b21CF547ae4AA0268670E1",
+      "valueUsd": 286249.3,
+      "amount": 250000,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Frax Ferry (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "l2Address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
+      "valueUsd": 257620.38,
+      "amount": 319338.84,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Frax Ferry (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 2310982864.1600013,
+    "nativeTvl": 642676174.84,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 1364209511.3699996,
+      "canonicalAdditionalTrust": 0,
+      "external": 303964960.32
+    },
+    "externalBreakdown": {
+      "issuerSecured": 239977702.5,
+      "additionalTrust": 63987257.82000001
+    },
+    "canonicalTvl": 1364209511.3699996,
+    "externalTvl": 303964960.32,
+    "apiCanonicalTvl": 1194940547.8100007,
+    "apiExternalTvl": 473366141.51
+  },
+  "externalTokensSummary": {
+    "totalCount": 16,
+    "totalValue": 303964960.32,
+    "byProtocol": {
+      "Circle CCTP": {
+        "count": 1,
+        "value": 202966560
+      },
+      "Wormhole NTT": {
+        "count": 2,
+        "value": 43399402
+      },
+      "Frax Ferry": {
+        "count": 5,
+        "value": 26114009.38
+      },
+      "Layer Zero v2 OFT": {
+        "count": 3,
+        "value": 23622187.2
+      },
+      "Stargate": {
+        "count": 2,
+        "value": 4045040
+      },
+      "Kraken EOA": {
+        "count": 1,
+        "value": 1761170.1
+      },
+      "Wormhole": {
+        "count": 1,
+        "value": 1212514.2
+      },
+      "Hyperlane (xERC-20)": {
+        "count": 1,
+        "value": 844077.44
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 16,
+        "value": 303964960.32
+      }
+    }
+  }
+}

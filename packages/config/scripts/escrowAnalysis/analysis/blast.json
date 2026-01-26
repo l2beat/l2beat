@@ -1,0 +1,346 @@
+{
+  "projectId": "blast",
+  "timestamp": 1769460548409,
+  "escrows": [
+    {
+      "address": "eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
+      "name": "LaunchBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "stETH",
+          "valueUsd": 66353956,
+          "amount": 22652.68,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 66353956,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "eth:0x98078db053902644191f93988341E31289E1C8FE",
+      "name": "ETHYieldManager",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by blast Governance",
+      "admin": "eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+      "adminName": "blast Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 7755073.5,
+          "amount": 2646.3,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 7755073.5,
+      "source": "canonical",
+      "description": "Contract managing Yield Providers for ETH."
+    },
+    {
+      "address": "eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by blast Governance",
+      "admin": "eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
+      "adminName": "blast Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "OLE",
+          "valueUsd": 178037.8,
+          "amount": 107874800,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 128750.98,
+          "amount": 1.46,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "BAG",
+          "valueUsd": 28859.35,
+          "amount": 1340674000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 6317.62,
+          "amount": 1337.55,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DOLA",
+          "valueUsd": 1914.71,
+          "amount": 1918.49,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 1117.43,
+          "amount": 0.38,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 507.27,
+          "amount": 507.42,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 154.48,
+          "amount": 154.63,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "ezETH",
+          "valueUsd": 46.88,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "RBX",
+          "valueUsd": 31.44,
+          "amount": 80639.77,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PSTAKE",
+          "valueUsd": 12.33,
+          "amount": 16291.61,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 345750.29,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USDB",
+      "name": "USDB",
+      "l2Address": "0x4300000000000000000000000000000000000003",
+      "valueUsd": 28213086,
+      "amount": 28229792,
+      "bridgeProtocol": "Blast",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Blast (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDe",
+      "name": "USDe",
+      "l2Address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "valueUsd": 1076074.2,
+      "amount": 1076374.8,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 440396.5,
+      "amount": 140.89,
+      "bridgeProtocol": "Connext (xERC20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Connext (xERC20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "bWOOL",
+      "name": "bWOOL",
+      "l2Address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "valueUsd": 354913.03,
+      "amount": 1424330500,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "valueUsd": 156714.31,
+      "amount": 49.23,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "valueUsd": 126363.64,
+      "amount": 40.57,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 146080453.14000002,
+    "nativeTvl": 41251811.51,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 74454779.79,
+      "canonicalAdditionalTrust": 0,
+      "external": 30367547.68
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 30367547.68
+    },
+    "canonicalTvl": 74454779.79,
+    "externalTvl": 30367547.68,
+    "apiCanonicalTvl": 345750.29,
+    "apiExternalTvl": 104482891.34
+  },
+  "externalTokensSummary": {
+    "totalCount": 6,
+    "totalValue": 30367547.68,
+    "byProtocol": {
+      "Blast": {
+        "count": 1,
+        "value": 28213086
+      },
+      "Layer Zero v2": {
+        "count": 1,
+        "value": 1076074.2
+      },
+      "Connext (xERC20)": {
+        "count": 1,
+        "value": 440396.5
+      },
+      "Layer Zero": {
+        "count": 2,
+        "value": 511627.34
+      },
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 126363.64
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 6,
+        "value": 30367547.68
+      }
+    }
+  }
+}

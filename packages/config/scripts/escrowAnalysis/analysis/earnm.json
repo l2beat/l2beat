@@ -1,38 +1,54 @@
 {
-  "projectId": "apechain",
-  "timestamp": 1769461361777,
+  "projectId": "earnm",
+  "timestamp": 1769460089767,
   "escrows": [
     {
-      "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
+      "address": "arb1:0xA9F4ee72439afC704db48dc049CbFb7E914aD300",
       "name": "Bridge",
       "category": "rollup-secured",
       "bridgeType": "canonical",
       "nameCategory": "canonical-trust-minimized",
       "additionalTrust": false,
       "categoryReason": "Escrow controlled by Rollup Governance",
-      "admin": "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
+      "admin": "arb1:0x8D9e5bB33Da252739780e3df5F9E686fd11E0536",
       "adminName": "Rollup Governance",
       "isRollupControlled": true,
       "tokens": [
         {
-          "symbol": "APE",
-          "valueUsd": 27872110,
-          "amount": 1000033700,
+          "symbol": "EARNM",
+          "valueUsd": 35.13,
+          "amount": 205177.05,
           "issuer": null,
-          "source": "external"
+          "source": "canonical"
         }
       ],
-      "totalValueUsd": 27872110,
+      "totalValueUsd": 35.13,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "0x0b6b5afee8602a4d88dc26fc2e85b2d1236156f6",
+      "name": "Escrow 0x0b6b5afe...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 27872110,
+    "totalTvl": 35.13,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 27872110,
+      "canonicalTrustMinimized": 35.13,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -40,10 +56,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 27872110,
+    "canonicalTvl": 35.13,
     "externalTvl": 0,
-    "apiCanonicalTvl": 0,
-    "apiExternalTvl": 27872110
+    "apiCanonicalTvl": 35.13,
+    "apiExternalTvl": 0
   },
   "externalTokensSummary": {
     "totalCount": 0,

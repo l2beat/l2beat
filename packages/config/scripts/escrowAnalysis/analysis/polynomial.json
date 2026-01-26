@@ -1,0 +1,574 @@
+{
+  "projectId": "polynomial",
+  "timestamp": 1769461869288,
+  "escrows": [
+    {
+      "address": "0xde1617ddb7c8a250a409d986930001985cfad76f",
+      "name": "Escrow 0xde1617dd...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Circle)",
+      "admin": null,
+      "adminName": "Circle",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 1552776.8,
+          "amount": 1553238.1,
+          "issuer": "Circle",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1552776.8,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xc374967634133f5ed1df5050276e5b33986625d3",
+      "name": "Escrow 0xc3749676...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x038bc0f438c6b46facc5c83475925f4dc111d79f",
+      "name": "Escrow 0x038bc0f4...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x615172e47c0c5a6da8ea959632ac0166f7a59edc",
+      "name": "Escrow 0x615172e4...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (MakerDAO)",
+      "admin": null,
+      "adminName": "MakerDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "sDAI",
+          "valueUsd": 18385.17,
+          "amount": 15702.32,
+          "issuer": "MakerDAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 18385.17,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xdf9fa2b420689384e8dd55a706262dc0ed37020f",
+      "name": "Escrow 0xdf9fa2b4...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Usual)",
+      "admin": null,
+      "adminName": "Usual",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USD0++",
+          "valueUsd": 249118.16,
+          "amount": 261114.36,
+          "issuer": "Usual",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 249118.16,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xc6cfb996a7cfeb89813a68cd13942cd75553032b",
+      "name": "Escrow 0xc6cfb996...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Ethena)",
+      "admin": null,
+      "adminName": "Ethena",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "sUSDe",
+          "valueUsd": 156573.02,
+          "amount": 128711.02,
+          "issuer": "Ethena",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 156573.02,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x31d16b451c4063fe24ca4149740af10948fde955",
+      "name": "Escrow 0x31d16b45...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xd08e20aab70fe4abc7f7baa9d1a9bd02d6c6e883",
+      "name": "Escrow 0xd08e20aa...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x876ffa8acbf043380675a579eb1c67e8f097c045",
+      "name": "Escrow 0x876ffa8a...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x1bf463463dd6747230ee1bf9428376ebf1e2c23a",
+      "name": "Escrow 0x1bf46346...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "WETH",
+          "valueUsd": 120415.86,
+          "amount": 41.09,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 120415.86,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x2396843ea97cf6b77239bb25fa018a3cd2ee06a6",
+      "name": "Escrow 0x2396843e...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xb4d1b0333ba154ed42decb07b0342c128bb492cf",
+      "name": "Escrow 0xb4d1b033...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xbd9fb031dac8fc48e7eb701ddec90cc194d5f4db",
+      "name": "Escrow 0xbd9fb031...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x847579e12cfb96a3357d9c51e374330af61716c2",
+      "name": "Escrow 0x847579e1...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (EtherFi)",
+      "admin": null,
+      "adminName": "EtherFi",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "weETH",
+          "valueUsd": 93511.44,
+          "amount": 29.38,
+          "issuer": "EtherFi",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 93511.44,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xae3f9951fdc045e03eb460d34b9728e327331ccd",
+      "name": "Escrow 0xae3f9951...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xae88be44e17bcb66a8640831a9ab6f973181df7c",
+      "name": "Escrow 0xae88be44...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x66e4158a9341ef7950af5b1435dccf84fb8d6993",
+      "name": "Escrow 0x66e4158a...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x2a905d69cdb343b2e5f5e25a11788cdfb67d4e1d",
+      "name": "Escrow 0x2a905d69...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Optimism)",
+      "admin": null,
+      "adminName": "Optimism",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "OP",
+          "valueUsd": 70604.26,
+          "amount": 238052.03,
+          "issuer": "Optimism",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 70604.26,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "eth:0x034cbb620d1e0e4C2E29845229bEAc57083b04eC",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by polynomial Governance",
+      "admin": "eth:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
+      "adminName": "polynomial Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 60224.46,
+          "amount": 20.55,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 60224.46,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by polynomial Governance",
+      "admin": "eth:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
+      "adminName": "polynomial Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    },
+    {
+      "address": "0x572a4080c16bed33cf2e876ad969e2e35769edb4",
+      "name": "Escrow 0x572a4080...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": null,
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 43839.18,
+          "amount": 12.22,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 43839.18,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x744e4e32c8b49bb0f812590a5124c183ed2cd836",
+      "name": "Escrow 0x744e4e32...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x33a1ae6703362a0bcca814e3c1fc65be0b8cce61",
+      "name": "Escrow 0x33a1ae67...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xc3c20718050019ff79eb8961b2a38289db8204b4",
+      "name": "Escrow 0xc3c20718...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x197ccb40bcded89c3d7b891824ab44d1913ee73e",
+      "name": "Escrow 0x197ccb40...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Solv Protocol)",
+      "admin": null,
+      "adminName": "Solv Protocol",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "SolvBTC",
+          "valueUsd": 26231.86,
+          "amount": 0.3,
+          "issuer": "Solv Protocol",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 26231.86,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x9f9d878bbd1118e7223f9d268d74fa6bdaf6cc52",
+      "name": "Escrow 0x9f9d878b...",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0x8309e63f777805f362d42f5b5f2d1a20287d5df2",
+      "name": "Escrow 0x8309e63f...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Kelp DAO)",
+      "admin": null,
+      "adminName": "Kelp DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "rsETH",
+          "valueUsd": 8844.74,
+          "amount": 2.84,
+          "issuer": "Kelp DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 8844.74,
+      "source": "canonical",
+      "description": null
+    },
+    {
+      "address": "0xeb3492a8a15baf729e57f4f7e84dc55b7a34a4e7",
+      "name": "Escrow 0xeb3492a8...",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Coinbase)",
+      "admin": null,
+      "adminName": "Coinbase",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "cbBTC",
+          "valueUsd": 4433.47,
+          "amount": 0.05,
+          "issuer": "Coinbase",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 4433.47,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 2404958.4200000004,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 2284542.56,
+      "canonicalAdditionalTrust": 120415.86,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 2404958.42,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 60224.46,
+    "apiExternalTvl": 2344733.9600000004
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

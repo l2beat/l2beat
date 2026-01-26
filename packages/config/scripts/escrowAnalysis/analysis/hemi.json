@@ -1,0 +1,169 @@
+{
+  "projectId": "hemi",
+  "timestamp": 1769460678513,
+  "escrows": [
+    {
+      "address": "eth:0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by hemi Governance",
+      "admin": "eth:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30",
+      "adminName": "hemi Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 5038063.5,
+          "amount": 1719.16,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 5038063.5,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by hemi Governance",
+      "admin": "eth:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30",
+      "adminName": "hemi Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "WBTC",
+          "valueUsd": 598381.8,
+          "amount": 6.79,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "cbBTC",
+          "valueUsd": 84217.95,
+          "amount": 0.95,
+          "issuer": "Coinbase",
+          "source": "canonical"
+        },
+        {
+          "symbol": "XAUt",
+          "valueUsd": 67477.07,
+          "amount": 13.29,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 1169.58,
+          "amount": 0.35,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 46.2,
+          "amount": 46.21,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 10.58,
+          "amount": 0.07,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FRAX.legacy",
+          "valueUsd": 4.97,
+          "amount": 5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "MKR",
+          "valueUsd": 3.3,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 2.4,
+          "amount": 0.2,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 2.36,
+          "amount": 0.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "tBTC",
+          "valueUsd": 1.75,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "rsETH",
+          "valueUsd": 1.59,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 1.08,
+          "amount": 3.58,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 0.95,
+          "amount": 0.04,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 751321.5799999998,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 5789385.080000001,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 5789385.08,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 5789385.08,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 5789385.080000001,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

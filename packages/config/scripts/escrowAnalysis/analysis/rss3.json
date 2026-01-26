@@ -1,0 +1,75 @@
+{
+  "projectId": "rss3",
+  "timestamp": 1769460815738,
+  "escrows": [
+    {
+      "address": "eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by rss3 Governance",
+      "admin": "eth:0x1075B29e5F7a911128C77F3989702E150C988904",
+      "adminName": "rss3 Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "RSS3",
+          "valueUsd": 6331395.5,
+          "amount": 496850940,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 2766.78,
+          "amount": 0.94,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 1127.1,
+          "amount": 1127.43,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 283.62,
+          "amount": 283.89,
+          "issuer": "Tether",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 6335573,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 6335573,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 6335573,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 6335573,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 6335573,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

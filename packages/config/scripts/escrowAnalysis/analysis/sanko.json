@@ -1,0 +1,120 @@
+{
+  "projectId": "sanko",
+  "timestamp": 1769460222141,
+  "escrows": [
+    {
+      "address": "arb1:0x2f285781B8d58678a3483de52D618198E4d27532",
+      "name": "Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "DMT",
+          "valueUsd": 2483822.5,
+          "amount": 546232.75,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 2483822.5,
+      "source": "canonical",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    },
+    {
+      "address": "arb1:0xb4951c0C41CFceB0D195A95FE66280457A80a990",
+      "name": "ERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Rollup Governance",
+      "admin": "arb1:0xd18b1C6376633000c85541F7c15c591Ffe5f9556",
+      "adminName": "Rollup Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 59242.02,
+          "amount": 59259.62,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 27041.73,
+          "amount": 9.23,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "wBTC",
+          "valueUsd": 51.41,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BOOP",
+          "valueUsd": 14.62,
+          "amount": 2038438.4,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ARB",
+          "valueUsd": 9.51,
+          "amount": 55.77,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "GRAIL",
+          "valueUsd": 0.22,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SOL",
+          "valueUsd": 0.22,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 86359.73,
+      "source": "canonical",
+      "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 2621799.8700000006,
+    "nativeTvl": 51617.64,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 2570182.23,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 2570182.23,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 2570182.2300000004,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

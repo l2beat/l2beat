@@ -1,0 +1,78 @@
+{
+  "projectId": "r0ar",
+  "timestamp": 1769460812047,
+  "escrows": [
+    {
+      "address": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+      "name": "OptimismPortal",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by r0ar Governance",
+      "admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+      "adminName": "r0ar Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 29566.1,
+          "amount": 10.09,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 29566.1,
+      "source": "canonical",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    },
+    {
+      "address": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by r0ar Governance",
+      "admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+      "adminName": "r0ar Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 16196.19,
+          "amount": 16201,
+          "issuer": "Circle",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 16196.19,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 45762.29,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 45762.29,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 45762.29,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 45762.29,
+    "apiExternalTvl": 0
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

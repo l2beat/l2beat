@@ -1,0 +1,422 @@
+{
+  "projectId": "unichain",
+  "timestamp": 1769460883911,
+  "escrows": [
+    {
+      "address": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by unichain Governance",
+      "admin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
+      "adminName": "unichain Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 86605130,
+          "amount": 29552.71,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 86605130,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+    },
+    {
+      "address": "eth:0x08bA0023eD60C7Bd040716dD13C45fA0062df5C5",
+      "name": "ETHLockbox",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by unichain Governance",
+      "admin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
+      "adminName": "unichain Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "A simple escrow contract storing ETH for the canonical bridge."
+    },
+    {
+      "address": "eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+      "name": "Escrow",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (MakerDAO)",
+      "admin": "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+      "adminName": "MakerDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDS",
+          "valueUsd": 7450983,
+          "amount": 100001010,
+          "issuer": "MakerDAO",
+          "source": "external"
+        },
+        {
+          "symbol": "sUSDS",
+          "valueUsd": 2549337.8,
+          "amount": 94897184,
+          "issuer": "MakerDAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 10000320.8,
+      "source": "canonical",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    },
+    {
+      "address": "eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",
+      "name": "L1ERC20TokenBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 3715325.2,
+          "amount": 1035.38,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 3715325.2,
+      "source": "canonical",
+      "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally."
+    },
+    {
+      "address": "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by unichain Governance",
+      "admin": "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
+      "adminName": "unichain Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "UNI",
+          "valueUsd": 2670570,
+          "amount": 565404.06,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 2096521,
+          "amount": 23.8,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 102366.21,
+          "amount": 102464.16,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 55659.08,
+          "amount": 2338.15,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 45054.49,
+          "amount": 45069.13,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 43032.31,
+          "amount": 12.7,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 2195.21,
+          "amount": 14.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 354.59,
+          "amount": 0.12,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 244.97,
+          "amount": 20.44,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ENS",
+          "valueUsd": 13.44,
+          "amount": 1.51,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LDO",
+          "valueUsd": 7.11,
+          "amount": 13.75,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ZRX",
+          "valueUsd": 6.6,
+          "amount": 49.76,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "wstETH",
+          "valueUsd": 5.02,
+          "amount": 0,
+          "issuer": "Lido DAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "GRT",
+          "valueUsd": 3.56,
+          "amount": 98.6,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DENT",
+          "valueUsd": 1.5,
+          "amount": 8000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "OCEAN",
+          "valueUsd": 1.05,
+          "amount": 7.26,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 5016036.139999999,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "l2Address": "0x9151434b16b9763660705744891fA906F660EcC5",
+      "valueUsd": 29231948,
+      "amount": 29251066,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC",
+      "name": "USDC",
+      "l2Address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "valueUsd": 24370746,
+      "amount": 39378900,
+      "bridgeProtocol": "Circle CCTP",
+      "issuer": "Circle",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Circle operates both the token and the bridge",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Circle",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over USDC - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+      "valueUsd": 15043053,
+      "amount": 4726.02,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "l2Address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "valueUsd": 12225734,
+      "amount": 138.8,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "BitGo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "kBTC",
+      "name": "Kraken Wrapped Bitcoin",
+      "l2Address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "valueUsd": 2642545.2,
+      "amount": 30,
+      "bridgeProtocol": "Kraken EOA",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Kraken EOA (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "HYPE",
+      "name": "HYPE",
+      "l2Address": "0x15D0e0c55a3E7eE67152aD7E89acf164253Ff68d",
+      "valueUsd": 2008343.2,
+      "amount": 83193.79,
+      "bridgeProtocol": "Wormhole NTT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Wormhole NTT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0xc3eACf0612346366Db554C991D7858716db09f58",
+      "valueUsd": 1827241.1,
+      "amount": 586.65,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "l2Address": "0xbdE8A5331E8Ac4831cf8ea9e42e229219EafaB97",
+      "valueUsd": 1528028.6,
+      "amount": 12246.64,
+      "bridgeProtocol": "Wormhole Token Bridge",
+      "issuer": "Solana/Wormhole",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Wormhole Token Bridge (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 889695.5,
+      "amount": 284.63,
+      "bridgeProtocol": "Hyperlane (xERC-20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (xERC-20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 195178341.61000004,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 105336812.14,
+      "canonicalAdditionalTrust": 0,
+      "external": 89767334.6
+    },
+    "externalBreakdown": {
+      "issuerSecured": 24370746,
+      "additionalTrust": 65396588.60000001
+    },
+    "canonicalTvl": 105336812.14,
+    "externalTvl": 89767334.6,
+    "apiCanonicalTvl": 91621166.13999997,
+    "apiExternalTvl": 103557175.47
+  },
+  "externalTokensSummary": {
+    "totalCount": 9,
+    "totalValue": 89767334.6,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 4,
+        "value": 58327976.1
+      },
+      "Circle CCTP": {
+        "count": 1,
+        "value": 24370746
+      },
+      "Kraken EOA": {
+        "count": 1,
+        "value": 2642545.2
+      },
+      "Wormhole NTT": {
+        "count": 1,
+        "value": 2008343.2
+      },
+      "Wormhole Token Bridge": {
+        "count": 1,
+        "value": 1528028.6
+      },
+      "Hyperlane (xERC-20)": {
+        "count": 1,
+        "value": 889695.5
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 9,
+        "value": 89767334.6
+      }
+    }
+  }
+}

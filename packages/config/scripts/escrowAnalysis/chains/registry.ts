@@ -19,6 +19,7 @@ export interface ChainInfo {
   hostChain: string // 'ethereum' for L2s, or parent chain for L3s
   hasDiscovery: boolean
   hasTvsConfig: boolean
+  isArchived: boolean
 }
 
 interface DiscoveryJson {
@@ -148,6 +149,34 @@ function hasTvsConfig(projectId: string): boolean {
 }
 
 /**
+ * Check if a project is archived by looking for archivedAt in its config files
+ */
+function isProjectArchived(projectId: string): boolean {
+  const projectDir = join(PROJECTS_DIR, projectId)
+
+  // Check common config file patterns
+  const configFiles = [
+    join(projectDir, `${projectId}.ts`),
+    join(projectDir, 'index.ts'),
+  ]
+
+  for (const configFile of configFiles) {
+    if (existsSync(configFile)) {
+      try {
+        const content = readFileSync(configFile, 'utf-8')
+        if (content.includes('archivedAt:') || content.includes('archivedAt :')) {
+          return true
+        }
+      } catch {
+        // Ignore read errors
+      }
+    }
+  }
+
+  return false
+}
+
+/**
  * Build the chain registry by scanning all projects
  */
 export function buildChainRegistry(): Map<string, ChainInfo> {
@@ -168,6 +197,7 @@ export function buildChainRegistry(): Map<string, ChainInfo> {
       hostChain,
       hasDiscovery: true,
       hasTvsConfig: hasTvsConfig(projectId),
+      isArchived: isProjectArchived(projectId),
     })
   }
 
@@ -175,13 +205,23 @@ export function buildChainRegistry(): Map<string, ChainInfo> {
 }
 
 /**
- * Get all chains of a specific stack
+ * Get all chains of a specific stack (excludes archived by default)
  */
 export function getChainsByStack(
   registry: Map<string, ChainInfo>,
   stack: ChainStack,
+  includeArchived = false,
 ): ChainInfo[] {
-  return Array.from(registry.values()).filter((chain) => chain.stack === stack)
+  return Array.from(registry.values()).filter(
+    (chain) => chain.stack === stack && (includeArchived || !chain.isArchived)
+  )
+}
+
+/**
+ * Get all active (non-archived) chains
+ */
+export function getActiveChains(registry: Map<string, ChainInfo>): ChainInfo[] {
+  return Array.from(registry.values()).filter((chain) => !chain.isArchived)
 }
 
 /**

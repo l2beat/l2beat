@@ -1,0 +1,251 @@
+{
+  "projectId": "mode",
+  "timestamp": 1769460748280,
+  "escrows": [
+    {
+      "address": "eth:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by mode Governance",
+      "admin": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7",
+      "adminName": "mode Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 6979422.5,
+          "amount": 2381.62,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 6979422.5,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+    },
+    {
+      "address": "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by mode Governance",
+      "admin": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7",
+      "adminName": "mode Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 883856.94,
+          "amount": 884119.56,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 417084.97,
+          "amount": 417484.1,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 278549.34,
+          "amount": 3.16,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 71675.31,
+          "amount": 22.52,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "OLAS",
+          "valueUsd": 47749.17,
+          "amount": 870962,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "cSTONE",
+          "valueUsd": 39538.64,
+          "amount": 12.89,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ankrETH",
+          "valueUsd": 3521.49,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DOLA",
+          "valueUsd": 428.63,
+          "amount": 429.48,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 116.47,
+          "amount": 116.51,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 38.51,
+          "amount": 0.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 0.97,
+          "amount": 0.08,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 0.01,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 1742560.4499999997,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "M-BTC",
+      "name": "Merlin BTC",
+      "l2Address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
+      "valueUsd": 86800080,
+      "amount": 991.55,
+      "bridgeProtocol": "Free.tech Bridge (Meson)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Free.tech Bridge (Meson) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 2015619.6,
+      "amount": 644.83,
+      "bridgeProtocol": "Connext (xERC20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Connext (xERC20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "l2Address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "valueUsd": 200303.62,
+      "amount": 2.27,
+      "bridgeProtocol": "Free.tech Bridge (Meson)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Free.tech Bridge (Meson) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "weETH.mode",
+      "name": "Wrapped eETH",
+      "l2Address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "valueUsd": 171700.62,
+      "amount": 53.94,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 99886410.76,
+    "nativeTvl": 1809960.9,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 8721982.95,
+      "canonicalAdditionalTrust": 0,
+      "external": 89187703.84
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 89187703.84
+    },
+    "canonicalTvl": 8721982.95,
+    "externalTvl": 89187703.84,
+    "apiCanonicalTvl": 8721982.950000003,
+    "apiExternalTvl": 89354466.91
+  },
+  "externalTokensSummary": {
+    "totalCount": 4,
+    "totalValue": 89187703.84,
+    "byProtocol": {
+      "Free.tech Bridge (Meson)": {
+        "count": 2,
+        "value": 87000383.62
+      },
+      "Connext (xERC20)": {
+        "count": 1,
+        "value": 2015619.6
+      },
+      "Layer Zero": {
+        "count": 1,
+        "value": 171700.62
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 4,
+        "value": 89187703.84
+      }
+    }
+  }
+}

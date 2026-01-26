@@ -1,0 +1,144 @@
+{
+  "projectId": "ink",
+  "timestamp": 1769461422618,
+  "escrows": [
+    {
+      "address": "eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
+      "name": "OptimismPortal2",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by ink Governance",
+      "admin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
+      "adminName": "ink Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 95415816,
+          "amount": 32559.23,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 95415816,
+      "source": "canonical",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+    },
+    {
+      "address": "eth:0xbd4AbB321138e8Eddc399cE64E66451294325a14",
+      "name": "ETHLockbox",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by ink Governance",
+      "admin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
+      "adminName": "ink Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "A simple escrow contract storing ETH for the canonical bridge."
+    },
+    {
+      "address": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+      "name": "L1StandardBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by ink Governance",
+      "admin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
+      "adminName": "ink Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "crvUSD",
+          "valueUsd": 1,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 0.36,
+          "amount": 1,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 1.3599999999999999,
+      "source": "canonical",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "kBTC",
+      "name": "Kraken Wrapped Bitcoin",
+      "l2Address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "valueUsd": 267319230,
+      "amount": 3034.8,
+      "bridgeProtocol": "Kraken EOA",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Kraken EOA (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "l2Address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+      "valueUsd": 231629180,
+      "amount": 231780670,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 594364227.36,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 95415817.36,
+      "canonicalAdditionalTrust": 0,
+      "external": 498948410
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 498948410
+    },
+    "canonicalTvl": 95415817.36,
+    "externalTvl": 498948410,
+    "apiCanonicalTvl": 95415817.36,
+    "apiExternalTvl": 498948410
+  },
+  "externalTokensSummary": {
+    "totalCount": 2,
+    "totalValue": 498948410,
+    "byProtocol": {
+      "Kraken EOA": {
+        "count": 1,
+        "value": 267319230
+      },
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 231629180
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 2,
+        "value": 498948410
+      }
+    }
+  }
+}
