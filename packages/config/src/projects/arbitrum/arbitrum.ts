@@ -384,6 +384,13 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Activate ArbOS 51 (Dia) and Gas Pricing Updates',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/53154361738756237993090798888616593723057470462495169047773178676976253908001?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2026-01-05T00:00:00Z',
+      description: 'Arbitrum One upgraded to ArbOS 51, introducing Fusaka EVM features and updated L2 gas pricing.',
+      type: 'general',
+    },
+    {
       title: 'ArbOS 40, Callisto Upgrade',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/13108804573775967668959825241666341617107666532012387058509418598838035461528?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2025-06-18T00:00:00Z',

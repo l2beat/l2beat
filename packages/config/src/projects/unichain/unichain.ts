@@ -104,11 +104,27 @@ export const unichain: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'UNIfication proposal executed',
+      url: 'https://www.tally.xyz/gov/uniswap/proposal/93',
+      description:
+        'Uniswap governance executed the UNIfication proposal, enabling protocol fees, burning 100M UNI, and routing Unichain sequencer fees into a UNI burn mechanism.',
+      date: '2025-12-27T00:00:00Z',
+      type: 'general',
+    },
+    {
       title: 'Unichain flashblocks are live',
       url: 'https://blog.uniswap.org/flashblocks-are-live',
       description:
         'Unichain hits 200ms sub-blocks inside Trusted Execution Environments.',
       date: '2025-08-14T00:00:00Z',
+      type: 'general',
+    },
+    {
+      title: 'TEE-based block building & fair ordering',
+      url: 'https://blog.uniswap.org/rollup-boost-is-live-on-unichain',
+      description:
+        'Unichain implements block building in TEE with MEV protection and fair ordering.',
+      date: '2025-05-01T00:00:00Z',
       type: 'general',
     },
     {

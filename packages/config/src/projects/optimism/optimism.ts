@@ -283,6 +283,14 @@ export const optimism: ScalingProject = opStackL2({
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
+      title: 'Upgrade 17 - Jovian Hardfork and Fusaka Readiness',
+      url: 'https://vote.optimism.io/proposals/3118571676657709551286937570456546163542507117143005939043790253732885172699',
+      date: '2025-11-25T00:00:00Z',
+      description:
+        'A protocol upgrade that improves fee mechanisms and ensures OP Stack readiness for the Fusaka Ethereum hardfork.',
+      type: 'general',
+    },
+    {
       title: 'Upgrade #16 Interop Contracts + Upgrades to Cannon',
       url: 'https://vote.optimism.io/proposals/42233809968417684816035432917226202543057967150073565253597304573923844823222',
       date: '2025-07-14T00:00:00Z',
