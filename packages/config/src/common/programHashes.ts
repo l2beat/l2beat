@@ -944,18 +944,18 @@ Verify:
     title: 'ArbOS v40 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v40/arbos',
-    //     verificationSteps: `
-    // Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+        verificationSteps: `
+L2BEAT team was able to independently regenerate this program hash. However currently the following steps for hash regeneration produce an error, so the process could not be independently verified.
 
-    // 1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
-    // 2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v40\` . Commit hash should be  \`37ae61f20f8efdbc7e2f6af7f21c309bc09086a1\`.
-    // 3. Update git submodules \`git submodule update --init --recursive --force\`.
-    // 4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
-    // 5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
-    //         `,
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v40\` . Commit hash should be  \`37ae61f20f8efdbc7e2f6af7f21c309bc09086a1\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`. Currently this step fails with an error.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+      `,
   },
   '0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499': {
     title: 'ArbOS v51 wasmModuleRoot',
