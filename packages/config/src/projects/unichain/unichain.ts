@@ -107,7 +107,7 @@ export const unichain: ScalingProject = opStackL2({
       title: 'UNIfication proposal executed',
       url: 'https://www.tally.xyz/gov/uniswap/proposal/93',
       description:
-        'Uniswap governance executed the UNIfication proposal, enabling protocol fees, burning 100M UNI, and routing Unichain sequencer fees into a UNI burn mechanism.',
+        'Uniswap governance enabled protocol fees, burned 100M UNI, and routed Unichain fees to UNI burn.',
       date: '2025-12-27T00:00:00Z',
       type: 'general',
     },

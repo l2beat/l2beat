@@ -648,7 +648,7 @@ export const scroll: ScalingProject = {
       url: 'https://gov.scroll.io/proposals/72907322044331380548190357610154468026012921395152333929550231764240959817459',
       date: '2025-12-04T00:00:00Z',
       description:
-        'A core protocol upgrade improving sequencer efficiency and prover performance, updating Scroll for Ethereum’s upcoming Fusaka changes, and introducing a more accurate rollup fee model.',
+        'A core protocol upgrade improving sequencer efficiency, prover performance, and rollup fee accuracy.',
       type: 'general',
     },
     {

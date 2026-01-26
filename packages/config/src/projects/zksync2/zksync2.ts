@@ -530,7 +530,7 @@ export const zksync2: ScalingProject = zkStackL2({
       url: 'https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
       date: '2025-10-06T00:00:00Z',
       description:
-        'A protocol upgrade introducing native interop messaging, enabling trustless cross-chain communication between ZKsync Chains via the ZKsync Gateway.',
+        'A protocol upgrade introducing native interop messaging between ZKsync Chains.',
       type: 'general',
     },
     {
@@ -578,7 +578,7 @@ export const zksync2: ScalingProject = zkStackL2({
       url: 'https://www.tally.xyz/gov/zksync/proposal/67712324710515983914473127418805437707715095849437613773846173900686148862581?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
       date: '2025-02-27T00:00:00Z',
       description:
-        'A foundational upgrade enabling custom settlement layers, custom DA, and a new asset routing architecture in preparation for ZK Gateway integration.',
+        'A foundational upgrade enabling custom settlement layers, custom DA, and new asset routing.',
       type: 'general',
     },
     {
@@ -586,7 +586,7 @@ export const zksync2: ScalingProject = zkStackL2({
       url: 'https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
       date: '2024-12-27T00:00:00Z',
       description:
-        'A protocol defense upgrade focused on code quality improvements, gas optimizations, and internal protocol hardening, serving as a stability baseline for subsequent major upgrades in 2025.',
+        'A protocol hardening upgrade improving code quality, gas efficiency, and internal stability.',
       type: 'general',
     },
     {

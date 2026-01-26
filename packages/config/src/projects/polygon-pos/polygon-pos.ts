@@ -374,8 +374,7 @@ export const polygonpos: ScalingProject = {
       title: 'Matic rebrands to Polygon',
       url: 'https://polygon.technology/blog/matic-network-becomes-polygon-ethereums-internet-of-blockchains-expands-mission-and-tech-scope',
       date: '2021-02-09T00:00:00Z',
-      description:
-        'Launch of the Polygon Proof-of-Stake chain.',
+      description:'Launch of the Polygon Proof-of-Stake chain.',
       type: 'general',
     },
   ],
