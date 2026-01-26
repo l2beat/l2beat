@@ -1158,7 +1158,7 @@
         "tx": "0x8ef0607d6c78f3a681ec41cf2fbeadc178b7b39eb46911ac902ecb1b0d83225a"
       }
     ],
-    "events": ["across-settlement.RelayedMessageOrbit"],
+    "events": ["across-settlement.MessageRelayed"],
     "messages": [
       { "type": "orbitstack.L1ToL2Message", "app": "across-settlement" }
     ]
@@ -1633,28 +1633,28 @@
     ],
     "events": [
       // dai deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositInitiated",
       "orbitstack-customgateway.DepositFinalized",
       // dai withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized",
       // lpt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositInitiated",
       "orbitstack-customgateway.DepositFinalized",
       // lpt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized",
       // grt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositInitiated",
       "orbitstack-customgateway.DepositFinalized",
       // grt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized",
       // wsteth deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+      "orbitstack-customgateway.DepositInitiated",
       "orbitstack-customgateway.DepositFinalized",
       // wsteth withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+      "orbitstack-customgateway.WithdrawalInitiated",
       "orbitstack-customgateway.WithdrawalFinalized"
     ],
     "messages": [

@@ -1,8 +1,4 @@
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   MessageDelivered,
   ORBITSTACK_NETWORKS,
@@ -12,46 +8,69 @@ import {
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
+// == Event signatures ==
+
+const messageRelayedLog =
+  'event MessageRelayed(address target, bytes message)'
+const messageDeliveredLog =
+  'event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)'
+
 // Across HubPool address on Ethereum
-const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
+const HUB_POOL = ChainSpecificAddress(
+  'eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda',
+)
 
 // Build lookup map from bridge address to network (OrbitStack)
 const ORBIT_BRIDGE_TO_NETWORK = new Map(
-  ORBITSTACK_NETWORKS.map((n) => [n.bridge.toString(), n]),
+  ORBITSTACK_NETWORKS.map((n) => [
+    ChainSpecificAddress.address(n.bridge).toString(),
+    n,
+  ]),
 )
 
-// L1 event: MessageRelayed from HubPool + MessageDelivered combined (OrbitStack)
-// Keep msgHash for OrbitStack as it needs messageNum for matching
-const AcrossSettlementRelayedMessageOrbit = createInteropEventType<{
+// L1 event: MessageRelayed from Across HubPool
+const MessageRelayed = createInteropEventType<{
   chain: string
-  messageNum: string
-}>('across-settlement.RelayedMessageOrbit')
+}>('across-settlement.MessageRelayed')
 
 // Event parser for MessageRelayed from HubPool
-const parseMessageRelayed = createEventParser(
-  'event MessageRelayed(address target, bytes message)',
-)
+const parseMessageRelayed = createEventParser(messageRelayedLog)
 
-export class AcrossSettlementOrbitPlugin implements InteropPlugin {
+export class AcrossSettlementOrbitPlugin implements InteropPluginResyncable {
   readonly name = 'across-settlement-orbit'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      // L1: MessageRelayed from Across HubPool (with MessageDelivered to identify OrbitStack)
+      {
+        type: 'event',
+        signature: messageRelayedLog,
+        includeTxEvents: [messageDeliveredLog],
+        addresses: [HUB_POOL],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1: Capture MessageRelayed from HubPool
-      const messageRelayed = parseMessageRelayed(input.log, [HUB_POOL])
+      const messageRelayed = parseMessageRelayed(input.log, [
+        ChainSpecificAddress.address(HUB_POOL),
+      ])
       if (messageRelayed) {
         const currentLogIndex = input.log.logIndex ?? -1
 
         // The bridge event (MessageDelivered) is always at logIndex - 2
-        // Pattern: MessageDelivered (N-2) -> InboxMessageDelivered (N-1) -> MessageRelayed (N)
+        // Pattern: MessageDelivered (N-2) → InboxMessageDelivered (N-1) → MessageRelayed (N)
         const bridgeLog = input.txLogs.find(
           (log) => log.logIndex === currentLogIndex - 2,
         )
@@ -66,9 +85,8 @@ export class AcrossSettlementOrbitPlugin implements InteropPlugin {
           if (!messageDelivered) return
 
           return [
-            AcrossSettlementRelayedMessageOrbit.create(input, {
+            MessageRelayed.create(input, {
               chain: orbitNetwork.chain,
-              messageNum: messageDelivered.messageIndex.toString(),
             }),
           ]
         }
@@ -82,19 +100,19 @@ export class AcrossSettlementOrbitPlugin implements InteropPlugin {
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (RedeemScheduled.checkType(event)) {
-      // Check if there's a corresponding AcrossSettlementRelayedMessageOrbit
-      const acrossEvent = db.find(AcrossSettlementRelayedMessageOrbit, {
-        messageNum: event.args.messageNum,
-        chain: event.args.chain,
-      })
-      if (!acrossEvent) return
-
-      // Also find underlying OrbitStack MessageDelivered
+      // Find underlying OrbitStack MessageDelivered by messageNum
       const messageDelivered = db.find(MessageDelivered, {
         messageNum: event.args.messageNum,
         chain: event.args.chain,
       })
       if (!messageDelivered) return
+
+      // L1: MessageDelivered (N) → InboxMessageDelivered (N+1) → MessageRelayed (N+2)
+      const acrossEvent = db.find(MessageRelayed, {
+        sameTxAtOffset: { event: messageDelivered, offset: 2 },
+        chain: event.args.chain,
+      })
+      if (!acrossEvent) return
 
       const results: MatchResult = [
         Result.Message('orbitstack.L1ToL2Message', {
