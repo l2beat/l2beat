@@ -1,8 +1,10 @@
-name: Deploy tvs stage
+name: Deploy TVS stage
 
 concurrency:
   group: tvs-deployment-stage
-permissions: {}
+permissions:
+  contents: read
+  packages: write
 
 on:
   workflow_dispatch: {}
@@ -11,41 +13,53 @@ on:
       - main
 
 jobs:
-  deploy-tvs:
-    name: Deploy tvs
+  check-changes:
+    name: Check for changes
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    outputs:
+      should_deploy: ${{ steps.check.outputs.should_deploy }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
         with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
-      - name: Build and publish containers
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check if package changed
+        id: check
         run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${TAG} -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: Dockerfile.backend
-          TAG: registry.heroku.com/${{ secrets.HEROKU_TVS_STAGING }}/web
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published container
-        run: |
-          heroku container:release -a ${{ secrets.HEROKU_TVS_STAGING }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+          if npx turbo-ignore @l2beat/backend --fallback=HEAD~1; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+            echo "✓ Backend package changed, will deploy TVS"
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+            echo "✗ Backend package unchanged, skipping TVS deployment"
+          fi
+
+  deploy:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-deploy-coolify.yml
+    with:
+      package: tvs
+      dockerfile: Dockerfile.backend
+      environment: staging
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TVS_STAGING_ID }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}

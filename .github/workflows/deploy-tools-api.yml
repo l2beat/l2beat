@@ -1,8 +1,10 @@
-name: Deploy Tools API
+name: Deploy tools-api
 
 concurrency:
   group: tools-api-deployment
-permissions: {}
+permissions:
+  contents: read
+  packages: write
 
 on:
   workflow_dispatch: {}
@@ -11,41 +13,53 @@ on:
       - main
 
 jobs:
-  deploy-tools-api:
-    name: Deploy Tools API
+  check-changes:
+    name: Check for changes
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    outputs:
+      should_deploy: ${{ steps.check.outputs.should_deploy }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
         with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
-      - name: Build and publish containers
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check if package changed
+        id: check
         run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${TAG} -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: Dockerfile.toolsapi
-          TAG: registry.heroku.com/${{ secrets.HEROKU_TOOLS_API }}/web
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published container
-        run: |
-          heroku container:release -a ${{ secrets.HEROKU_TOOLS_API }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+          if npx turbo-ignore @l2beat/tools-api --fallback=HEAD~1; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+            echo "✓ Tools API package changed, will deploy"
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+            echo "✗ Tools API package unchanged, skipping deployment"
+          fi
+
+  deploy:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-deploy-coolify.yml
+    with:
+      package: tools-api
+      dockerfile: Dockerfile.toolsapi
+      environment: production
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TOOLS_API_ID }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}

@@ -37,12 +37,6 @@ RUN mkdir /dist/ && \
 
 FROM node:22-slim as release
 WORKDIR /app/
-RUN apt update && \
-  apt install -y openssh-server curl bash iproute2 jq && \
-  apt clean && \
-  rm -rf /var/lib/apt/lists/*
 COPY --from=builder /src/ .
 COPY --from=builder /dist/difft /usr/local/bin/difft
-COPY docker/.profile.d .profile.d
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 CMD cd packages/token-backend && node build/server.js

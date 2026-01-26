@@ -28,12 +28,6 @@ RUN pnpm build:frontend
 
 FROM node:22-slim AS release
 WORKDIR /app/
-RUN apt update && \
-  apt install -y openssh-server curl bash iproute2 jq && \
-  apt clean && \
-  rm -rf /var/lib/apt/lists/*
 COPY --from=builder /src/ .
-COPY docker/.profile.d .profile.d
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /app/packages/frontend/
 CMD node ./dist/server/index.js

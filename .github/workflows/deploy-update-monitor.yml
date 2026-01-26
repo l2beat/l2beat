@@ -28,19 +28,11 @@ jobs:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Install and setup Coolify CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
           coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
           coolify context use l2beat
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
-        with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -52,13 +44,10 @@ jobs:
           docker build --push \
             --build-arg TURBO_TEAM=${TURBO_TEAM} \
             --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${TAG_DEV} -t ${TAG_PROD} \
             -t ${GH_TAG_LATEST} -t ${GH_TAG_SHA} \
             -f ${DOCKERFILE} .
         env:
           DOCKERFILE: Dockerfile.backend
-          TAG_DEV: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_DEV }}/web
-          TAG_PROD: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_PROD }}/web
           GH_TAG_LATEST: ghcr.io/${{ github.repository }}/update-monitor:latest
           GH_TAG_SHA: ghcr.io/${{ github.repository }}/update-monitor:${{ github.sha }}
           TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -68,11 +57,3 @@ jobs:
           set -ex
           coolify deploy uuid ${{ secrets.COOLIFY_UM_STAGING_ID }}
           coolify deploy uuid ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
-      - name: Release published containers (heroku)
-        run: |
-          set -ex
-          heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_DEV }} -v web
-          heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_PROD }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
