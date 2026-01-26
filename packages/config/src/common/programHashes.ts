@@ -1039,6 +1039,35 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
     verificationStatus: 'notVerified',
   },
+  '0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa': {
+    title: 'OP Kona absolute prestate v1.2.7 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/d181d5b197665df9b5efd66e4f76f09adf5c697f/kona',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install [just](https://just.systems).
+2. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+3. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout d181d5b197665df9b5efd66e4f76f09adf5c697f\`.
+4. Got to kona dir \`cd kona\` and run \`just build-cannon-prestate\`. This script will regenerate kona absolute prestate and create \`kona/prestates/<hash>.bin.gz\` file, where \`<hash>\` is the resulting absolute prestate.
+    `,
+  },
+  '0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e': {
+    title: 'OP absolute prestate v1.9.0 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.9.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.9.0-rc.1\` . Commit hash should be  \`a0c621361db5b5a6dcb60fd8943d485672a076b0\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
   '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
     title: 'OP absolute prestate v1.6.0 (cannon64)',
     description:
