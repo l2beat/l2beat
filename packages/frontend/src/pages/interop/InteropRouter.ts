@@ -9,7 +9,8 @@ import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData
 import { getInteropOmnichainData } from './omnichain/getInteropOmnichainData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
-const fromToQuerySchema = v.object({
+export type FromToQuery = v.infer<typeof FromToQuery>
+const FromToQuery = v.object({
   from: v
     .string()
     .optional()
@@ -34,7 +35,7 @@ export function createInteropRouter(
   router.get(
     '/interop/summary',
     validateRoute({
-      query: fromToQuerySchema,
+      query: FromToQuery,
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
@@ -46,7 +47,7 @@ export function createInteropRouter(
   router.get(
     '/interop/non-minting',
     validateRoute({
-      query: fromToQuerySchema,
+      query: FromToQuery,
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
@@ -58,7 +59,7 @@ export function createInteropRouter(
   router.get(
     '/interop/lock-and-mint',
     validateRoute({
-      query: fromToQuerySchema,
+      query: FromToQuery,
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
@@ -70,7 +71,7 @@ export function createInteropRouter(
   router.get(
     '/interop/omnichain',
     validateRoute({
-      query: fromToQuerySchema,
+      query: FromToQuery,
     }),
     async (req, res) => {
       const data = await getInteropOmnichainData(req, manifest, cache)

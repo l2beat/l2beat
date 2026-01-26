@@ -6,17 +6,10 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import type { FromToQuery } from '../InteropRouter'
 
 export async function getInteropSummaryData(
-  req: Request<
-    unknown,
-    unknown,
-    unknown,
-    {
-      from?: string[]
-      to?: string[]
-    }
-  >,
+  req: Request<unknown, unknown, unknown, FromToQuery>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
