@@ -12,6 +12,7 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
+import { buildInteropUrl } from './buildInteropUrl'
 
 interface InteropSelectedChainsContextType {
   selectedChains: {
@@ -47,10 +48,7 @@ export function InteropSelectedChainsProvider({
   )
   const [selectedChains, setSelectedChains] = useState(initialSelectedChains)
 
-  // Debounce URL updates (500ms delay)
   const debouncedChains = useDebouncedValue(selectedChains, 500)
-
-  // Track if change came from popstate (to skip URL update)
   const skipNextUrlUpdate = useRef(false)
 
   // Sync debounced state to URL
@@ -60,24 +58,14 @@ export function InteropSelectedChainsProvider({
       return
     }
 
-    const params = new URLSearchParams(window.location.search)
-
-    if (debouncedChains.from.length < allChainIds.length) {
-      params.set('from', debouncedChains.from.join(','))
-    } else {
-      params.delete('from')
-    }
-
-    if (debouncedChains.to.length < allChainIds.length) {
-      params.set('to', debouncedChains.to.join(','))
-    } else {
-      params.delete('to')
-    }
-
-    const newUrl =
-      params.size > 0
-        ? `${window.location.pathname}?${params.toString()}`
-        : window.location.pathname
+    const newUrl = buildInteropUrl(
+      window.location.pathname,
+      {
+        from: debouncedChains.from,
+        to: debouncedChains.to,
+      },
+      allChainIds,
+    )
 
     const currentUrl = window.location.pathname + window.location.search
     if (newUrl !== currentUrl) {
@@ -85,7 +73,6 @@ export function InteropSelectedChainsProvider({
     }
   }, [debouncedChains, allChainIds])
 
-  // Listen for browser back/forward
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
     const params = new URLSearchParams(window.location.search)
