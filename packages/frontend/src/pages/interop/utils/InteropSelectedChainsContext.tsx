@@ -5,15 +5,21 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
+import { useEventListener } from '~/hooks/useEventListener'
+import { buildInteropUrl } from './buildInteropUrl'
 
 interface InteropSelectedChainsContextType {
   selectedChains: {
     from: string[]
     to: string[]
   }
+  allChainIds: string[]
   toggleFrom: (chainId: string) => void
   toggleTo: (chainId: string) => void
   reset: () => void
@@ -21,22 +27,59 @@ interface InteropSelectedChainsContextType {
   setPath: (paths: { from: string; to: string }) => void
 }
 
-const InteropSelectedChainsContext = createContext<
+export const InteropSelectedChainsContext = createContext<
   InteropSelectedChainsContextType | undefined
 >(undefined)
 
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChain[]
+  initialSelectedChains: { from: string[]; to: string[] }
 }
 
 export function InteropSelectedChainsProvider({
   children,
   interopChains,
+  initialSelectedChains,
 }: InteropSelectedChainsProviderProps) {
-  const [selectedChains, setSelectedChains] = useState({
-    from: interopChains.map((chain) => chain.id),
-    to: interopChains.map((chain) => chain.id),
+  const allChainIds = useMemo(
+    () => interopChains.map((c) => c.id),
+    [interopChains],
+  )
+  const [selectedChains, setSelectedChains] = useState(initialSelectedChains)
+
+  const debouncedChains = useDebouncedValue(selectedChains, 500)
+  const skipNextUrlUpdate = useRef(false)
+
+  // Sync debounced state to URL
+  useEffect(() => {
+    if (skipNextUrlUpdate.current) {
+      skipNextUrlUpdate.current = false
+      return
+    }
+
+    const newUrl = buildInteropUrl(
+      window.location.pathname,
+      {
+        from: debouncedChains.from,
+        to: debouncedChains.to,
+      },
+      allChainIds,
+    )
+
+    const currentUrl = window.location.pathname + window.location.search
+    if (newUrl !== currentUrl) {
+      window.history.pushState({}, '', newUrl)
+    }
+  }, [debouncedChains, allChainIds])
+
+  useEventListener('popstate', () => {
+    skipNextUrlUpdate.current = true
+    const params = new URLSearchParams(window.location.search)
+    setSelectedChains({
+      from: parseChainIdsFromUrl(params.get('from'), allChainIds),
+      to: parseChainIdsFromUrl(params.get('to'), allChainIds),
+    })
   })
 
   const toggleFrom = useCallback((chainId: string) => {
@@ -55,17 +98,17 @@ export function InteropSelectedChainsProvider({
 
   const reset = useCallback(() => {
     setSelectedChains({
-      from: interopChains.map((chain) => chain.id),
-      to: interopChains.map((chain) => chain.id),
+      from: allChainIds,
+      to: allChainIds,
     })
-  }, [interopChains])
+  }, [allChainIds])
 
   const isDirty = useMemo(() => {
     return (
-      selectedChains.from.length !== interopChains.length ||
-      selectedChains.to.length !== interopChains.length
+      selectedChains.from.length !== allChainIds.length ||
+      selectedChains.to.length !== allChainIds.length
     )
-  }, [selectedChains, interopChains])
+  }, [selectedChains, allChainIds])
 
   const setPath = useCallback((paths: { from: string; to: string }) => {
     setSelectedChains({
@@ -76,11 +119,28 @@ export function InteropSelectedChainsProvider({
 
   return (
     <InteropSelectedChainsContext.Provider
-      value={{ selectedChains, toggleFrom, toggleTo, reset, isDirty, setPath }}
+      value={{
+        selectedChains,
+        allChainIds,
+        toggleFrom,
+        toggleTo,
+        reset,
+        isDirty,
+        setPath,
+      }}
     >
       {children}
     </InteropSelectedChainsContext.Provider>
   )
+}
+
+function parseChainIdsFromUrl(
+  param: string | null,
+  allChainIds: string[],
+): string[] {
+  if (!param) return allChainIds
+  const ids = param.split(',').filter((id) => allChainIds.includes(id))
+  return ids.length > 0 ? ids : allChainIds
 }
 
 export function useInteropSelectedChains() {

@@ -32,7 +32,7 @@ export const mantle: ScalingProject = opStackL2({
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
-        'https://twitter.com/0xMantle',
+        'https://x.com/Mantle_Official',
         'https://medium.com/0xmantle',
         'https://t.me/mantlenetwork',
       ],
@@ -190,17 +190,17 @@ export const mantle: ScalingProject = opStackL2({
   ],
   nonTemplateTechnology: {
     dataAvailability: {
-      name: 'Data is posted to EigenDA',
+      name: 'Data is posted to EigenDA and Ethereum blobs',
       description:
-        'Transactions roots are posted onchain and the full data is posted on EigenDA.  Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments. Mantle uses Hokulea, a Rust implementation that provides EigenDA blob derivation for OP stack chains.',
+        'Transaction data can be posted to both EigenDA and Ethereum blobs. Since the EigenDA ServiceManager bridge is not used, availability of the data posted to EigenDA is not verified against EigenDA operators, meaning that the Sequencer can publish unavailable EigenDA commitments. Mantle uses Hydro, a Go implementation that provides EigenDA blob derivation for OP stack chains.',
       references: [
         {
           url: 'https://docs.eigenda.xyz/overview',
           title: 'EigenDA Docs - Overview',
         },
         {
-          url: 'https://github.com/Layr-Labs/hokulea',
-          title: 'Hokulea - EigenDA blob derivation library',
+          url: 'https://github.com/mantle-xyz/hydro',
+          title: 'Hydro - EigenDA blob derivation library',
         },
         {
           title: 'Derivation: Batch submission - OP Mainnet specs',
@@ -215,6 +215,15 @@ export const mantle: ScalingProject = opStackL2({
         },
       ],
     },
+    otherConsiderations: [
+      {
+        name: 'Dual DA layer without onchain EigenDA verification',
+        description:
+          'Mantle can post transaction data to both EigenDA and Ethereum blobs. Should the sequencer post an EigenDA commitment to unavailable data, honest Mantle nodes would fail in the process of blob derivation and halt, refusing to process state updates. However, since there is no onchain proof system integration with the EigenDA verifier, the sequencer could potentially post unavailable data, collude with the state proposer, and still have a state root accepted onchain. This attack would put user funds at risk despite the offchain safety mechanism.',
+        references: [],
+        risks: [],
+      },
+    ],
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/succinctlabs/op-succinct/',

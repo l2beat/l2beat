@@ -624,9 +624,15 @@ function getProgramHashes(
 
   switch (fraudProofType) {
     case 'None':
-    case 'Permissioned':
-    case 'Permissionless':
       return []
+    case 'Permissioned':
+    case 'Permissionless': {
+      const absolutePrestate = templateVars.discovery.getContractValue<string>(
+        'PermissionedDisputeGame',
+        'absolutePrestate',
+      )
+      return [PROGRAM_HASHES(absolutePrestate)]
+    }
     case 'Kailua': {
       const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
         'KailuaTreasury',

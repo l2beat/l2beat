@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  FailedRelayedMessage,
   MessagePassed,
   RelayedMessage,
   SentMessage,
@@ -58,7 +59,7 @@ const WithdrawalBridgeInitiated = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
 }>('sky-bridge.WithdrawalBridgeInitiated', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 // L1 finalization: ERC20BridgeFinalized from Sky bridge
@@ -179,7 +180,11 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [DepositBridgeFinalized, WithdrawalBridgeFinalized]
+  matchTypes = [
+    DepositBridgeFinalized,
+    WithdrawalBridgeFinalized,
+    FailedRelayedMessage,
+  ]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
@@ -258,6 +263,30 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+        }),
+      ]
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      if (event.args.chain !== 'base') return
+
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: 'base',
+      })
+      if (!sentMessage) return
+
+      const depositBridgeInitiated = db.find(DepositBridgeInitiated, {
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
+      })
+      if (!depositBridgeInitiated) return
+
+      return [
+        Result.Message('opstack.L1ToL2MessageFailed', {
+          app: 'sky-bridge',
+          srcEvent: sentMessage,
+          dstEvent: event,
+          extraEvents: [depositBridgeInitiated],
         }),
       ]
     }

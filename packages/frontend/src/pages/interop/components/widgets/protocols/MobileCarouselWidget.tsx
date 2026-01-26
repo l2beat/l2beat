@@ -22,53 +22,38 @@ export function MobileCarouselWidget({
   const [view, setView] = useState<View>('paths')
 
   return (
-    <div className="relative max-md:mx-4 max-md:mb-4 max-md:h-[220px] md:max-[1024px]:h-[232px] min-[1600px]:hidden min-[1024px]:h-[213px]">
-      <div className="relative h-full">
+    <div className="relative max-md:mx-4 max-md:mb-4 max-[1024px]:min-h-[213px] min-[1600px]:hidden">
+      <div
+        className={cn(
+          'flex h-full gap-5 transition-transform duration-300 ease-in-out',
+          view === 'paths' && 'translate-x-0',
+          view === 'volume' &&
+            '-translate-x-[calc(100%+1.25rem)] min-[1024px]:-translate-x-0',
+          view === 'transfers' &&
+            '-translate-x-[calc(200%+2.5rem)] min-[1024px]:-translate-x-[calc(100%+1.25rem)]',
+        )}
+      >
         {/* Paths widget - only visible below 1024px */}
-        <WidgetWrapper
-          className={cn(
-            'min-[1024px]:hidden',
-            view === 'paths' && 'translate-x-0',
-            view === 'volume' && '-translate-x-[calc(100%+1.25rem)]',
-            view === 'transfers' && '-translate-x-[calc(200%+2.5rem)]',
-          )}
-        >
+        <div className="min-w-full flex-shrink-0 min-[1024px]:hidden">
           <TopPathsWidget
             interopChains={interopChains}
             top3Paths={top3Paths}
             isLoading={isLoading}
+            className="max-[1024px]:pb-8!"
           />
-        </WidgetWrapper>
-        <WidgetWrapper
-          className={cn(
-            // On >= 1024px, volume becomes first position since paths is hidden
-            // Disable transition to prevent animation during resize
-            view === 'paths' &&
-              'translate-x-[calc(100%+1.25rem)] min-[1024px]:translate-x-0 min-[1024px]:transition-none',
-            view === 'volume' && 'translate-x-0',
-            view === 'transfers' && '-translate-x-[calc(100%+1.25rem)]',
-          )}
-        >
+        </div>
+        <div className="min-w-full flex-shrink-0">
           <TopProtocolsByVolume
             topProtocols={topProtocols}
             isLoading={isLoading}
           />
-        </WidgetWrapper>
-        <WidgetWrapper
-          className={cn(
-            // On >= 1024px, transfers becomes second position since paths is hidden
-            // Disable transition to prevent animation during resize
-            view === 'paths' &&
-              'translate-x-[calc(200%+2.5rem)] min-[1024px]:translate-x-[calc(100%+1.25rem)] min-[1024px]:transition-none',
-            view === 'volume' && 'translate-x-[calc(100%+1.25rem)]',
-            view === 'transfers' && 'translate-x-0',
-          )}
-        >
+        </div>
+        <div className="min-w-full flex-shrink-0">
           <TopProtocolsByTransfers
             topProtocols={topProtocols}
             isLoading={isLoading}
           />
-        </WidgetWrapper>
+        </div>
       </div>
       <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">
         {/* Paths dot - only visible below 1024px */}
@@ -90,25 +75,6 @@ export function MobileCarouselWidget({
           dotClassName={view === 'transfers' ? 'bg-brand' : 'bg-secondary'}
         />
       </div>
-    </div>
-  )
-}
-
-function WidgetWrapper({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <div
-      className={cn(
-        'absolute inset-x-0 top-0 h-full w-full transition-transform duration-300 ease-in-out',
-        className,
-      )}
-    >
-      {children}
     </div>
   )
 }

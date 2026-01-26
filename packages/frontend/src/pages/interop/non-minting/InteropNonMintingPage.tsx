@@ -20,28 +20,33 @@ import { HeaderWithDescription } from './components/HeaderWithDescription'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  initialSelectedChains: { from: string[]; to: string[] }
 }
 
 export function InteropNonMintingPage({
   interopChains,
   queryState,
+  initialSelectedChains,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout maxWidth="wide">
-          <div className="max-md:hidden">
-            <HeaderWithDescription />
-          </div>
-          <InteropSelectedChainsProvider interopChains={interopChains}>
+        <InteropSelectedChainsProvider
+          interopChains={interopChains}
+          initialSelectedChains={initialSelectedChains}
+        >
+          <SideNavLayout maxWidth="wide">
+            <div className="max-md:hidden">
+              <HeaderWithDescription />
+            </div>
             <ChainSelector chains={interopChains} />
             <div className="md:hidden">
               <HeaderWithDescription />
             </div>
             <Widgets interopChains={interopChains} />
-          </InteropSelectedChainsProvider>
-        </SideNavLayout>
+          </SideNavLayout>
+        </InteropSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
   )

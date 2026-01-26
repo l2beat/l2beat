@@ -87,19 +87,6 @@ const averageDurationColumn = columnHelper.accessor(
   },
 )
 
-const tokenCountColumn = columnHelper.accessor((row) => row.tokens.length, {
-  header: 'Token\ncount',
-  cell: (ctx) => (
-    <div className="font-medium text-label-value-15">
-      {ctx.row.original.tokens.length}
-    </div>
-  ),
-  meta: {
-    align: 'right',
-    headClassName: 'text-2xs',
-  },
-})
-
 export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
@@ -116,7 +103,6 @@ export const lockAndMintColumns = [
 export const omniChainColumns = [
   ...commonColumns,
   last24hVolumeColumn,
-  tokenCountColumn,
   tokensByVolumeColumn,
 ]
 

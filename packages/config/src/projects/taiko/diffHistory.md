@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6f94a9ee932957b95b0b9da57bcde8e9f10ee03c
+
+# Diff at Mon, 26 Jan 2026 13:03:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999626
+- current timestamp: 1769432500
+
+## Description
+
+Operator removed, our event-based count shows 1 operator less.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xd3e142c02681a453d6962f4c40d6ba4ceefbc467
 
 # Diff at Wed, 21 Jan 2026 12:55:23 GMT:

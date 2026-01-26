@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x23e18f2b5d441f0d11e389024ea3e9e2f7bc0e9b
+
+# Diff at Mon, 26 Jan 2026 13:07:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1769000209
+- current timestamp: 1769432788
+
+## Description
+
+TGE proposal active after passing signaling by sequencers. voting will start soon, proposal will become executable on 9.2 and cause TGE on 11.2. as [explained here](https://forum.aztec.network/t/reference-for-triggering-the-aztec-token-generation-event-tge/8366).
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x07fa245479aa701d832a287655c12852208bc187
 
 # Diff at Wed, 21 Jan 2026 12:58:30 GMT:

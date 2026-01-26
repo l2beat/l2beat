@@ -643,53 +643,6 @@
     "messages": ["axelar.ContractCallMessage"],
     "transfers": ["axelar-its.Transfer"]
   },
-  "relay-simple-3": {
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0x8ff6c0aaf973cffb1f526bad1b6731127c46015f8fa5db619dc09e235b0628e1"
-      }
-    ]
-  },
-  "relay-simple": {
-    "txs": [
-      {
-        //0xce612511335c6342f0599cd373bd8534122647cb7cdebd75e67a01e08f00cf90
-        "chain": "ethereum",
-        "tx": "0x85ef54a114b1f94bb179f876917cea9f427a08d889ebc464add8f54d5786aed2"
-      },
-      {
-        "chain": "base",
-        "tx": "0xa44e3ce2719bd91104ae4df6dcd7b1171701da557e3fb58391927d1653b3cbf3"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x880c61462d87a061b18a35ad585b120212d844b51222e0c9d5bc84aa1addf800"
-      },
-      {
-        "chain": "base",
-        "tx": "0xaa2a3bb58bf24c52642ed51653f84f87c28d818da9fe90921df959fd2b9c461c"
-      }
-    ],
-    "events": ["relay-simple.TransferSrc", "relay-simple.TransferDst"],
-    "messages": ["relay-simple.Message"],
-    "transfers": ["relay-simple.Transfer"]
-  },
-  "relay-simple-tx": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0xa16ed28d81779e477ec904695639ebd7a6106eb5b76225f6fce741f362c7d6b6"
-      },
-      {
-        "chain": "base",
-        "tx": "0x0ccdffa428ef96f649771a822d72528e7c155d7949b5bcbd7984575850be2953"
-      }
-    ],
-    "events": ["relay-simple.TransferSrc", "relay-simple.TransferDst"],
-    "messages": ["relay-simple.Message"],
-    "transfers": ["relay-simple.Transfer"]
-  },
   "squid-coral": {
     "txs": [
       {
@@ -1923,7 +1876,8 @@
     "transfers": ["hyperlaneHwr.Transfer"]
   },
   "hwr": {
-    // 3 hwr transfers, one is USDC via cctp
+    // 4 hwr transfers, one is USDC via cctp
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1948,6 +1902,14 @@
       {
         "chain": "ethereum",
         "tx": "0x99cc07d4031da67e058a9513a4677307c47a2921c573cafbb5eed22741f26b6b"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0544ec200cb3bd270bd9d9246297c4a793fe940c0677a5a5a21597b5af609561"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
       }
     ]
   },
