@@ -14,6 +14,7 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
@@ -127,19 +128,19 @@ const L2ToL1LogSent = createInteropEventType<{
   direction: 'incoming', // TODO: for now incoming
 })
 
+const BridgeMint = createInteropEventType<{
+  chainId: number
+  assetId: `0x${string}`
+  dstTokenAddress?: Address32
+  dstAmount: bigint
+}>('zkstack.BridgeMint', { direction: 'incoming' })
+
 const L1MessageSent = createInteropEventType<{
   $dstChain: string
 }>('zkstack.L1MessageSent', {
   direction: 'outgoing',
+  ttl: 30 * UnixTime.DAY,
 })
-
-const Withdrawal = createInteropEventType<{
-  matchId: string
-  assetId: `0x${string}`
-  receiver: EthereumAddress
-  srcTokenAddress: Address32
-  srcAmount: bigint
-}>('zkstack.Withdrawal', { direction: 'outgoing' })
 
 const BridgeBurn = createInteropEventType<{
   matchId: string
@@ -147,14 +148,15 @@ const BridgeBurn = createInteropEventType<{
   receiver: EthereumAddress
   srcTokenAddress?: Address32
   srcAmount: bigint
-}>('zkstack.BridgeBurn', { direction: 'outgoing' })
+}>('zkstack.BridgeBurn', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
 
-const BridgeMint = createInteropEventType<{
-  chainId: number
+const Withdrawal = createInteropEventType<{
+  matchId: string
   assetId: `0x${string}`
-  dstTokenAddress?: Address32
-  dstAmount: bigint
-}>('zkstack.BridgeMint', { direction: 'incoming' })
+  receiver: EthereumAddress
+  srcTokenAddress: Address32
+  srcAmount: bigint
+}>('zkstack.Withdrawal', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
 
 const BridgeMintL1 = createInteropEventType<{
   matchId: string
@@ -163,7 +165,7 @@ const BridgeMintL1 = createInteropEventType<{
   receiver: EthereumAddress
   dstTokenAddress?: Address32
   dstAmount: bigint
-}>('zkstack.BridgeMintL1', { direction: 'incoming' })
+}>('zkstack.BridgeMintL1', { direction: 'incoming', ttl: 30 * UnixTime.DAY })
 
 export class ZkStackPlugin implements InteropPluginResyncable {
   readonly name = 'zkstack'
@@ -565,11 +567,16 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         })
         if (!l1MessageSent) return
 
+        // just to consume it
+        const l2ToL1LogSent = db.find(L2ToL1LogSent, {
+          sameTxAtOffset: { event: l1MessageSent, offset: -1 },
+        })
         return [
           Result.Message('zkstack.Message', {
             app: 'canonical-gas',
             srcEvent: l1MessageSent,
             dstEvent: event,
+            extraEvents: l2ToL1LogSent ? [l2ToL1LogSent] : [],
           }),
           Result.Transfer('canonical-gas.Transfer', {
             srcEvent: gasWithdrawal,
@@ -578,7 +585,6 @@ export class ZkStackPlugin implements InteropPluginResyncable {
             dstEvent: event,
             dstTokenAddress: event.args.dstTokenAddress,
             dstAmount: event.args.dstAmount,
-            extraEvents: [gasWithdrawal],
             // eth is always burned on L2 and unlocked on L1
             srcWasBurned: true,
             dstWasMinted: false,
@@ -604,12 +610,17 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         bridgeBurn.args.assetId,
         bridgeBurn.ctx.chain,
       )
+      // just to consume it
+      const l2ToL1LogSent = db.find(L2ToL1LogSent, {
+        sameTxAtOffset: { event: l1MessageSent, offset: -1 },
+      })
 
       return [
         Result.Message('zkstack.Message', {
           app: 'canonical-erc20',
           srcEvent: l1MessageSent,
           dstEvent: event,
+          extraEvents: l2ToL1LogSent ? [l2ToL1LogSent] : [],
         }),
         Result.Transfer('canonical-erc20.Transfer', {
           srcEvent: bridgeBurn,
