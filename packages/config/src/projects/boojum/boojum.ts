@@ -127,6 +127,25 @@ export const boojum: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0xe4503cf38485e3d728a7362155d53d3d63293e2fa48dca4f5588aa4625de251f',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d',
+            ),
+            chain: 'ethereum',
+          },
+          {
+            address: EthereumAddress(
+              '0xA14909eE4D20ebefd039094De75Fb440538799C1',
+            ),
+            chain: 'gateway',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
@@ -259,6 +278,25 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
       //   ],
       //   verificationStatus: 'notVerified',
       // },
+      {
+        hash: '0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xB3f4396C2040e502d0556Cbb16C0B22fE777A026',
+            ),
+            chain: 'ethereum',
+          },
+          {
+            address: EthereumAddress(
+              '0x7e81F6502209F1A114065A8f70820Ab5e28EE369',
+            ),
+            chain: 'gateway',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
       {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
