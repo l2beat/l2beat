@@ -179,7 +179,6 @@ export function createInteropModule({
     if (config.interop && config.interop.config.enabled) {
       await configStore.start()
       for (const configLoop of plugins.configPlugins) {
-        await configLoop.run()
         configLoop.start()
       }
     }
