@@ -1,6 +1,6 @@
 {
   "name": "socket",
-  "timestamp": 1763564064,
+  "timestamp": 1769431847,
   "configHash": "0x44723a57b77ee92524a24035d85e5695de9cbe29cc660d9fc8f7b9454bb44652",
   "entries": [
     {
@@ -361,7 +361,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 450,
+        "nonce": 452,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1057,7 +1057,7 @@
         "capacitorFactory__": "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 23380,
+        "globalMessageCount": 26826,
         "hasher__": "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -1246,7 +1246,8 @@
           "eth:0xDb39c6502e6DaaC4d9EFe6383029bda464ea043c",
           "eth:0x5Ed056B2AA13E19c5CCd4624F3e93C1B621faD5A",
           "eth:0x35bD9b69108CA11b8648eea424aaB3dC31a09eea",
-          "eth:0x82D4A4f701A5781AE6236FFA25545329a6161b76"
+          "eth:0x82D4A4f701A5781AE6236FFA25545329a6161b76",
+          "eth:0x301d702E0EBcc226FEB597a2B4886F3816BcE234"
         ],
         "transmitManager__": "eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -5209,6 +5210,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23833845 },
+  "usedBlockNumbers": { "ethereum": 24319116 },
   "permissionsConfigHash": "0x49a737967e5880971fb8ca69e5cab84bef3068ad7d440d8c841e532a68bc942f"
 }
