@@ -530,7 +530,7 @@ export const zksync2: ScalingProject = zkStackL2({
       url: 'https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
       date: '2025-10-06T00:00:00Z',
       description:
-        'A protocol upgrade introducing native interop messaging between ZK Chains.',
+        'A protocol upgrade introducing native interop messaging between chains connected to ZKsync Gateway.',
       type: 'general',
     },
     {
