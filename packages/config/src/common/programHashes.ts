@@ -947,7 +947,7 @@ Verify:
     verificationStatus: 'successful',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v40/arbos',
-        verificationSteps: `
+    verificationSteps: `
 L2BEAT team was able to independently regenerate this program hash. However currently the following steps for hash regeneration produce an error, so the process could not be independently verified.
 
 1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
