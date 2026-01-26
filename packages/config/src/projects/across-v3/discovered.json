@@ -1,6 +1,6 @@
 {
   "name": "across-v3",
-  "timestamp": 1768999073,
+  "timestamp": 1769431719,
   "configHash": "0x99506ce92b02361c7426940efe3e51dcd5ab61ad013bb6657b34fa88b79c47b7",
   "entries": [
     {
@@ -30,28 +30,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "26238396485607364874391540",
+        "cumulativeStake": "26022016021812750526245011",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10237,
+        "getCurrentRoundId": 10239,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 15,
-          "numberResolvedPriceRequests": 2118
+          "numberPendingPriceRequests": 38,
+          "numberResolvedPriceRequests": 2153
         },
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 10237,
-        "lastUpdateTime": 1768998899,
+        "getVotePhase": 1,
+        "lastRoundIdProcessed": 10239,
+        "lastUpdateTime": 1769431643,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 15,
+        "nextPendingIndexToProcess": 38,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "732056136393322098",
-        "rewardPerTokenStored": "732055304025383304",
+        "rewardPerToken": "734209028585280850",
+        "rewardPerTokenStored": "734208668889860167",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -644,7 +644,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1768999067,
+        "getCurrentTime": 1769431715,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -712,6 +712,39 @@
       },
       "implementationNames": {
         "eth:0x537abE038C223066B50312474409924487D2E655": "Polygon_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "Ink_Adapter",
+      "address": "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5",
+      "type": "Contract",
+      "template": "acrossv3/Adapter",
+      "sourceHashes": [
+        "0xbfd7166e5dce4fc403bfc9d03712390154e5aa737cb65ab10796605b28dc9e9e"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1768862363,
+      "sinceBlock": 24271862,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+        "cctpV2": true,
+        "L1_OP_USDC_BRIDGE": "eth:0x0000000000000000000000000000000000000000",
+        "L1_STANDARD_BRIDGE": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
+        "recipientCircleDomainId": 21,
+        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5": "OP_Adapter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -856,11 +889,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1768999067,
+        "getCurrentTime": 1769431715,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3609637,
+        "numberOfDeposits": 3622411,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -1095,7 +1128,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1768999067,
+        "getCurrentTime": 1769431715,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1109,38 +1142,6 @@
         "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "name": "Ink_Adapter",
-      "address": "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
-      "type": "Contract",
-      "template": "acrossv3/Adapter",
-      "sourceHashes": [
-        "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
-      "sinceTimestamp": 1734635711,
-      "sinceBlock": 21438590,
-      "values": {
-        "$immutable": true,
-        "cctpTokenMessenger": "eth:0x0000000000000000000000000000000000000000",
-        "L1_OP_USDC_BRIDGE": "eth:0x0000000000000000000000000000000000000000",
-        "L1_STANDARD_BRIDGE": "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0",
-        "L1_WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "L2_GAS_LIMIT": 200000,
-        "MESSENGER": "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
-        "recipientCircleDomainId": 4294967295,
-        "usdcToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "implementationNames": {
-        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": "OP_Adapter"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "UMA Multisig",
@@ -1177,7 +1178,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 924,
+        "nonce": 925,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1379,7 +1380,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1768999067,
+        "getCurrentTime": 1769431715,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1571,7 +1572,7 @@
           "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 398,
+        "nonce": 399,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1669,7 +1670,7 @@
           "34443": "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0",
           "41455": "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
           "42161": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
-          "57073": "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
+          "57073": "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5",
           "59144": "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
           "81457": "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
           "534352": "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8",
@@ -1718,13 +1719,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xa5577aaabb8d2eecc911bef39327cd29ed51ce67719ede35ec4bb8f2206de9c8",
-          "relayerRefundRoot": "0x620762f0127ad14c41ffa45f2eff328294fe8d81aeea8a7a682b11f9e1ca6e1f",
-          "slowRelayRoot": "0x06e866188eed585f01aaba65e19be3a616d6e9370288451abcf6a774583fb382",
-          "claimedBitMap": 1048575,
+          "poolRebalanceRoot": "0xec95c2319b59472931aab4992e537606b436885feb59d16725030c603d10f7e7",
+          "relayerRefundRoot": "0xbf2e03832403cd6511139c4eeff2e278875949ace3e12bd808e36c2b651b1e36",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1768998971
+          "unclaimedPoolRebalanceLeafCount": 19,
+          "challengePeriodEndTimestamp": 1769432963
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -2422,7 +2423,7 @@
         "owner": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
         "proposers": ["eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
-        "totalSupply": "31395402467539846062"
+        "totalSupply": "39964500000000000000"
       },
       "fieldMeta": { "proposers": { "severity": "HIGH" } },
       "implementationNames": {
@@ -2926,6 +2927,23 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
     ],
+    "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5": [
+      "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge, address _cctpTokenMessenger, uint32 _recipientCircleDomainId)",
+      "error InvalidBridgeConfig()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_OP_USDC_BRIDGE() view returns (address)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": [
       "constructor(tuple(uint256 rawValue) _fixedOracleFeePerSecondPerPfc, tuple(uint256 rawValue) _weeklyDelayFeePerSecondPerPfc, address _timerAddress)",
       "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
@@ -3085,21 +3103,6 @@
       "function removeMember(uint256 roleId, address memberToRemove)",
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
-    ],
-    "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": [
-      "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
-      "event MessageRelayed(address target, bytes message)",
-      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
-      "function L1_OP_USDC_BRIDGE() view returns (address)",
-      "function L1_STANDARD_BRIDGE() view returns (address)",
-      "function L1_WETH() view returns (address)",
-      "function L2_GAS_LIMIT() view returns (uint32)",
-      "function MESSENGER() view returns (address)",
-      "function cctpTokenMessenger() view returns (address)",
-      "function recipientCircleDomainId() view returns (uint32)",
-      "function relayMessage(address target, bytes message) payable",
-      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
-      "function usdcToken() view returns (address)"
     ],
     "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
       "constructor(address _masterCopy)"
@@ -3771,6 +3774,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 24283211 },
-  "permissionsConfigHash": "0x816e43ff195ea671a6eb6e9559b8e171e783663cca06ff8f5baf8b0e07bddb4f"
+  "usedBlockNumbers": { "ethereum": 24319105 },
+  "permissionsConfigHash": "0x4504a7550b21210316417e04af083276ecb3536de9be43d13fabbee63424c256"
 }
