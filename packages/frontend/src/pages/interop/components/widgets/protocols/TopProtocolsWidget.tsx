@@ -74,19 +74,19 @@ export function TopProtocolsWidget({
                 <tr key={protocol.protocolName}>
                   <td className="flex items-center gap-1 font-medium text-2xs">
                     <div
-                      className="size-3 rounded-xs"
+                      className="size-3 min-w-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
                     />
-                    <div className="max-w-20">
+                    <div className="leading-none">
                       {protocol.protocolName === 'Others'
                         ? `Others (${protocol.othersCount ?? 0})`
                         : protocol.protocolName}
                     </div>
                   </td>
-                  <td className="px-2 text-right font-medium text-2xs text-secondary">
+                  <td className="w-10 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%
                   </td>
-                  <td className="text-right font-medium text-2xs">
+                  <td className="w-12.5 text-right font-medium text-2xs">
                     {formatValue(protocol[metricType].value)}
                   </td>
                 </tr>
