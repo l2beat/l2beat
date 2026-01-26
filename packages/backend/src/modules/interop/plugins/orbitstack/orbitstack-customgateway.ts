@@ -1,4 +1,9 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -103,7 +108,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       ])
       if (depositInitiated) {
         const messageDeliveredLog = input.txLogs.find((log) => {
-          const parsed = parseMessageDelivered(log, [network.bridge])
+          const parsed = parseMessageDelivered(log, [ChainSpecificAddress.address(network.bridge)])
           return (
             parsed !== undefined &&
             parsed.messageIndex === depositInitiated._sequenceNumber
@@ -112,7 +117,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
 
         if (messageDeliveredLog) {
           const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
-            network.bridge,
+            ChainSpecificAddress.address(network.bridge),
           ])
           if (messageDelivered) {
             return [
@@ -133,13 +138,13 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       ])
       if (withdrawalFinalized) {
         const outBoxTxLog = input.txLogs.find((log) => {
-          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+          const parsed = parseOutBoxTransactionExecuted(log, [ChainSpecificAddress.address(network.outbox)])
           return parsed !== undefined
         })
 
         if (outBoxTxLog) {
           const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-            network.outbox,
+            ChainSpecificAddress.address(network.outbox),
           ])
           if (outBoxTx) {
             return [
@@ -190,7 +195,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       ])
       if (withdrawalInitiated) {
         const l2ToL1TxLog = input.txLogs.find((log) => {
-          const parsed = parseL2ToL1Tx(log, [network.arbsys])
+          const parsed = parseL2ToL1Tx(log, [ChainSpecificAddress.address(network.arbsys)])
           return (
             parsed !== undefined &&
             Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
@@ -198,7 +203,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
         })
         if (!l2ToL1TxLog) return
 
-        const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [network.arbsys])
+        const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [ChainSpecificAddress.address(network.arbsys)])
         if (!l2ToL1Tx) return
 
         const l2Token = findBurnedTokenAddress(

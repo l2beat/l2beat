@@ -1,4 +1,8 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   MessageDelivered,
   ORBITSTACK_NETWORKS,
@@ -57,7 +61,7 @@ export class AcrossSettlementOrbitPlugin implements InteropPlugin {
         const orbitNetwork = ORBIT_BRIDGE_TO_NETWORK.get(bridgeLog.address)
         if (orbitNetwork) {
           const messageDelivered = parseMessageDelivered(bridgeLog, [
-            orbitNetwork.bridge,
+            ChainSpecificAddress.address(orbitNetwork.bridge),
           ])
           if (!messageDelivered) return
 

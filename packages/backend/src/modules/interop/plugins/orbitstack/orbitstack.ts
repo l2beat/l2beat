@@ -1,6 +1,7 @@
 import {
   Address32,
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -8,10 +9,11 @@ import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   defineNetworks,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -23,28 +25,35 @@ const submitRetryableAbi = parseAbi([
   'function submitRetryable(bytes32 requestId, uint256 l1BaseFee, uint256 deposit, uint256 callvalue, uint256 gasFeeCap, uint64 gasLimit, uint256 maxSubmissionFee, address feeRefundAddress, address beneficiary, address retryTo, bytes retryData)',
 ])
 
+// == Event signatures ==
+
+const l2ToL1TxLog =
+  'event L2ToL1Tx(address caller, address indexed destination, uint256 indexed hash, uint256 indexed position, uint256 arbBlockNum, uint256 ethBlockNum, uint256 timestamp, uint256 callvalue, bytes data)'
+const outBoxTransactionExecutedLog =
+  'event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)'
+const messageDeliveredLog =
+  'event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)'
+const redeemScheduledLog =
+  'event RedeemScheduled(bytes32 indexed ticketId, bytes32 indexed retryTxHash, uint64 indexed sequenceNum, uint64 donatedGas, address gasDonor, uint256 maxRefund, uint256 submissionFeeRefund)'
+const inboxMessageDeliveredLog =
+  'event InboxMessageDelivered(uint256 indexed messageNum, bytes data)'
+
 // == L2->L1 messages ==
 
-export const parseL2ToL1Tx = createEventParser(
-  'event L2ToL1Tx(address caller, address indexed destination, uint256 indexed hash, uint256 indexed position, uint256 arbBlockNum, uint256 ethBlockNum, uint256 timestamp, uint256 callvalue, bytes data)',
-)
+export const parseL2ToL1Tx = createEventParser(l2ToL1TxLog)
 
 export const parseOutBoxTransactionExecuted = createEventParser(
-  'event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)',
+  outBoxTransactionExecutedLog,
 )
 
 // == L1->L2 messages ==
 
-export const parseMessageDelivered = createEventParser(
-  'event MessageDelivered(uint256 indexed messageIndex, bytes32 indexed beforeInboxAcc, address inbox, uint8 kind, address sender, bytes32 messageDataHash, uint256 baseFeeL1, uint64 timestamp)',
-)
+export const parseMessageDelivered = createEventParser(messageDeliveredLog)
 
-export const parseRedeemScheduled = createEventParser(
-  'event RedeemScheduled(bytes32 indexed ticketId, bytes32 indexed retryTxHash, uint64 indexed sequenceNum, uint64 donatedGas, address gasDonor, uint256 maxRefund, uint256 submissionFeeRefund)',
-)
+export const parseRedeemScheduled = createEventParser(redeemScheduledLog)
 
 export const parseInboxMessageDelivered = createEventParser(
-  'event InboxMessageDelivered(uint256 indexed messageNum, bytes data)',
+  inboxMessageDeliveredLog,
 )
 
 // L1MessageType_submitRetryableTx = 9
@@ -127,29 +136,35 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   {
     chain: 'arbitrum',
     // L2 -> L1 (Withdrawals)
-    arbsys: EthereumAddress('0x0000000000000000000000000000000000000064'),
-    outbox: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
+    arbsys: ChainSpecificAddress(
+      'arb1:0x0000000000000000000000000000000000000064',
+    ),
+    outbox: ChainSpecificAddress(
+      'eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
+    ),
     // L1 -> L2 (Messages)
-    bridge: EthereumAddress('0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a'),
+    bridge: ChainSpecificAddress(
+      'eth:0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a',
+    ),
     inbox: EthereumAddress('0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f'),
     sequencerInbox: EthereumAddress(
       '0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6',
     ),
-    arbRetryableTx: EthereumAddress(
-      '0x000000000000000000000000000000000000006e',
+    arbRetryableTx: ChainSpecificAddress(
+      'arb1:0x000000000000000000000000000000000000006e',
     ),
     // Gateways
-    l1StandardGateway: EthereumAddress(
-      '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+    l1StandardGateway: ChainSpecificAddress(
+      'eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
     ),
-    l2StandardGateway: EthereumAddress(
-      '0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
+    l2StandardGateway: ChainSpecificAddress(
+      'arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe',
     ),
-    l1WethGateway: EthereumAddress(
-      '0xd92023e9d9911199a6711321d1277285e6d4e2db',
+    l1WethGateway: ChainSpecificAddress(
+      'eth:0xd92023e9d9911199a6711321d1277285e6d4e2db',
     ),
-    l2WethGateway: EthereumAddress(
-      '0x6c411ad3e74de3e7bd422b94a27770f5b86c623b',
+    l2WethGateway: ChainSpecificAddress(
+      'arb1:0x6c411ad3e74de3e7bd422b94a27770f5b86c623b',
     ),
     l1Weth: EthereumAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'),
     l2Weth: EthereumAddress('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
@@ -203,17 +218,50 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
   },
 ])
 
-export class OrbitStackPlugin implements InteropPlugin {
+export class OrbitStackPlugin implements InteropPluginResyncable {
   readonly name = 'orbitstack'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      // L1: OutBoxTransactionExecuted from Outbox
+      {
+        type: 'event',
+        signature: outBoxTransactionExecutedLog,
+        addresses: ORBITSTACK_NETWORKS.map((n) => n.outbox),
+      },
+      // L1: MessageDelivered from Bridge (with InboxMessageDelivered)
+      {
+        type: 'event',
+        signature: messageDeliveredLog,
+        includeTxEvents: [inboxMessageDeliveredLog],
+        addresses: ORBITSTACK_NETWORKS.map((n) => n.bridge),
+      },
+      // L2: L2ToL1Tx from ArbSys
+      {
+        type: 'event',
+        signature: l2ToL1TxLog,
+        addresses: ORBITSTACK_NETWORKS.map((n) => n.arbsys),
+      },
+      // L2: RedeemScheduled from ArbRetryableTx
+      {
+        type: 'event',
+        signature: redeemScheduledLog,
+        addresses: ORBITSTACK_NETWORKS.map((n) => n.arbRetryableTx),
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
+      const logAddress = EthereumAddress(input.log.address)
       const network = ORBITSTACK_NETWORKS.find(
-        (n) => n.outbox === EthereumAddress(input.log.address),
+        (n) => ChainSpecificAddress.address(n.outbox) === logAddress,
       )
       if (network) {
         // L2 -> L1 (Withdrawal finalization on L1)
-        const otxe = parseOutBoxTransactionExecuted(input.log, [network.outbox])
+        const otxe = parseOutBoxTransactionExecuted(input.log, [
+          ChainSpecificAddress.address(network.outbox),
+        ])
         if (otxe) {
           return [
             OutBoxTransactionExecuted.create(input, {
@@ -226,11 +274,11 @@ export class OrbitStackPlugin implements InteropPlugin {
 
       // L1 -> L2 (Message initiation on L1)
       const networkForBridge = ORBITSTACK_NETWORKS.find(
-        (n) => n.bridge === EthereumAddress(input.log.address),
+        (n) => ChainSpecificAddress.address(n.bridge) === logAddress,
       )
       if (networkForBridge) {
         const messageDelivered = parseMessageDelivered(input.log, [
-          networkForBridge.bridge,
+          ChainSpecificAddress.address(networkForBridge.bridge),
         ])
         if (messageDelivered) {
           // Filter out SequencerInbox batch submissions - these are batch metadata, not user messages
@@ -263,7 +311,9 @@ export class OrbitStackPlugin implements InteropPlugin {
       if (!network) return
 
       // L2 -> L1 (Withdrawal initiation on L2)
-      const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
+      const l2ToL1Tx = parseL2ToL1Tx(input.log, [
+        ChainSpecificAddress.address(network.arbsys),
+      ])
       if (l2ToL1Tx) {
         const hasEth = l2ToL1Tx.callvalue > 0n
         const hasNoCalldata = l2ToL1Tx.data === '0x'
@@ -279,7 +329,7 @@ export class OrbitStackPlugin implements InteropPlugin {
 
       // L1 -> L2 (Message processing on L2)
       const redeemScheduled = parseRedeemScheduled(input.log, [
-        network.arbRetryableTx,
+        ChainSpecificAddress.address(network.arbRetryableTx),
       ])
       if (redeemScheduled) {
         const calldata = input.tx.data as `0x${string}`
