@@ -5,8 +5,10 @@ import { refactored } from './refactored'
 
 /** @deprecated */
 export const chains = [
-  ...layer2s.map((p) => p.chainConfig).filter((x) => x !== undefined),
-  ...layer3s.map((p) => p.chainConfig).filter((x) => x !== undefined),
-  ...bridges.map((p) => p.chainConfig).filter((x) => x !== undefined),
-  ...refactored.map((p) => p.chainConfig).filter((x) => x !== undefined),
+  ...layer2s.flatMap((p) => (p.chainConfig === undefined ? [] : [p.chainConfig])),
+  ...layer3s.flatMap((p) => (p.chainConfig === undefined ? [] : [p.chainConfig])),
+  ...bridges.flatMap((p) => (p.chainConfig === undefined ? [] : [p.chainConfig])),
+  ...refactored.flatMap((p) =>
+    p.chainConfig === undefined ? [] : [p.chainConfig],
+  ),
 ]
