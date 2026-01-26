@@ -230,6 +230,8 @@ export class CCTPV2Plugin implements InteropPlugin {
           dstEvent: messageReceived,
           dstTokenAddress: messageReceived.args.dstTokenAddress,
           dstAmount: messageReceived.args.dstAmount,
+          srcWasBurned: true,
+          dstWasMinted: true,
         }),
       ]
     }
