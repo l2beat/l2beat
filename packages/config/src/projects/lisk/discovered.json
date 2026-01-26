@@ -1255,7 +1255,7 @@
         "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
       ],
       "proxyType": "immutable",
-      "description": "A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.",
+      "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
         {
           "permission": "guard",

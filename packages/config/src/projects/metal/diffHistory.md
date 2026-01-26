@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6ae4abe1c8834627501e13da91cae00b5ca4ff13
+Generated with discovered.json: 0x506f01e3953b2598fbc1e554086469ab96138ab4
 
-# Diff at Sat, 24 Jan 2026 16:33:50 GMT:
+# Diff at Mon, 26 Jan 2026 09:08:12 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1768989976
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6ae4abe1c8834627501e13da91cae00b5ca4ff13
 
 ## Description
 
-SaferSafes (TimelockGuard) module added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe - timelock delays currently 0.
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe. Timelock delays currently 0.
 
 ## Watched changes
 
@@ -31,7 +31,7 @@ SaferSafes (TimelockGuard) module added to OpFoundationUpgradeSafe and OpFoundat
 ```diff
 +   Status: CREATED
     contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
-    +++ description: A Gnosis Safe guard (TimelockGuard) that adds extra safety checks for Safe operations. It requires transactions to be scheduled before execution, enforces a configurable timelock delay between scheduling and execution, and allows owners to cancel scheduled transactions. This module is enabled on the OpFoundation Safes.
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
 ```
 
 ## Source code changes
