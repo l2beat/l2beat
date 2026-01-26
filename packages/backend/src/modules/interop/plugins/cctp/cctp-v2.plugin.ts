@@ -206,10 +206,14 @@ export class CCTPV2Plugin implements InteropPlugin {
     db: InteropEventDb,
   ): MatchResult | undefined {
     if (CCTPv2MessageReceived.checkType(messageReceived)) {
-      const messageSent = db.find(CCTPv2MessageSent, {
+      // the sort makes our matching deterministic
+      const messageSentMatches = db.findAll(CCTPv2MessageSent, {
         messageHash: messageReceived.args.messageHash,
       })
-      if (!messageSent) return
+      if (messageSentMatches.length === 0) return
+      const messageSent = messageSentMatches.sort(
+        (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+      )[0]
       return [
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
