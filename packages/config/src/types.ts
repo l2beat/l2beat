@@ -1227,7 +1227,6 @@ export type InteropPluginName =
   | 'orbitstack-standardgateway'
   | 'orbitstack-wethgateway'
   | 'relay'
-  | 'relay-simple'
   | 'sky-bridge'
   | 'sorare-base'
   | 'squid-coral'
@@ -1238,6 +1237,7 @@ export type InteropPluginName =
   | 'wormhole-ntt'
   | 'wormhole-relayer'
   | 'wormhole-token-bridge'
+  | 'zkstack'
   | 'zklink-nova'
 
 export interface InteropConfig {

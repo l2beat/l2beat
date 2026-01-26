@@ -13,6 +13,10 @@ Interop plugins capture blockchain events and match them to create:
 1. **Capture Phase**: Plugins scan transaction logs and create `InteropEvent` objects
 2. **Match Phase**: Plugins correlate events across chains to create `InteropMessage` or `InteropTransfer`
 
+Notes:
+- `capture()` runs per log; return `undefined` when a log is irrelevant.
+- `InteropEvent` types should be short (`protocol.EventName`), stable, and directioned when useful.
+
 ### Plugin Ordering
 
 Plugins in `index.ts` execute in order. Specific plugins must run BEFORE generic ones:
@@ -49,6 +53,10 @@ cast 4byte-event <TOPIC0_HASH>
 # Get contract source (shows indexed params)
 cast source <ADDRESS> -f | grep -A6 "event MyEvent"
 ```
+
+Tips:
+- Always confirm the event signature (indexed params + tuple syntax).
+- Match `topic0` with `cast 4byte-event` if parsing fails.
 
 ### 2. Create Plugin File
 
@@ -110,13 +118,18 @@ In `src/modules/interop/examples/examples.jsonc`:
 
 ```jsonc
 "my-plugin": {
-  "txs": [
-    { "chain": "ethereum", "tx": "0x..." },
-    { "chain": "base", "tx": "0x..." }
-  ],
-  "events": ["my-plugin.L1Event", "my-plugin.L2Event"],
-  "messages": [{ "type": "opstack.L1ToL2Message", "app": "my-plugin" }],
-  "transfers": ["my-plugin.L1ToL2Transfer"]
+  "groups": [
+    {
+      "name": "Example flow",
+      "txs": [
+        { "chain": "ethereum", "tx": "0x..." },
+        { "chain": "base", "tx": "0x..." }
+      ],
+      "events": ["my-plugin.L1Event", "my-plugin.L2Event"],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "my-plugin" }],
+      "transfers": ["my-plugin.L1ToL2Transfer"]
+    }
+  ]
 }
 ```
 
@@ -127,6 +140,33 @@ NODE_OPTIONS="--no-experimental-strip-types" pnpm interop:example my-plugin --si
 ```
 
 ## Common Patterns
+
+### When You Need Other Logs in the Same Tx
+
+Use `includeTxEvents` in `getDataRequests()` whenever you need to correlate with
+auxiliary logs (e.g. `Transfer`, `BridgeBurn`, `BridgeMint`, etc.) during the capture phase:
+
+```ts
+{
+  type: 'event',
+  signature: myPrimaryEventLog,
+  includeTxEvents: [transferLog, bridgeBurnLog],
+  addresses: [L1_BRIDGE],
+}
+```
+
+### Synthetic Matching Keys
+
+If the two sides do not share a hash/nonce, build the most robust synthetic key:
+
+```ts
+const matchId = `${assetId}-${receiver.toLowerCase()}-${amount.toString()}`
+```
+
+### Matching Strategy
+
+- Put the **last-arriving** event type in `matchTypes` so matching happens when the destination side exists.
+- Use `sameTxBefore`/`sameTxAfter` when log indices vary; use `sameTxAtOffset` only when offsets are stable.
 
 ### Building on OpStack
 
@@ -166,6 +206,13 @@ cast 4byte-event <TOPIC0>
 
 Convert hex logIndex to decimal and calculate offset.
 
+### Address and Chain Helpers
+
+- `ChainSpecificAddress('eth:0x...')` and `ChainSpecificAddress('base:0x...')` for address scoping.
+- `Address32.from(log.address)` for ERC-20 token addresses.
+- `EthereumAddress(value)` for receiver/sender EOA-like fields (validates checksum).
+- Prefer `defineNetworks()` + chain-specific filtering if the plugin supports multiple networks.
+
 ## Troubleshooting
 
 ### Event Not Captured
@@ -177,6 +224,7 @@ Convert hex logIndex to decimal and calculate offset.
 - Missing event in `matchTypes` array
 - Wrong `sameTxAtOffset` value (check actual log indices)
 - Offsets vary between chains → use `sameTxBefore` instead
+- Another plugin matched first due to ordering
 
 ### Test Output
 - `[PASS]` = Expected and found

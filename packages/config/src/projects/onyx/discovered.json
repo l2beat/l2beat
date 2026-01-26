@@ -1,6 +1,6 @@
 {
   "name": "onyx",
-  "timestamp": 1768566203,
+  "timestamp": 1769272461,
   "configHash": "0xeecc67981b1e05d94a28e30ffc2d1b3bb167ea1c8549a1ef2eb278078fa0ed4f",
   "entries": [
     {
@@ -130,7 +130,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 4051,
+        "nonce": 4068,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -196,6 +196,11 @@
       "implementationNames": {
         "base:0x23264394923E4aEB990234180c37Bf757667C6f7": "ValidatorUtils"
       }
+    },
+    {
+      "address": "base:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "base:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -320,13 +325,13 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 4059,
+        "firstUnresolvedNode": 4076,
         "inbox": "base:0x8635f49481A90DeD18E8D0eB374028C4b39E700F",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 31776136,
-        "latestConfirmed": 4058,
-        "latestNodeCreated": 4058,
+        "latestConfirmed": 4075,
+        "latestNodeCreated": 4075,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95",
@@ -650,6 +655,7 @@
         "$immutable": false,
         "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "base:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
           "base:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "base:0x2103c69696CB2D3779f5445393808239034E911c",
           "base:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
@@ -666,8 +672,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -821,7 +827,7 @@
         "allowedOutboxList": [
           "base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95"
         ],
-        "delayedMessageCount": 1117,
+        "delayedMessageCount": 1122,
         "inboxHistory": [
           "base:0x8635f49481A90DeD18E8D0eB374028C4b39E700F",
           "base:0x0961428Ce999C15f5E2624d0bEbd9729387e8185"
@@ -831,8 +837,8 @@
         "outboxHistory": ["base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95"],
         "rollup": "base:0x50752f7988d0195d4d5fb09a1A22B8354b5A8c0b",
         "sequencerInbox": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
-        "sequencerMessageCount": 40945,
-        "sequencerReportedSubMessageCount": 23398335
+        "sequencerMessageCount": 40962,
+        "sequencerReportedSubMessageCount": 23543690
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -969,7 +975,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 40945,
+        "batchCount": 40962,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "base:0x107c739629aCced04e3197EAa6b44CdEe0cE246c",
@@ -1003,7 +1009,7 @@
         "rollup": "base:0x50752f7988d0195d4d5fb09a1A22B8354b5A8c0b",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1117,
+        "totalDelayedMessagesRead": 1122,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1834,6 +1840,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 40888428 },
-  "permissionsConfigHash": "0x7df33492fc5fd518e83743d60a2e4fe7614f78396d2714f9fd67e1a0f3b6d5c7"
+  "usedBlockNumbers": { "base": 41241557 },
+  "permissionsConfigHash": "0xdd1e5fbd77d8b8f7784f6e4a0ce7811bcf611238e4bcac9ac992c9463fd2449e"
 }

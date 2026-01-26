@@ -22,9 +22,9 @@ export function OmniChainCard({
   )
 
   return (
-    <PrimaryCard className="col-span-1 flex flex-col max-md:border-divider max-md:border-b min-[1024px]:max-[1600px]:col-span-2">
+    <PrimaryCard className="col-span-1 flex flex-col border-t-teal-500 max-md:border-b max-md:border-b-divider md:border-t-4 min-[1024px]:max-[1600px]:col-span-2">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-heading-20 md:text-heading-24">
+        <h2 className="font-bold text-heading-20 decoration-teal-500 underline-offset-6 max-md:underline md:text-heading-24">
           Omnichain
         </h2>
         <a href={viewAllUrl}>

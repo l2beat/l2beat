@@ -22,9 +22,9 @@ export function LockAndMintCard({
   )
 
   return (
-    <PrimaryCard className="flex flex-col max-md:border-divider max-md:border-b">
+    <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-yellow-700">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-heading-20 md:text-heading-24">
+        <h2 className="font-bold text-heading-20 decoration-yellow-700 underline-offset-6 max-md:underline md:text-heading-24">
           Lock & Mint
         </h2>
         <a href={viewAllUrl}>
