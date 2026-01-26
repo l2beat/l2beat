@@ -77,7 +77,7 @@ export function TopProtocolsWidget({
                       className="size-3 min-w-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
                     />
-                    <div>
+                    <div className="leading-none">
                       {protocol.protocolName === 'Others'
                         ? `Others (${protocol.othersCount ?? 0})`
                         : protocol.protocolName}
