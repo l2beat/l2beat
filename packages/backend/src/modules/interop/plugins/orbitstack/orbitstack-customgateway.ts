@@ -58,7 +58,7 @@ const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   amount: bigint
   gatewayKey: string
 }>('orbitstack-customgateway.L2ToL1TxWithdrawalInitiated', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 const parseWithdrawalInitiated = createEventParser(

@@ -16,6 +16,7 @@ import {
   Result,
 } from '../types'
 import {
+  FailedRelayedMessage,
   MessagePassed,
   OPSTACK_NETWORKS,
   RelayedMessage,
@@ -47,7 +48,7 @@ const ERC20BridgeInitiated = createInteropEventType<{
   l2Token: Address32
   amount: bigint
 }>('opstack.ERC20BridgeInitiated', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 const parseERC20BridgeInitiated = createEventParser(erc20BridgeInitiatedLog)
@@ -67,7 +68,7 @@ const ETHBridgeInitiatedL2 = createInteropEventType<{
   chain: string
   amount: bigint
 }>('opstack.ETHBridgeInitiatedL2', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 // L1: ETH withdrawal finalized
@@ -306,6 +307,7 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     // L1 -> L2: trigger on L2 finalization events
     ETHBridgeFinalizedL2,
     DepositFinalized,
+    FailedRelayedMessage,
   ]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
@@ -474,6 +476,51 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           dstTokenAddress: event.args.l2Token,
         }),
       ]
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      const network = OPSTACK_NETWORKS.find(
+        (n) => n.chain === event.args.chain,
+      )
+      if (!network) return
+
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: event.args.chain,
+      })
+      if (!sentMessage) return
+
+      // Try to find ERC20DepositInitiated
+      const erc20DepositInitiated = db.find(ERC20DepositInitiated, {
+        sameTxAtOffset: { event: sentMessage, offset: -3 },
+        chain: event.args.chain,
+      })
+      if (erc20DepositInitiated) {
+        return [
+          Result.Message('opstack.L1ToL2MessageFailed', {
+            app: 'opstack-standardbridge',
+            srcEvent: sentMessage,
+            dstEvent: event,
+            extraEvents: [erc20DepositInitiated],
+          }),
+        ]
+      }
+
+      // Try to find ETHBridgeInitiatedL1
+      const ethBridgeInitiated = db.find(ETHBridgeInitiatedL1, {
+        sameTxBefore: sentMessage,
+        chain: event.args.chain,
+      })
+      if (ethBridgeInitiated) {
+        return [
+          Result.Message('opstack.L1ToL2MessageFailed', {
+            app: 'opstack-standardbridge',
+            srcEvent: sentMessage,
+            dstEvent: event,
+            extraEvents: [ethBridgeInitiated],
+          }),
+        ]
+      }
     }
   }
 }
