@@ -25,25 +25,30 @@ import { OmniChainCard } from './components/table-widgets/OmniChainCard'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  initialSelectedChains: { from: string[]; to: string[] }
 }
 
 export function InteropSummaryPage({
   interopChains,
   queryState,
+  initialSelectedChains,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout maxWidth="wide">
-          <div className="flex min-h-screen flex-col">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <InteropSelectedChainsProvider interopChains={interopChains}>
+        <InteropSelectedChainsProvider
+          interopChains={interopChains}
+          initialSelectedChains={initialSelectedChains}
+        >
+          <SideNavLayout maxWidth="wide">
+            <div className="flex min-h-screen flex-col">
+              <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
               <ChainSelector chains={interopChains} />
               <Widgets interopChains={interopChains} />
-            </InteropSelectedChainsProvider>
-          </div>
-        </SideNavLayout>
+            </div>
+          </SideNavLayout>
+        </InteropSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
   )

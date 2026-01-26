@@ -6,25 +6,43 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import type { FromToQuery } from '../InteropRouter'
 
 export async function getInteropSummaryData(
-  req: Request,
+  req: Request<unknown, unknown, unknown, FromToQuery>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
+
+  const initialSelectedChains = {
+    from: (
+      req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
+      interopChainsIds
+    ).sort(),
+    to: (
+      req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
+      interopChainsIds
+    ).sort(),
+  }
   const queryState = await cache.get(
     {
-      key: ['interop', 'summary', 'prefetch'],
+      key: [
+        'interop',
+        'summary',
+        'prefetch',
+        initialSelectedChains.from.join(','),
+        initialSelectedChains.to.join(','),
+      ],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
     async () => {
       await helpers.interop.dashboard.prefetch({
-        from: interopChainsIds,
-        to: interopChainsIds,
+        from: initialSelectedChains.from,
+        to: initialSelectedChains.to,
       })
       return helpers.dehydrate()
     },
@@ -51,6 +69,7 @@ export async function getInteropSummaryData(
         ...appLayoutProps,
         queryState,
         interopChains: interopChainsWithIcons,
+        initialSelectedChains,
       },
     },
   }
