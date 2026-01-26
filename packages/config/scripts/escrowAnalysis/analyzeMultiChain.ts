@@ -35,6 +35,7 @@ import type {
   EscrowConfig,
   EscrowReport,
   ExternalTokenAnalysis,
+  NameCategory,
   SecurityCategory,
   StackConfig,
   TokenValue,
@@ -44,6 +45,8 @@ import type {
   TvsToken,
   TvsTokenFormula,
 } from './chains/types'
+
+import { deriveNameCategory, hasAdditionalTrust } from './chains/types'
 
 import { readFileSync, existsSync } from 'fs'
 
@@ -417,11 +420,17 @@ function classifyEscrow(
     }
   }
 
+  // Derive the Name category and additional trust flag
+  const nameCategory = deriveNameCategory(bridgeType, category)
+  const additionalTrust = hasAdditionalTrust(bridgeType, category)
+
   return {
     address: escrowConfig.address,
     name: escrowConfig.name,
     category,
     bridgeType,
+    nameCategory,
+    additionalTrust,
     categoryReason,
     admin,
     adminName,
@@ -509,6 +518,10 @@ function analyzeExternalTokens(
       categoryReason = 'Unknown bridge protocol'
     }
 
+    // External tokens always use external messaging
+    const nameCategory = deriveNameCategory('external', category)
+    const additionalTrust = hasAdditionalTrust('external', category)
+
     results.push({
       symbol: token.symbol,
       name: token.name,
@@ -518,6 +531,8 @@ function analyzeExternalTokens(
       bridgeProtocol,
       issuer,
       category,
+      nameCategory,
+      additionalTrust,
       categoryReason,
       formulaType: token.formula.type,
       trustedParties,
@@ -611,18 +626,36 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   const totalTvl = tvsData.reduce((sum, t) => sum + t.valueForProject, 0)
   const nativeTvl = tvsData.filter((t) => t.source === 'native').reduce((sum, t) => sum + t.valueForProject, 0)
 
-  const escrowCanonicalTvl = escrows.filter((e) => e.bridgeType === 'canonical').reduce((sum, e) => sum + e.totalValueUsd, 0)
-  const escrowExternalTvl = escrows.filter((e) => e.bridgeType === 'external').reduce((sum, e) => sum + e.totalValueUsd, 0)
-  const externalTokensTvl = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
-
-  const canonicalTvl = escrowCanonicalTvl
-  const externalTvl = escrowExternalTvl + externalTokensTvl
-
-  const noTrustEscrowTvl = escrows
-    .filter((e) => e.bridgeType === 'canonical' && (e.category === 'rollup-secured' || e.category === 'issuer-secured'))
+  // Calculate by Name category (the 3 main categories + native)
+  const canonicalTrustMinimizedTvl = escrows
+    .filter((e) => e.nameCategory === 'canonical-trust-minimized')
     .reduce((sum, e) => sum + e.totalValueUsd, 0)
 
-  // API classification for comparison (using valueForProject for correct totals)
+  const canonicalAdditionalTrustTvl = escrows
+    .filter((e) => e.nameCategory === 'canonical-additional-trust')
+    .reduce((sum, e) => sum + e.totalValueUsd, 0)
+
+  // External = escrows with external messaging + external tokens (no L1 escrow)
+  const externalFromEscrows = escrows
+    .filter((e) => e.nameCategory === 'external')
+    .reduce((sum, e) => sum + e.totalValueUsd, 0)
+  const externalFromTokens = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
+  const externalTotalTvl = externalFromEscrows + externalFromTokens
+
+  // External breakdown: issuer-secured vs additional trust
+  const externalIssuerSecuredTvl = escrows
+    .filter((e) => e.nameCategory === 'external' && e.category === 'issuer-secured')
+    .reduce((sum, e) => sum + e.totalValueUsd, 0) +
+    externalTokens.filter((t) => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0)
+
+  const externalAdditionalTrustTvl = escrows
+    .filter((e) => e.nameCategory === 'external' && e.category !== 'issuer-secured')
+    .reduce((sum, e) => sum + e.totalValueUsd, 0) +
+    externalTokens.filter((t) => t.category !== 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0)
+
+  // Legacy values for comparison with current API
+  const canonicalTvl = escrows.filter((e) => e.bridgeType === 'canonical').reduce((sum, e) => sum + e.totalValueUsd, 0)
+  const externalTvl = escrows.filter((e) => e.bridgeType === 'external').reduce((sum, e) => sum + e.totalValueUsd, 0) + externalFromTokens
   const apiCanonicalTvl = tvsData.filter((t) => t.source === 'canonical').reduce((sum, t) => sum + t.valueForProject, 0)
   const apiExternalTvl = tvsData.filter((t) => t.source === 'external').reduce((sum, t) => sum + t.valueForProject, 0)
 
@@ -633,32 +666,26 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     externalTokens,
     summary: {
       totalTvl,
+      nativeTvl,
+      byNameCategory: {
+        canonicalTrustMinimized: canonicalTrustMinimizedTvl,
+        canonicalAdditionalTrust: canonicalAdditionalTrustTvl,
+        external: externalTotalTvl,
+      },
+      externalBreakdown: {
+        issuerSecured: externalIssuerSecuredTvl,
+        additionalTrust: externalAdditionalTrustTvl,
+      },
       canonicalTvl,
       externalTvl,
-      nativeTvl,
-      canonicalNoAdditionalTrust: noTrustEscrowTvl,
-      // Current API values for comparison
       apiCanonicalTvl,
       apiExternalTvl,
-      // For visualizer compatibility
-      rollupSecuredTvl: escrows.filter((e) => e.category === 'rollup-secured').reduce((sum, e) => sum + e.totalValueUsd, 0),
-      issuerSecuredTvl: escrows.filter((e) => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
-        externalTokens.filter((t) => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0),
-      thirdPartySecuredTvl: escrows.filter((e) => e.category === 'third-party-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
-        externalTokens.filter((t) => t.category === 'third-party-secured').reduce((sum, t) => sum + t.valueUsd, 0),
-      byAdmin: {
-        rollupControlled: escrows.filter((e) => e.category === 'rollup-secured').reduce((sum, e) => sum + e.totalValueUsd, 0),
-        issuerControlled: escrows.filter((e) => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
-          externalTokens.filter((t) => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0),
-        thirdPartyControlled: escrows.filter((e) => e.category === 'third-party-secured').reduce((sum, e) => sum + e.totalValueUsd, 0) +
-          externalTokens.filter((t) => t.category === 'third-party-secured').reduce((sum, t) => sum + t.valueUsd, 0),
-      },
     },
     externalTokensSummary: {
       totalCount: externalTokens.length,
-      totalValue: externalTokens.reduce((sum, t) => sum + t.valueUsd, 0),
+      totalValue: externalFromTokens,
       byProtocol: {},
-      byCategory: {} as Record<SecurityCategory, { count: number; value: number }>,
+      byNameCategory: {} as Record<NameCategory, { count: number; value: number }>,
     },
   }
 
@@ -670,35 +697,48 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     report.externalTokensSummary.byProtocol[token.bridgeProtocol].count++
     report.externalTokensSummary.byProtocol[token.bridgeProtocol].value += token.valueUsd
 
-    if (!report.externalTokensSummary.byCategory[token.category]) {
-      report.externalTokensSummary.byCategory[token.category] = { count: 0, value: 0 }
+    if (!report.externalTokensSummary.byNameCategory[token.nameCategory]) {
+      report.externalTokensSummary.byNameCategory[token.nameCategory] = { count: 0, value: 0 }
     }
-    report.externalTokensSummary.byCategory[token.category].count++
-    report.externalTokensSummary.byCategory[token.category].value += token.valueUsd
+    report.externalTokensSummary.byNameCategory[token.nameCategory].count++
+    report.externalTokensSummary.byNameCategory[token.nameCategory].value += token.valueUsd
   }
 
-  // Print comparison table
+  // Print new framework table (3 categories + native)
   console.log('')
-  console.log(chalk.bold('  Source        Current API          New Framework        Difference'))
-  console.log(chalk.gray('  ─────────────────────────────────────────────────────────────────────'))
+  console.log(chalk.bold('  New Framework Classification'))
+  console.log(chalk.gray('  ──────────────────────────────────────────────────────────────────'))
 
-  const apiCanonicalPct = ((apiCanonicalTvl / totalTvl) * 100).toFixed(1)
-  const newCanonicalPct = ((canonicalTvl / totalTvl) * 100).toFixed(1)
-  const canonicalDiff = canonicalTvl - apiCanonicalTvl
-  const canonicalDiffStr = canonicalDiff >= 0 ? chalk.green(`+${formatUsd(canonicalDiff)}`) : chalk.red(`-${formatUsd(Math.abs(canonicalDiff))}`)
-  console.log(`  ${chalk.green('Canonical')}     ${formatUsd(apiCanonicalTvl)} (${apiCanonicalPct.padStart(4)}%)    ${formatUsd(canonicalTvl)} (${newCanonicalPct.padStart(4)}%)    ${canonicalDiffStr}`)
+  const canonTrustPct = ((canonicalTrustMinimizedTvl / totalTvl) * 100).toFixed(1)
+  console.log(`  ${chalk.green('Canonical (trust-minimized)')}     ${formatUsd(canonicalTrustMinimizedTvl).padStart(12)} (${canonTrustPct.padStart(5)}%)  ${chalk.gray('No additional trust')}`)
 
-  const apiExternalPct = ((apiExternalTvl / totalTvl) * 100).toFixed(1)
-  const newExternalPct = ((externalTvl / totalTvl) * 100).toFixed(1)
-  const externalDiff = externalTvl - apiExternalTvl
-  const externalDiffStr = externalDiff >= 0 ? chalk.green(`+${formatUsd(externalDiff)}`) : chalk.red(`-${formatUsd(Math.abs(externalDiff))}`)
-  console.log(`  ${chalk.yellow('External')}      ${formatUsd(apiExternalTvl)} (${apiExternalPct.padStart(4)}%)    ${formatUsd(externalTvl)} (${newExternalPct.padStart(4)}%)    ${externalDiffStr}`)
+  const canonAddTrustPct = ((canonicalAdditionalTrustTvl / totalTvl) * 100).toFixed(1)
+  console.log(`  ${chalk.red('Canonical (additional trust)')}    ${formatUsd(canonicalAdditionalTrustTvl).padStart(12)} (${canonAddTrustPct.padStart(5)}%)  ${chalk.gray('Third-party can rug')}`)
+
+  const externalPct = ((externalTotalTvl / totalTvl) * 100).toFixed(1)
+  console.log(`  ${chalk.yellow('External')}                        ${formatUsd(externalTotalTvl).padStart(12)} (${externalPct.padStart(5)}%)`)
+
+  // External breakdown
+  const extIssuerPct = ((externalIssuerSecuredTvl / totalTvl) * 100).toFixed(1)
+  const extAddTrustPct = ((externalAdditionalTrustTvl / totalTvl) * 100).toFixed(1)
+  console.log(chalk.gray(`    └─ Issuer-secured (no add. trust)  ${formatUsd(externalIssuerSecuredTvl).padStart(12)} (${extIssuerPct.padStart(5)}%)`))
+  console.log(chalk.gray(`    └─ Additional trust                ${formatUsd(externalAdditionalTrustTvl).padStart(12)} (${extAddTrustPct.padStart(5)}%)`))
 
   const nativePct = ((nativeTvl / totalTvl) * 100).toFixed(1)
-  console.log(`  ${chalk.cyan('Native')}        ${formatUsd(nativeTvl)} (${nativePct.padStart(4)}%)    ${formatUsd(nativeTvl)} (${nativePct.padStart(4)}%)    -`)
+  console.log(`  ${chalk.cyan('Native')}                          ${formatUsd(nativeTvl).padStart(12)} (${nativePct.padStart(5)}%)`)
 
-  console.log(chalk.gray('  ─────────────────────────────────────────────────────────────────────'))
-  console.log(chalk.bold(`  Total         ${formatUsd(totalTvl)}              ${formatUsd(totalTvl)}              ✓`))
+  console.log(chalk.gray('  ──────────────────────────────────────────────────────────────────'))
+  console.log(chalk.bold(`  Total                             ${formatUsd(totalTvl).padStart(12)}`))
+
+  // Summary: total with no additional trust
+  const noAddTrustTotal = canonicalTrustMinimizedTvl + externalIssuerSecuredTvl + nativeTvl
+  const noAddTrustPct = ((noAddTrustTotal / totalTvl) * 100).toFixed(1)
+  const addTrustTotal = canonicalAdditionalTrustTvl + externalAdditionalTrustTvl
+  const addTrustPct = ((addTrustTotal / totalTvl) * 100).toFixed(1)
+  console.log('')
+  console.log(chalk.bold('  Trust Summary'))
+  console.log(`  ${chalk.green('✓')} No additional trust:    ${formatUsd(noAddTrustTotal).padStart(12)} (${noAddTrustPct.padStart(5)}%)`)
+  console.log(`  ${chalk.red('⚠')} Additional trust:       ${formatUsd(addTrustTotal).padStart(12)} (${addTrustPct.padStart(5)}%)`)
   console.log('')
 
   return report

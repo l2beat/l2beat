@@ -1,189 +1,193 @@
 {
   "projectId": "nova",
-  "timestamp": 1769022528939,
+  "timestamp": 1769421101917,
   "escrows": [
     {
       "address": "eth:0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
       "name": "Bridge",
-      "category": "third-party-secured",
+      "category": "rollup-secured",
       "bridgeType": "canonical",
-      "categoryReason": "Token issuers unknown",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Arbitrum DAO",
       "admin": "eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
-      "adminName": null,
-      "isRollupControlled": false,
+      "adminName": "Arbitrum DAO",
+      "isRollupControlled": true,
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 8592708,
-          "amount": 2964.9599999999996,
+          "valueUsd": 9414224.666666666,
+          "amount": 3244.4466666666667,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 8592708,
+      "totalValueUsd": 9414224.666666666,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     },
     {
       "address": "eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
       "name": "ERC20Gateway",
-      "category": "third-party-secured",
+      "category": "rollup-secured",
       "bridgeType": "canonical",
-      "categoryReason": "Escrow holds tokens from multiple issuers",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Arbitrum DAO",
       "admin": "eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
-      "adminName": null,
-      "isRollupControlled": false,
+      "adminName": "Arbitrum DAO",
+      "isRollupControlled": true,
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 8592708,
-          "amount": 2964.9599999999996,
+          "valueUsd": 9414224.666666666,
+          "amount": 3244.4466666666667,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDC",
-          "valueUsd": 230484.53,
-          "amount": 230572.95,
+          "valueUsd": 230465.235,
+          "amount": 230554.92,
           "issuer": "Circle",
           "source": "canonical"
         },
         {
           "symbol": "ARB",
-          "valueUsd": 14513.515,
+          "valueUsd": 13620.18,
           "amount": 79698.65,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "WBTC",
-          "valueUsd": 11484.595,
+          "valueUsd": 11498.055,
           "amount": 0.13,
           "issuer": "BitGo",
           "source": "canonical"
         },
         {
-          "symbol": "SUSHI",
-          "valueUsd": 2297.36,
-          "amount": 7602.56,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
           "symbol": "BUSD",
-          "valueUsd": 2296.04,
+          "valueUsd": 2350.78,
           "amount": 2349.625,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "MAGIC",
-          "valueUsd": 2284.295,
+          "valueUsd": 2244.88,
           "amount": 25218.83,
           "issuer": null,
           "source": "canonical"
         },
         {
+          "symbol": "SUSHI",
+          "valueUsd": 2230.625,
+          "amount": 7602.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
           "symbol": "AIUS",
-          "valueUsd": 1755.235,
+          "valueUsd": 1638.715,
           "amount": 2740.365,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDT",
-          "valueUsd": 1018.445,
+          "valueUsd": 1018.1,
           "amount": 1019.295,
           "issuer": "Tether",
           "source": "canonical"
         },
         {
           "symbol": "PMON",
-          "valueUsd": 768.49,
+          "valueUsd": 759.645,
           "amount": 23901.34,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LINK",
-          "valueUsd": 235.325,
+          "valueUsd": 231.425,
           "amount": 19.535,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "1INCH",
-          "valueUsd": 17.91,
+          "valueUsd": 17.47,
           "amount": 125.915,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "GRT",
-          "valueUsd": 8.8,
+          "valueUsd": 8.78,
           "amount": 242.915,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "UNI",
-          "valueUsd": 7.285,
+          "valueUsd": 6.925,
           "amount": 1.5,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "STG",
-          "valueUsd": 4.82,
+          "valueUsd": 4.785,
           "amount": 29,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "APE",
-          "valueUsd": 4.625,
+          "valueUsd": 4.52,
           "amount": 25,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LRC",
-          "valueUsd": 4.385,
+          "valueUsd": 4.195,
           "amount": 89.085,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LPT",
-          "valueUsd": 3.155,
+          "valueUsd": 3.57,
           "amount": 1.135,
           "issuer": "Livepeer",
           "source": "canonical"
         },
         {
           "symbol": "BLUR",
-          "valueUsd": 3.085,
+          "valueUsd": 2.945,
           "amount": 100,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LUSD",
-          "valueUsd": 2.495,
+          "valueUsd": 2.505,
           "amount": 2.5,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "CRO",
-          "valueUsd": 2.435,
+          "valueUsd": 2.445,
           "amount": 27,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "DYDX",
-          "valueUsd": 0.965,
+          "valueUsd": 0.935,
           "amount": 5.665,
           "issuer": null,
           "source": "canonical"
@@ -197,7 +201,7 @@
         },
         {
           "symbol": "TRADE",
-          "valueUsd": 0.255,
+          "valueUsd": 0.25,
           "amount": 5,
           "issuer": null,
           "source": "canonical"
@@ -245,170 +249,172 @@
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 8859907.065000001,
+      "totalValueUsd": 9680342.65166667,
       "source": "canonical",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract."
     },
     {
       "address": "eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
       "name": "CustomGateway",
-      "category": "third-party-secured",
+      "category": "rollup-secured",
       "bridgeType": "canonical",
-      "categoryReason": "Escrow holds tokens from multiple issuers",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Arbitrum DAO",
       "admin": "eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560",
-      "adminName": null,
-      "isRollupControlled": false,
+      "adminName": "Arbitrum DAO",
+      "isRollupControlled": true,
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 8592708,
-          "amount": 2964.9599999999996,
+          "valueUsd": 9414224.666666666,
+          "amount": 3244.4466666666667,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDC",
-          "valueUsd": 230484.53,
-          "amount": 230572.95,
+          "valueUsd": 230465.235,
+          "amount": 230554.92,
           "issuer": "Circle",
           "source": "canonical"
         },
         {
           "symbol": "ARB",
-          "valueUsd": 14513.515,
+          "valueUsd": 13620.18,
           "amount": 79698.65,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "WBTC",
-          "valueUsd": 11484.595,
+          "valueUsd": 11498.055,
           "amount": 0.13,
           "issuer": "BitGo",
           "source": "canonical"
         },
         {
-          "symbol": "SUSHI",
-          "valueUsd": 2297.36,
-          "amount": 7602.56,
-          "issuer": null,
-          "source": "canonical"
-        },
-        {
           "symbol": "BUSD",
-          "valueUsd": 2296.04,
+          "valueUsd": 2350.78,
           "amount": 2349.625,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "MAGIC",
-          "valueUsd": 2284.295,
+          "valueUsd": 2244.88,
           "amount": 25218.83,
           "issuer": null,
           "source": "canonical"
         },
         {
+          "symbol": "SUSHI",
+          "valueUsd": 2230.625,
+          "amount": 7602.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
           "symbol": "AIUS",
-          "valueUsd": 1755.235,
+          "valueUsd": 1638.715,
           "amount": 2740.365,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "USDT",
-          "valueUsd": 1018.445,
+          "valueUsd": 1018.1,
           "amount": 1019.295,
           "issuer": "Tether",
           "source": "canonical"
         },
         {
           "symbol": "PMON",
-          "valueUsd": 768.49,
+          "valueUsd": 759.645,
           "amount": 23901.34,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LINK",
-          "valueUsd": 235.325,
+          "valueUsd": 231.425,
           "amount": 19.535,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "1INCH",
-          "valueUsd": 17.91,
+          "valueUsd": 17.47,
           "amount": 125.915,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "GRT",
-          "valueUsd": 8.8,
+          "valueUsd": 8.78,
           "amount": 242.915,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "UNI",
-          "valueUsd": 7.285,
+          "valueUsd": 6.925,
           "amount": 1.5,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "STG",
-          "valueUsd": 4.82,
+          "valueUsd": 4.785,
           "amount": 29,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "APE",
-          "valueUsd": 4.625,
+          "valueUsd": 4.52,
           "amount": 25,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LRC",
-          "valueUsd": 4.385,
+          "valueUsd": 4.195,
           "amount": 89.085,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LPT",
-          "valueUsd": 3.155,
+          "valueUsd": 3.57,
           "amount": 1.135,
           "issuer": "Livepeer",
           "source": "canonical"
         },
         {
           "symbol": "BLUR",
-          "valueUsd": 3.085,
+          "valueUsd": 2.945,
           "amount": 100,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LUSD",
-          "valueUsd": 2.495,
+          "valueUsd": 2.505,
           "amount": 2.5,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "CRO",
-          "valueUsd": 2.435,
+          "valueUsd": 2.445,
           "amount": 27,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "DYDX",
-          "valueUsd": 0.965,
+          "valueUsd": 0.935,
           "amount": 5.665,
           "issuer": null,
           "source": "canonical"
@@ -422,7 +428,7 @@
         },
         {
           "symbol": "TRADE",
-          "valueUsd": 0.255,
+          "valueUsd": 0.25,
           "amount": 5,
           "issuer": null,
           "source": "canonical"
@@ -470,7 +476,7 @@
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 8859907.065000001,
+      "totalValueUsd": 9680342.65166667,
       "source": "canonical",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability."
     },
@@ -479,6 +485,8 @@
       "name": "L1Escrow",
       "category": "issuer-secured",
       "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
       "categoryReason": "Escrow controlled by token issuer (MakerDAO)",
       "admin": "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
       "adminName": "MakerDAO",
@@ -486,39 +494,39 @@
       "tokens": [
         {
           "symbol": "DAI",
-          "valueUsd": 77728.08,
-          "amount": 77810.29,
+          "valueUsd": 77787.28,
+          "amount": 77802.89,
           "issuer": "MakerDAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 77728.08,
+      "totalValueUsd": 77787.28,
       "source": "canonical",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 26390250.21,
-    "canonicalTvl": 26390250.21,
-    "externalTvl": 0,
+    "totalTvl": 28852697.250000007,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 77728.08,
-    "apiCanonicalTvl": 26312522.130000003,
-    "apiExternalTvl": 77728.08,
-    "rollupSecuredTvl": 0,
-    "issuerSecuredTvl": 77728.08,
-    "thirdPartySecuredTvl": 26312522.130000003,
-    "byAdmin": {
-      "rollupControlled": 0,
-      "issuerControlled": 77728.08,
-      "thirdPartyControlled": 26312522.130000003
-    }
+    "byNameCategory": {
+      "canonicalTrustMinimized": 28852697.250000007,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 28852697.250000007,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 28774909.970000006,
+    "apiExternalTvl": 77787.28
   },
   "externalTokensSummary": {
     "totalCount": 0,
     "totalValue": 0,
     "byProtocol": {},
-    "byCategory": {}
+    "byNameCategory": {}
   }
 }

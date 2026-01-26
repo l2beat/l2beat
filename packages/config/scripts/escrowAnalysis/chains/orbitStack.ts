@@ -76,10 +76,10 @@ export const ARBITRUM_CONFIG = {
 export const NOVA_CONFIG: typeof ARBITRUM_CONFIG = {
   projectId: 'nova',
   rollupAdmins: [
-    // Nova uses Arbitrum DAO governance - same admins
-    'eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa',
-    'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
-    'eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD',
+    // Nova's ProxyAdmins (owned by UpgradeExecutor, controlled by Arbitrum DAO)
+    'eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148', // ProxyAdmin (Bridge admin)
+    'eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560', // ProxyAdmin 3 (ERC20Gateway, CustomGateway admin)
+    'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd', // UpgradeExecutor
   ],
   rollupAdminName: 'Arbitrum DAO',
   manualEscrows: [], // Nova escrows are auto-detected

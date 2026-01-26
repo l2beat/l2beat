@@ -1,12 +1,14 @@
 {
   "projectId": "apechain",
-  "timestamp": 1769022267044,
+  "timestamp": 1769420943250,
   "escrows": [
     {
       "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
       "name": "Bridge",
       "category": "rollup-secured",
       "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
       "categoryReason": "Escrow controlled by Rollup Governance",
       "admin": "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507",
       "adminName": "Rollup Governance",
@@ -14,39 +16,39 @@
       "tokens": [
         {
           "symbol": "APE",
-          "valueUsd": 28825462,
-          "amount": 1000033540,
+          "valueUsd": 27771700,
+          "amount": 1000033700,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 28825462,
+      "totalValueUsd": 27771700,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 28825462,
-    "canonicalTvl": 28825462,
-    "externalTvl": 0,
+    "totalTvl": 27771700,
     "nativeTvl": 0,
-    "canonicalNoAdditionalTrust": 28825462,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 27771700,
+      "canonicalAdditionalTrust": 0,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 27771700,
+    "externalTvl": 0,
     "apiCanonicalTvl": 0,
-    "apiExternalTvl": 28825462,
-    "rollupSecuredTvl": 28825462,
-    "issuerSecuredTvl": 0,
-    "thirdPartySecuredTvl": 0,
-    "byAdmin": {
-      "rollupControlled": 28825462,
-      "issuerControlled": 0,
-      "thirdPartyControlled": 0
-    }
+    "apiExternalTvl": 27771700
   },
   "externalTokensSummary": {
     "totalCount": 0,
     "totalValue": 0,
     "byProtocol": {},
-    "byCategory": {}
+    "byNameCategory": {}
   }
 }

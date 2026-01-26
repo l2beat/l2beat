@@ -10,6 +10,35 @@ export type SecurityCategory =
 
 export type BridgeType = 'canonical' | 'external'
 
+// Name classification (user-facing category from the framework)
+export type NameCategory =
+  | 'canonical-trust-minimized'    // Canonical messaging + rollup/issuer secured
+  | 'canonical-additional-trust'   // Canonical messaging + third-party secured
+  | 'external'                     // External messaging (any governance)
+  | 'native'                       // Native tokens
+
+// Whether using this bridge adds trust assumptions beyond holding the token
+export function hasAdditionalTrust(messaging: BridgeType, category: SecurityCategory): boolean {
+  if (messaging === 'canonical') {
+    // Canonical: only third-party adds trust (rollup/issuer already trusted)
+    return category === 'third-party-secured'
+  } else {
+    // External: issuer-secured is OK (issuer runs bridge), others add validator trust
+    return category !== 'issuer-secured'
+  }
+}
+
+// Derive the Name category from messaging + governance
+export function deriveNameCategory(messaging: BridgeType, category: SecurityCategory): NameCategory {
+  if (messaging === 'canonical') {
+    if (category === 'third-party-secured') {
+      return 'canonical-additional-trust'
+    }
+    return 'canonical-trust-minimized'
+  }
+  return 'external'
+}
+
 // Escrow configuration
 export interface EscrowConfig {
   address: string
@@ -91,6 +120,8 @@ export interface EscrowAnalysis {
   name: string
   category: SecurityCategory
   bridgeType: BridgeType
+  nameCategory: NameCategory
+  additionalTrust: boolean
   categoryReason: string
   admin: string | null
   adminName: string | null
@@ -114,6 +145,8 @@ export interface ExternalTokenAnalysis {
   bridgeProtocol: string
   issuer: string
   category: SecurityCategory
+  nameCategory: NameCategory
+  additionalTrust: boolean
   categoryReason: string
   formulaType: string
   trustedParties?: TrustedParty[]
@@ -127,28 +160,29 @@ export interface EscrowReport {
   externalTokens: ExternalTokenAnalysis[]
   summary: {
     totalTvl: number
+    nativeTvl: number
+    // Primary classification by Name category
+    byNameCategory: {
+      canonicalTrustMinimized: number   // Canonical + rollup/issuer secured
+      canonicalAdditionalTrust: number  // Canonical + third-party secured
+      external: number                   // All external messaging
+    }
+    // Additional trust breakdown within External
+    externalBreakdown: {
+      issuerSecured: number    // External + issuer-secured (no additional trust)
+      additionalTrust: number  // External + rollup/third-party (additional trust)
+    }
+    // Legacy fields for comparison
     canonicalTvl: number
     externalTvl: number
-    nativeTvl: number
-    canonicalNoAdditionalTrust: number
-    // Current API values for comparison
     apiCanonicalTvl: number
     apiExternalTvl: number
-    // For visualizer compatibility
-    rollupSecuredTvl: number
-    issuerSecuredTvl: number
-    thirdPartySecuredTvl: number
-    byAdmin: {
-      rollupControlled: number
-      issuerControlled: number
-      thirdPartyControlled: number
-    }
   }
   externalTokensSummary: {
     totalCount: number
     totalValue: number
     byProtocol: Record<string, { count: number; value: number }>
-    byCategory: Record<SecurityCategory, { count: number; value: number }>
+    byNameCategory: Record<NameCategory, { count: number; value: number }>
   }
 }
 

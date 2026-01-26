@@ -3,7 +3,7 @@
  * Generate HTML Visualizations
  *
  * Reads all analysis JSON files from /analysis folder and generates
- * HTML visualizations.
+ * HTML visualizations based on the Name category framework.
  *
  * Usage:
  *   npx ts-node scripts/escrowAnalysis/generateHtml.ts
@@ -24,52 +24,36 @@ function formatUsd(value: number): string {
 
 function generateHtml(reports: EscrowReport[]): string {
   const totalTvl = reports.reduce((sum, r) => sum + r.summary.totalTvl, 0)
-  const totalCanonical = reports.reduce((sum, r) => sum + r.summary.canonicalTvl, 0)
-  const totalExternal = reports.reduce((sum, r) => sum + r.summary.externalTvl, 0)
   const totalNative = reports.reduce((sum, r) => sum + r.summary.nativeTvl, 0)
-  const totalRollupSecured = reports.reduce((sum, r) => sum + r.summary.rollupSecuredTvl, 0)
-  const totalIssuerSecured = reports.reduce((sum, r) => sum + r.summary.issuerSecuredTvl, 0)
-  const totalThirdParty = reports.reduce((sum, r) => sum + r.summary.thirdPartySecuredTvl, 0)
 
-  // Get API totals from stored values
-  const totalApiCanonical = reports.reduce((sum, r) => sum + (r.summary.apiCanonicalTvl || 0), 0)
-  const totalApiExternal = reports.reduce((sum, r) => sum + (r.summary.apiExternalTvl || 0), 0)
+  // Aggregate by Name category
+  const totalCanonicalTrustMin = reports.reduce((sum, r) => sum + r.summary.byNameCategory.canonicalTrustMinimized, 0)
+  const totalCanonicalAddTrust = reports.reduce((sum, r) => sum + r.summary.byNameCategory.canonicalAdditionalTrust, 0)
+  const totalExternal = reports.reduce((sum, r) => sum + r.summary.byNameCategory.external, 0)
+  const totalExternalIssuer = reports.reduce((sum, r) => sum + r.summary.externalBreakdown.issuerSecured, 0)
+  const totalExternalAddTrust = reports.reduce((sum, r) => sum + r.summary.externalBreakdown.additionalTrust, 0)
+
+  // Trust summary
+  const noAddTrustTotal = totalCanonicalTrustMin + totalExternalIssuer + totalNative
+  const addTrustTotal = totalCanonicalAddTrust + totalExternalAddTrust
 
   const chainRows = reports
     .sort((a, b) => b.summary.totalTvl - a.summary.totalTvl)
     .map(r => {
-      // Use stored API values
-      const apiCanonical = r.summary.apiCanonicalTvl || 0
-      const apiExternal = r.summary.apiExternalTvl || 0
-
-      // Calculate differences
-      const canonicalDiff = r.summary.canonicalTvl - apiCanonical
-      const externalDiff = r.summary.externalTvl - apiExternal
-
-      const diffStr = (diff: number) => {
-        if (Math.abs(diff) < 1000) return ''
-        const sign = diff >= 0 ? '+' : '-'
-        return `<span class="${diff >= 0 ? 'positive' : 'negative'}" style="font-size:11px;margin-left:4px;">(${sign}${formatUsd(Math.abs(diff))})</span>`
-      }
-
-      const noTrust = r.summary.rollupSecuredTvl + r.summary.issuerSecuredTvl
-      const rollupPct = noTrust > 0 ? (r.summary.rollupSecuredTvl / noTrust) * 100 : 0
+      const s = r.summary
+      const noAddTrust = s.byNameCategory.canonicalTrustMinimized + s.externalBreakdown.issuerSecured + s.nativeTvl
+      const addTrust = s.byNameCategory.canonicalAdditionalTrust + s.externalBreakdown.additionalTrust
 
       return `
       <tr>
         <td class="clickable" onclick="showChainDetail('${r.projectId}')">${r.projectId}</td>
-        <td class="clickable" onclick="showChainDetail('${r.projectId}')">${formatUsd(r.summary.totalTvl)}</td>
-        <td class="canonical clickable" onclick="showReclassified('${r.projectId}', 'canonical')">${formatUsd(r.summary.canonicalTvl)}${diffStr(canonicalDiff)}</td>
-        <td class="external clickable" onclick="showReclassified('${r.projectId}', 'external')">${formatUsd(r.summary.externalTvl)}${diffStr(externalDiff)}</td>
-        <td class="native separator">${formatUsd(r.summary.nativeTvl)}</td>
-        <td class="clickable" onclick="showCategoryDetail('${r.projectId}', 'no-additional-trust')" style="position: relative;">
-          <div class="trust-bar">
-            <div class="trust-bar-rollup" style="width: ${rollupPct}%"></div>
-            <div class="trust-bar-issuer" style="width: ${100 - rollupPct}%"></div>
-          </div>
-          <span style="position: relative; z-index: 1;">${formatUsd(noTrust)}</span>
-        </td>
-        <td class="third-party clickable" onclick="showCategoryDetail('${r.projectId}', 'third-party-secured')">${formatUsd(r.summary.thirdPartySecuredTvl)}</td>
+        <td class="clickable" onclick="showChainDetail('${r.projectId}')">${formatUsd(s.totalTvl)}</td>
+        <td class="canonical-min clickable" onclick="showCategoryDetail('${r.projectId}', 'canonical-trust-minimized')">${formatUsd(s.byNameCategory.canonicalTrustMinimized)}</td>
+        <td class="canonical-add clickable" onclick="showCategoryDetail('${r.projectId}', 'canonical-additional-trust')">${formatUsd(s.byNameCategory.canonicalAdditionalTrust)}</td>
+        <td class="external clickable" onclick="showCategoryDetail('${r.projectId}', 'external')">${formatUsd(s.byNameCategory.external)}</td>
+        <td class="native separator">${formatUsd(s.nativeTvl)}</td>
+        <td class="no-trust">${formatUsd(noAddTrust)}</td>
+        <td class="add-trust">${formatUsd(addTrust)}</td>
       </tr>
     `}).join('')
 
@@ -91,8 +75,9 @@ function generateHtml(reports: EscrowReport[]): string {
       color: #c9d1d9;
       padding: 24px;
     }
-    h1 { color: #58a6ff; margin-bottom: 24px; }
+    h1 { color: #58a6ff; margin-bottom: 8px; }
     h2 { color: #8b949e; margin: 24px 0 16px; font-size: 14px; text-transform: uppercase; }
+    .subtitle { color: #8b949e; font-size: 13px; margin-bottom: 24px; }
 
     .summary-grid {
       display: grid;
@@ -108,27 +93,33 @@ function generateHtml(reports: EscrowReport[]): string {
     }
     .summary-card .label { color: #8b949e; font-size: 12px; margin-bottom: 4px; }
     .summary-card .value { font-size: 24px; font-weight: 600; }
-    .summary-card.canonical .value { color: #3fb950; }
+    .summary-card .pct { color: #8b949e; font-size: 12px; margin-top: 4px; }
+    .summary-card.canonical-min .value { color: #3fb950; }
+    .summary-card.canonical-add .value { color: #f85149; }
     .summary-card.external .value { color: #f0883e; }
     .summary-card.native .value { color: #58a6ff; }
 
-    .breakdown-grid {
+    .trust-summary {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       margin-bottom: 32px;
     }
-    .breakdown-card {
+    .trust-card {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 8px;
-      padding: 16px;
+      padding: 20px;
     }
-    .breakdown-card .label { color: #8b949e; font-size: 12px; margin-bottom: 4px; }
-    .breakdown-card .value { font-size: 20px; font-weight: 600; }
-    .breakdown-card.rollup .value { color: #3fb950; }
-    .breakdown-card.issuer .value { color: #a371f7; }
-    .breakdown-card.third-party .value { color: #f85149; }
+    .trust-card .label { font-size: 14px; margin-bottom: 8px; }
+    .trust-card .value { font-size: 28px; font-weight: 600; }
+    .trust-card .pct { color: #8b949e; font-size: 14px; margin-top: 4px; }
+    .trust-card.no-trust { border-left: 4px solid #3fb950; }
+    .trust-card.no-trust .value { color: #3fb950; }
+    .trust-card.add-trust { border-left: 4px solid #f85149; }
+    .trust-card.add-trust .value { color: #f85149; }
+    .trust-card .breakdown { margin-top: 12px; font-size: 12px; color: #8b949e; }
+    .trust-card .breakdown-item { margin-top: 4px; }
 
     table {
       width: 100%;
@@ -152,38 +143,12 @@ function generateHtml(reports: EscrowReport[]): string {
     td.clickable { cursor: pointer; }
     td.clickable:hover { text-decoration: underline; }
     td.separator, th.separator { border-right: 2px solid #30363d; }
-    .canonical { color: #3fb950; }
+    .canonical-min { color: #3fb950; }
+    .canonical-add { color: #f85149; }
     .external { color: #f0883e; }
     .native { color: #58a6ff; }
-    .rollup { color: #3fb950; }
-    .issuer { color: #a371f7; }
-    .third-party { color: #f85149; }
-    .positive { color: #3fb950; }
-    .negative { color: #f85149; }
-
-    .trust-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      opacity: 0.3;
-    }
-    .trust-bar-rollup { background: #3fb950; }
-    .trust-bar-issuer { background: #a371f7; }
-
-    .comparison-table {
-      width: auto;
-      margin-bottom: 32px;
-    }
-    .comparison-table td, .comparison-table th {
-      padding: 12px 16px;
-    }
-    .comparison-table .total-row {
-      font-weight: 600;
-      border-top: 2px solid #30363d;
-    }
+    .no-trust { color: #3fb950; }
+    .add-trust { color: #f85149; }
 
     .modal {
       display: none;
@@ -243,57 +208,75 @@ function generateHtml(reports: EscrowReport[]): string {
       font-size: 12px;
       margin-top: 4px;
     }
-    .escrow-category.rollup-secured { background: rgba(63,185,80,0.2); color: #3fb950; }
-    .escrow-category.issuer-secured { background: rgba(163,113,247,0.2); color: #a371f7; }
-    .escrow-category.third-party-secured { background: rgba(248,81,73,0.2); color: #f85149; }
+    .escrow-category.canonical-trust-minimized { background: rgba(63,185,80,0.2); color: #3fb950; }
+    .escrow-category.canonical-additional-trust { background: rgba(248,81,73,0.2); color: #f85149; }
+    .escrow-category.external { background: rgba(240,136,62,0.2); color: #f0883e; }
     .escrow-tokens {
       margin-top: 12px;
       font-size: 13px;
       color: #8b949e;
     }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-left: 8px;
+    }
+    .badge.no-trust { background: rgba(63,185,80,0.2); color: #3fb950; }
+    .badge.add-trust { background: rgba(248,81,73,0.2); color: #f85149; }
   </style>
 </head>
 <body>
   <h1>Escrow Analysis Dashboard</h1>
+  <p class="subtitle">Classification based on trust assumptions beyond holding the token</p>
 
-  <h2>Messaging Classification</h2>
-  <p style="color: #8b949e; font-size: 13px; margin-bottom: 16px;">How messages being passed between L1 and L2: Canonical (rollup messaging), External (non-rollup external messaging), Native (issued on L2 directly)</p>
-  <table class="comparison-table">
-    <thead>
-      <tr>
-        <th>Source</th>
-        <th>Current API</th>
-        <th>New Framework</th>
-        <th>Difference</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="canonical">Canonical</td>
-        <td>${formatUsd(totalApiCanonical)} (${((totalApiCanonical / totalTvl) * 100).toFixed(1)}%)</td>
-        <td>${formatUsd(totalCanonical)} (${((totalCanonical / totalTvl) * 100).toFixed(1)}%)</td>
-        <td class="${totalCanonical - totalApiCanonical >= 0 ? 'positive' : 'negative'}">${totalCanonical - totalApiCanonical >= 0 ? '+' : '-'}${formatUsd(Math.abs(totalCanonical - totalApiCanonical))}</td>
-      </tr>
-      <tr>
-        <td class="external">External</td>
-        <td>${formatUsd(totalApiExternal)} (${((totalApiExternal / totalTvl) * 100).toFixed(1)}%)</td>
-        <td>${formatUsd(totalExternal)} (${((totalExternal / totalTvl) * 100).toFixed(1)}%)</td>
-        <td class="${totalExternal - totalApiExternal >= 0 ? 'positive' : 'negative'}">${totalExternal - totalApiExternal >= 0 ? '+' : '-'}${formatUsd(Math.abs(totalExternal - totalApiExternal))}</td>
-      </tr>
-      <tr>
-        <td class="native">Native</td>
-        <td>${formatUsd(totalNative)} (${((totalNative / totalTvl) * 100).toFixed(1)}%)</td>
-        <td>${formatUsd(totalNative)} (${((totalNative / totalTvl) * 100).toFixed(1)}%)</td>
-        <td>-</td>
-      </tr>
-      <tr class="total-row">
-        <td>Total</td>
-        <td>${formatUsd(totalTvl)}</td>
-        <td>${formatUsd(totalTvl)}</td>
-        <td>✓</td>
-      </tr>
-    </tbody>
-  </table>
+  <h2>Trust Summary (All Chains)</h2>
+  <div class="trust-summary">
+    <div class="trust-card no-trust">
+      <div class="label">No Additional Trust Required</div>
+      <div class="value">${formatUsd(noAddTrustTotal)}</div>
+      <div class="pct">${((noAddTrustTotal / totalTvl) * 100).toFixed(1)}% of total TVL</div>
+      <div class="breakdown">
+        <div class="breakdown-item">Canonical (trust-minimized): ${formatUsd(totalCanonicalTrustMin)}</div>
+        <div class="breakdown-item">External (issuer-secured): ${formatUsd(totalExternalIssuer)}</div>
+        <div class="breakdown-item">Native: ${formatUsd(totalNative)}</div>
+      </div>
+    </div>
+    <div class="trust-card add-trust">
+      <div class="label">Additional Trust Required</div>
+      <div class="value">${formatUsd(addTrustTotal)}</div>
+      <div class="pct">${((addTrustTotal / totalTvl) * 100).toFixed(1)}% of total TVL</div>
+      <div class="breakdown">
+        <div class="breakdown-item">Canonical (third-party): ${formatUsd(totalCanonicalAddTrust)}</div>
+        <div class="breakdown-item">External (validators): ${formatUsd(totalExternalAddTrust)}</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Name Categories (All Chains)</h2>
+  <div class="summary-grid">
+    <div class="summary-card canonical-min">
+      <div class="label">Canonical (trust-minimized)</div>
+      <div class="value">${formatUsd(totalCanonicalTrustMin)}</div>
+      <div class="pct">${((totalCanonicalTrustMin / totalTvl) * 100).toFixed(1)}%</div>
+    </div>
+    <div class="summary-card canonical-add">
+      <div class="label">Canonical (additional trust)</div>
+      <div class="value">${formatUsd(totalCanonicalAddTrust)}</div>
+      <div class="pct">${((totalCanonicalAddTrust / totalTvl) * 100).toFixed(1)}%</div>
+    </div>
+    <div class="summary-card external">
+      <div class="label">External</div>
+      <div class="value">${formatUsd(totalExternal)}</div>
+      <div class="pct">${((totalExternal / totalTvl) * 100).toFixed(1)}% (issuer: ${formatUsd(totalExternalIssuer)}, other: ${formatUsd(totalExternalAddTrust)})</div>
+    </div>
+    <div class="summary-card native">
+      <div class="label">Native</div>
+      <div class="value">${formatUsd(totalNative)}</div>
+      <div class="pct">${((totalNative / totalTvl) * 100).toFixed(1)}%</div>
+    </div>
+  </div>
 
   <h2>Chains (${reports.length})</h2>
   <table>
@@ -301,15 +284,16 @@ function generateHtml(reports: EscrowReport[]): string {
       <tr>
         <th rowspan="2">Chain</th>
         <th rowspan="2">Total TVL</th>
-        <th colspan="3" class="separator" style="text-align: center; color: #58a6ff;">Messaging Classification</th>
-        <th colspan="2" style="text-align: center; color: #a371f7;">Trust Assumptions</th>
+        <th colspan="4" class="separator" style="text-align: center; color: #58a6ff;">Name Category</th>
+        <th colspan="2" style="text-align: center; color: #a371f7;">Trust Summary</th>
       </tr>
       <tr>
-        <th class="canonical">Canonical</th>
+        <th class="canonical-min">Canonical (min)</th>
+        <th class="canonical-add">Canonical (add)</th>
         <th class="external">External</th>
         <th class="native separator">Native</th>
-        <th style="color: #3fb950;">No Additional Trust</th>
-        <th class="third-party">Third-Party</th>
+        <th class="no-trust">No Add. Trust</th>
+        <th class="add-trust">Add. Trust</th>
       </tr>
     </thead>
     <tbody>
@@ -342,10 +326,49 @@ function generateHtml(reports: EscrowReport[]): string {
       const report = reports.find(r => r.projectId === chainId);
       if (!report) return;
 
-      document.getElementById('modal-title').textContent = chainId + ' Assets';
+      document.getElementById('modal-title').textContent = chainId + ' - All Assets';
 
-      const escrowHtml = '<h3 style="color: #8b949e; margin-bottom: 12px;">Escrows (L1 locked)</h3>' +
-        report.escrows
+      // Summary cards
+      const s = report.summary;
+      const noAddTrust = s.byNameCategory.canonicalTrustMinimized + s.externalBreakdown.issuerSecured + s.nativeTvl;
+      const addTrust = s.byNameCategory.canonicalAdditionalTrust + s.externalBreakdown.additionalTrust;
+
+      let html = \`
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+          <div style="background: #21262d; padding: 12px; border-radius: 8px; border-left: 3px solid #3fb950;">
+            <div style="color: #8b949e; font-size: 11px;">Canonical (trust-min)</div>
+            <div style="color: #3fb950; font-size: 18px; font-weight: 600;">\${formatUsd(s.byNameCategory.canonicalTrustMinimized)}</div>
+          </div>
+          <div style="background: #21262d; padding: 12px; border-radius: 8px; border-left: 3px solid #f85149;">
+            <div style="color: #8b949e; font-size: 11px;">Canonical (add. trust)</div>
+            <div style="color: #f85149; font-size: 18px; font-weight: 600;">\${formatUsd(s.byNameCategory.canonicalAdditionalTrust)}</div>
+          </div>
+          <div style="background: #21262d; padding: 12px; border-radius: 8px; border-left: 3px solid #f0883e;">
+            <div style="color: #8b949e; font-size: 11px;">External</div>
+            <div style="color: #f0883e; font-size: 18px; font-weight: 600;">\${formatUsd(s.byNameCategory.external)}</div>
+          </div>
+          <div style="background: #21262d; padding: 12px; border-radius: 8px; border-left: 3px solid #58a6ff;">
+            <div style="color: #8b949e; font-size: 11px;">Native</div>
+            <div style="color: #58a6ff; font-size: 18px; font-weight: 600;">\${formatUsd(s.nativeTvl)}</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px;">
+          <div style="background: #21262d; padding: 16px; border-radius: 8px; border-left: 4px solid #3fb950;">
+            <div style="color: #8b949e; font-size: 12px;">No Additional Trust</div>
+            <div style="color: #3fb950; font-size: 24px; font-weight: 600;">\${formatUsd(noAddTrust)}</div>
+            <div style="color: #8b949e; font-size: 11px;">\${((noAddTrust / s.totalTvl) * 100).toFixed(1)}%</div>
+          </div>
+          <div style="background: #21262d; padding: 16px; border-radius: 8px; border-left: 4px solid #f85149;">
+            <div style="color: #8b949e; font-size: 12px;">Additional Trust Required</div>
+            <div style="color: #f85149; font-size: 24px; font-weight: 600;">\${formatUsd(addTrust)}</div>
+            <div style="color: #8b949e; font-size: 11px;">\${((addTrust / s.totalTvl) * 100).toFixed(1)}%</div>
+          </div>
+        </div>
+      \`;
+
+      // Escrows section
+      html += '<h3 style="color: #8b949e; margin-bottom: 12px;">Escrows (L1 locked)</h3>';
+      html += report.escrows
         .sort((a, b) => b.totalValueUsd - a.totalValueUsd)
         .map(e => \`
           <div class="escrow-card">
@@ -354,9 +377,10 @@ function generateHtml(reports: EscrowReport[]): string {
               <span class="escrow-value">\${formatUsd(e.totalValueUsd)}</span>
             </div>
             <div>
-              <span class="escrow-category \${e.category}">\${e.category}</span>
-              <span style="color: #8b949e; margin-left: 8px; font-size: 12px;">\${e.bridgeType}</span>
+              <span class="escrow-category \${e.nameCategory}">\${e.nameCategory.replace(/-/g, ' ')}</span>
+              <span class="badge \${e.additionalTrust ? 'add-trust' : 'no-trust'}">\${e.additionalTrust ? 'Additional Trust' : 'No Add. Trust'}</span>
             </div>
+            <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">\${e.categoryReason}</div>
             <div class="escrow-tokens">
               \${e.tokens.slice(0, 5).map(t => t.symbol + ': ' + formatUsd(t.valueUsd)).join(' | ')}
               \${e.tokens.length > 5 ? ' | +' + (e.tokens.length - 5) + ' more' : ''}
@@ -364,149 +388,28 @@ function generateHtml(reports: EscrowReport[]): string {
           </div>
         \`).join('');
 
-      const externalHtml = report.externalTokens && report.externalTokens.length > 0 ?
-        '<h3 style="color: #8b949e; margin: 24px 0 12px;">External Tokens (No Escrow)</h3>' +
-        report.externalTokens
-        .sort((a, b) => b.valueUsd - a.valueUsd)
-        .map(t => \`
-          <div class="escrow-card">
-            <div class="escrow-header">
-              <span class="escrow-name">\${t.symbol}</span>
-              <span class="escrow-value">\${formatUsd(t.valueUsd)}</span>
+      // External tokens section
+      if (report.externalTokens && report.externalTokens.length > 0) {
+        html += '<h3 style="color: #8b949e; margin: 24px 0 12px;">External Tokens (No L1 Escrow)</h3>';
+        html += report.externalTokens
+          .sort((a, b) => b.valueUsd - a.valueUsd)
+          .map(t => \`
+            <div class="escrow-card">
+              <div class="escrow-header">
+                <span class="escrow-name">\${t.symbol}</span>
+                <span class="escrow-value">\${formatUsd(t.valueUsd)}</span>
+              </div>
+              <div>
+                <span class="escrow-category external">external</span>
+                <span class="badge \${t.additionalTrust ? 'add-trust' : 'no-trust'}">\${t.additionalTrust ? 'Additional Trust' : 'No Add. Trust'}</span>
+                <span style="color: #8b949e; margin-left: 8px; font-size: 12px;">\${t.bridgeProtocol}</span>
+              </div>
+              <div style="color: #8b949e; font-size: 11px; margin-top: 4px;">\${t.categoryReason}</div>
             </div>
-            <div>
-              <span class="escrow-category \${t.category}">\${t.category}</span>
-              <span style="color: #8b949e; margin-left: 8px; font-size: 12px;">\${t.bridgeProtocol}</span>
-            </div>
-          </div>
-        \`).join('') : '';
-
-      document.getElementById('modal-body').innerHTML = escrowHtml + externalHtml;
-      document.getElementById('modal').classList.add('active');
-    }
-
-    function showReclassified(chainId, type) {
-      const report = reports.find(r => r.projectId === chainId);
-      if (!report) return;
-
-      if (type === 'canonical') {
-        // Escrows now canonical that were marked external in the API
-        const reclassified = report.escrows
-          .filter(e => e.bridgeType === 'canonical' && e.tokens?.some(t => t.source === 'external'))
-          .filter(e => e.totalValueUsd > 10000)
-          .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
-        const totalReclassified = reclassified.reduce((sum, e) => sum + e.totalValueUsd, 0);
-
-        document.getElementById('modal-title').textContent = chainId + ' - Canonical Reclassification';
-
-        if (reclassified.length === 0) {
-          document.getElementById('modal-body').innerHTML = '<p style="color: #8b949e;">No significant reclassifications for this category.</p>';
-        } else {
-          const tableHtml = \`
-            <table style="width: 100%;">
-              <thead>
-                <tr>
-                  <th style="text-align: left;">Escrow</th>
-                  <th style="text-align: right;">TVL</th>
-                  <th style="text-align: left;">Current API</th>
-                  <th style="text-align: left;">New Framework</th>
-                </tr>
-              </thead>
-              <tbody>
-                \${reclassified.map(e => \`
-                  <tr>
-                    <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
-                    <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
-                    <td class="external">source: external</td>
-                    <td class="canonical">\${e.bridgeType} + \${e.category}</td>
-                  </tr>
-                \`).join('')}
-                <tr style="border-top: 2px solid #30363d; font-weight: 600;">
-                  <td>Total reclassified</td>
-                  <td style="text-align: right;">\${formatUsd(totalReclassified)}</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          \`;
-          document.getElementById('modal-body').innerHTML = tableHtml;
-        }
-      } else {
-        // External summary view
-        const apiExternal = report.summary.apiExternalTvl || 0;
-        const newExternal = report.summary.externalTvl;
-        const diff = newExternal - apiExternal;
-
-        // Break down by category
-        const externalTokens = report.externalTokens || [];
-        const issuerSecured = externalTokens.filter(t => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0);
-        const thirdPartySecured = externalTokens.filter(t => t.category === 'third-party-secured').reduce((sum, t) => sum + t.valueUsd, 0);
-
-        // Count by bridge protocol
-        const byProtocol = {};
-        externalTokens.forEach(t => {
-          byProtocol[t.bridgeProtocol] = (byProtocol[t.bridgeProtocol] || 0) + t.valueUsd;
-        });
-        const topProtocols = Object.entries(byProtocol)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 5);
-
-        document.getElementById('modal-title').textContent = chainId + ' - External TVL Summary';
-
-        const tableHtml = \`
-          <table style="width: 100%; margin-bottom: 24px;">
-            <thead>
-              <tr>
-                <th style="text-align: left;">Metric</th>
-                <th style="text-align: right;">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Current API External</td>
-                <td style="text-align: right;">\${formatUsd(apiExternal)}</td>
-              </tr>
-              <tr>
-                <td>New Framework External</td>
-                <td style="text-align: right;">\${formatUsd(newExternal)}</td>
-              </tr>
-              <tr style="border-top: 2px solid #30363d; font-weight: 600;">
-                <td>Difference</td>
-                <td style="text-align: right;" class="\${diff >= 0 ? 'positive' : 'negative'}">\${diff >= 0 ? '+' : '-'}\${formatUsd(Math.abs(diff))}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 style="color: #8b949e; margin-bottom: 12px;">External Tokens by Security</h3>
-          <table style="width: 100%; margin-bottom: 24px;">
-            <tbody>
-              <tr>
-                <td class="issuer">Issuer-Secured</td>
-                <td style="text-align: right;">\${formatUsd(issuerSecured)}</td>
-              </tr>
-              <tr>
-                <td class="third-party">Third-Party-Secured</td>
-                <td style="text-align: right;">\${formatUsd(thirdPartySecured)}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 style="color: #8b949e; margin-bottom: 12px;">Top Bridge Protocols</h3>
-          <table style="width: 100%;">
-            <tbody>
-              \${topProtocols.map(([protocol, value]) => \`
-                <tr>
-                  <td>\${protocol}</td>
-                  <td style="text-align: right;">\${formatUsd(value)}</td>
-                </tr>
-              \`).join('')}
-            </tbody>
-          </table>
-        \`;
-        document.getElementById('modal-body').innerHTML = tableHtml;
+          \`).join('');
       }
 
+      document.getElementById('modal-body').innerHTML = html;
       document.getElementById('modal').classList.add('active');
     }
 
@@ -515,29 +418,23 @@ function generateHtml(reports: EscrowReport[]): string {
       if (!report) return;
 
       const categoryNames = {
-        'rollup-secured': 'Rollup-Secured',
-        'issuer-secured': 'Issuer-Secured',
-        'third-party-secured': 'Third-Party-Secured',
-        'no-additional-trust': 'No Additional Trust'
+        'canonical-trust-minimized': 'Canonical (trust-minimized)',
+        'canonical-additional-trust': 'Canonical (additional trust)',
+        'external': 'External'
       };
 
-      document.getElementById('modal-title').textContent = chainId + ' - ' + categoryNames[category] + ' Assets';
-
-      // Handle combined "no-additional-trust" category
-      const categories = category === 'no-additional-trust'
-        ? ['rollup-secured', 'issuer-secured']
-        : [category];
+      document.getElementById('modal-title').textContent = chainId + ' - ' + categoryNames[category];
 
       // Get escrows for this category
       const escrows = report.escrows
-        .filter(e => categories.includes(e.category))
-        .filter(e => e.totalValueUsd > 10000)
+        .filter(e => e.nameCategory === category)
+        .filter(e => e.totalValueUsd > 1000)
         .sort((a, b) => b.totalValueUsd - a.totalValueUsd);
 
       // Get external tokens for this category
       const externalTokens = (report.externalTokens || [])
-        .filter(t => categories.includes(t.category))
-        .filter(t => t.valueUsd > 10000)
+        .filter(t => t.nameCategory === category)
+        .filter(t => t.valueUsd > 1000)
         .sort((a, b) => b.valueUsd - a.valueUsd);
 
       const escrowTotal = escrows.reduce((sum, e) => sum + e.totalValueUsd, 0);
@@ -545,29 +442,22 @@ function generateHtml(reports: EscrowReport[]): string {
 
       let html = '';
 
-      // Show breakdown summary for no-additional-trust
-      if (category === 'no-additional-trust') {
-        const rollupEscrows = escrows.filter(e => e.category === 'rollup-secured').reduce((sum, e) => sum + e.totalValueUsd, 0);
-        const issuerEscrows = escrows.filter(e => e.category === 'issuer-secured').reduce((sum, e) => sum + e.totalValueUsd, 0);
-        const rollupTokens = externalTokens.filter(t => t.category === 'rollup-secured').reduce((sum, t) => sum + t.valueUsd, 0);
-        const issuerTokens = externalTokens.filter(t => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0);
-        const rollupTotal = rollupEscrows + rollupTokens;
-        const issuerTotal = issuerEscrows + issuerTokens;
-        const grandTotal = rollupTotal + issuerTotal;
-        const rollupPct = grandTotal > 0 ? ((rollupTotal / grandTotal) * 100).toFixed(1) : 0;
-        const issuerPct = grandTotal > 0 ? ((issuerTotal / grandTotal) * 100).toFixed(1) : 0;
+      // For external, show breakdown by trust
+      if (category === 'external') {
+        const issuerSecured = escrows.filter(e => !e.additionalTrust).reduce((sum, e) => sum + e.totalValueUsd, 0) +
+          externalTokens.filter(t => !t.additionalTrust).reduce((sum, t) => sum + t.valueUsd, 0);
+        const addTrust = escrows.filter(e => e.additionalTrust).reduce((sum, e) => sum + e.totalValueUsd, 0) +
+          externalTokens.filter(t => t.additionalTrust).reduce((sum, t) => sum + t.valueUsd, 0);
 
         html += \`
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
             <div style="background: #21262d; border-radius: 8px; padding: 16px; border-left: 4px solid #3fb950;">
-              <div style="color: #8b949e; font-size: 12px;">Rollup-Secured</div>
-              <div style="font-size: 20px; font-weight: 600; color: #3fb950;">\${formatUsd(rollupTotal)}</div>
-              <div style="color: #8b949e; font-size: 11px;">\${rollupPct}% of total</div>
+              <div style="color: #8b949e; font-size: 12px;">Issuer-Secured (no add. trust)</div>
+              <div style="font-size: 20px; font-weight: 600; color: #3fb950;">\${formatUsd(issuerSecured)}</div>
             </div>
-            <div style="background: #21262d; border-radius: 8px; padding: 16px; border-left: 4px solid #a371f7;">
-              <div style="color: #8b949e; font-size: 12px;">Issuer-Secured</div>
-              <div style="font-size: 20px; font-weight: 600; color: #a371f7;">\${formatUsd(issuerTotal)}</div>
-              <div style="color: #8b949e; font-size: 11px;">\${issuerPct}% of total</div>
+            <div style="background: #21262d; border-radius: 8px; padding: 16px; border-left: 4px solid #f85149;">
+              <div style="color: #8b949e; font-size: 12px;">Additional Trust Required</div>
+              <div style="font-size: 20px; font-weight: 600; color: #f85149;">\${formatUsd(addTrust)}</div>
             </div>
           </div>
         \`;
@@ -581,7 +471,8 @@ function generateHtml(reports: EscrowReport[]): string {
               <tr>
                 <th style="text-align: left;">Escrow</th>
                 <th style="text-align: right;">TVL</th>
-                <th style="text-align: left;">Category</th>
+                <th style="text-align: left;">Security</th>
+                <th style="text-align: left;">Trust</th>
               </tr>
             </thead>
             <tbody>
@@ -589,12 +480,14 @@ function generateHtml(reports: EscrowReport[]): string {
                 <tr>
                   <td>\${e.name} \${e.adminName ? '(' + e.adminName + ')' : ''}</td>
                   <td style="text-align: right;">\${formatUsd(e.totalValueUsd)}</td>
-                  <td class="\${e.category === 'rollup-secured' ? 'rollup' : 'issuer'}">\${e.category === 'rollup-secured' ? 'Rollup' : 'Issuer'}</td>
+                  <td>\${e.category}</td>
+                  <td class="\${e.additionalTrust ? 'add-trust' : 'no-trust'}">\${e.additionalTrust ? 'Additional' : 'None'}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
                 <td>Subtotal</td>
                 <td style="text-align: right;">\${formatUsd(escrowTotal)}</td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>
@@ -611,7 +504,7 @@ function generateHtml(reports: EscrowReport[]): string {
                 <th style="text-align: left;">Token</th>
                 <th style="text-align: right;">TVL</th>
                 <th style="text-align: left;">Bridge</th>
-                <th style="text-align: left;">Category</th>
+                <th style="text-align: left;">Trust</th>
               </tr>
             </thead>
             <tbody>
@@ -620,7 +513,7 @@ function generateHtml(reports: EscrowReport[]): string {
                   <td>\${t.symbol}</td>
                   <td style="text-align: right;">\${formatUsd(t.valueUsd)}</td>
                   <td>\${t.bridgeProtocol}</td>
-                  <td class="\${t.category === 'rollup-secured' ? 'rollup' : t.category === 'issuer-secured' ? 'issuer' : 'third-party'}">\${t.category === 'rollup-secured' ? 'Rollup' : t.category === 'issuer-secured' ? 'Issuer' : 'Third-Party'}</td>
+                  <td class="\${t.additionalTrust ? 'add-trust' : 'no-trust'}">\${t.additionalTrust ? 'Additional' : 'None'}</td>
                 </tr>
               \`).join('')}
               <tr style="border-top: 2px solid #30363d; font-weight: 600;">
@@ -688,7 +581,7 @@ function main(): void {
   const outputPath = join(ANALYSIS_DIR, 'dashboard.html')
   writeFileSync(outputPath, html)
 
-  console.log(`\n✓ Dashboard saved to ${outputPath}`)
+  console.log(`\n Dashboard saved to ${outputPath}`)
   console.log(`  Open in browser: file://${outputPath}`)
 }
 

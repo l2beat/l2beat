@@ -4,26 +4,28 @@ Tooling for analyzing trust assumptions of bridged assets on L2s/L3s.
 
 ## Classification Framework
 
-### Two Dimensions
+### Name Categories (User-Facing)
 
-**1. Messaging Type** - How withdrawals are validated:
-- **Canonical**: Uses rollup's native fraud/validity proofs
-- **External**: Uses external validation (CCTP, LayerZero, etc.)
+| Name | Category | Messaging | Who can harm you? | Additional Trust? |
+|------|----------|-----------|-------------------|-------------------|
+| Canonical (trust-minimized) | Rollup-secured | Canonical | Rollup governance | No |
+| Canonical (trust-minimized) | Issuer-secured | Canonical | Issuer OR Rollup gov | No |
+| External | Issuer-secured | External (issuer) | Issuer | No |
+| External | Rollup-secured | External | Rollup gov OR External validators | **Yes** |
+| External | Third-party-secured | External | Third-Party OR External validators | **Yes** |
+| Canonical (additional trust) | Third-party-secured | Canonical | Third-Party OR Rollup gov | **Yes** |
+| Native | - | - | - | - |
 
-**2. Governance** - Who controls the escrow/bridge:
-- **Rollup-Secured**: Controlled by rollup governance
-- **Issuer-Secured**: Controlled by token issuer (no additional trust)
-- **Third-Party-Secured**: Controlled by external party (additional trust)
+### Key Insight
 
-### Trust Matrix
+**Canonical messaging**: Trust depends only on escrow control
+- Rollup/Issuer controlled → No additional trust
+- Third-party controlled → Additional trust (third-party can rug)
 
-| Messaging | Governance | Additional Trust? |
-|-----------|------------|-------------------|
-| Canonical | Rollup-Secured | No |
-| Canonical | Issuer-Secured | No |
-| Canonical | Third-Party-Secured | Yes |
-| External | Issuer-Secured | No |
-| External | Third-Party-Secured | Yes |
+**External messaging**: You ALWAYS trust external validators for withdrawals
+- Issuer-secured → No additional trust (issuer already trusted by holding token)
+- Rollup-secured → Additional trust (external validators now in trust path)
+- Third-party-secured → Additional trust (validators + third-party)
 
 ### Key Principle
 
@@ -31,7 +33,7 @@ Tooling for analyzing trust assumptions of bridged assets on L2s/L3s.
 
 - Hold USDC → already trust Circle
 - Circle controls CCTP bridge → no additional trust (issuer-secured)
-- LayerZero controls bridge → additional trust (third-party-secured)
+- LayerZero bridges your ETH → additional trust (third-party validators)
 
 ## Usage
 
