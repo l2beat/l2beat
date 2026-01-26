@@ -73,7 +73,7 @@ const L2_BRIDGE = ChainSpecificAddress('base:0x...')
 // 3. Event types (add TTL for events awaiting finalization)
 const MyL1Event = createInteropEventType<{ amount: bigint }>('my-plugin.L1Event')
 const MyL2Event = createInteropEventType<{ amount: bigint }>('my-plugin.L2Event', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 // 4. Event parsers

@@ -1,5 +1,9 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { RelayedMessage, SentMessage } from './opstack/opstack'
+import {
+  FailedRelayedMessage,
+  RelayedMessage,
+  SentMessage,
+} from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -51,7 +55,7 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [RelayedMessage]
+  matchTypes = [RelayedMessage, FailedRelayedMessage]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (RelayedMessage.checkType(event)) {
@@ -92,6 +96,28 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
       }
 
       return results
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: event.args.chain,
+      })
+      if (!sentMessage) return
+
+      const messageForwarded = db.find(MessageForwarded, {
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
+      })
+      if (!messageForwarded) return
+
+      return [
+        Result.Message('opstack.L1ToL2MessageFailed', {
+          app: 'zklink-nova',
+          srcEvent: sentMessage,
+          dstEvent: event,
+          extraEvents: [messageForwarded],
+        }),
+      ]
     }
   }
 }

@@ -1,5 +1,9 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { RelayedMessage, SentMessage } from './opstack/opstack'
+import {
+  FailedRelayedMessage,
+  RelayedMessage,
+  SentMessage,
+} from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -106,7 +110,7 @@ export class BeefyBridgePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [BridgedIn]
+  matchTypes = [BridgedIn, FailedRelayedMessage]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (BridgedIn.checkType(event)) {
@@ -144,6 +148,30 @@ export class BeefyBridgePlugin implements InteropPluginResyncable {
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: L2_BIFI_TOKEN,
+        }),
+      ]
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      if (event.args.chain !== 'optimism') return
+
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: 'optimism',
+      })
+      if (!sentMessage) return
+
+      const bridgedOut = db.find(BridgedOut, {
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
+      })
+      if (!bridgedOut) return
+
+      return [
+        Result.Message('opstack.L1ToL2MessageFailed', {
+          app: 'beefy-bridge',
+          srcEvent: sentMessage,
+          dstEvent: event,
+          extraEvents: [bridgedOut],
         }),
       ]
     }
