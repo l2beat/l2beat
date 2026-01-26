@@ -22,21 +22,13 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+          fetch-depth: 2
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
+          cache: 'npm'
 
       - name: Check if package changed
         id: check

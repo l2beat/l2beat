@@ -53,9 +53,20 @@ jobs:
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
 
-      - name: Install and setup Coolify CLI
+      - name: Cache Coolify CLI
+        id: cache-coolify
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/bin/coolify
+          key: coolify-cli-v1
+
+      - name: Install Coolify CLI
+        if: steps.cache-coolify.outputs.cache-hit != 'true'
         run: |
           curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+
+      - name: Setup Coolify context
+        run: |
           coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
           coolify context use l2beat
 
@@ -67,18 +78,19 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${GH_TAG_LATEST} -t ${GH_TAG_SHA} \
-            -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: ${{ inputs.dockerfile }}
-          GH_TAG_LATEST: ghcr.io/${{ github.repository }}/${{ inputs.package }}:latest
-          GH_TAG_SHA: ghcr.io/${{ github.repository }}/${{ inputs.package }}:${{ github.sha }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ inputs.dockerfile }}
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/${{ inputs.package }}:latest
+            ghcr.io/${{ github.repository }}/${{ inputs.package }}:${{ github.sha }}
+          build-args: |
+            TURBO_TEAM=${{ secrets.TURBO_TEAM }}
+            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Deploy to Coolify
         run: |
