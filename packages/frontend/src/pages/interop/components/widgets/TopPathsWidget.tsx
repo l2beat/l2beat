@@ -32,7 +32,7 @@ export function TopPathsWidget({
   }
 
   return (
-    <PrimaryCard className="@container max-md:rounded-lg max-[1024px]:h-full min-[1024px]:h-[213px]">
+    <PrimaryCard className="@container h-full max-md:rounded-lg">
       <h2 className="font-bold text-heading-16 md:text-heading-20">
         Top 3 paths by volume
       </h2>
