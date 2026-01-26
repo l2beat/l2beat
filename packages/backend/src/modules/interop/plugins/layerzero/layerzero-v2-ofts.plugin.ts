@@ -172,7 +172,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               if (transfer.value !== oftReceived.amountReceivedLD) return
               return {
                 address: Address32.from(log.address),
-                minted: Address32.from(transfer.to) === Address32.ZERO,
+                minted: Address32.from(transfer.from) === Address32.ZERO,
               }
             },
           )
