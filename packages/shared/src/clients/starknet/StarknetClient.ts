@@ -8,6 +8,7 @@ import {
   StarknetErrorResponse,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,
+  type StarknetTransaction,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -46,11 +47,27 @@ export class StarknetClient extends ClientCore implements BlockClient {
       throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
 
+    // Paradex has a bug where it returns empty/malformed transactions with
+    // missing transaction_hash. We allow this only for Paradex and filter them out.
+    // For other chains, it will throw an error.
+    if (
+      blockResponse.data.result.transactions.some((t) => !t.transaction_hash) &&
+      this.$.sourceName !== 'paradex'
+    ) {
+      throw new Error(`Block ${blockNumber}: Missing transaction hash`)
+    }
+
+    // Filter out empty transactions (Paradex bug workaround)
+    const validTransactions = blockResponse.data.result.transactions.filter(
+      (t): t is StarknetTransaction & { transaction_hash: string } =>
+        !!t.transaction_hash,
+    )
+
     return {
       number: blockResponse.data.result.block_number,
       hash: blockResponse.data.result.block_hash,
       timestamp: blockResponse.data.result.timestamp,
-      transactions: blockResponse.data.result.transactions.map((t) => ({
+      transactions: validTransactions.map((t) => ({
         hash: t.transaction_hash,
         from: t.sender_address,
         type: t.type,
