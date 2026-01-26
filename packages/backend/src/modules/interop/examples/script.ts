@@ -254,7 +254,9 @@ function checkExample(
     verbose,
   )
 
-  const header = example.name ? `${example.name} (${exampleId})` : exampleId
+  const header = example.description
+    ? `${example.description} (${exampleId})`
+    : exampleId
 
   console.log(`\n--- ${header} ---`)
   console.log(

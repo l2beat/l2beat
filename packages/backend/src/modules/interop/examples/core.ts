@@ -41,7 +41,7 @@ const TxEntry = v.object({
 
 export type Example = v.infer<typeof Example>
 export const Example = v.object({
-  name: v.string().optional(),
+  description: v.string().optional(),
   tags: v.array(v.string()).optional(),
   loadConfigs: v.array(v.string()).optional(),
   txs: v.array(TxEntry),
