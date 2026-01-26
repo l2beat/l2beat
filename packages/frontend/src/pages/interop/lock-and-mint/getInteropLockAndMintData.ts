@@ -17,12 +17,14 @@ export async function getInteropLockAndMintData(
   const appLayoutProps = await getAppLayoutProps()
   const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
   const initialSelectedChains = {
-    from:
+    from: (
       req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds,
-    to:
+      interopChainsIds
+    ).sort(),
+    to: (
       req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds,
+      interopChainsIds
+    ).sort(),
   }
   const queryState = await cache.get(
     {
@@ -30,8 +32,8 @@ export async function getInteropLockAndMintData(
         'interop',
         'lock-and-mint',
         'prefetch',
-        initialSelectedChains.from.sort().join(','),
-        initialSelectedChains.to.sort().join(','),
+        initialSelectedChains.from.join(','),
+        initialSelectedChains.to.join(','),
       ],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
