@@ -127,11 +127,15 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         const initialResyncRequestedFrom = UnixTime.fromDate(
           new Date('2023-01-01'),
         )
+        const initialResyncRequestedAt = UnixTime.fromDate(
+          new Date('2023-01-03'),
+        )
         const record = state({
           pluginName: 'plugin-a',
           chain: 'ethereum',
           lastError: 'Initial error',
           resyncRequestedFrom: initialResyncRequestedFrom,
+          resyncRequestedAt: initialResyncRequestedAt,
         })
         await repository.upsert(record)
 
@@ -151,6 +155,39 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(stored).toEqual({
           ...record,
           resyncRequestedFrom: updatedResyncRequestedFrom,
+        })
+      })
+    },
+  )
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.setResyncRequest.name,
+    () => {
+      it('sets resync request without touching lastError', async () => {
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Initial error',
+        })
+        await repository.upsert(record)
+
+        const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
+        const resyncRequestedAt = UnixTime.fromDate(new Date('2023-01-02'))
+        await repository.setResyncRequest(
+          'plugin-a',
+          'ethereum',
+          resyncRequestedFrom,
+          resyncRequestedAt,
+        )
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual({
+          ...record,
+          resyncRequestedFrom,
+          resyncRequestedAt,
         })
       })
     },
@@ -310,5 +347,6 @@ function state(
     chain: overrides.chain,
     lastError: overrides.lastError ?? null,
     resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
+    resyncRequestedAt: overrides.resyncRequestedAt ?? null,
   }
 }

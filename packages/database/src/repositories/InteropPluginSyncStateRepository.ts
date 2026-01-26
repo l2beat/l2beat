@@ -9,6 +9,7 @@ export interface InteropPluginSyncStateRecord {
   chain: string
   lastError: string | null
   resyncRequestedFrom: UnixTime | null
+  resyncRequestedAt: UnixTime | null
 }
 
 export type InteropPluginSyncStateUpdateable = Omit<
@@ -22,6 +23,7 @@ export function toRecord(
   return {
     ...row,
     resyncRequestedFrom: toTimestamp(row.resyncRequestedFrom),
+    resyncRequestedAt: toTimestamp(row.resyncRequestedAt),
   }
 }
 
@@ -31,6 +33,7 @@ export function toRow(
   return {
     ...record,
     resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
+    resyncRequestedAt: fromTimestamp(record.resyncRequestedAt),
   }
 }
 
@@ -40,6 +43,7 @@ function toUpdateRow(
   return {
     ...record,
     resyncRequestedFrom: fromTimestamp(record.resyncRequestedFrom),
+    resyncRequestedAt: fromTimestamp(record.resyncRequestedAt),
   }
 }
 
@@ -52,6 +56,7 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
         cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
           lastError: eb.ref('excluded.lastError'),
           resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+          resyncRequestedAt: eb.ref('excluded.resyncRequestedAt'),
         })),
       )
       .execute()
@@ -88,6 +93,29 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .onConflict((cb) =>
         cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
           resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+        })),
+      )
+      .execute()
+  }
+
+  async setResyncRequest(
+    pluginName: string,
+    chain: string,
+    resyncRequestedFrom: UnixTime,
+    resyncRequestedAt: UnixTime,
+  ): Promise<void> {
+    await this.db
+      .insertInto('InteropPluginSyncState')
+      .values({
+        pluginName,
+        chain,
+        resyncRequestedFrom: fromTimestamp(resyncRequestedFrom),
+        resyncRequestedAt: fromTimestamp(resyncRequestedAt),
+      })
+      .onConflict((cb) =>
+        cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
+          resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+          resyncRequestedAt: eb.ref('excluded.resyncRequestedAt'),
         })),
       )
       .execute()
