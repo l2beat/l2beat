@@ -23,29 +23,32 @@ const config: InteropFeatureConfig = {
 describe(createInteropRouter.name, () => {
   describe('POST /interop/resync', () => {
     it('applies wildcard to unspecified existing chains', async () => {
-      const setResyncRequestedFrom = mockFn().resolvesTo(undefined)
+      const setResyncRequest = mockFn().resolvesTo(undefined)
       const interopPluginSyncState = mockObject<
         Database['interopPluginSyncState']
       >({
-        setResyncRequestedFrom,
+        setResyncRequest,
         findByPluginName: mockFn().resolvesTo([
           {
             pluginName: 'plugin',
             chain: 'chain-a',
             lastError: null,
             resyncRequestedFrom: null,
+            resyncRequestedAt: null,
           },
           {
             pluginName: 'plugin',
             chain: 'chain-b',
             lastError: null,
             resyncRequestedFrom: null,
+            resyncRequestedAt: null,
           },
           {
             pluginName: 'plugin',
             chain: 'chain-c',
             lastError: null,
             resyncRequestedFrom: null,
+            resyncRequestedAt: null,
           },
         ]),
       })
@@ -81,21 +84,26 @@ describe(createInteropRouter.name, () => {
         })
         .expect(200)
 
-      expect(setResyncRequestedFrom).toHaveBeenCalledTimes(3)
-      expect(setResyncRequestedFrom).toHaveBeenCalledWith(
+      expect(setResyncRequest).toHaveBeenCalledTimes(3)
+      const requestIds = setResyncRequest.calls.map((call) => call.args[3])
+      expect(new Set(requestIds).size).toEqual(1)
+      expect(setResyncRequest).toHaveBeenCalledWith(
         'plugin',
         'chain-a',
         UnixTime(1000),
+        requestIds[0],
       )
-      expect(setResyncRequestedFrom).toHaveBeenCalledWith(
+      expect(setResyncRequest).toHaveBeenCalledWith(
         'plugin',
         'chain-b',
         UnixTime(2000),
+        requestIds[0],
       )
-      expect(setResyncRequestedFrom).toHaveBeenCalledWith(
+      expect(setResyncRequest).toHaveBeenCalledWith(
         'plugin',
         'chain-c',
         UnixTime(2000),
+        requestIds[0],
       )
     })
   })

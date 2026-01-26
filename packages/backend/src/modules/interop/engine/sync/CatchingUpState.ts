@@ -52,22 +52,25 @@ export class CatchingUpState implements TimeloopState {
         return this
       }
 
-      const resyncFrom = await this.syncer.isResyncRequestedFrom()
-      if (resyncFrom !== undefined) {
-        this.status = 'deleting all data for resync'
-        await this.syncer.deleteAllClusterData(resyncFrom)
+      const resyncRequest = await this.syncer.getResyncRequest()
+      if (resyncRequest !== undefined) {
+        this.status = 'waiting for resync wipe'
+        const ready = await this.syncer.waitForResyncWipe(resyncRequest)
+        if (!ready) {
+          return this
+        }
       }
 
       this.status = 'syncing'
       const rangeData = await this.calculateNextRange(
         this.syncer.latestBlockNumber,
-        resyncFrom,
+        resyncRequest?.from,
       )
       if (rangeData) {
         const logQuery = this.syncer.buildLogQuery()
         await this.syncRange(logQuery, rangeData)
 
-        if (resyncFrom) {
+        if (resyncRequest) {
           await this.clearResyncRequestFlag()
         }
       } else {

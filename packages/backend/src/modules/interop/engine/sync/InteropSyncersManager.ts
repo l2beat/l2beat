@@ -8,6 +8,7 @@ import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropEventSyncer } from './InteropEventSyncer'
+import { ResyncWipeCoordinator } from './ResyncWipeCoordinator'
 
 export type PluginSyncStatus = {
   pluginName: string
@@ -45,6 +46,11 @@ export class InteropSyncersManager {
           `Cluster of plugins '${cluster.name} contains mix of non- and resyncable plugins. They must all be the same kind.`,
         )
       }
+      const resyncCoordinator = new ResyncWipeCoordinator(
+        cluster.name,
+        enabledChains,
+        logger.for(ResyncWipeCoordinator.name),
+      )
       for (const chain of enabledChains) {
         const chainConfig = chainConfigs.find((c) => c.name === chain)
         if (!chainConfig) {
@@ -58,6 +64,7 @@ export class InteropSyncersManager {
           eventStore,
           db,
           logger,
+          resyncCoordinator,
         )
         this.syncers
           .getOrInsertComputed(cluster.name, () => new UpsertMap())

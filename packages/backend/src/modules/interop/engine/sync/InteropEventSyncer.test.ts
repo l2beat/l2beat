@@ -235,7 +235,7 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
-  describe(InteropEventSyncer.prototype.isResyncRequestedFrom.name, () => {
+  describe(InteropEventSyncer.prototype.getResyncRequest.name, () => {
     it('returns undefined when no resync requested', async () => {
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
@@ -247,7 +247,7 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncRequest()
 
       expect(result).toEqual(undefined)
     })
@@ -260,14 +260,18 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
+              resyncRequestedAt: UnixTime(456),
             }),
           }),
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncRequest()
 
-      expect(result).toEqual(UnixTime(123))
+      expect(result).toEqual({
+        from: UnixTime(123),
+        requestedAt: UnixTime(456),
+      })
     })
   })
 

@@ -23,7 +23,10 @@ describe(FollowingState.name, () => {
       })
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(1)),
+        getResyncRequest: mockFn().resolvesTo({
+          from: UnixTime(1),
+          requestedAt: UnixTime(10),
+        }),
         getLastSyncedRange,
         getItemsToCapture,
         saveProducedInteropEvents,
@@ -203,7 +206,7 @@ function createSyncer(
       name: 'mock-cluster',
       plugins: [],
     } as InteropEventSyncer['cluster'],
-    isResyncRequestedFrom: mockFn().resolvesTo(undefined),
+    getResyncRequest: mockFn().resolvesTo(undefined),
     getLastSyncedRange: mockFn().resolvesTo(undefined),
     getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
     getItemsToCapture: mockFn().returns({

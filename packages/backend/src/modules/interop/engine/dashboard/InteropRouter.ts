@@ -121,19 +121,27 @@ export function createInteropRouter(
     const { pluginName, resyncRequestedFrom } = payload
 
     const defaultFrom = resyncRequestedFrom['*']
-    const existingChains = (
+    const existingStates =
       await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const existingChains = existingStates.map((r) => r.chain)
+    const maxRequestedAt = Math.max(
+      0,
+      ...existingStates.map((state) => state.resyncRequestedAt ?? 0),
+    )
+    const requestedAt = UnixTime.now()
+    const resyncRequestedAt =
+      requestedAt > maxRequestedAt ? requestedAt : UnixTime(maxRequestedAt + 1)
 
     const updatedChains = new Set<string>()
     await db.transaction(async () => {
       for (const chain of existingChains) {
         const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
         if (resyncFrom) {
-          await db.interopPluginSyncState.setResyncRequestedFrom(
+          await db.interopPluginSyncState.setResyncRequest(
             pluginName,
             chain,
             resyncFrom,
+            resyncRequestedAt,
           )
           updatedChains.add(chain)
         }
