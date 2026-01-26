@@ -22,14 +22,8 @@ import {
   getTokenInfos,
   type TokenInfos,
 } from '../engine/financials/InteropFinancialsLoop'
-import type { InteropEvent } from '../plugins/types'
-import {
-  type CoreResult,
-  type Example,
-  type ExpectedMessageType,
-  readExamples,
-  Separated,
-} from './core'
+import { type CoreResult, type Example, readExamples, Separated } from './core'
+import { checkExpects, printExpectsResult } from './expects'
 import { ExampleRunner } from './runner'
 import { hashExampleDefinition, SnapshotService } from './snapshot/service'
 
@@ -220,39 +214,20 @@ async function runExample(
   }
 }
 
-function normalizeExpectedMessage(item: ExpectedMessageType): {
-  type: string
-  app?: string
-} {
-  if (typeof item === 'string') {
-    return { type: item }
-  }
-  return item
-}
-
 function checkExample(
   exampleId: string,
   example: Example,
   result: CoreResult,
   verbose: boolean,
 ): boolean {
-  const eventsOk = checkEvents(
-    'Event   ',
-    [...(example.events ?? [])],
-    result.events,
-    result.matchedEventIds,
-    verbose,
-  )
-  const messagesOk = checkTypedWithApp(
-    'Message ',
-    [...(example.messages ?? [])].map(normalizeExpectedMessage),
-    result.messages,
-    verbose,
-  )
-  const transfersOk = checkTypedSimple(
-    'Transfer',
-    [...(example.transfers ?? [])],
-    result.transfers,
+  const results = checkExpects(
+    example.expects ?? {},
+    {
+      events: example.events,
+      messages: example.messages,
+      transfers: example.transfers,
+    },
+    result,
     verbose,
   )
 
@@ -262,85 +237,14 @@ function checkExample(
   console.log(
     `    Txs: ${example.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
   )
-  return eventsOk && messagesOk && transfersOk
-}
 
-const PASS = '[\x1B[1;32mPASS\x1B[0m]'
-const XTRA = '[\x1B[1;34mXTRA\x1B[0m]'
-const FAIL = '[\x1B[1;31mFAIL\x1B[0m]'
-const MTCH = '[\x1B[1;32mMTCH\x1B[0m]'
-const UNMT = '[\x1B[1;33mUNMT\x1B[0m]'
+  printExpectsResult(example.expects, results)
 
-function checkTypedSimple(
-  name: string,
-  expected: string[],
-  values: { type: string }[],
-  verbose: boolean,
-): boolean {
-  for (const value of values) {
-    const idx = expected.indexOf(value.type)
-    if (idx !== -1) {
-      expected.splice(idx, 1)
-    }
-    const tag = idx !== -1 ? PASS : XTRA
-    console.log(tag, name, verbose ? value : value.type)
-  }
-  for (const type of expected) {
-    console.log(FAIL, name, type)
-  }
-  return expected.length === 0
-}
-
-function checkEvents(
-  name: string,
-  expected: string[],
-  events: InteropEvent[],
-  matchedEventIds: Set<string>,
-  verbose: boolean,
-): boolean {
-  for (const event of events) {
-    const idx = expected.indexOf(event.type)
-    if (idx !== -1) {
-      expected.splice(idx, 1)
-    }
-    const isMatched = matchedEventIds.has(event.eventId)
-    const matchTag = isMatched ? MTCH : UNMT
-    const expectedTag = idx !== -1 ? PASS : XTRA
-    console.log(expectedTag, matchTag, name, verbose ? event : event.type)
-  }
-  for (const type of expected) {
-    console.log(FAIL, name, type)
-  }
-  return expected.length === 0
-}
-
-function checkTypedWithApp(
-  name: string,
-  expected: { type: string; app?: string }[],
-  values: { type: string; app?: string }[],
-  verbose: boolean,
-): boolean {
-  for (const value of values) {
-    const idx = expected.findIndex(
-      (e) =>
-        e.type === value.type && (e.app === undefined || e.app === value.app),
-    )
-    if (idx !== -1) {
-      expected.splice(idx, 1)
-    }
-    const tag = idx !== -1 ? PASS : XTRA
-    const display = verbose
-      ? value
-      : value.app
-        ? `${value.type} (app: ${value.app})`
-        : value.type
-    console.log(tag, name, display)
-  }
-  for (const exp of expected) {
-    const display = exp.app ? `${exp.type} (app: ${exp.app})` : exp.type
-    console.log(FAIL, name, display)
-  }
-  return expected.length === 0
+  return (
+    results.eventsResult.success &&
+    results.messagesResult.success &&
+    results.transfersResult.success
+  )
 }
 
 function summarize(result: CoreResult) {

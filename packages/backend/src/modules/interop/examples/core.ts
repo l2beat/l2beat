@@ -9,15 +9,30 @@ import type {
   InteropTransfer,
 } from '../plugins/types'
 
-// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
+export const ExpectedEvent = v.union([
+  v.string(),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
+])
+export type ExpectedEventType = v.infer<typeof ExpectedEvent>
+
 export const ExpectedMessage = v.union([
   v.string(),
-  v.object({
-    type: v.string(),
-    app: v.string().optional(),
-  }),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
 ])
 export type ExpectedMessageType = v.infer<typeof ExpectedMessage>
+
+export const ExpectedTransfer = v.union([
+  v.string(),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
+])
+export type ExpectedTransferType = v.infer<typeof ExpectedTransfer>
+
+export const Expects = v.object({
+  events: v.array(ExpectedEvent).optional(),
+  messages: v.array(ExpectedMessage).optional(),
+  transfers: v.array(ExpectedTransfer).optional(),
+})
+export type ExpectsType = v.infer<typeof Expects>
 
 export interface CoreResult {
   events: InteropEvent[]
@@ -42,8 +57,21 @@ export const Example = v.object({
   tags: v.array(v.string()).optional(),
   loadConfigs: v.array(v.string()).optional(),
   txs: v.array(TxEntry),
+  // New structured expectations field
+  expects: Expects.optional(),
+  // Legacy fields - kept for backward compatibility
   events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
+  messages: v
+    .array(
+      v.union([
+        v.string(),
+        v.object({
+          type: v.string(),
+          app: v.string().optional(),
+        }),
+      ]),
+    )
+    .optional(),
   transfers: v.array(v.string()).optional(),
 })
 
