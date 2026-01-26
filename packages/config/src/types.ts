@@ -1227,7 +1227,6 @@ export type InteropPluginName =
   | 'orbitstack-standardgateway'
   | 'orbitstack-wethgateway'
   | 'relay'
-  | 'relay-simple'
   | 'sky-bridge'
   | 'sorare-base'
   | 'squid-coral'
