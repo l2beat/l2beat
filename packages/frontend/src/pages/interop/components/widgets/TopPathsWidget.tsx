@@ -6,6 +6,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
@@ -13,10 +14,12 @@ export function TopPathsWidget({
   interopChains,
   isLoading,
   top3Paths,
+  className,
 }: {
   interopChains: InteropChainWithIcon[]
   isLoading: boolean
   top3Paths: InteropDashboardData['top3Paths'] | undefined
+  className?: string
 }) {
   const { selectedChains, setPath, reset } = useInteropSelectedChains()
   const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
@@ -32,7 +35,9 @@ export function TopPathsWidget({
   }
 
   return (
-    <PrimaryCard className="@container h-full max-md:rounded-lg">
+    <PrimaryCard
+      className={cn('@container h-full max-md:rounded-lg', className)}
+    >
       <h2 className="font-bold text-heading-16 md:text-heading-20">
         Top 3 paths by volume
       </h2>

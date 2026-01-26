@@ -39,6 +39,7 @@ export function MobileCarouselWidget({
             interopChains={interopChains}
             top3Paths={top3Paths}
             isLoading={isLoading}
+            className="max-[1024px]:pb-8!"
           />
         </div>
         <div className="min-w-full flex-shrink-0">
