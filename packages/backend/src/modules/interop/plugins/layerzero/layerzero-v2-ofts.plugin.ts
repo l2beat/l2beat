@@ -43,7 +43,8 @@ const OFTSentPacketSent = createInteropEventType<{
   oappAddress: Address32
   srcTokenAddress?: Address32
   srcAmount?: bigint
-}>('layerzero-v2.PacketOFTSent')
+  burned?: boolean
+}>('layerzero-v2.PacketOFTSent', { direction: 'outgoing' })
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
@@ -52,7 +53,8 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   oappAddress: Address32
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('layerzero-v2.PacketOFTDelivered')
+  minted?: boolean
+}>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
@@ -114,7 +116,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== normalized.amountSentLD) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
         },
       )
 
@@ -125,8 +130,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           amountSentLD: normalized.amountSentLD,
           amountReceivedLD: normalized.amountReceivedLD,
           oappAddress: Address32.from(input.log.address),
-          srcTokenAddress: matchingTransferData,
+          srcTokenAddress: matchingTransferData?.address,
           srcAmount: normalized.amountSentLD,
+          burned: matchingTransferData?.burned,
         }),
       ]
     }
@@ -164,7 +170,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               if (!transfer) return
               // compare amount to not match a rogue Transfer event
               if (transfer.value !== oftReceived.amountReceivedLD) return
-              return Address32.from(log.address)
+              return {
+                address: Address32.from(log.address),
+                minted: Address32.from(transfer.to) === Address32.ZERO,
+              }
             },
           )
 
@@ -174,8 +183,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: matchingTransferData,
+              dstTokenAddress: matchingTransferData?.address,
               dstAmount: oftReceived.amountReceivedLD,
+              minted: matchingTransferData?.minted,
             }),
           ]
         }
@@ -215,6 +225,8 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
         dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
+        srcWasBurned: oftSentPacketSent.args.burned,
+        dstWasMinted: oftReceivedPacketDelivered.args.minted,
       }),
     ]
   }
