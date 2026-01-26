@@ -173,10 +173,16 @@ export class CCTPV1Plugin implements InteropPlugin {
     const network = networks.find((n) => n.chain === messageReceived.ctx.chain)
     if (!network) return
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
-      const messageSent = db.find(CCTPv1MessageSent, {
+      // findAll and use oldest for determinism
+      // there are bots like https://etherscan.io/address/0xfd62020cee216dc543e29752058ee9f60f7d9ff9#tokentxns
+      // who always use the same messageBody
+      const messageSentMatches = db.findAll(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,
       })
-      if (!messageSent) return
+      if (messageSentMatches.length === 0) return
+      const messageSent = messageSentMatches.sort(
+        (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+      )[0]
       return [
         Result.Message('cctp-v1.Message', {
           app: 'cctp-v1',
@@ -190,6 +196,8 @@ export class CCTPV1Plugin implements InteropPlugin {
           dstEvent: messageReceived,
           dstTokenAddress: messageReceived.args.dstTokenAddress,
           dstAmount: messageReceived.args.dstAmount,
+          srcWasBurned: true,
+          dstWasMinted: true,
         }),
       ]
     }
