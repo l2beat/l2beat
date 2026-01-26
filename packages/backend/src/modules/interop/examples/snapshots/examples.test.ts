@@ -56,17 +56,7 @@ describe('interop examples', () => {
           logger: Logger.SILENT,
           http: new HttpClient(),
           snapshotService,
-          env: mockObject<Env>({
-            string: (key: string) => {
-              if (key === 'TOKEN_BACKEND_TRPC_URL') {
-                return 'http://token-backend.local'
-              }
-              if (key === 'TOKEN_BACKEND_CF_TOKEN') {
-                return 'test-token'
-              }
-              return ''
-            },
-          }),
+          env: mockObject<Env>({}),
           mode: 'replay',
           inputs,
         })
