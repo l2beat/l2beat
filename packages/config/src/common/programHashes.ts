@@ -940,4 +940,181 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+  '0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a': {
+    title: 'ArbOS v40 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'successful',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v40/arbos',
+    verificationSteps: `
+L2BEAT team was able to independently regenerate this program hash. However currently the following steps for hash regeneration produce an error, so the process could not be independently verified.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v40\` . Commit hash should be  \`37ae61f20f8efdbc7e2f6af7f21c309bc09086a1\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`. Currently this step fails with an error.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+      `,
+  },
+  '0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499': {
+    title: 'ArbOS v51 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'successful',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v51/arbos',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51\` . Commit hash should be  \`03949e76071f048c850d721c7a378a2e4b3fbd09\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39': {
+    title: 'ArbOS v32 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v32/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4': {
+    title: 'ArbOS v20 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v20/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c': {
+    title: 'ArbOS Kinto wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'notVerified',
+  },
+  '0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69': {
+    title: 'ArbOS v31 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v31/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
+    title: 'ArbOS Apechain wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'notVerified',
+  },
+  '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
+    title: 'ArbOS v41 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v41/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v41\` . Commit hash should be  \`2a9b15285b422e83f7a1faad0722990baa779971\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287': {
+    title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+    verificationStatus: 'notVerified',
+  },
+  '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
+    title: 'Celestia Nitro 3.2.2 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+    verificationStatus: 'notVerified',
+  },
+  '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
+    title: 'OP absolute prestate v1.6.0 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.6.0\` . Commit hash should be  \`d6fb90dd489e39efa206b55200766ccc075c1d9b\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b': {
+    title: 'OP absolute prestate v1.8.0-rc.4 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.8.0-rc.4/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.8.0-rc.4\` . Commit hash should be  \`94706ec5072b13030600d1b45ae10b673b660c0d\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03ddcb9294fef6dd477b4e911fd777fda0832fdd10aa594ac941540ea62a2aa0': {
+    title: 'OP absolute prestate Boba',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x03c7ae758795765c6664a5d39bf63841c71ff191e9189522bad8ebff5d4eca98': {
+    title: 'OP absolute prestate Cyber',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c': {
+    title: 'OP absolute prestate v1.3.1',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-node/v1.3.1/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.3.1\` . Commit hash should be  \`e3c2f046c2d7103c765cbd47e949a284e511a47d\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14': {
+    title: 'OP absolute prestate Lisk',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x03eb07101fbdeaf3f04d9fb76526362c1eea2824e4c6e970bdb19675b72e4fc8': {
+    title: 'OP absolute prestate v1.6.1 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.1/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.6.1\` . Commit hash should be  \`a094d016092e3355642d00be6d7943c4529ef008\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
 }
