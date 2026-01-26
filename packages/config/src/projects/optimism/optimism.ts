@@ -287,7 +287,7 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://vote.optimism.io/proposals/3118571676657709551286937570456546163542507117143005939043790253732885172699',
       date: '2025-11-25T00:00:00Z',
       description:
-        'A protocol upgrade that improves fee mechanisms and ensures OP Stack readiness for the Fusaka Ethereum hardfork.',
+        'A protocol upgrade improving fee mechanisms and preparing the OP Stack for the Fusaka hardfork.',
       type: 'general',
     },
     {
