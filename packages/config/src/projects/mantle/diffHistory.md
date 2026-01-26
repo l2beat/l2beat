@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa23e05c2eddefae498d0ca9719e9727aeb8bcc0a
 
 ## Description
 
-Mantle migrates data availability from EigenDA to Ethereum blobs. The SystemConfig now shows `isUsingEigenDA: false` and `isSequencerSendingBlobTx: true`. This makes Mantle a rollup instead of a validium. MantleSecurityMultisig membership updated (added 1 member, threshold now 6 of 14).
+Mantle enables Ethereum blobs for data availability alongside EigenDA. The SystemConfig now shows `isUsingEigenDA: false` and `isSequencerSendingBlobTx: true`, but the system can still post to EigenDA offchain via Hydro. Trust assumptions remain unchanged as there is no onchain EigenDA verifier. MantleSecurityMultisig membership updated (added 1 member, threshold now 6 of 14).
 
 ## Watched changes
 
