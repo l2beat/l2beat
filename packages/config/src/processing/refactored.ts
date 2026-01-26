@@ -17,6 +17,7 @@ import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
+import { layerzero } from '../projects/layerzero/layerzero'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
@@ -93,4 +94,5 @@ export const refactored: BaseProject[] = [
   cctpv2,
   relay,
   gaszip,
+  layerzero,
 ]

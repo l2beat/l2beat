@@ -1547,5 +1547,6 @@
   "static/meta-images/interop/lock-&-mint/opengraph-image.png": "c7f3eacc7094f94624a7862a8ddac9c7",
   "static/icons/cctpv2.png": "43e01daf3b88b73f0c67e0ebfdd5fe46",
   "static/icons/gaszip.png": "5bffaa2df1f650e9f41b8fadf7d30795",
-  "static/icons/relay.png": "8690254fb8cc2eb5762371d9c50b7308"
+  "static/icons/relay.png": "8690254fb8cc2eb5762371d9c50b7308",
+  "static/icons/layerzero.png": "316f17a18b677c7e98d2f307c2b4d6e7"
 }

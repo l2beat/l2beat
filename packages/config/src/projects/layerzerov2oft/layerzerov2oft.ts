@@ -17,7 +17,7 @@ export const layerzerov2oft: Bridge = {
   id: ProjectId('layerzerov2oft'),
   addedAt: UnixTime(1718891395), // 2024-06-20T13:49:55Z
   display: {
-    name: 'LayerZero v2 OFTs',
+    name: 'LayerZero',
     slug: 'layerzerov2oft',
     warning:
       'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers (OFT/OApp owners).',
@@ -186,17 +186,6 @@ To receive the original locked token back, a user would have to return to the ma
         },
       ],
     },
-  },
-  interopConfig: {
-    bridgeType: 'omnichain',
-    plugins: [
-      {
-        plugin: 'layerzero-v2',
-      },
-      {
-        plugin: 'layerzero-v2-ofts',
-      },
-    ],
   },
   config: {
     escrows: [
