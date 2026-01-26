@@ -39,6 +39,33 @@ describe(StarknetClient.name, () => {
 
       expect(result).toEqual(mockStarknetBlock)
     })
+
+    it('filters out empty transactions for Paradex', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockStarknetGetBlockWithTxsResponseWithEmptyTx,
+      })
+
+      const client = mockClient({ http, sourceName: 'paradex' })
+
+      const result = await client.getBlockWithTransactions(100)
+
+      // Should only contain the valid transaction, empty one filtered out
+      expect(result.transactions).toHaveLength(2)
+      expect(result.transactions[0].hash).toEqual('0x1234')
+      expect(result.transactions[1].hash).toEqual('0x5678')
+    })
+
+    it('throws error for non-Paradex when transaction_hash is missing', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockStarknetGetBlockWithTxsResponseWithEmptyTx,
+      })
+
+      const client = mockClient({ http, sourceName: 'other-chain' })
+
+      await expect(client.getBlockWithTransactions(100)).toBeRejectedWith(
+        'Block 100: Missing transaction hash',
+      )
+    })
   })
 
   describe(StarknetClient.prototype.getLatestBlockNumber.name, () => {
@@ -142,6 +169,7 @@ function mockClient(deps: {
   http?: HttpClient
   url?: string
   generateId?: () => string
+  sourceName?: string
 }) {
   return new StarknetClient({
     url: deps.url ?? 'API_URL',
@@ -150,7 +178,7 @@ function mockClient(deps: {
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
-    sourceName: 'test',
+    sourceName: deps.sourceName ?? 'test',
   })
 }
 
@@ -183,3 +211,41 @@ const mockStarknetGetBlockWithTxsResponse = (
     })),
   },
 })
+
+const mockStarknetGetBlockWithTxsResponseWithEmptyTx = {
+  jsonrpc: '2.0',
+  id: 1,
+  result: {
+    block_number: 100,
+    timestamp: UnixTime.now(),
+    block_hash: '0xabcdef',
+    transactions: [
+      {
+        type: 'INVOKE',
+        calldata: ['0x1234'],
+        transaction_hash: '0x1234',
+        sender_address: '0x1234',
+      },
+      // Empty transaction (missing transaction_hash) - Paradex bug
+      {
+        type: '',
+        calldata: [],
+        transaction_hash: undefined,
+        sender_address: '',
+      },
+      {
+        type: 'DEPLOY',
+        calldata: ['0x5678'],
+        transaction_hash: '0x5678',
+        sender_address: '0x5678',
+      },
+      // Another empty transaction - Paradex bug
+      {
+        type: '',
+        calldata: [],
+        transaction_hash: undefined,
+        sender_address: '',
+      },
+    ],
+  },
+}
