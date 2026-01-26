@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x758791ddb7ad54da9864519ecbc5ea873154a269
+
+# Diff at Mon, 26 Jan 2026 12:50:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999073
+- current timestamp: 1769431719
+
+## Description
+
+Upgrade Ink adapter (cctp v2 support):
+https://disco.l2beat.com/diff/eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2/eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.57073:
+-        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
++        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Ink_Adapter.sol}                               |   0
+ .../OP_Adapter.sol}                                | 124 +++++++++++++++------
+ 2 files changed, 93 insertions(+), 31 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768999073 (main branch discovery), not current.
+
+```diff
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "Ink_Adapter"
++        "OP_Adapter"
+    }
+```
+
 Generated with discovered.json: 0x17dd3740d04ee41c971654c4b477ba031e228eab
 
 # Diff at Wed, 21 Jan 2026 12:39:00 GMT:
