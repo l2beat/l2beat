@@ -49,7 +49,6 @@ import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgat
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { RelayPlugin } from './relay/relay.plugin'
-import { RelaySimplePlugIn } from './relay-simple'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
@@ -199,7 +198,6 @@ export function createInteropPlugins(
       },
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
-      new RelaySimplePlugIn(),
       new GasZipPlugin(deps.logger),
       new ZkStackPlugin(),
     ],
