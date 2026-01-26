@@ -1146,4 +1146,16 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
 3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
     `,
   },
+  '0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609': {
+    title: 'Cartesi Honeypot v2 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v2.',
+    verificationStatus: 'notVerified',
+  },
+  '0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14': {
+    title: 'Cartesi Honeypot v1 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v1.',
+    verificationStatus: 'notVerified',
+  },
 }
