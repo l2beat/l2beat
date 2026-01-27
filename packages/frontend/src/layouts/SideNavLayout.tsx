@@ -263,8 +263,13 @@ export function SideNavLayout({
         >
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
           <div
+            style={
+              {
+                '--tablet-content-horizontal-padding': '20px',
+              } as React.CSSProperties
+            }
             className={cn(
-              'mx-auto min-h-screen md:px-5 lg:pl-0',
+              'mx-auto min-h-screen md:px-(--tablet-content-horizontal-padding) lg:pl-0',
               maxWidth === 'default' && 'max-w-(--breakpoint-lg)',
               maxWidth === 'wide' && 'max-w-412',
             )}
