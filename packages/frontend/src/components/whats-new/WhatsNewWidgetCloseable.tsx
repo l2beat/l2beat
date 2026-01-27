@@ -12,7 +12,7 @@ export function WhatsNewWidgetCloseable({
   whatsNew: WhatsNewWidget
 }) {
   const isClient = useIsClient()
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
   const { track } = useTracking()
   const [isClosed, setIsClosed] = useLocalStorage(
     `whats-new-${whatsNew.id}`,
@@ -39,7 +39,7 @@ export function WhatsNewWidgetCloseable({
         onClick={() => {
           track('whatsNewClicked', {
             props: {
-              device: isMobile || isTablet ? 'mobile' : 'desktop',
+              device: isDesktop ? 'desktop' : 'mobile',
               action: 'close',
             },
           })

@@ -149,13 +149,12 @@ function NameWithProjectInfoTooltip({
   project,
   withInfoTooltip,
 }: NameWithProjectInfoTooltipProps) {
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
   const projectName = project.shortName ?? project.name
 
   if (
     !withInfoTooltip ||
-    isMobile ||
-    isTablet ||
+    !isDesktop ||
     (!project.description && !project.badges)
   ) {
     return projectName

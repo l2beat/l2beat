@@ -35,7 +35,7 @@ const TooltipTrigger = ({
   disabledOnMobile?: boolean
 }) => {
   const localRef = useRef(null)
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
   const { setOpen } = useTooltipTriggerContext()
 
   if (props.disabled) {
@@ -47,13 +47,12 @@ const TooltipTrigger = ({
     return <TooltipPrimitive.Trigger ref={ref} {...props} />
   }
 
-  const onClick =
-    isMobile || isTablet
-      ? (e: React.MouseEvent) => {
-          e.preventDefault()
-          setOpen(true)
-        }
-      : undefined
+  const onClick = !isDesktop
+    ? (e: React.MouseEvent) => {
+        e.preventDefault()
+        setOpen(true)
+      }
+    : undefined
 
   return (
     <TooltipPrimitive.Trigger

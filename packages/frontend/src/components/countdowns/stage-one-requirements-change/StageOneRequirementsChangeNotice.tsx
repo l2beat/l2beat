@@ -16,14 +16,14 @@ export function StageOneRequirementsChangeNotice({
 }: {
   downgradePending: NonNullable<StageConfigured['downgradePending']>
 }) {
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
   return (
     <CountdownSection>
       <div className="flex flex-wrap items-center justify-center gap-4">
         <h2 className="mr-auto text-heading-24">Stages changes</h2>
         <Countdown
           expiresAt={downgradePending.expiresAt}
-          size={isMobile || isTablet ? 'sm' : 'md'}
+          size={isDesktop ? 'md' : 'sm'}
         />
       </div>
       <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">

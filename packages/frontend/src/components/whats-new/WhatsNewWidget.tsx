@@ -11,7 +11,7 @@ export interface WhatsNewWidget {
 
 export function WhatsNewWidget({ whatsNew }: { whatsNew: WhatsNewWidget }) {
   const { track } = useTracking()
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
 
   return (
     <a
@@ -19,7 +19,7 @@ export function WhatsNewWidget({ whatsNew }: { whatsNew: WhatsNewWidget }) {
       onClick={() => {
         track('whatsNewClicked', {
           props: {
-            device: isMobile || isTablet ? 'mobile' : 'desktop',
+            device: isDesktop ? 'desktop' : 'mobile',
             action: 'open',
           },
         })

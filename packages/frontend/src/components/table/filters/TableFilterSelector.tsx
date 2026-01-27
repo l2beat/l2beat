@@ -44,14 +44,14 @@ export function TableFilterSelector({
 }: {
   entries: FilterableEntry[]
 }) {
-  const { isMobile, isTablet } = useDevice()
+  const { isDesktop } = useDevice()
 
   return (
     <TableFilterInternalContextProvider>
-      {isMobile || isTablet ? (
-        <MobileFilters entries={entries} />
-      ) : (
+      {isDesktop ? (
         <DesktopFilters entries={entries} />
+      ) : (
+        <MobileFilters entries={entries} />
       )}
     </TableFilterInternalContextProvider>
   )
