@@ -30,7 +30,7 @@ export class InteropSyncersManager {
   private dataCleaners: InteropDataCleaner[] = []
 
   constructor(
-    private readonly pluginClusters: PluginCluster[],
+    readonly pluginClusters: PluginCluster[],
     enabledChains: LongChainName[],
     chainConfigs: ChainApi[],
     eventStore: InteropEventStore,
@@ -65,6 +65,9 @@ export class InteropSyncersManager {
           logger,
         )
         clusterSyncers.push(eventSyncer)
+        this.syncers
+          .getOrInsertComputed(cluster.name, () => new UpsertMap())
+          .set(chain, eventSyncer)
       }
 
       if (clusterSyncers.length > 0) {
@@ -130,7 +133,7 @@ export class InteropSyncersManager {
 
       const http = new Http({
         logger: rpcLogger,
-        maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
+        maxCallsPerMinute: 500, // rpcConfig.callsPerMinute
       })
 
       client = new EthRpcClient(
