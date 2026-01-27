@@ -1,21 +1,44 @@
+/**
+ * supports zk stack interop (only L1 <> L2)
+ * skips over gateway for gateway L3s
+ *
+ * add new zk stack chains to zkstack.networks.ts
+ *
+ * undefined src/dstTokens mean we do not have them in tokenDB,
+ * check the src/dst txHash for what tokens to add
+ *
+ * TODO: track state root settlement for withdrawals
+ *       current ver only tracks user execution of withdrawal
+ */
 import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
+  UnixTime,
 } from '@l2beat/shared-pure'
-import { findParsedAround } from './hyperlane-hwr'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findParsedAround } from '../hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  defineNetworks,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
+import { ZkStackConfig } from './zkstack.config'
+import {
+  ETH_ASSET_ID,
+  getNetworkByChainId,
+  getNetworkByDiamondAddress,
+  getNetworkByL2Chain,
+  L1_ASSET_ROUTER,
+  L1_NATIVE_TOKEN_VAULT,
+  SUPPORTED_CHAINS,
+} from './zkstack.networks'
 
 // == Event signatures ==
 
@@ -43,13 +66,12 @@ const l2ToL1LogSentLog =
 const bridgeMintLog =
   'event BridgeMint(uint256 indexed chainId, bytes32 indexed assetId, address receiver, uint256 amount)'
 
-// BridgeMint (index_topic_1 uint256 chainId, index_topic_2 bytes32 assetId, index_topic_3 address receiver, data uint256 amount)
-
 const bridgeBurnLog =
   'event BridgeBurn(uint256 indexed chainId, bytes32 indexed assetId, address indexed sender, address receiver, uint256 amount)'
 
-const transferLog =
-  'event Transfer(address indexed from, address indexed to, uint256 value)'
+//just for tagging
+const relayedRootBundleLog =
+  'event RelayedRootBundle(uint32 indexed rootBundleId, bytes32 indexed relayerRefundRoot, bytes32 indexed slowRelayRoot)'
 
 // == Parsers ==
 
@@ -66,66 +88,7 @@ const parseWithdrawal = createEventParser(withdrawalLog)
 const parseL2ToL1LogSent = createEventParser(l2ToL1LogSentLog)
 const parseBridgeMint = createEventParser(bridgeMintLog)
 const parseBridgeBurn = createEventParser(bridgeBurnLog)
-const parseTransfer = createEventParser(transferLog)
-
-// == Networks ==
-
-interface ZkStackNetwork {
-  chainId: number
-  chain: string
-  diamondAddress: ChainSpecificAddress
-  l1AssetRouter: ChainSpecificAddress
-  l1NativeTokenVault: ChainSpecificAddress
-  l2SharedBridge: ChainSpecificAddress
-  l2L1Messenger: ChainSpecificAddress
-  l2EthToken: ChainSpecificAddress
-}
-
-// this would equally work without all specific addresses except diamond
-// but they are probably good for perf/resyncing
-const ZKSTACK_SUPPORTED = defineNetworks<ZkStackNetwork>('zkstack', [
-  {
-    chainId: 324,
-    chain: 'zksync2',
-    diamondAddress: ChainSpecificAddress(
-      'eth:0x32400084C286CF3E17e7B677ea9583e60a000324',
-    ),
-    l1AssetRouter: ChainSpecificAddress(
-      'eth:0x8829AD80E425C646DAB305381ff105169FeEcE56',
-    ),
-    l1NativeTokenVault: ChainSpecificAddress(
-      'eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6',
-    ),
-    l2SharedBridge: ChainSpecificAddress(
-      'zksync:0x0000000000000000000000000000000000010004',
-    ),
-    l2L1Messenger: ChainSpecificAddress(
-      'zksync:0x0000000000000000000000000000000000008008',
-    ),
-    l2EthToken: ChainSpecificAddress(
-      'zksync:0x000000000000000000000000000000000000800A',
-    ),
-  },
-])
-
-function getNetworkByChainId(chainId: bigint): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find((n) => BigInt(n.chainId) === chainId)
-}
-
-function getNetworkByDiamondAddress(
-  address: EthereumAddress,
-): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find(
-    (n) => ChainSpecificAddress.address(n.diamondAddress) === address,
-  )
-}
-
-function getNetworkByL2Chain(chain: string): ZkStackNetwork | undefined {
-  return ZKSTACK_SUPPORTED.find((n) => n.chain === chain)
-}
-
-const ZKSYNC_GAS_ASSET_ID =
-  '0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609'
+const parseRelayedRootBundle = createEventParser(relayedRootBundleLog)
 
 function zkstackWithdrawMatchId(
   assetId: `0x${string}`,
@@ -154,18 +117,38 @@ const BridgehubDepositBaseTokenInitiated = createInteropEventType<{
 const BridgehubDepositInitiated = createInteropEventType<{
   chainId: number
   assetId: `0x${string}`
-  srcTokenAddress: Address32
+  srcTokenAddress?: Address32
   srcAmount: bigint
   $dstChain: string
 }>('zkstack.BridgehubDepositInitiated', { direction: 'outgoing' })
 
-const L2ToL1LogSent = createInteropEventType<object>('zkstack.L2ToL1LogSent', {
+const L2ToL1LogSent = createInteropEventType<{
+  app: string
+}>('zkstack.L2ToL1LogSent', {
   direction: 'incoming', // TODO: for now incoming
 })
 
-const L1MessageSent = createInteropEventType<object>('zkstack.L1MessageSent', {
+const BridgeMint = createInteropEventType<{
+  chainId: number
+  assetId: `0x${string}`
+  dstTokenAddress?: Address32
+  dstAmount: bigint
+}>('zkstack.BridgeMint', { direction: 'incoming' })
+
+const L1MessageSent = createInteropEventType<{
+  $dstChain: string
+}>('zkstack.L1MessageSent', {
   direction: 'outgoing',
+  ttl: 30 * UnixTime.DAY,
 })
+
+const BridgeBurn = createInteropEventType<{
+  matchId: string
+  assetId: `0x${string}`
+  receiver: EthereumAddress
+  srcTokenAddress?: Address32
+  srcAmount: bigint
+}>('zkstack.BridgeBurn', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
 
 const Withdrawal = createInteropEventType<{
   matchId: string
@@ -173,22 +156,7 @@ const Withdrawal = createInteropEventType<{
   receiver: EthereumAddress
   srcTokenAddress: Address32
   srcAmount: bigint
-}>('zkstack.Withdrawal', { direction: 'outgoing' })
-
-const BridgeBurn = createInteropEventType<{
-  matchId: string
-  assetId: `0x${string}`
-  receiver: EthereumAddress
-  srcTokenAddress: Address32
-  srcAmount: bigint
-}>('zkstack.BridgeBurn', { direction: 'outgoing' })
-
-const BridgeMint = createInteropEventType<{
-  chainId: number
-  assetId: `0x${string}`
-  dstTokenAddress: Address32
-  dstAmount: bigint
-}>('zkstack.BridgeMint', { direction: 'incoming' })
+}>('zkstack.Withdrawal', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
 
 const BridgeMintL1 = createInteropEventType<{
   matchId: string
@@ -197,62 +165,62 @@ const BridgeMintL1 = createInteropEventType<{
   receiver: EthereumAddress
   dstTokenAddress?: Address32
   dstAmount: bigint
-}>('zkstack.BridgeMintL1', { direction: 'incoming' })
+}>('zkstack.BridgeMintL1', { direction: 'incoming', ttl: 30 * UnixTime.DAY })
 
 export class ZkStackPlugin implements InteropPluginResyncable {
   readonly name = 'zkstack'
+
+  constructor(private configs: InteropConfigStore) {}
 
   getDataRequests(): DataRequest[] {
     return [
       {
         type: 'event',
         signature: newPriorityRequestIdLog,
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.diamondAddress),
+        addresses: SUPPORTED_CHAINS.map((n) => n.diamondAddress),
       },
       {
         type: 'event',
         signature: bridgehubDepositBaseTokenInitiatedLog,
         includeTxEvents: [newPriorityRequestLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1AssetRouter),
+        addresses: [L1_ASSET_ROUTER],
       },
       {
         type: 'event',
         signature: bridgehubDepositInitiatedLog,
-        includeTxEvents: [bridgeBurnLog, transferLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1AssetRouter),
+        includeTxEvents: [bridgeBurnLog],
+        addresses: [L1_ASSET_ROUTER],
       },
       {
         type: 'event',
         signature: bridgeMintLog,
-        includeTxEvents: [transferLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l1NativeTokenVault),
+        addresses: [L1_NATIVE_TOKEN_VAULT],
       },
       {
         type: 'event',
         signature: l2ToL1LogSentLog,
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l2L1Messenger),
+        includeTxEvents: [relayedRootBundleLog], // for tagging
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2L1Messenger),
       },
       {
         type: 'event',
         signature: l1MessageSentLog,
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l2L1Messenger),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2L1Messenger),
       },
       {
         type: 'event',
         signature: withdrawalLog,
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l2EthToken),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2EthToken),
       },
       {
         type: 'event',
         signature: bridgeBurnLog,
-        includeTxEvents: [transferLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l2SharedBridge),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2SharedBridge),
       },
       {
         type: 'event',
         signature: bridgeMintLog,
-        includeTxEvents: [transferLog],
-        addresses: ZKSTACK_SUPPORTED.map((n) => n.l2SharedBridge),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2SharedBridge),
       },
     ]
   }
@@ -260,7 +228,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       const newPriorityRequestId = parseNewPriorityRequestId(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) =>
+        ...SUPPORTED_CHAINS.map((n) =>
           ChainSpecificAddress.address(n.diamondAddress),
         ),
       ])
@@ -281,11 +249,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
       const baseTokenDeposit = parseBridgehubDepositBaseTokenInitiated(
         input.log,
-        [
-          ...ZKSTACK_SUPPORTED.map((n) =>
-            ChainSpecificAddress.address(n.l1AssetRouter),
-          ),
-        ],
+        [ChainSpecificAddress.address(L1_ASSET_ROUTER)],
       )
       if (baseTokenDeposit) {
         const network = getNetworkByChainId(baseTokenDeposit.chainId)
@@ -320,9 +284,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       }
 
       const depositInitiated = parseBridgehubDepositInitiated(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) =>
-          ChainSpecificAddress.address(n.l1AssetRouter),
-        ),
+        ChainSpecificAddress.address(L1_ASSET_ROUTER),
       ])
       if (depositInitiated) {
         const network = getNetworkByChainId(depositInitiated.chainId)
@@ -342,26 +304,16 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         )
         if (!bridgeBurn) return
 
-        const transferMatch = findParsedAround(
-          input.txLogs,
-          startLogIndex,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (!transfer) return
-            if (transfer.value !== bridgeBurn.amount) return
-            return {
-              tokenAddress: Address32.from(log.address),
-              amount: transfer.value,
-            }
-          },
+        const srcTokenAddress = this.implementationAddress(
+          depositInitiated.assetId,
+          'ethereum',
         )
-        if (!transferMatch) return
 
         return [
           BridgehubDepositInitiated.create(input, {
             chainId: Number(depositInitiated.chainId),
             assetId: depositInitiated.assetId,
-            srcTokenAddress: transferMatch.tokenAddress,
+            srcTokenAddress,
             srcAmount: bridgeBurn.amount,
             $dstChain: network.chain,
           }),
@@ -369,9 +321,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       }
 
       const bridgeMint = parseBridgeMint(input.log, [
-        ...ZKSTACK_SUPPORTED.map((n) =>
-          ChainSpecificAddress.address(n.l1NativeTokenVault),
-        ),
+        ChainSpecificAddress.address(L1_NATIVE_TOKEN_VAULT),
       ])
       if (bridgeMint) {
         // must be from supported chain to ethereum
@@ -386,26 +336,10 @@ export class ZkStackPlugin implements InteropPluginResyncable {
           bridgeMint.amount,
         )
 
-        const startLogIndex = input.log.logIndex ?? -1
-        const transferMatch = findParsedAround(
-          input.txLogs,
-          startLogIndex,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (!transfer) return
-            if (transfer.value !== bridgeMint.amount) return
-            return {
-              tokenAddress: Address32.from(log.address),
-              amount: transfer.value,
-            }
-          },
+        const dstTokenAddress = this.implementationAddress(
+          bridgeMint.assetId,
+          'ethereum',
         )
-
-        const dstTokenAddress =
-          transferMatch?.tokenAddress ??
-          (bridgeMint.assetId.toLowerCase() === ZKSYNC_GAS_ASSET_ID
-            ? Address32.NATIVE
-            : undefined)
 
         return [
           BridgeMintL1.create(input, {
@@ -430,16 +364,32 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       ChainSpecificAddress.address(network.l2L1Messenger),
     ])
     if (l1MessageSent) {
-      return [L1MessageSent.create(input, {})]
+      return [
+        L1MessageSent.create(input, {
+          $dstChain: 'ethereum', // fosho
+        }),
+      ]
     }
 
     // to capture this event seems useless but is needed for gas token deposits to L2
-    // since they do not emit anything else
+    // since they do not emit anything else, and for tagging message stuff
     const l2ToL1LogSent = parseL2ToL1LogSent(input.log, [
       ChainSpecificAddress.address(network.l2L1Messenger),
     ])
     if (l2ToL1LogSent) {
-      return [L2ToL1LogSent.create(input, {})]
+      const relayedRootBundle = findParsedAround(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => {
+          const parsed = parseRelayedRootBundle(log, null)
+          if (parsed) return parsed
+        },
+      )
+      return [
+        L2ToL1LogSent.create(input, {
+          app: relayedRootBundle ? 'across-settlement' : 'unknown',
+        }),
+      ]
     }
 
     const withdrawal = parseWithdrawal(input.log, [
@@ -448,14 +398,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (withdrawal) {
       const receiver = EthereumAddress(withdrawal.l1Receiver)
       const matchId = zkstackWithdrawMatchId(
-        ZKSYNC_GAS_ASSET_ID,
+        ETH_ASSET_ID,
         receiver,
         withdrawal.amount,
       )
       return [
         Withdrawal.create(input, {
           matchId,
-          assetId: ZKSYNC_GAS_ASSET_ID,
+          assetId: ETH_ASSET_ID,
           receiver,
           srcTokenAddress: Address32.NATIVE,
           srcAmount: withdrawal.amount,
@@ -469,21 +419,10 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (bridgeBurn) {
       if (bridgeBurn.chainId !== 1n) return
 
-      const startLogIndex = input.log.logIndex ?? -1
-      const transferMatch = findParsedAround(
-        input.txLogs,
-        startLogIndex,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          if (transfer.value !== bridgeBurn.amount) return
-          return {
-            tokenAddress: Address32.from(log.address),
-            amount: transfer.value,
-          }
-        },
+      const srcTokenAddress = this.implementationAddress(
+        bridgeBurn.assetId,
+        network.chain,
       )
-      if (!transferMatch) return
 
       const receiver = EthereumAddress(bridgeBurn.receiver)
       const matchId = zkstackWithdrawMatchId(
@@ -497,7 +436,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
           matchId,
           assetId: bridgeBurn.assetId,
           receiver,
-          srcTokenAddress: transferMatch.tokenAddress,
+          srcTokenAddress,
           srcAmount: bridgeBurn.amount,
         }),
       ]
@@ -510,27 +449,16 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       // bridgeMint is emitted on both sides, we make sure to capture the incoming one
       if (bridgeMint.chainId !== 1n) return
 
-      const startLogIndex = input.log.logIndex ?? -1
-      const transferMatch = findParsedAround(
-        input.txLogs,
-        startLogIndex,
-        (log) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          if (transfer.value !== bridgeMint.amount) return
-          return {
-            tokenAddress: Address32.from(log.address),
-            amount: transfer.value,
-          }
-        },
+      const dstTokenAddress = this.implementationAddress(
+        bridgeMint.assetId,
+        network.chain,
       )
-      if (!transferMatch) return
 
       return [
         BridgeMint.create(input, {
           chainId: Number(bridgeMint.chainId),
           assetId: bridgeMint.assetId,
-          dstTokenAddress: transferMatch.tokenAddress,
+          dstTokenAddress,
           dstAmount: bridgeMint.amount,
         }),
       ]
@@ -557,14 +485,24 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       })
 
       // erc-20 case
+      // TODO: as soon as we have the fist non-ETH gas chain, this needs some work
       if (depositInitiated) {
         const bridgeMint = db.find(BridgeMint, {
           sameTxBefore: l2LogSent,
         })
         if (!bridgeMint) return
 
+        const isForeignToSrc = this.isForeign(
+          bridgeMint.args.assetId,
+          event.ctx.chain,
+        )
+        const isForeignToDst = this.isForeign(
+          bridgeMint.args.assetId,
+          bridgeMint.ctx.chain,
+        )
+
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-erc20',
             srcEvent: event,
             dstEvent: l2LogSent,
@@ -576,6 +514,8 @@ export class ZkStackPlugin implements InteropPluginResyncable {
             dstEvent: bridgeMint,
             dstTokenAddress: bridgeMint.args.dstTokenAddress,
             dstAmount: bridgeMint.args.dstAmount,
+            srcWasBurned: isForeignToSrc,
+            dstWasMinted: isForeignToDst,
           }),
         ]
       }
@@ -586,7 +526,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         baseTokenDeposit.args.srcTokenAddress !== undefined
       ) {
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-gas',
             srcEvent: event,
             dstEvent: l2LogSent,
@@ -598,14 +538,17 @@ export class ZkStackPlugin implements InteropPluginResyncable {
             dstEvent: l2LogSent,
             dstTokenAddress: Address32.NATIVE,
             dstAmount: baseTokenDeposit.args.amount,
+            // ETH is always locked on L1 and minted on L2
+            srcWasBurned: false,
+            dstWasMinted: true,
           }),
         ]
       }
 
       // message case (no transfer)
       return [
-        Result.Message('zksync.Message', {
-          app: 'unknown',
+        Result.Message('zkstack.Message', {
+          app: l2LogSent.args.app,
           srcEvent: event,
           dstEvent: l2LogSent,
           extraEvents: [baseTokenDeposit],
@@ -624,20 +567,27 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         })
         if (!l1MessageSent) return
 
+        // just to consume it
+        const l2ToL1LogSent = db.find(L2ToL1LogSent, {
+          sameTxAtOffset: { event: l1MessageSent, offset: -1 },
+        })
         return [
-          Result.Message('zksync.Message', {
+          Result.Message('zkstack.Message', {
             app: 'canonical-gas',
             srcEvent: l1MessageSent,
             dstEvent: event,
+            extraEvents: l2ToL1LogSent ? [l2ToL1LogSent] : [],
           }),
           Result.Transfer('canonical-gas.Transfer', {
             srcEvent: gasWithdrawal,
             srcTokenAddress: gasWithdrawal.args.srcTokenAddress,
             srcAmount: gasWithdrawal.args.srcAmount,
             dstEvent: event,
-            dstTokenAddress: event.args.dstTokenAddress ?? Address32.NATIVE,
+            dstTokenAddress: event.args.dstTokenAddress,
             dstAmount: event.args.dstAmount,
-            extraEvents: [gasWithdrawal],
+            // eth is always burned on L2 and unlocked on L1
+            srcWasBurned: true,
+            dstWasMinted: false,
           }),
         ]
       }
@@ -652,11 +602,25 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       })
       if (!l1MessageSent) return
 
+      const isForeignToDst = this.isForeign(
+        bridgeBurn.args.assetId,
+        event.ctx.chain,
+      )
+      const isForeignToSrc = this.isForeign(
+        bridgeBurn.args.assetId,
+        bridgeBurn.ctx.chain,
+      )
+      // just to consume it
+      const l2ToL1LogSent = db.find(L2ToL1LogSent, {
+        sameTxAtOffset: { event: l1MessageSent, offset: -1 },
+      })
+
       return [
-        Result.Message('zksync.Message', {
+        Result.Message('zkstack.Message', {
           app: 'canonical-erc20',
           srcEvent: l1MessageSent,
           dstEvent: event,
+          extraEvents: l2ToL1LogSent ? [l2ToL1LogSent] : [],
         }),
         Result.Transfer('canonical-erc20.Transfer', {
           srcEvent: bridgeBurn,
@@ -665,8 +629,44 @@ export class ZkStackPlugin implements InteropPluginResyncable {
           dstEvent: event,
           dstTokenAddress: event.args.dstTokenAddress,
           dstAmount: event.args.dstAmount,
+          dstWasMinted: isForeignToDst,
+          srcWasBurned: isForeignToSrc,
         }),
       ]
     }
+  }
+
+  private implementationAddress(
+    assetId: `0x${string}`,
+    chain: string,
+  ): Address32 | undefined {
+    const assets = this.configs.get(ZkStackConfig)
+    if (!assets) return
+    const entry = assets[assetId.toLowerCase()]
+    if (!entry) return
+    const unfiltered = entry.implementationAddresses[chain]
+    // hack for building a bridge between zkstack and l2 beets understanding of a native token address
+    if (
+      unfiltered ===
+      Address32.from('0x0000000000000000000000000000000000000001')
+    )
+      return Address32.NATIVE
+    return unfiltered
+  }
+
+  private isForeign(
+    assetId: `0x${string}`,
+    chain: string,
+  ): boolean | undefined {
+    const assets = this.configs.get(ZkStackConfig)
+    if (!assets) return
+    const entry = assets[assetId.toLowerCase()]
+    if (!entry) return
+    const toChain =
+      entry.chainId === 1
+        ? 'ethereum'
+        : getNetworkByChainId(BigInt(entry.chainId))?.chain
+    if (!toChain) return
+    return chain !== toChain
   }
 }
