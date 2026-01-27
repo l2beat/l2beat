@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x36ec5691f07ec4905da31786435eb51ab54116eb
+Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044
 
-# Diff at Tue, 27 Jan 2026 11:33:13 GMT:
+# Diff at Tue, 27 Jan 2026 17:04:07 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769003954
-- current timestamp: 1769513484
+- current timestamp: 1769533383
 
 ## Description
 
-OPSuccinctL2OutputOracle updated rangeVkeyCommitment verification key (0x5d15e8...→0x05044f...).
+OPSuccinctL2OutputOracle updated rangeVkeyCommitment verification key (0x5d15e8...→0x05044f...). This is a hotfix addressing an issue where Mantle logic in revm was inconsistent with geth, which prevented the generation of the corresponding ZKP.
 
 ## Watched changes
 

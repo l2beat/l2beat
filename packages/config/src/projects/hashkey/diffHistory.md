@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0628f75aa155d3f37e6c6427082d22a13315b67f
+Generated with discovered.json: 0x4a4512404f72585e84ed87f3d2ff6d8b6750725c
 
-# Diff at Tue, 27 Jan 2026 11:29:50 GMT:
+# Diff at Tue, 27 Jan 2026 16:58:54 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1765550542
-- current timestamp: 1769513326
+- current timestamp: 1769532941
 
 ## Description
 
-New PermissionedDisputeGame implementation deployed and registered in DisputeGameFactory (gameImpls.1 changed). SystemConfig updated with new batcher address (0xFa35501...) and new unsafe block signer (0x38Eb7B...). The previous PermissionedDisputeGame at 0x78075e was deleted.
+Key rotation: New PermissionedDisputeGame deployed with new proposer address (0xC5576... → 0xD1B3E...). Since PermissionedDisputeGame has immutable constructor params, a new contract was needed to change the proposer. SystemConfig also updated with new batcher (0xFa35501...) and new unsafe block signer (0x38Eb7B...). Same implementation code and absolutePrestate (v1.3.1 govApproved).
 
 ## Watched changes
 

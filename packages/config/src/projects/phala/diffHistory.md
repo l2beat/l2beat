@@ -1,14 +1,16 @@
-Generated with discovered.json: 0x23c97ad43522b9e26d496eb66e1d92ed352dfeae
+Generated with discovered.json: 0xa2b52bde21ece72c0d01fa1e252e748c0455f45e
 
-# Diff at Tue, 27 Jan 2026 11:30:09 GMT:
+# Diff at Tue, 27 Jan 2026 16:56:39 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768990153
-- current timestamp: 1769513332
+- current timestamp: 1769532933
 
 ## Description
 
-Respected game type changed from 6 to 1 (PermissionedDisputeGame) in OptimismPortal2 and AnchorStateRegistry. This means withdrawals now use the standard PermissionedDisputeGame type instead of the custom type 6. DisputeGameFactory now shows 2 permissioned games total. Also added new member to Conduit Multisig 1 (now 4 of 13).
+Phala switched from ZK validity proofs to optimistic fault proofs. `respectedGameType` changed from 6 (OPSuccinctDisputeGame) to 1 (PermissionedDisputeGame) via `setRespectedGameType(1)`. New state proposals now use PermissionedDisputeGame instead of OPSuccinct ZK proofs. OPSuccinctL2OutputOracle is now idle (last ZK proposal was game #276). Both game implementations remain registered in DisputeGameFactory.
+
+Also added new member to Conduit Multisig 1 (now 4 of 13).
 
 ## Watched changes
 
@@ -17,7 +19,7 @@ Respected game type changed from 6 to 1 (PermissionedDisputeGame) in OptimismPor
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
       values.permissionedGamesTotal:
 -        0
-+        2
++        3
     }
 ```
 

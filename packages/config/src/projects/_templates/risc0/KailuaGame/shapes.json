@@ -9,5 +9,11 @@
     "address": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
     "chain": "ethereum",
     "blockNumber": 23975645
+  },
+  "KailuaGame_v5compat": {
+    "hash": "0xeb03c515a41cf0488257e2d087c87b453cdc683dcdd31975049260130672f399",
+    "address": "eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b",
+    "chain": "ethereum",
+    "blockNumber": 24319793
   }
 }

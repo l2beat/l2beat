@@ -13,8 +13,8 @@ export const phala: ScalingProject = opStackL2({
   display: {
     name: 'Phala',
     slug: 'phala',
-    description: `Phala is cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
-      Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
+    description: `Phala is a cloud computing protocol aiming to offer developers a secure and efficient platform for deploying AI-ready applications in a trusted environment (TEE).
+      Phala uses the OP Stack. Originally deployed with OPSuccinct (SP1 ZK proofs), it currently operates with standard PermissionedDisputeGame (optimistic).`,
     links: {
       websites: ['https://phala.network/'],
       bridges: ['https://subbridge.io'],
@@ -49,8 +49,7 @@ export const phala: ScalingProject = opStackL2({
     ],
   },
   nonTemplateProofSystem: {
-    type: 'Validity',
-    zkCatalogId: ProjectId('sp1'),
+    type: 'Optimistic',
   },
   nonTemplateTrackedTxs: [
     {
