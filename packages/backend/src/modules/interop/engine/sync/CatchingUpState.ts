@@ -196,9 +196,10 @@ export class CatchingUpState implements TimeloopState {
   }
 
   async clearResyncRequestFlag() {
-    await this.syncer.db.interopPluginSyncState.clearResyncRequestUnlessWipePending(
+    await this.syncer.db.interopPluginSyncState.setResyncRequestedFrom(
       this.syncer.cluster.name,
       this.syncer.chain,
+      null,
     )
   }
 
