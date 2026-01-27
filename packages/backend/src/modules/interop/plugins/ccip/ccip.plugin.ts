@@ -5,23 +5,20 @@ The dst chain on SRC must be determined by the contract address that emitted the
 contracts are set up for every SRC-DST pair on each chain
 */
 
-import {
-  Address32,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  defineNetworks,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
-} from './types'
+} from '../types'
+import { CCIPConfig } from './ccip.config'
 
 /*
  event CCIPSendRequested(Internal.EVM2EVMMessage message);
@@ -122,73 +119,6 @@ export const ExecutionStateChanged = createInteropEventType<{
   dstTokens?: { address: Address32; amount: bigint }[]
 }>('ccip.ExecutionStateChanged')
 
-interface CcipNetwork {
-  chain: string
-  outboundLanes: Record<string, ChainSpecificAddress>
-  inboundLanes: Record<string, ChainSpecificAddress>
-}
-
-// Future reference: https://docs.chain.link/ccip/directory/mainnet/chain/mainnet
-const CCIP_NETWORKS = defineNetworks<CcipNetwork>('ccip', [
-  {
-    chain: 'base',
-    outboundLanes: {
-      arbitrum: ChainSpecificAddress(
-        'base:0x9D0ffA76C7F82C34Be313b5bFc6d42A72dA8CA69',
-      ),
-      ethereum: ChainSpecificAddress(
-        'base:0x56b30A0Dcd8dc87Ec08b80FA09502bAB801fa78e',
-      ),
-    },
-    inboundLanes: {
-      arbitrum: ChainSpecificAddress(
-        'base:0x7D38c6363d5E4DFD500a691Bc34878b383F58d93',
-      ),
-      ethereum: ChainSpecificAddress(
-        'base:0xCA04169671A81E4fB8768cfaD46c347ae65371F1',
-      ),
-    },
-  },
-  {
-    chain: 'arbitrum',
-    outboundLanes: {
-      base: ChainSpecificAddress(
-        'arb1:0xc1b6287A3292d6469F2D8545877E40A2f75CA9a6',
-      ),
-      ethereum: ChainSpecificAddress(
-        'arb1:0x67761742ac8A21Ec4D76CA18cbd701e5A6F3Bef3',
-      ),
-    },
-    inboundLanes: {
-      base: ChainSpecificAddress(
-        'arb1:0xb62178f8198905D0Fa6d640Bdb188E4E8143Ac4b',
-      ),
-      ethereum: ChainSpecificAddress(
-        'arb1:0x91e46cc5590A4B9182e47f40006140A7077Dec31',
-      ),
-    },
-  },
-  {
-    chain: 'ethereum',
-    outboundLanes: {
-      arbitrum: ChainSpecificAddress(
-        'eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284',
-      ),
-      base: ChainSpecificAddress(
-        'eth:0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937',
-      ),
-    },
-    inboundLanes: {
-      arbitrum: ChainSpecificAddress(
-        'eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9',
-      ),
-      base: ChainSpecificAddress(
-        'eth:0x6B4B6359Dd5B47Cdb030E5921456D2a0625a9EbD',
-      ),
-    },
-  },
-])
-
 /**
  * Find the token address from the Transfer event immediately preceding a Released/Minted event.
  * In v1.5 TokenPools, the event order is: Transfer -> Released/Minted
@@ -210,15 +140,35 @@ function findPrecedingTransferToken(
   return undefined
 }
 
-export class CCIPPlugIn implements InteropPluginResyncable {
+export class CCIPPlugin implements InteropPluginResyncable {
   readonly name = 'ccip'
 
+  constructor(private configs: InteropConfigStore) {}
+
   getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(CCIPConfig) ?? []
+
+    const outboundAddresses: ChainSpecificAddress[] = []
+    const inboundAddresses: ChainSpecificAddress[] = []
+
+    for (const network of networks) {
+      try {
+        for (const addr of Object.values(network.outboundLanes)) {
+          outboundAddresses.push(ChainSpecificAddress.fromLong(network.chain, addr))
+        }
+        for (const addr of Object.values(network.inboundLanes)) {
+          inboundAddresses.push(ChainSpecificAddress.fromLong(network.chain, addr))
+        }
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
     return [
       {
         type: 'event',
         signature: CCIPSendRequestedLog,
-        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.outboundLanes)),
+        addresses: outboundAddresses,
       },
       {
         type: 'event',
@@ -229,29 +179,34 @@ export class CCIPPlugIn implements InteropPluginResyncable {
           mintedLog,
           transferLog,
         ],
-        addresses: CCIP_NETWORKS.flatMap((n) => Object.values(n.inboundLanes)),
+        addresses: inboundAddresses,
       },
     ]
   }
 
   capture(input: LogToCapture) {
-    const network = CCIP_NETWORKS.find((x) => x.chain === input.chain)
+    const networks = this.configs.get(CCIPConfig)
+    if (!networks) return
+
+    const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
 
     const ccipSendRequested = parseCCIPSendRequested(input.log, null)
     if (ccipSendRequested) {
       const outboundLane = EthereumAddress(input.log.address)
+      // Check if this event is from one of our outbound lanes
+      const dstChainEntry = Object.entries(network.outboundLanes).find(
+        ([_, address]) => address === outboundLane,
+      )
+      if (!dstChainEntry) return
+
       return ccipSendRequested.message.tokenAmounts.map((ta, index) =>
         CCIPSendRequested.create(input, {
           messageId: ccipSendRequested.message.messageId,
           token: Address32.from(ta.token),
           amount: ta.amount,
           index,
-          $dstChain:
-            Object.entries(network.outboundLanes).find(
-              ([_, address]) =>
-                ChainSpecificAddress.address(address) === outboundLane,
-            )?.[0] ?? `Unknown_${outboundLane}`,
+          $dstChain: dstChainEntry[0],
         }),
       )
     }
@@ -259,6 +214,11 @@ export class CCIPPlugIn implements InteropPluginResyncable {
     const executionStateChanged = parseExecutionStateChanged(input.log, null)
     if (executionStateChanged) {
       const inboundLane = EthereumAddress(input.log.address)
+      // Check if this event is from one of our inbound lanes
+      const srcChainEntry = Object.entries(network.inboundLanes).find(
+        ([_, address]) => address === inboundLane,
+      )
+      if (!srcChainEntry) return
 
       // Collect token release/mint events from TokenPools in the same transaction
       // These are emitted in the same order as tokenAmounts[] in the source message
@@ -321,11 +281,7 @@ export class CCIPPlugIn implements InteropPluginResyncable {
         ExecutionStateChanged.create(input, {
           messageId: executionStateChanged.messageId,
           state: executionStateChanged.state,
-          $srcChain:
-            Object.entries(network.inboundLanes).find(
-              ([_, address]) =>
-                ChainSpecificAddress.address(address) === inboundLane,
-            )?.[0] ?? `Unknown_${inboundLane}`,
+          $srcChain: srcChainEntry[0],
           dstTokens: dstTokens.length > 0 ? dstTokens : undefined,
         }),
       ]

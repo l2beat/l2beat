@@ -16,7 +16,8 @@ import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
-import { CCIPPlugIn } from './ccip'
+import { CCIPConfigPlugin } from './ccip/ccip.config'
+import { CCIPPlugin } from './ccip/ccip.plugin'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
@@ -113,6 +114,12 @@ export function createInteropPlugins(
         deps.httpClient,
         rpcs,
       ),
+      new CCIPConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
@@ -121,7 +128,7 @@ export function createInteropPlugins(
       new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
-      new CCIPPlugIn(),
+      new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
       {
         name: 'cctp',
