@@ -73,7 +73,7 @@ export const LogOrderCreated = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $dstChain: string
-}>('squid-coral.LogOrderCreated')
+}>('squid-coral.LogOrderCreated', { direction: 'outgoing' })
 
 export const LogOrderFilled = createInteropEventType<{
   orderHash: `0x${string}`
@@ -82,7 +82,7 @@ export const LogOrderFilled = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $srcChain: string
-}>('squid-coral.LogOrderFilled')
+}>('squid-coral.LogOrderFilled', { direction: 'incoming' })
 
 export class SquidCoralPlugin implements InteropPlugin {
   readonly name = 'squid-coral'
@@ -171,9 +171,11 @@ export class SquidCoralPlugin implements InteropPlugin {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
         srcAmount: orderCreated.args.fromAmount,
+        srcWasBurned: false,
         dstEvent: orderFilled,
         dstTokenAddress: orderFilled.args.toToken,
         dstAmount: orderFilled.args.fillAmount,
+        dstWasMinted: false,
       }),
     ]
   }
