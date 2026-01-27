@@ -7,10 +7,7 @@ import {
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type {
-  AggregatedInteropTransferWithTokens,
-  InteropGroupedData,
-} from '../types'
+import type { AggregatedInteropTransferWithTokens } from '../types'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
@@ -19,7 +16,7 @@ export type TokenData = {
   iconUrl: string
   volume: number
   transferCount: number
-  avgDuration: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit
   avgValue: number
 }
 
@@ -29,7 +26,7 @@ export type ChainData = {
   iconUrl: string
   volume: number
   transferCount: number
-  avgDuration: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit
   avgValue: number
 }
 
@@ -92,8 +89,14 @@ export function getProtocolEntries(
         protocolName: project.interopConfig.name ?? project.name,
         bridgeType,
         volume: data.volume,
-        tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
-        chains: getChainsData(data.chains, logger),
+        tokens: getTokensData(
+          key,
+          data.tokens,
+          tokensDetailsMap,
+          durationSplitMap,
+          logger,
+        ),
+        chains: getChainsData(key, data.chains, durationSplitMap, logger),
         transferCount: data.transferCount,
         averageValue:
           data.transferCount > 0 ? data.volume / data.transferCount : 0,
@@ -104,8 +107,10 @@ export function getProtocolEntries(
 }
 
 function getTokensData(
-  tokens: Map<string, InteropGroupedData>,
+  protocolId: string,
+  tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
 ) {
   return Array.from(tokens.entries())
@@ -117,6 +122,12 @@ function getTokensData(
         return undefined
       }
 
+      const avgDuration = getAverageDuration(
+        protocolId,
+        token,
+        durationSplitMap,
+      )
+
       return {
         id: tokenId,
         symbol: tokenDetails.symbol,
@@ -125,7 +136,7 @@ function getTokensData(
           manifest.getUrl('/images/token-placeholder.png'),
         volume: token.volume,
         transferCount: token.transferCount,
-        avgDuration: Math.floor(token.totalDurationSum / token.transferCount),
+        avgDuration: avgDuration,
         avgValue: Math.floor(token.volume / token.transferCount),
       }
     })
@@ -134,7 +145,9 @@ function getTokensData(
 }
 
 function getChainsData(
-  chains: Map<string, InteropGroupedData>,
+  protocolId: string,
+  chains: Map<string, AverageDurationData & { volume: number }>,
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
 ): ChainData[] {
   return Array.from(chains.entries())
@@ -145,15 +158,19 @@ function getChainsData(
         return undefined
       }
 
+      const avgDuration = getAverageDuration(
+        protocolId,
+        chainData,
+        durationSplitMap,
+      )
+
       return {
         id: chainId,
         name: chain.name,
         iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
         volume: chainData.volume,
         transferCount: chainData.transferCount,
-        avgDuration: Math.floor(
-          chainData.totalDurationSum / chainData.transferCount,
-        ),
+        avgDuration: avgDuration,
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
       }
     })
@@ -161,16 +178,18 @@ function getChainsData(
     .toSorted((a, b) => b.volume - a.volume)
 }
 
+type AverageDurationData = {
+  transferCount: number
+  totalDurationSum: number
+  inTransferCount: number
+  inDurationSum: number
+  outTransferCount: number
+  outDurationSum: number
+}
+
 function getAverageDuration(
   key: string,
-  data: {
-    transferCount: number
-    totalDurationSum: number
-    inTransferCount: number
-    inDurationSum: number
-    outTransferCount: number
-    outDurationSum: number
-  },
+  data: AverageDurationData,
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
 ): ProtocolEntry['averageDuration'] {
   const durationSplit = durationSplitMap.get(key)

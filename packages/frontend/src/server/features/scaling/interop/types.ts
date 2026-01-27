@@ -25,3 +25,12 @@ export type InteropGroupedData = {
   transferCount: number
   totalDurationSum: number
 }
+
+export type AverageDurationData = {
+  transferCount: number
+  totalDurationSum: number
+  inTransferCount: number
+  inDurationSum: number
+  outTransferCount: number
+  outDurationSum: number
+}

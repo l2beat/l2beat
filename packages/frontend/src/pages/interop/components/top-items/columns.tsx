@@ -1,8 +1,10 @@
-import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
+import type { DurationSplit } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { AvgDurationCell } from '../table/AvgDurationCell'
 
 export type TopItem = {
   id: string
@@ -10,7 +12,7 @@ export type TopItem = {
   iconUrl: string
   volume: number
   transferCount: number
-  avgDuration: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit
   avgValue: number
 }
 export type TopItemType = 'tokens' | 'chains'
@@ -46,7 +48,7 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
     ),
   }),
   columnHelper.accessor('volume', {
-    header: 'Volume',
+    header: 'Last 24h\nVolume',
     cell: (ctx) => (
       <span className="font-medium text-label-value-15">
         {formatCurrency(ctx.row.original.volume, 'usd')}
@@ -57,7 +59,7 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
     },
   }),
   columnHelper.accessor('transferCount', {
-    header: 'Transfer Count',
+    header: 'Last 24h\ntransfer count',
     cell: (ctx) => (
       <div className="font-medium text-label-value-15">
         {ctx.row.original.transferCount}
@@ -68,18 +70,16 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
     },
   }),
   columnHelper.accessor('avgDuration', {
-    header: 'Avg Duration',
+    header: 'Last 24h avg.\ntransfer time',
     cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatSeconds(ctx.row.original.avgDuration)}
-      </span>
+      <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
     ),
     meta: {
       align: 'right',
     },
   }),
   columnHelper.accessor('avgValue', {
-    header: 'Avg Value',
+    header: 'Last 24h avg.\ntransfer value',
     cell: (ctx) => (
       <span className="font-medium text-label-value-15">
         {formatCurrency(ctx.row.original.avgValue, 'usd')}

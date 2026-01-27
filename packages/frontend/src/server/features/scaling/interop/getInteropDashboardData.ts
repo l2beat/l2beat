@@ -129,7 +129,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
       transferCount: 1000,
-      avgDuration: 100_000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 10_000,
     },
     {
@@ -139,7 +139,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
       transferCount: 500,
-      avgDuration: 50_000,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
     },
   ]
@@ -151,7 +151,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl: manifest.getUrl('/icons/ethereum.png'),
       volume: 8_000_000,
       transferCount: 1000,
-      avgDuration: 100_000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 8_000,
     },
     {
@@ -160,7 +160,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       volume: 5_000_000,
       transferCount: 500,
-      avgDuration: 50_000,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
     },
   ]

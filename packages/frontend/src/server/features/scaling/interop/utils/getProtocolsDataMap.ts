@@ -1,7 +1,7 @@
 import type { InteropConfig } from '@l2beat/config'
 import type {
   AggregatedInteropTransferWithTokens,
-  InteropGroupedData,
+  AverageDurationData,
 } from '../types'
 
 export function getProtocolsDataMap(
@@ -12,8 +12,8 @@ export function getProtocolsDataMap(
     string,
     {
       volume: number
-      tokens: Map<string, InteropGroupedData>
-      chains: Map<string, InteropGroupedData>
+      tokens: Map<string, AverageDurationData & { volume: number }>
+      chains: Map<string, AverageDurationData & { volume: number }>
       transferCount: number
       totalDurationSum: number
       // Split duration tracking (only used when durationSplit is configured)
@@ -27,8 +27,8 @@ export function getProtocolsDataMap(
   for (const record of records) {
     const current = protocolsDataMap.get(record.id) ?? {
       volume: 0,
-      tokens: new Map<string, InteropGroupedData>(),
-      chains: new Map<string, InteropGroupedData>(),
+      tokens: new Map<string, AverageDurationData & { volume: number }>(),
+      chains: new Map<string, AverageDurationData & { volume: number }>(),
       transferCount: 0,
       totalDurationSum: 0,
       inTransferCount: 0,
@@ -39,35 +39,64 @@ export function getProtocolsDataMap(
 
     for (const token of record.tokens) {
       const currentToken = current.tokens.get(token.abstractTokenId)
+      const durationSplit = durationSplitMap.get(record.id)
+
+      let inTransferCount = currentToken?.inTransferCount ?? 0
+      let inDurationSum = currentToken?.inDurationSum ?? 0
+      let outTransferCount = currentToken?.outTransferCount ?? 0
+      let outDurationSum = currentToken?.outDurationSum ?? 0
+
+      if (durationSplit) {
+        const isInDirection =
+          record.srcChain === durationSplit.in.from &&
+          record.dstChain === durationSplit.in.to
+        const isOutDirection =
+          record.srcChain === durationSplit.out.from &&
+          record.dstChain === durationSplit.out.to
+
+        if (isInDirection) {
+          inTransferCount += token.transferCount ?? 0
+          inDurationSum += token.totalDurationSum ?? 0
+        } else if (isOutDirection) {
+          outTransferCount += token.transferCount ?? 0
+          outDurationSum += token.totalDurationSum ?? 0
+        }
+      }
       current.tokens.set(token.abstractTokenId, {
         transferCount: currentToken?.transferCount ?? 0 + token.transferCount,
         totalDurationSum:
           currentToken?.totalDurationSum ?? 0 + token.totalDurationSum,
         volume: currentToken?.volume ?? 0 + token.volume,
+        inTransferCount,
+        inDurationSum,
+        outTransferCount,
+        outDurationSum,
       })
     }
 
-    if (record.srcChain) {
-      const currentChain = current.chains.get(record.srcChain) ?? {
-        volume: 0,
-        transferCount: 0,
-        totalDurationSum: 0,
-      }
-      current.chains.set(record.srcChain, {
-        volume: currentChain.volume + (record.srcValueUsd ?? 0),
-        transferCount: currentChain.transferCount + (record.transferCount ?? 0),
-        totalDurationSum:
-          currentChain.totalDurationSum + (record.totalDurationSum ?? 0),
-      })
-    }
-    if (record.dstChain && record.dstChain !== record.srcChain) {
-      const currentChain = current.chains.get(record.dstChain) ?? {
-        volume: 0,
-        transferCount: 0,
-        totalDurationSum: 0,
-      }
+    const currentChain = current.chains.get(record.srcChain) ?? INITIAL_DATA
+    current.chains.set(record.srcChain, {
+      volume: currentChain.volume + (record.srcValueUsd ?? 0),
+      inDurationSum: currentChain.inDurationSum,
+      outDurationSum:
+        currentChain.outDurationSum + (record.totalDurationSum ?? 0),
+      inTransferCount: currentChain.inTransferCount,
+      outTransferCount:
+        currentChain.outTransferCount + (record.transferCount ?? 0),
+      transferCount: currentChain.transferCount + (record.transferCount ?? 0),
+      totalDurationSum:
+        currentChain.totalDurationSum + (record.totalDurationSum ?? 0),
+    })
+    if (record.dstChain !== record.srcChain) {
+      const currentChain = current.chains.get(record.dstChain) ?? INITIAL_DATA
       current.chains.set(record.dstChain, {
-        volume: currentChain.volume + (record.dstValueUsd ?? 0),
+        volume: currentChain.volume + (record.srcValueUsd ?? 0),
+        inDurationSum:
+          currentChain.inDurationSum + (record.totalDurationSum ?? 0),
+        outDurationSum: currentChain.outDurationSum,
+        inTransferCount:
+          currentChain.inTransferCount + (record.transferCount ?? 0),
+        outTransferCount: currentChain.outTransferCount,
         transferCount: currentChain.transferCount + (record.transferCount ?? 0),
         totalDurationSum:
           currentChain.totalDurationSum + (record.totalDurationSum ?? 0),
@@ -113,4 +142,14 @@ export function getProtocolsDataMap(
   }
 
   return protocolsDataMap
+}
+
+const INITIAL_DATA = {
+  volume: 0,
+  transferCount: 0,
+  totalDurationSum: 0,
+  inTransferCount: 0,
+  inDurationSum: 0,
+  outTransferCount: 0,
+  outDurationSum: 0,
 }
