@@ -162,8 +162,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
   )
 
   describe(
-    InteropPluginSyncStateRepository.prototype.clearResyncRequestUnlessWipePending
-      .name,
+    InteropPluginSyncStateRepository.prototype
+      .clearResyncRequestUnlessWipePending.name,
     () => {
       it('clears resyncRequestedFrom only when wipeRequired is false', async () => {
         const record = state({
