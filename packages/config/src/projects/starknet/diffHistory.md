@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x7f3a2e1fac2b6f5c35d77e1b1f0b91d087e97743
+
+# Diff at Tue, 27 Jan 2026 10:46:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ff7d808b2d664b70015c8fab467386a14a164e23 block: 1768921358
+- current timestamp: 1769510717
+
+## Description
+
+Added new EOA to be a security agent for ETH and STRK bridge (can enable withdrawal limit).
+
+## Watched changes
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_AGENT.members.1:
++        "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+      values.secAgentAC.1:
++        "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_AGENT.members.1:
++        "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+      values.secAgentAC.1:
++        "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+    }
+```
+
 Generated with discovered.json: 0xc1a283e1b58e773f37dff0428cc3c0720dafe4a4
 
 # Diff at Tue, 20 Jan 2026 16:05:37 GMT:
