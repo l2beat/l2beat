@@ -108,11 +108,10 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
-const dbClearedFor = new Map<string, UnixTime>()
-
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
+  public waitingForWipe = false
 
   constructor(
     readonly chain: LongChainName,
@@ -215,12 +214,23 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async isResyncRequestedFrom(): Promise<UnixTime | undefined> {
+    const { resyncFrom } = await this.getResyncState()
+    return resyncFrom
+  }
+
+  async getResyncState(): Promise<{
+    resyncFrom?: UnixTime
+    wipeRequired: boolean
+  }> {
     const syncState =
       await this.db.interopPluginSyncState.findByPluginNameAndChain(
         this.cluster.name,
         this.chain,
       )
-    return syncState?.resyncRequestedFrom ?? undefined
+    return {
+      resyncFrom: syncState?.resyncRequestedFrom ?? undefined,
+      wipeRequired: syncState?.wipeRequired ?? false,
+    }
   }
 
   buildLogQuery() {
@@ -264,25 +274,5 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
-  }
-
-  async deleteAllClusterData(forRequest?: UnixTime) {
-    if (forRequest) {
-      if (dbClearedFor.get(this.cluster.name) === forRequest) {
-        return
-      }
-      dbClearedFor.set(this.cluster.name, forRequest)
-    }
-
-    await this.db.transaction(async () => {
-      for (const plugin of this.cluster.plugins) {
-        // Delete messages:
-        await this.db.interopMessage.deleteForPlugin(plugin.name)
-        // Delete transfers:
-        await this.db.interopTransfer.deleteForPlugin(plugin.name)
-        // Delete events:
-        await this.store.deleteAllForPlugin(plugin.name)
-      }
-    })
   }
 }

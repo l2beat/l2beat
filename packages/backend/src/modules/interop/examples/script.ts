@@ -140,6 +140,7 @@ async function runExample(
     example,
     logger: Logger.ERROR,
     http: new HttpClient(),
+    tokenDbClient,
     snapshotService,
     env: getEnv(),
     mode: opts.seal ? 'capture' : 'live',
