@@ -105,14 +105,13 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return []
 
-    const addresses = networks
-      .filter((network) => network.messageTransmitter)
-      .map((network) =>
-        ChainSpecificAddress.fromLong(
-          network.chain,
-          network.messageTransmitter!,
-        ),
-      )
+    const networksWithTransmitter = networks.filter(
+      (network): network is typeof network & { messageTransmitter: string } =>
+        network.messageTransmitter !== undefined,
+    )
+    const addresses = networksWithTransmitter.map((network) =>
+      ChainSpecificAddress.fromLong(network.chain, network.messageTransmitter),
+    )
 
     return [
       {
