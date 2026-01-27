@@ -1550,5 +1550,8 @@
   "static/icons/relay.png": "8690254fb8cc2eb5762371d9c50b7308",
   "static/icons/layerzero.png": "316f17a18b677c7e98d2f307c2b4d6e7",
   "static/meta-images/publications/governance-review-83.png": "733ed92985776cc9c2b66ac164c530b6",
-  "static/icons/cctpv1.png": "0eb42253e99f94191aeed3d6c67da597"
+  "static/icons/cctpv1.png": "0eb42253e99f94191aeed3d6c67da597",
+  "static/icons/axelar-its.png": "a6078cf28e592bae1394458026c7d2d7",
+  "static/icons/axelar.png": "a6078cf28e592bae1394458026c7d2d7",
+  "static/icons/squid.png": "4b12e9f1a1010155189e4bcb77e09ff2"
 }

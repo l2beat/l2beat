@@ -260,6 +260,7 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
+              wipeRequired: false,
             }),
           }),
         }),
@@ -391,76 +392,6 @@ describe(InteropEventSyncer.name, () => {
         toEventSelector(extraSignatureA),
         toEventSelector(extraSignatureB),
       ])
-    })
-  })
-
-  describe(InteropEventSyncer.prototype.deleteAllClusterData.name, () => {
-    it('wipes data for cluster and plugin names', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        cluster: makeCluster({
-          name: 'clusterName',
-          plugins: [
-            makePlugin({ name: 'across' }),
-            makePlugin({ name: 'wormhole' }),
-          ],
-        }),
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
-      })
-
-      await syncer.deleteAllClusterData()
-
-      expect(transaction).toHaveBeenCalled()
-      expect(deleteMessage).toHaveBeenCalledTimes(2)
-      expect(deleteTransfer).toHaveBeenCalledTimes(2)
-      expect(deleteEvents).toHaveBeenCalledTimes(2)
-      expect(deleteMessage).toHaveBeenCalledWith('across')
-      expect(deleteMessage).toHaveBeenCalledWith('wormhole')
-    })
-
-    it('deduplicates cluster and plugin names', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        cluster: makeCluster({
-          name: 'clusterName',
-          plugins: [makePlugin({ name: 'across' })],
-        }),
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
-      })
-
-      await syncer.deleteAllClusterData()
-
-      expect(deleteMessage).toHaveBeenCalledTimes(1)
-      expect(deleteTransfer).toHaveBeenCalledTimes(1)
-      expect(deleteEvents).toHaveBeenCalledTimes(1)
     })
   })
 
