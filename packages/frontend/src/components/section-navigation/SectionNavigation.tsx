@@ -21,7 +21,9 @@ export function SectionNavigation({
   className?: string
   style?: CSSProperties
 }) {
-  const indexOffset = sections.some((section) => section.id === 'summary') ? -1 : 0
+  const indexOffset = sections.some((section) => section.id === 'summary')
+    ? -1
+    : 0
   const currentSection = useCurrentSection()
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
