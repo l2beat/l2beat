@@ -54,6 +54,12 @@ export function createInteropModule({
     tokenDbClient,
   })
 
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
+  const aggregationStatusProvider = {
+    isAggregationInProgress: () =>
+      interopAggregatingIndexer?.isAggregationInProgress() ?? false,
+  }
+
   const syncersManager = new InteropSyncersManager(
     pluginsAsClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
@@ -61,6 +67,7 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
+    aggregationStatusProvider,
   )
 
   const transferStream = new InteropTransferStream()
@@ -137,7 +144,6 @@ export function createInteropModule({
     logger,
   )
 
-  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
     interopAggregatingIndexer = new InteropAggregatingIndexer({
       db,
@@ -146,6 +152,7 @@ export function createInteropModule({
       indexerService,
       parents: [hourlyIndexer],
       minHeight: 1,
+      syncersManager,
     })
   }
 
