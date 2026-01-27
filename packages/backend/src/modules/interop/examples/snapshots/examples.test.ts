@@ -1,5 +1,6 @@
 import { type Env, Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockObject } from 'earl'
 import { join } from 'path'
 import { readExamples } from '../core'
@@ -55,6 +56,7 @@ describe('interop examples', () => {
           example: definition,
           logger: Logger.SILENT,
           http: mockObject<HttpClient>({}),
+          tokenDbClient: mockObject<TokenDbClient>({}),
           snapshotService,
           env: mockObject<Env>({}),
           mode: 'replay',

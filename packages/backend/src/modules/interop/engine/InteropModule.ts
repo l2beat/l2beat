@@ -40,12 +40,18 @@ export function createInteropModule({
 
   const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   const configStore = new InteropConfigStore(db)
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
   const plugins = createInteropPlugins({
     configs: configStore,
     chains: config.interop.config.chains,
     httpClient: new HttpClient(),
     logger,
     rpcClients: providers.clients.rpcClients,
+    tokenDbClient,
   })
 
   const syncersManager = new InteropSyncersManager(
@@ -109,12 +115,6 @@ export function createInteropModule({
     parents: [hourlyIndexer],
     minHeight: 1,
     indexerService,
-  })
-
-  const tokenDbClient = getTokenDbClient({
-    apiUrl: config.interop.financials.tokenDbApiUrl,
-    authToken: config.interop.financials.tokenDbAuthToken,
-    callSource: 'interop',
   })
 
   const financialsService = new InteropFinancialsLoop(
