@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xde6efd0a77c300b06bc1b2fc23fb4624a49a1bd8
+Generated with discovered.json: 0x97e52c13d4b29efc16959c77b3f7716a90acb6b3
 
-# Diff at Tue, 27 Jan 2026 11:51:26 GMT:
+# Diff at Tue, 27 Jan 2026 18:09:47 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1766048362
@@ -17,14 +17,6 @@ SaferSafes module (LivenessModule + TimelockGuard combined) added to OpFoundatio
     +++ description: None
       values.GnosisSafe_modules.0:
 +        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
-    }
-```
-
-```diff
-    contract DisputeGameFactory (eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57) {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-      errors:
-+        {"permissionedGamesTotal":"Processing error occurred."}
     }
 ```
 
