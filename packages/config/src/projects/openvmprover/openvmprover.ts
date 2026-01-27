@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -100,7 +101,7 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
     ],
     verifierHashes: [
       {
-        hash: '0xeea69613c0ab56b156122ce41ac52afc8434e8d2fa1b57cdd5e2c1491e06aaf9',
+        hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -110,12 +111,33 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The verification steps are based on [this guide](https://github.com/scroll-tech/scroll-sc-tools/tree/feat/feynman?tab=readme-ov-file), with slight adjustments to resolve build failures. Memory usage peaks around 60 GiB on an ubuntu machine.
+
+1. Install dependency packages: \`sudo apt-get update && sudo apt-get install build-essential pkg-config libssl-dev\`.
+2. Install specifically required rust toolchain and solidity compiler:
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+rustup toolchain install nightly-2025-02-14
+
+cargo install svm-rs
+svm install 0.8.19
+solc --version  # should be 0.8.19
+\`\`\`
+3. Check out the correct version of the [scroll-sc-tools](https://github.com/scroll-tech/scroll-sc-tools) repo: \`git checkout feat/feynman\`. The commit hash should be \`74c0bd1994171dcb69c6da82e93cf6d273f9b984\`.
+4. Modify the script to download all required trusted setup params: line 8 of \`scripts/download-params.sh\` should be changed to \`degrees=("22" "24")\`.
+5. Download trusted setup params (around 3 GiB): \`bash scripts/download-params.sh\`.
+6. Generate the verifier file and output its code hash: \`RUST_MIN_STACK=16777216 cargo run --release -- generate-verifier\`.
+7. Verify that the deployed verifier smart contract has the same codehash: \`cast keccak $(cast code 0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4 --rpc-url <YOUR_ETHEREUM_RPC_URL>)\`.
+        `,
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0xd20da378d89e8ff0cb8da8f2e3316b11a1da263111de94a6d2ab0bd9a69c0160',
+        hash: '0xf86ce35d4f5b1478f21194d9c6fc825f8d8afc0468425c981dc017149f0cac5e',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -125,12 +147,33 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+        verificationSteps: `
+The verification steps are based on [this guide](https://github.com/scroll-tech/scroll-sc-tools/tree/feat/galileo?tab=readme-ov-file), with slight adjustments to resolve build failures. Memory usage peaks around 50 GiB on an ubuntu machine.
+
+1. Install dependency packages: \`sudo apt-get update && sudo apt-get install build-essential pkg-config libssl-dev\`.
+2. Install specifically required rust toolchain and solidity compiler:
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+rustup toolchain install nightly-2025-02-14
+
+cargo install svm-rs
+svm install 0.8.19
+solc --version  # should be 0.8.19
+\`\`\`
+3. Check out the correct version of the [scroll-sc-tools](https://github.com/scroll-tech/scroll-sc-tools) repo: \`git checkout feat/galileo\`. The commit hash should be \`f880a705954dc205cae7e1add474bd9e6cad1610\`.
+4. Modify the script to download all required trusted setup params: line 8 of \`scripts/download-params.sh\` should be changed to \`degrees=("22" "23" "24")\`.
+5. Download trusted setup params (around 4 GiB): \`bash scripts/download-params.sh\`.
+6. Generate the verifier file and output its code hash: \`RUST_MIN_STACK=16777216 cargo run --release -- generate-verifier --recompute\`. If this step produces a build failure because of \`SOLC_VERSION_0_8_31_CHECKSUM\` duplication, open the problematic \`builds.rs\` file and remove all occurances of the duplicate (second version of \`SOLC_VERSION_0_8_31_CHECKSUM\`). This requires altering several lines, including changing the hardcoded length of \`ALL_SOLC_VERSIONS\` array. Rerun the command after altering the file.
+7. Verify that the deployed verifier smart contract has the same codehash: \`cast keccak $(cast code 0x749fC77A1a131632a8b88e8703E489557660C75e --rpc-url <YOUR_ETHEREUM_RPC_URL>)\`.
+        `,
       },
       {
-        hash: '0xdd4e59c1c10f04e88f31d9a6cc28e8915b18a3b9770454818f9332bf8c5bb86e',
+        hash: '0x91816743ec15118a4ddacb13c830e56e9f8b28f1c875dfc458a27142a88c9fc8',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -142,10 +185,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0x84bee8abb47e23e48f2803a65467c82e2ce7241ee3a2166b0c50f1961afc5636',
+        hash: '0x14fc3c8162cc5ead23a04f8221bbd7f18f21946a6e92df34831fab6482b19a37',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -157,10 +200,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0x4ec51340896884b1ee3cbbe582a591603fe6079a269658f5885598e9681b8da3',
+        hash: '0xaeaf8626da1244ce080122af824423c2a78bb8a043a821473d2247e8462f28af',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -172,10 +215,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0x2d16d04b31777cac46405a5f8db57df83992422fa9eba9eedd5b23567e1b92ac',
+        hash: '0xa69a3ce200bf287833cb53d85a93e5a943ac51473dd9ee4dff855dcfbaeabb6a',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -187,10 +230,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0x566598f3b1e7cc2f2eb7ee51aecdb6d7b2607ed3ecd7426e6bdfd40ea478c59f',
+        hash: '0x3b69f45dffa4aa394e991c0bbf0a31b5652a89639f075fa88ab7ea7245a4563a',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -202,10 +245,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
       {
-        hash: '0xf4d2667a66e6ce10c953f77163ebb17a9e6add82a825e5aad4e55760dd1a5945',
+        hash: '0x9accf42dcd17d7f7f61eeedd3843ff669028f2cb5fd2c879c02da54945f6dbb9',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -217,7 +260,7 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         ],
         verificationStatus: 'notVerified',
         description:
-          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
+          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
       },
     ],
   },
