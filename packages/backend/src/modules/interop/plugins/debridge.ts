@@ -59,16 +59,18 @@ export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
   amount: bigint
   srcTokenAddress?: Address32
+  srcWasBurned?: boolean
   $dstChain: string
-}>('debridge.Sent')
+}>('debridge.Sent', { direction: 'outgoing' })
 
 export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
   amount: bigint
   dstTokenAddress?: Address32
+  dstWasMinted?: boolean
   receiver: EthereumAddress
   $srcChain: string
-}>('debridge.Claimed')
+}>('debridge.Claimed', { direction: 'incoming' })
 
 export class DeBridgePlugin implements InteropPlugin {
   readonly name = 'debridge'
@@ -77,8 +79,9 @@ export class DeBridgePlugin implements InteropPlugin {
     const sent = parseSent(input.log, null)
     if (sent) {
       let srcTokenAddress: Address32 | undefined
+      let srcWasBurned: boolean | undefined
       if (sent.amount > 0n) {
-        srcTokenAddress = findParsedAround(
+        const transferInfo = findParsedAround(
           input.txLogs,
           input.log.logIndex ?? -1,
           (log) => {
@@ -86,14 +89,24 @@ export class DeBridgePlugin implements InteropPlugin {
             if (!transfer || !isWithinTolerance(transfer.value, sent.amount)) {
               return
             }
-            return Address32.from(log.address)
+            return {
+              address: Address32.from(log.address),
+              burned: Address32.from(transfer.to) === Address32.ZERO,
+            }
           },
         )
+        srcTokenAddress = transferInfo?.address
+        srcWasBurned = transferInfo?.burned
+      }
+      if (!srcTokenAddress && sent.amount > 0n) {
+        srcTokenAddress = Address32.NATIVE // gas does not emit
+        srcWasBurned = false
       }
       return [
         Sent.create(input, {
           submissionId: sent.submissionId,
           srcTokenAddress,
+          srcWasBurned,
           amount: sent.amount,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
@@ -106,9 +119,10 @@ export class DeBridgePlugin implements InteropPlugin {
 
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
-      let srcTokenAddress: Address32 | undefined
+      let dstTokenAddress: Address32 | undefined
+      let dstWasMinted: boolean | undefined
       if (claimed.amount > 0n) {
-        srcTokenAddress = findParsedAround(
+        const transferInfo = findParsedAround(
           input.txLogs,
           input.log.logIndex ?? -1,
           (log) => {
@@ -119,16 +133,22 @@ export class DeBridgePlugin implements InteropPlugin {
             ) {
               return
             }
-            return Address32.from(log.address)
+            return {
+              address: Address32.from(log.address),
+              minted: Address32.from(transfer.from) === Address32.ZERO,
+            }
           },
         )
+        dstTokenAddress = transferInfo?.address
+        dstWasMinted = transferInfo?.minted
       }
 
       return [
         Claimed.create(input, {
           submissionId: claimed.submissionId,
           amount: claimed.amount,
-          dstTokenAddress: srcTokenAddress,
+          dstTokenAddress,
+          dstWasMinted,
           receiver: EthereumAddress(claimed.receiver),
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,
@@ -158,11 +178,13 @@ export class DeBridgePlugin implements InteropPlugin {
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
-          srcTokenAddress: sent.args.srcTokenAddress,
+          srcTokenAddress: sent.args.srcTokenAddress ?? Address32.NATIVE,
           srcAmount: claimed.args.amount,
+          srcWasBurned: sent.args.srcWasBurned,
           dstEvent: claimed,
-          dstTokenAddress: claimed.args.dstTokenAddress,
+          dstTokenAddress: claimed.args.dstTokenAddress ?? Address32.NATIVE,
           dstAmount: claimed.args.amount,
+          dstWasMinted: claimed.args.dstWasMinted,
         }),
       )
     }
