@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockObject } from 'earl'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
@@ -21,6 +22,7 @@ describe('Interop Plugins', async () => {
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,
     rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
+    tokenDbClient: mockObject<TokenDbClient>(),
   })
 
   before(async () => {
