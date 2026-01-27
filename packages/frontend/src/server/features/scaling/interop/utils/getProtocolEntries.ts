@@ -39,6 +39,7 @@ export type DurationSplit = {
 export type ProtocolEntry = {
   iconUrl: string
   protocolName: string
+  isAggregate?: boolean
   bridgeType: 'nonMinting' | 'lockAndMint' | 'omnichain'
   volume: number
   tokens: TokenData[]
@@ -81,6 +82,7 @@ export function getProtocolEntries(
         iconSlug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         protocolName: project.interopConfig.name ?? project.name,
+        isAggregate: project.interopConfig.isAggregate,
         bridgeType,
         volume: data.volume,
         tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
