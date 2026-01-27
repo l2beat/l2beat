@@ -82,7 +82,9 @@ const WithdrawalFinalized = createInteropEventType<{
 
 const parseWithdrawalFinalized = createEventParser(withdrawalFinalizedLog)
 
-export class OrbitStackStandardGatewayPlugin implements InteropPluginResyncable {
+export class OrbitStackStandardGatewayPlugin
+  implements InteropPluginResyncable
+{
   readonly name = 'orbitstack-standardgateway'
 
   getDataRequests(): DataRequest[] {

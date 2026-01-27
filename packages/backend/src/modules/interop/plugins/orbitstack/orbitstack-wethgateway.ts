@@ -152,9 +152,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPluginResyncable {
       ])
       if (withdrawalFinalized) {
         // Verify this is for WETH
-        if (
-          EthereumAddress(withdrawalFinalized.l1Token) !== network.l1Weth
-        ) {
+        if (EthereumAddress(withdrawalFinalized.l1Token) !== network.l1Weth) {
           return
         }
         return [
@@ -171,15 +169,22 @@ export class OrbitStackWethGatewayPlugin implements InteropPluginResyncable {
 
       // First, check if this is an L2ToL1Tx event from ArbSys (for WETH withdrawals)
       // This needs to run BEFORE the base plugin to prevent misclassification
-      const l2ToL1Tx = parseL2ToL1Tx(input.log, [ChainSpecificAddress.address(network.arbsys)])
+      const l2ToL1Tx = parseL2ToL1Tx(input.log, [
+        ChainSpecificAddress.address(network.arbsys),
+      ])
       if (l2ToL1Tx) {
         // Check if this L2ToL1Tx is part of a WETH withdrawal
         // by looking for a WithdrawalInitiated event in the same transaction
         const wethWithdrawalLog = input.txLogs.find((log) => {
-          if (EthereumAddress(log.address) !== ChainSpecificAddress.address(network.l2WethGateway)) {
+          if (
+            EthereumAddress(log.address) !==
+            ChainSpecificAddress.address(network.l2WethGateway)
+          ) {
             return false
           }
-          const parsed = parseWithdrawalInitiated(log, [ChainSpecificAddress.address(network.l2WethGateway)])
+          const parsed = parseWithdrawalInitiated(log, [
+            ChainSpecificAddress.address(network.l2WethGateway),
+          ])
           return (
             parsed !== undefined &&
             EthereumAddress(parsed.l1Token) === network.l1Weth &&
@@ -200,7 +205,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPluginResyncable {
       }
 
       // Check if this is from the L2 WETH gateway
-      if (EthereumAddress(input.log.address) !== ChainSpecificAddress.address(network.l2WethGateway)) return
+      if (
+        EthereumAddress(input.log.address) !==
+        ChainSpecificAddress.address(network.l2WethGateway)
+      )
+        return
 
       // L1 -> L2: DepositFinalized
       const depositFinalized = parseDepositFinalized(input.log, [
@@ -222,7 +231,8 @@ export class OrbitStackWethGatewayPlugin implements InteropPluginResyncable {
           return (
             parsed !== undefined &&
             (parsed.from === '0x0000000000000000000000000000000000000000' ||
-              EthereumAddress(parsed.from) === ChainSpecificAddress.address(network.l2WethGateway)) &&
+              EthereumAddress(parsed.from) ===
+                ChainSpecificAddress.address(network.l2WethGateway)) &&
             parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
           )
         })
