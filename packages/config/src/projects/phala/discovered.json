@@ -1,6 +1,6 @@
 {
   "name": "phala",
-  "timestamp": 1768990153,
+  "timestamp": 1769513332,
   "configHash": "0x72696c4eb7450c6fb0563b9ba0d44e15f6820682f47d6f3e67a4843862573c6b",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -119,7 +119,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620178",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620195",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -303,7 +303,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 267,
+        "gameCount": 279,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
@@ -317,7 +317,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 0,
+        "permissionedGamesTotal": 2,
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.3.0"
@@ -597,6 +597,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -614,8 +615,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 215,
+        "multisigThreshold": "4 of 13 (31%)",
+        "nonce": 219,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -738,7 +739,7 @@
         "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
@@ -798,14 +799,14 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 24275362
+          "prevBlockNum": 24323021
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "RespectedGameString": 6,
-        "respectedGameType": 6,
+        "RespectedGameString": "PermissionedDisputeGame",
+        "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1768923887,
         "superchainConfig": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
         "systemConfig": "eth:0xeBf5859b7646ca9cf8A981613569bF28394F2571",
@@ -934,6 +935,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OPSuccinctL2OutputOracle",
       "address": "eth:0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
       "type": "Contract",
@@ -990,11 +996,11 @@
         "GENESIS_CONFIG_NAME": "0xae8304f40f7123e0c87b97f8a600e94ff3a3a25be588fc66b8a3717c8959ce77",
         "initializerVersion": 3,
         "l2BlockTime": 10,
-        "lastProposalTimestamp": 1768950839,
-        "latestBlockNumber": 3455760,
-        "latestOutputIndex": 795,
-        "nextBlockNumber": 3455770,
-        "nextOutputIndex": 796,
+        "lastProposalTimestamp": 1769383823,
+        "latestBlockNumber": 3498960,
+        "latestOutputIndex": 805,
+        "nextBlockNumber": 3498970,
+        "nextOutputIndex": 806,
         "optimisticMode": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -1129,7 +1135,7 @@
         "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6.",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1768923887,
       "sinceBlock": 24276968,
@@ -1155,8 +1161,8 @@
         "paused": false,
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "RespectedGameString": 6,
-        "respectedGameType": 6,
+        "RespectedGameString": "PermissionedDisputeGame",
+        "respectedGameType": 1,
         "retirementTimestamp": 1768923887,
         "superchainConfig": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
         "systemConfig": "eth:0xeBf5859b7646ca9cf8A981613569bF28394F2571",
@@ -2299,6 +2305,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24282469 },
-  "permissionsConfigHash": "0x24ed6de316354e4f6b5236699842bcb373dfd416ffa615048472f3dd9c555fce"
+  "usedBlockNumbers": { "ethereum": 24325873 },
+  "permissionsConfigHash": "0xc0f43e7704f99d18279c33529ea14811553810f5c4ff398377aeb78743896045"
 }

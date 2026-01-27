@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xde6efd0a77c300b06bc1b2fc23fb4624a49a1bd8
+
+# Diff at Tue, 27 Jan 2026 11:51:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1766048362
+- current timestamp: 1769513833
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard combined) added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe. This provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      errors:
++        {"permissionedGamesTotal":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/swell/.flat/SaferSafes.sol        | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0xaa71d171a1bb59181fdbc0e9694f2460e1cd2b69
 
 # Diff at Thu, 18 Dec 2025 09:00:56 GMT:

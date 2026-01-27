@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x0628f75aa155d3f37e6c6427082d22a13315b67f
+
+# Diff at Tue, 27 Jan 2026 11:29:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1765550542
+- current timestamp: 1769513326
+
+## Description
+
+New PermissionedDisputeGame implementation deployed and registered in DisputeGameFactory (gameImpls.1 changed). SystemConfig updated with new batcher address (0xFa35501...) and new unsafe block signer (0x38Eb7B...). The previous PermissionedDisputeGame at 0x78075e was deleted.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5"
++        "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"
++        "eth:0xFa35501cab42175918093F40C317642919F45165"
+      values.unsafeBlockSigner:
+-        "eth:0xCc467FdB41B5b5A4E23021CAd69ED27550a41694"
++        "eth:0x38Eb7BDa08297a65d399FbE46F061116f6Dd0ECB"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    EOA  (eth:0xFCF35CeE40325db21c3dc5b45849251E78Be47eb) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5","role":".challenger"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
 Generated with discovered.json: 0x6bb0b76f710a92ed0d5c323aa6bd691a0e345a77
 
 # Diff at Fri, 12 Dec 2025 16:19:53 GMT:

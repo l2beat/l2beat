@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x23c97ad43522b9e26d496eb66e1d92ed352dfeae
+
+# Diff at Tue, 27 Jan 2026 11:30:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768990153
+- current timestamp: 1769513332
+
+## Description
+
+Respected game type changed from 6 to 1 (PermissionedDisputeGame) in OptimismPortal2 and AnchorStateRegistry. This means withdrawals now use the standard PermissionedDisputeGame type instead of the custom type 6. DisputeGameFactory now shows 2 permissioned games total. Also added new member to Conduit Multisig 1 (now 4 of 13).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        0
++        2
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
 Generated with discovered.json: 0x8cbd1a27bf1dd9e58baebf200f66bfab14583428
 
 # Diff at Wed, 21 Jan 2026 10:10:39 GMT:
