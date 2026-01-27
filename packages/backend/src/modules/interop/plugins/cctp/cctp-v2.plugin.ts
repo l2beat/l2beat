@@ -63,7 +63,7 @@ import {
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPluginResyncable,
+  type InteropPlugin,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -104,12 +104,12 @@ export const CCTPv2MessageReceived = createInteropEventType<{
   dstAmount?: bigint
 }>('cctp-v2.MessageReceived', { direction: 'incoming' })
 
-export class CCTPV2Plugin implements InteropPluginResyncable {
+export class CCTPV2Plugin implements InteropPlugin {
   readonly name = 'cctp-v2'
 
   constructor(private configs: InteropConfigStore) {}
 
-  getDataRequests(): DataRequest[] {
+  pendingGetDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCTPV2Config)
     if (!networks) return []
 
