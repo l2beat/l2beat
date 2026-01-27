@@ -62,6 +62,28 @@ const L1_MESSAGE_TYPE_SUBMIT_RETRYABLE_TX = 9
 // Offset of data.length in the packed retryable ticket message (8 * 32 bytes)
 // Fields: to, l2CallValue, deposit, maxSubmissionCost, excessFeeRefundAddress,
 // callValueRefundAddress, gasLimit, maxFeePerGas (all uint256 due to address casting)
+//
+/*
+ *
+ * return _deliverMessage(
+      L1MessageType_submitRetryableTx,
+      msg.sender,
+      abi.encodePacked(
+          uint256(uint160(to)),
+          l2CallValue,
+          _fromNativeTo18Decimals(amount),
+          maxSubmissionCost,
+          uint256(uint160(excessFeeRefundAddress)),
+          uint256(uint160(callValueRefundAddress)),
+          gasLimit,
+          maxFeePerGas,
+          data.length,
+          data
+      ),
+      amount
+ * );
+ *
+ */
 const RETRYABLE_DATA_LENGTH_OFFSET = 256
 
 function getIsEthOnlyFromInbox(
@@ -171,47 +193,47 @@ export const ORBITSTACK_NETWORKS = defineNetworks('orbitstack', [
     customGateways: [
       {
         key: 'custom',
-        l1Gateway: EthereumAddress(
-          '0xcee284f754e854890e311e3280b767f80797180d',
+        l1Gateway: ChainSpecificAddress(
+          'eth:0xcee284f754e854890e311e3280b767f80797180d',
         ),
-        l2Gateway: EthereumAddress(
-          '0x096760f208390250649e3e8763348e783aef5562',
+        l2Gateway: ChainSpecificAddress(
+          'arb1:0x096760f208390250649e3e8763348e783aef5562',
         ),
       },
       {
         key: 'dai',
-        l1Gateway: EthereumAddress(
-          '0xd3b5b60020504bc3489d6949d545893982ba3011',
+        l1Gateway: ChainSpecificAddress(
+          'eth:0xd3b5b60020504bc3489d6949d545893982ba3011',
         ),
-        l2Gateway: EthereumAddress(
-          '0x467194771dae2967aef3ecbedd3bf9a310c76c65',
+        l2Gateway: ChainSpecificAddress(
+          'arb1:0x467194771dae2967aef3ecbedd3bf9a310c76c65',
         ),
       },
       {
         key: 'lpt',
-        l1Gateway: EthereumAddress(
-          '0x6142f1c8bbf02e6a6bd074e8d564c9a5420a0676',
+        l1Gateway: ChainSpecificAddress(
+          'eth:0x6142f1c8bbf02e6a6bd074e8d564c9a5420a0676',
         ),
-        l2Gateway: EthereumAddress(
-          '0x6D2457a4ad276000A615295f7A80F79E48CcD318',
+        l2Gateway: ChainSpecificAddress(
+          'arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318',
         ),
       },
       {
         key: 'grt',
-        l1Gateway: EthereumAddress(
-          '0x01cdc91b0a9ba741903aa3699bf4ce31d6c5cc06',
+        l1Gateway: ChainSpecificAddress(
+          'eth:0x01cdc91b0a9ba741903aa3699bf4ce31d6c5cc06',
         ),
-        l2Gateway: EthereumAddress(
-          '0x65E1a5e8946e7E87d9774f5288f41c30a99fD302',
+        l2Gateway: ChainSpecificAddress(
+          'arb1:0x65E1a5e8946e7E87d9774f5288f41c30a99fD302',
         ),
       },
       {
         key: 'wsteth',
-        l1Gateway: EthereumAddress(
-          '0x0f25c1dc2a9922304f2eac71dca9b07e310e8e5a',
+        l1Gateway: ChainSpecificAddress(
+          'eth:0x0f25c1dc2a9922304f2eac71dca9b07e310e8e5a',
         ),
-        l2Gateway: EthereumAddress(
-          '0x07d4692291b9e30e326fd31706f686f83f331b82',
+        l2Gateway: ChainSpecificAddress(
+          'arb1:0x07d4692291b9e30e326fd31706f686f83f331b82',
         ),
       },
     ],
@@ -286,7 +308,7 @@ export class OrbitStackPlugin implements InteropPluginResyncable {
             EthereumAddress(messageDelivered.inbox) ===
             networkForBridge.sequencerInbox
           ) {
-            return
+            return [] // this prevents other plugins from picking it
           }
 
           // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
@@ -332,8 +354,8 @@ export class OrbitStackPlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(network.arbRetryableTx),
       ])
       if (redeemScheduled) {
-        const calldata = input.tx.data as `0x${string}`
-        if (!calldata.startsWith(SUBMIT_RETRYABLE_SELECTOR)) {
+        const calldata = input.tx.data as `0x${string}` | undefined
+        if (!calldata?.startsWith(SUBMIT_RETRYABLE_SELECTOR)) {
           return
         }
 

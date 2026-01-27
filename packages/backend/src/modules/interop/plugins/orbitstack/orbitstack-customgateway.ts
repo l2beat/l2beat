@@ -93,17 +93,12 @@ export class OrbitStackCustomGatewayPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     // Collect all custom gateway addresses across networks
-    const l1Gateways: ChainSpecificAddress[] = []
-    const l2Gateways: ChainSpecificAddress[] = []
-
-    for (const network of ORBITSTACK_NETWORKS) {
-      for (const gateway of network.customGateways ?? []) {
-        l1Gateways.push(ChainSpecificAddress(`eth:${gateway.l1Gateway}`))
-        l2Gateways.push(
-          ChainSpecificAddress(`${network.chain}:${gateway.l2Gateway}`),
-        )
-      }
-    }
+    const l1Gateways = ORBITSTACK_NETWORKS.flatMap(
+      (n) => n.customGateways?.map((g) => g.l1Gateway) ?? [],
+    )
+    const l2Gateways = ORBITSTACK_NETWORKS.flatMap(
+      (n) => n.customGateways?.map((g) => g.l2Gateway) ?? [],
+    )
 
     return [
       // L1: DepositInitiated from L1CustomGateway
@@ -138,21 +133,23 @@ export class OrbitStackCustomGatewayPlugin implements InteropPluginResyncable {
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
       // L1 operations
+      const logAddress = EthereumAddress(input.log.address)
       const network = ORBITSTACK_NETWORKS.find((network) =>
         network.customGateways?.some(
-          (gateway) => gateway.l1Gateway === EthereumAddress(input.log.address),
+          (gateway) =>
+            ChainSpecificAddress.address(gateway.l1Gateway) === logAddress,
         ),
       )
       if (!network) return
 
       const gateway = network.customGateways?.find(
-        (g) => g.l1Gateway === EthereumAddress(input.log.address),
+        (g) => ChainSpecificAddress.address(g.l1Gateway) === logAddress,
       )
       if (!gateway) return
 
       // L1 -> L2: DepositInitiated
       const depositInitiated = parseDepositInitiated(input.log, [
-        gateway.l1Gateway,
+        ChainSpecificAddress.address(gateway.l1Gateway),
       ])
       if (depositInitiated) {
         return [
@@ -167,7 +164,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPluginResyncable {
 
       // L2 -> L1: WithdrawalFinalized
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
-        gateway.l1Gateway,
+        ChainSpecificAddress.address(gateway.l1Gateway),
       ])
       if (withdrawalFinalized) {
         return [
@@ -184,14 +181,15 @@ export class OrbitStackCustomGatewayPlugin implements InteropPluginResyncable {
       const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
       if (!network) return
 
+      const logAddress = EthereumAddress(input.log.address)
       const gateway = network.customGateways?.find(
-        (g) => g.l2Gateway === EthereumAddress(input.log.address),
+        (g) => ChainSpecificAddress.address(g.l2Gateway) === logAddress,
       )
       if (!gateway) return
 
       // L1 -> L2: DepositFinalized
       const depositFinalized = parseDepositFinalized(input.log, [
-        gateway.l2Gateway,
+        ChainSpecificAddress.address(gateway.l2Gateway),
       ])
       if (depositFinalized) {
         const l2Token = findMintedTokenAddress(
@@ -214,7 +212,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPluginResyncable {
 
       // L2 -> L1: WithdrawalInitiated
       const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
-        gateway.l2Gateway,
+        ChainSpecificAddress.address(gateway.l2Gateway),
       ])
       if (withdrawalInitiated) {
         const l2Token = findBurnedTokenAddress(
