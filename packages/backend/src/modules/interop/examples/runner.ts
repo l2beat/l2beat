@@ -12,11 +12,19 @@ import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins, flattenClusters } from '../plugins'
+import {
+  createInteropPlugins,
+  flattenClusters,
+  type InteropPlugins,
+} from '../plugins'
 import type { InteropEvent } from '../plugins/types'
-import type { Example } from './core'
+import type { Example, RunResult } from './core'
 import { RpcReplay } from './snapshot/replay'
-import type { ExampleInputs, SnapshotService } from './snapshot/service'
+import {
+  type ExampleInputs,
+  hashExampleDefinition,
+  type SnapshotService,
+} from './snapshot/service'
 import { RpcSnapshotClient } from './snapshot/snapshot'
 
 type Dependencies = {
@@ -35,6 +43,7 @@ export class ExampleRunner {
     new Map()
 
   private inputs: ExampleInputs
+  private store = new InteropConfigStore(undefined)
   constructor(private readonly $: Dependencies) {
     this.inputs = $.inputs ?? $.snapshotService.createEmptyExampleInputs()
   }
@@ -54,8 +63,6 @@ export class ExampleRunner {
     if (!rpcClients.some((x) => x.chain === 'ethereum')) {
       rpcClients.push(await this.getRpcClient('ethereum'))
     }
-
-    const configs = new InteropConfigStore(undefined)
     const tokenDbClient = getTokenDbClient({
       apiUrl: this.$.env.string('TOKEN_BACKEND_TRPC_URL'),
       authToken: this.$.env.string('TOKEN_BACKEND_CF_TOKEN'),
@@ -64,25 +71,14 @@ export class ExampleRunner {
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
-      configs,
+      configs: this.store,
       httpClient: this.$.http,
       logger: this.$.logger,
       rpcClients,
       tokenDbClient,
     })
 
-    if (this.$.example.loadConfigs && this.$.example.loadConfigs.length > 0) {
-      for (const key of this.$.example.loadConfigs) {
-        const config = plugins.configPlugins.find((x) =>
-          x.provides.map((k) => k.key).includes(key),
-        )
-
-        assert(config, `Cannot load configs: ${key}`)
-
-        this.$.logger.info('Loading config', { key })
-        await config.run()
-      }
-    }
+    await this.loadConfigs(plugins)
 
     const events: InteropEvent[] = []
 
@@ -172,6 +168,43 @@ export class ExampleRunner {
       matchedEventIds: new Set(result.matched.map((e) => e.eventId)),
       messages: result.messages,
       transfers: transfersWithContext,
+    }
+  }
+
+  public async flush(result: RunResult) {
+    if (this.$.mode === 'capture') {
+      this.inputs.writeSpace('config', this.store.getAll())
+    }
+
+    await this.$.snapshotService.saveInputs(this.$.exampleId, this.inputs)
+    await this.$.snapshotService.saveOutputs(this.$.exampleId, result)
+  }
+
+  public async updateManifest() {
+    const definitionHash = hashExampleDefinition(this.$.example)
+    await this.$.snapshotService.updateManifest(
+      this.$.exampleId,
+      definitionHash,
+    )
+  }
+
+  private async loadConfigs(plugins: InteropPlugins) {
+    if (this.$.mode === 'replay') {
+      this.store.writeAll(this.inputs.readSpace('config'))
+      return
+    }
+
+    if (this.$.example.loadConfigs && this.$.example.loadConfigs.length > 0) {
+      for (const key of this.$.example.loadConfigs) {
+        const config = plugins.configPlugins.find((x) =>
+          x.provides.map((k) => k.key).includes(key),
+        )
+
+        assert(config, `Cannot load configs: ${key}`)
+
+        this.$.logger.info('Loading config', { key })
+        await config.run()
+      }
     }
   }
 

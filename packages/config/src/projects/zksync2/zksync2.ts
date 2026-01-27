@@ -526,6 +526,14 @@ export const zksync2: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
+      title: 'V29 Interop Messaging Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-10-06T00:00:00Z',
+      description:
+        'A protocol upgrade introducing native interop messaging between chains connected to ZKsync Gateway.',
+      type: 'general',
+    },
+    {
       title: 'Proof system intervention',
       url: 'https://x.com/zksync/status/1951434107575214429',
       date: '2025-07-30T00:00:00Z',
@@ -542,12 +550,44 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'general',
     },
     {
+      title: 'V28 Precompile Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/54063168049426383294336598998322383147338444177076559098597792110160570100155?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-05-29T00:00:00Z',
+      description:
+        'A performance upgrade enabling circuit-backed cryptographic precompiles.',
+      type: 'general',
+    },
+    {
+      title: 'V27 EVM Emulation Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/112142012854508751423955156601121618924383324119199970784935099214632480260394?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-04-18T00:00:00Z',
+      description:
+        'This implementation adds 2 features: EVM emulation and Fflonk verifier.',
+      type: 'general',
+    },
+    {
       title: 'ZK token minter key compromised',
       url: 'https://zksync.mirror.xyz/W5vPDZqEqf2NuwQ5x7SyFnIxqqpE1szAFD69iaaBFnI',
       date: '2025-04-13T00:00:00Z',
       description:
         '1/1 signer key of a ZK airdrop admin multisig is compromised. ZKsync deploys TransactionFilterer.',
       type: 'incident',
+    },
+    {
+      title: 'ZKsync Protocol Upgrade v26',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/67712324710515983914473127418805437707715095849437613773846173900686148862581?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-02-27T00:00:00Z',
+      description:
+        'A foundational upgrade enabling custom settlement layers, custom DA, and new asset routing.',
+      type: 'general',
+    },
+    {
+      title: 'ZKsync Protocol Upgrade v25',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2024-12-27T00:00:00Z',
+      description:
+        'A protocol hardening upgrade improving code quality, gas efficiency, and internal stability.',
+      type: 'general',
     },
     {
       title: 'Onchain Governance Launch',
