@@ -125,8 +125,8 @@ function getTokensData(
           manifest.getUrl('/images/token-placeholder.png'),
         volume: token.volume,
         transferCount: token.transferCount,
-        avgDuration: token.totalDurationSum / token.transferCount,
-        avgValue: token.volume / token.transferCount,
+        avgDuration: Math.floor(token.totalDurationSum / token.transferCount),
+        avgValue: Math.floor(token.volume / token.transferCount),
       }
     })
     .filter(notUndefined)
@@ -151,8 +151,10 @@ function getChainsData(
         iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
         volume: chainData.volume,
         transferCount: chainData.transferCount,
-        avgDuration: chainData.totalDurationSum / chainData.transferCount,
-        avgValue: chainData.volume / chainData.transferCount,
+        avgDuration: Math.floor(
+          chainData.totalDurationSum / chainData.transferCount,
+        ),
+        avgValue: Math.floor(chainData.volume / chainData.transferCount),
       }
     })
     .filter(notUndefined)
