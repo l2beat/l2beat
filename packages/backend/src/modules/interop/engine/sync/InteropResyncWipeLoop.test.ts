@@ -40,10 +40,7 @@ describe(InteropResyncWipeLoop.name, () => {
 
     const loop = new InteropResyncWipeLoop(
       makeCluster(),
-      new Map<InteropEventSyncer['chain'], InteropEventSyncer>([
-        ['ethereum', makeSyncer('ethereum', true)],
-        ['arbitrum', makeSyncer('arbitrum', true)],
-      ]),
+      [makeSyncer('ethereum', true), makeSyncer('arbitrum', true)],
       store,
       db,
       Logger.SILENT,
@@ -91,10 +88,7 @@ describe(InteropResyncWipeLoop.name, () => {
 
     const loop = new InteropResyncWipeLoop(
       makeCluster(),
-      new Map<InteropEventSyncer['chain'], InteropEventSyncer>([
-        ['ethereum', makeSyncer('ethereum', true)],
-        ['arbitrum', makeSyncer('arbitrum', false)],
-      ]),
+      [makeSyncer('ethereum', true), makeSyncer('arbitrum', false)],
       store,
       db,
       Logger.SILENT,
@@ -138,10 +132,7 @@ describe(InteropResyncWipeLoop.name, () => {
 
     const loop = new InteropResyncWipeLoop(
       makeCluster(),
-      new Map<InteropEventSyncer['chain'], InteropEventSyncer>([
-        ['ethereum', makeSyncer('ethereum', true)],
-        ['arbitrum', makeSyncer('arbitrum', true)],
-      ]),
+      [makeSyncer('ethereum', true), makeSyncer('arbitrum', true)],
       store,
       db,
       Logger.SILENT,
@@ -172,7 +163,10 @@ function makePlugin(name: string): InteropPluginResyncable {
   }
 }
 
-function makeSyncer(chain: string, waitingForWipe: boolean): InteropEventSyncer {
+function makeSyncer(
+  chain: string,
+  waitingForWipe: boolean,
+): InteropEventSyncer {
   return mockObject<InteropEventSyncer>({
     chain: chain as InteropEventSyncer['chain'],
     waitingForWipe,

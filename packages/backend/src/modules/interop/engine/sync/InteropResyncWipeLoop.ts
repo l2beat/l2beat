@@ -10,10 +10,7 @@ import type {
 export class InteropResyncWipeLoop extends TimeLoop {
   constructor(
     private readonly cluster: ResyncablePluginCluster,
-    private readonly syncers: Map<
-      InteropEventSyncer['chain'],
-      InteropEventSyncer
-    >,
+    private readonly syncers: InteropEventSyncer[],
     private readonly store: InteropEventStore,
     private readonly db: Database,
     protected logger: Logger,
@@ -24,8 +21,7 @@ export class InteropResyncWipeLoop extends TimeLoop {
   }
 
   async run() {
-    const syncers = Array.from(this.syncers.values())
-    if (syncers.length === 0) {
+    if (this.syncers.length === 0) {
       return
     }
 
@@ -40,8 +36,8 @@ export class InteropResyncWipeLoop extends TimeLoop {
       syncStates.map((state) => [state.chain, state]),
     )
 
-    const allWaitingForWipe = syncers.every((syncer) => syncer.waitingForWipe)
-    const allWipeRequired = syncers.every(
+    const allWaitingForWipe = this.syncers.every((syncer) => syncer.waitingForWipe)
+    const allWipeRequired = this.syncers.every(
       (syncer) => statesByChain.get(syncer.chain)?.wipeRequired === true,
     )
 
