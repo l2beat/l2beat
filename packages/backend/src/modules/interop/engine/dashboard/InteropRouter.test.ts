@@ -34,18 +34,21 @@ describe(createInteropRouter.name, () => {
             chain: 'chain-a',
             lastError: null,
             resyncRequestedFrom: null,
+            wipeRequired: false,
           },
           {
             pluginName: 'plugin',
             chain: 'chain-b',
             lastError: null,
             resyncRequestedFrom: null,
+            wipeRequired: false,
           },
           {
             pluginName: 'plugin',
             chain: 'chain-c',
             lastError: null,
             resyncRequestedFrom: null,
+            wipeRequired: false,
           },
         ]),
       })

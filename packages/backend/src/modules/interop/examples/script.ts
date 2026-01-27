@@ -31,7 +31,7 @@ import {
   Separated,
 } from './core'
 import { ExampleRunner } from './runner'
-import { hashExampleDefinition, SnapshotService } from './snapshot/service'
+import { SnapshotService } from './snapshot/service'
 
 const cmd = command({
   name: 'interop:example',
@@ -140,6 +140,7 @@ async function runExample(
     example,
     logger: Logger.ERROR,
     http: new HttpClient(),
+    tokenDbClient,
     snapshotService,
     env: getEnv(),
     mode: opts.seal ? 'capture' : 'live',
@@ -160,11 +161,9 @@ async function runExample(
   const coreResult = await runner.run()
 
   if (opts.seal) {
-    await snapshotService.saveInputs(exampleId, exampleInputs)
-    await snapshotService.saveOutputs(exampleId, coreResult)
+    await runner.flush(coreResult)
     if (!opts.uncompressed) {
-      const definitionHash = hashExampleDefinition(example)
-      await snapshotService.updateManifest(exampleId, definitionHash)
+      await runner.updateManifest()
     }
   }
 
@@ -256,7 +255,9 @@ function checkExample(
     verbose,
   )
 
-  const header = example.name ? `${example.name} (${exampleId})` : exampleId
+  const header = example.description
+    ? `${example.description} (${exampleId})`
+    : exampleId
 
   console.log(`\n--- ${header} ---`)
   console.log(

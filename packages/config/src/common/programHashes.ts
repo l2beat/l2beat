@@ -334,18 +334,48 @@ fn main() {
     verificationStatus: 'notVerified',
   },
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
-    title: 'Aggregation program of OP Succinct',
+    title: 'Aggregation program of Facet v1 (OP Succinct)',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
-    title: 'Range program of OP Succinct',
+    title: 'Range program of Facet v1 (OP Succinct)',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/range',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605': {
     title: 'Aggregation program of OP Succinct',
@@ -919,17 +949,45 @@ Verify:
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
     title: 'Range program of Ethscriptions ZK Fault Proofs',
     description:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
     title: 'Morph Guest program (v0.4.9 release)',
@@ -1039,6 +1097,35 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
     verificationStatus: 'notVerified',
   },
+  '0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa': {
+    title: 'OP Kona absolute prestate v1.2.7 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/d181d5b197665df9b5efd66e4f76f09adf5c697f/kona',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install [just](https://just.systems).
+2. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+3. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout d181d5b197665df9b5efd66e4f76f09adf5c697f\`.
+4. Got to kona dir \`cd kona\` and run \`just build-cannon-prestate\`. This script will regenerate kona absolute prestate and create \`kona/prestates/<hash>.bin.gz\` file, where \`<hash>\` is the resulting absolute prestate.
+    `,
+  },
+  '0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e': {
+    title: 'OP absolute prestate v1.9.0 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.9.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.9.0-rc.1\` . Commit hash should be  \`a0c621361db5b5a6dcb60fd8943d485672a076b0\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
   '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
     title: 'OP absolute prestate v1.6.0 (cannon64)',
     description:
@@ -1116,5 +1203,28 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
 2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.6.1\` . Commit hash should be  \`a094d016092e3355642d00be6d7943c4529ef008\`.
 3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
     `,
+  },
+  '0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609': {
+    title: 'Cartesi Honeypot v2 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v2.',
+    programUrl:
+      'https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/honeypot.cpp',
+    verificationStatus: 'successful',
+    verificationSteps: `
+The verification process is based on [this guide](https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/README.md#building-and-running).
+
+1. Install all required dependencies: Docker, GNU Make, Lua 5.4, [cartesi/machine-emulator](https://github.com/cartesi/machine-emulator) 0.19.x and [cartesi/xgenext2fs](https://github.com/cartesi/genext2fs). 
+In our experience, cartesi-machine could not be installed from cartesi APT package repository because the \`dist.cartesi.io\` URL was not accessible, the homebrew installation worked successfully on an ubuntu machine.
+2. Check out the correct commit version of the [honeypot repo](https://github.com/cartesi/honeypot): \`git checkout 699c2b12745f1f7da708cb497106e657e3a67e49\`.
+3. On x86 architecture, configure docker to work with riscv64 architecture via emulation: \`docker run --privileged --rm tonistiigi/binfmt --install riscv64\`.
+4. Build the application by running: \`make HONEYPOT_CONFIG=mainnet\`. This build script will output the correct program hash on successful execution.
+    `,
+  },
+  '0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14': {
+    title: 'Cartesi Honeypot v1 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v1.',
+    verificationStatus: 'notVerified',
   },
 }

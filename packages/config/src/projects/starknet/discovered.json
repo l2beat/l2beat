@@ -1,6 +1,6 @@
 {
   "name": "starknet",
-  "timestamp": 1768921358,
+  "timestamp": 1769510717,
   "configHash": "0x8192c5b5f9936379abd3392407409821e4221235526b62f2ae7e1cacda25a546",
   "entries": [
     {
@@ -890,6 +890,25 @@
       ]
     },
     {
+      "address": "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
+        }
+      ]
+    },
+    {
       "name": "SHARPVerifierCallProxy",
       "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
       "type": "Reference",
@@ -1655,7 +1674,10 @@
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+            "members": [
+              "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+              "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+            ]
           }
         },
         "bridgedToken": "eth:0x0000000000000000000000000000000000455448",
@@ -1677,7 +1699,10 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "secAdminAC": ["eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"],
-        "secAgentAC": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
+        "secAgentAC": [
+          "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+          "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+        ],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2129,7 +2154,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1687035,
+        "l1ToL2MessageNonce": 1687520,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -2155,9 +2180,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "356775106319721844715408870331572944357768354258121862794556413853621054569",
-        "stateBlockNumber": 5816396,
-        "stateRoot": "2694363463879319202101679665191151754112996412692984165284542460402201686725",
+        "stateBlockHash": "1794705575304545653555250059344444209501136001411434838534066072021738544278",
+        "stateBlockNumber": 6098913,
+        "stateRoot": "928059118949997370702171154852949991044296692383084129143527623834870904323",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -2348,7 +2373,10 @@
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+            "members": [
+              "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+              "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+            ]
           }
         },
         "bridgedToken": "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
@@ -2372,7 +2400,10 @@
         "messagingContract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_VERSION": "5.0.0",
         "secAdminAC": ["eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"],
-        "secAgentAC": ["eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"],
+        "secAgentAC": [
+          "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+          "eth:0x4032bE860716F6e4488CBc9f1505E26E2FA3C2c2"
+        ],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "withdrawalLimitStatus": "inactive",
@@ -2605,7 +2636,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3409,7 +3440,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4904,6 +4935,6 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 24276757 },
-  "permissionsConfigHash": "0x03a2a7a626253683483a87428da6ad8b2cdd6ac7fcd504a65006b5ee56b822b7"
+  "usedBlockNumbers": { "ethereum": 24325656 },
+  "permissionsConfigHash": "0xa4d7d4b4ca08ed468ecc8a9bbfdc82705f284f1b4fc9a694bf9a7859c27002fb"
 }
