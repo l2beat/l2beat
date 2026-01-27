@@ -7,7 +7,7 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/Popover'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import type { FilterableValueId } from './filterableValue'
@@ -74,9 +74,9 @@ export function TableFilter({ filter, possibleValues }: Props) {
 
 function TableFilterValuePart({ filter, possibleValues }: Props) {
   const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
 
-  if (isMobile) {
+  if (isMobile || isTablet) {
     return (
       <>
         <button

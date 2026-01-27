@@ -1,4 +1,4 @@
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { useTracking } from '~/hooks/useTracking'
 
 export interface WhatsNewWidget {
@@ -11,14 +11,17 @@ export interface WhatsNewWidget {
 
 export function WhatsNewWidget({ whatsNew }: { whatsNew: WhatsNewWidget }) {
   const { track } = useTracking()
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
 
   return (
     <a
       href={whatsNew.href}
       onClick={() => {
         track('whatsNewClicked', {
-          props: { device: isMobile ? 'mobile' : 'desktop', action: 'open' },
+          props: {
+            device: isMobile || isTablet ? 'mobile' : 'desktop',
+            action: 'open',
+          },
         })
       }}
     >

@@ -3,7 +3,7 @@ import { StageBadge } from '~/components/badge/StageBadge'
 import { Countdown } from '~/components/Countdown'
 import { CustomLink } from '~/components/link/CustomLink'
 import { externalLinks } from '~/consts/externalLinks'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CloseIcon } from '~/icons/Close'
 import { MissingIcon } from '~/icons/Missing'
@@ -16,14 +16,14 @@ export function StageOneRequirementsChangeNotice({
 }: {
   downgradePending: NonNullable<StageConfigured['downgradePending']>
 }) {
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
   return (
     <CountdownSection>
       <div className="flex flex-wrap items-center justify-center gap-4">
         <h2 className="mr-auto text-heading-24">Stages changes</h2>
         <Countdown
           expiresAt={downgradePending.expiresAt}
-          size={isMobile ? 'sm' : 'md'}
+          size={isMobile || isTablet ? 'sm' : 'md'}
         />
       </div>
       <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">

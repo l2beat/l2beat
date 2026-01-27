@@ -3,7 +3,7 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import type React from 'react'
 import { useRef, useState } from 'react'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {
   TooltipTriggerContextProvider,
@@ -35,7 +35,7 @@ const TooltipTrigger = ({
   disabledOnMobile?: boolean
 }) => {
   const localRef = useRef(null)
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
   const { setOpen } = useTooltipTriggerContext()
 
   if (props.disabled) {
@@ -47,12 +47,13 @@ const TooltipTrigger = ({
     return <TooltipPrimitive.Trigger ref={ref} {...props} />
   }
 
-  const onClick = isMobile
-    ? (e: React.MouseEvent) => {
-        e.preventDefault()
-        setOpen(true)
-      }
-    : undefined
+  const onClick =
+    isMobile || isTablet
+      ? (e: React.MouseEvent) => {
+          e.preventDefault()
+          setOpen(true)
+        }
+      : undefined
 
   return (
     <TooltipPrimitive.Trigger

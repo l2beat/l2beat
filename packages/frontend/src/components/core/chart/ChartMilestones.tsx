@@ -2,8 +2,8 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
+import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { ChevronIcon } from '~/icons/Chevron'
 import { IncidentIcon } from '~/icons/Incident'
 import { MilestoneIcon } from '~/icons/Milestone'
@@ -91,7 +91,7 @@ function ChartMilestone({
   milestoneIndex: number
   allMilestones: Milestone[]
 }) {
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
   const triggerMilestone = allMilestones[milestoneIndex]
   assert(triggerMilestone)
   const { interactiveLegend } = useChart()
@@ -107,7 +107,7 @@ function ChartMilestone({
       !interactiveLegend.disableOnboarding &&
       'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
   )
-  if (isMobile) {
+  if (isMobile || isTablet) {
     return (
       <Drawer>
         <DrawerTrigger asChild>

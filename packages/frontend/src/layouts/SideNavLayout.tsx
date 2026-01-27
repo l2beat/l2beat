@@ -12,7 +12,7 @@ import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCl
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -37,7 +37,7 @@ export function SideNavLayout({
   maxWidth = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
-  const isMobile = useIsMobile()
+  const isMobile = useDevice()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )

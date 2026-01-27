@@ -18,8 +18,8 @@ import {
   PopoverTrigger,
   popoverTriggerClasses,
 } from '~/components/core/Popover'
+import { useDevice } from '~/hooks/useDevice'
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { useTracking } from '~/hooks/useTracking'
 import { ChevronIcon } from '~/icons/Chevron'
 import { FilterIcon } from '~/icons/Filter'
@@ -44,11 +44,11 @@ export function TableFilterSelector({
 }: {
   entries: FilterableEntry[]
 }) {
-  const isMobile = useIsMobile()
+  const { isMobile, isTablet } = useDevice()
 
   return (
     <TableFilterInternalContextProvider>
-      {isMobile ? (
+      {isMobile || isTablet ? (
         <MobileFilters entries={entries} />
       ) : (
         <DesktopFilters entries={entries} />
