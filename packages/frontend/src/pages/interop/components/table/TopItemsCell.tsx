@@ -74,8 +74,8 @@ export function InteropTopItemsCell({
         )}
       </DialogTrigger>
 
-      <DialogContent className="max-h-[450px] max-w-[800px] gap-0 overflow-y-auto bg-surface-primary pt-0 pb-3">
-        <DialogHeader className="fade-out-to-bottom-3 -mr-6 sticky top-0 z-10 bg-surface-primary pt-6 pr-6 pb-4">
+      <DialogContent className="max-h-[450px] w-[800px] max-w-[calc(100%-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle className="flex items-center">
             <span>Top {itemType} by volume for </span>
             <div className="ml-1.5 inline-flex items-center gap-1">
@@ -88,8 +88,10 @@ export function InteropTopItemsCell({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <div className="-mr-6 overflow-x-auto">
-          <BasicTable table={table} tableWrapperClassName="pb-0" />
+        <div className="overflow-x-auto">
+          <div className="mr-6 ml-6 w-fit">
+            <BasicTable table={table} tableWrapperClassName="pb-0" />
+          </div>
         </div>
       </DialogContent>
     </Dialog>
