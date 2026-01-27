@@ -6,6 +6,7 @@ interface BlockBasedApi {
   url: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
+  timeout?: number
   multicallV3?: {
     address: EthereumAddress
     sinceBlock: number

@@ -33,6 +33,7 @@ export class EthRpcClient {
     private url: string,
     private metricsLabel: string,
     private nextId: () => string | number = randomId,
+    private timeout?: number,
   ) {}
 
   async getChainId(): Promise<bigint> {
@@ -225,6 +226,7 @@ export class EthRpcClient {
         params,
       }),
       headers: { 'Content-Type': 'application/json' },
+      timeout: this.timeout,
     })
     let data: unknown
     let jsonSuccess = true

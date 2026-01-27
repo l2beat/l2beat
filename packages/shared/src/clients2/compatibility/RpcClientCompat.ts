@@ -37,6 +37,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  timeout?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -100,6 +101,7 @@ export class RpcClientCompat implements IRpcClient {
       deps.url,
       `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
+      deps.timeout,
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
