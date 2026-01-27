@@ -8,6 +8,7 @@ import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropEventSyncer } from './InteropEventSyncer'
+import { InteropResyncWipeLoop } from './InteropResyncWipeLoop'
 
 export type PluginSyncStatus = {
   pluginName: string
@@ -26,6 +27,7 @@ export class InteropSyncersManager {
     string, // plugin cluster name
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
+  private wipeLoops = new Map<string, InteropResyncWipeLoop>()
 
   constructor(
     private readonly pluginClusters: PluginCluster[],
@@ -45,6 +47,11 @@ export class InteropSyncersManager {
           `Cluster of plugins '${cluster.name} contains mix of non- and resyncable plugins. They must all be the same kind.`,
         )
       }
+      const clusterSyncers = this.syncers.getOrInsertComputed(
+        cluster.name,
+        () => new UpsertMap(),
+      )
+
       for (const chain of enabledChains) {
         const chainConfig = chainConfigs.find((c) => c.name === chain)
         if (!chainConfig) {
@@ -59,9 +66,20 @@ export class InteropSyncersManager {
           db,
           logger,
         )
-        this.syncers
-          .getOrInsertComputed(cluster.name, () => new UpsertMap())
-          .set(chain, eventSyncer)
+        clusterSyncers.set(chain, eventSyncer)
+      }
+
+      if (clusterSyncers.size > 0) {
+        this.wipeLoops.set(
+          cluster.name,
+          new InteropResyncWipeLoop(
+            { name: cluster.name, plugins: resyncablePlugins },
+            clusterSyncers,
+            eventStore,
+            db,
+            logger,
+          ),
+        )
       }
     }
   }
@@ -71,6 +89,9 @@ export class InteropSyncersManager {
       for (const syncer of chain.values()) {
         syncer.start()
       }
+    }
+    for (const wipeLoop of this.wipeLoops.values()) {
+      wipeLoop.start()
     }
   }
 
