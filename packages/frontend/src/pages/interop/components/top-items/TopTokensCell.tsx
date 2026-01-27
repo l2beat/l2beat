@@ -1,5 +1,5 @@
 import type { TokenData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import type { TopItem } from './getTopItemsColumns'
+import type { TopItem } from './columns'
 import { InteropTopItemsCell } from './TopItemsCell'
 
 export function TopTokensCell({

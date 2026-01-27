@@ -30,8 +30,8 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
       />
     ),
     meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:pr-1.5!',
+      headClassName: 'w-0 pr-0!',
+      cellClassName: 'pr-0!',
     },
     size: 28,
     enableHiding: false,
