@@ -82,7 +82,7 @@ export const CCTPv2MessageSent = createInteropEventType<{
   tokenAddress?: Address32
   messageHash: string
   $dstChain: string
-}>('cctp-v2.MessageSent')
+}>('cctp-v2.MessageSent', { direction: 'outgoing' })
 
 export const CCTPv2MessageReceived = createInteropEventType<{
   app?: string
@@ -95,7 +95,7 @@ export const CCTPv2MessageReceived = createInteropEventType<{
   messageHash: string
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('cctp-v2.MessageReceived')
+}>('cctp-v2.MessageReceived', { direction: 'incoming' })
 
 export class CCTPV2Plugin implements InteropPlugin {
   readonly name = 'cctp-v2'

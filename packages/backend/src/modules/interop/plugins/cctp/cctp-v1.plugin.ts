@@ -78,7 +78,7 @@ export const CCTPv1MessageSent = createInteropEventType<{
   $dstChain: string
   srcTokenAddress?: Address32
   srcAmount?: bigint
-}>('cctp-v1.MessageSent')
+}>('cctp-v1.MessageSent', { direction: 'outgoing' })
 
 export const CCTPv1MessageReceived = createInteropEventType<{
   caller: EthereumAddress
@@ -87,7 +87,7 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   messageBody: string
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('cctp-v1.MessageReceived')
+}>('cctp-v1.MessageReceived', { direction: 'incoming' })
 
 export class CCTPV1Plugin implements InteropPlugin {
   readonly name = 'cctp-v1'
