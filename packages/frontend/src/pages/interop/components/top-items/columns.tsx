@@ -1,6 +1,7 @@
 import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TopItem = {
@@ -39,15 +40,15 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   columnHelper.accessor('displayName', {
     header: itemTypeToHeader(itemType),
     cell: (ctx) => (
-      <div className="font-medium text-label-value-13">
+      <PrimaryValueCell className="font-bold leading-none!">
         {ctx.row.original.displayName}
-      </div>
+      </PrimaryValueCell>
     ),
   }),
   columnHelper.accessor('volume', {
     header: 'Volume',
     cell: (ctx) => (
-      <span className="font-medium text-label-value-13">
+      <span className="font-medium text-label-value-15">
         {formatCurrency(ctx.row.original.volume, 'usd')}
       </span>
     ),
@@ -58,7 +59,7 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   columnHelper.accessor('transferCount', {
     header: 'Transfer Count',
     cell: (ctx) => (
-      <div className="font-medium text-label-value-13">
+      <div className="font-medium text-label-value-15">
         {ctx.row.original.transferCount}
       </div>
     ),
@@ -69,7 +70,7 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   columnHelper.accessor('avgDuration', {
     header: 'Avg Duration',
     cell: (ctx) => (
-      <span className="font-medium text-label-value-13">
+      <span className="font-medium text-label-value-15">
         {formatSeconds(ctx.row.original.avgDuration)}
       </span>
     ),
@@ -80,7 +81,7 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   columnHelper.accessor('avgValue', {
     header: 'Avg Value',
     cell: (ctx) => (
-      <span className="font-medium text-label-value-13">
+      <span className="font-medium text-label-value-15">
         {formatCurrency(ctx.row.original.avgValue, 'usd')}
       </span>
     ),
