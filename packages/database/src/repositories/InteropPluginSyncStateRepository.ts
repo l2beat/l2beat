@@ -81,7 +81,7 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
   async setResyncRequestedFrom(
     pluginName: string,
     chain: string,
-    resyncRequestedFrom: UnixTime | null,
+    resyncRequestedFrom: UnixTime,
   ): Promise<void> {
     await this.db
       .insertInto('InteropPluginSyncState')
