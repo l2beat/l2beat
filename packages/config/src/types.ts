@@ -1190,6 +1190,7 @@ export type InteropPluginName =
   | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
+  | 'agglayer'
   | 'allbridge'
   | 'aori'
   | 'axelar'
