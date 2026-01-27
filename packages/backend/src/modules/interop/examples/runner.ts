@@ -6,7 +6,7 @@ import {
   RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, unique } from '@l2beat/shared-pure'
-import { getTokenDbClient } from '@l2beat/token-backend'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -35,6 +35,7 @@ type Dependencies = {
   snapshotService: SnapshotService
   env: Env
   mode: 'capture' | 'replay' | 'live'
+  tokenDbClient: TokenDbClient
   inputs?: ExampleInputs
 }
 
@@ -63,11 +64,6 @@ export class ExampleRunner {
     if (!rpcClients.some((x) => x.chain === 'ethereum')) {
       rpcClients.push(await this.getRpcClient('ethereum'))
     }
-    const tokenDbClient = getTokenDbClient({
-      apiUrl: this.$.env.string('TOKEN_BACKEND_TRPC_URL'),
-      authToken: this.$.env.string('TOKEN_BACKEND_CF_TOKEN'),
-      callSource: 'interop',
-    })
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
@@ -75,7 +71,7 @@ export class ExampleRunner {
       httpClient: this.$.http,
       logger: this.$.logger,
       rpcClients,
-      tokenDbClient,
+      tokenDbClient: this.$.tokenDbClient,
     })
 
     await this.loadConfigs(plugins)
