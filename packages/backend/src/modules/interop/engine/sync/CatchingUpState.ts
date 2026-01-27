@@ -22,7 +22,6 @@ import type {
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 10_000n,
   arbitrum: 100_000n,
-  optimism: 100_000n,
 }
 
 interface RangeData {
