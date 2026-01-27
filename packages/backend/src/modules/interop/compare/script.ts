@@ -52,7 +52,8 @@ const c = {
   info: (s: string) => `${colors.blue}${s}${colors.reset}`,
   dim: (s: string) => `${colors.dim}${s}${colors.reset}`,
   bold: (s: string) => `${colors.bold}${s}${colors.reset}`,
-  num: (n: number | string) => `${colors.bold}${colors.cyan}${n}${colors.reset}`,
+  num: (n: number | string) =>
+    `${colors.bold}${colors.cyan}${n}${colors.reset}`,
 }
 
 interface BaseRow {
@@ -153,8 +154,12 @@ const cmd = command({
     )
     console.log('')
 
-    const localPool = new Pool({ connectionString: getEnvOrThrow('LOCAL_DB_URL') })
-    const stagingPool = new Pool({ connectionString: getEnvOrThrow('STAGING_DB_URL') })
+    const localPool = new Pool({
+      connectionString: getEnvOrThrow('LOCAL_DB_URL'),
+    })
+    const stagingPool = new Pool({
+      connectionString: getEnvOrThrow('STAGING_DB_URL'),
+    })
 
     try {
       // Find overlapping time range to ensure fair comparison
@@ -167,7 +172,9 @@ const cmd = command({
       )
 
       if (!overlap) {
-        console.log(c.warning('No overlapping data found in the specified time range.'))
+        console.log(
+          c.warning('No overlapping data found in the specified time range.'),
+        )
         return
       }
 
@@ -200,7 +207,9 @@ const cmd = command({
         console.log('')
         console.log(c.dim('To re-run with same range:'))
         console.log(
-          c.info(`  pnpm interop:compare ${args.plugin} --from-ts ${fromTs} --to-ts ${toTs}`),
+          c.info(
+            `  pnpm interop:compare ${args.plugin} --from-ts ${fromTs} --to-ts ${toTs}`,
+          ),
         )
         console.log('')
       }
@@ -314,9 +323,15 @@ async function findOverlappingTimeRange(
   }
 
   console.log(c.header('Sync State'))
-  console.log(`  ${c.dim('Local  ')} ${formatDateTime(localMin)} ${c.dim('→')} ${formatDateTime(localMax)}`)
-  console.log(`  ${c.dim('Staging')} ${formatDateTime(stagingMin)} ${c.dim('→')} ${formatDateTime(stagingMax)}`)
-  console.log(`  ${c.success('Overlap')} ${formatDateTime(overlapFrom)} ${c.dim('→')} ${formatDateTime(overlapTo)}`)
+  console.log(
+    `  ${c.dim('Local  ')} ${formatDateTime(localMin)} ${c.dim('→')} ${formatDateTime(localMax)}`,
+  )
+  console.log(
+    `  ${c.dim('Staging')} ${formatDateTime(stagingMin)} ${c.dim('→')} ${formatDateTime(stagingMax)}`,
+  )
+  console.log(
+    `  ${c.success('Overlap')} ${formatDateTime(overlapFrom)} ${c.dim('→')} ${formatDateTime(overlapTo)}`,
+  )
   console.log('')
 
   return { from: overlapFrom, to: overlapTo }
@@ -373,17 +388,22 @@ function printSummary(name: string, result: ComparisonResult<unknown>): void {
   // Table-like summary
   const pad = (n: number, w: number) => String(n).padStart(w)
   const w = 5 // width for numbers
-  console.log(`  ┌─────────┬─────────┬─────────┐`)
-  console.log(`  │ ${c.dim('Staging')} │ ${c.dim('Local')}   │ ${c.dim('Common')}  │`)
-  console.log(`  ├─────────┼─────────┼─────────┤`)
-  console.log(`  │ ${c.num(pad(result.staging.length, w))}   │ ${c.num(pad(result.local.length, w))}   │ ${c.num(pad(result.common, w))}   │`)
-  console.log(`  └─────────┴─────────┴─────────┘`)
+  console.log('  ┌─────────┬─────────┬─────────┐')
+  console.log(
+    `  │ ${c.dim('Staging')} │ ${c.dim('Local')}   │ ${c.dim('Common')}  │`,
+  )
+  console.log('  ├─────────┼─────────┼─────────┤')
+  console.log(
+    `  │ ${c.num(pad(result.staging.length, w))}   │ ${c.num(pad(result.local.length, w))}   │ ${c.num(pad(result.common, w))}   │`,
+  )
+  console.log('  └─────────┴─────────┴─────────┘')
 
   if (allMatch) {
     console.log(`  ${c.success('[OK] All match')}`)
   } else {
     const parts: string[] = []
-    if (stagingOnly > 0) parts.push(c.warning(`[!] +${stagingOnly} staging-only`))
+    if (stagingOnly > 0)
+      parts.push(c.warning(`[!] +${stagingOnly} staging-only`))
     if (localOnly > 0) parts.push(c.info(`[!] +${localOnly} local-only`))
     console.log(`  ${parts.join('   ')}`)
   }
@@ -455,13 +475,15 @@ function printCombinedBreakdown<T>(
 
   console.log(`  ${c.dim('Breakdown:')}`)
   for (const [key, counts] of sorted) {
-    const localStr = counts.local > 0
-      ? c.info(String(counts.local).padStart(3))
-      : c.dim('  -')
-    const stagingStr = counts.staging > 0
-      ? c.warning(String(counts.staging).padStart(3))
-      : c.dim('  -')
-    console.log(`    ${key.padEnd(maxKeyLen)}  ${c.dim('L')}${localStr}  ${c.dim('S')}${stagingStr}`)
+    const localStr =
+      counts.local > 0 ? c.info(String(counts.local).padStart(3)) : c.dim('  -')
+    const stagingStr =
+      counts.staging > 0
+        ? c.warning(String(counts.staging).padStart(3))
+        : c.dim('  -')
+    console.log(
+      `    ${key.padEnd(maxKeyLen)}  ${c.dim('L')}${localStr}  ${c.dim('S')}${stagingStr}`,
+    )
   }
 }
 
@@ -492,14 +514,24 @@ async function compareEvents(
   const result = compareByKey(localResult.rows, stagingResult.rows, getKey)
 
   printSummary('Events', result)
-  printItems('Staging-only', result.onlyInStaging, (e) => {
-    const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
-    return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
-  }, c.warning)
-  printItems('Local-only', result.onlyInLocal, (e) => {
-    const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
-    return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
-  }, c.info)
+  printItems(
+    'Staging-only',
+    result.onlyInStaging,
+    (e) => {
+      const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
+      return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
+    },
+    c.warning,
+  )
+  printItems(
+    'Local-only',
+    result.onlyInLocal,
+    (e) => {
+      const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
+      return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
+    },
+    c.info,
+  )
   printCombinedBreakdown(
     result.onlyInLocal,
     result.onlyInStaging,

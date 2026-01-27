@@ -116,7 +116,7 @@ export function createInteropPlugins(
         deps.httpClient,
         rpcs,
       ),
-new CCIPConfigPlugin(
+      new CCIPConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,

@@ -5,7 +5,11 @@ The dst chain on SRC must be determined by the contract address that emitted the
 contracts are set up for every SRC-DST pair on each chain
 */
 
-import { Address32, ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
@@ -154,10 +158,14 @@ export class CCIPPlugin implements InteropPluginResyncable {
     for (const network of networks) {
       try {
         for (const addr of Object.values(network.outboundLanes)) {
-          outboundAddresses.push(ChainSpecificAddress.fromLong(network.chain, addr))
+          outboundAddresses.push(
+            ChainSpecificAddress.fromLong(network.chain, addr),
+          )
         }
         for (const addr of Object.values(network.inboundLanes)) {
-          inboundAddresses.push(ChainSpecificAddress.fromLong(network.chain, addr))
+          inboundAddresses.push(
+            ChainSpecificAddress.fromLong(network.chain, addr),
+          )
         }
       } catch {
         // Chain not supported by ChainSpecificAddress, skip
