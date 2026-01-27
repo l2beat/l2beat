@@ -90,7 +90,7 @@ You can find us to discuss everything related to Everclear’s governance, from 
 
 ### **[RFC] Flow Application for Canonical Uniswap V3 Deployment**
 
-Protofire [requests](https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876) recognizing Flow as a canonical Uniswap v3 chain, proposing a live standalone deployment called Flow Swap with Axelar bridging, citing Flow’s high-throughput L1 with sub-second blocks, low fees, EVM-equivalence, MEV-resilience, and consumer app traction, aiming to attract NFT and gaming users to DeFi; current KPIs show about $111M DeFi TVL, $473K daily DEX volume, and $62.8M bridged TVL, contracts are deployed, and the production frontend is operational at [flowswap.io](flowswap.io).
+Protofire [requests](https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876) recognizing Flow as a canonical Uniswap v3 chain, proposing a live standalone deployment called Flow Swap with Axelar bridging, citing Flow’s high-throughput L1 with sub-second blocks, low fees, EVM-equivalence, MEV-resilience, and consumer app traction, aiming to attract NFT and gaming users to DeFi; current KPIs show about $111M DeFi TVL, $473K daily DEX volume, and $62.8M bridged TVL, contracts are deployed, and the production frontend is operational at [flowswap.io](https://gov.uniswap.org/t/rfc-flow-application-for-canonical-uniswap-v3-deployment/25876).
 
 ### **[RFC] Governance Process Upgrade: Establishing a Statute of Limitations for Temperature Checks**
 
