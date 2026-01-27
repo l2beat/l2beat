@@ -47,32 +47,39 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from '../types'
 import { CCTPV2Config } from './cctp.config'
 
-const parseMessageSent = createEventParser('event MessageSent(bytes message)')
+const messageSentLog = 'event MessageSent(bytes message)'
+const parseMessageSent = createEventParser(messageSentLog)
 
-const parseV2MessageReceived = createEventParser(
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)',
-)
+const v2MessageReceivedLog =
+  'event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)'
+const parseV2MessageReceived = createEventParser(v2MessageReceivedLog)
 
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+const parseTransfer = createEventParser(transferLog)
 
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
@@ -97,10 +104,38 @@ export const CCTPv2MessageReceived = createInteropEventType<{
   dstAmount?: bigint
 }>('cctp-v2.MessageReceived', { direction: 'incoming' })
 
-export class CCTPV2Plugin implements InteropPlugin {
+export class CCTPV2Plugin implements InteropPluginResyncable {
   readonly name = 'cctp-v2'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(CCTPV2Config)
+    if (!networks) return []
+
+    const addresses = networks
+      .filter((network) => network.messageTransmitter)
+      .map((network) =>
+        ChainSpecificAddress.fromLong(
+          network.chain,
+          network.messageTransmitter!,
+        ),
+      )
+
+    return [
+      {
+        type: 'event',
+        signature: messageSentLog,
+        addresses,
+      },
+      {
+        type: 'event',
+        signature: v2MessageReceivedLog,
+        includeTxEvents: [transferLog],
+        addresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(CCTPV2Config)
@@ -115,7 +150,6 @@ export class CCTPV2Plugin implements InteropPlugin {
 
     const messageSent = parseMessageSent(input.log, [
       network.messageTransmitter,
-      // TODO: v1 address
     ])
     if (messageSent) {
       const version = decodeMessageVersion(messageSent.message)
@@ -151,12 +185,9 @@ export class CCTPV2Plugin implements InteropPlugin {
       network.messageTransmitter,
     ])
     if (v2MessageReceived) {
-      // TODO: also recipient is TokenBurnMessenger
-
       if (!v2MessageReceived) return
       const messageBody = decodeV2MessageBody(v2MessageReceived.messageBody)
 
-      // use erc20 transfer event instead (fragile because it might not be 2 logs before)
       const previouspreviousLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 2,
