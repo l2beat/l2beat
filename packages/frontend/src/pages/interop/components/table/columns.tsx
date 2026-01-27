@@ -36,7 +36,7 @@ const commonColumns = [
     header: 'Name',
     cell: (ctx) => (
       <TwoRowCell>
-        <TwoRowCell.First className="max-w-[76px] break-words font-bold text-label-value-15">
+        <TwoRowCell.First className="max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
           {ctx.row.original.protocolName}
         </TwoRowCell.First>
         <TwoRowCell.Second>
@@ -45,7 +45,7 @@ const commonColumns = [
       </TwoRowCell>
     ),
     meta: {
-      cellClassName: 'whitespace-normal',
+      cellClassName: 'whitespace-normal py-1',
       headClassName: 'text-2xs',
     },
   }),
