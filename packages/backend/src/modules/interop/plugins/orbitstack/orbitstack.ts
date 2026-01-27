@@ -132,7 +132,7 @@ export const L2ToL1Tx = createInteropEventType<{
   position: number
   amount?: bigint // ETH amount if callvalue > 0
   isEthOnly?: boolean // true if ETH sent with no calldata
-}>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
+}>('orbitstack.L2ToL1Tx', { ttl: 30 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string

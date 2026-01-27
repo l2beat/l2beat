@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xa23e05c2eddefae498d0ca9719e9727aeb8bcc0a
+
+# Diff at Wed, 21 Jan 2026 14:00:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1767784170
+- current timestamp: 1769003954
+
+## Description
+
+Mantle enables Ethereum blobs for data availability alongside EigenDA. The SystemConfig now shows `isUsingEigenDA: false` and `isSequencerSendingBlobTx: true`, but the system can still post to EigenDA offchain via Hydro. Trust assumptions remain unchanged as there is no onchain EigenDA verifier. MantleSecurityMultisig membership updated (added 1 member, threshold now 6 of 14).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.opStackDA.isUsingEigenDA:
+-        "v1"
++        false
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc77E153e3c7ab09e9216a21Bd3fa2e1f4C24118D"
+      values.$members.1:
+-        "eth:0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
++        "eth:0xA081e53597173e4e405Ef907C630585c22ef089b"
+      values.$members.7:
+-        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
++        "eth:0xE6a04E34D329f912Aca478Df7FDbe378E30eb0E5"
+      values.$members.12:
+-        "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
++        "eth:0x63a7E8AbD9A3771aF5ac0bfdef04769C2f9e2916"
+      values.multisigThreshold:
+-        "6 of 13 (46%)"
++        "6 of 14 (43%)"
+    }
+```
+
 Generated with discovered.json: 0x9f2b13bc8b90e365efde11f69335814506700cfe
 
 # Diff at Wed, 07 Jan 2026 11:10:54 GMT:

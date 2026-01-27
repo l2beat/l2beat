@@ -48,7 +48,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
 
   async getLatestBlockNumber(): Promise<number> {
     const key = this.buildSnapshotKey(['latestBlockNumber'])
-    const snapshot = await this.$.inputs.read<number>(key)
+    const snapshot = await this.$.inputs.readRpc<number>(key)
     if (snapshot) {
       return snapshot
     }
@@ -63,7 +63,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       'blockWithTransactions',
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.read<EVMBlockWithTransactions>(key)
+    const snapshot = await this.$.inputs.readRpc<EVMBlockWithTransactions>(key)
     if (snapshot) {
       return snapshot
     }
@@ -75,7 +75,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       'blockParentBeaconRoot',
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.read<string>(key)
+    const snapshot = await this.$.inputs.readRpc<string>(key)
     if (snapshot) {
       return snapshot
     }
@@ -97,7 +97,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       blockNumber.toString(),
       includeTxs.toString(),
     ])
-    const snapshot = await this.$.inputs.read<
+    const snapshot = await this.$.inputs.readRpc<
       EVMBlock | EVMBlockWithTransactions
     >(key)
     if (snapshot) {
@@ -109,7 +109,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
 
   async getTransaction(txHash: string): Promise<EVMTransaction> {
     const key = this.buildSnapshotKey(['transaction', txHash])
-    const snapshot = await this.$.inputs.read<EVMTransaction>(key)
+    const snapshot = await this.$.inputs.readRpc<EVMTransaction>(key)
     if (snapshot) {
       return snapshot
     }
@@ -119,7 +119,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
 
   async getTransactionReceipt(txHash: string): Promise<Receipt> {
     const key = this.buildSnapshotKey(['transactionReceipt', txHash])
-    const snapshot = await this.$.inputs.read<Receipt>(key)
+    const snapshot = await this.$.inputs.readRpc<Receipt>(key)
     if (snapshot) {
       return snapshot
     }
@@ -136,7 +136,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       holder.toString(),
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.read<string>(key)
+    const snapshot = await this.$.inputs.readRpc<string>(key)
     if (snapshot) {
       return BigInt(snapshot)
     }
@@ -159,7 +159,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       addressKey,
       topicsKey,
     ])
-    const snapshot = await this.$.inputs.read<EVMLog[]>(key)
+    const snapshot = await this.$.inputs.readRpc<EVMLog[]>(key)
     if (snapshot) {
       return snapshot
     }
@@ -179,7 +179,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       newestBlock.toString(),
       percentilesKey,
     ])
-    const snapshot = await this.$.inputs.read<EVMFeeHistory>(key)
+    const snapshot = await this.$.inputs.readRpc<EVMFeeHistory>(key)
     if (snapshot) {
       return snapshot
     }
@@ -197,7 +197,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       callParams.data.toString(),
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.read<string>(key)
+    const snapshot = await this.$.inputs.readRpc<string>(key)
 
     if (snapshot) {
       return Bytes.fromHex(snapshot)
@@ -218,7 +218,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       blockNumber.toString(),
       callsKey,
     ])
-    const snapshot = await this.$.inputs.read<MulticallV3Response[]>(key)
+    const snapshot = await this.$.inputs.readRpc<MulticallV3Response[]>(key)
 
     if (snapshot) {
       return snapshot

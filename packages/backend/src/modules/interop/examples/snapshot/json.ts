@@ -18,7 +18,7 @@ export function toSafeJSON(parameters: unknown, pretty = false): string {
   )
 }
 
-export function fromSafeJSON(data: string): Record<string, unknown> {
+export function fromSafeJSON<T>(data: string): T {
   return JSON.parse(data, (_, value: unknown) => {
     if (
       typeof value === 'object' &&

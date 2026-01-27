@@ -1112,7 +1112,7 @@
   },
   "across-settlement-op": {
     "tags": ["across", "opstack"],
-    "name": "L1 → Optimism",
+    "description": "L1 → Optimism",
     "txs": [
       {
         "chain": "ethereum",
@@ -1130,7 +1130,7 @@
   },
   "across-settlement-base": {
     "tags": ["across", "opstack"],
-    "name": "L1 → Base",
+    "description": "L1 → Base",
     "txs": [
       {
         "chain": "ethereum",
@@ -1179,7 +1179,7 @@
   },
   "lido-wsteth-base-ethereum-deposit": {
     "tags": ["lido"],
-    "name": "Base L1 → L2 deposit",
+    "description": "Base L1 → L2 deposit",
     "txs": [
       {
         "chain": "ethereum",
@@ -1196,7 +1196,7 @@
   },
   "lido-wsteth-base-ethereum-withdrawal": {
     "tags": ["lido"],
-    "name": "Base L2 → L1 withdrawal",
+    "description": "Base L2 → L1 withdrawal",
     "txs": [
       {
         "chain": "base",
@@ -1216,7 +1216,7 @@
   },
   "lido-wsteth-optimism-ethereum-deposit": {
     "tags": ["lido"],
-    "name": "Optimism L1 → L2 deposit",
+    "description": "Optimism L1 → L2 deposit",
     "txs": [
       {
         "chain": "ethereum",
@@ -1233,7 +1233,7 @@
   },
   "lido-wsteth-optimism-ethereum-withdrawal": {
     "tags": ["lido"],
-    "name": "Optimism L2 → L1 withdrawal",
+    "description": "Optimism L2 → L1 withdrawal",
     "txs": [
       {
         "chain": "optimism",
@@ -1291,7 +1291,7 @@
   },
   "opstack-standardbridge-optimism-ethereum-erc20": {
     "tags": ["opstack"],
-    "name": "optimism -> ethereum (erc20)",
+    "description": "optimism -> ethereum (erc20)",
     "txs": [
       {
         "chain": "ethereum",
@@ -1309,7 +1309,7 @@
   },
   "opstack-standardbridge-ethereum-optimism-erc20": {
     "tags": ["opstack"],
-    "name": "ethereum -> optimism (erc20)",
+    "description": "ethereum -> optimism (erc20)",
     "txs": [
       {
         "chain": "optimism",
@@ -1327,7 +1327,7 @@
   },
   "opstack-standardbridge-ethereum-optimism-eth": {
     "tags": ["opstack"],
-    "name": "ethereum -> optimism (eth)",
+    "description": "ethereum -> optimism (eth)",
     "txs": [
       {
         "chain": "optimism",
@@ -1345,7 +1345,7 @@
   },
   "opstack-standardbridge-optimism-ethereum-eth": {
     "tags": ["opstack"],
-    "name": "optimism -> ethereum (eth)",
+    "description": "optimism -> ethereum (eth)",
     "txs": [
       {
         "chain": "ethereum",
@@ -1363,7 +1363,7 @@
   },
   "opstack-standardbridge-base-ethereum-erc20": {
     "tags": ["opstack"],
-    "name": "base -> ethereum (erc20)",
+    "description": "base -> ethereum (erc20)",
     "txs": [
       {
         "chain": "ethereum",
@@ -1381,7 +1381,7 @@
   },
   "opstack-standardbridge-ethereum-base-eth": {
     "tags": ["opstack"],
-    "name": "ethereum -> base (eth)",
+    "description": "ethereum -> base (eth)",
     "txs": [
       {
         "chain": "base",
@@ -1399,7 +1399,7 @@
   },
   "opstack-standardbridge-ethereum-base-erc20": {
     "tags": ["opstack"],
-    "name": "ethereum -> base (erc20)",
+    "description": "ethereum -> base (erc20)",
     "txs": [
       {
         "chain": "base",

@@ -36,6 +36,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  timeout?: number
 }
 
 type Param =
@@ -318,7 +319,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         jsonrpc: '2.0',
       }),
       redirect: 'follow',
-      timeout: 10_000,
+      timeout: this.$.timeout ?? 10_000,
     })
   }
 
@@ -336,7 +337,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(queries),
       redirect: 'follow',
-      timeout: 10_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
     })
 
     const results = new Map(

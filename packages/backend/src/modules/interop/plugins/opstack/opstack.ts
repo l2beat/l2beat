@@ -25,6 +25,8 @@ const messagePassedLog =
 const withdrawalFinalizedLog =
   'event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)'
 const relayedMessageLog = 'event RelayedMessage(bytes32 indexed msgHash)'
+const failedRelayedMessageLog =
+  'event FailedRelayedMessage(bytes32 indexed msgHash)'
 const sentMessageLog =
   'event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)'
 const sentMessageExtension1Log =
@@ -37,7 +39,7 @@ export const MessagePassed = createInteropEventType<{
   chain: string
   withdrawalHash: string
   value: bigint
-}>('opstack.MessagePassed', { ttl: 14 * UnixTime.DAY }) // needs to go through the challenge period
+}>('opstack.MessagePassed', { ttl: 30 * UnixTime.DAY }) // needs to go through the challenge period
 
 export const parseMessagePassed = createEventParser(messagePassedLog)
 
@@ -60,6 +62,15 @@ export const RelayedMessage = createInteropEventType<{
 }>('opstack.RelayedMessage')
 
 export const parseRelayedMessage = createEventParser(relayedMessageLog)
+
+export const FailedRelayedMessage = createInteropEventType<{
+  chain: string
+  msgHash: string
+}>('opstack.FailedRelayedMessage')
+
+export const parseFailedRelayedMessage = createEventParser(
+  failedRelayedMessageLog,
+)
 
 // L1 event: this will be a combination of two logs
 export const SentMessage = createInteropEventType<{
@@ -184,6 +195,11 @@ export class OpStackPlugin implements InteropPluginResyncable {
         signature: relayedMessageLog,
         addresses: OPSTACK_NETWORKS.map((n) => n.l2CrossDomainMessenger),
       },
+      {
+        type: 'event',
+        signature: failedRelayedMessageLog,
+        addresses: OPSTACK_NETWORKS.map((n) => n.l2CrossDomainMessenger),
+      },
     ]
   }
 
@@ -275,10 +291,21 @@ export class OpStackPlugin implements InteropPluginResyncable {
           }),
         ]
       }
+      const failedRelayedMessage = parseFailedRelayedMessage(input.log, [
+        ChainSpecificAddress.address(network.l2CrossDomainMessenger),
+      ])
+      if (failedRelayedMessage) {
+        return [
+          FailedRelayedMessage.create(input, {
+            chain: network.chain,
+            msgHash: failedRelayedMessage.msgHash,
+          }),
+        ]
+      }
     }
   }
 
-  matchTypes = [WithdrawalFinalized, RelayedMessage]
+  matchTypes = [WithdrawalFinalized, RelayedMessage, FailedRelayedMessage]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // Match L2->L1 withdrawals
@@ -345,6 +372,22 @@ export class OpStackPlugin implements InteropPluginResyncable {
       }
 
       return results
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: event.args.chain,
+      })
+      if (!sentMessage) return
+
+      return [
+        Result.Message('opstack.L1ToL2MessageFailed', {
+          app: 'unknown',
+          srcEvent: sentMessage,
+          dstEvent: event,
+        }),
+      ]
     }
   }
 }
