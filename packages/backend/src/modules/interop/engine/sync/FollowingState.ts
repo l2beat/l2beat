@@ -21,8 +21,7 @@ export class FollowingState implements BlockProcessorState {
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
     this.status = 'processing'
 
-    const resyncRequested =
-      (await this.syncer.isResyncRequestedFrom()) !== undefined
+    const resyncRequested = (await this.syncer.getResyncRequest()) !== undefined
     const lastSyncedRecord = resyncRequested
       ? undefined
       : await this.syncer.getLastSyncedRange()
