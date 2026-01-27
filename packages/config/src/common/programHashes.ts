@@ -334,18 +334,48 @@ fn main() {
     verificationStatus: 'notVerified',
   },
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
-    title: 'Aggregation program of OP Succinct',
+    title: 'Aggregation program of Facet v1 (OP Succinct)',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
-    title: 'Range program of OP Succinct',
+    title: 'Range program of Facet v1 (OP Succinct)',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/range',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605': {
     title: 'Aggregation program of OP Succinct',
@@ -919,17 +949,45 @@ Verify:
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
     title: 'Range program of Ethscriptions ZK Fault Proofs',
     description:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
     title: 'Morph Guest program (v0.4.9 release)',
