@@ -52,14 +52,10 @@ export class CatchingUpState implements TimeloopState {
         return this
       }
 
-      const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-      if (resyncFrom !== undefined && wipeRequired) {
-        this.syncer.waitingForWipe = true
-        this.status = 'waiting for wipe'
-        return this
-      }
-      if (this.syncer.waitingForWipe && !wipeRequired) {
-        this.syncer.waitingForWipe = false
+      const resyncFrom = await this.syncer.isResyncRequestedFrom()
+      if (resyncFrom !== undefined) {
+        this.status = 'deleting all data for resync'
+        await this.syncer.deleteAllClusterData(resyncFrom)
       }
 
       this.status = 'syncing'
@@ -72,7 +68,7 @@ export class CatchingUpState implements TimeloopState {
         await this.syncRange(logQuery, rangeData)
 
         if (resyncFrom) {
-          await this.clearResyncRequestFlagUnlessWipePending()
+          await this.clearResyncRequestFlag()
         }
       } else {
         this.status = 'idle'
@@ -199,10 +195,11 @@ export class CatchingUpState implements TimeloopState {
     return interopEvents.flat()
   }
 
-  async clearResyncRequestFlagUnlessWipePending() {
-    await this.syncer.db.interopPluginSyncState.clearResyncRequestUnlessWipePending(
+  async clearResyncRequestFlag() {
+    await this.syncer.db.interopPluginSyncState.setResyncRequestedFrom(
       this.syncer.cluster.name,
       this.syncer.chain,
+      null,
     )
   }
 
