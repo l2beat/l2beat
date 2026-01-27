@@ -1150,7 +1150,18 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
     title: 'Cartesi Honeypot v2 template hash',
     description:
       'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v2.',
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/honeypot.cpp',
+    verificationStatus: 'successful',
+    verificationSteps: `
+The verification process is based on [this guide](https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/README.md#building-and-running).
+
+1. Install all required dependencies: Docker, GNU Make, Lua 5.4, [cartesi/machine-emulator](https://github.com/cartesi/machine-emulator) 0.19.x and [cartesi/xgenext2fs](https://github.com/cartesi/genext2fs). 
+In our experience, cartesi-machine could not be installed from cartesi APT package repository because the \`dist.cartesi.io\` URL was not accessible, the homebrew installation worked successfully on an ubuntu machine.
+2. Check out the correct commit version of the [honeypot repo](https://github.com/cartesi/honeypot): \`git checkout 699c2b12745f1f7da708cb497106e657e3a67e49\`.
+3. On x86 architecture, configure docker to work with riscv64 architecture via emulation: \`docker run --privileged --rm tonistiigi/binfmt --install riscv64\`.
+4. Build the application by running: \`make HONEYPOT_CONFIG=mainnet\`. This build script will output the correct program hash on successful execution.
+    `,
   },
   '0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14': {
     title: 'Cartesi Honeypot v1 template hash',
