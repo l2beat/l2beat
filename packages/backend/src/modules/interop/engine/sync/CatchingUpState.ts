@@ -72,7 +72,7 @@ export class CatchingUpState implements TimeloopState {
         await this.syncRange(logQuery, rangeData)
 
         if (resyncFrom) {
-          await this.clearResyncRequestFlag()
+          await this.clearResyncRequestFlagUnlessWipePending()
         }
       } else {
         this.status = 'idle'
@@ -199,7 +199,7 @@ export class CatchingUpState implements TimeloopState {
     return interopEvents.flat()
   }
 
-  async clearResyncRequestFlag() {
+  async clearResyncRequestFlagUnlessWipePending() {
     await this.syncer.db.interopPluginSyncState.clearResyncRequestUnlessWipePending(
       this.syncer.cluster.name,
       this.syncer.chain,

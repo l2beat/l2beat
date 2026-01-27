@@ -275,5 +275,4 @@ export class InteropEventSyncer extends TimeLoop {
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
   }
-
 }

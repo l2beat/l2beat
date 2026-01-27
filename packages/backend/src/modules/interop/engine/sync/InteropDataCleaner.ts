@@ -7,7 +7,7 @@ import type {
   ResyncablePluginCluster,
 } from './InteropEventSyncer'
 
-export class InteropResyncWipeLoop extends TimeLoop {
+export class InteropDataCleaner extends TimeLoop {
   constructor(
     private readonly cluster: ResyncablePluginCluster,
     private readonly syncers: InteropEventSyncer[],
@@ -36,7 +36,9 @@ export class InteropResyncWipeLoop extends TimeLoop {
       syncStates.map((state) => [state.chain, state]),
     )
 
-    const allWaitingForWipe = this.syncers.every((syncer) => syncer.waitingForWipe)
+    const allWaitingForWipe = this.syncers.every(
+      (syncer) => syncer.waitingForWipe,
+    )
     const allWipeRequired = this.syncers.every(
       (syncer) => statesByChain.get(syncer.chain)?.wipeRequired === true,
     )

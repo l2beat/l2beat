@@ -4,13 +4,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
-import { InteropResyncWipeLoop } from './InteropResyncWipeLoop'
+import { InteropDataCleaner } from './InteropDataCleaner'
 import type {
   InteropEventSyncer,
   ResyncablePluginCluster,
 } from './InteropEventSyncer'
 
-describe(InteropResyncWipeLoop.name, () => {
+describe(InteropDataCleaner.name, () => {
   it('wipes data when all syncers are waiting and wipeRequired is set', async () => {
     const deleteMessage = mockFn().resolvesTo(undefined)
     const deleteTransfer = mockFn().resolvesTo(undefined)
@@ -38,7 +38,7 @@ describe(InteropResyncWipeLoop.name, () => {
       deleteAllForPlugin: deleteEvents,
     })
 
-    const loop = new InteropResyncWipeLoop(
+    const loop = new InteropDataCleaner(
       makeCluster(),
       [makeSyncer('ethereum', true), makeSyncer('arbitrum', true)],
       store,
@@ -86,7 +86,7 @@ describe(InteropResyncWipeLoop.name, () => {
       deleteAllForPlugin: deleteEvents,
     })
 
-    const loop = new InteropResyncWipeLoop(
+    const loop = new InteropDataCleaner(
       makeCluster(),
       [makeSyncer('ethereum', true), makeSyncer('arbitrum', false)],
       store,
@@ -130,7 +130,7 @@ describe(InteropResyncWipeLoop.name, () => {
       deleteAllForPlugin: deleteEvents,
     })
 
-    const loop = new InteropResyncWipeLoop(
+    const loop = new InteropDataCleaner(
       makeCluster(),
       [makeSyncer('ethereum', true), makeSyncer('arbitrum', true)],
       store,

@@ -7,8 +7,8 @@ import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
-import { InteropResyncWipeLoop } from './InteropResyncWipeLoop'
 
 export type PluginSyncStatus = {
   pluginName: string
@@ -27,7 +27,7 @@ export class InteropSyncersManager {
     string, // plugin cluster name
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
-  private wipeLoops: InteropResyncWipeLoop[] = []
+  private dataCleaners: InteropDataCleaner[] = []
 
   constructor(
     private readonly pluginClusters: PluginCluster[],
@@ -68,8 +68,8 @@ export class InteropSyncersManager {
       }
 
       if (clusterSyncers.length > 0) {
-        this.wipeLoops.push(
-          new InteropResyncWipeLoop(
+        this.dataCleaners.push(
+          new InteropDataCleaner(
             { name: cluster.name, plugins: resyncablePlugins },
             clusterSyncers,
             eventStore,
@@ -87,8 +87,8 @@ export class InteropSyncersManager {
         syncer.start()
       }
     }
-    for (const wipeLoop of this.wipeLoops) {
-      wipeLoop.start()
+    for (const cleaner of this.dataCleaners) {
+      cleaner.start()
     }
   }
 
