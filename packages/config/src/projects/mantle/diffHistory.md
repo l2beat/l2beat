@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044
+
+# Diff at Tue, 27 Jan 2026 17:04:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769003954
+- current timestamp: 1769533383
+
+## Description
+
+OPSuccinctL2OutputOracle updated rangeVkeyCommitment verification key (0x5d15e8...→0x05044f...). This is a hotfix addressing an issue where Mantle logic in revm was inconsistent with geth, which prevented the generation of the corresponding ZKP.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.rangeVkeyCommitment:
+-        "0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8"
++        "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5"
+    }
+```
+
 Generated with discovered.json: 0xa23e05c2eddefae498d0ca9719e9727aeb8bcc0a
 
 # Diff at Wed, 21 Jan 2026 14:00:22 GMT:
