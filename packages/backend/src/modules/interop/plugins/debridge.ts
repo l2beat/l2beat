@@ -61,7 +61,7 @@ export const Sent = createInteropEventType<{
   srcTokenAddress?: Address32
   srcWasBurned?: boolean
   $dstChain: string
-}>('debridge.Sent')
+}>('debridge.Sent', { direction: 'outgoing' })
 
 export const Claimed = createInteropEventType<{
   submissionId: `0x${string}`
@@ -70,7 +70,7 @@ export const Claimed = createInteropEventType<{
   dstWasMinted?: boolean
   receiver: EthereumAddress
   $srcChain: string
-}>('debridge.Claimed')
+}>('debridge.Claimed', { direction: 'incoming' })
 
 export class DeBridgePlugin implements InteropPlugin {
   readonly name = 'debridge'
