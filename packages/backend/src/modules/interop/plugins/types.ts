@@ -216,6 +216,7 @@ interface EventDataRequest {
   type: 'event'
   signature: string
   includeTxEvents?: string[]
+  includeTx?: boolean
   addresses: ChainSpecificAddress[]
 }
 

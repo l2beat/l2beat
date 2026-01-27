@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
-import type { RpcBlock, RpcLog } from '@l2beat/shared'
+import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
@@ -301,6 +301,59 @@ describe(CatchingUpState.name, () => {
       ])
     })
 
+    it('fetches transaction data when includeTx is configured', async () => {
+      const baseTopic0 = '0xaaa'
+      const txHash = `0x${'22'.repeat(32)}`
+
+      const captureLog = mockFn().returns(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const logQuery = new LogQuery()
+      logQuery.addresses.add(EthereumAddress.random())
+      logQuery.topic0s.add(baseTopic0)
+      logQuery.topic0sWithTx.add(baseTopic0)
+
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+      ])
+
+      const transaction = makeRpcTransaction({
+        hash: txHash,
+        input: '0xabc',
+        value: 123n,
+      })
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        getTransactionByHash,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
+      const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.data).toEqual(transaction.input)
+      expect(captured?.tx.value).toEqual(transaction.value)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.to).toEqual(transaction.to?.toString())
+    })
+
     it('throws when no synced range and no resync timestamp', async () => {
       const syncer = createSyncer({
         latestBlockNumber: 10n,
@@ -337,6 +390,7 @@ function createSyncer(
     buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
     getLogs: mockFn().resolvesTo([]),
     getTransactionReceipt: mockFn().resolvesTo(null),
+    getTransactionByHash: mockFn().resolvesTo(null),
     captureLog: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
     db: mockObject<InteropEventSyncer['db']>({
@@ -397,6 +451,23 @@ function makeRpcLog(params: {
     blockNumber: params.blockNumber,
     blockTimestamp: params.blockTimestamp,
     blockHash: ZERO_HASH,
+  }
+}
+
+function makeRpcTransaction(
+  overrides: Partial<RpcTransaction> = {},
+): RpcTransaction {
+  return {
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    gas: 0n,
+    hash: ZERO_HASH,
+    input: '0x',
+    to: EthereumAddress.random(),
+    transactionIndex: 0n,
+    value: 0n,
+    ...overrides,
   }
 }
 
