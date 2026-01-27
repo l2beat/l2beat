@@ -73,7 +73,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const key = this.buildSnapshotKey(['latestBlockNumber'])
 
     const latestBlockNumber = await super.getLatestBlockNumber()
-    await this.exampleInputs.write(key, latestBlockNumber)
+    await this.exampleInputs.writeRpc(key, latestBlockNumber)
     return latestBlockNumber
   }
 
@@ -88,7 +88,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const blockWithTransactions = await super.getBlockWithTransactions(
       blockNumber,
     )
-    await this.exampleInputs.write(key, blockWithTransactions)
+    await this.exampleInputs.writeRpc(key, blockWithTransactions)
     return blockWithTransactions
   }
 
@@ -100,7 +100,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
       blockNumber.toString(),
     ])
     const parentBeaconRoot = await super.getBlockParentBeaconRoot(blockNumber)
-    await this.exampleInputs.write(key, parentBeaconRoot)
+    await this.exampleInputs.writeRpc(key, parentBeaconRoot)
     return parentBeaconRoot
   }
 
@@ -127,7 +127,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
       // biome-ignore lint/suspicious/noExplicitAny: don't judge me
       includeTxs as any,
     )
-    await this.exampleInputs.write(key, block)
+    await this.exampleInputs.writeRpc(key, block)
     return block
   }
 
@@ -135,7 +135,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const key = this.buildSnapshotKey(['transaction', txHash])
 
     const transaction = await super.getTransaction(txHash)
-    await this.exampleInputs.write(key, transaction)
+    await this.exampleInputs.writeRpc(key, transaction)
     return transaction
   }
 
@@ -143,7 +143,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const key = this.buildSnapshotKey(['transactionReceipt', txHash])
 
     const receipt = await super.getTransactionReceipt(txHash)
-    await this.exampleInputs.write(key, receipt)
+    await this.exampleInputs.writeRpc(key, receipt)
     return receipt
   }
 
@@ -158,7 +158,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     ])
 
     const balance = await super.getBalance(holder, blockNumber)
-    await this.exampleInputs.write(key, balance.toString())
+    await this.exampleInputs.writeRpc(key, balance.toString())
     return balance
   }
 
@@ -179,7 +179,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     ])
 
     const logs = await super.getLogs(from, to, addresses, topics)
-    await this.exampleInputs.write(key, logs)
+    await this.exampleInputs.writeRpc(key, logs)
     return logs
   }
 
@@ -201,7 +201,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
       newestBlock,
       rewardPercentiles,
     )
-    await this.exampleInputs.write(key, feeHistory)
+    await this.exampleInputs.writeRpc(key, feeHistory)
     return feeHistory
   }
 
@@ -217,7 +217,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     ])
 
     const result = await super.call(callParams, blockNumber)
-    await this.exampleInputs.write(key, result.toString())
+    await this.exampleInputs.writeRpc(key, result.toString())
     return result
   }
 
@@ -235,7 +235,7 @@ export class RpcSnapshotClient extends RpcClientCompat {
     ])
 
     const results = await super.multicall(calls, blockNumber)
-    await this.exampleInputs.write(key, results)
+    await this.exampleInputs.writeRpc(key, results)
     return results
   }
 

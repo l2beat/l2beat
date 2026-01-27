@@ -1,8 +1,8 @@
 import { type Env, Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { join } from 'path'
-import { type CoreResult, readExamples } from '../core'
+import { readExamples } from '../core'
 import { ExampleRunner } from '../runner'
 import { normalize } from '../snapshot/json'
 import { hashExampleDefinition, SnapshotService } from '../snapshot/service'
@@ -54,7 +54,7 @@ describe('interop examples', () => {
           exampleId: example,
           example: definition,
           logger: Logger.SILENT,
-          http: new HttpClient(),
+          http: mockObject<HttpClient>({}),
           snapshotService,
           env: mockObject<Env>({}),
           mode: 'replay',
@@ -63,7 +63,7 @@ describe('interop examples', () => {
 
         const result = await runner.run()
 
-        expect(normalize(result)).toEqual(normalize(outputs) as CoreResult)
+        expect(normalize(result)).toEqual(normalize(outputs))
       })
     }
   })
