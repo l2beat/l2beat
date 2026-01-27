@@ -9,6 +9,7 @@ export interface InteropPluginSyncStateRecord {
   chain: string
   lastError: string | null
   resyncRequestedFrom: UnixTime | null
+  wipeRequired: boolean
 }
 
 export type InteropPluginSyncStateUpdateable = Omit<
@@ -20,8 +21,11 @@ export function toRecord(
   row: Selectable<InteropPluginSyncState>,
 ): InteropPluginSyncStateRecord {
   return {
-    ...row,
+    pluginName: row.pluginName,
+    chain: row.chain,
+    lastError: row.lastError,
     resyncRequestedFrom: toTimestamp(row.resyncRequestedFrom),
+    wipeRequired: row.wipeRequired,
   }
 }
 
@@ -52,6 +56,7 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
         cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
           lastError: eb.ref('excluded.lastError'),
           resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+          wipeRequired: eb.ref('excluded.wipeRequired'),
         })),
       )
       .execute()
@@ -84,13 +89,31 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
         pluginName,
         chain,
         resyncRequestedFrom: fromTimestamp(resyncRequestedFrom),
+        wipeRequired: true,
       })
       .onConflict((cb) =>
         cb.columns(['pluginName', 'chain']).doUpdateSet((eb) => ({
           resyncRequestedFrom: eb.ref('excluded.resyncRequestedFrom'),
+          wipeRequired: eb.ref('excluded.wipeRequired'),
         })),
       )
       .execute()
+  }
+
+  async clearResyncRequestUnlessWipePending(
+    pluginName: string,
+    chain: string,
+  ): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropPluginSyncState')
+      .set({ resyncRequestedFrom: null })
+      .where('pluginName', '=', pluginName)
+      .where('chain', '=', chain)
+      // Do not clear if a new resync request is pending wipe.
+      .where('wipeRequired', '=', false)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
   }
 
   async updateByPluginNameAndChain(
@@ -103,6 +126,19 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .set(toUpdateRow(patch))
       .where('pluginName', '=', pluginName)
       .where('chain', '=', chain)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  async updateByPluginName(
+    pluginName: string,
+    patch: InteropPluginSyncStateUpdateable,
+  ): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropPluginSyncState')
+      .set(toUpdateRow(patch))
+      .where('pluginName', '=', pluginName)
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)
