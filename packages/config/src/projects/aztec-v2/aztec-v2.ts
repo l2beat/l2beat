@@ -22,6 +22,7 @@ export const aztecV2: ScalingProject = upcomingL2({
         'https://twitter.com/aztecnetwork',
         'https://medium.com/aztec-protocol',
         'https://t.me/aztecprotocol',
+        'https://discord.com/invite/aztec',
       ],
     },
   },

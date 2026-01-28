@@ -1,6 +1,6 @@
 {
   "name": "hashkey",
-  "timestamp": 1765550542,
+  "timestamp": 1769532941,
   "configHash": "0x126a725ccb1ee5f283389d6da79659a5bf8ee6f888854416a0aeec37214ca814",
   "entries": [
     {
@@ -79,10 +79,10 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 430,
+        "gameCount": 476,
         "gameImpls": [
           "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
-          "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
+          "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -92,7 +92,7 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
-        "permissionedGamesTotal": 430,
+        "permissionedGamesTotal": 476,
         "version": "1.0.1-beta.1"
       },
       "fieldMeta": {
@@ -182,13 +182,18 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0x38Eb7BDa08297a65d399FbE46F061116f6Dd0ECB",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
@@ -217,7 +222,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 20000000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "eth:0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f",
+        "batcherHash": "eth:0xFa35501cab42175918093F40C317642919F45165",
         "batchInbox": "eth:0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5",
         "blobbasefeeScalar": 4294967295,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
@@ -262,7 +267,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 21414667,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0xCc467FdB41B5b5A4E23021CAd69ED27550a41694",
+        "unsafeBlockSigner": "eth:0x38Eb7BDa08297a65d399FbE46F061116f6Dd0ECB",
         "version": "2.3.0-beta.3",
         "VERSION": 0
       },
@@ -428,7 +433,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -551,103 +556,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PermissionedDisputeGame",
-      "address": "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
-      "type": "Contract",
-      "template": "opstack/PermissionedDisputeGame",
-      "sourceHashes": [
-        "0x42d9bef8dd252ad9f5c4e0f9476d758e0580ba046660165ffc4991ddcefae7f8"
-      ],
-      "proxyType": "immutable",
-      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "sinceTimestamp": 1743945071,
-      "sinceBlock": 22210083,
-      "values": {
-        "$immutable": true,
-        "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "absolutePrestateDecoded": "v1.3.1 (govApproved)",
-        "anchorStateRegistry": "eth:0x4deC2aA521108d78d983c0c12656c6CF8631F2ED",
-        "challenger": "eth:0xFCF35CeE40325db21c3dc5b45849251E78Be47eb",
-        "claimData": [],
-        "claimDataLen": 0,
-        "clockExtension": 10800,
-        "createdAt": 0,
-        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
-        "gameData": {
-          "gameType_": 1,
-          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "gameType": 1,
-        "getChallengerDuration": [],
-        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "l2BlockNumber": 0,
-        "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
-        "l2ChainId": 177,
-        "maxClockDuration": 302400,
-        "maxGameDepth": 73,
-        "proposer": "eth:0xC55763132E9b76766D62e59728b3933F54C998C5",
-        "resolvedAt": 0,
-        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "splitDepth": 30,
-        "startingBlockNumber": 0,
-        "startingOutputRoot": {
-          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2BlockNumber": 0
-        },
-        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "status": 0,
-        "version": "1.3.1-beta.2",
-        "vm": "eth:0x7447b25b91336127042CC6899B2C15668a1Ab8BA",
-        "weth": "eth:0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
-      },
-      "fieldMeta": {
-        "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
-        }
-      },
-      "implementationNames": {
-        "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5": "PermissionedDisputeGame"
-      },
-      "usedTypes": [
-        {
-          "typeCaster": "Mapping",
-          "arg": {
-            "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
-            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
-            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
-            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
-            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
-            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
-            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
-            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
-            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
-            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
-            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
-            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
-            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
-            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
-            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
-            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
-            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
-            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
-            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
-            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
-            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
-            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
-            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
-            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
-            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
-            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
-            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
-            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
-          }
-        }
-      ]
-    },
-    {
       "name": "ProxyAdmin",
       "address": "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
       "type": "Contract",
@@ -733,6 +641,103 @@
       }
     },
     {
+      "name": "PermissionedDisputeGame",
+      "address": "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41",
+      "type": "Contract",
+      "template": "opstack/PermissionedDisputeGame",
+      "sourceHashes": [
+        "0x42d9bef8dd252ad9f5c4e0f9476d758e0580ba046660165ffc4991ddcefae7f8"
+      ],
+      "proxyType": "immutable",
+      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "sinceTimestamp": 1769138747,
+      "sinceBlock": 24294792,
+      "values": {
+        "$immutable": true,
+        "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
+        "absolutePrestateDecoded": "v1.3.1 (govApproved)",
+        "anchorStateRegistry": "eth:0x4deC2aA521108d78d983c0c12656c6CF8631F2ED",
+        "challenger": "eth:0xFCF35CeE40325db21c3dc5b45849251E78Be47eb",
+        "claimData": [],
+        "claimDataLen": 0,
+        "clockExtension": 10800,
+        "createdAt": 0,
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 1,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameType": 1,
+        "getChallengerDuration": [],
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2BlockNumberChallenged": false,
+        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
+        "l2ChainId": 177,
+        "maxClockDuration": 302400,
+        "maxGameDepth": 73,
+        "proposer": "eth:0xD1B3Ea8b98C86b1fc00B28096CB504d930D17A54",
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "splitDepth": 30,
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "1.3.1-beta.2",
+        "vm": "eth:0x7447b25b91336127042CC6899B2C15668a1Ab8BA",
+        "weth": "eth:0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
+      },
+      "fieldMeta": {
+        "absolutePrestateDecoded": {
+          "description": "Prestate tag for known prestates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41": "PermissionedDisputeGame"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6": "v1.6.0 (cannon64)",
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
+            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
+            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
+            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
+            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
+            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
+            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
+            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
+            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
+            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
+            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
+            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
+            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
+            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
+            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
+            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
+            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
+            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
+            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
+            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
+            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
+            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
+            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
+          }
+        }
+      ]
+    },
+    {
       "address": "eth:0x892Aa95AD0b733A72e2f3F5EB20d5314CBBbD180",
       "type": "EOA",
       "proxyType": "EOA"
@@ -764,7 +769,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621084",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621093",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -954,18 +959,6 @@
       ]
     },
     {
-      "address": "eth:0xC55763132E9b76766D62e59728b3933F54C998C5",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
-          "role": ".proposer"
-        }
-      ]
-    },
-    {
       "name": "Hashkey Multisig 2",
       "address": "eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A",
       "type": "Contract",
@@ -1009,7 +1002,7 @@
       }
     },
     {
-      "address": "eth:0xCc467FdB41B5b5A4E23021CAd69ED27550a41694",
+      "address": "eth:0xD1B3Ea8b98C86b1fc00B28096CB504d930D17A54",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1120,7 +1113,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "balance": "69101903296019267130175817",
+        "balance": "69081841202561950150067821",
         "disputeGameFactory": "eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0xC7fCbE26c1Db751d63869F72F782a56710f6be5A",
@@ -1128,7 +1121,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 23993621
+          "prevBlockNum": 24309562
         },
         "paused": false,
         "proofMaturityDelaySeconds": 302400,
@@ -1163,7 +1156,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f",
+      "address": "eth:0xFa35501cab42175918093F40C317642919F45165",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1182,14 +1175,7 @@
     {
       "address": "eth:0xFCF35CeE40325db21c3dc5b45849251E78Be47eb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
-          "role": ".challenger"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SuperchainConfig",
@@ -1589,7 +1575,28 @@
       "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32)",
       "function version() view returns (string)"
     ],
-    "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5": [
+    "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41": [
       "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _weth, address _anchorStateRegistry, uint256 _l2ChainId, address _proposer, address _challenger)",
       "error AlreadyInitialized()",
       "error AnchorRootNotFound()",
@@ -1676,27 +1683,6 @@
       "function version() view returns (string)",
       "function vm() view returns (address vm_)",
       "function weth() view returns (address weth_)"
-    ],
-    "eth:0x7986eD289935A0F47FC434C00cDE309fE2c51f1C": [
-      "constructor(address _owner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function addressManager() view returns (address)",
-      "function changeProxyAdmin(address _proxy, address _newAdmin)",
-      "function getProxyAdmin(address _proxy) view returns (address)",
-      "function getProxyImplementation(address _proxy) view returns (address)",
-      "function implementationName(address) view returns (string)",
-      "function isUpgrading() view returns (bool)",
-      "function owner() view returns (address)",
-      "function proxyType(address) view returns (uint8)",
-      "function renounceOwnership()",
-      "function setAddress(string _name, address _address)",
-      "function setAddressManager(address _address)",
-      "function setImplementationName(address _address, string _name)",
-      "function setProxyType(address _address, uint8 _type)",
-      "function setUpgrading(bool _upgrading)",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _proxy, address _implementation)",
-      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
     "eth:0x899F07862D3A03F70E07b7f01183934b485d2e97": [
       "constructor(address _addressManager, string _implementationName)"
@@ -2021,6 +2007,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23997205 },
-  "permissionsConfigHash": "0xdbce61a2fca51317de6b4346bbfe50e89fc3babd9400f0e47c75e17c52cf07c8"
+  "usedBlockNumbers": { "ethereum": 24327500 },
+  "permissionsConfigHash": "0x2ac0f6d3ae4c8e852a3de91296c698eb57b5061b919b32600468a76e3813d4df"
 }

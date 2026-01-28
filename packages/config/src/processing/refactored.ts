@@ -7,6 +7,7 @@ import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { ccip } from '../projects/ccip/ccip'
+import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
@@ -95,7 +96,8 @@ export const refactored: BaseProject[] = [
   usdt0,
   debridgeDln,
   hyperlaneHwr,
-  ccip,
+ccip,
+  cctpv1,
   cctpv2,
   relay,
   gaszip,

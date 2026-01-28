@@ -51,6 +51,7 @@
           "level": "error",
           "fix": "safe"
         },
+        "noUnusedFunctionParameters": "error",
         "noConstAssign": "error",
         "noConstantCondition": "off",
         "noEmptyCharacterClassInRegex": "error",
@@ -131,10 +132,7 @@
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
-        "noFocusedTests": {
-          "fix": "none",
-          "level": "error"
-        },
+        "noFocusedTests": "error",
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",

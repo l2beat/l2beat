@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { cn } from '~/utils/cn'
 import {
   Drawer,
@@ -28,19 +28,19 @@ export function ShowMoreText({
   const [expanded, setExpanded] = useState(false)
   const [isOverflowing, setIsOverflowing] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
-  const isMobile = useIsMobile()
+  const { isDesktop } = useDevice()
 
   const handleResize = useCallback(() => {
     if (contentRef.current) {
       const { scrollHeight, offsetHeight, clientWidth, scrollWidth } =
         contentRef.current
-      if (isMobile) {
-        setIsOverflowing(scrollHeight > offsetHeight)
-      } else {
+      if (isDesktop) {
         setIsOverflowing(scrollWidth > clientWidth)
+      } else {
+        setIsOverflowing(scrollHeight > offsetHeight)
       }
     }
-  }, [isMobile])
+  }, [isDesktop])
 
   useEffect(() => {
     handleResize()
