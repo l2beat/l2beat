@@ -319,6 +319,13 @@ fn main() {
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
   },
+  '0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5': {
+    title: 'Range program of OP Succinct (Mantle)',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Mantle-specific build addressing revm/geth inconsistency.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
     description:

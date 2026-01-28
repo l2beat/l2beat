@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x64ba262484c99fb1d7c15926c7614428a5b2bf51
+
+# Diff at Tue, 27 Jan 2026 16:46:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768989690
+- current timestamp: 1769532258
+
+## Description
+
+New KailuaGame implementation (type 1337) deployed with OP-Contracts v5 compatibility patch. The new implementation adds a mock `anchorStateRegistry()` function that returns `msg.sender` as a workaround - OP-Contracts v5 expects dispute games to have this function for withdrawal finalization.
+
+Diff: https://disco.l2beat.com/diff/eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD/eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x1E987CF54A39CA2AC5FdC97DCaFbbB805ef356bD"
++        "eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Source code changes
+
+```diff
+./src/projects/bob/{.flat@1768989690 => .flat}/KailuaGame.sol | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+```
+
 Generated with discovered.json: 0xc48ba9bfc1c31779625405f6d126a761305a9a04
 
 # Diff at Wed, 21 Jan 2026 10:03:40 GMT:
