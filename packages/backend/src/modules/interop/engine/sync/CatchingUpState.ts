@@ -46,6 +46,11 @@ export class CatchingUpState implements TimeloopState {
 
   async catchUp(): Promise<SyncerState> {
     while (true) {
+      if (this.syncer.isAggregationInProgress()) {
+        this.status = 'waiting for aggregation'
+        return this
+      }
+
       if (this.syncer.latestBlockNumber === undefined) {
         this.status = 'waiting for block number'
         return this

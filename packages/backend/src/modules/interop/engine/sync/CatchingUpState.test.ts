@@ -14,6 +14,24 @@ const CLUSTER_NAME = 'mock-cluster'
 
 describe(CatchingUpState.name, () => {
   describe(CatchingUpState.prototype.catchUp.name, () => {
+    it('waits when aggregation is in progress', async () => {
+      const getResyncState = mockFn().resolvesTo({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
+      const syncer = createSyncer({
+        isAggregationInProgress: mockFn().returns(true),
+        getResyncState,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for aggregation')
+      expect(getResyncState).not.toHaveBeenCalled()
+    })
+
     it('waits when latest block number is missing', async () => {
       const getResyncState = mockFn().resolvesTo({
         resyncFrom: undefined,
@@ -337,6 +355,7 @@ function createSyncer(
     buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
     getLogs: mockFn().resolvesTo([]),
     getTransactionReceipt: mockFn().resolvesTo(null),
+    isAggregationInProgress: mockFn().returns(false),
     captureLog: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
     db: mockObject<InteropEventSyncer['db']>({

@@ -232,6 +232,30 @@ describe(InteropSyncersManager.name, () => {
     })
   })
 
+  describe(InteropSyncersManager.prototype.areAllSyncersFollowing.name, () => {
+    it('returns false when any syncer is not following', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      expect(manager.areAllSyncersFollowing()).toEqual(true)
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')
+      if (!syncer) {
+        throw new Error('Expected syncer to exist')
+      }
+      syncer.state = {
+        type: 'timeLoop',
+        name: 'catchingUp',
+        status: 'waiting',
+        run: async () => syncer.state,
+      }
+
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+  })
+
   describe(InteropSyncersManager.prototype.getPluginSyncStatuses.name, () => {
     it('merges db ranges, db states, and existing syncers, then sorts the result', async () => {
       const syncedRanges: InteropPluginSyncedRangeRecord[] = [

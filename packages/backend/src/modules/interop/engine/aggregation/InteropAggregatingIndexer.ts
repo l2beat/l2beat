@@ -11,12 +11,14 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
+  syncersManager: InteropSyncersManager
 }
 
 export class InteropAggregatingIndexer extends ManagedChildIndexer {
@@ -25,6 +27,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
+    if (!this.$.syncersManager.areAllSyncersFollowing()) {
+      this.logger.info(
+        'Skipping aggregation - not all syncers are following the tip',
+      )
+      return to
+    }
+
     const from = to - UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
@@ -74,6 +83,10 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     })
 
     return to
+  }
+
+  isAggregationInProgress(): boolean {
+    return this.getState().status === 'updating'
   }
 
   // Invalidate on every restart

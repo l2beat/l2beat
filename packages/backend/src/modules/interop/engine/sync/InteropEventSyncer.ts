@@ -108,6 +108,10 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
+export interface AggregationStatusProvider {
+  isAggregationInProgress(): boolean
+}
+
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
@@ -120,6 +124,7 @@ export class InteropEventSyncer extends TimeLoop {
     readonly store: InteropEventStore,
     readonly db: Database,
     protected logger: Logger,
+    private readonly aggregationStatusProvider?: AggregationStatusProvider,
     intervalMs = 10000,
   ) {
     super({ intervalMs })
@@ -164,6 +169,10 @@ export class InteropEventSyncer extends TimeLoop {
         current.processNewestBlock(block, logs),
       )
     }
+  }
+
+  isAggregationInProgress(): boolean {
+    return this.aggregationStatusProvider?.isAggregationInProgress() ?? false
   }
 
   captureLog(logToCapture: LogToCapture) {

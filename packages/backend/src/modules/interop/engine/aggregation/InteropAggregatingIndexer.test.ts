@@ -6,6 +6,7 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 
 describe(InteropAggregatingIndexer.name, () => {
@@ -73,10 +74,14 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTransfer,
         aggregatedInteropToken,
       })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areAllSyncersFollowing: mockFn().returns(true),
+      })
 
       const indexer = new InteropAggregatingIndexer({
         db,
         configs,
+        syncersManager,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
@@ -256,10 +261,14 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         transaction,
       })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areAllSyncersFollowing: mockFn().returns(true),
+      })
 
       const indexer = new InteropAggregatingIndexer({
         db,
         configs,
+        syncersManager,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
@@ -372,6 +381,54 @@ describe(InteropAggregatingIndexer.name, () => {
           volume: 3000,
         },
       ])
+    })
+
+    it('skips aggregation when not all syncers are following', async () => {
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo([]),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const transaction = mockFn(async (fn: any) => await fn())
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areAllSyncersFollowing: mockFn().returns(false),
+      })
+
+      const indexer = new InteropAggregatingIndexer({
+        db,
+        configs: [],
+        syncersManager,
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        minHeight: 0,
+      })
+
+      const result = await indexer.update(from, to)
+
+      expect(result).toEqual(to)
+      expect(interopTransfer.getByRange).not.toHaveBeenCalled()
+      expect(transaction).not.toHaveBeenCalled()
+      expect(aggregatedInteropTransfer.insertMany).not.toHaveBeenCalled()
+      expect(aggregatedInteropToken.insertMany).not.toHaveBeenCalled()
     })
   })
 })
