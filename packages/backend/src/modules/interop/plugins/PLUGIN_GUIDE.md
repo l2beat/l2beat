@@ -155,6 +155,20 @@ auxiliary logs (e.g. `Transfer`, `BridgeBurn`, `BridgeMint`, etc.) during the ca
 }
 ```
 
+### When You Need Transaction Data
+
+Use `includeTx` in `getDataRequests()` when your capture logic needs transaction
+fields like `data` or `value` during resync:
+
+```ts
+{
+  type: 'event',
+  signature: myPrimaryEventLog,
+  includeTx: true,
+  addresses: [L1_BRIDGE],
+}
+```
+
 ### Synthetic Matching Keys
 
 If the two sides do not share a hash/nonce, build the most robust synthetic key:

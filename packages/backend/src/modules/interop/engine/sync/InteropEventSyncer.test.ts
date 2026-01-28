@@ -5,7 +5,12 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { RpcBlock, RpcLog, RpcReceipt } from '@l2beat/shared'
+import type {
+  RpcBlock,
+  RpcLog,
+  RpcReceipt,
+  RpcTransaction,
+} from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -291,6 +296,7 @@ describe(InteropEventSyncer.name, () => {
             type: 'event',
             signature,
             includeTxEvents: [extraSignature, extraSignatureTwo],
+            includeTx: true,
             addresses: [ethAddress, arbAddress],
           },
         ],
@@ -312,6 +318,7 @@ describe(InteropEventSyncer.name, () => {
         toEventSelector(extraSignature),
         toEventSelector(extraSignatureTwo),
       ])
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
       expect(query.isEmpty()).toEqual(false)
     })
 
@@ -456,17 +463,20 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe('rpc wrapper methods', () => {
-    it('passes through getBlockByNumber, getLogs, and getTransactionReceipt', async () => {
+    it('passes through getBlockByNumber, getLogs, getTransactionReceipt, and getTransactionByHash', async () => {
       const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
       const log = makeRpcLog()
       const getLogs = mockFn().resolvesTo([log])
       const receipt = makeRpcReceipt()
       const getTransactionReceipt = mockFn().resolvesTo(receipt)
+      const transaction = makeRpcTransaction()
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
       const syncer = createSyncer({
         rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
           getBlockByNumber,
           getLogs,
           getTransactionReceipt,
+          getTransactionByHash,
         }),
       })
 
@@ -478,10 +488,12 @@ describe(InteropEventSyncer.name, () => {
         topics: [[]],
       })
       const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
+      const tx = await syncer.getTransactionByHash(ZERO_HASH)
 
       expect(block).toEqual(makeRpcBlock(5n))
       expect(logs).toEqual([log])
       expect(txReceipt).toEqual(receipt)
+      expect(tx).toEqual(transaction)
     })
   })
 })
@@ -702,11 +714,29 @@ function makeRpcReceipt(): RpcReceipt {
   }
 }
 
+function makeRpcTransaction(
+  overrides: Partial<RpcTransaction> = {},
+): RpcTransaction {
+  return {
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    gas: 0n,
+    hash: ZERO_HASH,
+    input: '0x',
+    to: EthereumAddress.random(),
+    transactionIndex: 0n,
+    value: 0n,
+    ...overrides,
+  }
+}
+
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
   return mockObject<InteropEventSyncer['rpcClient']>({
     getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(1n)),
     getLogs: mockFn().resolvesTo([]),
     getTransactionReceipt: mockFn().resolvesTo(null),
+    getTransactionByHash: mockFn().resolvesTo(null),
   })
 }
 

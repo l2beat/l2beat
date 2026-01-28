@@ -3,6 +3,7 @@ import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import {
   getBlockNumberAtOrBefore,
   type RpcLog,
+  type RpcTransaction,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
@@ -141,6 +142,7 @@ export class CatchingUpState implements TimeloopState {
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
     const txsWithIncludedEvents = new Set<string>()
+    const txsWithFullData = new Set<string>()
     for (const log of logs) {
       assert(log.transactionHash)
       const v = logsPerTx.getOrInsert(log.transactionHash, [])
@@ -149,6 +151,9 @@ export class CatchingUpState implements TimeloopState {
       const topic0 = log.topics[0]
       if (topic0 && logQueryForChain.topicToTxEvents.has(topic0)) {
         txsWithIncludedEvents.add(log.transactionHash)
+      }
+      if (topic0 && logQueryForChain.topic0sWithTx.has(topic0)) {
+        txsWithFullData.add(log.transactionHash)
       }
     }
 
@@ -165,6 +170,15 @@ export class CatchingUpState implements TimeloopState {
       )
     }
 
+    const txsByHash = new Map<string, LogToCapture['tx']>()
+    for (const txHash of txsWithFullData) {
+      const transaction = await this.syncer.getTransactionByHash(txHash)
+      if (!transaction) {
+        continue
+      }
+      txsByHash.set(txHash, toTransaction(transaction))
+    }
+
     const interopEvents = []
     for (const log of logs) {
       assert(log.transactionHash)
@@ -177,7 +191,7 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: { hash: log.transactionHash },
+        tx: txsByHash.get(log.transactionHash) ?? { hash: log.transactionHash },
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -290,5 +304,16 @@ export class CatchingUpState implements TimeloopState {
         },
       ),
     )
+  }
+}
+
+function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
+  return {
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to ?? undefined,
+    data: tx.input,
+    type: tx.type?.toString(),
+    value: tx.value,
   }
 }
