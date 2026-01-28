@@ -2,10 +2,12 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
+import { SubgroupTooltip } from './SubgroupTooltip'
 import { TopChainsCell } from './TopChainsCell'
 import { TopTokensCell } from './TopTokensCell'
 
@@ -34,12 +36,22 @@ const commonColumns = [
   columnHelper.accessor('protocolName', {
     header: 'Name',
     cell: (ctx) => (
-      <div className="max-w-[76px] break-words font-bold text-label-value-15">
-        {ctx.row.original.protocolName}
-      </div>
+      <TwoRowCell>
+        <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+          <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+            {ctx.row.original.protocolName}
+          </div>
+          {ctx.row.original.subgroup && (
+            <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+          )}
+        </TwoRowCell.First>
+        <TwoRowCell.Second>
+          {ctx.row.original.isAggregate && 'Aggregate'}
+        </TwoRowCell.Second>
+      </TwoRowCell>
     ),
     meta: {
-      cellClassName: 'whitespace-normal',
+      cellClassName: 'whitespace-normal py-1',
       headClassName: 'text-2xs',
     },
   }),

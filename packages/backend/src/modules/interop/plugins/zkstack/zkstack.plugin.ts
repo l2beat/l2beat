@@ -210,7 +210,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: withdrawalLog,
-        addresses: SUPPORTED_CHAINS.map((n) => n.l2EthToken),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2GasToken),
       },
       {
         type: 'event',
@@ -393,7 +393,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
 
     const withdrawal = parseWithdrawal(input.log, [
-      ChainSpecificAddress.address(network.l2EthToken),
+      ChainSpecificAddress.address(network.l2GasToken),
     ])
     if (withdrawal) {
       const receiver = EthereumAddress(withdrawal.l1Receiver)
@@ -644,7 +644,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (!assets) return
     const entry = assets[assetId.toLowerCase()]
     if (!entry) return
-    const unfiltered = entry.implementationAddresses[chain]
+    const unfiltered = entry.deployedTokenAddresses[chain]
     // hack for building a bridge between zkstack and l2 beets understanding of a native token address
     if (
       unfiltered ===
