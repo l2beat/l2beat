@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x4f394ef95bd6a8faed461ed4253206245cd70025
+
+# Diff at Wed, 28 Jan 2026 11:58:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1768395715
+- current timestamp: 1769601454
+
+## Description
+
+Discovery rerun after cache override.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768395715 (main branch discovery), not current.
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      sourceHashes.0:
+-        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
++        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+      implementationNames.ethscr:0x3300000000000000000000000000000000000003:
+-        "EthscriptionsProver"
++        "Proxy"
+    }
+```
+
+```diff
+    contract Proxy (ethscr:0x4200000000000000000000000000000000000018) {
+    +++ description: ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.
+      name:
+-        "ProxyAdmin"
++        "Proxy"
+      sourceHashes.0:
+-        "0xa30dbc60acedeaa7e8154c11b75935442af967787bea59f73fe85e96780a15e6"
++        "0x8a450a4702d14921f51f4bc045204cb9ef401b919b47bc4ff16ffe47387111c6"
+      values.owner:
+-        "ethscr:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      implementationNames.ethscr:0x4200000000000000000000000000000000000018:
+-        "ProxyAdmin"
++        "Proxy"
+    }
+```
+
 Generated with discovered.json: 0x3bdda8534b53f90e2c3ee53b461b1a4d7baebc50
 
 # Diff at Wed, 14 Jan 2026 13:02:59 GMT:
