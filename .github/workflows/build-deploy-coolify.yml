@@ -3,20 +3,15 @@ name: Build and Deploy to Coolify
 on:
   workflow_call:
     inputs:
-      package:
-        description: "Package name (e.g., frontend, backend)"
+      project:
+        description: "Project name (e.g., frontend, backend, disco-ui)"
         required: true
         type: string
-      displayPackageName:
-        description: "Display package name (e.g., Frontend, Backend)"
-        required: false
-        type: string
-        default: ${{ inputs.package }}
       dockerfile:
         description: "Dockerfile path (e.g., packages/frontend/Dockerfile)"
         required: false
         type: string
-        default: packages/${{ inputs.package }}/Dockerfile
+        default: packages/${{ inputs.project }}/Dockerfile
       environment:
         description: "Environment (production or staging)"
         required: false
@@ -40,7 +35,7 @@ permissions:
 
 jobs:
   build-and-deploy:
-    name: Build and deploy ${{ inputs.displayPackageName }}
+    name: Build and deploy ${{ inputs.project }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -90,8 +85,8 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/${{ inputs.package }}:latest
-            ghcr.io/${{ github.repository }}/${{ inputs.package }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/${{ inputs.project }}:latest
+            ghcr.io/${{ github.repository }}/${{ inputs.project }}:${{ github.sha }}
           build-args: |
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
@@ -100,5 +95,5 @@ jobs:
 
       - name: Deploy to Coolify
         run: |
-          echo "Deploying ${{ inputs.displayPackageName }} (${{ inputs.environment }}) to Coolify..."
+          echo "Deploying ${{ inputs.project }} (${{ inputs.environment }}) to Coolify..."
           coolify deploy uuid ${{ secrets.COOLIFY_UUID }}

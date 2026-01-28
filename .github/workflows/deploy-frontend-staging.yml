@@ -23,7 +23,7 @@ jobs:
     if: needs.check-changes.outputs.should_deploy == 'true'
     uses: ./.github/workflows/build-deploy-coolify.yml
     with:
-      package: frontend
+      project: frontend
       environment: staging
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
