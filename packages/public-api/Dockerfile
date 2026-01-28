@@ -37,8 +37,12 @@ RUN mkdir /dist/ && \
 
 FROM node:22.22.0-slim as release
 
-# Security: Run as non-root user
-RUN groupadd -r appgroup && useradd -r -g appgroup -m appuser
+# Install curl for healthcheck and create non-root user
+RUN apt update && \
+  apt install -y curl && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/
 COPY --from=builder --chown=appuser:appgroup /src/ .
