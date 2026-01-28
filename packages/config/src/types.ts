@@ -1249,6 +1249,9 @@ export interface InteropConfig {
    * which is a separate project)
    */
   isAggregate?: boolean
+  /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
+   * so layerzero id should be configured in usdt0 config) */
+  subgroupId?: ProjectId
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
   durationSplit?: {

@@ -7,6 +7,7 @@ import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getP
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
+import { SubgroupTooltip } from './SubGroupTooltip'
 import { TopChainsCell } from './TopChainsCell'
 import { TopTokensCell } from './TopTokensCell'
 
@@ -36,8 +37,13 @@ const commonColumns = [
     header: 'Name',
     cell: (ctx) => (
       <TwoRowCell>
-        <TwoRowCell.First className="max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-          {ctx.row.original.protocolName}
+        <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+          <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+            {ctx.row.original.protocolName}
+          </div>
+          {ctx.row.original.subgroup && (
+            <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+          )}
         </TwoRowCell.First>
         <TwoRowCell.Second>
           {ctx.row.original.isAggregate && 'Aggregate'}

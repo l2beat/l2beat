@@ -40,6 +40,10 @@ export type ProtocolEntry = {
   iconUrl: string
   protocolName: string
   isAggregate?: boolean
+  subgroup?: {
+    name: string
+    iconUrl: string
+  }
   bridgeType: 'nonMinting' | 'lockAndMint' | 'omnichain'
   volume: number
   tokens: TokenData[]
@@ -78,11 +82,21 @@ export function getProtocolEntries(
       assert(project, `Project not found: ${key}`)
       const bridgeType = project.interopConfig.bridgeType
 
+      const subgroupProject = interopProjects.find(
+        (p) => p.id === project.interopConfig.subgroupId,
+      )
+
       return {
         iconSlug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         protocolName: project.interopConfig.name ?? project.name,
         isAggregate: project.interopConfig.isAggregate,
+        subgroup: subgroupProject
+          ? {
+              name: subgroupProject.name,
+              iconUrl: manifest.getUrl(`/icons/${subgroupProject.slug}.png`),
+            }
+          : undefined,
         bridgeType,
         volume: data.volume,
         tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
