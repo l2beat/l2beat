@@ -20,12 +20,6 @@ export type AggregatedInteropTransferWithTokens =
     >[]
   }
 
-export type InteropGroupedData = {
-  volume: number
-  transferCount: number
-  totalDurationSum: number
-}
-
 export type AverageDurationData = {
   transferCount: number
   totalDurationSum: number
