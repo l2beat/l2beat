@@ -32,13 +32,9 @@ export function AvgDurationCell({
     </div>
   )
 
-  if (disableTooltip) {
-    return content
-  }
-
   return (
     <Tooltip>
-      <TooltipTrigger>{content}</TooltipTrigger>
+      <TooltipTrigger disabled={disableTooltip}>{content}</TooltipTrigger>
       <TooltipContent>
         <div className="flex flex-col gap-1.5 font-medium text-label-value-15">
           <DurationTooltipItem averageDuration={averageDuration} type="in" />
