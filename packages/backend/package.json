@@ -36,7 +36,8 @@
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
     "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
-    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts"
+    "interop:compare": "ts-node ./src/modules/interop/compare/script.ts",
+    "interop:ccip": "ts-node ./src/modules/interop/plugins/ccip.script.ts"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
