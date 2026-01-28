@@ -9,7 +9,7 @@
 import { readdirSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
-export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'starknet' | 'unknown'
+export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'starknet' | 'facet' | 'unknown'
 export type ChainType = 'layer2' | 'layer3'
 
 export interface ChainInfo {
@@ -60,10 +60,13 @@ const ZKSTACK_TEMPLATES = [
   'shared-zk-stack/ValidatorTimelock_post29',
 ]
 
-// Templates that identify Polygon chains
+// Templates that identify Polygon CDK / AggLayer chains
 const POLYGON_TEMPLATES = [
   'polygoncdkstack/RollupManager',
   'polygoncdkstack/PolygonRollupManager',
+  'katana/AggchainFEP_post035',
+  'polygon-cdk/AgglayerBridge',
+  'polygon-cdk/AggchainFEP',
 ]
 
 // Templates that identify Starknet
@@ -72,6 +75,13 @@ const STARKNET_TEMPLATES = [
   'starknet/StarkgateManager',
   'starknet/StarkgateRegistry',
   'starknet/LordsL1Bridge',
+]
+
+// Templates that identify Facet
+const FACET_TEMPLATES = [
+  'facet/Rollup',
+  'facet/L1ETHBridge',
+  'facet/FacetEtherBridge',
 ]
 
 /**
@@ -87,8 +97,13 @@ function detectStack(discovery: DiscoveryJson): ChainStack {
   }
 
   // Check each stack's templates
+  // Order matters: check more specific stacks first (polygon/katana before opstack)
   if (ORBIT_TEMPLATES.some((t) => templates.has(t))) {
     return 'orbit'
+  }
+  // Check Polygon CDK before opstack (Katana has both opstack and polygon templates)
+  if (POLYGON_TEMPLATES.some((t) => templates.has(t))) {
+    return 'polygon'
   }
   if (OPSTACK_TEMPLATES.some((t) => templates.has(t))) {
     return 'opstack'
@@ -96,11 +111,11 @@ function detectStack(discovery: DiscoveryJson): ChainStack {
   if (ZKSTACK_TEMPLATES.some((t) => templates.has(t))) {
     return 'zkstack'
   }
-  if (POLYGON_TEMPLATES.some((t) => templates.has(t))) {
-    return 'polygon'
-  }
   if (STARKNET_TEMPLATES.some((t) => templates.has(t))) {
     return 'starknet'
+  }
+  if (FACET_TEMPLATES.some((t) => templates.has(t))) {
+    return 'facet'
   }
 
   return 'unknown'

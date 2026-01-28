@@ -1,13 +1,13 @@
 {
   "projectId": "facet",
-  "timestamp": 1769589723491,
+  "timestamp": 1769600634786,
   "escrows": [
     {
       "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
       "name": "L1ETHLockbox",
       "category": "third-party-secured",
-      "bridgeType": "canonical",
-      "nameCategory": "canonical-additional-trust",
+      "bridgeType": "external",
+      "nameCategory": "external",
       "additionalTrust": true,
       "categoryReason": "Token issuers unknown",
       "admin": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
@@ -16,22 +16,22 @@
       "tokens": [
         {
           "symbol": "WETH",
-          "valueUsd": 1092797.4,
+          "valueUsd": 1093040,
           "amount": 362.83,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 1092797.4,
-      "source": "canonical",
+      "totalValueUsd": 1093040,
+      "source": "external",
       "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
     },
     {
       "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
       "name": "FastExternalBridge",
       "category": "third-party-secured",
-      "bridgeType": "canonical",
-      "nameCategory": "canonical-additional-trust",
+      "bridgeType": "external",
+      "nameCategory": "external",
       "additionalTrust": true,
       "categoryReason": "Token issuers unknown",
       "admin": "eth:0x0000000000000000000000000000000000000000",
@@ -40,58 +40,58 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 92933.73,
-          "amount": 30.87,
+          "valueUsd": 94648.09,
+          "amount": 31.48,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 92933.73,
-      "source": "canonical",
+      "totalValueUsd": 94648.09,
+      "source": "external",
       "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
     },
     {
       "address": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
       "name": "L1Bridge",
-      "category": "third-party-secured",
+      "category": "rollup-secured",
       "bridgeType": "canonical",
-      "nameCategory": "canonical-additional-trust",
-      "additionalTrust": true,
-      "categoryReason": "Token issuers unknown",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Immutable canonical bridge - trust in proof system",
       "admin": null,
       "adminName": null,
       "isRollupControlled": false,
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 162.59,
+          "valueUsd": 162.37,
           "amount": 0.05,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 162.59,
+      "totalValueUsd": 162.37,
       "source": "canonical",
       "description": "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 1185893.72,
+    "totalTvl": 1187850.4600000002,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 0,
-      "canonicalAdditionalTrust": 1185893.72,
-      "external": 0
+      "canonicalTrustMinimized": 162.37,
+      "canonicalAdditionalTrust": 0,
+      "external": 1187688.09
     },
     "externalBreakdown": {
       "issuerSecured": 0,
-      "additionalTrust": 0
+      "additionalTrust": 1187688.09
     },
-    "canonicalTvl": 1185893.72,
-    "externalTvl": 0,
-    "apiCanonicalTvl": 162.59,
-    "apiExternalTvl": 1185731.13
+    "canonicalTvl": 162.37,
+    "externalTvl": 1187688.09,
+    "apiCanonicalTvl": 162.37,
+    "apiExternalTvl": 1187688.09
   },
   "externalTokensSummary": {
     "totalCount": 0,

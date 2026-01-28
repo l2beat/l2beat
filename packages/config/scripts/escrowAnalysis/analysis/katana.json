@@ -1,72 +1,263 @@
 {
   "projectId": "katana",
-  "timestamp": 1769589722941,
-  "escrows": [],
+  "timestamp": 1769600215259,
+  "escrows": [
+    {
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "name": "AgglayerBridge",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Escrow controlled by Polygon/AggLayer",
+      "admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "adminName": "Polygon/AggLayer",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "weETH",
+          "valueUsd": 112670810,
+          "amount": 34432.77,
+          "issuer": "EtherFi",
+          "source": "canonical"
+        },
+        {
+          "symbol": "ETH",
+          "valueUsd": 9355517,
+          "amount": 3111.48,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "wstETH",
+          "valueUsd": 4034447.2,
+          "amount": 1093.08,
+          "issuer": "Lido DAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "POL",
+          "valueUsd": 555207,
+          "amount": 4648635,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 473344.22,
+          "amount": 5.32,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "MORPHO",
+          "valueUsd": 331464.28,
+          "amount": 275209.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 228049.62,
+          "amount": 752200.5,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 100997.89,
+          "amount": 101136.15,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 56632.13,
+          "amount": 56650.78,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "YFI",
+          "valueUsd": 51560.7,
+          "amount": 15.36,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PAXG",
+          "valueUsd": 41.01,
+          "amount": 0.01,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDS",
+          "valueUsd": 15.99,
+          "amount": 16,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 12.04,
+          "amount": 24.3,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "WETH",
+          "valueUsd": 9.55,
+          "amount": 0,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 2.73,
+          "amount": 0.57,
+          "issuer": "Uniswap",
+          "source": "canonical"
+        },
+        {
+          "symbol": "LBTC",
+          "valueUsd": 0.89,
+          "amount": 0,
+          "issuer": "Lombard Finance",
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 0.03,
+          "amount": 0.09,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "cbBTC",
+          "valueUsd": 0,
+          "amount": 0,
+          "issuer": "Coinbase",
+          "source": "canonical"
+        },
+        {
+          "symbol": "MATIC",
+          "valueUsd": 0,
+          "amount": 0.02,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 127858112.28000002,
+      "source": "canonical",
+      "description": "Shared AggLayer bridge escrow for all AggLayer chains. Controlled by Polygon/AggLayer governance."
+    }
+  ],
   "externalTokens": [
     {
       "symbol": "vbWBTC",
       "name": "Vault Bridge WBTC",
       "l2Address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
-      "valueUsd": 90534224,
+      "valueUsd": 90647816,
       "amount": 1023.19,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
-      "nameCategory": "external",
+      "nameCategory": "canonical-additional-trust",
       "additionalTrust": true,
-      "categoryReason": "Bridged via Agglayer shared bridge (vault bridge) (trust model not analyzed)",
-      "formulaType": "calculation"
+      "categoryReason": "Uses AggLayer canonical messaging infrastructure. Controlled by Katana vaultBridge Multisig",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Katana vaultBridge Multisig",
+          "role": "Bridge Operator",
+          "powers": [
+            "control bridge operations"
+          ],
+          "riskDescription": "Bridge controlled by Katana vaultBridge Multisig"
+        }
+      ]
     },
     {
       "symbol": "vbETH",
       "name": "Vault Bridge ETH",
       "l2Address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
-      "valueUsd": 47154744,
-      "amount": 18455.9,
+      "valueUsd": 47089392,
+      "amount": 18156.5,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
-      "nameCategory": "external",
+      "nameCategory": "canonical-additional-trust",
       "additionalTrust": true,
-      "categoryReason": "Bridged via Agglayer shared bridge (vault bridge) (trust model not analyzed)",
-      "formulaType": "calculation"
+      "categoryReason": "Uses AggLayer canonical messaging infrastructure. Controlled by Katana vaultBridge Multisig",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Katana vaultBridge Multisig",
+          "role": "Bridge Operator",
+          "powers": [
+            "control bridge operations"
+          ],
+          "riskDescription": "Bridge controlled by Katana vaultBridge Multisig"
+        }
+      ]
     },
     {
       "symbol": "vbUSDT",
       "name": "Vault Bridge USDT",
       "l2Address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
-      "valueUsd": 46525760,
-      "amount": 46683968,
+      "valueUsd": 44231296,
+      "amount": 44391508,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
-      "nameCategory": "external",
+      "nameCategory": "canonical-additional-trust",
       "additionalTrust": true,
-      "categoryReason": "Bridged via Agglayer shared bridge (vault bridge) (trust model not analyzed)",
-      "formulaType": "calculation"
+      "categoryReason": "Uses AggLayer canonical messaging infrastructure. Controlled by Katana vaultBridge Multisig",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Katana vaultBridge Multisig",
+          "role": "Bridge Operator",
+          "powers": [
+            "control bridge operations"
+          ],
+          "riskDescription": "Bridge controlled by Katana vaultBridge Multisig"
+        }
+      ]
     },
     {
       "symbol": "vbUSDC",
       "name": "Vault Bridge USDC",
       "l2Address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
-      "valueUsd": 32305434,
-      "amount": 32371674,
+      "valueUsd": 29088282,
+      "amount": 29151262,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
-      "nameCategory": "external",
+      "nameCategory": "canonical-additional-trust",
       "additionalTrust": true,
-      "categoryReason": "Bridged via Agglayer shared bridge (vault bridge) (trust model not analyzed)",
-      "formulaType": "calculation"
+      "categoryReason": "Uses AggLayer canonical messaging infrastructure. Controlled by Katana vaultBridge Multisig",
+      "formulaType": "calculation",
+      "trustedParties": [
+        {
+          "name": "Katana vaultBridge Multisig",
+          "role": "Bridge Operator",
+          "powers": [
+            "control bridge operations"
+          ],
+          "riskDescription": "Bridge controlled by Katana vaultBridge Multisig"
+        }
+      ]
     },
     {
       "symbol": "LBTC",
       "name": "Lombard Staked Bitcoin",
       "l2Address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
-      "valueUsd": 7525869.5,
-      "amount": 84.27,
+      "valueUsd": 7310680,
+      "amount": 81.78,
       "bridgeProtocol": "Chainlink CCIP",
-      "issuer": "Unknown",
+      "issuer": "Lombard Finance",
       "category": "third-party-secured",
       "nameCategory": "external",
       "additionalTrust": true,
@@ -87,7 +278,7 @@
       "symbol": "JitoSOL",
       "name": "Jito Staked SOL",
       "l2Address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
-      "valueUsd": 1211763.4,
+      "valueUsd": 1211787.4,
       "amount": 7581.28,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "Unknown",
@@ -99,43 +290,47 @@
     }
   ],
   "summary": {
-    "totalTvl": 369431381.15999997,
-    "nativeTvl": 15094591.68,
+    "totalTvl": 362469325.8999999,
+    "nativeTvl": 15031935.639999999,
     "byNameCategory": {
       "canonicalTrustMinimized": 0,
-      "canonicalAdditionalTrust": 0,
-      "external": 225257794.9
+      "canonicalAdditionalTrust": 338914898.28000003,
+      "external": 8522467.4
     },
     "externalBreakdown": {
       "issuerSecured": 0,
-      "additionalTrust": 225257794.9
+      "additionalTrust": 8522467.4
     },
-    "canonicalTvl": 0,
-    "externalTvl": 225257794.9,
-    "apiCanonicalTvl": 129078969.99999996,
-    "apiExternalTvl": 225257819.48000002
+    "canonicalTvl": 127858112.28000002,
+    "externalTvl": 8522467.4,
+    "apiCanonicalTvl": 127858112.28000002,
+    "apiExternalTvl": 219579277.98000002
   },
   "externalTokensSummary": {
     "totalCount": 6,
-    "totalValue": 225257794.9,
+    "totalValue": 8522467.4,
     "byProtocol": {
       "Agglayer shared bridge (vault bridge)": {
         "count": 4,
-        "value": 216520162
+        "value": 211056786
       },
       "Chainlink CCIP": {
         "count": 1,
-        "value": 7525869.5
+        "value": 7310680
       },
       "Layer Zero v2 OFT": {
         "count": 1,
-        "value": 1211763.4
+        "value": 1211787.4
       }
     },
     "byNameCategory": {
+      "canonical-additional-trust": {
+        "count": 4,
+        "value": 211056786
+      },
       "external": {
-        "count": 6,
-        "value": 225257794.9
+        "count": 2,
+        "value": 8522467.4
       }
     }
   }

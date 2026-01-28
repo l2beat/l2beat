@@ -29,6 +29,8 @@ import { getOrbitStackConfig, getKnownEscrowAdmin } from './chains/orbitStack'
 import { getOpStackConfig, getKnownOpStackEscrowAdmin } from './chains/opStack'
 import { getStarknetConfig } from './chains/starknet'
 import { getZkStackConfig } from './chains/zkStack'
+import { getPolygonCdkConfig } from './chains/polygonCdk'
+import { getFacetConfig } from './chains/facet'
 
 import type {
   BridgeType,
@@ -222,6 +224,15 @@ const ISSUER_OPERATED_TOKENS: Record<string, boolean> = {
   'USDS': true,   // MakerDAO operates their own bridge
   'sUSDS': true,  // MakerDAO operates their own bridge
   'DAI': true,    // MakerDAO Teleport
+}
+
+// Bridges that use canonical messaging even though API marks tokens as "external"
+// These are shared canonical infrastructure, not external third-party bridges
+const CANONICAL_MESSAGING_BRIDGES: Record<string, { adminName: string; description: string }> = {
+  'Agglayer shared bridge (vault bridge)': {
+    adminName: 'Katana vaultBridge Multisig',
+    description: 'Uses AggLayer canonical messaging infrastructure',
+  },
 }
 
 // ===== Data Loading Functions =====
@@ -419,20 +430,40 @@ function extractEscrowAddresses(formula: TvsTokenFormula): string[] {
   return addresses
 }
 
-function mapTvsToTokens(escrowAddress: string, tvsData: TvsToken[]): TokenValue[] {
+function mapTvsToTokens(
+  escrowAddress: string,
+  tvsData: TvsToken[],
+  isMainCanonicalEscrow = false,
+): TokenValue[] {
   const normalizedAddress = normalizeAddress(escrowAddress)
   const tokens: TokenValue[] = []
 
   for (const token of tvsData) {
     const escrowAddresses = extractEscrowAddresses(token.formula)
+
+    // Case 1: Token formula references this escrow directly
     if (escrowAddresses.includes(normalizedAddress)) {
       // For sum formulas with multiple escrows, only attribute to the FIRST escrow
-      // to avoid confusing duplicate entries with identical values
       const isFirstEscrow = escrowAddresses[0] === normalizedAddress
       if (escrowAddresses.length > 1 && !isFirstEscrow) {
         continue // Skip - value will be attributed to first escrow
       }
 
+      tokens.push({
+        symbol: token.symbol,
+        valueUsd: token.valueForProject,
+        amount: token.amount,
+        issuer: EXTENDED_TOKEN_ISSUERS[token.symbol] || null,
+        source: token.source as BridgeType,
+      })
+    }
+    // Case 2: Canonical token with no escrow in formula (e.g., totalSupply on L2)
+    // Map to the main canonical escrow if this is designated as such
+    else if (
+      isMainCanonicalEscrow &&
+      token.source === 'canonical' &&
+      escrowAddresses.length === 0
+    ) {
       tokens.push({
         symbol: token.symbol,
         valueUsd: token.valueForProject,
@@ -455,8 +486,14 @@ function classifyEscrow(
   stackConfig: StackConfig,
 ): EscrowAnalysis {
   // Get all admins from the discovery entry
-  const allAdmins = entry ? getAllAdminsFromEntry(entry) : []
+  let allAdmins = entry ? getAllAdminsFromEntry(entry) : []
   let admin = allAdmins.length > 0 ? allAdmins[0] : null
+
+  // Use admin override from escrow config (for shared infrastructure escrows)
+  if (escrowConfig.admin) {
+    admin = escrowConfig.admin
+    allAdmins = [escrowConfig.admin]
+  }
 
   // Fallback to known escrow admins if not found in discovery
   if (!admin) {
@@ -468,6 +505,10 @@ function classifyEscrow(
     ? isAnyAdminRollupControlled(allAdmins, stackConfig.rollupAdmins)
     : isRollupControlled(admin, stackConfig.rollupAdmins)
 
+  // Check if the contract is immutable (no admin can upgrade it)
+  const isImmutable = entry?.values?.['$immutable'] === true ||
+    entry?.proxyType === 'immutable'
+
   let category: SecurityCategory
   const bridgeType = escrowConfig.bridgeType ?? 'canonical'
   let categoryReason: string
@@ -477,6 +518,11 @@ function classifyEscrow(
     category = 'rollup-secured'
     adminName = stackConfig.rollupAdminName
     categoryReason = `Escrow controlled by ${stackConfig.rollupAdminName}`
+  } else if (isImmutable && !admin && bridgeType === 'canonical') {
+    // Immutable canonical bridge with no admin = trust-minimized
+    // The trust is in the rollup's proof system, no admin can rug
+    category = 'rollup-secured'
+    categoryReason = 'Immutable canonical bridge - trust in proof system'
   } else {
     const tokenIssuers = [...new Set(tokens.map((t) => t.issuer).filter(Boolean))]
 
@@ -490,6 +536,12 @@ function classifyEscrow(
     } else {
       category = 'third-party-secured'
       categoryReason = 'Escrow holds tokens from multiple issuers'
+    }
+
+    // Use adminName override from escrow config (for shared infrastructure)
+    if (escrowConfig.adminName) {
+      adminName = escrowConfig.adminName
+      categoryReason = `Escrow controlled by ${escrowConfig.adminName}`
     }
   }
 
@@ -591,9 +643,24 @@ function analyzeExternalTokens(
       categoryReason = 'Unknown bridge protocol'
     }
 
-    // External tokens always use external messaging
-    const nameCategory = deriveNameCategory('external', category)
-    const additionalTrust = hasAdditionalTrust('external', category)
+    // Determine messaging type: some bridges marked "external" actually use canonical messaging
+    const canonicalBridgeInfo = CANONICAL_MESSAGING_BRIDGES[bridgeProtocol]
+    const messagingType: BridgeType = canonicalBridgeInfo ? 'canonical' : 'external'
+
+    // For canonical messaging bridges, update category reason
+    if (canonicalBridgeInfo) {
+      category = 'third-party-secured'
+      categoryReason = `${canonicalBridgeInfo.description}. Controlled by ${canonicalBridgeInfo.adminName}`
+      trustedParties = [{
+        name: canonicalBridgeInfo.adminName,
+        role: 'Bridge Operator',
+        powers: ['control bridge operations'],
+        riskDescription: `Bridge controlled by ${canonicalBridgeInfo.adminName}`,
+      }]
+    }
+
+    const nameCategory = deriveNameCategory(messagingType, category)
+    const additionalTrust = hasAdditionalTrust(messagingType, category)
 
     results.push({
       symbol: token.symbol,
@@ -633,6 +700,10 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     stackConfig = getStarknetConfig(chainInfo)
   } else if (stack === 'zkstack') {
     stackConfig = getZkStackConfig(chainInfo)
+  } else if (stack === 'polygon') {
+    stackConfig = getPolygonCdkConfig(chainInfo)
+  } else if (stack === 'facet') {
+    stackConfig = getFacetConfig(chainInfo)
   } else {
     console.log(chalk.yellow(`  Stack '${stack}' not fully supported yet, using auto-detection`))
     stackConfig = {
@@ -668,32 +739,70 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   const tvsConfig = loadTvsConfig(projectId)
 
   // Build escrow configs from TVS if auto-detecting
-  let escrowConfigs = stackConfig.escrows
-  if (escrowConfigs.length === 0 || stackConfig.autoDetect) {
+  let escrowConfigs: EscrowConfig[] = []
+
+  // Start with manual escrows from config
+  const manualEscrows = new Map<string, EscrowConfig>()
+  for (const escrow of stackConfig.escrows) {
+    manualEscrows.set(normalizeAddress(escrow.address), escrow)
+  }
+
+  if (stackConfig.autoDetect) {
     // Auto-detect escrows from TVS data
+    // Track token sources per escrow to determine bridgeType
     const escrowsFromTvs = new Map<string, EscrowConfig>()
+    const escrowTokenSources = new Map<string, Set<string>>()
+
     for (const token of tvsData) {
       const addresses = extractEscrowAddresses(token.formula)
       for (const addr of addresses) {
-        if (escrowsFromTvs.has(addr)) continue
+        const normalizedAddr = normalizeAddress(addr)
+        // Track token sources for this escrow
+        if (!escrowTokenSources.has(normalizedAddr)) {
+          escrowTokenSources.set(normalizedAddr, new Set())
+        }
+        escrowTokenSources.get(normalizedAddr)!.add(token.source)
+
+        if (escrowsFromTvs.has(normalizedAddr) || manualEscrows.has(normalizedAddr)) continue
         const entry = findEntryByAddress(discovery, addr)
-        escrowsFromTvs.set(addr, {
+        escrowsFromTvs.set(normalizedAddr, {
           address: entry?.address ?? addr,
           name: entry?.name ?? `Escrow ${addr.slice(0, 10)}...`,
           description: entry?.description,
         })
       }
     }
-    escrowConfigs = Array.from(escrowsFromTvs.values())
+
+    // Set bridgeType based on dominant token source
+    // If all tokens are external, mark escrow as external
+    for (const [addr, config] of escrowsFromTvs) {
+      const sources = escrowTokenSources.get(addr)
+      if (sources && sources.size === 1 && sources.has('external')) {
+        config.bridgeType = 'external'
+      } else if (sources && sources.has('canonical')) {
+        config.bridgeType = 'canonical'
+      }
+      // If mixed or no sources, leave undefined (defaults to canonical)
+    }
+
+    escrowConfigs = [...manualEscrows.values(), ...escrowsFromTvs.values()]
+  } else {
+    escrowConfigs = [...manualEscrows.values()]
   }
 
   console.log(chalk.gray(`  Found ${escrowConfigs.length} escrows, ${tvsData.length} tokens`))
 
   // Analyze escrows
+  // The first manual escrow is the main canonical escrow (e.g., AgglayerBridge)
+  const mainCanonicalEscrowAddr = stackConfig.escrows.length > 0
+    ? normalizeAddress(stackConfig.escrows[0].address)
+    : null
+
   const escrows: EscrowAnalysis[] = []
   for (const escrowConfig of escrowConfigs) {
     const entry = findEntryByAddress(discovery, escrowConfig.address)
-    const tokens = mapTvsToTokens(escrowConfig.address, tvsData)
+    const isMainCanonical = mainCanonicalEscrowAddr === normalizeAddress(escrowConfig.address)
+    const tokens = mapTvsToTokens(escrowConfig.address, tvsData, isMainCanonical)
     const analysis = classifyEscrow(escrowConfig, entry, discovery, tokens, stackConfig)
     escrows.push(analysis)
   }
@@ -706,31 +815,44 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
   const nativeTvl = tvsData.filter((t) => t.source === 'native').reduce((sum, t) => sum + t.valueForProject, 0)
 
   // Calculate by Name category (the 3 main categories + native)
+  // Use nameCategory from both escrows AND external tokens (some external tokens use canonical messaging)
   const canonicalTrustMinimizedTvl = escrows
     .filter((e) => e.nameCategory === 'canonical-trust-minimized')
-    .reduce((sum, e) => sum + e.totalValueUsd, 0)
+    .reduce((sum, e) => sum + e.totalValueUsd, 0) +
+    externalTokens
+      .filter((t) => t.nameCategory === 'canonical-trust-minimized')
+      .reduce((sum, t) => sum + t.valueUsd, 0)
 
   const canonicalAdditionalTrustTvl = escrows
     .filter((e) => e.nameCategory === 'canonical-additional-trust')
-    .reduce((sum, e) => sum + e.totalValueUsd, 0)
+    .reduce((sum, e) => sum + e.totalValueUsd, 0) +
+    externalTokens
+      .filter((t) => t.nameCategory === 'canonical-additional-trust')
+      .reduce((sum, t) => sum + t.valueUsd, 0)
 
-  // External = escrows with external messaging + external tokens (no L1 escrow)
+  // External = escrows with external messaging + external tokens with external nameCategory
   const externalFromEscrows = escrows
     .filter((e) => e.nameCategory === 'external')
     .reduce((sum, e) => sum + e.totalValueUsd, 0)
-  const externalFromTokens = externalTokens.reduce((sum, t) => sum + t.valueUsd, 0)
+  const externalFromTokens = externalTokens
+    .filter((t) => t.nameCategory === 'external')
+    .reduce((sum, t) => sum + t.valueUsd, 0)
   const externalTotalTvl = externalFromEscrows + externalFromTokens
 
-  // External breakdown: issuer-secured vs additional trust
+  // External breakdown: issuer-secured vs additional trust (only for tokens with external nameCategory)
   const externalIssuerSecuredTvl = escrows
     .filter((e) => e.nameCategory === 'external' && e.category === 'issuer-secured')
     .reduce((sum, e) => sum + e.totalValueUsd, 0) +
-    externalTokens.filter((t) => t.category === 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0)
+    externalTokens
+      .filter((t) => t.nameCategory === 'external' && t.category === 'issuer-secured')
+      .reduce((sum, t) => sum + t.valueUsd, 0)
 
   const externalAdditionalTrustTvl = escrows
     .filter((e) => e.nameCategory === 'external' && e.category !== 'issuer-secured')
     .reduce((sum, e) => sum + e.totalValueUsd, 0) +
-    externalTokens.filter((t) => t.category !== 'issuer-secured').reduce((sum, t) => sum + t.valueUsd, 0)
+    externalTokens
+      .filter((t) => t.nameCategory === 'external' && t.category !== 'issuer-secured')
+      .reduce((sum, t) => sum + t.valueUsd, 0)
 
   // Legacy values for comparison with current API
   const canonicalTvl = escrows.filter((e) => e.bridgeType === 'canonical').reduce((sum, e) => sum + e.totalValueUsd, 0)

@@ -45,6 +45,8 @@ export interface EscrowConfig {
   name: string
   bridgeType?: BridgeType
   description?: string
+  admin?: string  // Override admin address (for shared infrastructure escrows)
+  adminName?: string  // Override admin name display
 }
 
 // Stack-specific configuration
