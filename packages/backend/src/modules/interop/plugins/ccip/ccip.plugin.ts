@@ -88,12 +88,10 @@ CCIP v1.5.x - v1.6.0 (separate events):
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 // Source-side TokenPool events (v1.5.x - v1.6.0)
-const lockedLog =
-  'event Locked(address indexed sender, uint256 amount)'
+const lockedLog = 'event Locked(address indexed sender, uint256 amount)'
 const parseLockedEvent = createEventParser(lockedLog)
 
-const burnedLog =
-  'event Burned(address indexed sender, uint256 amount)'
+const burnedLog = 'event Burned(address indexed sender, uint256 amount)'
 const parseBurnedEvent = createEventParser(burnedLog)
 
 // Source-side unified event (v1.6.1+)
@@ -216,12 +214,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: CCIPSendRequestedLog,
-        includeTxEvents: [
-          lockedLog,
-          burnedLog,
-          lockedOrBurnedLog,
-          transferLog,
-        ],
+        includeTxEvents: [lockedLog, burnedLog, lockedOrBurnedLog, transferLog],
         addresses: outboundAddresses,
       },
       {
@@ -316,7 +309,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
       const locked = parseLockedEvent(log, null)
       if (locked) {
         const transfer = findPrecedingTransfer(logsBeforeSend, i, locked.amount)
-        if (transfer && !processedTokens.has(transfer.tokenAddress.toLowerCase())) {
+        if (
+          transfer &&
+          !processedTokens.has(transfer.tokenAddress.toLowerCase())
+        ) {
           processedTokens.add(transfer.tokenAddress.toLowerCase())
           result.push({ wasBurned: false })
         }
@@ -327,7 +323,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
       const burned = parseBurnedEvent(log, null)
       if (burned) {
         const transfer = findPrecedingTransfer(logsBeforeSend, i, burned.amount)
-        if (transfer && !processedTokens.has(transfer.tokenAddress.toLowerCase())) {
+        if (
+          transfer &&
+          !processedTokens.has(transfer.tokenAddress.toLowerCase())
+        ) {
           processedTokens.add(transfer.tokenAddress.toLowerCase())
           result.push({ wasBurned: true })
         }
@@ -343,12 +342,20 @@ export class CCIPPlugin implements InteropPluginResyncable {
 
         // Check if burned by looking at preceding Transfer
         let wasBurned = false
-        const transfer = findPrecedingTransfer(logsBeforeSend, i, lockedOrBurned.amount)
+        const transfer = findPrecedingTransfer(
+          logsBeforeSend,
+          i,
+          lockedOrBurned.amount,
+        )
         if (transfer) {
           wasBurned = transfer.to === ZERO_ADDRESS
         } else {
           // Fee-on-transfer: check any preceding Transfer for this token
-          const anyTransfer = findPrecedingTransferForToken(logsBeforeSend, i, tokenAddr)
+          const anyTransfer = findPrecedingTransferForToken(
+            logsBeforeSend,
+            i,
+            tokenAddr,
+          )
           if (anyTransfer) {
             wasBurned = anyTransfer.to === ZERO_ADDRESS
           }
@@ -367,7 +374,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
   private collectDestTokenInfo(
     input: LogToCapture,
   ): { address: Address32; amount: bigint; wasMinted: boolean }[] {
-    const result: { address: Address32; amount: bigint; wasMinted: boolean }[] = []
+    const result: { address: Address32; amount: bigint; wasMinted: boolean }[] =
+      []
     const logsBeforeExecution = input.txLogs.filter(
       (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
     )
@@ -380,7 +388,11 @@ export class CCIPPlugin implements InteropPluginResyncable {
       if (releasedOrMinted) {
         // Check if minted by looking at preceding Transfer
         let wasMinted = false
-        const transfer = findPrecedingTransfer(logsBeforeExecution, i, releasedOrMinted.amount)
+        const transfer = findPrecedingTransfer(
+          logsBeforeExecution,
+          i,
+          releasedOrMinted.amount,
+        )
         if (transfer) {
           wasMinted = transfer.from === ZERO_ADDRESS
         }
@@ -395,7 +407,11 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // Try v1.5 Released event (wasMinted = false)
       const released = parseReleased(log, null)
       if (released) {
-        const transfer = findPrecedingTransfer(logsBeforeExecution, i, released.amount)
+        const transfer = findPrecedingTransfer(
+          logsBeforeExecution,
+          i,
+          released.amount,
+        )
         if (transfer) {
           result.push({
             address: Address32.from(transfer.tokenAddress),
@@ -409,7 +425,11 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // Try v1.5 Minted event (wasMinted = true)
       const minted = parseMinted(log, null)
       if (minted) {
-        const transfer = findPrecedingTransfer(logsBeforeExecution, i, minted.amount)
+        const transfer = findPrecedingTransfer(
+          logsBeforeExecution,
+          i,
+          minted.amount,
+        )
         if (transfer) {
           result.push({
             address: Address32.from(transfer.tokenAddress),

@@ -73,14 +73,22 @@ function TransfersTable(props: {
               </td>
               <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
               <td>
-                <BooleanCell value={e.srcWasBurned} trueLabel="burned" falseLabel="locked" />
+                <BooleanCell
+                  value={e.srcWasBurned}
+                  trueLabel="burned"
+                  falseLabel="locked"
+                />
               </td>
               <td>
                 {e.dstAmount} {e.dstSymbol}
               </td>
               <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
               <td>
-                <BooleanCell value={e.dstWasMinted} trueLabel="minted" falseLabel="released" />
+                <BooleanCell
+                  value={e.dstWasMinted}
+                  trueLabel="minted"
+                  falseLabel="released"
+                />
               </td>
               <td>{e.srcChain}</td>
               <td>

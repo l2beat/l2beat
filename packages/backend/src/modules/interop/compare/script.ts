@@ -529,20 +529,31 @@ async function compareEvents(
       `  ${c.error(`[!] ${matchedDiffs.length} events have different matched status:`)}`,
     )
     for (const { local, staging } of matchedDiffs) {
-      const ctx = typeof local.ctx === 'string' ? JSON.parse(local.ctx) : local.ctx
-      const localStatus = local.matched ? c.success('matched') : c.warning('unmatched')
-      const stagingStatus = staging.matched ? c.success('matched') : c.warning('unmatched')
+      const ctx =
+        typeof local.ctx === 'string' ? JSON.parse(local.ctx) : local.ctx
+      const localStatus = local.matched
+        ? c.success('matched')
+        : c.warning('unmatched')
+      const stagingStatus = staging.matched
+        ? c.success('matched')
+        : c.warning('unmatched')
       console.log(
         `    ${c.dim('•')} ${local.chain} ${local.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`,
       )
-      console.log(`      ${c.dim('local:')} ${localStatus}  ${c.dim('staging:')} ${stagingStatus}`)
+      console.log(
+        `      ${c.dim('local:')} ${localStatus}  ${c.dim('staging:')} ${stagingStatus}`,
+      )
     }
   } else if (result.common > 0) {
-    console.log(`  ${c.success('[OK] All common events have same matched status')}`)
+    console.log(
+      `  ${c.success('[OK] All common events have same matched status')}`,
+    )
   }
 
   // Show matched status for staging-only events
-  const stagingOnlyMatched = result.onlyInStaging.filter((e) => e.matched).length
+  const stagingOnlyMatched = result.onlyInStaging.filter(
+    (e) => e.matched,
+  ).length
   const stagingOnlyUnmatched = result.onlyInStaging.length - stagingOnlyMatched
   if (result.onlyInStaging.length > 0) {
     console.log(
@@ -675,15 +686,35 @@ async function compareTransfers(
         `    ${c.dim('•')} ${local.srcChain} → ${local.dstChain} ${local.srcTxHash}`,
       )
       if (local.srcWasBurned !== staging.srcWasBurned) {
-        const localSrc = local.srcWasBurned === null ? 'null' : local.srcWasBurned ? 'burned' : 'locked'
-        const stagingSrc = staging.srcWasBurned === null ? 'null' : staging.srcWasBurned ? 'burned' : 'locked'
+        const localSrc =
+          local.srcWasBurned === null
+            ? 'null'
+            : local.srcWasBurned
+              ? 'burned'
+              : 'locked'
+        const stagingSrc =
+          staging.srcWasBurned === null
+            ? 'null'
+            : staging.srcWasBurned
+              ? 'burned'
+              : 'locked'
         console.log(
           `      ${c.dim('srcWasBurned:')} local=${c.info(localSrc)} staging=${c.warning(stagingSrc)}`,
         )
       }
       if (local.dstWasMinted !== staging.dstWasMinted) {
-        const localDst = local.dstWasMinted === null ? 'null' : local.dstWasMinted ? 'minted' : 'released'
-        const stagingDst = staging.dstWasMinted === null ? 'null' : staging.dstWasMinted ? 'minted' : 'released'
+        const localDst =
+          local.dstWasMinted === null
+            ? 'null'
+            : local.dstWasMinted
+              ? 'minted'
+              : 'released'
+        const stagingDst =
+          staging.dstWasMinted === null
+            ? 'null'
+            : staging.dstWasMinted
+              ? 'minted'
+              : 'released'
         console.log(
           `      ${c.dim('dstWasMinted:')} local=${c.info(localDst)} staging=${c.warning(stagingDst)}`,
         )

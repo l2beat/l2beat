@@ -96,7 +96,7 @@ export const refactored: BaseProject[] = [
   usdt0,
   debridgeDln,
   hyperlaneHwr,
-ccip,
+  ccip,
   cctpv1,
   cctpv2,
   relay,
