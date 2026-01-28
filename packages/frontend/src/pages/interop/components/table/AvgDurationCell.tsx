@@ -12,8 +12,10 @@ import type {
 
 export function AvgDurationCell({
   averageDuration,
+  disableTooltip = false,
 }: {
   averageDuration: ProtocolEntry['averageDuration']
+  disableTooltip?: boolean
 }) {
   if (averageDuration.type === 'single') {
     return (
@@ -22,14 +24,21 @@ export function AvgDurationCell({
       </div>
     )
   }
+
+  const content = (
+    <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
+      <DurationCellItem averageDuration={averageDuration} type="in" />
+      <DurationCellItem averageDuration={averageDuration} type="out" />
+    </div>
+  )
+
+  if (disableTooltip) {
+    return content
+  }
+
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
-          <DurationCellItem averageDuration={averageDuration} type="in" />
-          <DurationCellItem averageDuration={averageDuration} type="out" />
-        </div>
-      </TooltipTrigger>
+      <TooltipTrigger>{content}</TooltipTrigger>
       <TooltipContent>
         <div className="flex flex-col gap-1.5 font-medium text-label-value-15">
           <DurationTooltipItem averageDuration={averageDuration} type="in" />

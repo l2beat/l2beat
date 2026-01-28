@@ -72,7 +72,10 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   columnHelper.accessor('avgDuration', {
     header: 'Last 24h avg.\ntransfer time',
     cell: (ctx) => (
-      <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
+      <AvgDurationCell
+        averageDuration={ctx.row.original.avgDuration}
+        disableTooltip
+      />
     ),
     meta: {
       align: 'right',
