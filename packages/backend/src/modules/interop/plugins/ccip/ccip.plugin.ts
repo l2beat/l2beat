@@ -86,6 +86,13 @@ CCIP v1.5.x - v1.6.0 (separate events):
 */
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+const DEAD_ADDRESS = '0x000000000000000000000000000000000000dead'
+
+// Check if an address is a burn destination (0x0 or 0xdead)
+function isBurnAddress(address: string): boolean {
+  const normalized = address.toLowerCase()
+  return normalized === ZERO_ADDRESS || normalized === DEAD_ADDRESS
+}
 
 // Source-side TokenPool events (v1.5.x - v1.6.0)
 const lockedLog = 'event Locked(address indexed sender, uint256 amount)'
@@ -348,7 +355,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
           lockedOrBurned.amount,
         )
         if (transfer) {
-          wasBurned = transfer.to === ZERO_ADDRESS
+          wasBurned = isBurnAddress(transfer.to)
         } else {
           // Fee-on-transfer: check any preceding Transfer for this token
           const anyTransfer = findPrecedingTransferForToken(
@@ -357,7 +364,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
             tokenAddr,
           )
           if (anyTransfer) {
-            wasBurned = anyTransfer.to === ZERO_ADDRESS
+            wasBurned = isBurnAddress(anyTransfer.to)
           }
         }
         result.push({ wasBurned })
