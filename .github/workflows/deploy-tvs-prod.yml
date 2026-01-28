@@ -16,6 +16,7 @@ jobs:
   check-changes:
     name: Check for changes
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       should_deploy: ${{ steps.check.outputs.should_deploy }}
     steps:
