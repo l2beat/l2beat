@@ -333,9 +333,11 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: l2ToL1Tx,
             srcAmount: l2ToL1Tx.args.amount,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: true,
             dstEvent: event,
             dstAmount: l2ToL1Tx.args.amount,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: false,
           }),
         )
       }
@@ -366,9 +368,11 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.args.txValue,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: true,
           }),
         )
       }
