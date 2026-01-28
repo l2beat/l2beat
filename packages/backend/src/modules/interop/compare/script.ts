@@ -98,6 +98,7 @@ interface ComparisonResult<T> {
   onlyInLocal: T[]
   onlyInStaging: T[]
   common: number
+  commonPairs: { local: T; staging: T }[]
 }
 
 const cmd = command({
@@ -354,13 +355,14 @@ function compareByKey<T>(
 
   const onlyInLocal: T[] = []
   const onlyInStaging: T[] = []
-  let common = 0
+  const commonPairs: { local: T; staging: T }[] = []
 
-  localMap.forEach((item, key) => {
-    if (stagingMap.has(key)) {
-      common++
+  localMap.forEach((localItem, key) => {
+    const stagingItem = stagingMap.get(key)
+    if (stagingItem) {
+      commonPairs.push({ local: localItem, staging: stagingItem })
     } else {
-      onlyInLocal.push(item)
+      onlyInLocal.push(localItem)
     }
   })
 
@@ -375,7 +377,8 @@ function compareByKey<T>(
     staging: stagingItems,
     onlyInLocal,
     onlyInStaging,
-    common,
+    common: commonPairs.length,
+    commonPairs,
   }
 }
 
@@ -514,24 +517,64 @@ async function compareEvents(
   const result = compareByKey(localResult.rows, stagingResult.rows, getKey)
 
   printSummary('Events', result)
+
+  // Check for matched status differences in common events
+  const matchedDiffs = result.commonPairs.filter(
+    ({ local, staging }) => local.matched !== staging.matched,
+  )
+  if (matchedDiffs.length > 0) {
+    console.log(
+      `  ${c.error(`[!] ${matchedDiffs.length} events have different matched status:`)}`,
+    )
+    for (const { local, staging } of matchedDiffs) {
+      const ctx = typeof local.ctx === 'string' ? JSON.parse(local.ctx) : local.ctx
+      const localStatus = local.matched ? c.success('matched') : c.warning('unmatched')
+      const stagingStatus = staging.matched ? c.success('matched') : c.warning('unmatched')
+      console.log(
+        `    ${c.dim('•')} ${local.chain} ${local.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`,
+      )
+      console.log(`      ${c.dim('local:')} ${localStatus}  ${c.dim('staging:')} ${stagingStatus}`)
+    }
+  } else if (result.common > 0) {
+    console.log(`  ${c.success('[OK] All common events have same matched status')}`)
+  }
+
+  // Show matched status for staging-only events
+  const stagingOnlyMatched = result.onlyInStaging.filter((e) => e.matched).length
+  const stagingOnlyUnmatched = result.onlyInStaging.length - stagingOnlyMatched
+  if (result.onlyInStaging.length > 0) {
+    console.log(
+      `  ${c.dim('Staging-only:')} ${c.success(`${stagingOnlyMatched} matched`)} / ${c.warning(`${stagingOnlyUnmatched} unmatched`)}`,
+    )
+  }
   printItems(
-    'Staging-only',
-    result.onlyInStaging,
+    'Staging-only (unmatched)',
+    result.onlyInStaging.filter((e) => !e.matched),
     (e) => {
       const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
       return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
     },
     c.warning,
   )
+
+  // Show matched status for local-only events
+  const localOnlyMatched = result.onlyInLocal.filter((e) => e.matched).length
+  const localOnlyUnmatched = result.onlyInLocal.length - localOnlyMatched
+  if (result.onlyInLocal.length > 0) {
+    console.log(
+      `  ${c.dim('Local-only:')} ${c.success(`${localOnlyMatched} matched`)} / ${c.warning(`${localOnlyUnmatched} unmatched`)}`,
+    )
+  }
   printItems(
-    'Local-only',
-    result.onlyInLocal,
+    'Local-only (unmatched)',
+    result.onlyInLocal.filter((e) => !e.matched),
     (e) => {
       const ctx = typeof e.ctx === 'string' ? JSON.parse(e.ctx) : e.ctx
       return `${e.chain} ${e.type.split('.')[1]} ${ctx?.txHash ?? 'unknown'}`
     },
     c.info,
   )
+
   printCombinedBreakdown(
     result.onlyInLocal,
     result.onlyInStaging,
