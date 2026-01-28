@@ -931,6 +931,14 @@
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4, 6, 7, 8, 9, 10]
       },
+      "fieldMeta": {
+        "verifierVersions": {
+          "description": "Each element of the array says which version of verifier is registered under this index in latestVerifier array."
+        },
+        "latestVerifier": {
+          "description": "Only verifiers of version >= 7 can be used to check Scroll STF (see _commitBatchesFromV7 on Scroll contract). Versions are NOT indices of this array, they are given by verifierVersions array."
+        }
+      },
       "implementationNames": {
         "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": "MultipleVersionRollupVerifier"
       },
