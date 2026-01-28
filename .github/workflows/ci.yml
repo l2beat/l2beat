@@ -316,6 +316,7 @@ jobs:
             out=$(yq -r '
               (.jobs // {})
               | to_entries[]
+              | select(.value | has("uses") | not)
               | select(.value | has("timeout-minutes") | not)
               | .key
             ' "$file")
