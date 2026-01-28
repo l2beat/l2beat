@@ -22,6 +22,7 @@ export const synapse: Bridge = {
       socialMedia: [
         'https://twitter.com/SynapseProtocol',
         'https://discord.com/invite/4rMzuEnKqe',
+        'https://t.me/synapseprotocol',
         'https://forum.synapseprotocol.com/',
         'https://synapse.mirror.xyz/',
       ],

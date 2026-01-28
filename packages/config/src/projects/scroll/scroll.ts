@@ -753,7 +753,9 @@ function getScrollVKeys(): string[] {
   const verifiers = discovery.getContractValue<
     { startBatchIndex: number; verifier: string }[]
   >('MultipleVersionRollupVerifier', 'latestVerifier')
-  for (const verifier of verifiers) {
+  // Verifiers of version before 7 can not be used by scroll
+  // Confusingly enough, version 7 is at index 6 because version 5 is skipped
+  for (const verifier of verifiers.slice(6)) {
     for (const digestType of [
       'verifierDigest',
       'verifierDigest1',

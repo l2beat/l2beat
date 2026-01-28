@@ -25,7 +25,6 @@ export function EthereumDaProjectSummary({ project }: Props) {
         <ProjectsUsedIn
           usedIn={project.header.usedIn}
           className="flex-wrap justify-start"
-          noTooltip
         />
       ),
     },
@@ -35,7 +34,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
+      className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
     >
       <DaProjectStats stats={stats} className="mb-6" />
 

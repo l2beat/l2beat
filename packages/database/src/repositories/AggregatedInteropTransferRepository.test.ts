@@ -693,7 +693,6 @@ function record(
   totalDurationSum = 0,
   srcValueUsd?: number,
   dstValueUsd?: number,
-  tokensByVolume: Record<string, number> = {},
 ): AggregatedInteropTransferRecord {
   return {
     timestamp,

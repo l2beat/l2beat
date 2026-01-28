@@ -14,7 +14,6 @@ export interface CommonProjectColumnsOptions {
 export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
   columnHelper: ColumnHelper<T>,
   getHref: (row: T) => string | undefined,
-  opts?: CommonProjectColumnsOptions,
 ) {
   return [
     columnHelper.accessor((_, index) => index + 1, {

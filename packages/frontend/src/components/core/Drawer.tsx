@@ -88,9 +88,12 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 const DrawerContent = ({
   ref,
   className,
+  contentClassName,
   children,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Content>) => (
+}: React.ComponentProps<typeof DrawerPrimitive.Content> & {
+  contentClassName?: string
+}) => (
   <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
@@ -102,7 +105,7 @@ const DrawerContent = ({
       {...props}
     >
       <div className="mx-auto my-4 h-2 w-[100px] shrink-0 rounded-full bg-gray-400 dark:bg-zinc-700" />
-      <div className="px-4 pb-4">{children}</div>
+      <div className={cn('px-4 pb-4', contentClassName)}>{children}</div>
     </DrawerPrimitive.Content>
   </DrawerPortal>
 )

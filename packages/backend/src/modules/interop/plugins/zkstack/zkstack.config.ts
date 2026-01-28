@@ -2,16 +2,17 @@
  * assetIds are multichain identifiers (same on all chains)
  * for unique assets in the zk stack eco
  * this config maps assetIds to their
- * implementation addresses and origin chains
+ * deployed token addresses and origin chains
  *
  * recipe
  * 1. get all deployed token addresses per supported chain (e.g. ethereum, zksync2, abstract)
  * 2. for each chain get assetIds for all tokens from (1) by calling assetId(tokenAddress)
- * 3. create a cross-chain set of assetIds and map the token addresses we already have from (1) per chain
- * 4. fill in missing token addresses by calling tokenAddress(assetId) on each chain for missing entries
- * 5. fill in origin chain ids by calling originChainId(assetId) on L1 for each assetId
- * 6. ...
- * 7. enjoy the mapping
+ * 3. for each chain get BASE_TOKEN_ASSET_ID and add it (map to l2GasToken on L2s)
+ * 4. create a cross-chain set of assetIds and map the token addresses we already have from (1) per chain
+ * 5. fill in missing token addresses by calling tokenAddress(assetId) on each chain for missing entries
+ * 6. fill in origin chain ids by calling originChainId(assetId) on L1 for each assetId
+ * 7. ...
+ * 8. enjoy the mapping
  */
 import type { Logger } from '@l2beat/backend-tools'
 import type { CallParameters, IRpcClient } from '@l2beat/shared'
@@ -39,7 +40,7 @@ import { L1_NATIVE_TOKEN_VAULT, SUPPORTED_CHAINS } from './zkstack.networks'
 
 export interface ZkStackAssetMappingEntry {
   chainId: number
-  implementationAddresses: Record<string, Address32>
+  deployedTokenAddresses: Record<string, Address32>
 }
 
 export type ZkStackAssetMapping = Record<string, ZkStackAssetMappingEntry>
@@ -50,6 +51,7 @@ const ASSET_ABI = parseAbi([
   'function assetId(address tokenAddress) view returns (bytes32)',
   'function originChainId(bytes32 assetId) view returns (uint256)',
   'function tokenAddress(bytes32 assetId) view returns (address)',
+  'function BASE_TOKEN_ASSET_ID() view returns (bytes32)',
 ])
 
 const MULTICALL_CHUNK = 150
@@ -173,11 +175,39 @@ export class ZkStackConfigPlugin
       }),
     )
 
+    const gasTokenByChain = new Map(
+      SUPPORTED_CHAINS.map((network) => [
+        network.chain,
+        ChainSpecificAddress.address(network.l2GasToken),
+      ]),
+    )
+
+    const baseTokenAssetIds = new Set<string>()
+    await Promise.all(
+      supportedChainsToScan.map(async ({ chain, contract, rpc }) => {
+        const assetId = await this.fetchBaseTokenAssetId(rpc, contract, chain)
+        if (!assetId) return
+
+        baseTokenAssetIds.add(assetId)
+        const gasToken = gasTokenByChain.get(chain)
+        if (!gasToken) return
+
+        const tokensByAssetId =
+          tokensByAssetIdByChain.get(chain) ??
+          new Map<string, EthereumAddress>()
+        tokensByAssetId.set(assetId, gasToken)
+        tokensByAssetIdByChain.set(chain, tokensByAssetId)
+      }),
+    )
+
     const assetIdSet = new Set<string>()
     for (const tokensByAssetId of tokensByAssetIdByChain.values()) {
       for (const assetId of tokensByAssetId.keys()) {
         assetIdSet.add(assetId)
       }
+    }
+    for (const assetId of baseTokenAssetIds) {
+      assetIdSet.add(assetId)
     }
 
     if (assetIdSet.size === 0) {
@@ -234,13 +264,13 @@ export class ZkStackConfigPlugin
 
     const orderedAssetIds = [...assetIds].sort((a, b) => a.localeCompare(b))
     for (const assetId of orderedAssetIds) {
-      const implementationAddresses: Record<string, Address32> = {}
+      const deployedTokenAddresses: Record<string, Address32> = {}
       let resolvedCount = 0
 
       for (const { chain } of supportedChainsToScan) {
         const token = tokensByAssetIdByChain.get(chain)?.get(assetId)
         if (!token || token === EthereumAddress.ZERO) continue
-        implementationAddresses[chain] = Address32.from(token)
+        deployedTokenAddresses[chain] = Address32.from(token)
         resolvedCount++
       }
 
@@ -257,7 +287,7 @@ export class ZkStackConfigPlugin
 
       mappings[assetId] = {
         chainId,
-        implementationAddresses,
+        deployedTokenAddresses: deployedTokenAddresses,
       }
     }
 
@@ -413,6 +443,49 @@ export class ZkStackConfigPlugin
     })
 
     return originChainIds
+  }
+
+  private async fetchBaseTokenAssetId(
+    rpc: IRpcClient,
+    contract: EthereumAddress,
+    chain: string,
+  ): Promise<`0x${string}` | undefined> {
+    try {
+      const call: CallParameters = {
+        to: contract,
+        data: Bytes.fromHex(
+          encodeFunctionData({
+            abi: ASSET_ABI,
+            functionName: 'BASE_TOKEN_ASSET_ID',
+          }),
+        ),
+      }
+
+      const latest = await rpc.getLatestBlockNumber()
+      const result = await rpc.call(call, latest)
+      if (result.toString() === '0x') {
+        this.logger.warn('Failed to resolve base token assetId', { chain })
+        return
+      }
+
+      const assetId = decodeFunctionResult({
+        abi: ASSET_ABI,
+        functionName: 'BASE_TOKEN_ASSET_ID',
+        data: result.toString() as Hex,
+      }) as `0x${string}`
+
+      const normalized = assetId.toLowerCase() as `0x${string}`
+      if (normalized === ZERO_ASSET_ID) {
+        this.logger.warn('Resolved base token assetId to zero', { chain })
+        return
+      }
+
+      this.logger.info('Resolved base token assetId', { chain })
+      return normalized
+    } catch (error) {
+      this.logger.warn('Failed to resolve base token assetId', { chain, error })
+      return
+    }
   }
 
   private async fetchTokenAddressesByAssetId(

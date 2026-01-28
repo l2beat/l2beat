@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1763633846,
+  "timestamp": 1769597655,
   "configHash": "0x892ebea752f55cf257a83ce2dca497b9d5fb68216dca083eced501f86c092e1d",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -150,7 +150,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 31,
+        "nonce": 34,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -330,12 +330,10 @@
           "0xedebd1222578e5cd75d76c8972ab5ee7439591ee667094aea695b092484877fb",
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
-          "0x53db8d725c0ab3508a316c447486588e8ecf3f0e312e1eb660a78cc4da0435b9",
           "0x4af3dac73046df0094622345c6546dafd0125ac82675783c76939c70c90c3583",
           "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
-          "0x57279ee111eae047c50148a1828b367aab0de682a8b2f871773b7ceedfec0ccf",
           "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
           "0xb8da985da602277762b88bf534754cde59fc01f1dbbb780c76a2725d4e63e83d",
           "0x6f6bb4800c7f533bbbfd0887c4e0c6b5dc30c3161a07b9d93f79e7351cc76d99",
@@ -345,8 +343,6 @@
           "0xed3e75b0d95c82ef333aa13929a00b8e6c4e04c812006b21f3743c78f774992a",
           "0x7bd201d192cd84f224b5fc8fd8b3ce7ce8009021d4253d57dc44e7276fc20ae0",
           "0x527dcc8a9eac6bd0fc0312f8c20b76a57c962ba6ee6f23e3fdc5e6462542f7da",
-          "0xd5606d3d6ab8f66f5e03ce91f661497136715da9de0592c73101542b761c9f05",
-          "0x77d378ff087228faca307142fb29c9c6b488e21749e3439e7fb2b8d7b712df7f",
           "0xb0c2ad4df99ac14cc0859092c6391b88036a8d9940adfa1e091367999c50543b",
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
           "0x495069623e95f02bcc9e1d2b3648723d7f41ea7d675d7627e1bf5a61016f4836",
@@ -365,7 +361,6 @@
           "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
-          "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
@@ -373,10 +368,7 @@
           "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
-          "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
-          "0xcffa72ad95f4b22f0b12c07e366fc907973a362e59408f2cf4c9cf64afcf4b59",
           "0x59cda9c6e1af517f006af4e9f8dc5777e98e8b56a00cc4a6fae1df481c9e6522",
-          "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -389,42 +381,30 @@
           "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0x903031a70695f8c94aed1a36044804a65be3da21523663c5e44d95bce12bb261",
-          "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
-          "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
           "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
-          "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
-          "0xafa52dc954a63d64a5f5226cc23a879200a4eb72dcddc260dc6c5a8856f542b6",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
-          "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
-          "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
-          "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
-          "0xe9b67ca9a3930733843aa8b2ccddf5257a88517f5a71686bfd8b5ce28a1cf92f",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
-          "0x3c5330aeb8fe113af9d30194f8573a5988bdd8a7dcf39f6fb3735df187c9d4c9",
-          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
-          "0x23300304fd0646813aa0be7ccc7118087f34331f5892b9dd8ae54b6f0c669224",
           "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
           "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
           "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
           "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
           "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
           "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
-          "0xa5ed4323be04f277e312a5924bd6028e843d2948f646eb540b73ed8ee23379b8",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
@@ -437,7 +417,13 @@
           "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
           "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
-          "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb"
+          "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
+          "0xe53ff57b72c0ea3dc215523a33d43340a5d1aadb25f8395de0bce768f17a84c5",
+          "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
+          "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
+          "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
+          "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
+          "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -606,7 +592,7 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0x900a9E1D5D5980973f513173249727505FA3bd22",
-          "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
+          "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7",
           "eth:0x55688D9211bC00BA573A1e0672e5de050818a360",
           "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0",
           "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
@@ -616,7 +602,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 24,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -869,6 +855,11 @@
       ]
     },
     {
+      "address": "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EigenDACertVerifier",
       "address": "eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7",
       "type": "Contract",
@@ -1090,7 +1081,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 137420,
+        "batchId": 151600,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1126,7 +1117,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 137420,
+        "taskNumber": 151600,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1285,11 +1276,6 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-eigenlayer"
-    },
-    {
-      "address": "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "EigenDARelayRegistry",
@@ -2196,6 +2182,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23839602 },
-  "permissionsConfigHash": "0x5e4286fbb4c16b078f76ca13796944ddc6e07da5ba8125d018cbf6634b52a8ee"
+  "usedBlockNumbers": { "ethereum": 24332870 },
+  "permissionsConfigHash": "0xc635e5c4f81287ab6afbbe843df20d8f63624d745cc8fee1bc1067687c83367d"
 }

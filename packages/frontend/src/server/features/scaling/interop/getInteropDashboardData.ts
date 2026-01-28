@@ -95,9 +95,14 @@ export async function getInteropDashboardData(
     { symbol: string; iconUrl: string | null }
   >(tokensDetailsData.map((t) => [t.id, t]))
 
+  // Projects that are part of other projects
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
+
   return {
-    top3Paths: getTopPaths(records),
-    topProtocols: getTopProtocols(records, interopProjects),
+    top3Paths: getTopPaths(records, subgroupProjects),
+    topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
@@ -128,6 +133,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 10_000,
     },
     {
       id: 'usdc01',
@@ -135,6 +143,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
     },
   ]
 
@@ -144,17 +155,24 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       name: 'Ethereum',
       iconUrl: manifest.getUrl('/icons/ethereum.png'),
       volume: 8_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 8_000,
     },
     {
       id: 'arbitrum',
       name: 'Arbitrum',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
     },
   ]
 
   const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
     protocolName: project.interopConfig.name ?? project.name,
+    isAggregate: project.interopConfig.isAggregate,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeType: project.interopConfig.bridgeType,
