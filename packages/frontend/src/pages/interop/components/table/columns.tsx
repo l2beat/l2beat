@@ -7,7 +7,7 @@ import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getP
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
-import { SubgroupTooltip } from './SubGroupTooltip'
+import { SubgroupTooltip } from './SubgroupTooltip'
 import { TopChainsCell } from './TopChainsCell'
 import { TopTokensCell } from './TopTokensCell'
 
