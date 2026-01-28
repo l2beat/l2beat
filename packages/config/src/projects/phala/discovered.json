@@ -1,7 +1,7 @@
 {
   "name": "phala",
-  "timestamp": 1769532933,
-  "configHash": "0x72696c4eb7450c6fb0563b9ba0d44e15f6820682f47d6f3e67a4843862573c6b",
+  "timestamp": 1769598027,
+  "configHash": "0xf49a0d3e507504b0aa33cd5d415adb4a2efa2434302a9f85cedefab1b6f66ec7",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -271,7 +271,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1756389311,
       "sinceBlock": 23240047,
       "values": {
@@ -303,7 +303,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 280,
+        "gameCount": 281,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
@@ -317,7 +317,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 3,
+        "permissionedGamesTotal": 4,
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.3.0"
@@ -2305,6 +2305,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24327499 },
+  "usedBlockNumbers": { "ethereum": 24332901 },
   "permissionsConfigHash": "0xc0f43e7704f99d18279c33529ea14811553810f5c4ff398377aeb78743896045"
 }
