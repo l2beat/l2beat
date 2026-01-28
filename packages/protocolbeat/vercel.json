@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://protocolbeat.herokuapp.com/api/:match*"
+      "destination": "https://defidisco-backend-prod-mac9m.ondigitalocean.app/api/:match*"
     }
   ],
   "trailingSlash": false

@@ -1,0 +1,15 @@
+name: defidisco-preview
+services:
+  - name: l2b-ui
+    github:
+      repo: deficollective/defi-disco
+      branch: main
+      deploy_on_push: false
+    dockerfile_path: Dockerfile.discoui
+    http_port: 2021
+    instance_size_slug: apps-s-1vcpu-1gb
+    instance_count: 1
+    health_check:
+      http_path: /api/projects
+      initial_delay_seconds: 30
+      period_seconds: 10

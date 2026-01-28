@@ -1,0 +1,19 @@
+name: defidisco-backend-prod
+services:
+  - name: l2b-api
+    github:
+      repo: deficollective/defi-disco
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile.discoui
+    http_port: 2021
+    instance_size_slug: apps-s-1vcpu-1gb
+    instance_count: 1
+    health_check:
+      http_path: /api/projects
+      initial_delay_seconds: 30
+      period_seconds: 10
+    envs:
+      - key: CORS_ALLOWED_ORIGINS
+        scope: RUN_TIME
+        value: "https://defidisco.vercel.app,https://defidisco-*.vercel.app"
