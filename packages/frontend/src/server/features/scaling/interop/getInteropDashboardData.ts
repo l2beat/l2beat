@@ -95,9 +95,14 @@ export async function getInteropDashboardData(
     { symbol: string; iconUrl: string | null }
   >(tokensDetailsData.map((t) => [t.id, t]))
 
+  // Projects that are part of other projects
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
+
   return {
-    top3Paths: getTopPaths(records),
-    topProtocols: getTopProtocols(records, interopProjects),
+    top3Paths: getTopPaths(records, subgroupProjects),
+    topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
