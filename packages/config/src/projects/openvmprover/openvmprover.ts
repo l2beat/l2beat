@@ -172,96 +172,97 @@ solc --version  # should be 0.8.19
 7. Verify that the deployed verifier smart contract has the same codehash: \`cast keccak $(cast code 0x749fC77A1a131632a8b88e8703E489557660C75e --rpc-url <YOUR_ETHEREUM_RPC_URL>)\`.
         `,
       },
-      {
-        hash: '0x91816743ec15118a4ddacb13c830e56e9f8b28f1c875dfc458a27142a88c9fc8',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0x14fc3c8162cc5ead23a04f8221bbd7f18f21946a6e92df34831fab6482b19a37',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0xaeaf8626da1244ce080122af824423c2a78bb8a043a821473d2247e8462f28af',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0xa69a3ce200bf287833cb53d85a93e5a943ac51473dd9ee4dff855dcfbaeabb6a',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x03a72B00D036C479105fF98A1953b15d9c510110',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0x3b69f45dffa4aa394e991c0bbf0a31b5652a89639f075fa88ab7ea7245a4563a',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x2293cd12e8564e8219d314b075867c2f66ac6941',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
-      {
-        hash: '0x9accf42dcd17d7f7f61eeedd3843ff669028f2cb5fd2c879c02da54945f6dbb9',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
-      },
+      // Verifiers below could not be used by scroll because their version is <7
+      // {
+      //   hash: '0x91816743ec15118a4ddacb13c830e56e9f8b28f1c875dfc458a27142a88c9fc8',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
+      // {
+      //   hash: '0x14fc3c8162cc5ead23a04f8221bbd7f18f21946a6e92df34831fab6482b19a37',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
+      // {
+      //   hash: '0xaeaf8626da1244ce080122af824423c2a78bb8a043a821473d2247e8462f28af',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
+      // {
+      //   hash: '0xa69a3ce200bf287833cb53d85a93e5a943ac51473dd9ee4dff855dcfbaeabb6a',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x03a72B00D036C479105fF98A1953b15d9c510110',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
+      // {
+      //   hash: '0x3b69f45dffa4aa394e991c0bbf0a31b5652a89639f075fa88ab7ea7245a4563a',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x2293cd12e8564e8219d314b075867c2f66ac6941',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
+      // {
+      //   hash: '0x9accf42dcd17d7f7f61eeedd3843ff669028f2cb5fd2c879c02da54945f6dbb9',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: solidity codehash of the verifier smart contract, i.e. keccak256 of the EVM bytecode.',
+      // },
     ],
   },
 }
