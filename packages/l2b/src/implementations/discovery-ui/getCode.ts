@@ -1,7 +1,6 @@
 import {
   type ConfigReader,
   combineImplementationHashes,
-  type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
 } from '@l2beat/discovery'
@@ -101,7 +100,6 @@ export function getCode(
 }
 
 export function getAllCode(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
 ): Record<string, ApiCodeResponse> {
@@ -118,7 +116,6 @@ export function getAllCode(
   for (const fullAddress of allAddresses) {
     try {
       const { entryName, codePaths } = getCodePaths(
-        paths,
         configReader,
         project,
         fullAddress,

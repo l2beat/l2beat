@@ -240,13 +240,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
       const { project, searchTerm, address } = paramsValidation.data
 
-      const response = searchCode(
-        paths,
-        configReader,
-        project,
-        searchTerm,
-        address,
-      )
+      const response = searchCode(configReader, project, searchTerm, address)
       res.json(response)
     })
 
@@ -272,7 +266,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
       const { project, address, against } = queryValidation.data
 
-      const { codePaths } = getCodePaths(paths, configReader, project, address)
+      const { codePaths } = getCodePaths(configReader, project, address)
       const implementationPath =
         codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
       const againstPath =
