@@ -11,6 +11,9 @@
     "eth:0xeBf5859b7646ca9cf8A981613569bF28394F2571": "SystemConfig"
   },
   "overrides": {
+    "eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
     "eth:0xeBf5859b7646ca9cf8A981613569bF28394F2571": {
       "ignoreRelatives": ["disputeGameFactory"]
     }
