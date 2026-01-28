@@ -7,10 +7,6 @@ on:
         description: "Package name (e.g., frontend, backend)"
         required: true
         type: string
-      dockerfile:
-        description: "Path to Dockerfile"
-        required: true
-        type: string
       environment:
         description: "Environment (production or staging)"
         required: false
@@ -81,7 +77,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ${{ inputs.dockerfile }}
+          file: packages/${{ inputs.package }}/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/${{ inputs.package }}:latest

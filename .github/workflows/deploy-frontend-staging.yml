@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/build-deploy-coolify.yml
     with:
       package: frontend
-      dockerfile: Dockerfile.frontend
       environment: staging
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
