@@ -1,7 +1,7 @@
-name: Deploy frontend prod
+name: Deploy TVS prod
 
 concurrency:
-  group: frontend-deployment-prod
+  group: tvs-deployment-prod
 permissions:
   contents: read
   packages: write
@@ -34,12 +34,12 @@ jobs:
       - name: Check if package changed
         id: check
         run: |
-          if npx turbo-ignore @l2beat/frontend --fallback=HEAD~1; then
+          if npx turbo-ignore @l2beat/backend --fallback=HEAD~1; then
             echo "should_deploy=true" >> $GITHUB_OUTPUT
-            echo "✓ Frontend package changed, will deploy"
+            echo "✓ Backend package changed, will deploy TVS"
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
-            echo "✗ Frontend package unchanged, skipping deployment"
+            echo "✗ Backend package unchanged, skipping TVS deployment"
           fi
 
   deploy:
@@ -47,12 +47,12 @@ jobs:
     if: needs.check-changes.outputs.should_deploy == 'true'
     uses: ./.github/workflows/build-deploy-coolify.yml
     with:
-      package: frontend
-      dockerfile: Dockerfile.frontend
+      package: tvs
+      dockerfile: Dockerfile.backend
       environment: production
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
-      COOLIFY_UUID: ${{ secrets.COOLIFY_FRONTEND_PROD_ID }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TVS_PRODUCTION_ID }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}

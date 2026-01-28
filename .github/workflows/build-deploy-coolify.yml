@@ -1,69 +1,98 @@
-name: Deploy update monitor
+name: Build and Deploy to Coolify
 
-concurrency:
-  group: update-monitor-deployment
+on:
+  workflow_call:
+    inputs:
+      package:
+        description: "Package name (e.g., frontend, backend)"
+        required: true
+        type: string
+      dockerfile:
+        description: "Path to Dockerfile"
+        required: true
+        type: string
+      environment:
+        description: "Environment (production or staging)"
+        required: false
+        type: string
+        default: "production"
+    secrets:
+      COOLIFY_SERVER:
+        required: true
+      COOLIFY_DEPLOY_API_KEY:
+        required: true
+      COOLIFY_UUID:
+        required: true
+      TURBO_TOKEN:
+        required: true
+      TURBO_TEAM:
+        required: false
+
 permissions:
   contents: read
   packages: write
 
-on:
-  workflow_dispatch: {}
-  schedule:
-    - cron: "45 * * * *"
-
 jobs:
-  deploy-update-monitor:
-    name: Deploy update monitor
+  build-and-deploy:
+    name: Build and deploy ${{ inputs.package }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
       - name: Set up Docker.io mirror
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
+
       - name: Cache Coolify CLI
         id: cache-coolify
         uses: actions/cache@v4
         with:
           path: ~/.local/bin/coolify
           key: coolify-cli-v1
+
       - name: Install Coolify CLI
         if: steps.cache-coolify.outputs.cache-hit != 'true'
         run: |
           curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+
       - name: Setup Coolify context
         run: |
           coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
           coolify context use l2beat
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish containers
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile.backend
+          file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/update-monitor:latest
-            ghcr.io/${{ github.repository }}/update-monitor:${{ github.sha }}
+            ghcr.io/${{ github.repository }}/${{ inputs.package }}:latest
+            ghcr.io/${{ github.repository }}/${{ inputs.package }}:${{ github.sha }}
           build-args: |
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
+            TURBO_TEAM=${{ secrets.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Release published containers (coolify)
+
+      - name: Deploy to Coolify
         run: |
-          set -ex
-          coolify deploy uuid ${{ secrets.COOLIFY_UM_STAGING_ID }}
-          coolify deploy uuid ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
+          echo "Deploying ${{ inputs.package }} (${{ inputs.environment }}) to Coolify..."
+          coolify deploy uuid ${{ secrets.COOLIFY_UUID }}

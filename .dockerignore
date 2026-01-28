@@ -18,3 +18,15 @@ packages/config/cache/**
 # env
 .env
 .env.*
+
+# Git
+.git
+
+# Test files and coverage
+coverage
+.nyc_output
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
