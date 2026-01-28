@@ -43,7 +43,9 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         aggregatedTransfers.push({
           timestamp: to,
           id: config.id,
-          ...getAggregatedTransfer(group),
+          ...getAggregatedTransfer(group, {
+            calculateValueAtRisk: config.bridgeType === 'nonMinting',
+          }),
         })
 
         aggregatedTokens.push(
