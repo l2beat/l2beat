@@ -1,5 +1,16 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Maintains the addresses of the contracts used in the system.",
-  "ignoreRelatives": ["getValidatorShareAddress"]
+  "description": "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.",
+  "ignoreRelatives": ["getValidatorShareAddress", "tokensMapped"],
+  "ignoreInWatchMode": ["tokensMapped"],
+  "fields": {
+    "tokensMapped": {
+      "handler": {
+        "type": "event",
+        "select": "childToken",
+        "set": { "event": "TokenMapped" },
+        "groupBy": "rootToken"
+      }
+    }
+  }
 }
