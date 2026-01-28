@@ -28,6 +28,11 @@ describe('aggregation', () => {
         totalDurationSum: 5000,
         srcValueUsd: 2000,
         dstValueUsd: 2000,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 1,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -68,6 +73,11 @@ describe('aggregation', () => {
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 3,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -100,6 +110,11 @@ describe('aggregation', () => {
         totalDurationSum: 11000,
         srcValueUsd: 3000,
         dstValueUsd: undefined,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 1,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -127,6 +142,75 @@ describe('aggregation', () => {
 
       expect(result.srcValueUsd).toEqual(3000.23)
       expect(result.dstValueUsd).toEqual(5001.21)
+    })
+
+    it('correctly buckets transfers by size', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 1000,
+          srcValueUsd: 50, // under 100
+          dstValueUsd: 50,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 2000,
+          srcValueUsd: undefined, // 100-1K
+          dstValueUsd: 500,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 3000,
+          srcValueUsd: 5000, // 1K-10K
+          dstValueUsd: 5000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 50000, // 10K-100K
+          dstValueUsd: 50000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 200000, // over 100K
+          dstValueUsd: 200000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: undefined,
+          dstValueUsd: undefined,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers)
+
+      expect(result).toEqual({
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        transferCount: 6,
+        totalDurationSum: 20000,
+        srcValueUsd: 255050,
+        dstValueUsd: 255550,
+        countUnder100: 1,
+        count100To1K: 1,
+        count1KTo10K: 1,
+        count10KTo100K: 1,
+        countOver100K: 1,
+      })
     })
 
     it('throws error when group is empty', () => {
