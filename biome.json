@@ -51,7 +51,6 @@
           "level": "error",
           "fix": "safe"
         },
-        "noUnusedFunctionParameters": "error",
         "noConstAssign": "error",
         "noConstantCondition": "off",
         "noEmptyCharacterClassInRegex": "error",
