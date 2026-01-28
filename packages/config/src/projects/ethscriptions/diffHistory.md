@@ -8,7 +8,7 @@ Generated with discovered.json: 0x4f394ef95bd6a8faed461ed4253206245cd70025
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery rerun after cache override.
 
 ## Config/verification related changes
 
