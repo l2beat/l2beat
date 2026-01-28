@@ -15,6 +15,9 @@ export type TokenData = {
   symbol: string
   iconUrl: string
   volume: number
+  transferCount: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit
+  avgValue: number
 }
 
 export type ChainData = {
@@ -22,6 +25,9 @@ export type ChainData = {
   name: string
   iconUrl: string
   volume: number
+  transferCount: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit
+  avgValue: number
 }
 
 export type DurationSplit = {
@@ -99,8 +105,14 @@ export function getProtocolEntries(
           : undefined,
         bridgeType,
         volume: data.volume,
-        tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
-        chains: getChainsData(data.chains, logger),
+        tokens: getTokensData(
+          key,
+          data.tokens,
+          tokensDetailsMap,
+          durationSplitMap,
+          logger,
+        ),
+        chains: getChainsData(key, data.chains, durationSplitMap, logger),
         transferCount: data.transferCount,
         averageValue:
           data.transferCount > 0 ? data.volume / data.transferCount : 0,
@@ -111,12 +123,14 @@ export function getProtocolEntries(
 }
 
 function getTokensData(
-  tokens: Map<string, number>,
+  protocolId: string,
+  tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
 ) {
   return Array.from(tokens.entries())
-    .map(([tokenId, volume]) => {
+    .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
 
       if (!tokenDetails) {
@@ -124,13 +138,22 @@ function getTokensData(
         return undefined
       }
 
+      const avgDuration = getAverageDuration(
+        protocolId,
+        token,
+        durationSplitMap,
+      )
+
       return {
         id: tokenId,
         symbol: tokenDetails.symbol,
         iconUrl:
           tokenDetails.iconUrl ??
           manifest.getUrl('/images/token-placeholder.png'),
-        volume,
+        volume: token.volume,
+        transferCount: token.transferCount,
+        avgDuration: avgDuration,
+        avgValue: Math.floor(token.volume / token.transferCount),
       }
     })
     .filter(notUndefined)
@@ -138,38 +161,51 @@ function getTokensData(
 }
 
 function getChainsData(
-  chains: Map<string, number>,
+  protocolId: string,
+  chains: Map<string, AverageDurationData & { volume: number }>,
+  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
 ): ChainData[] {
   return Array.from(chains.entries())
-    .map(([chainId, volume]) => {
+    .map(([chainId, chainData]) => {
       const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
       if (!chain) {
         logger.warn(`Chain not found: ${chainId}`)
         return undefined
       }
 
+      const avgDuration = getAverageDuration(
+        protocolId,
+        chainData,
+        durationSplitMap,
+      )
+
       return {
         id: chainId,
         name: chain.name,
         iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-        volume,
+        volume: chainData.volume,
+        transferCount: chainData.transferCount,
+        avgDuration: avgDuration,
+        avgValue: Math.floor(chainData.volume / chainData.transferCount),
       }
     })
     .filter(notUndefined)
     .toSorted((a, b) => b.volume - a.volume)
 }
 
+type AverageDurationData = {
+  transferCount: number
+  totalDurationSum: number
+  inTransferCount: number
+  inDurationSum: number
+  outTransferCount: number
+  outDurationSum: number
+}
+
 function getAverageDuration(
   key: string,
-  data: {
-    transferCount: number
-    totalDurationSum: number
-    inTransferCount: number
-    inDurationSum: number
-    outTransferCount: number
-    outDurationSum: number
-  },
+  data: AverageDurationData,
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
 ): ProtocolEntry['averageDuration'] {
   const durationSplit = durationSplitMap.get(key)
