@@ -693,6 +693,11 @@ function record(
   totalDurationSum = 0,
   srcValueUsd?: number,
   dstValueUsd?: number,
+  countUnder100 = 0,
+  count100To1K = 0,
+  count1KTo10K = 0,
+  count10KTo100K = 0,
+  countOver100K = 0,
 ): AggregatedInteropTransferRecord {
   return {
     timestamp,
@@ -703,5 +708,10 @@ function record(
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
+    countUnder100,
+    count100To1K,
+    count1KTo10K,
+    count10KTo100K,
+    countOver100K,
   }
 }

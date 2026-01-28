@@ -104,6 +104,11 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 11000,
           srcValueUsd: 5000,
           dstValueUsd: 5000,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 2,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
@@ -285,6 +290,11 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
         {
@@ -296,6 +306,11 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 7000,
           srcValueUsd: 1000,
           dstValueUsd: 1000,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
         {
@@ -307,6 +322,11 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 9000,
           srcValueUsd: 2500,
           dstValueUsd: 2500,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth)
         {
@@ -318,6 +338,11 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 28000,
           srcValueUsd: 10500,
           dstValueUsd: 10000,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 3,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
