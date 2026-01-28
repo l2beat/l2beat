@@ -1,7 +1,7 @@
 {
   "name": "phala",
-  "timestamp": 1769598027,
-  "configHash": "0xf49a0d3e507504b0aa33cd5d415adb4a2efa2434302a9f85cedefab1b6f66ec7",
+  "timestamp": 1769604483,
+  "configHash": "0xd1fa79dbca1deaf58eb68a2d4fd42b2ecf5b7bedaaed6de2d7a65dce1154f07b",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -462,6 +462,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -1337,6 +1342,11 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "role": ".proposer"
+        },
         {
           "permission": "propose",
           "from": "eth:0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
@@ -2305,6 +2315,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24332901 },
-  "permissionsConfigHash": "0xc0f43e7704f99d18279c33529ea14811553810f5c4ff398377aeb78743896045"
+  "usedBlockNumbers": { "ethereum": 24333435 },
+  "permissionsConfigHash": "0xd19ab8df14c2335122a27209a609a059564c465f11d4c299ad2d62674fdd622c"
 }
