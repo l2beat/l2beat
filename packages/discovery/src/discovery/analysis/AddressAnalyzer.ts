@@ -4,7 +4,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import type { DiscoveryCustomType, Entrypoint } from '../config/StructureConfig'
+import type { DiscoveryCustomType } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
@@ -84,7 +84,6 @@ export class AddressAnalyzer {
     provider: IProvider,
     address: ChainSpecificAddress,
     config: StructureContractConfig,
-    entrypoints: Record<ChainSpecificAddress, Entrypoint> = {},
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
