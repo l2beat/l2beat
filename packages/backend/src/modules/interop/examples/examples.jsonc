@@ -25,6 +25,7 @@
     "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
+    "loadConfigs": ["ccip"],
     "txs": [
       // Arbitrum → Base (old Minted event format)
       {
