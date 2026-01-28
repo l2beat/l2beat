@@ -1,0 +1,102 @@
+{
+  "projectId": "facet",
+  "timestamp": 1769589723491,
+  "escrows": [
+    {
+      "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+      "name": "L1ETHLockbox",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "WETH",
+          "valueUsd": 1092797.4,
+          "amount": 362.83,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1092797.4,
+      "source": "canonical",
+      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
+    },
+    {
+      "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+      "name": "FastExternalBridge",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": "eth:0x0000000000000000000000000000000000000000",
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 92933.73,
+          "amount": 30.87,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 92933.73,
+      "source": "canonical",
+      "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
+    },
+    {
+      "address": "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+      "name": "L1Bridge",
+      "category": "third-party-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-additional-trust",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 162.59,
+          "amount": 0.05,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 162.59,
+      "source": "canonical",
+      "description": "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
+    }
+  ],
+  "externalTokens": [],
+  "summary": {
+    "totalTvl": 1185893.72,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 0,
+      "canonicalAdditionalTrust": 1185893.72,
+      "external": 0
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 0
+    },
+    "canonicalTvl": 1185893.72,
+    "externalTvl": 0,
+    "apiCanonicalTvl": 162.59,
+    "apiExternalTvl": 1185731.13
+  },
+  "externalTokensSummary": {
+    "totalCount": 0,
+    "totalValue": 0,
+    "byProtocol": {},
+    "byNameCategory": {}
+  }
+}

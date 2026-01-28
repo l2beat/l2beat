@@ -1,6 +1,6 @@
 {
   "projectId": "apechain",
-  "timestamp": 1769461361777,
+  "timestamp": 1769589601282,
   "escrows": [
     {
       "address": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -16,23 +16,23 @@
       "tokens": [
         {
           "symbol": "APE",
-          "valueUsd": 27872110,
+          "valueUsd": 27313610,
           "amount": 1000033700,
           "issuer": null,
           "source": "external"
         }
       ],
-      "totalValueUsd": 27872110,
+      "totalValueUsd": 27313610,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 27872110,
+    "totalTvl": 27313610,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 27872110,
+      "canonicalTrustMinimized": 27313610,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -40,10 +40,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 27872110,
+    "canonicalTvl": 27313610,
     "externalTvl": 0,
     "apiCanonicalTvl": 0,
-    "apiExternalTvl": 27872110
+    "apiExternalTvl": 27313610
   },
   "externalTokensSummary": {
     "totalCount": 0,

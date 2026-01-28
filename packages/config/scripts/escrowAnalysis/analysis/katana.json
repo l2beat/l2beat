@@ -1,14 +1,14 @@
 {
   "projectId": "katana",
-  "timestamp": 1769460680565,
+  "timestamp": 1769589722941,
   "escrows": [],
   "externalTokens": [
     {
       "symbol": "vbWBTC",
       "name": "Vault Bridge WBTC",
       "l2Address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
-      "valueUsd": 90803720,
-      "amount": 1036.17,
+      "valueUsd": 90534224,
+      "amount": 1023.19,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -21,8 +21,8 @@
       "symbol": "vbETH",
       "name": "Vault Bridge ETH",
       "l2Address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
-      "valueUsd": 46660260,
-      "amount": 18730.16,
+      "valueUsd": 47154744,
+      "amount": 18455.9,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -35,8 +35,8 @@
       "symbol": "vbUSDT",
       "name": "Vault Bridge USDT",
       "l2Address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
-      "valueUsd": 41155752,
-      "amount": 41294800,
+      "valueUsd": 46525760,
+      "amount": 46683968,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -49,8 +49,8 @@
       "symbol": "vbUSDC",
       "name": "Vault Bridge USDC",
       "l2Address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
-      "valueUsd": 39698196,
-      "amount": 39763388,
+      "valueUsd": 32305434,
+      "amount": 32371674,
       "bridgeProtocol": "Agglayer shared bridge (vault bridge)",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -63,8 +63,8 @@
       "symbol": "LBTC",
       "name": "Lombard Staked Bitcoin",
       "l2Address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
-      "valueUsd": 2660783.8,
-      "amount": 30.27,
+      "valueUsd": 7525869.5,
+      "amount": 84.27,
       "bridgeProtocol": "Chainlink CCIP",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -87,7 +87,7 @@
       "symbol": "JitoSOL",
       "name": "Jito Staked SOL",
       "l2Address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
-      "valueUsd": 1185716.6,
+      "valueUsd": 1211763.4,
       "amount": 7581.28,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "Unknown",
@@ -99,43 +99,43 @@
     }
   ],
   "summary": {
-    "totalTvl": 361909300.97999996,
-    "nativeTvl": 14943382.15,
+    "totalTvl": 369431381.15999997,
+    "nativeTvl": 15094591.68,
     "byNameCategory": {
       "canonicalTrustMinimized": 0,
       "canonicalAdditionalTrust": 0,
-      "external": 222164428.4
+      "external": 225257794.9
     },
     "externalBreakdown": {
       "issuerSecured": 0,
-      "additionalTrust": 222164428.4
+      "additionalTrust": 225257794.9
     },
     "canonicalTvl": 0,
-    "externalTvl": 222164428.4,
-    "apiCanonicalTvl": 124801465.85,
-    "apiExternalTvl": 222164452.98000002
+    "externalTvl": 225257794.9,
+    "apiCanonicalTvl": 129078969.99999996,
+    "apiExternalTvl": 225257819.48000002
   },
   "externalTokensSummary": {
     "totalCount": 6,
-    "totalValue": 222164428.4,
+    "totalValue": 225257794.9,
     "byProtocol": {
       "Agglayer shared bridge (vault bridge)": {
         "count": 4,
-        "value": 218317928
+        "value": 216520162
       },
       "Chainlink CCIP": {
         "count": 1,
-        "value": 2660783.8
+        "value": 7525869.5
       },
       "Layer Zero v2 OFT": {
         "count": 1,
-        "value": 1185716.6
+        "value": 1211763.4
       }
     },
     "byNameCategory": {
       "external": {
         "count": 6,
-        "value": 222164428.4
+        "value": 225257794.9
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "projectId": "xchain",
-  "timestamp": 1769461422866,
+  "timestamp": 1769589662600,
   "escrows": [
     {
       "address": "eth:0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",
@@ -16,23 +16,23 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 14210.34,
+          "valueUsd": 14600.3,
           "amount": 4.85,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 14210.34,
+      "totalValueUsd": 14600.3,
       "source": "canonical",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
     }
   ],
   "externalTokens": [],
   "summary": {
-    "totalTvl": 17616.19,
+    "totalTvl": 18005.809999999998,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 14210.34,
+      "canonicalTrustMinimized": 14600.3,
       "canonicalAdditionalTrust": 0,
       "external": 0
     },
@@ -40,10 +40,10 @@
       "issuerSecured": 0,
       "additionalTrust": 0
     },
-    "canonicalTvl": 14210.34,
+    "canonicalTvl": 14600.3,
     "externalTvl": 0,
-    "apiCanonicalTvl": 14210.34,
-    "apiExternalTvl": 3405.85
+    "apiCanonicalTvl": 14600.3,
+    "apiExternalTvl": 3405.51
   },
   "externalTokensSummary": {
     "totalCount": 0,

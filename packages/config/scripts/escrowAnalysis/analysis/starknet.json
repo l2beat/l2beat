@@ -1,0 +1,541 @@
+{
+  "projectId": "starknet",
+  "timestamp": 1769590185611,
+  "escrows": [
+    {
+      "address": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "name": "USDCBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDC.e",
+          "valueUsd": 221969410,
+          "amount": 222057630,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 221969410,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "name": "STRKBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "STRK",
+          "valueUsd": 208356240,
+          "amount": 3005192200,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 208356240,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+      "name": "SolvBTCBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Solv Protocol)",
+      "admin": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "adminName": "Solv Protocol",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "SolvBTC",
+          "valueUsd": 90582830,
+          "amount": 971.87,
+          "issuer": "Solv Protocol",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 90582830,
+      "source": "canonical",
+      "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
+    },
+    {
+      "address": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "name": "ETHBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 70646424,
+          "amount": 23463.17,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 70646424,
+      "source": "canonical",
+      "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "name": "WBTCBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "WBTC",
+          "valueUsd": 47722244,
+          "amount": 512.64,
+          "issuer": "BitGo",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 47722244,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+      "name": "MultiBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "EKUBO",
+          "valueUsd": 21410188,
+          "amount": 9666594,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "NSTR",
+          "valueUsd": 306931.7,
+          "amount": 32997244,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ZEND",
+          "valueUsd": 25329.28,
+          "amount": 44374936,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 21742448.98,
+      "source": "canonical",
+      "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
+    },
+    {
+      "address": "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e",
+      "name": "LBTCBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lombard Finance)",
+      "admin": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+      "adminName": "Lombard Finance",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "LBTC",
+          "valueUsd": 14066145,
+          "amount": 157.51,
+          "issuer": "Lombard Finance",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 14066145,
+      "source": "canonical",
+      "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually."
+    },
+    {
+      "address": "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+      "name": "wstETHBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 9894007,
+          "amount": 2681.14,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 9894007,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "name": "USDTBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "USDT",
+          "valueUsd": 5282833.5,
+          "amount": 5289481,
+          "issuer": "Tether",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 5282833.5,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "name": "LORDSBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Realms/BiblioDAO)",
+      "admin": null,
+      "adminName": "Realms/BiblioDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "LORDS",
+          "valueUsd": 1422255.2,
+          "amount": 108284130,
+          "issuer": "Realms/BiblioDAO",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 1422255.2,
+      "source": "canonical",
+      "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2."
+    },
+    {
+      "address": "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+      "name": "DAIBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (MakerDAO)",
+      "admin": "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58",
+      "adminName": "MakerDAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "DAI",
+          "valueUsd": 425110.47,
+          "amount": 425215.84,
+          "issuer": "MakerDAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 425110.47,
+      "source": "canonical",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    },
+    {
+      "address": "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+      "name": "rETHBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "rETH",
+          "valueUsd": 211809.8,
+          "amount": 60.86,
+          "issuer": "Rocket Pool",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 211809.8,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+      "name": "UNIBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "UNI",
+          "valueUsd": 34956.99,
+          "amount": 7282.39,
+          "issuer": "Uniswap",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 34956.99,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+      "name": "LUSDBridge",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Liquity)",
+      "admin": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "adminName": "Liquity",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "LUSD",
+          "valueUsd": 8465.59,
+          "amount": 8461.14,
+          "issuer": "Liquity",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 8465.59,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+      "name": "sfrxETHBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "sfrxETH",
+          "valueUsd": 43.02,
+          "amount": 0.01,
+          "issuer": "Frax",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 43.02,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    },
+    {
+      "address": "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+      "name": "FXSBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Starkware Governance",
+      "admin": "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "adminName": "Starkware Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "FRAX",
+          "valueUsd": 9.26,
+          "amount": 9.17,
+          "issuer": "Frax",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 9.26,
+      "source": "canonical",
+      "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "l2Address": "0x0593e034dda23eea82d2ba9a30960ed42cf4a01502cc2351dc9b9881f9931a68",
+      "valueUsd": 86385544,
+      "amount": 971.41,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Solv Protocol",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "l2Address": "0x03fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac",
+      "valueUsd": 46011460,
+      "amount": 517.32,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "BitGo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "EUTBL",
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "l2Address": "0x04f5e0de717daa6aa8de63b1bf2e8d7823ec5b21a88461b1519d9dbc956fb7f2",
+      "valueUsd": 19897576,
+      "amount": 15861568,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "USTBL",
+      "name": "Spiko US T-Bills Money Market Fund",
+      "l2Address": "0x020ff2f6021ada9eDBCeAf31B96f9F67b746662a6e6B2bC9d30c0d3e290a71f6",
+      "valueUsd": 10490998,
+      "amount": 9782026,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "tBTC",
+      "name": "Starknet tBTC",
+      "l2Address": "0x04daa17763b286d1e59b97c283C0b8C949994C361e426A28F743c67bDfE9a32f",
+      "valueUsd": 7515449,
+      "amount": 84.35,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Threshold",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "USN",
+      "name": "Noon USN",
+      "l2Address": "0x01e6545Cab7BA4ac866768ba5e1Bd540893762286ED3feA7f9C02bFa147e135B",
+      "valueUsd": 2211362,
+      "amount": 2214271,
+      "bridgeProtocol": "Hyperlane",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (trust model not analyzed)",
+      "formulaType": "starknetTotalSupply"
+    },
+    {
+      "symbol": "sUSN",
+      "name": "Staked USN",
+      "l2Address": "0x02411565EF1A14DeCFBe83d2e987ccEd918cD752508a3d9c55DEb67148d14D17",
+      "valueUsd": 1794708,
+      "amount": 1551311.1,
+      "bridgeProtocol": "Hyperlane",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Hyperlane (trust model not analyzed)",
+      "formulaType": "starknetTotalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 915627772.0200001,
+    "nativeTvl": 48954956.5,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 692365232.8100001,
+      "canonicalAdditionalTrust": 0,
+      "external": 174307097
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 174307097
+    },
+    "canonicalTvl": 692365232.8100001,
+    "externalTvl": 174307097,
+    "apiCanonicalTvl": 682046115.34,
+    "apiExternalTvl": 184626700.18
+  },
+  "externalTokensSummary": {
+    "totalCount": 7,
+    "totalValue": 174307097,
+    "byProtocol": {
+      "Unknown Bridge": {
+        "count": 5,
+        "value": 170301027
+      },
+      "Hyperlane": {
+        "count": 2,
+        "value": 4006070
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 7,
+        "value": 174307097
+      }
+    }
+  }
+}

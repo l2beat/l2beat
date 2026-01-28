@@ -27,6 +27,8 @@ import {
 
 import { getOrbitStackConfig, getKnownEscrowAdmin } from './chains/orbitStack'
 import { getOpStackConfig, getKnownOpStackEscrowAdmin } from './chains/opStack'
+import { getStarknetConfig } from './chains/starknet'
+import { getZkStackConfig } from './chains/zkStack'
 
 import type {
   BridgeType,
@@ -116,6 +118,13 @@ const EXTENDED_TOKEN_ISSUERS: Record<string, string> = {
   USD0: 'Usual',
   SolvBTC: 'Solv Protocol',
   OP: 'Optimism',
+  LBTC: 'Lombard Finance',
+  LORDS: 'Realms/BiblioDAO',
+  LUSD: 'Liquity',
+  rETH: 'Rocket Pool',
+  UNI: 'Uniswap',
+  FXS: 'Frax',
+  FRAX: 'Frax',
 }
 
 // ===== Bridge Security Info =====
@@ -258,6 +267,7 @@ function sleep(ms: number): Promise<void> {
 const PROJECT_ID_TO_API_ID: Record<string, string> = {
   'optimism': 'op-mainnet',
   'bobanetwork': 'boba-network',
+  'zksync2': 'zksync-era',
 }
 
 function getApiProjectId(projectId: string): string {
@@ -334,7 +344,12 @@ function findEntryByAddress(
 
 function getAdminFromEntry(entry: DiscoveryEntry): string | null {
   if (entry.values && '$admin' in entry.values) {
-    return entry.values['$admin'] as string
+    const admin = entry.values['$admin']
+    // Handle array of admins (e.g., Starknet bridges)
+    if (Array.isArray(admin)) {
+      return admin.length > 0 ? admin[0] : null
+    }
+    return admin as string
   }
   if (entry.values && 'wards' in entry.values) {
     const wards = entry.values['wards'] as string[]
@@ -345,9 +360,32 @@ function getAdminFromEntry(entry: DiscoveryEntry): string | null {
   return null
 }
 
+function getAllAdminsFromEntry(entry: DiscoveryEntry): string[] {
+  const admins: string[] = []
+  if (entry.values && '$admin' in entry.values) {
+    const admin = entry.values['$admin']
+    if (Array.isArray(admin)) {
+      admins.push(...admin)
+    } else if (admin) {
+      admins.push(admin as string)
+    }
+  }
+  if (entry.values && 'wards' in entry.values) {
+    const wards = entry.values['wards'] as string[]
+    if (wards) {
+      admins.push(...wards)
+    }
+  }
+  return admins
+}
+
 function isRollupControlled(admin: string | null, rollupAdmins: string[]): boolean {
   if (!admin) return false
   return rollupAdmins.some((addr) => normalizeAddress(addr) === normalizeAddress(admin))
+}
+
+function isAnyAdminRollupControlled(admins: string[], rollupAdmins: string[]): boolean {
+  return admins.some((admin) => isRollupControlled(admin, rollupAdmins))
 }
 
 function extractEscrowAddresses(formula: TvsTokenFormula): string[] {
@@ -416,12 +454,19 @@ function classifyEscrow(
   tokens: TokenValue[],
   stackConfig: StackConfig,
 ): EscrowAnalysis {
-  let admin = entry ? getAdminFromEntry(entry) : null
+  // Get all admins from the discovery entry
+  const allAdmins = entry ? getAllAdminsFromEntry(entry) : []
+  let admin = allAdmins.length > 0 ? allAdmins[0] : null
+
   // Fallback to known escrow admins if not found in discovery
   if (!admin) {
     admin = getKnownEscrowAdmin(escrowConfig.address) || getKnownOpStackEscrowAdmin(escrowConfig.address)
   }
-  const rollupControlled = isRollupControlled(admin, stackConfig.rollupAdmins)
+
+  // Check if any admin is rollup-controlled
+  const rollupControlled = allAdmins.length > 0
+    ? isAnyAdminRollupControlled(allAdmins, stackConfig.rollupAdmins)
+    : isRollupControlled(admin, stackConfig.rollupAdmins)
 
   let category: SecurityCategory
   const bridgeType = escrowConfig.bridgeType ?? 'canonical'
@@ -584,6 +629,10 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     stackConfig = getOrbitStackConfig(chainInfo)
   } else if (stack === 'opstack') {
     stackConfig = getOpStackConfig(chainInfo)
+  } else if (stack === 'starknet') {
+    stackConfig = getStarknetConfig(chainInfo)
+  } else if (stack === 'zkstack') {
+    stackConfig = getZkStackConfig(chainInfo)
   } else {
     console.log(chalk.yellow(`  Stack '${stack}' not fully supported yet, using auto-detection`))
     stackConfig = {
@@ -789,6 +838,10 @@ const DEFAULT_CHAINS = [
   'soneium',
   'xchain',
   'polynomial',
+  'katana',
+  'starknet',
+  'zksync2',
+  'facet',
 ]
 
 async function main(): Promise<void> {

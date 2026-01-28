@@ -1,0 +1,221 @@
+{
+  "projectId": "zksync2",
+  "timestamp": 1769590074945,
+  "escrows": [
+    {
+      "address": "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989",
+      "name": "L1ERC20Bridge_wstETH",
+      "category": "issuer-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 2394982.5,
+          "amount": 649.01,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 2394982.5,
+      "source": "canonical",
+      "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge."
+    },
+    {
+      "address": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+      "name": "L1ERC20Bridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by ZKsync Governance",
+      "admin": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+      "adminName": "ZKsync Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ALI",
+          "valueUsd": 46.07,
+          "amount": 20465.01,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDP",
+          "valueUsd": 9.31,
+          "amount": 9.32,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 55.38,
+      "source": "canonical",
+      "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "USDC",
+      "name": "USDC",
+      "l2Address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+      "valueUsd": 28635390,
+      "amount": 28646770,
+      "bridgeProtocol": "Circle CCTP",
+      "issuer": "Circle",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Circle operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Circle",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over USDC - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "USDN",
+      "name": "USN Token",
+      "l2Address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "valueUsd": 712105.4,
+      "amount": 713042.1,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "l2Address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
+      "valueUsd": 687035.4,
+      "amount": 200,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Frax operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over sfrxETH - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "l2Address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
+      "valueUsd": 599905.9,
+      "amount": 200,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Frax",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Frax operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Frax",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over frxETH - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "l2Address": "0xD405617DB7473b0A3158356Be7bC9EbEc6D88b85",
+      "valueUsd": 286850.78,
+      "amount": 250000,
+      "bridgeProtocol": "Frax Ferry",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Frax Ferry (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0x6bE2425C381eb034045b527780D2Bf4E21AB7236",
+      "valueUsd": 231532.44,
+      "amount": 72.53,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 1685923629.000001,
+    "nativeTvl": 1486395439.23,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 2395037.88,
+      "canonicalAdditionalTrust": 0,
+      "external": 31152819.919999998
+    },
+    "externalBreakdown": {
+      "issuerSecured": 29922331.299999997,
+      "additionalTrust": 1230488.62
+    },
+    "canonicalTvl": 2395037.88,
+    "externalTvl": 31152819.919999998,
+    "apiCanonicalTvl": 165931687.51000002,
+    "apiExternalTvl": 33596502.26
+  },
+  "externalTokensSummary": {
+    "totalCount": 6,
+    "totalValue": 31152819.919999998,
+    "byProtocol": {
+      "Circle CCTP": {
+        "count": 1,
+        "value": 28635390
+      },
+      "Layer Zero v2 OFT": {
+        "count": 2,
+        "value": 943637.8400000001
+      },
+      "Frax Ferry": {
+        "count": 3,
+        "value": 1573792.08
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 6,
+        "value": 31152819.919999998
+      }
+    }
+  }
+}

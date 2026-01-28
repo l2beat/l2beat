@@ -1,6 +1,6 @@
 {
   "projectId": "ink",
-  "timestamp": 1769461422618,
+  "timestamp": 1769589602036,
   "escrows": [
     {
       "address": "eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
@@ -16,13 +16,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 95415816,
-          "amount": 32559.23,
+          "valueUsd": 83477720,
+          "amount": 27724.71,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 95415816,
+      "totalValueUsd": 83477720,
       "source": "canonical",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
     },
@@ -63,13 +63,13 @@
         },
         {
           "symbol": "CRV",
-          "valueUsd": 0.36,
+          "valueUsd": 0.35,
           "amount": 1,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 1.3599999999999999,
+      "totalValueUsd": 1.35,
       "source": "canonical",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
     }
@@ -79,7 +79,7 @@
       "symbol": "kBTC",
       "name": "Kraken Wrapped Bitcoin",
       "l2Address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
-      "valueUsd": 267319230,
+      "valueUsd": 271818620,
       "amount": 3034.8,
       "bridgeProtocol": "Kraken EOA",
       "issuer": "Unknown",
@@ -93,8 +93,8 @@
       "symbol": "USD₮0",
       "name": "USD₮0",
       "l2Address": "0x0200C29006150606B650577BBE7B6248F58470c1",
-      "valueUsd": 231629180,
-      "amount": 231780670,
+      "valueUsd": 228508500,
+      "amount": 228792740,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -105,39 +105,39 @@
     }
   ],
   "summary": {
-    "totalTvl": 594364227.36,
+    "totalTvl": 583804841.35,
     "nativeTvl": 0,
     "byNameCategory": {
-      "canonicalTrustMinimized": 95415817.36,
+      "canonicalTrustMinimized": 83477721.35,
       "canonicalAdditionalTrust": 0,
-      "external": 498948410
+      "external": 500327120
     },
     "externalBreakdown": {
       "issuerSecured": 0,
-      "additionalTrust": 498948410
+      "additionalTrust": 500327120
     },
-    "canonicalTvl": 95415817.36,
-    "externalTvl": 498948410,
-    "apiCanonicalTvl": 95415817.36,
-    "apiExternalTvl": 498948410
+    "canonicalTvl": 83477721.35,
+    "externalTvl": 500327120,
+    "apiCanonicalTvl": 83477721.35,
+    "apiExternalTvl": 500327120
   },
   "externalTokensSummary": {
     "totalCount": 2,
-    "totalValue": 498948410,
+    "totalValue": 500327120,
     "byProtocol": {
       "Kraken EOA": {
         "count": 1,
-        "value": 267319230
+        "value": 271818620
       },
       "Layer Zero v2 OFT": {
         "count": 1,
-        "value": 231629180
+        "value": 228508500
       }
     },
     "byNameCategory": {
       "external": {
         "count": 2,
-        "value": 498948410
+        "value": 500327120
       }
     }
   }

@@ -9,7 +9,7 @@
 import { readdirSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
-export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'unknown'
+export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'starknet' | 'unknown'
 export type ChainType = 'layer2' | 'layer3'
 
 export interface ChainInfo {
@@ -55,12 +55,23 @@ const OPSTACK_TEMPLATES = [
 const ZKSTACK_TEMPLATES = [
   'zkstack/StateTransitionManager',
   'zkstack/ValidatorTimelock',
+  'shared-zk-stack/Diamond',
+  'shared-zk-stack/BridgeHub',
+  'shared-zk-stack/ValidatorTimelock_post29',
 ]
 
 // Templates that identify Polygon chains
 const POLYGON_TEMPLATES = [
   'polygoncdkstack/RollupManager',
   'polygoncdkstack/PolygonRollupManager',
+]
+
+// Templates that identify Starknet
+const STARKNET_TEMPLATES = [
+  'starknet/StarknetEthBridge',
+  'starknet/StarkgateManager',
+  'starknet/StarkgateRegistry',
+  'starknet/LordsL1Bridge',
 ]
 
 /**
@@ -87,6 +98,9 @@ function detectStack(discovery: DiscoveryJson): ChainStack {
   }
   if (POLYGON_TEMPLATES.some((t) => templates.has(t))) {
     return 'polygon'
+  }
+  if (STARKNET_TEMPLATES.some((t) => templates.has(t))) {
+    return 'starknet'
   }
 
   return 'unknown'
