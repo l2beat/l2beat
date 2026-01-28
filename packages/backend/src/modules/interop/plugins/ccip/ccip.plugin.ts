@@ -68,32 +68,40 @@ const executionStateChangedLog =
 const parseExecutionStateChanged = createEventParser(executionStateChangedLog)
 
 /*
-TokenPool events emitted when tokens are released or minted on destination chain.
-These are more reliable than Transfer events as they're CCIP-specific and avoid
-capturing internal mint operations (e.g., USDC burn/mint pattern).
+TokenPool events emitted when tokens are locked/burned on source chain
+and released/minted on destination chain.
 
-CCIP v1.6.1+ (ReleasedOrMinted - unified event):
-  https://docs.chain.link/ccip/api-reference/evm/v1.6.1/token-pool#releasedorminted
-  event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)
+CCIP v1.6.1+ (unified events):
+  Source: LockedOrBurned(uint64 indexed remoteChainSelector, address token, address sender, uint256 amount)
+  Dest:   ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)
   - Token address is included in event data
-  - `sender` is the offRamp address (msg.sender calling the pool)
+  - To determine lock vs burn / release vs mint, check the preceding Transfer event:
+    - Transfer to 0x0 = burn, Transfer from 0x0 = mint
 
-CCIP v1.5.x - v1.6.0 (Released/Minted - separate events):
-  https://docs.chain.link/ccip/api-reference/evm/v1.6.0/token-pool#minted
-  https://docs.chain.link/ccip/api-reference/evm/v1.5.1/token-pool
-  event Released(address indexed sender, address indexed recipient, uint256 amount)
-  event Minted(address indexed sender, address indexed recipient, uint256 amount)
+CCIP v1.5.x - v1.6.0 (separate events):
+  Source: Locked(address indexed sender, uint256 amount) / Burned(address indexed sender, uint256 amount)
+  Dest:   Released(address indexed sender, address indexed recipient, uint256 amount) / Minted(...)
   - Token address must be extracted from the preceding Transfer event
-  - Event order: Transfer -> Released/Minted -> ExecutionStateChanged
-  - `sender` is the offRamp address
+  - Event order: Transfer -> Locked/Burned/Released/Minted
 */
 
-// v1.6.1+ TokenPool event (has token address in event data)
-const releasedOrMintedLog =
-  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)'
-const parseReleasedOrMinted = createEventParser(releasedOrMintedLog)
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-// v1.5.x - v1.6.0 TokenPool events (token address from preceding Transfer event)
+// Source-side TokenPool events (v1.5.x - v1.6.0)
+const lockedLog =
+  'event Locked(address indexed sender, uint256 amount)'
+const parseLockedEvent = createEventParser(lockedLog)
+
+const burnedLog =
+  'event Burned(address indexed sender, uint256 amount)'
+const parseBurnedEvent = createEventParser(burnedLog)
+
+// Source-side unified event (v1.6.1+)
+const lockedOrBurnedLog =
+  'event LockedOrBurned(uint64 indexed remoteChainSelector, address token, address sender, uint256 amount)'
+const parseLockedOrBurned = createEventParser(lockedOrBurnedLog)
+
+// Destination-side TokenPool events (v1.5.x - v1.6.0)
 const releasedLog =
   'event Released(address indexed sender, address indexed recipient, uint256 amount)'
 const parseReleased = createEventParser(releasedLog)
@@ -102,7 +110,12 @@ const mintedLog =
   'event Minted(address indexed sender, address indexed recipient, uint256 amount)'
 const parseMinted = createEventParser(mintedLog)
 
-// Standard ERC20 Transfer event to extract token address for v1.5 events
+// Destination-side unified event (v1.6.1+)
+const releasedOrMintedLog =
+  'event ReleasedOrMinted(uint64 indexed remoteChainSelector, address token, address sender, address recipient, uint256 amount)'
+const parseReleasedOrMinted = createEventParser(releasedOrMintedLog)
+
+// Standard ERC20 Transfer event
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 const parseTransfer = createEventParser(transferLog)
@@ -113,6 +126,7 @@ export const CCIPSendRequested = createInteropEventType<{
   token: Address32
   amount: bigint
   index: number // Position in tokenAmounts array for matching
+  wasBurned?: boolean // Whether the source token was burned (vs locked)
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -120,25 +134,51 @@ export const ExecutionStateChanged = createInteropEventType<{
   state: number
   $srcChain: string
   // Token data from ReleasedOrMinted events (one per token in the message)
-  dstTokens?: { address: Address32; amount: bigint }[]
+  dstTokens?: { address: Address32; amount: bigint; wasMinted: boolean }[]
 }>('ccip.ExecutionStateChanged')
 
 /**
- * Find the token address from the Transfer event immediately preceding a Released/Minted event.
- * In v1.5 TokenPools, the event order is: Transfer -> Released/Minted
+ * Find the Transfer event immediately preceding a TokenPool event with matching amount.
+ * Returns the Transfer event details including token address and from/to addresses.
  */
-function findPrecedingTransferToken(
+function findPrecedingTransfer(
   logs: LogToCapture['txLogs'],
   currentIndex: number,
   amount: bigint,
-): string | undefined {
-  // Look backwards from the current log to find a matching Transfer event
+): { tokenAddress: string; from: string; to: string } | undefined {
   for (let j = currentIndex - 1; j >= 0; j--) {
     const prevLog = logs[j]
     const transfer = parseTransfer(prevLog, null)
     if (transfer && transfer.value === amount) {
-      // The token address is the contract that emitted the Transfer event
-      return prevLog.address
+      return {
+        tokenAddress: prevLog.address,
+        from: transfer.from.toLowerCase(),
+        to: transfer.to.toLowerCase(),
+      }
+    }
+  }
+  return undefined
+}
+
+/**
+ * Find Transfer event for a specific token address (for fee-on-transfer tokens
+ * where amounts don't match exactly).
+ */
+function findPrecedingTransferForToken(
+  logs: LogToCapture['txLogs'],
+  currentIndex: number,
+  tokenAddress: string,
+): { from: string; to: string } | undefined {
+  const normalizedToken = tokenAddress.toLowerCase()
+  for (let j = currentIndex - 1; j >= 0; j--) {
+    const prevLog = logs[j]
+    if (prevLog.address.toLowerCase() !== normalizedToken) continue
+    const transfer = parseTransfer(prevLog, null)
+    if (transfer) {
+      return {
+        from: transfer.from.toLowerCase(),
+        to: transfer.to.toLowerCase(),
+      }
     }
   }
   return undefined
@@ -176,6 +216,12 @@ export class CCIPPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: CCIPSendRequestedLog,
+        includeTxEvents: [
+          lockedLog,
+          burnedLog,
+          lockedOrBurnedLog,
+          transferLog,
+        ],
         addresses: outboundAddresses,
       },
       {
@@ -208,6 +254,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
       )
       if (!dstChainEntry) return
 
+      // Collect source-side lock/burn info from TokenPool events
+      // Events are emitted in same order as tokenAmounts[]
+      const srcTokenInfo = this.collectSourceTokenInfo(input)
+
       return ccipSendRequested.message.tokenAmounts.map((ta, index) =>
         CCIPSendRequested.create(input, {
           messageId: ccipSendRequested.message.messageId,
@@ -215,6 +265,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
           amount: ta.amount,
           index,
           $dstChain: dstChainEntry[0],
+          wasBurned: srcTokenInfo[index]?.wasBurned,
         }),
       )
     }
@@ -229,61 +280,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
       if (!srcChainEntry) return
 
       // Collect token release/mint events from TokenPools in the same transaction
-      // These are emitted in the same order as tokenAmounts[] in the source message
-      // Support multiple event formats: ReleasedOrMinted (v1.6+), Released/Minted (v1.5)
-      const dstTokens: { address: Address32; amount: bigint }[] = []
-      const logsBeforeExecution = input.txLogs.filter(
-        (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
-      )
-
-      for (let i = 0; i < logsBeforeExecution.length; i++) {
-        const log = logsBeforeExecution[i]
-
-        // Try v1.6+ ReleasedOrMinted event (has token address in event data)
-        const releasedOrMinted = parseReleasedOrMinted(log, null)
-        if (releasedOrMinted) {
-          dstTokens.push({
-            address: Address32.from(releasedOrMinted.token),
-            amount: releasedOrMinted.amount,
-          })
-          continue
-        }
-
-        // Try v1.5 Released event (token address from preceding Transfer event)
-        const released = parseReleased(log, null)
-        if (released) {
-          // Find the Transfer event immediately before this Released event
-          const tokenAddress = findPrecedingTransferToken(
-            logsBeforeExecution,
-            i,
-            released.amount,
-          )
-          if (tokenAddress) {
-            dstTokens.push({
-              address: Address32.from(tokenAddress),
-              amount: released.amount,
-            })
-          }
-          continue
-        }
-
-        // Try v1.5 Minted event (token address from preceding Transfer event)
-        const minted = parseMinted(log, null)
-        if (minted) {
-          // Find the Transfer event immediately before this Minted event
-          const tokenAddress = findPrecedingTransferToken(
-            logsBeforeExecution,
-            i,
-            minted.amount,
-          )
-          if (tokenAddress) {
-            dstTokens.push({
-              address: Address32.from(tokenAddress),
-              amount: minted.amount,
-            })
-          }
-        }
-      }
+      const dstTokens = this.collectDestTokenInfo(input)
 
       return [
         ExecutionStateChanged.create(input, {
@@ -294,6 +291,136 @@ export class CCIPPlugin implements InteropPluginResyncable {
         }),
       ]
     }
+  }
+
+  /**
+   * Collect source-side token info (wasBurned) from TokenPool events.
+   * Detects Locked/Burned (v1.5) and LockedOrBurned (v1.6.1+) events.
+   * Events are emitted in the same order as tokenAmounts[] in the message.
+   */
+  private collectSourceTokenInfo(
+    input: LogToCapture,
+  ): { wasBurned: boolean }[] {
+    const result: { wasBurned: boolean }[] = []
+    const logsBeforeSend = input.txLogs.filter(
+      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+    )
+
+    // Track which tokens we've processed
+    const processedTokens = new Set<string>()
+
+    for (let i = 0; i < logsBeforeSend.length; i++) {
+      const log = logsBeforeSend[i]
+
+      // Try v1.5 Locked event (wasBurned = false)
+      const locked = parseLockedEvent(log, null)
+      if (locked) {
+        const transfer = findPrecedingTransfer(logsBeforeSend, i, locked.amount)
+        if (transfer && !processedTokens.has(transfer.tokenAddress.toLowerCase())) {
+          processedTokens.add(transfer.tokenAddress.toLowerCase())
+          result.push({ wasBurned: false })
+        }
+        continue
+      }
+
+      // Try v1.5 Burned event (wasBurned = true)
+      const burned = parseBurnedEvent(log, null)
+      if (burned) {
+        const transfer = findPrecedingTransfer(logsBeforeSend, i, burned.amount)
+        if (transfer && !processedTokens.has(transfer.tokenAddress.toLowerCase())) {
+          processedTokens.add(transfer.tokenAddress.toLowerCase())
+          result.push({ wasBurned: true })
+        }
+        continue
+      }
+
+      // Try v1.6.1+ LockedOrBurned event
+      const lockedOrBurned = parseLockedOrBurned(log, null)
+      if (lockedOrBurned) {
+        const tokenAddr = lockedOrBurned.token.toLowerCase()
+        if (processedTokens.has(tokenAddr)) continue
+        processedTokens.add(tokenAddr)
+
+        // Check if burned by looking at preceding Transfer
+        let wasBurned = false
+        const transfer = findPrecedingTransfer(logsBeforeSend, i, lockedOrBurned.amount)
+        if (transfer) {
+          wasBurned = transfer.to === ZERO_ADDRESS
+        } else {
+          // Fee-on-transfer: check any preceding Transfer for this token
+          const anyTransfer = findPrecedingTransferForToken(logsBeforeSend, i, tokenAddr)
+          if (anyTransfer) {
+            wasBurned = anyTransfer.to === ZERO_ADDRESS
+          }
+        }
+        result.push({ wasBurned })
+      }
+    }
+
+    return result
+  }
+
+  /**
+   * Collect destination-side token info (wasMinted) from TokenPool events.
+   * Detects Released/Minted (v1.5) and ReleasedOrMinted (v1.6.1+) events.
+   */
+  private collectDestTokenInfo(
+    input: LogToCapture,
+  ): { address: Address32; amount: bigint; wasMinted: boolean }[] {
+    const result: { address: Address32; amount: bigint; wasMinted: boolean }[] = []
+    const logsBeforeExecution = input.txLogs.filter(
+      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+    )
+
+    for (let i = 0; i < logsBeforeExecution.length; i++) {
+      const log = logsBeforeExecution[i]
+
+      // Try v1.6+ ReleasedOrMinted event
+      const releasedOrMinted = parseReleasedOrMinted(log, null)
+      if (releasedOrMinted) {
+        // Check if minted by looking at preceding Transfer
+        let wasMinted = false
+        const transfer = findPrecedingTransfer(logsBeforeExecution, i, releasedOrMinted.amount)
+        if (transfer) {
+          wasMinted = transfer.from === ZERO_ADDRESS
+        }
+        result.push({
+          address: Address32.from(releasedOrMinted.token),
+          amount: releasedOrMinted.amount,
+          wasMinted,
+        })
+        continue
+      }
+
+      // Try v1.5 Released event (wasMinted = false)
+      const released = parseReleased(log, null)
+      if (released) {
+        const transfer = findPrecedingTransfer(logsBeforeExecution, i, released.amount)
+        if (transfer) {
+          result.push({
+            address: Address32.from(transfer.tokenAddress),
+            amount: released.amount,
+            wasMinted: false,
+          })
+        }
+        continue
+      }
+
+      // Try v1.5 Minted event (wasMinted = true)
+      const minted = parseMinted(log, null)
+      if (minted) {
+        const transfer = findPrecedingTransfer(logsBeforeExecution, i, minted.amount)
+        if (transfer) {
+          result.push({
+            address: Address32.from(transfer.tokenAddress),
+            amount: minted.amount,
+            wasMinted: true,
+          })
+        }
+      }
+    }
+
+    return result
   }
 
   matchTypes = [ExecutionStateChanged]
@@ -324,8 +451,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
               dstEvent: delivery,
               srcTokenAddress: matched.args.token,
               srcAmount: matched.args.amount,
+              srcWasBurned: matched.args.wasBurned,
               dstTokenAddress: dstToken.address,
               dstAmount: dstToken.amount,
+              dstWasMinted: dstToken.wasMinted,
             }),
           )
         }
