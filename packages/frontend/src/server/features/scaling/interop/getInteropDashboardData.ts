@@ -155,6 +155,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
     protocolName: project.interopConfig.name ?? project.name,
+    isAggregate: project.interopConfig.isAggregate,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeType: project.interopConfig.bridgeType,
