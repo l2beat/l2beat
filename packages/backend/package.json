@@ -35,8 +35,7 @@
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
-    "interop:compare": ". ./.env && LOCAL_DB_URL=$LOCAL_DB_URL STAGING_DB_URL=$STAGING_DB_URL ts-node ./src/modules/interop/compare/script.ts"
+    "interop:example": "ts-node ./src/modules/interop/examples/script.ts"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
