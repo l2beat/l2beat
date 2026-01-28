@@ -2213,6 +2213,39 @@
     ],
     "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
   },
+  "zkstack-unsupported": {
+    "loadConfigs": ["zkstack"],
+    "tags": ["zkstack"],
+    "txs": [
+      // 'legacy' deposit erc-20
+      {
+        "chain": "ethereum",
+        "tx": "0x1f090ee0f3ff13c2681800b388a7177e6a22c99edfc2b565a00d43e541931dea"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0xf01dbaf12640a53a1f101ae71ffbe7dbf39b232622b662fd4ba0d708f74e8240"
+      },
+      // zklink message
+      {
+        "chain": "ethereum",
+        "tx": "0x9222223d139c1c95b2cca9174db6f8bc82c1dda45a0dfe6aa1f9b0d1bb7dee58"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x926ad40e0da97e84ade4ce52b4a8c488f0588b75db1730da58f513b47101369c"
+      },
+      // 'AccessControlledOCR2Aggregator' message
+      {
+        "chain": "ethereum",
+        "tx": "0xe0194201751283be901e44b8ab744055eacab9fdf3f8df71ff160cc9341406aa"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x4679a9290df4277ecdec5171be31a3a379550823458388c95659a7c9035a79fb"
+      }
+    ]
+  },
   "zkstack-deposit-message": {
     "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],

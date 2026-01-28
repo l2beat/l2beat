@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb9f5f4fc7a54444dac41f58d865e6a238ee555e5
+
+# Diff at Wed, 28 Jan 2026 08:41:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5f975c807ad2cfd64aebc4e504f78714f81d9cf block: 1766408981
+- current timestamp: 1766408981
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766408981 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      fieldMeta:
++        {"verifierVersions":{"description":"Each element of the array says which version of verifier is registered under this index in latestVerifier array."},"latestVerifier":{"description":"Only verifiers of version >= 7 can be used to check Scroll STF (see _commitBatchesFromV7 on Scroll contract). Versions are NOT indices of this array, they are given by verifierVersions array."}}
+    }
+```
+
 Generated with discovered.json: 0xc041eb4811dd20ed554903f04315c38a8fad6bb5
 
 # Diff at Thu, 08 Jan 2026 16:08:24 GMT:

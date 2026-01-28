@@ -11,6 +11,7 @@ export const usdt0: BaseProject = {
   addedAt: UnixTime(1767959267),
   interopConfig: {
     bridgeType: 'omnichain',
+    subgroupId: ProjectId('layerzero'),
     plugins: [
       {
         abstractTokenId: ABSTRACT_TOKEN_ID,

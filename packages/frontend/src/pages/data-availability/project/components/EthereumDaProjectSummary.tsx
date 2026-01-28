@@ -25,7 +25,6 @@ export function EthereumDaProjectSummary({ project }: Props) {
         <ProjectsUsedIn
           usedIn={project.header.usedIn}
           className="flex-wrap justify-start"
-          noTooltip
         />
       ),
     },
