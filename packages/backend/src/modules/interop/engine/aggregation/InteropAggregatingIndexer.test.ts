@@ -104,6 +104,7 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 11000,
           srcValueUsd: 5000,
           dstValueUsd: 5000,
+          avgValueAtRisk: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 2,
@@ -290,6 +291,7 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          avgValueAtRisk: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -306,6 +308,7 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 7000,
           srcValueUsd: 1000,
           dstValueUsd: 1000,
+          avgValueAtRisk: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -322,6 +325,7 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 9000,
           srcValueUsd: 2500,
           dstValueUsd: 2500,
+          avgValueAtRisk: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -338,6 +342,7 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 28000,
           srcValueUsd: 10500,
           dstValueUsd: 10000,
+          avgValueAtRisk: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 3,
@@ -395,6 +400,87 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 12000,
           volume: 3000,
+        },
+      ])
+    })
+
+    it('calculates average value at risk for nonMinting bridge type', async () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          duration: UnixTime.DAY,
+          srcValueUsd: 1,
+          dstValueUsd: 1,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          bridgeType: 'nonMinting',
+          plugins: [{ plugin: 'across' }],
+        },
+      ]
+
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo(transfers),
+      })
+
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
+      })
+
+      const transaction = mockFn(async (fn: any) => await fn())
+
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+      })
+
+      const indexer = new InteropAggregatingIndexer({
+        db,
+        configs,
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        minHeight: 0,
+      })
+
+      await indexer.update(from, to)
+
+      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 1,
+          totalDurationSum: UnixTime.DAY,
+          srcValueUsd: 1,
+          dstValueUsd: 1,
+          // avgValueAtRisk = (1 * 86400) / 86400 = 1
+          avgValueAtRisk: 1,
+          countUnder100: 1,
+          count100To1K: 0,
+          count1KTo10K: 0,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
     })
