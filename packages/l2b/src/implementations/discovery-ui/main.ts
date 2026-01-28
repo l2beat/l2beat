@@ -119,13 +119,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project, address } = paramsValidation.data
 
     const checkFlatCode = readonly === false
-    const response = getCode(
-      paths,
-      configReader,
-      project,
-      address,
-      checkFlatCode,
-    )
+    const response = getCode(configReader, project, address, checkFlatCode)
     res.json(response)
   })
 

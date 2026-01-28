@@ -13,7 +13,7 @@ export function searchCode(
   const code =
     address === undefined
       ? getAllCode(paths, configReader, project)
-      : { [address]: getCode(paths, configReader, project, address) }
+      : { [address]: getCode(configReader, project, address) }
 
   const matches: ApiCodeSearchResponse['matches'] = []
   for (const address in code) {

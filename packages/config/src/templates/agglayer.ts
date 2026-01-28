@@ -435,7 +435,7 @@ function buildValidiumSections(
   context: SharedContext,
 ): VariantSections {
   const dacInfo = getDacInfo(config.discovery)
-  const provider = resolveValidiumDaProvider(config, context, dacInfo)
+  const provider = resolveValidiumDaProvider(config, dacInfo)
 
   const customDa =
     config.customDa ??
@@ -728,7 +728,6 @@ function buildOpstackClosedSections(
 
 function resolveValidiumDaProvider(
   config: AgglayerCdkErigonValidiumConfig,
-  context: SharedContext,
   dacInfo?: DacInfo,
 ): DAProvider {
   if (config.daProvider !== undefined) {

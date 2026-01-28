@@ -51,6 +51,7 @@
           "level": "error",
           "fix": "safe"
         },
+        "noUnusedFunctionParameters": "error",
         "noConstAssign": "error",
         "noConstantCondition": "off",
         "noEmptyCharacterClassInRegex": "error",
@@ -108,8 +109,14 @@
           "level": "error",
           "fix": "safe",
           "options": {
-            "attributes": ["className", "classname"],
-            "functions": ["cn", "cva"]
+            "attributes": [
+              "className",
+              "classname"
+            ],
+            "functions": [
+              "cn",
+              "cva"
+            ]
           }
         }
       },
@@ -131,10 +138,7 @@
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
-        "noFocusedTests": {
-          "fix": "none",
-          "level": "error"
-        },
+        "noFocusedTests": "error",
         "noFunctionAssign": "error",
         "noGlobalAssign": "error",
         "noImportAssign": "error",
@@ -168,7 +172,10 @@
   },
   "overrides": [
     {
-      "includes": ["**/test/**/*.ts", "**/*.test.ts"],
+      "includes": [
+        "**/test/**/*.ts",
+        "**/*.test.ts"
+      ],
       "linter": {
         "rules": {
           "style": {
@@ -182,7 +189,12 @@
       }
     },
     {
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+      "includes": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts"
+      ],
       "linter": {
         "rules": {
           "correctness": {

@@ -76,18 +76,12 @@ function isFlatCodeCurrent(
 }
 
 export function getCode(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
   checkFlatCode = false,
 ): ApiCodeResponse {
-  const { entryName, codePaths } = getCodePaths(
-    paths,
-    configReader,
-    project,
-    address,
-  )
+  const { entryName, codePaths } = getCodePaths(configReader, project, address)
 
   if (checkFlatCode) {
     if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
@@ -152,7 +146,6 @@ export function getAllCode(
 }
 
 export function getCodePaths(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
