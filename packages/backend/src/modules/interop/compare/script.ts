@@ -90,6 +90,8 @@ interface TransferRow extends BaseRow {
   dstTokenAddress: string | null
   srcRawAmount: string | null
   dstRawAmount: string | null
+  srcWasBurned: boolean | null
+  dstWasMinted: boolean | null
 }
 
 interface ComparisonResult<T> {
@@ -640,7 +642,8 @@ async function compareTransfers(
   const query = `
     SELECT "transferId", plugin, type, timestamp, "srcTxHash", "dstTxHash",
            "srcChain", "dstChain", "srcTokenAddress", "dstTokenAddress",
-           "srcRawAmount"::text, "dstRawAmount"::text
+           "srcRawAmount"::text, "dstRawAmount"::text,
+           "srcWasBurned", "dstWasMinted"
     FROM "InteropTransfer"
     WHERE plugin = $1 AND timestamp >= $2 AND timestamp <= $3
     ORDER BY timestamp DESC
@@ -656,6 +659,51 @@ async function compareTransfers(
   const result = compareByKey(localResult.rows, stagingResult.rows, getKey)
 
   printSummary('Transfers', result)
+
+  // Check for srcWasBurned/dstWasMinted differences in common transfers
+  const burnMintDiffs = result.commonPairs.filter(
+    ({ local, staging }) =>
+      local.srcWasBurned !== staging.srcWasBurned ||
+      local.dstWasMinted !== staging.dstWasMinted,
+  )
+  if (burnMintDiffs.length > 0) {
+    console.log(
+      `  ${c.error(`[!] ${burnMintDiffs.length} transfers have different burn/mint status:`)}`,
+    )
+    for (const { local, staging } of burnMintDiffs.slice(0, 10)) {
+      console.log(
+        `    ${c.dim('•')} ${local.srcChain} → ${local.dstChain} ${local.srcTxHash}`,
+      )
+      if (local.srcWasBurned !== staging.srcWasBurned) {
+        const localSrc = local.srcWasBurned === null ? 'null' : local.srcWasBurned ? 'burned' : 'locked'
+        const stagingSrc = staging.srcWasBurned === null ? 'null' : staging.srcWasBurned ? 'burned' : 'locked'
+        console.log(
+          `      ${c.dim('srcWasBurned:')} local=${c.info(localSrc)} staging=${c.warning(stagingSrc)}`,
+        )
+      }
+      if (local.dstWasMinted !== staging.dstWasMinted) {
+        const localDst = local.dstWasMinted === null ? 'null' : local.dstWasMinted ? 'minted' : 'released'
+        const stagingDst = staging.dstWasMinted === null ? 'null' : staging.dstWasMinted ? 'minted' : 'released'
+        console.log(
+          `      ${c.dim('dstWasMinted:')} local=${c.info(localDst)} staging=${c.warning(stagingDst)}`,
+        )
+      }
+    }
+    if (burnMintDiffs.length > 10) {
+      console.log(`    ${c.dim(`... and ${burnMintDiffs.length - 10} more`)}`)
+    }
+  } else if (result.common > 0) {
+    // Count how many have burn/mint data
+    const withBurnMint = result.commonPairs.filter(
+      ({ local }) => local.srcWasBurned !== null || local.dstWasMinted !== null,
+    ).length
+    if (withBurnMint > 0) {
+      console.log(
+        `  ${c.success(`[OK] All ${withBurnMint} common transfers have same burn/mint status`)}`,
+      )
+    }
+  }
+
   printItems(
     'Staging-only',
     result.onlyInStaging,
