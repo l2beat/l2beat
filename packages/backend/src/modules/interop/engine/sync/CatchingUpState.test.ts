@@ -15,10 +15,13 @@ const CLUSTER_NAME = 'mock-cluster'
 describe(CatchingUpState.name, () => {
   describe(CatchingUpState.prototype.catchUp.name, () => {
     it('waits when latest block number is missing', async () => {
-      const isResyncRequestedFrom = mockFn().resolvesTo(undefined)
+      const getResyncState = mockFn().resolvesTo({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
       const syncer = createSyncer({
         latestBlockNumber: undefined,
-        isResyncRequestedFrom,
+        getResyncState,
       })
       const state = new CatchingUpState(syncer, Logger.SILENT)
 
@@ -26,19 +29,20 @@ describe(CatchingUpState.name, () => {
 
       expect(nextState).toEqual(state)
       expect(state.status).toEqual('waiting for block number')
-      expect(isResyncRequestedFrom).not.toHaveBeenCalled()
+      expect(getResyncState).not.toHaveBeenCalled()
     })
 
-    it('resyncs from requested timestamp, clears flag and switches to following', async () => {
-      const deleteAllClusterData = mockFn().resolvesTo(undefined)
+    it('resyncs from requested timestamp after wipe, clears flag and switches to following', async () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const getLogs = mockFn().resolvesTo([])
-      const setResyncRequestedFrom = mockFn().resolvesTo(undefined)
+      const clearResyncRequestUnlessWipePending = mockFn().resolvesTo(1)
 
       const syncer = createSyncer({
         latestBlockNumber: 10n,
-        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(5)),
-        deleteAllClusterData,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: false,
+        }),
         getLastSyncedRange: mockFn().resolvesTo(
           makeSyncedRange({ toBlock: 3n }),
         ),
@@ -49,7 +53,7 @@ describe(CatchingUpState.name, () => {
           interopPluginSyncState: mockObject<
             InteropEventSyncer['db']['interopPluginSyncState']
           >({
-            setResyncRequestedFrom,
+            clearResyncRequestUnlessWipePending,
           }),
         }),
       })
@@ -58,7 +62,6 @@ describe(CatchingUpState.name, () => {
       const nextState = await state.catchUp()
 
       expect(nextState).toBeA(FollowingState)
-      expect(deleteAllClusterData).toHaveBeenCalled()
       expect(getLogs).not.toHaveBeenCalled()
       expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
         fromBlock: 5n,
@@ -66,11 +69,31 @@ describe(CatchingUpState.name, () => {
         toBlock: 10n,
         toTimestamp: UnixTime(10),
       })
-      expect(setResyncRequestedFrom).toHaveBeenCalledWith(
+      expect(clearResyncRequestUnlessWipePending).toHaveBeenCalledWith(
         CLUSTER_NAME,
         CHAIN,
-        null,
       )
+    })
+
+    it('waits for wipe when resync is requested and wipeRequired is set', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: true,
+        }),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
+      expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
     it('switches to following when already synced to latest block', async () => {
@@ -302,8 +325,11 @@ function createSyncer(
       plugins: [],
     } as InteropEventSyncer['cluster'],
     latestBlockNumber: 10n,
-    isResyncRequestedFrom: mockFn().resolvesTo(undefined),
-    deleteAllClusterData: mockFn().resolvesTo(undefined),
+    waitingForWipe: false,
+    getResyncState: mockFn().resolvesTo({
+      resyncFrom: undefined,
+      wipeRequired: false,
+    }),
     getLastSyncedRange: mockFn().resolvesTo(undefined),
     getBlockByNumber: mockFn().executes((blockNumber: bigint) =>
       makeRpcBlock(blockNumber),
@@ -317,7 +343,7 @@ function createSyncer(
       interopPluginSyncState: mockObject<
         InteropEventSyncer['db']['interopPluginSyncState']
       >({
-        setResyncRequestedFrom: mockFn().resolvesTo(undefined),
+        clearResyncRequestUnlessWipePending: mockFn().resolvesTo(1),
       }),
     }),
     ...overrides,

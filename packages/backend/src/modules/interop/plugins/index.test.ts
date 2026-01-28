@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockObject } from 'earl'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
@@ -11,7 +12,7 @@ import {
   pluginsAsClusters,
 } from './index'
 import type { InteropPlugin } from './types'
-import { definedNetworks } from './types'
+import { definedNetworks, isPluginResyncable } from './types'
 
 describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
@@ -21,6 +22,7 @@ describe('Interop Plugins', async () => {
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,
     rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
+    tokenDbClient: mockObject<TokenDbClient>(),
   })
 
   before(async () => {
@@ -52,6 +54,21 @@ describe('Interop Plugins', async () => {
           assert(plugin.matchTypes, `matchTypes missing for ${plugin.name}`)
         })
       }
+    }
+  })
+
+  describe('clusters do not mix resyncable and non-resyncable plugins', () => {
+    for (const cluster of pluginsAsClusters(plugins.eventPlugins)) {
+      it(cluster.name, () => {
+        const resyncableCount =
+          cluster.plugins.filter(isPluginResyncable).length
+        const isMixed =
+          resyncableCount > 0 && resyncableCount < cluster.plugins.length
+        assert(
+          !isMixed,
+          `Cluster "${cluster.name}" mixes resyncable and non-resyncable plugins.`,
+        )
+      })
     }
   })
 

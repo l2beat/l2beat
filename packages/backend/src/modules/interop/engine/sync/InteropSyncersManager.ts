@@ -7,6 +7,7 @@ import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
 
 export type PluginSyncStatus = {
@@ -26,9 +27,10 @@ export class InteropSyncersManager {
     string, // plugin cluster name
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
+  private dataCleaners: InteropDataCleaner[] = []
 
   constructor(
-    private readonly pluginClusters: PluginCluster[],
+    readonly pluginClusters: PluginCluster[],
     enabledChains: LongChainName[],
     chainConfigs: ChainApi[],
     eventStore: InteropEventStore,
@@ -45,6 +47,9 @@ export class InteropSyncersManager {
           `Cluster of plugins '${cluster.name} contains mix of non- and resyncable plugins. They must all be the same kind.`,
         )
       }
+
+      const clusterSyncers: InteropEventSyncer[] = []
+
       for (const chain of enabledChains) {
         const chainConfig = chainConfigs.find((c) => c.name === chain)
         if (!chainConfig) {
@@ -59,9 +64,22 @@ export class InteropSyncersManager {
           db,
           logger,
         )
+        clusterSyncers.push(eventSyncer)
         this.syncers
           .getOrInsertComputed(cluster.name, () => new UpsertMap())
           .set(chain, eventSyncer)
+      }
+
+      if (clusterSyncers.length > 0) {
+        this.dataCleaners.push(
+          new InteropDataCleaner(
+            { name: cluster.name, plugins: resyncablePlugins },
+            clusterSyncers,
+            eventStore,
+            db,
+            logger,
+          ),
+        )
       }
     }
   }
@@ -71,6 +89,9 @@ export class InteropSyncersManager {
       for (const syncer of chain.values()) {
         syncer.start()
       }
+    }
+    for (const cleaner of this.dataCleaners) {
+      cleaner.start()
     }
   }
 
@@ -112,7 +133,7 @@ export class InteropSyncersManager {
 
       const http = new Http({
         logger: rpcLogger,
-        maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
+        maxCallsPerMinute: 500, // rpcConfig.callsPerMinute
       })
 
       client = new EthRpcClient(

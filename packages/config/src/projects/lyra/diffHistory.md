@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x3b27e81a317c5dfc340afb54cc10a20b702e8dc9
+
+# Diff at Tue, 27 Jan 2026 11:32:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768989802
+- current timestamp: 1769513434
+
+## Description
+
+New member added to Conduit Multisig 1, increasing from 4 of 12 to 4 of 13 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
 Generated with discovered.json: 0xa7e9d111172747410419806c66f5418a25f9cde7
 
 # Diff at Wed, 21 Jan 2026 10:04:26 GMT:

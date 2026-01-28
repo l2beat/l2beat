@@ -38,16 +38,18 @@ export const InterchainTransfer = createInteropEventType<{
   matchId: string
   amount: bigint
   tokenAddress?: Address32
+  srcWasBurned?: boolean
   $dstChain: string
-}>('axelar-its.InterchainTransfer')
+}>('axelar-its.InterchainTransfer', { direction: 'outgoing' })
 
 export const InterchainTransferReceived = createInteropEventType<{
   matchId: string
   commandId: `0x${string}`
   amount: bigint
   tokenAddress?: Address32
+  dstWasMinted?: boolean
   $srcChain: string
-}>('axelar-its.InterchainTransferReceived')
+}>('axelar-its.InterchainTransferReceived', { direction: 'incoming' })
 
 export class AxelarITSPlugin implements InteropPlugin {
   readonly name = 'axelar-its'
@@ -55,7 +57,7 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
-      const tokenAddress = findParsedAround(
+      const transferInfo = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -64,7 +66,10 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== interchainTransfer.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
         },
       )
 
@@ -86,7 +91,8 @@ export class AxelarITSPlugin implements InteropPlugin {
         InterchainTransfer.create(input, {
           matchId,
           amount: interchainTransfer.amount,
-          tokenAddress: tokenAddress,
+          tokenAddress: transferInfo?.address,
+          srcWasBurned: transferInfo?.burned,
           $dstChain,
         }),
       ]
@@ -97,7 +103,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
-      const tokenAddress = findParsedAround(
+      const transferInfo = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -106,7 +112,10 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== interchainTransferReceived.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            minted: Address32.from(transfer.from) === Address32.ZERO,
+          }
         },
       )
 
@@ -128,7 +137,8 @@ export class AxelarITSPlugin implements InteropPlugin {
           matchId,
           commandId: interchainTransferReceived.commandId,
           amount: interchainTransferReceived.amount,
-          tokenAddress: tokenAddress,
+          tokenAddress: transferInfo?.address,
+          dstWasMinted: transferInfo?.minted,
           $srcChain,
         }),
       ]
@@ -170,9 +180,11 @@ export class AxelarITSPlugin implements InteropPlugin {
           srcEvent: interchainTransfer,
           srcAmount: interchainTransfer.args.amount,
           srcTokenAddress: interchainTransfer.args.tokenAddress,
+          srcWasBurned: interchainTransfer.args.srcWasBurned,
           dstEvent: interchainTransferReceived,
           dstAmount: interchainTransferReceived.args.amount,
           dstTokenAddress: interchainTransferReceived.args.tokenAddress,
+          dstWasMinted: interchainTransferReceived.args.dstWasMinted,
         }),
       ]
     }

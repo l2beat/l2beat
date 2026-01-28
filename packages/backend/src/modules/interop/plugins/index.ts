@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient, IRpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import type { InteropComparePlugin } from '../engine/compare/InteropCompareLoop'
 import type {
   InteropConfigPlugin,
@@ -61,13 +62,14 @@ import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 import { ZklinkNovaPlugin } from './zklink-nova'
+import { ZkStackConfigPlugin } from './zkstack/zkstack.config'
 
 export interface PluginCluster {
   name: string
   plugins: InteropPlugin[]
 }
 
-import { ZkStackPlugin } from './zkstack'
+import { ZkStackPlugin } from './zkstack/zkstack.plugin'
 
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
@@ -81,6 +83,7 @@ export interface InteropPluginDependencies {
   rpcClients: IRpcClient[]
   logger: Logger
   configs: InteropConfigStore
+  tokenDbClient: TokenDbClient
 }
 
 export function createInteropPlugins(
@@ -89,7 +92,6 @@ export function createInteropPlugins(
   const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
   assert(ethereumRpc)
   const rpcs = new Map(deps.rpcClients.map((r) => [r.chain, r]))
-
   return {
     comparePlugins: [new AcrossComparePlugin()],
     configPlugins: [
@@ -112,6 +114,12 @@ export function createInteropPlugins(
         deps.logger,
         deps.httpClient,
         rpcs,
+      ),
+      new ZkStackConfigPlugin(
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.tokenDbClient,
       ),
     ],
     eventPlugins: [
@@ -199,7 +207,7 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new GasZipPlugin(deps.logger),
-      new ZkStackPlugin(),
+      new ZkStackPlugin(deps.configs),
     ],
   }
 }

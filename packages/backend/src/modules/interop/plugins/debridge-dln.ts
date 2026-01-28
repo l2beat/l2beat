@@ -43,7 +43,7 @@ export const CreatedOrder = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $dstChain: string
-}>('debridge-dln.CreatedOrder')
+}>('debridge-dln.CreatedOrder', { direction: 'outgoing' })
 
 const FulfilledOrder = createInteropEventType<{
   orderId: `0x${string}`
@@ -52,29 +52,29 @@ const FulfilledOrder = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $srcChain: string
-}>('debridge-dln.FulfilledOrder')
+}>('debridge-dln.FulfilledOrder', { direction: 'incoming' })
 
 export const SentOrderUnlock = createInteropEventType<{
   orderId: `0x${string}`
   beneficiary: Address32
   submissionId: `0x${string}`
-}>('debridge-dln.SentOrderUnlock')
+}>('debridge-dln.SentOrderUnlock', { direction: 'outgoing' })
 
 export const ClaimedUnlock = createInteropEventType<{
   orderId: `0x${string}`
   beneficiary: Address32
   giveAmount: bigint
   giveTokenAddress: Address32
-}>('debridge-dln.ClaimedUnlock')
+}>('debridge-dln.ClaimedUnlock', { direction: 'incoming' })
 
 export const SentOrderCancel = createInteropEventType<{
   orderId: `0x${string}`
   submissionId: `0x${string}`
-}>('debridge-dln.SentOrderCancel')
+}>('debridge-dln.SentOrderCancel', { direction: 'outgoing' })
 
 export const ClaimedOrderCancel = createInteropEventType<{
   orderId: `0x${string}`
-}>('debridge-dln.ClaimedOrderCancel')
+}>('debridge-dln.ClaimedOrderCancel', { direction: 'incoming' })
 
 export class DeBridgeDlnPlugin implements InteropPlugin {
   readonly name = 'debridge-dln'
@@ -203,9 +203,11 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           srcEvent: orderCreated,
           srcTokenAddress: orderCreated.args.fromToken,
           srcAmount: orderCreated.args.fromAmount,
+          srcWasBurned: false,
           dstEvent: fulfilledOrder_claimedUnlock,
           dstTokenAddress: fulfilledOrder_claimedUnlock.args.toToken,
           dstAmount: fulfilledOrder_claimedUnlock.args.fillAmount,
+          dstWasMinted: false,
         }),
       ]
     }
