@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropProtocolData = {
@@ -35,20 +35,26 @@ export function getTopProtocols(
     0,
   )
 
-  return Array.from(map.entries()).map(([key, data]): InteropProtocolData => {
-    const project = interopProjects.find((p) => p.id === key)
-    assert(project, `Project not found: ${key}`)
+  return Array.from(map.entries())
+    .map(([key, data]): InteropProtocolData | undefined => {
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
+      if (project.interopConfig.subgroupId) {
+        return undefined
+      }
 
-    return {
-      protocolName: project?.interopConfig.name ?? project.name,
-      volume: {
-        value: data.volume,
-        share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,
-      },
-      transfers: {
-        value: data.transfers,
-        share: totalTransfers > 0 ? (data.transfers / totalTransfers) * 100 : 0,
-      },
-    }
-  })
+      return {
+        protocolName: project?.interopConfig.name ?? project.name,
+        volume: {
+          value: data.volume,
+          share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,
+        },
+        transfers: {
+          value: data.transfers,
+          share:
+            totalTransfers > 0 ? (data.transfers / totalTransfers) * 100 : 0,
+        },
+      }
+    })
+    .filter(notUndefined)
 }
