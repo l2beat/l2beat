@@ -89,9 +89,11 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: false,
             extraEvents: [messageRelayed],
           }),
         )

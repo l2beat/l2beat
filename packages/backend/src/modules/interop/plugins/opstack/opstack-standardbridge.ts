@@ -342,9 +342,11 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: erc20BridgeInitiated,
           srcAmount: erc20BridgeInitiated.args.amount,
           srcTokenAddress: erc20BridgeInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -380,9 +382,11 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: ethBridgeInitiated,
           srcAmount: ethBridgeInitiated.args.amount,
           srcTokenAddress: Address32.NATIVE,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.NATIVE,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -430,9 +434,11 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: ethBridgeInitiated,
           srcAmount: ethBridgeInitiated.args.amount,
           srcTokenAddress: Address32.NATIVE,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.NATIVE,
+          dstWasMinted: true,
           extraEvents,
         }),
       ]
@@ -471,9 +477,11 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: erc20DepositInitiated,
           srcAmount: erc20DepositInitiated.args.amount,
           srcTokenAddress: erc20DepositInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }

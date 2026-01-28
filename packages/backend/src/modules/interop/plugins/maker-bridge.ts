@@ -263,9 +263,11 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: depositInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }
@@ -304,9 +306,11 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }

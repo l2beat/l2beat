@@ -220,9 +220,11 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
           srcEvent: depositBridgeInitiated,
           srcAmount: depositBridgeInitiated.args.amount,
           srcTokenAddress: depositBridgeInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }
@@ -260,9 +262,11 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
           srcEvent: withdrawalBridgeInitiated,
           srcAmount: withdrawalBridgeInitiated.args.amount,
           srcTokenAddress: withdrawalBridgeInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }
