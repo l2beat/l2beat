@@ -107,9 +107,27 @@ const averageDurationColumn = columnHelper.accessor(
   },
 )
 
+const averageValueAtRiskColumn = columnHelper.accessor('averageValueAtRisk', {
+  header: 'Last 24h avg.\nvalue at risk',
+  invertSorting: true,
+  meta: {
+    align: 'right',
+    headClassName: 'text-2xs',
+  },
+  cell: (ctx) => {
+    if (ctx.row.original.averageValueAtRisk === undefined) return '-'
+    return (
+      <span className="font-medium text-label-value-15">
+        {formatCurrency(ctx.row.original.averageValueAtRisk, 'usd')}
+      </span>
+    )
+  },
+})
+
 export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
+  averageValueAtRiskColumn,
   tokensByVolumeColumn,
 ]
 
