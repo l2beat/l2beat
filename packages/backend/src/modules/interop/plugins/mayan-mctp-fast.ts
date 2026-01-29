@@ -47,9 +47,7 @@ export class MayanMctpFastPlugin implements InteropPluginResyncable {
     const fastMctpAddresses: ChainSpecificAddress[] = []
     for (const chain of FAST_MCTP_CHAINS) {
       try {
-        fastMctpAddresses.push(
-          ChainSpecificAddress.fromLong(chain, FAST_MCTP),
-        )
+        fastMctpAddresses.push(ChainSpecificAddress.fromLong(chain, FAST_MCTP))
       } catch {
         // Chain not supported by ChainSpecificAddress, skip
       }

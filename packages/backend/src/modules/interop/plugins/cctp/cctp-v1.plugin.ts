@@ -110,7 +110,10 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       if (!network.messageTransmitter) continue
       try {
         addresses.push(
-          ChainSpecificAddress.fromLong(network.chain, network.messageTransmitter),
+          ChainSpecificAddress.fromLong(
+            network.chain,
+            network.messageTransmitter,
+          ),
         )
       } catch {
         // Chain not supported by ChainSpecificAddress, skip
