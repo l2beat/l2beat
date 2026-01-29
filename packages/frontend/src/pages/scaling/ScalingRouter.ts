@@ -10,6 +10,7 @@ import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
+import { getScalingProjectLLMData } from './project/getScalingProjectLLMData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
@@ -161,6 +162,29 @@ export function createScalingRouter(
       }
       const html = render(data, req.originalUrl)
       res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/scaling/projects/:slug/llms.txt',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+    }),
+    async (req, res) => {
+      const markdown = await cache.get(
+        {
+          key: ['scaling', 'projects', req.params.slug, 'llms.txt'],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () => getScalingProjectLLMData(req.params.slug),
+      )
+      if (!markdown) {
+        res.status(404).send('Not found')
+        return
+      }
+      res.setHeader('Content-Type', 'text/markdown; charset=utf-8')
+      res.status(200).send(markdown)
     },
   )
 
