@@ -64,7 +64,7 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
-  { chainId: '137', chain: 'polygon' },
+  { chainId: '137', chain: 'polygonpos' },
   // no zksync2, apechain, abstract supported
 ])
 
