@@ -30,7 +30,7 @@ export function getTransferSizeChartData(
     assert(project, `Project not found: ${record.id}`)
     const current = data.get(record.id) || {
       name: project.interopConfig.name ?? project.name,
-      iconUrl: manifest.getUrl(`/icons/${record.id}.png`),
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       countUnder100: 0,
       count100To1K: 0,
       count1KTo10K: 0,

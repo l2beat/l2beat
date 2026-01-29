@@ -71,12 +71,16 @@ const chartMeta = {
 
 export function TransferSizeChart({ data, isLoading }: Props) {
   const isClient = useIsClient()
+
   if (isLoading || !isClient) {
     return <Skeleton className="mt-5 h-full w-full" />
   }
 
   return (
-    <SimpleChartContainer meta={chartMeta} className="h-full">
+    <SimpleChartContainer
+      meta={chartMeta}
+      className="h-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
+    >
       <BarChart
         accessibilityLayer
         data={data}
@@ -97,18 +101,18 @@ export function TransferSizeChart({ data, isLoading }: Props) {
               dataKey={actualKey}
               stackId="a"
               fill={chartMeta[actualKey].color}
-              fillOpacity={1}
+              fillOpacity={0.8}
               isAnimationActive={false}
             />,
           ]
         })}
-        <CartesianGrid vertical={false} strokeDasharray="5 5" x={0} />,
+        <CartesianGrid vertical={false} strokeDasharray="5 5" />
         <YAxis
           tickCount={5}
-          tickLine={false}
           axisLine={false}
-          dy={-10}
-          dx={-10}
+          tickLine={false}
+          width={30}
+          dx={5}
           unit="%"
           domain={[0, 100]}
           allowDataOverflow={true}
