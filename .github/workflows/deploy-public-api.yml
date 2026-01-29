@@ -14,46 +14,16 @@ on:
 
 jobs:
   check-changes:
-    name: Check for changes
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    outputs:
-      should_deploy: ${{ steps.check.outputs.should_deploy }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Check if package changed
-        id: check
-        run: |
-          if npx turbo-ignore @l2beat/public-api --fallback=HEAD~1; then
-            echo "should_deploy=true" >> $GITHUB_OUTPUT
-            echo "✓ Public API package changed, will deploy"
-          else
-            echo "should_deploy=false" >> $GITHUB_OUTPUT
-            echo "✗ Public API package unchanged, skipping deployment"
-          fi
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/public-api'
 
   deploy:
     needs: check-changes
     if: needs.check-changes.outputs.should_deploy == 'true'
     uses: ./.github/workflows/build-deploy-coolify.yml
     with:
-      package: public-api
-      dockerfile: Dockerfile.public-api
+      project: public-api
       environment: production
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
