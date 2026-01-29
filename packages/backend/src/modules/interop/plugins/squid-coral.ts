@@ -64,6 +64,8 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
+  { chainId: '137', chain: 'polygon' },
+  // no zksync2, apechain, abstract supported
 ])
 
 export const LogOrderCreated = createInteropEventType<{
