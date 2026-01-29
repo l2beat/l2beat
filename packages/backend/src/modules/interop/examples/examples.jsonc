@@ -2449,16 +2449,16 @@
       {
         "chain": "ethereum",
         "tx": "0x6d5463530e31301203093cf3cbd4a2b58750a91e068b648e6c81a21f6bd9a2d5"
-      },
-      // PoS bridge withdrawal
-      {
-        "chain": "polygonpos",
-        "tx": "0xf0ff5f2c0297fe741751ae507fa8517a7642405554753e853ca5a20b638b8fc2"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
       }
+      // PoS bridge withdrawal
+      // {
+      //   "chain": "polygonpos",
+      //   "tx": "0xf0ff5f2c0297fe741751ae507fa8517a7642405554753e853ca5a20b638b8fc2"
+      // },
+      // {
+      //   "chain": "ethereum",
+      //   "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      // }
     ]
   },
   "sky-bridge": {
