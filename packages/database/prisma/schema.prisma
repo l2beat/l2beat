@@ -566,6 +566,7 @@ model AggregatedInteropToken {
   transferCount    Int
   totalDurationSum Int
   volume           Float    @db.Real
+  avgValueInFlight Float?   @db.Real
 
   @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
 }

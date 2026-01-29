@@ -12,6 +12,7 @@ export interface AggregatedInteropTokenRecord {
   transferCount: number
   totalDurationSum: number
   volume: number
+  avgValueInFlight: number | undefined
 }
 
 export function toRecord(
@@ -26,6 +27,7 @@ export function toRecord(
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
+    avgValueInFlight: row.avgValueInFlight ?? undefined,
   }
 }
 
@@ -41,6 +43,7 @@ export function toRow(
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
+    avgValueInFlight: record.avgValueInFlight,
   }
 }
 

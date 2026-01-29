@@ -459,6 +459,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           5,
           1000,
           5000,
+          1,
         )
         const record2 = record(
           'protocol2',
@@ -695,6 +696,7 @@ function record(
   transferCount = 1,
   totalDurationSum = 0,
   volume = 1000,
+  avgValueInFlight = 1,
 ): AggregatedInteropTokenRecord {
   return {
     timestamp,
@@ -705,5 +707,6 @@ function record(
     transferCount,
     totalDurationSum,
     volume,
+    avgValueInFlight,
   }
 }
