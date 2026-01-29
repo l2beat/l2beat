@@ -16,7 +16,7 @@
 
 export const EXPLORER_URLS: Record<string, string> = {
   ethereum: 'https://etherscan.io',
-  zksync2: 'https://era.zksync.network',
+  zksync2: 'https://explorer.zksync.io',
   arbitrum: 'https://arbiscan.io',
   nova: 'https://nova.arbiscan.io',
   optimism: 'https://optimistic.etherscan.io',
@@ -37,5 +37,6 @@ export const EXPLORER_URLS: Record<string, string> = {
   zircuit: 'https://explorer.zircuit.com',
   metis: 'https://andromeda-explorer.metis.io',
   ethereal: 'https://explorer.ethereal.trade',
+  ethscriptions: 'https://explorer.ethscriptions.com',
   sepolia: 'https://sepolia.etherscan.io',
 }

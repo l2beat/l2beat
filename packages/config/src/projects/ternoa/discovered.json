@@ -1,21 +1,9 @@
 {
   "name": "ternoa",
-  "timestamp": 1762264403,
-  "configHash": "0x59afb46276a25fa69f7ea3db630a53078e1e059a83a97cd4fdfd489e4cae76ae",
+  "timestamp": 1768816541,
+  "configHash": "0x283a72f48183823abf99c76e2064dd3976788748bef2a5f0b2e40160b5ed92b4",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
-    {
-      "address": "eth:0x129A94208bb3030D809c36849d43b50d13e0cACf",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-          "role": ".trustedSequencer"
-        }
-      ]
-    },
     {
       "name": "AgglayerBridge",
       "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -127,7 +115,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x46f279c3ad8f4552d78845e9ae61600c5b0d5eb3a13cf180352e19bc463c5c08",
+        "lastAccInputHash": "0x5a09a53dd81e0b08403e2a60e3f8d8c9b8841fc122aa5f0348c9c53561c5e17e",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
@@ -138,7 +126,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "eth:0x129A94208bb3030D809c36849d43b50d13e0cACf",
+        "trustedSequencer": "eth:0xA2Ce8D246889Db0F1Cb615E2E1231790cd5244A7",
         "trustedSequencerURL": "https://rpc-mainnet.zkevm.ternoa.network"
       },
       "fieldMeta": {
@@ -170,6 +158,18 @@
         "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xA2Ce8D246889Db0F1Cb615E2E1231790cd5244A7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "role": ".trustedSequencer"
+        }
+      ]
     },
     {
       "name": "PolygonDataCommittee",
@@ -424,6 +424,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23726377 },
-  "permissionsConfigHash": "0xdbcc77a6d4193d5320ce3b0c32e1c19608a1d5bb06af249c1cd1a053f476401e"
+  "usedBlockNumbers": { "ethereum": 24268056 },
+  "permissionsConfigHash": "0x5995ab9a08b49f8368c786bc2144cf0a60f6bf5ab0f24f32d17c2ef279f3b2aa"
 }

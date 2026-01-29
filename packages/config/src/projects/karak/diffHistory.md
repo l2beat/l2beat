@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2e8b0f29859755baf465cd715600b95938365ca6
+
+# Diff at Fri, 12 Dec 2025 10:26:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@7bf72bf2e7f3f2920d36572439c307777c13976c block: 1764334235
+- current timestamp: 1765535115
+
+## Description
+
+K2 is posting to Celestia.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x9696d033137fe5d82b7fa59e4a0b5ef38f4fb9e1
 
 # Diff at Fri, 28 Nov 2025 12:52:00 GMT:

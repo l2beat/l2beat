@@ -1,4 +1,162 @@
-Generated with discovered.json: 0x8c2cb25422ebb280311a2342c853ac3aaffb9ed0
+Generated with discovered.json: 0x5a5e21d1f702b4a978de82815108776870ac993a
+
+# Diff at Mon, 12 Jan 2026 11:20:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1767783841
+- current timestamp: 1768216753
+
+## Description
+
+PredicateServiceManager aggregator EOA (`0x38f6001e8ac11240f903CBa56aFF72A1425ae371`) revoked its EIP7702 delegation, returning to a standard EOA. Ownership of the PredicateServiceManager transferred back to a 4/4 multisig (`0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE`) from the previous EOA owner (3 new EOAs added).
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      unverified:
+-        true
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"}
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      values.owner:
+-        "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c"
++        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
+    }
+```
+
+```diff
+    EOA  (eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","description":"can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../intmax/.flat/GnosisSafe/GnosisSafe.sol         | 953 +++++++++++++++++++++
+ .../intmax/.flat/GnosisSafe/GnosisSafeProxy.p.sol  |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+Generated with discovered.json: 0xc8eaab8ca41d4a8d5ae89e50b5c0e6192aac7354
+
+# Diff at Wed, 07 Jan 2026 11:05:12 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@06616d58f9233a17d6fc6d6798b38e1aba76513e block: 1767717509
+- current timestamp: 1767783841
+
+## Description
+
+PredicateServiceManager aggregator 7702-delegated to unverified smart contract.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values.$implementation:
+-        "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
++        "eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"
+      values.delegationManager:
+-        "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3"
+      values.DOMAIN_VERSION:
+-        "1"
+      values.eip712Domain:
+-        {"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
+-        "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getDeposit:
+-        0
+      values.getDomainHash:
+-        "0x7cf15dd1293c71ee6a4c120c19c7a2943ac93931c9c12066915c2efedf0f9e1c"
+      values.getNonce:
+-        0
+      values.NAME:
+-        "EIP7702StatelessDeleGator"
+      values.PACKED_USER_OP_TYPEHASH:
+-        "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18"
+      values.VERSION:
+-        "1.3.0"
+      unverified:
++        true
+    }
+```
+
+Generated with discovered.json: 0x62b02cf18c12df0a3ac7a2044ca2ae08c9f4ccd2
+
+# Diff at Tue, 06 Jan 2026 16:39:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fff3953f1ad2b8af4f603c8d3120130558677a86 block: 1763637734
+- current timestamp: 1767717509
+
+## Description
+
+Removed multisig member, decreased threshold.
+
+## Watched changes
+
+```diff
+    contract INTMAX Multisig 1 (eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 3 (eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.multisigThreshold:
+-        "1 of 5 (20%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 2 (scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xa781746afbb166007d5c3c550ba090f0445a170d
 
 # Diff at Thu, 20 Nov 2025 11:23:19 GMT:
 

@@ -7,6 +7,7 @@ import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
+import { ShortenedHash } from './ShortenedHash'
 
 function MessagesTable(props: {
   messages: InteropMessageRecord[]
@@ -16,6 +17,7 @@ function MessagesTable(props: {
     <table id="myTable" className="display">
       <thead>
         <tr>
+          <th>Plugin</th>
           <th>Timestamp UTC</th>
           <th>Duration</th>
           <th>App</th>
@@ -34,6 +36,7 @@ function MessagesTable(props: {
             <tr
               key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
             >
+              <td>{e.plugin}</td>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
@@ -46,10 +49,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
                   >
-                    {e.srcTxHash}
+                    <ShortenedHash hash={e.srcTxHash} />
                   </a>
                 ) : (
-                  e.srcTxHash
+                  <ShortenedHash hash={e.srcTxHash} />
                 )}
               </td>
               <td>{e.dstChain}</td>
@@ -59,10 +62,10 @@ function MessagesTable(props: {
                     target="_blank"
                     href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
                   >
-                    {e.dstTxHash}
+                    <ShortenedHash hash={e.dstTxHash} />
                   </a>
                 ) : (
-                  e.dstTxHash
+                  <ShortenedHash hash={e.dstTxHash} />
                 )}
               </td>
             </tr>

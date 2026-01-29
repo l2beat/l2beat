@@ -1,11 +1,24 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
-import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
+import type { Database } from '@l2beat/database'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InMemoryCache } from '../../cache/InMemoryCache'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
-import { ContractSchema, DetailedProjectSchema, ProjectSchema } from './types'
+import { getTokensData } from './getTokensData'
+import {
+  ContractSchema,
+  DetailedProjectSchema,
+  ProjectSchema,
+  TokenSchema,
+} from './types'
 
-export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
+export function addProjectsRoutes(
+  openapi: OpenApi,
+  ps: ProjectService,
+  db: Database,
+  cache: InMemoryCache,
+) {
   openapi.get(
     '/v1/projects',
     {
@@ -13,7 +26,7 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
       tags: ['projects'],
       result: v.array(ProjectSchema),
     },
-    async (req, res) => {
+    async (_, res) => {
       const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })
@@ -129,6 +142,51 @@ export function addProjectsRoutes(openapi: OpenApi, ps: ProjectService) {
       )
 
       res.json(contracts)
+    },
+  )
+
+  openapi.get(
+    '/v1/project/:projectId/tokens',
+    {
+      summary: 'List of tokens associated with the project',
+      description: 'This endpoint may be affected by changes in the future.',
+      tags: ['projects'],
+      params: v.object({
+        projectId: v.string(),
+      }),
+      result: v.array(TokenSchema),
+      errors: {
+        404: GenericErrorResponse,
+      },
+    },
+    async (req, res) => {
+      const { projectId } = req.params
+
+      const project = await ps.getProject({
+        id: ProjectId(projectId),
+        optional: ['tvsConfig'],
+      })
+
+      if (!project) {
+        res.status(404).json()
+        return
+      }
+
+      if (!project.tvsConfig) {
+        res.json([])
+        return
+      }
+
+      const data = await cache.get(
+        {
+          key: ['projects', 'tokens', projectId],
+          ttl: 5 * UnixTime.MINUTE,
+          staleWhileRevalidate: 5 * UnixTime.MINUTE,
+        },
+        () => getTokensData(db, project),
+      )
+
+      res.json(data)
     },
   )
 }

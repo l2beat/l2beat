@@ -9,9 +9,12 @@ const discovery = new ProjectDiscovery('karak')
 
 export const karak: ScalingProject = opStackL2({
   addedAt: UnixTime(1687459278), // 2023-06-22T18:41:18Z
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.EthereumCalldata],
+  additionalBadges: [BADGES.RaaS.Caldera],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'K2',
     slug: 'k2',
@@ -20,10 +23,14 @@ export const karak: ScalingProject = opStackL2({
     links: {
       websites: ['https://karak.network/'],
       bridges: ['https://k2bridge.karak.network/'],
+      documentation: [
+        'https://docs.opengdp.network/get-started/introduction/start-here',
+      ],
       explorers: ['https://explorer.karak.network/'],
       socialMedia: [
         'https://twitter.com/Karak_Network',
         'https://t.me/Karak_Network',
+        'https://discord.com/invite/opengdp',
       ],
     },
   },

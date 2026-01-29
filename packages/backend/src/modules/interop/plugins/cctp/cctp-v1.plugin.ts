@@ -47,12 +47,18 @@ This has a problem that the same message sent twice will be identical, however c
 is set by Circle validators, it's hard to say how this can be solved by the matching logic only.
 */
 
-import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
@@ -63,22 +69,23 @@ import {
 } from '../types'
 import { CCTPV1Config } from './cctp.config'
 
-const parseMessageSent = createEventParser('event MessageSent(bytes message)')
+const messageSentLog = 'event MessageSent(bytes message)'
+const parseMessageSent = createEventParser(messageSentLog)
 
-const parseV1MessageReceived = createEventParser(
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
-)
+const v1MessageReceivedLog =
+  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)'
+const parseV1MessageReceived = createEventParser(v1MessageReceivedLog)
 
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+const parseTransfer = createEventParser(transferLog)
 
 export const CCTPv1MessageSent = createInteropEventType<{
   messageBody: string
   $dstChain: string
   srcTokenAddress?: Address32
   srcAmount?: bigint
-}>('cctp-v1.MessageSent')
+}>('cctp-v1.MessageSent', { direction: 'outgoing' })
 
 export const CCTPv1MessageReceived = createInteropEventType<{
   caller: EthereumAddress
@@ -87,12 +94,39 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   messageBody: string
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('cctp-v1.MessageReceived')
+}>('cctp-v1.MessageReceived', { direction: 'incoming' })
 
 export class CCTPV1Plugin implements InteropPlugin {
-  name = 'cctp-v1'
+  readonly name = 'cctp-v1'
 
   constructor(private configs: InteropConfigStore) {}
+
+  pendingGetDataRequests(): DataRequest[] {
+    const networks = this.configs.get(CCTPV1Config)
+    if (!networks) return []
+
+    const networksWithTransmitter = networks.filter(
+      (network): network is typeof network & { messageTransmitter: string } =>
+        network.messageTransmitter !== undefined,
+    )
+    const addresses = networksWithTransmitter.map((network) =>
+      ChainSpecificAddress.fromLong(network.chain, network.messageTransmitter),
+    )
+
+    return [
+      {
+        type: 'event',
+        signature: messageSentLog,
+        addresses,
+      },
+      {
+        type: 'event',
+        signature: v1MessageReceivedLog,
+        includeTxEvents: [transferLog],
+        addresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(CCTPV1Config)
@@ -173,10 +207,16 @@ export class CCTPV1Plugin implements InteropPlugin {
     const network = networks.find((n) => n.chain === messageReceived.ctx.chain)
     if (!network) return
     if (CCTPv1MessageReceived.checkType(messageReceived)) {
-      const messageSent = db.find(CCTPv1MessageSent, {
+      // findAll and use oldest for determinism
+      // there are bots like https://etherscan.io/address/0xfd62020cee216dc543e29752058ee9f60f7d9ff9#tokentxns
+      // who always use the same messageBody
+      const messageSentMatches = db.findAll(CCTPv1MessageSent, {
         messageBody: messageReceived.args.messageBody,
       })
-      if (!messageSent) return
+      if (messageSentMatches.length === 0) return
+      const messageSent = messageSentMatches.sort(
+        (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+      )[0]
       return [
         Result.Message('cctp-v1.Message', {
           app: 'cctp-v1',
@@ -190,6 +230,8 @@ export class CCTPV1Plugin implements InteropPlugin {
           dstEvent: messageReceived,
           dstTokenAddress: messageReceived.args.dstTokenAddress,
           dstAmount: messageReceived.args.dstAmount,
+          srcWasBurned: true,
+          dstWasMinted: true,
         }),
       ]
     }

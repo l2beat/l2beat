@@ -54,9 +54,12 @@ describe('getProjects', () => {
     }
   })
 
-  describe('every non-ecosystem project has statuses and display', () => {
+  describe('every project has statuses and display (except ecosystems and interop protocols)', () => {
     for (const project of projects) {
-      if (project.ecosystemConfig) {
+      if (
+        (project.ecosystemConfig || project.interopConfig) &&
+        (!project.statuses || !project.display)
+      ) {
         continue
       }
       it(project.name, () => {
@@ -382,7 +385,10 @@ describe('getProjects', () => {
       const contracts = chains
         .filter(
           (c) =>
-            c.name !== 'zksync2' && c.name !== 'kinto' && c.name !== 'degen',
+            c.name !== 'zksync2' &&
+            c.name !== 'kinto' &&
+            c.name !== 'degen' &&
+            c.name !== 'abstract',
         ) // we are omitting zksync2, degen and kinto as they use different addresses
         .flatMap(
           (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],
@@ -422,6 +428,24 @@ describe('getProjects', () => {
         }
       }
     })
+
+    describe('every untilTimestamp (if present) is greater than sinceTimestamp', () => {
+      for (const project of projects) {
+        const trackedTxsConfig = project.trackedTxsConfig
+        if (!trackedTxsConfig) continue
+
+        it(project.id, () => {
+          for (const config of trackedTxsConfig) {
+            if (config.untilTimestamp) {
+              expect(config.untilTimestamp).toBeGreaterThan(
+                config.sinceTimestamp,
+              )
+            }
+          }
+        })
+      }
+    })
+
     describe('transfers', () => {
       it('every configuration points to unique transfer params', () => {
         const transfers = new Set<string>()

@@ -30,8 +30,8 @@ export async function getChainConfig(
         case 'etherscan':
           indexerApis.push({
             type: api.type,
-            url: env.string('ETHERSCAN_API_URL'),
-            apiKey: env.string('ETHERSCAN_API_KEY'),
+            url: api.customUrl ?? env.string('ETHERSCAN_API_URL'),
+            apiKey: api.customUrl ? '' : env.string('ETHERSCAN_API_KEY'),
             chainId: api.chainId,
           })
           break
@@ -59,6 +59,7 @@ export async function getChainConfig(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             ),
+            timeout: env.optionalInteger(Env.key(chain, 'RPC_TIMEOUT')),
             multicallV3: multicallV3
               ? {
                   address: multicallV3.address,

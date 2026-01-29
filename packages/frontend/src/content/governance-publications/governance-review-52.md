@@ -263,7 +263,7 @@ By embedding Scroll in Kenya’s payments, remittance, and RWA tokenization surg
 
 ### **Kenya Scroll Node Founder Program Proposal**
 
-Web3Clubs — the Nairobi-based incubator that already anchors a 5,000-member developer network and maintains close ties to Kenya’s regulators, exchanges, and mobile-money giants — [is asking Scroll DAO for a one-off](https://forum.scroll.io/t/kenya-scroll-node-founder-program-proposal/730) grant of $33k (≈ 89 k SCR) to run a three-month “Scroll Founder Programme.” The cohort would shepherd five to ten African teams from idea to on-chain launch, using Scroll’s Open Zero curriculum and a three-stage pipeline dubbed Msingi (foundation), Daraja (bridge), and Vuka (go-to-market). Founders would spend two weeks in orientation, six weeks refining business models and MVPs under local and global mentors, then six weeks inside the Open Zero track polishing UX, demos, and growth plans before a Nairobi demo day and listing on [openeconomy.xyz](openeconomy.xyz). Success will be judged on complex outputs—at least five Scroll-deployed MVPs, three integrations with banks or payment rails, three sandbox applications to Kenya’s Capital-Markets Authority—and on softer targets such as seventy new Scroll-aligned developers and one team graduating into Open Campus or securing outside funding.
+Web3Clubs — the Nairobi-based incubator that already anchors a 5,000-member developer network and maintains close ties to Kenya’s regulators, exchanges, and mobile-money giants — [is asking Scroll DAO for a one-off](https://forum.scroll.io/t/kenya-scroll-node-founder-program-proposal/730) grant of $33k (≈ 89 k SCR) to run a three-month “Scroll Founder Programme.” The cohort would shepherd five to ten African teams from idea to on-chain launch, using Scroll’s Open Zero curriculum and a three-stage pipeline dubbed Msingi (foundation), Daraja (bridge), and Vuka (go-to-market). Founders would spend two weeks in orientation, six weeks refining business models and MVPs under local and global mentors, then six weeks inside the Open Zero track polishing UX, demos, and growth plans before a Nairobi demo day and listing on [openeconomy.xyz](https://openeconomy.xyz/). Success will be judged on complex outputs—at least five Scroll-deployed MVPs, three integrations with banks or payment rails, three sandbox applications to Kenya’s Capital-Markets Authority—and on softer targets such as seventy new Scroll-aligned developers and one team graduating into Open Campus or securing outside funding.
 
 **Discuss with L2BEAT**
 
@@ -272,5 +272,6 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 **Upcoming Events (Times in UTC):**
 
 [Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 21.5 at 11:30.
+
 
 [Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 21.5 at 17:00.

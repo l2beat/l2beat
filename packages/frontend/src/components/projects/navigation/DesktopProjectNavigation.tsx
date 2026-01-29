@@ -9,7 +9,6 @@ import {
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { usePathname } from '~/hooks/usePathname'
 import { useRouter } from '~/hooks/useRouter'
-import { SummaryIcon } from '~/icons/Summary'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import type { ProjectNavigationSection } from './types'
@@ -115,15 +114,7 @@ export function DesktopProjectNavigation({
         </div>
 
         <SectionNavigation
-          indexOffset={-1}
-          sections={[
-            {
-              id: 'summary',
-              title: 'Summary',
-              icon: <SummaryIcon className="-left-px relative size-5" />,
-            },
-            ...sections,
-          ]}
+          sections={sections}
           className={
             project.isUnderReview
               ? 'max-h-[calc(100vh-300px)]'

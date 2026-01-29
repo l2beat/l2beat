@@ -1,4 +1,4537 @@
-Generated with discovered.json: 0xa27d5dfea877513c2cb9715522e9c23e7886238c
+Generated with discovered.json: 0x0ea7166f514c086419d054c81a816ceff923b828
+
+# Diff at Mon, 26 Jan 2026 12:59:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999500
+- current timestamp: 1769432271
+
+## Description
+
+ms changes and new unverified tokenPools.
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.0:
+-        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":11}
+      values.getConfig.signers.1:
+-        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":11}
+      values.getConfig.signers.2:
+-        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":7}
+      values.getConfig.signers.3:
+-        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":3,"group":14}
+      values.getConfig.signers.4.group:
+-        5
++        18
+      values.getConfig.signers.4.index:
+-        4
++        0
+      values.getConfig.signers.4.addr:
+-        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.getConfig.signers.5.group:
+-        11
++        17
+      values.getConfig.signers.5.index:
+-        5
++        1
+      values.getConfig.signers.5.addr:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
++        "eth:0x04189A291cC7E497015B45D4bb046DC0A8258068"
+      values.getConfig.signers.6.group:
+-        14
++        18
+      values.getConfig.signers.6.index:
+-        6
++        2
+      values.getConfig.signers.6.addr:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
++        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.getConfig.signers.7.group:
+-        14
++        16
+      values.getConfig.signers.7.index:
+-        7
++        3
+      values.getConfig.signers.7.addr:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
++        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.getConfig.signers.8.group:
+-        10
++        11
+      values.getConfig.signers.8.index:
+-        8
++        4
+      values.getConfig.signers.8.addr:
+-        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
++        "eth:0x146CAe49Dbe1b1D1968fc4652814740706548952"
+      values.getConfig.signers.9.group:
+-        13
++        21
+      values.getConfig.signers.9.index:
+-        9
++        5
+      values.getConfig.signers.9.addr:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
++        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.getConfig.signers.10.group:
+-        4
++        2
+      values.getConfig.signers.10.index:
+-        10
++        6
+      values.getConfig.signers.10.addr:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.11.group:
+-        1
++        18
+      values.getConfig.signers.11.index:
+-        11
++        7
+      values.getConfig.signers.11.addr:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.getConfig.signers.12.group:
+-        1
++        21
+      values.getConfig.signers.12.index:
+-        12
++        8
+      values.getConfig.signers.12.addr:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.getConfig.signers.13.group:
+-        13
++        21
+      values.getConfig.signers.13.index:
+-        13
++        9
+      values.getConfig.signers.13.addr:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
++        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.getConfig.signers.14.group:
+-        3
++        20
+      values.getConfig.signers.14.index:
+-        14
++        10
+      values.getConfig.signers.14.addr:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.getConfig.signers.15.group:
+-        13
++        8
+      values.getConfig.signers.15.index:
+-        15
++        11
+      values.getConfig.signers.15.addr:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
++        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.16.group:
+-        9
++        15
+      values.getConfig.signers.16.index:
+-        16
++        12
+      values.getConfig.signers.16.addr:
+-        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
++        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.17.group:
+-        13
++        10
+      values.getConfig.signers.17.index:
+-        17
++        13
+      values.getConfig.signers.17.addr:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.18.group:
+-        1
++        20
+      values.getConfig.signers.18.index:
+-        18
++        14
+      values.getConfig.signers.18.addr:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.getConfig.signers.19.group:
+-        13
++        6
+      values.getConfig.signers.19.index:
+-        19
++        15
+      values.getConfig.signers.19.addr:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
++        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.20.group:
+-        3
++        20
+      values.getConfig.signers.20.index:
+-        20
++        16
+      values.getConfig.signers.20.addr:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.getConfig.signers.21.group:
+-        14
++        20
+      values.getConfig.signers.21.index:
+-        21
++        17
+      values.getConfig.signers.21.addr:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
++        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.22.index:
+-        22
++        18
+      values.getConfig.signers.22.addr:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
++        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.23.group:
+-        1
++        20
+      values.getConfig.signers.23.index:
+-        23
++        19
+      values.getConfig.signers.23.addr:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.getConfig.signers.24.group:
+-        13
++        6
+      values.getConfig.signers.24.index:
+-        24
++        20
+      values.getConfig.signers.24.addr:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
++        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.25.group:
+-        14
++        21
+      values.getConfig.signers.25.index:
+-        25
++        21
+      values.getConfig.signers.25.addr:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
++        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.getConfig.signers.26.group:
+-        10
++        21
+      values.getConfig.signers.26.index:
+-        26
++        22
+      values.getConfig.signers.26.addr:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.getConfig.signers.27.group:
+-        15
++        12
+      values.getConfig.signers.27.index:
+-        27
++        23
+      values.getConfig.signers.27.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.28.group:
+-        2
++        20
+      values.getConfig.signers.28.index:
+-        28
++        24
+      values.getConfig.signers.28.addr:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.getConfig.signers.29.group:
+-        1
++        21
+      values.getConfig.signers.29.index:
+-        29
++        25
+      values.getConfig.signers.29.addr:
+-        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.30.group:
+-        2
++        7
+      values.getConfig.signers.30.index:
+-        30
++        26
+      values.getConfig.signers.30.addr:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.31.group:
+-        15
++        22
+      values.getConfig.signers.31.index:
+-        31
++        27
+      values.getConfig.signers.31.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.32.group:
+-        15
++        4
+      values.getConfig.signers.32.index:
+-        32
++        28
+      values.getConfig.signers.32.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.33.group:
+-        1
++        4
+      values.getConfig.signers.33.index:
+-        33
++        29
+      values.getConfig.signers.33.addr:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.34.group:
+-        14
++        22
+      values.getConfig.signers.34.index:
+-        34
++        30
+      values.getConfig.signers.34.addr:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.35.group:
+-        7
++        22
+      values.getConfig.signers.35.index:
+-        35
++        31
+      values.getConfig.signers.35.addr:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.36.group:
+-        11
++        5
+      values.getConfig.signers.36.index:
+-        36
++        32
+      values.getConfig.signers.36.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.37.group:
+-        6
++        16
+      values.getConfig.signers.37.index:
+-        37
++        33
+      values.getConfig.signers.37.addr:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.38.group:
+-        14
++        18
+      values.getConfig.signers.38.index:
+-        38
++        34
+      values.getConfig.signers.38.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.39.group:
+-        14
++        13
+      values.getConfig.signers.39.index:
+-        39
++        35
+      values.getConfig.signers.39.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.40.group:
+-        5
++        21
+      values.getConfig.signers.40.index:
+-        40
++        36
+      values.getConfig.signers.40.addr:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.41.group:
+-        13
++        21
+      values.getConfig.signers.41.index:
+-        41
++        37
+      values.getConfig.signers.41.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.42.group:
+-        13
++        2
+      values.getConfig.signers.42.index:
+-        42
++        38
+      values.getConfig.signers.42.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.43.group:
+-        13
++        20
+      values.getConfig.signers.43.index:
+-        43
++        39
+      values.getConfig.signers.43.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.44.group:
+-        8
++        20
+      values.getConfig.signers.44.index:
+-        44
++        40
+      values.getConfig.signers.44.addr:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.45.group:
+-        9
++        20
+      values.getConfig.signers.45.index:
+-        45
++        41
+      values.getConfig.signers.45.addr:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.46.group:
+-        6
++        3
+      values.getConfig.signers.46.index:
+-        46
++        42
+      values.getConfig.signers.46.addr:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.47.group:
+-        15
++        17
+      values.getConfig.signers.47.index:
+-        47
++        43
+      values.getConfig.signers.47.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.48.group:
+-        1
++        13
+      values.getConfig.signers.48.index:
+-        48
++        44
+      values.getConfig.signers.48.addr:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.49.group:
+-        4
++        22
+      values.getConfig.signers.49.index:
+-        49
++        45
+      values.getConfig.signers.49.addr:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.50.group:
+-        11
++        9
+      values.getConfig.signers.50.index:
+-        50
++        46
+      values.getConfig.signers.50.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.51.group:
+-        13
++        8
+      values.getConfig.signers.51.index:
+-        51
++        47
+      values.getConfig.signers.51.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.52.group:
+-        8
++        18
+      values.getConfig.signers.52.index:
+-        52
++        48
+      values.getConfig.signers.52.addr:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.53.group:
+-        14
++        20
+      values.getConfig.signers.53.index:
+-        53
++        49
+      values.getConfig.signers.53.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.54.group:
+-        14
++        3
+      values.getConfig.signers.54.index:
+-        54
++        50
+      values.getConfig.signers.54.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.55.group:
+-        14
++        21
+      values.getConfig.signers.55.index:
+-        55
++        51
+      values.getConfig.signers.55.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.56.group:
+-        14
++        21
+      values.getConfig.signers.56.index:
+-        56
++        52
+      values.getConfig.signers.56.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.57.group:
+-        4
++        21
+      values.getConfig.signers.57.index:
+-        57
++        53
+      values.getConfig.signers.57.addr:
+-        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.58.group:
+-        13
++        20
+      values.getConfig.signers.58.index:
+-        58
++        54
+      values.getConfig.signers.59.group:
+-        4
++        8
+      values.getConfig.signers.59.index:
+-        59
++        55
+      values.getConfig.signers.60.group:
+-        6
++        13
+      values.getConfig.signers.60.index:
+-        60
++        56
+      values.getConfig.signers.61.group:
+-        15
++        21
+      values.getConfig.signers.61.index:
+-        61
++        57
+      values.getConfig.signers.62.group:
+-        14
++        21
+      values.getConfig.signers.62.index:
+-        62
++        58
+      values.getConfig.signers.63.group:
+-        13
++        20
+      values.getConfig.signers.63.index:
+-        63
++        59
+      values.getConfig.signers.64.group:
+-        13
++        20
+      values.getConfig.signers.64.index:
+-        64
++        60
+      values.getConfig.signers.65.group:
+-        13
++        20
+      values.getConfig.signers.65.index:
+-        65
++        61
+      values.getConfig.signers.66.group:
+-        14
++        21
+      values.getConfig.signers.66.index:
+-        66
++        62
+      values.getConfig.signers.67.group:
+-        13
++        20
+      values.getConfig.signers.67.index:
+-        67
++        63
+      values.getConfig.signers.68.group:
+-        11
++        18
+      values.getConfig.signers.68.index:
+-        68
++        64
+      values.getConfig.signers.69.group:
+-        11
++        18
+      values.getConfig.signers.69.index:
+-        69
++        65
+      values.getConfig.signers.70.group:
+-        15
++        22
+      values.getConfig.signers.70.index:
+-        70
++        66
+      values.getConfig.groupQuorums.2:
++        1
+      values.getConfig.groupQuorums.3:
++        1
+      values.getConfig.groupQuorums.4:
++        1
+      values.getConfig.groupQuorums.5:
++        1
+      values.getConfig.groupQuorums.6:
++        1
+      values.getConfig.groupQuorums.7:
++        1
+      values.getConfig.groupQuorums.8:
++        1
+      values.getConfig.groupQuorums.16:
+-        0
+      values.getConfig.groupQuorums.17:
+-        0
+      values.getConfig.groupQuorums.18:
+-        0
+      values.getConfig.groupQuorums.19:
+-        0
+      values.getConfig.groupQuorums.20:
+-        0
+      values.getConfig.groupQuorums.21:
+-        0
+      values.getConfig.groupQuorums.22:
+-        0
+      values.getConfig.groupParents.11:
+-        0
++        1
+      values.getConfig.groupParents.12:
+-        0
++        1
+      values.getConfig.groupParents.13:
+-        12
++        1
+      values.getConfig.groupParents.14:
+-        12
++        1
+      values.getConfig.groupParents.15:
+-        12
++        1
+      values.getConfig.groupParents.16:
+-        0
++        1
+      values.getConfig.groupParents.17:
+-        0
++        1
+      values.getConfig.groupParents.20:
+-        0
++        19
+      values.getConfig.groupParents.21:
+-        0
++        19
+      values.getConfig.groupParents.22:
+-        0
++        19
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      values.getConfig.signers.56:
+-        {"addr":"eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65","index":56,"group":11}
+      values.getConfig.signers.57.index:
+-        57
++        56
+      values.getConfig.signers.58.index:
+-        58
++        57
+      values.getConfig.signers.59.index:
+-        59
++        58
+      values.getConfig.signers.60.index:
+-        60
++        59
+      values.getConfig.signers.61.index:
+-        61
++        60
+      values.getConfig.signers.62.index:
+-        62
++        61
+      values.getConfig.signers.63.index:
+-        63
++        62
+      values.getConfig.signers.64.index:
+-        64
++        63
+      values.getConfig.signers.65.index:
+-        65
++        64
+      values.getConfig.signers.66.index:
+-        66
++        65
+      values.getConfig.signers.67.index:
+-        67
++        66
+      values.getConfig.signers.68.index:
+-        68
++        67
+      values.getConfig.signers.69.index:
+-        69
++        68
+      values.getConfig.signers.70.index:
+-        70
++        69
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.322:
++        "eth:0x035E4d17Be1A0D2727b2035e030c4525Ce3EDCf4"
+      values.pools.323:
++        "eth:0xF1ea4D1E49B43D2f0d5DDE8e065247F2B75e794c"
+      values.pools.324:
++        "eth:0xADD9d7eAbD2b1504CF671C9A2F1EDC25DA81ade7"
+      values.pools.325:
++        "eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773"
+      values.pools.326:
++        "eth:0x9e10292dc8e6848256881589E71Eb5382e8173ae"
+      values.pools.327:
++        "eth:0x713e82fFa4485a1D324ef5b9Ff4B04C28e100aa9"
+      values.pools.328:
++        "eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1"
+      values.pools.329:
++        "eth:0x578b5aB9a75Cb37cC0F25108417cfd489b5B16e1"
+      values.poolsMap.eth:0x228F6BeC1b04B5A3Da52B6Da2DBDdCa046444C88:
++        "eth:0x035E4d17Be1A0D2727b2035e030c4525Ce3EDCf4"
+      values.poolsMap.eth:0x8d2Cc7A489666ECFC6120A817b5EeE720aE2cccf:
++        "eth:0xF1ea4D1E49B43D2f0d5DDE8e065247F2B75e794c"
+      values.poolsMap.eth:0x682701193e669092C1987D444186fC2a5CFc6A72:
++        "eth:0xADD9d7eAbD2b1504CF671C9A2F1EDC25DA81ade7"
+      values.poolsMap.eth:0xBa9c7933c8b4442AcDee24c73E76D403aFB87bd1:
++        "eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773"
+      values.poolsMap.eth:0x9292884280391bbD3418A1d0A96a22a579f5874F:
++        "eth:0x9e10292dc8e6848256881589E71Eb5382e8173ae"
+      values.poolsMap.eth:0x987bE894C30da0D5617470dfc7392f5695961fC2:
++        "eth:0x713e82fFa4485a1D324ef5b9Ff4B04C28e100aa9"
+      values.poolsMap.eth:0x9f6714C302ffe3c3bAFaf2Ccb44201fF64f6371C:
++        "eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1"
+      values.poolsMap.eth:0x3fea1cb36D2C5523c062d0E060EAC253608b4DAf:
++        "eth:0x578b5aB9a75Cb37cC0F25108417cfd489b5B16e1"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) {
+    +++ description: None
+      values.getConfig.signers.31:
+-        {"addr":"eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65","index":31,"group":2}
+      values.getConfig.signers.32.index:
+-        32
++        31
+      values.getConfig.signers.33.index:
+-        33
++        32
+      values.getConfig.signers.34.index:
+-        34
++        33
+      values.getConfig.signers.35.index:
+-        35
++        34
+      values.getConfig.signers.36.index:
+-        36
++        35
+      values.getConfig.signers.37.index:
+-        37
++        36
+      values.getConfig.signers.38.index:
+-        38
++        37
+      values.getConfig.signers.39.index:
+-        39
++        38
+      values.getConfig.signers.40.index:
+-        40
++        39
+      values.getConfig.signers.41.index:
+-        41
++        40
+      values.getConfig.signers.42.index:
+-        42
++        41
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      values.getConfig.signers.0:
++        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":2}
+      values.getConfig.signers.1:
++        {"addr":"eth:0x04189A291cC7E497015B45D4bb046DC0A8258068","index":1,"group":19}
+      values.getConfig.signers.2:
++        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":2,"group":2}
+      values.getConfig.signers.3:
++        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":3,"group":18}
+      values.getConfig.signers.4:
++        {"addr":"eth:0x146CAe49Dbe1b1D1968fc4652814740706548952","index":4,"group":13}
+      values.getConfig.signers.5:
++        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":5,"group":1}
+      values.getConfig.signers.6:
++        {"addr":"eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","index":6,"group":4}
+      values.getConfig.signers.7:
++        {"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":7,"group":2}
+      values.getConfig.signers.8:
++        {"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":8,"group":1}
+      values.getConfig.signers.9:
++        {"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":9,"group":1}
+      values.getConfig.signers.10:
++        {"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":10,"group":1}
+      values.getConfig.signers.11:
++        {"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":11,"group":10}
+      values.getConfig.signers.12:
++        {"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":12,"group":17}
+      values.getConfig.signers.13:
++        {"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":13,"group":12}
+      values.getConfig.signers.14:
++        {"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":14,"group":1}
+      values.getConfig.signers.15:
++        {"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":15,"group":8}
+      values.getConfig.signers.16:
++        {"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":16,"group":1}
+      values.getConfig.signers.17:
++        {"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":1}
+      values.getConfig.signers.18:
++        {"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":16}
+      values.getConfig.signers.19:
++        {"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":1}
+      values.getConfig.signers.20:
++        {"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":8}
+      values.getConfig.signers.21:
++        {"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":1}
+      values.getConfig.signers.22:
++        {"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":1}
+      values.getConfig.signers.23:
++        {"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":14}
+      values.getConfig.signers.24:
++        {"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":1}
+      values.getConfig.signers.0.group:
+-        4
++        1
+      values.getConfig.signers.0.index:
+-        0
++        25
+      values.getConfig.signers.0.addr:
+-        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.1.group:
+-        4
++        9
+      values.getConfig.signers.1.index:
+-        1
++        26
+      values.getConfig.signers.1.addr:
+-        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.2.group:
+-        2
++        1
+      values.getConfig.signers.2.index:
+-        2
++        27
+      values.getConfig.signers.2.addr:
+-        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.3.group:
+-        4
++        6
+      values.getConfig.signers.3.index:
+-        3
++        28
+      values.getConfig.signers.3.addr:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.4.group:
+-        2
++        6
+      values.getConfig.signers.4.index:
+-        4
++        29
+      values.getConfig.signers.4.addr:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.5.group:
+-        2
++        1
+      values.getConfig.signers.5.index:
+-        5
++        30
+      values.getConfig.signers.5.addr:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.6.index:
+-        6
++        31
+      values.getConfig.signers.6.addr:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.7.group:
+-        1
++        7
+      values.getConfig.signers.7.index:
+-        7
++        32
+      values.getConfig.signers.7.addr:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.8.index:
+-        8
++        33
+      values.getConfig.signers.8.addr:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
++        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.getConfig.signers.9.group:
+-        1
++        18
+      values.getConfig.signers.9.index:
+-        9
++        34
+      values.getConfig.signers.9.addr:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.10.group:
+-        1
++        2
+      values.getConfig.signers.10.index:
+-        10
++        35
+      values.getConfig.signers.10.addr:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.11.group:
+-        2
++        15
+      values.getConfig.signers.11.index:
+-        11
++        36
+      values.getConfig.signers.11.addr:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.12.group:
+-        2
++        1
+      values.getConfig.signers.12.index:
+-        12
++        37
+      values.getConfig.signers.12.addr:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.13.index:
+-        13
++        38
+      values.getConfig.signers.13.addr:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.14.group:
+-        2
++        4
+      values.getConfig.signers.14.index:
+-        14
++        39
+      values.getConfig.signers.14.addr:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.15.group:
+-        3
++        1
+      values.getConfig.signers.15.index:
+-        15
++        40
+      values.getConfig.signers.15.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.16.group:
+-        3
++        1
+      values.getConfig.signers.16.index:
+-        16
++        41
+      values.getConfig.signers.16.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.17.group:
+-        3
++        1
+      values.getConfig.signers.17.index:
+-        17
++        42
+      values.getConfig.signers.17.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.18.group:
+-        2
++        5
+      values.getConfig.signers.18.index:
+-        18
++        43
+      values.getConfig.signers.18.addr:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.19.group:
+-        4
++        19
+      values.getConfig.signers.19.index:
+-        19
++        44
+      values.getConfig.signers.19.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.20.group:
+-        2
++        15
+      values.getConfig.signers.20.index:
+-        20
++        45
+      values.getConfig.signers.20.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.21.group:
+-        2
++        1
+      values.getConfig.signers.21.index:
+-        21
++        46
+      values.getConfig.signers.21.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.22.group:
+-        1
++        11
+      values.getConfig.signers.22.index:
+-        22
++        47
+      values.getConfig.signers.22.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.23.group:
+-        1
++        10
+      values.getConfig.signers.23.index:
+-        23
++        48
+      values.getConfig.signers.23.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.24.group:
+-        1
++        2
+      values.getConfig.signers.24.index:
+-        24
++        49
+      values.getConfig.signers.24.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.25.group:
+-        3
++        1
+      values.getConfig.signers.25.index:
+-        25
++        50
+      values.getConfig.signers.25.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.26.group:
+-        4
++        5
+      values.getConfig.signers.26.index:
+-        26
++        51
+      values.getConfig.signers.26.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.27.index:
+-        27
++        52
+      values.getConfig.signers.27.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.28.group:
+-        2
++        1
+      values.getConfig.signers.28.index:
+-        28
++        53
+      values.getConfig.signers.28.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.29.group:
+-        2
++        1
+      values.getConfig.signers.29.index:
+-        29
++        54
+      values.getConfig.signers.29.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.30.group:
+-        2
++        1
+      values.getConfig.signers.30.index:
+-        30
++        55
+      values.getConfig.signers.30.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.getConfig.signers.31.group:
+-        2
++        10
+      values.getConfig.signers.31.index:
+-        31
++        56
+      values.getConfig.signers.31.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.32.group:
+-        1
++        15
+      values.getConfig.signers.32.index:
+-        32
++        57
+      values.getConfig.signers.32.addr:
+-        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
++        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.33.group:
+-        3
++        1
+      values.getConfig.signers.33.index:
+-        33
++        58
+      values.getConfig.signers.34.group:
+-        2
++        1
+      values.getConfig.signers.34.index:
+-        34
++        59
+      values.getConfig.signers.35.index:
+-        35
++        60
+      values.getConfig.signers.36.index:
+-        36
++        61
+      values.getConfig.signers.37.index:
+-        37
++        62
+      values.getConfig.signers.38.group:
+-        2
++        1
+      values.getConfig.signers.38.index:
+-        38
++        63
+      values.getConfig.signers.39.index:
+-        39
++        64
+      values.getConfig.signers.40.group:
+-        4
++        2
+      values.getConfig.signers.40.index:
+-        40
++        65
+      values.getConfig.signers.41.group:
+-        4
++        2
+      values.getConfig.signers.41.index:
+-        41
++        66
+      values.getConfig.signers.42.group:
+-        3
++        1
+      values.getConfig.signers.42.index:
+-        42
++        67
+      values.getConfig.groupQuorums.0:
+-        2
++        1
+      values.getConfig.groupQuorums.1:
+-        2
++        4
+      values.getConfig.groupQuorums.3:
+-        2
++        6
+      values.getConfig.groupQuorums.4:
+-        2
++        1
+      values.getConfig.groupQuorums.5:
+-        0
++        1
+      values.getConfig.groupQuorums.6:
+-        0
++        1
+      values.getConfig.groupQuorums.7:
+-        0
++        1
+      values.getConfig.groupQuorums.8:
+-        0
++        1
+      values.getConfig.groupQuorums.9:
+-        0
++        1
+      values.getConfig.groupQuorums.10:
+-        0
++        1
+      values.getConfig.groupQuorums.11:
+-        0
++        1
+      values.getConfig.groupQuorums.12:
+-        0
++        1
+      values.getConfig.groupQuorums.13:
+-        0
++        1
+      values.getConfig.groupQuorums.14:
+-        0
++        1
+      values.getConfig.groupQuorums.15:
+-        0
++        1
+      values.getConfig.groupQuorums.16:
+-        0
++        1
+      values.getConfig.groupQuorums.17:
+-        0
++        1
+      values.getConfig.groupQuorums.18:
+-        0
++        1
+      values.getConfig.groupQuorums.19:
+-        0
++        1
+      values.getConfig.groupParents.4:
+-        0
++        3
+      values.getConfig.groupParents.5:
+-        0
++        3
+      values.getConfig.groupParents.6:
+-        0
++        3
+      values.getConfig.groupParents.7:
+-        0
++        3
+      values.getConfig.groupParents.8:
+-        0
++        3
+      values.getConfig.groupParents.9:
+-        0
++        3
+      values.getConfig.groupParents.10:
+-        0
++        3
+      values.getConfig.groupParents.11:
+-        0
++        3
+      values.getConfig.groupParents.12:
+-        0
++        3
+      values.getConfig.groupParents.13:
+-        0
++        3
+      values.getConfig.groupParents.14:
+-        0
++        3
+      values.getConfig.groupParents.15:
+-        0
++        3
+      values.getConfig.groupParents.16:
+-        0
++        3
+      values.getConfig.groupParents.17:
+-        0
++        3
+      values.getConfig.groupParents.18:
+-        0
++        3
+      values.getConfig.groupParents.19:
+-        0
++        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x035E4d17Be1A0D2727b2035e030c4525Ce3EDCf4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x578b5aB9a75Cb37cC0F25108417cfd489b5B16e1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x713e82fFa4485a1D324ef5b9Ff4B04C28e100aa9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x9e10292dc8e6848256881589E71Eb5382e8173ae)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xADD9d7eAbD2b1504CF671C9A2F1EDC25DA81ade7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xF1ea4D1E49B43D2f0d5DDE8e065247F2B75e794c)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x5894a1115e4f20f41eec557481dfbb1c69210360
+
+# Diff at Wed, 21 Jan 2026 12:47:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768817536
+- current timestamp: 1768999500
+
+## Description
+
+tokenpools!
+
+## Watched changes
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.95:
++        {"sourceChainSelector":"7801139999541420232","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.7801139999541420232:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.316:
++        "eth:0xf9419f356C5554A1D9f78753039C9E047C28103f"
+      values.pools.317:
++        "eth:0x15833dDE8669d8D880F7Ef9d6611e2D47e8e66C9"
+      values.pools.318:
++        "eth:0x36C7bD9815bA84B517B39dfeAB008b09763b0190"
+      values.pools.319:
++        "eth:0xa07926e7fA59657E9f22bc63d50310499da2Ff57"
+      values.pools.320:
++        "eth:0x1f72c944D9D0BFE647c52a9afA7E7B04766f27a6"
+      values.pools.321:
++        "eth:0xA9b325ae18bCEfC5d73FEB6BB3C085B7888d07E0"
+      values.poolsMap.eth:0xf317baB151bB50F766994223DbD047083BD884Bd:
++        "eth:0xf9419f356C5554A1D9f78753039C9E047C28103f"
+      values.poolsMap.eth:0xDEA2a2A166e2FDC47b934bee68E6032F8f1Ca09C:
++        "eth:0x15833dDE8669d8D880F7Ef9d6611e2D47e8e66C9"
+      values.poolsMap.eth:0x9d21BA6e86d990354dE74c7Cb13189DAfea7BF48:
++        "eth:0x36C7bD9815bA84B517B39dfeAB008b09763b0190"
+      values.poolsMap.eth:0x8A6c26F60046372DbbEcCD185Bd944B9032d90E3:
++        "eth:0xa07926e7fA59657E9f22bc63d50310499da2Ff57"
+      values.poolsMap.eth:0xfcA298CA796016F10ae95d6B42A654Fe7C5e8fe3:
++        "eth:0x1f72c944D9D0BFE647c52a9afA7E7B04766f27a6"
+      values.poolsMap.eth:0x1719Af5C249021eE20270723870De15111fD89d4:
++        "eth:0xA9b325ae18bCEfC5d73FEB6BB3C085B7888d07E0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x15833dDE8669d8D880F7Ef9d6611e2D47e8e66C9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x1f72c944D9D0BFE647c52a9afA7E7B04766f27a6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x36C7bD9815bA84B517B39dfeAB008b09763b0190)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xa07926e7fA59657E9f22bc63d50310499da2Ff57)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xA9b325ae18bCEfC5d73FEB6BB3C085B7888d07E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xf9419f356C5554A1D9f78753039C9E047C28103f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x15833dDE8669d8D880F7Ef9d6611e2D47e8e66C9.sol | 1374 ++++++++++++++++++++
+ ...:0x1f72c944D9D0BFE647c52a9afA7E7B04766f27a6.sol | 1374 ++++++++++++++++++++
+ ...:0x36C7bD9815bA84B517B39dfeAB008b09763b0190.sol | 1374 ++++++++++++++++++++
+ ...:0xA9b325ae18bCEfC5d73FEB6BB3C085B7888d07E0.sol | 1374 ++++++++++++++++++++
+ ...:0xa07926e7fA59657E9f22bc63d50310499da2Ff57.sol | 1374 ++++++++++++++++++++
+ ...:0xf9419f356C5554A1D9f78753039C9E047C28103f.sol | 1374 ++++++++++++++++++++
+ 6 files changed, 8244 insertions(+)
+```
+
+Generated with discovered.json: 0xcfc7c972bea366e25be9064c682bae7bc6d60109
+
+# Diff at Mon, 19 Jan 2026 10:16:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768371884
+- current timestamp: 1768817536
+
+## Description
+
+ARB tokenpool added.
+
+## Watched changes
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.314:
++        "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C"
+      values.pools.315:
++        "eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC"
+      values.poolsMap.eth:0x0acdb582C1d5512Ea31fD64b9C07882CB31E494D:
++        "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C"
+      values.poolsMap.eth:0xfEFF18567FCD8417b43a4B3BF577Ab41ca376969:
++        "eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbiPool (eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/transporter/.flat/ArbiPool.sol    | 1838 ++++++++++++++++++++
+ ...:0x125b0Ae1d4E236e5F16F7E427B1BF850EB74b8BC.sol | 1374 +++++++++++++++
+ 2 files changed, 3212 insertions(+)
+```
+
+Generated with discovered.json: 0x024092e3b3ab7ef7dc5cbe13410383e9fd99cfb7
+
+# Diff at Wed, 14 Jan 2026 06:26:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767795367
+- current timestamp: 1768371884
+
+## Description
+
+multisig changes.
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.0:
++        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":11}
+      values.getConfig.signers.1:
++        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":11}
+      values.getConfig.signers.2:
++        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":7}
+      values.getConfig.signers.0.group:
+-        18
++        14
+      values.getConfig.signers.0.index:
+-        0
++        3
+      values.getConfig.signers.0.addr:
+-        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
++        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.getConfig.signers.1.group:
+-        17
++        5
+      values.getConfig.signers.1.index:
+-        1
++        4
+      values.getConfig.signers.1.addr:
+-        "eth:0x04189A291cC7E497015B45D4bb046DC0A8258068"
++        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.2.group:
+-        18
++        11
+      values.getConfig.signers.2.index:
+-        2
++        5
+      values.getConfig.signers.2.addr:
+-        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.getConfig.signers.3.group:
+-        16
++        14
+      values.getConfig.signers.3.index:
+-        3
++        6
+      values.getConfig.signers.3.addr:
+-        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
++        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.getConfig.signers.4.group:
+-        11
++        14
+      values.getConfig.signers.4.index:
+-        4
++        7
+      values.getConfig.signers.4.addr:
+-        "eth:0x146CAe49Dbe1b1D1968fc4652814740706548952"
++        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.getConfig.signers.5.group:
+-        21
++        10
+      values.getConfig.signers.5.index:
+-        5
++        8
+      values.getConfig.signers.5.addr:
+-        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
++        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
+      values.getConfig.signers.6.group:
+-        2
++        13
+      values.getConfig.signers.6.index:
+-        6
++        9
+      values.getConfig.signers.6.addr:
+-        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.getConfig.signers.7.group:
+-        18
++        4
+      values.getConfig.signers.7.index:
+-        7
++        10
+      values.getConfig.signers.7.addr:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
++        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.8.group:
+-        21
++        1
+      values.getConfig.signers.8.index:
+-        8
++        11
+      values.getConfig.signers.8.addr:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
++        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.9.group:
+-        21
++        1
+      values.getConfig.signers.9.index:
+-        9
++        12
+      values.getConfig.signers.9.addr:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
++        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.10.group:
+-        20
++        13
+      values.getConfig.signers.10.index:
+-        10
++        13
+      values.getConfig.signers.10.addr:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
++        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.getConfig.signers.11.group:
+-        8
++        3
+      values.getConfig.signers.11.index:
+-        11
++        14
+      values.getConfig.signers.11.addr:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.12.group:
+-        15
++        13
+      values.getConfig.signers.12.index:
+-        12
++        15
+      values.getConfig.signers.12.addr:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.getConfig.signers.13.group:
+-        10
++        9
+      values.getConfig.signers.13.index:
+-        13
++        16
+      values.getConfig.signers.13.addr:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
+      values.getConfig.signers.14.group:
+-        20
++        13
+      values.getConfig.signers.14.index:
+-        14
++        17
+      values.getConfig.signers.14.addr:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
++        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.15.group:
+-        6
++        1
+      values.getConfig.signers.15.index:
+-        15
++        18
+      values.getConfig.signers.15.addr:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.16.group:
+-        20
++        13
+      values.getConfig.signers.16.index:
+-        16
++        19
+      values.getConfig.signers.16.addr:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
++        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.getConfig.signers.17.group:
+-        20
++        3
+      values.getConfig.signers.17.index:
+-        17
++        20
+      values.getConfig.signers.17.addr:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.18.index:
+-        18
++        21
+      values.getConfig.signers.18.addr:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.getConfig.signers.19.group:
+-        20
++        14
+      values.getConfig.signers.19.index:
+-        19
++        22
+      values.getConfig.signers.19.addr:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
++        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.getConfig.signers.20.group:
+-        6
++        1
+      values.getConfig.signers.20.index:
+-        20
++        23
+      values.getConfig.signers.20.addr:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.21.group:
+-        21
++        13
+      values.getConfig.signers.21.index:
+-        21
++        24
+      values.getConfig.signers.21.addr:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
++        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.getConfig.signers.22.group:
+-        21
++        14
+      values.getConfig.signers.22.index:
+-        22
++        25
+      values.getConfig.signers.22.addr:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.23.group:
+-        12
++        10
+      values.getConfig.signers.23.index:
+-        23
++        26
+      values.getConfig.signers.23.addr:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.24.group:
+-        20
++        15
+      values.getConfig.signers.24.index:
+-        24
++        27
+      values.getConfig.signers.24.addr:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.25.group:
+-        21
++        2
+      values.getConfig.signers.25.index:
+-        25
++        28
+      values.getConfig.signers.25.addr:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.26.group:
+-        7
++        1
+      values.getConfig.signers.26.index:
+-        26
++        29
+      values.getConfig.signers.26.addr:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
+      values.getConfig.signers.27.group:
+-        22
++        2
+      values.getConfig.signers.27.index:
+-        27
++        30
+      values.getConfig.signers.27.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.28.group:
+-        4
++        15
+      values.getConfig.signers.28.index:
+-        28
++        31
+      values.getConfig.signers.28.addr:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.29.group:
+-        4
++        15
+      values.getConfig.signers.29.index:
+-        29
++        32
+      values.getConfig.signers.29.addr:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.30.group:
+-        22
++        1
+      values.getConfig.signers.30.index:
+-        30
++        33
+      values.getConfig.signers.30.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.31.group:
+-        22
++        14
+      values.getConfig.signers.31.index:
+-        31
++        34
+      values.getConfig.signers.31.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.getConfig.signers.32.group:
+-        5
++        7
+      values.getConfig.signers.32.index:
+-        32
++        35
+      values.getConfig.signers.32.addr:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.33.group:
+-        16
++        11
+      values.getConfig.signers.33.index:
+-        33
++        36
+      values.getConfig.signers.33.addr:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.34.group:
+-        18
++        6
+      values.getConfig.signers.34.index:
+-        34
++        37
+      values.getConfig.signers.34.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.35.group:
+-        13
++        14
+      values.getConfig.signers.35.index:
+-        35
++        38
+      values.getConfig.signers.35.addr:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.36.group:
+-        21
++        14
+      values.getConfig.signers.36.index:
+-        36
++        39
+      values.getConfig.signers.36.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.37.group:
+-        21
++        5
+      values.getConfig.signers.37.index:
+-        37
++        40
+      values.getConfig.signers.37.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.38.group:
+-        2
++        13
+      values.getConfig.signers.38.index:
+-        38
++        41
+      values.getConfig.signers.38.addr:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.39.group:
+-        20
++        13
+      values.getConfig.signers.39.index:
+-        39
++        42
+      values.getConfig.signers.39.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.40.group:
+-        20
++        13
+      values.getConfig.signers.40.index:
+-        40
++        43
+      values.getConfig.signers.40.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.41.group:
+-        20
++        8
+      values.getConfig.signers.41.index:
+-        41
++        44
+      values.getConfig.signers.41.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.42.group:
+-        3
++        9
+      values.getConfig.signers.42.index:
+-        42
++        45
+      values.getConfig.signers.42.addr:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.43.group:
+-        17
++        6
+      values.getConfig.signers.43.index:
+-        43
++        46
+      values.getConfig.signers.43.addr:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.44.group:
+-        13
++        15
+      values.getConfig.signers.44.index:
+-        44
++        47
+      values.getConfig.signers.44.addr:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.45.group:
+-        22
++        1
+      values.getConfig.signers.45.index:
+-        45
++        48
+      values.getConfig.signers.45.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.46.group:
+-        9
++        4
+      values.getConfig.signers.46.index:
+-        46
++        49
+      values.getConfig.signers.46.addr:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.47.group:
+-        8
++        11
+      values.getConfig.signers.47.index:
+-        47
++        50
+      values.getConfig.signers.47.addr:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.48.group:
+-        18
++        13
+      values.getConfig.signers.48.index:
+-        48
++        51
+      values.getConfig.signers.48.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.49.group:
+-        20
++        8
+      values.getConfig.signers.49.index:
+-        49
++        52
+      values.getConfig.signers.49.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.50.group:
+-        3
++        14
+      values.getConfig.signers.50.index:
+-        50
++        53
+      values.getConfig.signers.50.addr:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.51.group:
+-        21
++        14
+      values.getConfig.signers.51.index:
+-        51
++        54
+      values.getConfig.signers.51.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.52.group:
+-        21
++        14
+      values.getConfig.signers.52.index:
+-        52
++        55
+      values.getConfig.signers.52.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.53.group:
+-        21
++        14
+      values.getConfig.signers.53.index:
+-        53
++        56
+      values.getConfig.signers.53.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
+      values.getConfig.signers.54.group:
+-        21
++        4
+      values.getConfig.signers.54.index:
+-        54
++        57
+      values.getConfig.signers.54.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
+      values.getConfig.signers.55.group:
+-        20
++        13
+      values.getConfig.signers.55.index:
+-        55
++        58
+      values.getConfig.signers.56.group:
+-        8
++        4
+      values.getConfig.signers.56.index:
+-        56
++        59
+      values.getConfig.signers.57.group:
+-        13
++        6
+      values.getConfig.signers.57.index:
+-        57
++        60
+      values.getConfig.signers.58.group:
+-        21
++        15
+      values.getConfig.signers.58.index:
+-        58
++        61
+      values.getConfig.signers.59.group:
+-        21
++        14
+      values.getConfig.signers.59.index:
+-        59
++        62
+      values.getConfig.signers.60.group:
+-        20
++        13
+      values.getConfig.signers.60.index:
+-        60
++        63
+      values.getConfig.signers.61.group:
+-        20
++        13
+      values.getConfig.signers.61.index:
+-        61
++        64
+      values.getConfig.signers.62.group:
+-        20
++        13
+      values.getConfig.signers.62.index:
+-        62
++        65
+      values.getConfig.signers.63.group:
+-        21
++        14
+      values.getConfig.signers.63.index:
+-        63
++        66
+      values.getConfig.signers.64.group:
+-        20
++        13
+      values.getConfig.signers.64.index:
+-        64
++        67
+      values.getConfig.signers.65.group:
+-        18
++        11
+      values.getConfig.signers.65.index:
+-        65
++        68
+      values.getConfig.signers.66.group:
+-        18
++        11
+      values.getConfig.signers.66.index:
+-        66
++        69
+      values.getConfig.signers.67.group:
+-        22
++        15
+      values.getConfig.signers.67.index:
+-        67
++        70
+      values.getConfig.groupQuorums.2:
+-        1
+      values.getConfig.groupQuorums.3:
+-        1
+      values.getConfig.groupQuorums.4:
+-        1
+      values.getConfig.groupQuorums.5:
+-        1
+      values.getConfig.groupQuorums.6:
+-        1
+      values.getConfig.groupQuorums.7:
+-        1
+      values.getConfig.groupQuorums.8:
+-        1
+      values.getConfig.groupQuorums.16:
++        0
+      values.getConfig.groupQuorums.17:
++        0
+      values.getConfig.groupQuorums.18:
++        0
+      values.getConfig.groupQuorums.19:
++        0
+      values.getConfig.groupQuorums.20:
++        0
+      values.getConfig.groupQuorums.21:
++        0
+      values.getConfig.groupQuorums.22:
++        0
+      values.getConfig.groupParents.11:
+-        1
++        0
+      values.getConfig.groupParents.12:
+-        1
++        0
+      values.getConfig.groupParents.13:
+-        1
++        12
+      values.getConfig.groupParents.14:
+-        1
++        12
+      values.getConfig.groupParents.15:
+-        1
++        12
+      values.getConfig.groupParents.16:
+-        1
++        0
+      values.getConfig.groupParents.17:
+-        1
++        0
+      values.getConfig.groupParents.20:
+-        19
++        0
+      values.getConfig.groupParents.21:
+-        19
++        0
+      values.getConfig.groupParents.22:
+-        19
++        0
+    }
+```
+
+```diff
+    contract LockReleaseTokenPool (eth:0x41993c7228221403723B37D9F0B5F162C2902aA8) {
+    +++ description: None
+      values.owner:
+-        "eth:0x713Cd4dC546805B06D2B8188258C355875E9F4E7"
++        "eth:0xbe760c1f66180c27F676De0d0c6E6Ec825E01C18"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.94:
++        {"sourceChainSelector":"1556008542357238666","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.1556008542357238666:
+-        "eth:0x70B2b3430c41bA19E20F57Cae23c3C619CbCA65D"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      values.getConfig.signers.0:
++        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":12}
+      values.getConfig.signers.1:
++        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":12}
+      values.getConfig.signers.2:
++        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":7}
+      values.getConfig.signers.3:
++        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":3,"group":11}
+      values.getConfig.signers.4:
++        {"addr":"eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","index":4,"group":5}
+      values.getConfig.signers.5:
++        {"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":5,"group":12}
+      values.getConfig.signers.6:
++        {"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":6,"group":11}
+      values.getConfig.signers.7:
++        {"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":7,"group":11}
+      values.getConfig.signers.8:
++        {"addr":"eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112","index":8,"group":10}
+      values.getConfig.signers.9:
++        {"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":9,"group":11}
+      values.getConfig.signers.10:
++        {"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":10,"group":4}
+      values.getConfig.signers.11:
++        {"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":11,"group":1}
+      values.getConfig.signers.12:
++        {"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":12,"group":1}
+      values.getConfig.signers.13:
++        {"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":13,"group":11}
+      values.getConfig.signers.14:
++        {"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":14,"group":3}
+      values.getConfig.signers.15:
++        {"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":15,"group":11}
+      values.getConfig.signers.16:
++        {"addr":"eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","index":16,"group":9}
+      values.getConfig.signers.17:
++        {"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":11}
+      values.getConfig.signers.18:
++        {"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":1}
+      values.getConfig.signers.19:
++        {"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":11}
+      values.getConfig.signers.20:
++        {"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":3}
+      values.getConfig.signers.21:
++        {"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":11}
+      values.getConfig.signers.22:
++        {"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":11}
+      values.getConfig.signers.23:
++        {"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":1}
+      values.getConfig.signers.24:
++        {"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":11}
+      values.getConfig.signers.25:
++        {"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":25,"group":11}
+      values.getConfig.signers.26:
++        {"addr":"eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695","index":26,"group":10}
+      values.getConfig.signers.27:
++        {"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":27,"group":11}
+      values.getConfig.signers.28:
++        {"addr":"eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","index":28,"group":2}
+      values.getConfig.signers.29:
++        {"addr":"eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F","index":29,"group":1}
+      values.getConfig.signers.30:
++        {"addr":"eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8","index":30,"group":2}
+      values.getConfig.signers.31:
++        {"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":31,"group":11}
+      values.getConfig.signers.32:
++        {"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":32,"group":11}
+      values.getConfig.signers.33:
++        {"addr":"eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7","index":33,"group":1}
+      values.getConfig.signers.34:
++        {"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":34,"group":11}
+      values.getConfig.signers.35:
++        {"addr":"eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","index":35,"group":7}
+      values.getConfig.signers.36:
++        {"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":36,"group":12}
+      values.getConfig.signers.37:
++        {"addr":"eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","index":37,"group":6}
+      values.getConfig.signers.38:
++        {"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":38,"group":11}
+      values.getConfig.signers.39:
++        {"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":39,"group":11}
+      values.getConfig.signers.40:
++        {"addr":"eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","index":40,"group":5}
+      values.getConfig.signers.41:
++        {"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":41,"group":11}
+      values.getConfig.signers.42:
++        {"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":42,"group":11}
+      values.getConfig.signers.0.group:
+-        7
++        11
+      values.getConfig.signers.0.index:
+-        0
++        43
+      values.getConfig.signers.0.addr:
+-        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.1.group:
+-        5
++        8
+      values.getConfig.signers.1.index:
+-        1
++        44
+      values.getConfig.signers.1.addr:
+-        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.2.group:
+-        10
++        9
+      values.getConfig.signers.2.index:
+-        2
++        45
+      values.getConfig.signers.2.addr:
+-        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.3.group:
+-        4
++        6
+      values.getConfig.signers.3.index:
+-        3
++        46
+      values.getConfig.signers.3.addr:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.4.group:
+-        1
++        11
+      values.getConfig.signers.4.index:
+-        4
++        47
+      values.getConfig.signers.4.addr:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.5.index:
+-        5
++        48
+      values.getConfig.signers.5.addr:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.6.group:
+-        3
++        4
+      values.getConfig.signers.6.index:
+-        6
++        49
+      values.getConfig.signers.6.addr:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.7.group:
+-        9
++        12
+      values.getConfig.signers.7.index:
+-        7
++        50
+      values.getConfig.signers.7.addr:
+-        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.8.group:
+-        1
++        11
+      values.getConfig.signers.8.index:
+-        8
++        51
+      values.getConfig.signers.8.addr:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.9.group:
+-        3
++        8
+      values.getConfig.signers.9.index:
+-        9
++        52
+      values.getConfig.signers.9.addr:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.10.group:
+-        1
++        11
+      values.getConfig.signers.10.index:
+-        10
++        53
+      values.getConfig.signers.10.addr:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.11.group:
+-        10
++        11
+      values.getConfig.signers.11.index:
+-        11
++        54
+      values.getConfig.signers.11.addr:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.12.group:
+-        2
++        11
+      values.getConfig.signers.12.index:
+-        12
++        55
+      values.getConfig.signers.12.addr:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.13.group:
+-        1
++        11
+      values.getConfig.signers.13.index:
+-        13
++        56
+      values.getConfig.signers.13.addr:
+-        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
++        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
+      values.getConfig.signers.14.group:
+-        2
++        4
+      values.getConfig.signers.14.index:
+-        14
++        57
+      values.getConfig.signers.14.addr:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
+      values.getConfig.signers.15.group:
+-        1
++        11
+      values.getConfig.signers.15.index:
+-        15
++        58
+      values.getConfig.signers.15.addr:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.getConfig.signers.16.group:
+-        7
++        4
+      values.getConfig.signers.16.index:
+-        16
++        59
+      values.getConfig.signers.16.addr:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.17.index:
+-        17
++        60
+      values.getConfig.signers.17.addr:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.18.group:
+-        5
++        11
+      values.getConfig.signers.18.index:
+-        18
++        61
+      values.getConfig.signers.18.addr:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0xD8B2263665600f2742425D451e91FEaf642bac30"
+      values.getConfig.signers.19.group:
+-        8
++        11
+      values.getConfig.signers.19.index:
+-        19
++        62
+      values.getConfig.signers.19.addr:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
+      values.getConfig.signers.20.group:
+-        9
++        11
+      values.getConfig.signers.20.index:
+-        20
++        63
+      values.getConfig.signers.20.addr:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.getConfig.signers.21.group:
+-        6
++        11
+      values.getConfig.signers.21.index:
+-        21
++        64
+      values.getConfig.signers.21.addr:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
+      values.getConfig.signers.22.group:
+-        1
++        11
+      values.getConfig.signers.22.index:
+-        22
++        65
+      values.getConfig.signers.22.addr:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
+      values.getConfig.signers.23.group:
+-        4
++        11
+      values.getConfig.signers.23.index:
+-        23
++        66
+      values.getConfig.signers.23.addr:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
+      values.getConfig.signers.24.group:
+-        8
++        11
+      values.getConfig.signers.24.index:
+-        24
++        67
+      values.getConfig.signers.24.addr:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
+      values.getConfig.signers.25.group:
+-        4
++        12
+      values.getConfig.signers.25.index:
+-        25
++        68
+      values.getConfig.signers.25.addr:
+-        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
++        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.getConfig.signers.26.group:
+-        4
++        12
+      values.getConfig.signers.26.index:
+-        26
++        69
+      values.getConfig.signers.26.addr:
+-        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.getConfig.signers.27.group:
+-        6
++        11
+      values.getConfig.signers.27.index:
+-        27
++        70
+      values.getConfig.signers.27.addr:
+-        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
++        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
+      values.getConfig.groupQuorums.11:
+-        0
++        4
+      values.getConfig.groupQuorums.12:
+-        0
++        2
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.311:
++        "eth:0x2d2a804E10B0CA29e3246F438b1223393AB3EDf8"
+      values.pools.312:
++        "eth:0x33D5E3e9964772A054Ad79B605B7eCc95EBc96c6"
+      values.pools.313:
++        "eth:0xf385545EFFb47238aB19048E5137502da420Cd63"
+      values.poolsMap.eth:0xd0609Ac13000d88B0BEbf5Bb21074916eDd92Bb1:
++        "eth:0x2d2a804E10B0CA29e3246F438b1223393AB3EDf8"
+      values.poolsMap.eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375:
++        "eth:0x33D5E3e9964772A054Ad79B605B7eCc95EBc96c6"
+      values.poolsMap.eth:0xb81C3E05F0d32788A0F74884eB63F1A45C825a28:
++        "eth:0xf385545EFFb47238aB19048E5137502da420Cd63"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      values.getConfig.signers.0:
+-        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":2}
+      values.getConfig.signers.1:
+-        {"addr":"eth:0x04189A291cC7E497015B45D4bb046DC0A8258068","index":1,"group":19}
+      values.getConfig.signers.2:
+-        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":2,"group":2}
+      values.getConfig.signers.3:
+-        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":3,"group":18}
+      values.getConfig.signers.4:
+-        {"addr":"eth:0x146CAe49Dbe1b1D1968fc4652814740706548952","index":4,"group":13}
+      values.getConfig.signers.5:
+-        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":5,"group":1}
+      values.getConfig.signers.6:
+-        {"addr":"eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","index":6,"group":4}
+      values.getConfig.signers.7:
+-        {"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":7,"group":2}
+      values.getConfig.signers.8:
+-        {"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":8,"group":1}
+      values.getConfig.signers.9:
+-        {"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":9,"group":1}
+      values.getConfig.signers.10:
+-        {"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":10,"group":1}
+      values.getConfig.signers.11:
+-        {"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":11,"group":10}
+      values.getConfig.signers.12:
+-        {"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":12,"group":17}
+      values.getConfig.signers.13:
+-        {"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":13,"group":12}
+      values.getConfig.signers.14:
+-        {"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":14,"group":1}
+      values.getConfig.signers.15:
+-        {"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":15,"group":8}
+      values.getConfig.signers.16:
+-        {"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":16,"group":1}
+      values.getConfig.signers.17:
+-        {"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":1}
+      values.getConfig.signers.18:
+-        {"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":16}
+      values.getConfig.signers.19:
+-        {"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":1}
+      values.getConfig.signers.20:
+-        {"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":8}
+      values.getConfig.signers.21:
+-        {"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":1}
+      values.getConfig.signers.22:
+-        {"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":1}
+      values.getConfig.signers.23:
+-        {"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":14}
+      values.getConfig.signers.24:
+-        {"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":1}
+      values.getConfig.signers.25:
+-        {"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":25,"group":1}
+      values.getConfig.signers.26.group:
+-        9
++        4
+      values.getConfig.signers.26.index:
+-        26
++        0
+      values.getConfig.signers.26.addr:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.getConfig.signers.27.group:
+-        1
++        4
+      values.getConfig.signers.27.index:
+-        27
++        1
+      values.getConfig.signers.27.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.getConfig.signers.28.group:
+-        6
++        2
+      values.getConfig.signers.28.index:
+-        28
++        2
+      values.getConfig.signers.28.addr:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.getConfig.signers.29.group:
+-        6
++        4
+      values.getConfig.signers.29.index:
+-        29
++        3
+      values.getConfig.signers.29.addr:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.getConfig.signers.30.group:
+-        1
++        2
+      values.getConfig.signers.30.index:
+-        30
++        4
+      values.getConfig.signers.30.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.getConfig.signers.31.group:
+-        1
++        2
+      values.getConfig.signers.31.index:
+-        31
++        5
+      values.getConfig.signers.31.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.getConfig.signers.32.group:
+-        7
++        1
+      values.getConfig.signers.32.index:
+-        32
++        6
+      values.getConfig.signers.32.addr:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.getConfig.signers.33.index:
+-        33
++        7
+      values.getConfig.signers.33.addr:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
++        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.getConfig.signers.34.group:
+-        18
++        1
+      values.getConfig.signers.34.index:
+-        34
++        8
+      values.getConfig.signers.34.addr:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.getConfig.signers.35.group:
+-        2
++        1
+      values.getConfig.signers.35.index:
+-        35
++        9
+      values.getConfig.signers.35.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.36.group:
+-        15
++        1
+      values.getConfig.signers.36.index:
+-        36
++        10
+      values.getConfig.signers.36.addr:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.getConfig.signers.37.group:
+-        1
++        2
+      values.getConfig.signers.37.index:
+-        37
++        11
+      values.getConfig.signers.37.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.getConfig.signers.38.group:
+-        1
++        2
+      values.getConfig.signers.38.index:
+-        38
++        12
+      values.getConfig.signers.38.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.getConfig.signers.39.group:
+-        4
++        1
+      values.getConfig.signers.39.index:
+-        39
++        13
+      values.getConfig.signers.39.addr:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.getConfig.signers.40.group:
+-        1
++        2
+      values.getConfig.signers.40.index:
+-        40
++        14
+      values.getConfig.signers.40.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.41.group:
+-        1
++        3
+      values.getConfig.signers.41.index:
+-        41
++        15
+      values.getConfig.signers.41.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.42.group:
+-        1
++        3
+      values.getConfig.signers.42.index:
+-        42
++        16
+      values.getConfig.signers.42.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.43.group:
+-        5
++        3
+      values.getConfig.signers.43.index:
+-        43
++        17
+      values.getConfig.signers.43.addr:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.44.group:
+-        19
++        2
+      values.getConfig.signers.44.index:
+-        44
++        18
+      values.getConfig.signers.44.addr:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.getConfig.signers.45.group:
+-        15
++        4
+      values.getConfig.signers.45.index:
+-        45
++        19
+      values.getConfig.signers.45.addr:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.46.group:
+-        1
++        2
+      values.getConfig.signers.46.index:
+-        46
++        20
+      values.getConfig.signers.46.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.47.group:
+-        11
++        2
+      values.getConfig.signers.47.index:
+-        47
++        21
+      values.getConfig.signers.47.addr:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.48.group:
+-        10
++        1
+      values.getConfig.signers.48.index:
+-        48
++        22
+      values.getConfig.signers.48.addr:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.49.group:
+-        2
++        1
+      values.getConfig.signers.49.index:
+-        49
++        23
+      values.getConfig.signers.49.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.50.index:
+-        50
++        24
+      values.getConfig.signers.50.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.51.group:
+-        5
++        3
+      values.getConfig.signers.51.index:
+-        51
++        25
+      values.getConfig.signers.51.addr:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.52.group:
+-        1
++        4
+      values.getConfig.signers.52.index:
+-        52
++        26
+      values.getConfig.signers.52.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.53.index:
+-        53
++        27
+      values.getConfig.signers.53.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.54.group:
+-        1
++        2
+      values.getConfig.signers.54.index:
+-        54
++        28
+      values.getConfig.signers.54.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.55.group:
+-        1
++        2
+      values.getConfig.signers.55.index:
+-        55
++        29
+      values.getConfig.signers.55.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.56.group:
+-        1
++        2
+      values.getConfig.signers.56.index:
+-        56
++        30
+      values.getConfig.signers.56.addr:
+-        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.57.group:
+-        10
++        2
+      values.getConfig.signers.57.index:
+-        57
++        31
+      values.getConfig.signers.57.addr:
+-        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
+      values.getConfig.signers.58.group:
+-        15
++        1
+      values.getConfig.signers.58.index:
+-        58
++        32
+      values.getConfig.signers.58.addr:
+-        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.getConfig.signers.59.group:
+-        1
++        3
+      values.getConfig.signers.59.index:
+-        59
++        33
+      values.getConfig.signers.60.group:
+-        1
++        2
+      values.getConfig.signers.60.index:
+-        60
++        34
+      values.getConfig.signers.61.index:
+-        61
++        35
+      values.getConfig.signers.62.index:
+-        62
++        36
+      values.getConfig.signers.63.index:
+-        63
++        37
+      values.getConfig.signers.64.group:
+-        1
++        2
+      values.getConfig.signers.64.index:
+-        64
++        38
+      values.getConfig.signers.65.index:
+-        65
++        39
+      values.getConfig.signers.66.group:
+-        2
++        4
+      values.getConfig.signers.66.index:
+-        66
++        40
+      values.getConfig.signers.67.group:
+-        2
++        4
+      values.getConfig.signers.67.index:
+-        67
++        41
+      values.getConfig.signers.68.group:
+-        1
++        3
+      values.getConfig.signers.68.index:
+-        68
++        42
+      values.getConfig.groupQuorums.0:
+-        1
++        2
+      values.getConfig.groupQuorums.1:
+-        4
++        2
+      values.getConfig.groupQuorums.3:
+-        6
++        2
+      values.getConfig.groupQuorums.4:
+-        1
++        2
+      values.getConfig.groupQuorums.5:
+-        1
++        0
+      values.getConfig.groupQuorums.6:
+-        1
++        0
+      values.getConfig.groupQuorums.7:
+-        1
++        0
+      values.getConfig.groupQuorums.8:
+-        1
++        0
+      values.getConfig.groupQuorums.9:
+-        1
++        0
+      values.getConfig.groupQuorums.10:
+-        1
++        0
+      values.getConfig.groupQuorums.11:
+-        1
++        0
+      values.getConfig.groupQuorums.12:
+-        1
++        0
+      values.getConfig.groupQuorums.13:
+-        1
++        0
+      values.getConfig.groupQuorums.14:
+-        1
++        0
+      values.getConfig.groupQuorums.15:
+-        1
++        0
+      values.getConfig.groupQuorums.16:
+-        1
++        0
+      values.getConfig.groupQuorums.17:
+-        1
++        0
+      values.getConfig.groupQuorums.18:
+-        1
++        0
+      values.getConfig.groupQuorums.19:
+-        1
++        0
+      values.getConfig.groupParents.4:
+-        3
++        0
+      values.getConfig.groupParents.5:
+-        3
++        0
+      values.getConfig.groupParents.6:
+-        3
++        0
+      values.getConfig.groupParents.7:
+-        3
++        0
+      values.getConfig.groupParents.8:
+-        3
++        0
+      values.getConfig.groupParents.9:
+-        3
++        0
+      values.getConfig.groupParents.10:
+-        3
++        0
+      values.getConfig.groupParents.11:
+-        3
++        0
+      values.getConfig.groupParents.12:
+-        3
++        0
+      values.getConfig.groupParents.13:
+-        3
++        0
+      values.getConfig.groupParents.14:
+-        3
++        0
+      values.getConfig.groupParents.15:
+-        3
++        0
+      values.getConfig.groupParents.16:
+-        3
++        0
+      values.getConfig.groupParents.17:
+-        3
++        0
+      values.getConfig.groupParents.18:
+-        3
++        0
+      values.getConfig.groupParents.19:
+-        3
++        0
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x2d2a804E10B0CA29e3246F438b1223393AB3EDf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x33D5E3e9964772A054Ad79B605B7eCc95EBc96c6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xf385545EFFb47238aB19048E5137502da420Cd63)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xf385545EFFb47238aB19048E5137502da420Cd63.sol | 1374 +++++++++++++++
+ ...:0x2d2a804E10B0CA29e3246F438b1223393AB3EDf8.sol | 1771 ++++++++++++++++++++
+ ...:0x33D5E3e9964772A054Ad79B605B7eCc95EBc96c6.sol | 1771 ++++++++++++++++++++
+ 3 files changed, 4916 insertions(+)
+```
+
+Generated with discovered.json: 0xb06bb74c2bcd2a5d16721ad544ea58873d13e5c5
+
+# Diff at Wed, 07 Jan 2026 15:16:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1764758476
+- current timestamp: 1767795367
+
+## Description
+
+new tokenpools, ms changes.
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      values.getConfig.signers.0:
+-        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":11}
+      values.getConfig.signers.1:
+-        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":11}
+      values.getConfig.signers.2:
+-        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":7}
+      values.getConfig.signers.3:
+-        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":3,"group":14}
+      values.getConfig.signers.4.group:
+-        5
++        18
+      values.getConfig.signers.4.index:
+-        4
++        0
+      values.getConfig.signers.4.addr:
+-        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
++        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
+      values.getConfig.signers.5.group:
+-        11
++        17
+      values.getConfig.signers.5.index:
+-        5
++        1
+      values.getConfig.signers.5.addr:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
++        "eth:0x04189A291cC7E497015B45D4bb046DC0A8258068"
+      values.getConfig.signers.6.group:
+-        14
++        18
+      values.getConfig.signers.6.index:
+-        6
++        2
+      values.getConfig.signers.6.addr:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
++        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
+      values.getConfig.signers.7.group:
+-        14
++        16
+      values.getConfig.signers.7.index:
+-        7
++        3
+      values.getConfig.signers.7.addr:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
++        "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60"
+      values.getConfig.signers.8.group:
+-        10
++        11
+      values.getConfig.signers.8.index:
+-        8
++        4
+      values.getConfig.signers.8.addr:
+-        "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112"
++        "eth:0x146CAe49Dbe1b1D1968fc4652814740706548952"
+      values.getConfig.signers.9.group:
+-        13
++        21
+      values.getConfig.signers.9.index:
+-        9
++        5
+      values.getConfig.signers.9.addr:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
++        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
+      values.getConfig.signers.10.group:
+-        4
++        2
+      values.getConfig.signers.10.index:
+-        10
++        6
+      values.getConfig.signers.10.addr:
+-        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
++        "eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67"
+      values.getConfig.signers.11.group:
+-        1
++        18
+      values.getConfig.signers.11.index:
+-        11
++        7
+      values.getConfig.signers.11.addr:
+-        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
++        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
+      values.getConfig.signers.12.group:
+-        1
++        21
+      values.getConfig.signers.12.index:
+-        12
++        8
+      values.getConfig.signers.12.addr:
+-        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
++        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
+      values.getConfig.signers.13.group:
+-        13
++        21
+      values.getConfig.signers.13.index:
+-        13
++        9
+      values.getConfig.signers.13.addr:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
++        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
+      values.getConfig.signers.14.group:
+-        3
++        20
+      values.getConfig.signers.14.index:
+-        14
++        10
+      values.getConfig.signers.14.addr:
+-        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
++        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
+      values.getConfig.signers.15.group:
+-        13
++        8
+      values.getConfig.signers.15.index:
+-        15
++        11
+      values.getConfig.signers.15.addr:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
++        "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8"
+      values.getConfig.signers.16.group:
+-        9
++        15
+      values.getConfig.signers.16.index:
+-        16
++        12
+      values.getConfig.signers.16.addr:
+-        "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688"
++        "eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"
+      values.getConfig.signers.17.group:
+-        13
++        10
+      values.getConfig.signers.17.index:
+-        17
++        13
+      values.getConfig.signers.17.addr:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"
+      values.getConfig.signers.18.group:
+-        1
++        20
+      values.getConfig.signers.18.index:
+-        18
++        14
+      values.getConfig.signers.18.addr:
+-        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
++        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
+      values.getConfig.signers.19.group:
+-        13
++        6
+      values.getConfig.signers.19.index:
+-        19
++        15
+      values.getConfig.signers.19.addr:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
++        "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3"
+      values.getConfig.signers.20.group:
+-        3
++        20
+      values.getConfig.signers.20.index:
+-        20
++        16
+      values.getConfig.signers.20.addr:
+-        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
++        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
+      values.getConfig.signers.21.group:
+-        14
++        20
+      values.getConfig.signers.21.index:
+-        21
++        17
+      values.getConfig.signers.21.addr:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
++        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
+      values.getConfig.signers.22.index:
+-        22
++        18
+      values.getConfig.signers.22.addr:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
++        "eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"
+      values.getConfig.signers.23.group:
+-        1
++        20
+      values.getConfig.signers.23.index:
+-        23
++        19
+      values.getConfig.signers.23.addr:
+-        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
++        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
+      values.getConfig.signers.24.group:
+-        13
++        6
+      values.getConfig.signers.24.index:
+-        24
++        20
+      values.getConfig.signers.24.addr:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
++        "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+      values.getConfig.signers.25.group:
+-        14
++        21
+      values.getConfig.signers.25.index:
+-        25
++        21
+      values.getConfig.signers.25.addr:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
++        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
+      values.getConfig.signers.26.group:
+-        10
++        21
+      values.getConfig.signers.26.index:
+-        26
++        22
+      values.getConfig.signers.26.addr:
+-        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
++        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
+      values.getConfig.signers.27.group:
+-        15
++        12
+      values.getConfig.signers.27.index:
+-        27
++        23
+      values.getConfig.signers.27.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"
+      values.getConfig.signers.28.group:
+-        2
++        20
+      values.getConfig.signers.28.index:
+-        28
++        24
+      values.getConfig.signers.28.addr:
+-        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
++        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
+      values.getConfig.signers.29.group:
+-        1
++        21
+      values.getConfig.signers.29.index:
+-        29
++        25
+      values.getConfig.signers.29.addr:
+-        "eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.30.group:
+-        2
++        7
+      values.getConfig.signers.30.index:
+-        30
++        26
+      values.getConfig.signers.30.addr:
+-        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.31.group:
+-        15
++        22
+      values.getConfig.signers.31.index:
+-        31
++        27
+      values.getConfig.signers.31.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.32.group:
+-        15
++        4
+      values.getConfig.signers.32.index:
+-        32
++        28
+      values.getConfig.signers.32.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.33.group:
+-        1
++        4
+      values.getConfig.signers.33.index:
+-        33
++        29
+      values.getConfig.signers.33.addr:
+-        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.34.group:
+-        14
++        22
+      values.getConfig.signers.34.index:
+-        34
++        30
+      values.getConfig.signers.34.addr:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.35.group:
+-        7
++        22
+      values.getConfig.signers.35.index:
+-        35
++        31
+      values.getConfig.signers.35.addr:
+-        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.36.group:
+-        11
++        5
+      values.getConfig.signers.36.index:
+-        36
++        32
+      values.getConfig.signers.36.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.37.group:
+-        6
++        16
+      values.getConfig.signers.37.index:
+-        37
++        33
+      values.getConfig.signers.37.addr:
+-        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.38.group:
+-        14
++        18
+      values.getConfig.signers.38.index:
+-        38
++        34
+      values.getConfig.signers.38.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.39.group:
+-        14
++        13
+      values.getConfig.signers.39.index:
+-        39
++        35
+      values.getConfig.signers.39.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.40.group:
+-        5
++        21
+      values.getConfig.signers.40.index:
+-        40
++        36
+      values.getConfig.signers.40.addr:
+-        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.41.group:
+-        13
++        21
+      values.getConfig.signers.41.index:
+-        41
++        37
+      values.getConfig.signers.41.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.42.group:
+-        13
++        2
+      values.getConfig.signers.42.index:
+-        42
++        38
+      values.getConfig.signers.42.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.43.group:
+-        13
++        20
+      values.getConfig.signers.43.index:
+-        43
++        39
+      values.getConfig.signers.43.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.44.group:
+-        8
++        20
+      values.getConfig.signers.44.index:
+-        44
++        40
+      values.getConfig.signers.44.addr:
+-        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.45.group:
+-        9
++        20
+      values.getConfig.signers.45.index:
+-        45
++        41
+      values.getConfig.signers.45.addr:
+-        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.46.group:
+-        6
++        3
+      values.getConfig.signers.46.index:
+-        46
++        42
+      values.getConfig.signers.46.addr:
+-        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.47.group:
+-        15
++        17
+      values.getConfig.signers.47.index:
+-        47
++        43
+      values.getConfig.signers.47.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.48.group:
+-        1
++        13
+      values.getConfig.signers.48.index:
+-        48
++        44
+      values.getConfig.signers.48.addr:
+-        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.49.group:
+-        4
++        22
+      values.getConfig.signers.49.index:
+-        49
++        45
+      values.getConfig.signers.49.addr:
+-        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.50.group:
+-        11
++        9
+      values.getConfig.signers.50.index:
+-        50
++        46
+      values.getConfig.signers.50.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.51.group:
+-        13
++        8
+      values.getConfig.signers.51.index:
+-        51
++        47
+      values.getConfig.signers.51.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.52.group:
+-        8
++        18
+      values.getConfig.signers.52.index:
+-        52
++        48
+      values.getConfig.signers.52.addr:
+-        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.53.group:
+-        14
++        20
+      values.getConfig.signers.53.index:
+-        53
++        49
+      values.getConfig.signers.53.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.54.group:
+-        14
++        3
+      values.getConfig.signers.54.index:
+-        54
++        50
+      values.getConfig.signers.54.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.55.group:
+-        14
++        21
+      values.getConfig.signers.55.index:
+-        55
++        51
+      values.getConfig.signers.55.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.56.group:
+-        14
++        21
+      values.getConfig.signers.56.index:
+-        56
++        52
+      values.getConfig.signers.56.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.57.group:
+-        4
++        21
+      values.getConfig.signers.57.index:
+-        57
++        53
+      values.getConfig.signers.57.addr:
+-        "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.58.group:
+-        13
++        21
+      values.getConfig.signers.58.index:
+-        58
++        54
+      values.getConfig.signers.58.addr:
+-        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
++        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
+      values.getConfig.signers.59.group:
+-        4
++        20
+      values.getConfig.signers.59.index:
+-        59
++        55
+      values.getConfig.signers.59.addr:
+-        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.getConfig.signers.60.group:
+-        6
++        8
+      values.getConfig.signers.60.index:
+-        60
++        56
+      values.getConfig.signers.60.addr:
+-        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.61.group:
+-        15
++        13
+      values.getConfig.signers.61.index:
+-        61
++        57
+      values.getConfig.signers.61.addr:
+-        "eth:0xD8B2263665600f2742425D451e91FEaf642bac30"
++        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.62.group:
+-        14
++        21
+      values.getConfig.signers.62.index:
+-        62
++        58
+      values.getConfig.signers.62.addr:
+-        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
++        "eth:0xD8B2263665600f2742425D451e91FEaf642bac30"
+      values.getConfig.signers.63.group:
+-        13
++        21
+      values.getConfig.signers.63.index:
+-        63
++        59
+      values.getConfig.signers.63.addr:
+-        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
++        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
+      values.getConfig.signers.64.group:
+-        13
++        20
+      values.getConfig.signers.64.index:
+-        64
++        60
+      values.getConfig.signers.64.addr:
+-        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
++        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.getConfig.signers.65.group:
+-        13
++        20
+      values.getConfig.signers.65.index:
+-        65
++        61
+      values.getConfig.signers.65.addr:
+-        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
++        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
+      values.getConfig.signers.66.group:
+-        14
++        20
+      values.getConfig.signers.66.index:
+-        66
++        62
+      values.getConfig.signers.66.addr:
+-        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
++        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
+      values.getConfig.signers.67.group:
+-        13
++        21
+      values.getConfig.signers.67.index:
+-        67
++        63
+      values.getConfig.signers.67.addr:
+-        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
++        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
+      values.getConfig.signers.68.group:
+-        11
++        20
+      values.getConfig.signers.68.index:
+-        68
++        64
+      values.getConfig.signers.68.addr:
+-        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
++        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
+      values.getConfig.signers.69.group:
+-        11
++        18
+      values.getConfig.signers.69.index:
+-        69
++        65
+      values.getConfig.signers.69.addr:
+-        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
++        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.getConfig.signers.70.group:
+-        15
++        18
+      values.getConfig.signers.70.index:
+-        70
++        66
+      values.getConfig.signers.70.addr:
+-        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
++        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.getConfig.signers.71.group:
+-        14
++        22
+      values.getConfig.signers.71.index:
+-        71
++        67
+      values.getConfig.signers.71.addr:
+-        "eth:0xfE82835E7fa4D39F24B2F96d77267dD5714f884C"
++        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
+      values.getConfig.groupQuorums.2:
++        1
+      values.getConfig.groupQuorums.3:
++        1
+      values.getConfig.groupQuorums.4:
++        1
+      values.getConfig.groupQuorums.5:
++        1
+      values.getConfig.groupQuorums.6:
++        1
+      values.getConfig.groupQuorums.7:
++        1
+      values.getConfig.groupQuorums.8:
++        1
+      values.getConfig.groupQuorums.16:
+-        0
+      values.getConfig.groupQuorums.17:
+-        0
+      values.getConfig.groupQuorums.18:
+-        0
+      values.getConfig.groupQuorums.19:
+-        0
+      values.getConfig.groupQuorums.20:
+-        0
+      values.getConfig.groupQuorums.21:
+-        0
+      values.getConfig.groupQuorums.22:
+-        0
+      values.getConfig.groupParents.11:
+-        0
++        1
+      values.getConfig.groupParents.12:
+-        0
++        1
+      values.getConfig.groupParents.13:
+-        12
++        1
+      values.getConfig.groupParents.14:
+-        12
++        1
+      values.getConfig.groupParents.15:
+-        12
++        1
+      values.getConfig.groupParents.16:
+-        0
++        1
+      values.getConfig.groupParents.17:
+-        0
++        1
+      values.getConfig.groupParents.20:
+-        0
++        19
+      values.getConfig.groupParents.21:
+-        0
++        19
+      values.getConfig.groupParents.22:
+-        0
++        19
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50)
+    +++ description: None
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x3300f27EDEeEB59CC4C4203785406cBEAfEC8dF3) {
+    +++ description: None
+      values.getRateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x0c2Bc4d2698820e12E6eBe863E7b9E2650CD5b7D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (eth:0x73aEB5ECA03Ad587B8Fdcc2B61f9fb4D2e3D90c1)
+    +++ description: None
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.92:
++        {"sourceChainSelector":"6093540873831549674","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.offRamps.93:
++        {"sourceChainSelector":"17529533435026248318","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.6093540873831549674:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.17529533435026248318:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0x99bb52AAF045F63F74d0a3FbE6Cf3e7B23aeD212) {
+    +++ description: None
+      values.getRateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x0c2Bc4d2698820e12E6eBe863E7b9E2650CD5b7D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (eth:0xAFcC997D86713FeC802Cc665122d64a5130bDd1D)
+    +++ description: None
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.48:
+-        "eth:0xAFcC997D86713FeC802Cc665122d64a5130bDd1D"
++        "eth:0x267aE721c7b9BB409847C324A06259A7d96a644A"
+      values.pools.296:
+-        "eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50"
++        "eth:0x3F13dE27D0e0bEfA371752b9CE057Eb0b35921fb"
+      values.pools.300:
++        "eth:0x2Ef9B5f17a6C66A105f93317E9d515E30EC4aa69"
+      values.pools.301:
++        "eth:0x3f4E4632822cF71E30bA5e7158cB6616afE0cD38"
+      values.pools.302:
++        "eth:0xdb54Ba6433f77fBFf15316987Acb4Ef16f0CA89B"
+      values.pools.303:
++        "eth:0x3a138a2bA7DBA72ACBCdb2DCFBaF02ce311e5d0F"
+      values.pools.304:
++        "eth:0x390735D3b3C3805F71644154e5Fba82E0e542e76"
+      values.pools.305:
++        "eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a"
+      values.pools.306:
++        "eth:0x41993c7228221403723B37D9F0B5F162C2902aA8"
+      values.pools.307:
++        "eth:0x30d06e2B7e32c50235c66499839489dDB5125262"
+      values.pools.308:
++        "eth:0xe4C65aCa139aE0dcd288F477A413890996D057c8"
+      values.pools.309:
++        "eth:0x06bd2e7122A8a7bBF4a6Ef9fe20d71dbCEe32e06"
+      values.pools.310:
++        "eth:0x22B8B1ea06AEE07880436a90dA396594350D4f19"
+      values.poolsMap.eth:0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23:
+-        "eth:0xAFcC997D86713FeC802Cc665122d64a5130bDd1D"
++        "eth:0x267aE721c7b9BB409847C324A06259A7d96a644A"
+      values.poolsMap.eth:0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B:
+-        "eth:0x1E9Aa57aa830278f7e7E3336c535F5024E836f50"
++        "eth:0x3F13dE27D0e0bEfA371752b9CE057Eb0b35921fb"
+      values.poolsMap.eth:0x4ccF52d4e95B7425E9179622D9768B9D2f636844:
++        "eth:0x2Ef9B5f17a6C66A105f93317E9d515E30EC4aa69"
+      values.poolsMap.eth:0x061661137c9aF602ED0Cb6f15FB326C3c8F302b4:
++        "eth:0x3f4E4632822cF71E30bA5e7158cB6616afE0cD38"
+      values.poolsMap.eth:0x54B7f94B48F176e07828019ee98bEA4ea6e10ed3:
++        "eth:0xdb54Ba6433f77fBFf15316987Acb4Ef16f0CA89B"
+      values.poolsMap.eth:0x93783ccd94763e11B9a57394e63Ddd9CeedaD925:
++        "eth:0x3a138a2bA7DBA72ACBCdb2DCFBaF02ce311e5d0F"
+      values.poolsMap.eth:0x59DB93D135F16585ED90b8C942d4f8AE0DcFBFc0:
++        "eth:0x390735D3b3C3805F71644154e5Fba82E0e542e76"
+      values.poolsMap.eth:0x498D9329555471bF6073A5f2D047F746d522A373:
++        "eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a"
+      values.poolsMap.eth:0x54D2252757e1672EEaD234D27B1270728fF90581:
++        "eth:0x41993c7228221403723B37D9F0B5F162C2902aA8"
+      values.poolsMap.eth:0x4E6a625Ad02Dc7Da37f434D2a232e68D925270FF:
++        "eth:0x30d06e2B7e32c50235c66499839489dDB5125262"
+      values.poolsMap.eth:0x6c51E86aD16B7dCDC7e5250126717f193145f185:
++        "eth:0xe4C65aCa139aE0dcd288F477A413890996D057c8"
+      values.poolsMap.eth:0xAde49Ae9383abBb17FEdF1D9F261df431d4ee21f:
++        "eth:0x06bd2e7122A8a7bBF4a6Ef9fe20d71dbCEe32e06"
+      values.poolsMap.eth:0xe103f85c23577675f82438a2866C7EE3bBC9c8C8:
++        "eth:0x22B8B1ea06AEE07880436a90dA396594350D4f19"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901"
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (eth:0xD4304D2D5C9cdF63124fD2A6C814f6b4F85925D9) {
+    +++ description: None
+      values.getRateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x0c2Bc4d2698820e12E6eBe863E7b9E2650CD5b7D"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) {
+    +++ description: None
+      values.getConfig.signers.43:
+-        {"addr":"eth:0xfE82835E7fa4D39F24B2F96d77267dD5714f884C","index":43,"group":2}
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      values.getConfig.signers.0:
++        {"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":2}
+      values.getConfig.signers.1:
++        {"addr":"eth:0x04189A291cC7E497015B45D4bb046DC0A8258068","index":1,"group":19}
+      values.getConfig.signers.2:
++        {"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":2,"group":2}
+      values.getConfig.signers.3:
++        {"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":3,"group":18}
+      values.getConfig.signers.4:
++        {"addr":"eth:0x146CAe49Dbe1b1D1968fc4652814740706548952","index":4,"group":13}
+      values.getConfig.signers.5:
++        {"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":5,"group":1}
+      values.getConfig.signers.6:
++        {"addr":"eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","index":6,"group":4}
+      values.getConfig.signers.7:
++        {"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":7,"group":2}
+      values.getConfig.signers.8:
++        {"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":8,"group":1}
+      values.getConfig.signers.9:
++        {"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":9,"group":1}
+      values.getConfig.signers.10:
++        {"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":10,"group":1}
+      values.getConfig.signers.11:
++        {"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":11,"group":10}
+      values.getConfig.signers.12:
++        {"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":12,"group":17}
+      values.getConfig.signers.13:
++        {"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":13,"group":12}
+      values.getConfig.signers.14:
++        {"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":14,"group":1}
+      values.getConfig.signers.15:
++        {"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":15,"group":8}
+      values.getConfig.signers.16:
++        {"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":16,"group":1}
+      values.getConfig.signers.17:
++        {"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":1}
+      values.getConfig.signers.18:
++        {"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":16}
+      values.getConfig.signers.19:
++        {"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":1}
+      values.getConfig.signers.20:
++        {"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":8}
+      values.getConfig.signers.21:
++        {"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":1}
+      values.getConfig.signers.22:
++        {"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":1}
+      values.getConfig.signers.23:
++        {"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":14}
+      values.getConfig.signers.24:
++        {"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":1}
+      values.getConfig.signers.0.group:
+-        4
++        1
+      values.getConfig.signers.0.index:
+-        0
++        25
+      values.getConfig.signers.0.addr:
+-        "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34"
++        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
+      values.getConfig.signers.1.group:
+-        4
++        9
+      values.getConfig.signers.1.index:
+-        1
++        26
+      values.getConfig.signers.1.addr:
+-        "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472"
++        "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+      values.getConfig.signers.2.group:
+-        2
++        1
+      values.getConfig.signers.2.index:
+-        2
++        27
+      values.getConfig.signers.2.addr:
+-        "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0"
++        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
+      values.getConfig.signers.3.group:
+-        4
++        6
+      values.getConfig.signers.3.index:
+-        3
++        28
+      values.getConfig.signers.3.addr:
+-        "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94"
++        "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6"
+      values.getConfig.signers.4.group:
+-        2
++        6
+      values.getConfig.signers.4.index:
+-        4
++        29
+      values.getConfig.signers.4.addr:
+-        "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142"
++        "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+      values.getConfig.signers.5.group:
+-        2
++        1
+      values.getConfig.signers.5.index:
+-        5
++        30
+      values.getConfig.signers.5.addr:
+-        "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887"
++        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
+      values.getConfig.signers.6.index:
+-        6
++        31
+      values.getConfig.signers.6.addr:
+-        "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845"
++        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
+      values.getConfig.signers.7.group:
+-        1
++        7
+      values.getConfig.signers.7.index:
+-        7
++        32
+      values.getConfig.signers.7.addr:
+-        "eth:0x34e42200901133bdceb1195f2c5241cb03D06274"
++        "eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"
+      values.getConfig.signers.8.index:
+-        8
++        33
+      values.getConfig.signers.8.addr:
+-        "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8"
++        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
+      values.getConfig.signers.9.group:
+-        1
++        18
+      values.getConfig.signers.9.index:
+-        9
++        34
+      values.getConfig.signers.9.addr:
+-        "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D"
++        "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"
+      values.getConfig.signers.10.group:
+-        1
++        2
+      values.getConfig.signers.10.index:
+-        10
++        35
+      values.getConfig.signers.10.addr:
+-        "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf"
++        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.11.group:
+-        2
++        15
+      values.getConfig.signers.11.index:
+-        11
++        36
+      values.getConfig.signers.11.addr:
+-        "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253"
++        "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5"
+      values.getConfig.signers.12.group:
+-        2
++        1
+      values.getConfig.signers.12.index:
+-        12
++        37
+      values.getConfig.signers.12.addr:
+-        "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6"
++        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.13.index:
+-        13
++        38
+      values.getConfig.signers.13.addr:
+-        "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c"
++        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
+      values.getConfig.signers.14.group:
+-        2
++        4
+      values.getConfig.signers.14.index:
+-        14
++        39
+      values.getConfig.signers.14.addr:
+-        "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0"
++        "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"
+      values.getConfig.signers.15.group:
+-        3
++        1
+      values.getConfig.signers.15.index:
+-        15
++        40
+      values.getConfig.signers.15.addr:
+-        "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C"
++        "eth:0x843742760078Df85609690D85827173A1A96D14a"
+      values.getConfig.signers.16.group:
+-        3
++        1
+      values.getConfig.signers.16.index:
+-        16
++        41
+      values.getConfig.signers.16.addr:
+-        "eth:0x60Fead3745461393F9298228E19d6D720Db89F2e"
++        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
+      values.getConfig.signers.17.group:
+-        3
++        1
+      values.getConfig.signers.17.index:
+-        17
++        42
+      values.getConfig.signers.17.addr:
+-        "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee"
++        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
+      values.getConfig.signers.18.group:
+-        2
++        5
+      values.getConfig.signers.18.index:
+-        18
++        43
+      values.getConfig.signers.18.addr:
+-        "eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226"
++        "eth:0x9079410666ED02725ee9d148398Cee26397c2A36"
+      values.getConfig.signers.19.group:
+-        4
++        19
+      values.getConfig.signers.19.index:
+-        19
++        44
+      values.getConfig.signers.19.addr:
+-        "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
++        "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+      values.getConfig.signers.20.group:
+-        2
++        15
+      values.getConfig.signers.20.index:
+-        20
++        45
+      values.getConfig.signers.20.addr:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++        "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+      values.getConfig.signers.21.group:
+-        2
++        1
+      values.getConfig.signers.21.index:
+-        21
++        46
+      values.getConfig.signers.21.addr:
+-        "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2"
++        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
+      values.getConfig.signers.22.group:
+-        1
++        11
+      values.getConfig.signers.22.index:
+-        22
++        47
+      values.getConfig.signers.22.addr:
+-        "eth:0x843742760078Df85609690D85827173A1A96D14a"
++        "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"
+      values.getConfig.signers.23.group:
+-        1
++        10
+      values.getConfig.signers.23.index:
+-        23
++        48
+      values.getConfig.signers.23.addr:
+-        "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7"
++        "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB"
+      values.getConfig.signers.24.group:
+-        1
++        2
+      values.getConfig.signers.24.index:
+-        24
++        49
+      values.getConfig.signers.24.addr:
+-        "eth:0x8E0e08E8cbc324310550E195383b7aC200726639"
++        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+      values.getConfig.signers.25.group:
+-        3
++        1
+      values.getConfig.signers.25.index:
+-        25
++        50
+      values.getConfig.signers.25.addr:
+-        "eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6"
++        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
+      values.getConfig.signers.26.group:
+-        4
++        5
+      values.getConfig.signers.26.index:
+-        26
++        51
+      values.getConfig.signers.26.addr:
+-        "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
++        "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
+      values.getConfig.signers.27.index:
+-        27
++        52
+      values.getConfig.signers.27.addr:
+-        "eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD"
++        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
+      values.getConfig.signers.28.group:
+-        2
++        1
+      values.getConfig.signers.28.index:
+-        28
++        53
+      values.getConfig.signers.28.addr:
+-        "eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2"
++        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
+      values.getConfig.signers.29.group:
+-        2
++        1
+      values.getConfig.signers.29.index:
+-        29
++        54
+      values.getConfig.signers.29.addr:
+-        "eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F"
++        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
+      values.getConfig.signers.30.group:
+-        2
++        1
+      values.getConfig.signers.30.index:
+-        30
++        55
+      values.getConfig.signers.30.addr:
+-        "eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009"
++        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
+      values.getConfig.signers.31.group:
+-        2
++        1
+      values.getConfig.signers.31.index:
+-        31
++        56
+      values.getConfig.signers.31.addr:
+-        "eth:0xBbe4467c7151B810eC8FdB281F6fB7F0cD8A7b65"
++        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
+      values.getConfig.signers.32.group:
+-        1
++        10
+      values.getConfig.signers.32.index:
+-        32
++        57
+      values.getConfig.signers.32.addr:
+-        "eth:0xd107276078c6605bE0CEC43D765733291B7102aF"
++        "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+      values.getConfig.signers.33.group:
+-        3
++        15
+      values.getConfig.signers.33.index:
+-        33
++        58
+      values.getConfig.signers.33.addr:
+-        "eth:0xD8B2263665600f2742425D451e91FEaf642bac30"
++        "eth:0xd3E2da792E806556517124f03F12e557045951E7"
+      values.getConfig.signers.34.group:
+-        2
++        1
+      values.getConfig.signers.34.index:
+-        34
++        59
+      values.getConfig.signers.34.addr:
+-        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
++        "eth:0xD8B2263665600f2742425D451e91FEaf642bac30"
+      values.getConfig.signers.35.index:
+-        35
++        60
+      values.getConfig.signers.35.addr:
+-        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
++        "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C"
+      values.getConfig.signers.36.index:
+-        36
++        61
+      values.getConfig.signers.36.addr:
+-        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
++        "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"
+      values.getConfig.signers.37.index:
+-        37
++        62
+      values.getConfig.signers.37.addr:
+-        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
++        "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162"
+      values.getConfig.signers.38.group:
+-        2
++        1
+      values.getConfig.signers.38.index:
+-        38
++        63
+      values.getConfig.signers.38.addr:
+-        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
++        "eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8"
+      values.getConfig.signers.39.index:
+-        39
++        64
+      values.getConfig.signers.39.addr:
+-        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
++        "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"
+      values.getConfig.signers.40.group:
+-        4
++        1
+      values.getConfig.signers.40.index:
+-        40
++        65
+      values.getConfig.signers.40.addr:
+-        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
++        "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
+      values.getConfig.signers.41.group:
+-        4
++        2
+      values.getConfig.signers.41.index:
+-        41
++        66
+      values.getConfig.signers.41.addr:
+-        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
++        "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028"
+      values.getConfig.signers.42.group:
+-        3
++        2
+      values.getConfig.signers.42.index:
+-        42
++        67
+      values.getConfig.signers.42.addr:
+-        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
++        "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+      values.getConfig.signers.43.group:
+-        2
++        1
+      values.getConfig.signers.43.index:
+-        43
++        68
+      values.getConfig.signers.43.addr:
+-        "eth:0xfE82835E7fa4D39F24B2F96d77267dD5714f884C"
++        "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
+      values.getConfig.groupQuorums.0:
+-        2
++        1
+      values.getConfig.groupQuorums.1:
+-        2
++        4
+      values.getConfig.groupQuorums.3:
+-        2
++        6
+      values.getConfig.groupQuorums.4:
+-        2
++        1
+      values.getConfig.groupQuorums.5:
+-        0
++        1
+      values.getConfig.groupQuorums.6:
+-        0
++        1
+      values.getConfig.groupQuorums.7:
+-        0
++        1
+      values.getConfig.groupQuorums.8:
+-        0
++        1
+      values.getConfig.groupQuorums.9:
+-        0
++        1
+      values.getConfig.groupQuorums.10:
+-        0
++        1
+      values.getConfig.groupQuorums.11:
+-        0
++        1
+      values.getConfig.groupQuorums.12:
+-        0
++        1
+      values.getConfig.groupQuorums.13:
+-        0
++        1
+      values.getConfig.groupQuorums.14:
+-        0
++        1
+      values.getConfig.groupQuorums.15:
+-        0
++        1
+      values.getConfig.groupQuorums.16:
+-        0
++        1
+      values.getConfig.groupQuorums.17:
+-        0
++        1
+      values.getConfig.groupQuorums.18:
+-        0
++        1
+      values.getConfig.groupQuorums.19:
+-        0
++        1
+      values.getConfig.groupParents.4:
+-        0
++        3
+      values.getConfig.groupParents.5:
+-        0
++        3
+      values.getConfig.groupParents.6:
+-        0
++        3
+      values.getConfig.groupParents.7:
+-        0
++        3
+      values.getConfig.groupParents.8:
+-        0
++        3
+      values.getConfig.groupParents.9:
+-        0
++        3
+      values.getConfig.groupParents.10:
+-        0
++        3
+      values.getConfig.groupParents.11:
+-        0
++        3
+      values.getConfig.groupParents.12:
+-        0
++        3
+      values.getConfig.groupParents.13:
+-        0
++        3
+      values.getConfig.groupParents.14:
+-        0
++        3
+      values.getConfig.groupParents.15:
+-        0
++        3
+      values.getConfig.groupParents.16:
+-        0
++        3
+      values.getConfig.groupParents.17:
+-        0
++        3
+      values.getConfig.groupParents.18:
+-        0
++        3
+      values.getConfig.groupParents.19:
+-        0
++        3
+    }
+```
+
+```diff
+    contract RMNRemote (eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20) {
+    +++ description: None
+      values.owner:
+-        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
++        "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x06bd2e7122A8a7bBF4a6Ef9fe20d71dbCEe32e06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x22B8B1ea06AEE07880436a90dA396594350D4f19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x267aE721c7b9BB409847C324A06259A7d96a644A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x2Ef9B5f17a6C66A105f93317E9d515E30EC4aa69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x30d06e2B7e32c50235c66499839489dDB5125262)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x390735D3b3C3805F71644154e5Fba82E0e542e76)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x3a138a2bA7DBA72ACBCdb2DCFBaF02ce311e5d0F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x3Ba8e8e561798e5194c898f3a2303986A7d1e901)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x3F13dE27D0e0bEfA371752b9CE057Eb0b35921fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x3f4E4632822cF71E30bA5e7158cB6616afE0cD38)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x41993c7228221403723B37D9F0B5F162C2902aA8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xdb54Ba6433f77fBFf15316987Acb4Ef16f0CA89B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xe4C65aCa139aE0dcd288F477A413890996D057c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenTransferorPool (eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x06bd2e7122A8a7bBF4a6Ef9fe20d71dbCEe32e06.sol | 1374 +++++++++++
+ ...:0x30d06e2B7e32c50235c66499839489dDB5125262.sol | 1374 +++++++++++
+ ...:0x390735D3b3C3805F71644154e5Fba82E0e542e76.sol | 1374 +++++++++++
+ ...:0x3a138a2bA7DBA72ACBCdb2DCFBaF02ce311e5d0F.sol | 1374 +++++++++++
+ ...:0x3f4E4632822cF71E30bA5e7158cB6616afE0cD38.sol | 1374 +++++++++++
+ ...:0xdb54Ba6433f77fBFf15316987Acb4Ef16f0CA89B.sol | 1374 +++++++++++
+ ...0xe4C65aCa139aE0dcd288F477A413890996D057c8.sol} |  671 +-----
+ ...:0x22B8B1ea06AEE07880436a90dA396594350D4f19.sol | 1820 +++++++++++++++
+ ...:0x267aE721c7b9BB409847C324A06259A7d96a644A.sol | 1771 +++++++++++++++
+ ...0x2Ef9B5f17a6C66A105f93317E9d515E30EC4aa69.sol} | 1973 ++++++++--------
+ ...:0x3F13dE27D0e0bEfA371752b9CE057Eb0b35921fb.sol | 1766 +++++++++++++++
+ ...:0x41993c7228221403723B37D9F0B5F162C2902aA8.sol | 1766 +++++++++++++++
+ .../dev/null                                       | 1325 -----------
+ .../src/projects/transporter/.flat/Safe/Safe.sol   | 1088 +++++++++
+ .../transporter/.flat/Safe/SafeProxy.p.sol         |   37 +
+ .../transporter/.flat/TokenTransferorPool.sol      | 2379 ++++++++++++++++++++
+ 16 files changed, 20009 insertions(+), 2831 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764758476 (main branch discovery), not current.
+
+```diff
+    contract LockReleaseDextfPool (eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91) {
+    +++ description: None
+      template:
++        "transporter/TokenPool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DEXTF Token (eth:0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x73a0dd18e59ddd278d72b255fb74def93c4e9b10
 
 # Diff at Wed, 03 Dec 2025 10:44:27 GMT:
 

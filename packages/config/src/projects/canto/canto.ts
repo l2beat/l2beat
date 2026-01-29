@@ -21,7 +21,7 @@ export const canto: ScalingProject = upcomingL2({
       repositories: ['https://github.com/Canto-Network'],
       socialMedia: [
         'https://twitter.com/CantoPublic',
-        'https://discord.gg/canto',
+        'https://discord.com/invite/63GmEXZsVf',
       ],
     },
   },

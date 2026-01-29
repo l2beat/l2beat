@@ -35,7 +35,6 @@ export const onChainProjects: string[] = [
   'dydx',
   'tokens',
   'gateway',
-  'hibachi',
   'opcm16',
   'aztecnetwork',
   ...configReader.getProjectsInGroup('tokens'),
@@ -119,11 +118,11 @@ describe('discovery config.jsonc', () => {
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
     for (const c of configs) {
       const discovery = configReader.readDiscovery(c.name)
-      const reason = templateService.discoveryNeedsRefresh(discovery, c)
+      const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
       assert(
-        reason === undefined,
-        `${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
+        reasons.length === 0,
+        `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
   })

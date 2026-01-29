@@ -54,6 +54,7 @@ export const stargatev2: Bridge = {
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       bridges: ['https://layerzeroscan.com/'],
+      documentation: ['https://docs.stargate.finance/introduction/overview'],
       repositories: [
         'https://github.com/stargate-protocol/stargate-v2',
         'https://github.com/LayerZero-Labs/LayerZero-v2',
@@ -104,7 +105,7 @@ While liquidity providers need to keep all pools buffered with assets, users can
 Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
 
 While Stargate operates the local token pools on each supported chain, they are all connected through the LayerZero messaging protocol, which is responsible for verifying and delivering the crosschain messages.
-Verification is done by Stargate-selected permissioned verifiers (called DVNs in LayerZero terminology), currently configured as a 2/2 of Stargate and Nethermind custom Multisigs. 
+Verification is done by Stargate-selected permissioned verifiers (called DVNs in LayerZero terminology), currently configured as a 2/2 of the required (Nethermind, LayerZero) custom Multisigs. 
 Crosschain message passing is done by professional relayers and executors but could technically be done by anyone (even the user themselves if they have access to the bridge message signed by the two verifiers e.g. in case they have committed the verification onchain).
 
 Just like the assets themselves, so-called *credits* (also OFTs) are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
@@ -124,10 +125,18 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     validation: (() => {
       assert(
         discoveredUlnConfig.requiredDVNCount === 2 &&
-          discoveredUlnConfig.requiredDVNs[0] ===
-            'eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
-          discoveredUlnConfig.requiredDVNs[1] ===
+          discoveredUlnConfig.requiredDVNs.includes(
             'eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
+          ) &&
+          discoveredUlnConfig.optionalDVNCount === 0 &&
+          discoveredUlnConfig.optionalDVNThreshold === 0 &&
+          // &&
+          // discoveredUlnConfig.optionalDVNs.includes(
+          //   'eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18', // Stargate DVN address
+          // ),
+          discoveredUlnConfig.requiredDVNs.includes(
+            'eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b', // LayerZero DVN address
+          ),
         'Update the validation, poO and permissions sections, the security config of Stargatev2 has changed.',
       )
       assert(
@@ -139,7 +148,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       return {
         name: 'LayerZero messaging',
         description:
-          'The LayerZero message protocol is used: For validation of messages from Stargate over LayerZero, two DVNs are currently configured: Nethermind and Stargate.\
+          'The LayerZero message protocol is used: For validation of messages from Stargate over LayerZero, two required DVN (Nethermind, LayerZero) are currently configured on Ethereum.\
         If both DVNs agree on a message, it is verified and can be executed by an Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
         references: [
           {

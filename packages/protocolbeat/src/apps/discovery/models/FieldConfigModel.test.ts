@@ -179,4 +179,77 @@ describe('FieldConfigModel', () => {
       expect(updated.severity).toEqual('HIGH')
     })
   })
+
+  describe('setDescription', () => {
+    it('sets a normal description', () => {
+      const model = FieldConfigModel.fromRawJsonc('{}')
+      const updated = model.setDescription('Test description')
+      expect(updated.peek().description).toEqual('Test description')
+      expect(updated.hasDefinition('description')).toEqual(true)
+    })
+
+    it('trims whitespace from description', () => {
+      const model = FieldConfigModel.fromRawJsonc('{}')
+      const updated = model.setDescription('  Test description  ')
+      expect(updated.peek().description).toEqual('Test description')
+    })
+
+    it('converts empty string to undefined', () => {
+      const model = FieldConfigModel.fromRawJsonc(
+        `{ "description": "Existing" }`,
+      )
+      const updated = model.setDescription('')
+      expect(updated.peek().description).toEqual(undefined)
+      expect(updated.hasDefinition('description')).toEqual(false)
+    })
+
+    it('converts whitespace-only string to undefined', () => {
+      const model = FieldConfigModel.fromRawJsonc(
+        `{ "description": "Existing" }`,
+      )
+      const updated = model.setDescription('   ')
+      expect(updated.peek().description).toEqual(undefined)
+      expect(updated.hasDefinition('description')).toEqual(false)
+    })
+
+    it('removes description when set to undefined', () => {
+      const model = FieldConfigModel.fromRawJsonc(
+        `{ "description": "Existing" }`,
+      )
+      const updated = model.setDescription(undefined)
+      expect(updated.peek().description).toEqual(undefined)
+      expect(updated.hasDefinition('description')).toEqual(false)
+    })
+
+    it('changes description from one value to another', () => {
+      const model = FieldConfigModel.fromRawJsonc(
+        `{ "description": "Old description" }`,
+      )
+      const updated = model.setDescription('New description')
+      expect(model.peek().description).toEqual('Old description')
+      expect(updated.peek().description).toEqual('New description')
+    })
+
+    it('maintains immutability when setting description', () => {
+      const original = FieldConfigModel.fromRawJsonc('{}')
+      const updated = original.setDescription('Test')
+      expect(original.peek().description).toEqual(undefined)
+      expect(updated.peek().description).toEqual('Test')
+    })
+
+    it('preserves comments when setting description', () => {
+      const jsonc = `{
+        // Comment A
+        "severity": "HIGH", // Comment B
+        "description": "Old" // Comment C
+      }`
+      const model = FieldConfigModel.fromRawJsonc(jsonc)
+      const updated = model.setDescription('New description')
+
+      const text = updated.toString()
+      expect(text).toInclude('Comment A')
+      expect(text).toInclude('Comment B')
+      expect(text).toInclude('New description')
+    })
+  })
 })

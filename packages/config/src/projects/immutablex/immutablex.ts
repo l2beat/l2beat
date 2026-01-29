@@ -16,7 +16,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -86,7 +86,7 @@ export const immutablex: ScalingProject = {
     stacks: ['StarkEx'],
     links: {
       websites: ['https://immutable.com/'],
-      bridges: ['https://market.immutable.com/'],
+      bridges: ['https://toolkit.immutable.com/squid-bridge/'],
       documentation: [
         'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
       ],
@@ -96,6 +96,9 @@ export const immutablex: ScalingProject = {
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
         'https://discord.com/invite/immutable-play',
+        'https://reddit.com/r/ImmutableX/',
+        'https://linkedin.com/company/immutable-1/',
+        'https://youtube.com/channel/UCR_WlrGou7hm0ACXYpldcuA',
       ],
       other: ['https://growthepie.com/chains/immutable-x'],
     },
@@ -172,7 +175,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: immutablexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: immutablexProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

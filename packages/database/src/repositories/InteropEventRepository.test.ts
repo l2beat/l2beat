@@ -86,6 +86,65 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropEventRepository.prototype.getOldestEventForPluginAndChain.name,
+    () => {
+      it('returns the oldest event by timestamp for plugins and chain', async () => {
+        await repository.insertMany([
+          event('plugin1', 'event1', 'deposit', UnixTime(200), UnixTime(300), {
+            chain: 'chainA',
+          }),
+          event('plugin1', 'event2', 'deposit', UnixTime(100), UnixTime(200), {
+            chain: 'chainA',
+          }),
+          event('plugin1', 'event3', 'deposit', UnixTime(50), UnixTime(150), {
+            chain: 'chainB',
+          }),
+          event('plugin2', 'event4', 'withdraw', UnixTime(25), UnixTime(125), {
+            chain: 'chainA',
+          }),
+          event('plugin3', 'event5', 'withdraw', UnixTime(10), UnixTime(110), {
+            chain: 'chainA',
+          }),
+        ])
+
+        const result = await repository.getOldestEventForPluginAndChain(
+          ['plugin1', 'plugin2'],
+          'chainA',
+        )
+
+        expect(result?.eventId).toEqual('event4')
+      })
+
+      it('returns undefined when there are no events for plugin and chain', async () => {
+        await repository.insertMany([
+          event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+            chain: 'chainB',
+          }),
+          event('plugin2', 'event2', 'deposit', UnixTime(50), UnixTime(150), {
+            chain: 'chainB',
+          }),
+        ])
+
+        const result = await repository.getOldestEventForPluginAndChain(
+          ['plugin1', 'plugin2'],
+          'chainA',
+        )
+
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined when plugin list is empty', async () => {
+        const result = await repository.getOldestEventForPluginAndChain(
+          [],
+          'chainA',
+        )
+
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(InteropEventRepository.prototype.getByType.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
@@ -347,6 +406,37 @@ describeDatabase(InteropEventRepository.name, (db) => {
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
+    })
+  })
+
+  describe(InteropEventRepository.prototype.deleteAllForPlugin.name, () => {
+    it('deletes events for the specified plugin', async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
+        event('plugin2', 'event3', 'withdraw', UnixTime(200), UnixTime(300)),
+      ])
+
+      const deleted = await repository.deleteAllForPlugin('plugin1')
+
+      expect(deleted).toEqual(2)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
+      expect(remaining[0]?.eventId).toEqual('event3')
+    })
+
+    it('returns 0 when no events match the plugin', async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+      ])
+
+      const deleted = await repository.deleteAllForPlugin('plugin2')
+
+      expect(deleted).toEqual(0)
+
+      const remaining = await repository.getAll()
+      expect(remaining).toHaveLength(1)
     })
   })
 

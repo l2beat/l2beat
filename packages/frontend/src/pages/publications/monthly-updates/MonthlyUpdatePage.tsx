@@ -35,12 +35,12 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
   ].map((item) => ({
     id: item.id,
     title: item.name,
-    icon: <img src={`/icons/${item.id}.png`} alt={item.name} />,
+    icon: <img src={item.iconUrl} alt={item.name} />,
   }))
   return (
     <AppLayout {...props}>
-      <SideNavLayout>
-        <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+      <SideNavLayout childrenWrapperClassName="md:pt-0">
+        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 md:mb-6 lg:hidden">
           <MobileSectionNavigation sections={sections} />
         </div>
 

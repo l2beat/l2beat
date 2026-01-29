@@ -19,8 +19,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -276,6 +276,24 @@ export const zircuit: ScalingProject = {
           functionSignature:
             'function proposeL2OutputV3(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
           sinceTimestamp: UnixTime(1756148051),
+          untilTimestamp: UnixTime(1764017747),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+          { type: 'liveness', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x92Ef6Af472b39F1b363da45E35530c24619245A4',
+          ),
+          selector: '0x2685d148',
+          functionSignature:
+            'function proposeL2OutputV3(bytes32 _outputRoot, uint64 _claimNonce, address _claimSenderAddress, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
+          sinceTimestamp: UnixTime(1764017747),
         },
       },
     ],
@@ -344,7 +362,7 @@ export const zircuit: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: zircuitProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {

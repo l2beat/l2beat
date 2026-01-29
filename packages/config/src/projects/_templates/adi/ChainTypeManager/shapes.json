@@ -1,0 +1,14 @@
+{
+  "ChainTypeManager_v29_ADI": {
+    "hash": "0x02b4caf5d4d2907355dd4d367636aba133b66f2d7152f316ff2b714915c26d61",
+    "address": "eth:0x191D1D51a9CBe988E69ad3D27eFab60663e5ed61",
+    "chain": "ethereum",
+    "blockNumber": 24038982
+  },
+  "ZKsyncOSChainTypeManager_v30_ADI": {
+    "hash": "0xce7505b0d1b5400403ca2c4d2c36a9e7cc633e215f5da2ab4d2256a0389e7dad",
+    "address": "eth:0x721e27269ce348F71bdAAd7B7b033Afa60e404e0",
+    "chain": "ethereum",
+    "blockNumber": 24275768
+  }
+}

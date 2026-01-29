@@ -1,4 +1,213 @@
-Generated with discovered.json: 0xe2f73d6810e77df245dc3a46ea25799be4a885f1
+Generated with discovered.json: 0x44a5bf30978a593b120da932b4520ae25c0bfee0
+
+# Diff at Wed, 14 Jan 2026 06:09:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1756734918
+- current timestamp: 1768370885
+
+## Description
+
+Upgrade to all contract implementations, mostly refactoring without adding new features.
+
+- DepositBoxERC1155 https://disco.l2beat.com/diff/eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304/eth:0xE45573275d130D98e35cb1F5b5f6849490Ef3ec4
+- DepositBoxEth https://disco.l2beat.com/diff/eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a/eth:0x35C916B4386744f2a9EB1139073Aa42713852E70
+- CommunityPool https://disco.l2beat.com/diff/eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a/eth:0x29353f77C6b0D3772d73e708CC8E1fCa08c80C11
+- Linker https://disco.l2beat.com/diff/eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0/eth:0xb401971adc1A5dAD635F1e0cccbD1E3cc286b903
+- DepositBoxERC721 https://disco.l2beat.com/diff/eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5/eth:0xb49A02585E2BeB912027D8876DC1cdbE8F97C1A3
+- MessageProxyForMainnet https://disco.l2beat.com/diff/eth:0x0AE92a5105111281151b980A0aD680b890bf1944/eth:0xd1ffC52c0a5B8513bccfCd26632Df1999929788b
+- DepositBoxERC20 https://disco.l2beat.com/diff/eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788/eth:0xeDf7B1D29E99bE10177D2110cbfAb6DC466344EE
+- DepositBoxERC721WithMetadata https://disco.l2beat.com/diff/eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7/eth:0x0e007F24dC7B6E08209c60fF8b275b0f068a2903
+
+
+## Watched changes
+
+```diff
+    contract DepositBoxERC1155 (eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf1249b1702e937c0b400c431224c31f04de782b043f625ab4e1dd18d9ba95863"
++        "0xf29714d5de2b9f07fcd6532510aaf4f4f630bfcfbe94d09e3f09c1f5438b4bed"
+      values.$implementation:
+-        "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"
++        "eth:0xE45573275d130D98e35cb1F5b5f6849490Ef3ec4"
+      values.$pastUpgrades.8:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0xE45573275d130D98e35cb1F5b5f6849490Ef3ec4"]]
+      values.$upgradeCount:
+-        8
++        9
+      implementationNames.eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304:
+-        "DepositBoxERC1155"
+      implementationNames.eth:0xE45573275d130D98e35cb1F5b5f6849490Ef3ec4:
++        "DepositBoxERC1155"
+    }
+```
+
+```diff
+    contract DepositBoxEth (eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x85c164a0c91eb9d4eb34a3a81e63e66c588a8acd2ec2cdbb4cbcf227807eb359"
++        "0x021eb7bf8b67e3750e9715e0b32fcbf7943d04630cb4cef1f29d49bd457428f1"
+      values.$implementation:
+-        "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"
++        "eth:0x35C916B4386744f2a9EB1139073Aa42713852E70"
+      values.$pastUpgrades.8:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0x35C916B4386744f2a9EB1139073Aa42713852E70"]]
+      values.$upgradeCount:
+-        8
++        9
+      implementationNames.eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a:
+-        "DepositBoxEth"
+      implementationNames.eth:0x35C916B4386744f2a9EB1139073Aa42713852E70:
++        "DepositBoxEth"
+    }
+```
+
+```diff
+    contract CommunityPool (eth:0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf86e44103e5d07e9f6a25146ea2cfc4946eba19bbb8731b704b9f5047202b6b7"
++        "0x52fdf7312b788ac984067a0f05050356f66840aac7d4ae24f933d07cb9f1e138"
+      values.$implementation:
+-        "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
++        "eth:0x29353f77C6b0D3772d73e708CC8E1fCa08c80C11"
+      values.$pastUpgrades.8:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0x29353f77C6b0D3772d73e708CC8E1fCa08c80C11"]]
+      values.$upgradeCount:
+-        8
++        9
+      implementationNames.eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a:
+-        "CommunityPool"
+      implementationNames.eth:0x29353f77C6b0D3772d73e708CC8E1fCa08c80C11:
++        "CommunityPool"
+    }
+```
+
+```diff
+    contract Linker (eth:0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x64d57ba715ab14476dad60dec42ebcc0f939e5c516d5a33d0d2b2c142c8c8995"
++        "0x1dfe6921d03af91f9967734d020791de21d60b52dd846e2669229d64362b407c"
+      values.$implementation:
+-        "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0"
++        "eth:0xb401971adc1A5dAD635F1e0cccbD1E3cc286b903"
+      values.$pastUpgrades.6:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0xb401971adc1A5dAD635F1e0cccbD1E3cc286b903"]]
+      values.$upgradeCount:
+-        6
++        7
+      implementationNames.eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0:
+-        "Linker"
+      implementationNames.eth:0xb401971adc1A5dAD635F1e0cccbD1E3cc286b903:
++        "Linker"
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xafde9f814c1cf9acd1b9fe1079c4a8b2dad9af902314bae9c98ecc95d370023a"
++        "0xffc8c999bc9ccf3fec5c3dcb416c0a1854ece0b3fa604a90b6c0a0bb5043dc71"
+      values.$implementation:
+-        "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"
++        "eth:0xb49A02585E2BeB912027D8876DC1cdbE8F97C1A3"
+      values.$pastUpgrades.8:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0xb49A02585E2BeB912027D8876DC1cdbE8F97C1A3"]]
+      values.$upgradeCount:
+-        8
++        9
+      implementationNames.eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5:
+-        "DepositBoxERC721"
+      implementationNames.eth:0xb49A02585E2BeB912027D8876DC1cdbE8F97C1A3:
++        "DepositBoxERC721"
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x35e9599e33157eeee63fd0fb0b76fbb7d42b14c7f969abc8b765417abbae91d5"
++        "0x4f63f195de31b3e2ee34ea092abd14da9060a03dd197ab55adb534df0d148bbe"
+      values.$implementation:
+-        "eth:0x0AE92a5105111281151b980A0aD680b890bf1944"
++        "eth:0xd1ffC52c0a5B8513bccfCd26632Df1999929788b"
+      values.$pastUpgrades.10:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0xd1ffC52c0a5B8513bccfCd26632Df1999929788b"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      implementationNames.eth:0x0AE92a5105111281151b980A0aD680b890bf1944:
+-        "MessageProxyForMainnet"
+      implementationNames.eth:0xd1ffC52c0a5B8513bccfCd26632Df1999929788b:
++        "MessageProxyForMainnet"
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6d6c213f615227669bc439b652e8d47403e0c630f5182fc3221d871255939029"
++        "0x06ac2cb59d6299089517d46856333e27b4e725188a004ccaf1ed9d3f845f4f6b"
+      values.$implementation:
+-        "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"
++        "eth:0xeDf7B1D29E99bE10177D2110cbfAb6DC466344EE"
+      values.$pastUpgrades.9:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0xeDf7B1D29E99bE10177D2110cbfAb6DC466344EE"]]
+      values.$upgradeCount:
+-        9
++        10
+      implementationNames.eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788:
+-        "DepositBoxERC20"
+      implementationNames.eth:0xeDf7B1D29E99bE10177D2110cbfAb6DC466344EE:
++        "DepositBoxERC20"
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc330381a32c8728fbbdb79c094a22af35e910194c1397147dd089acf552b0c64"
++        "0x46514106eaeabdaaccaf1d4f3f493032cf0d7f6764c361dca6cda39f9e5e5d19"
+      values.$implementation:
+-        "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7"
++        "eth:0x0e007F24dC7B6E08209c60fF8b275b0f068a2903"
+      values.$pastUpgrades.4:
++        ["2026-01-08T12:03:47.000Z","0x0ef4c25e9f2fb7739e3b5984571d2d16cdb83751bc3c60a9dd1fdfcf9eccc54a",["eth:0x0e007F24dC7B6E08209c60fF8b275b0f068a2903"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7:
+-        "DepositBoxERC721WithMetadata"
+      implementationNames.eth:0x0e007F24dC7B6E08209c60fF8b275b0f068a2903:
++        "DepositBoxERC721WithMetadata"
+    }
+```
+
+## Source code changes
+
+```diff
+.../CommunityPool/CommunityPool.sol                |  144 ++-
+ .../DepositBoxERC1155/DepositBoxERC1155.sol        |  793 +++++++++---
+ .../DepositBoxERC20/DepositBoxERC20.sol            | 1328 ++++++++++++--------
+ .../DepositBoxERC721/DepositBoxERC721.sol          |  771 +++++++++---
+ .../DepositBoxERC721WithMetadata.sol               |  785 +++++++++---
+ .../DepositBoxEth/DepositBoxEth.sol                |  736 +++++++++--
+ .../{.flat@1756734918 => .flat}/Linker/Linker.sol  |  677 ++++++++--
+ .../MessageProxyForMainnet.sol                     |  221 ++--
+ 8 files changed, 4067 insertions(+), 1388 deletions(-)
+```
+
+Generated with discovered.json: 0x11e91a1a93b1c6b8fa8c6b5fd59f09dfdc46555e
 
 # Diff at Mon, 01 Sep 2025 13:58:49 GMT:
 

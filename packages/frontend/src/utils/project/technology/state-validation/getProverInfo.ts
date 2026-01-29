@@ -4,8 +4,8 @@ import isEmpty from 'lodash/isEmpty'
 import pickBy from 'lodash/pickBy'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 
 export function getProverInfo(
@@ -29,6 +29,7 @@ export function getProverInfo(
     contractUtils,
     tvs,
     allProjects,
+    projectId,
   )
 
   // take only trusted setups that are used in this project
@@ -39,7 +40,7 @@ export function getProverInfo(
 
   return {
     name: zkCatalogProject.name,
-    icon: getProjectIcon(zkCatalogProject.slug),
+    icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
     href: `/zk-catalog/${zkCatalogProject.slug}`,
     trustedSetups,
   }

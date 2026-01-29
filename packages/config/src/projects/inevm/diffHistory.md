@@ -1,3 +1,155 @@
+Generated with discovered.json: 0xf20bd99942a518a16f78d0ae48f1297a59fc0dab
+
+# Diff at Mon, 12 Jan 2026 11:26:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1767971095
+- current timestamp: 1768217087
+
+## Description
+
+RollupProxy currentRequiredStake increased from 0.6 ETH to 0.8 ETH.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "600000000000000000"
++        "800000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x502457e4b8bbf5a592d3ed929ea18d4e0e9ba15b
+
+# Diff at Fri, 09 Jan 2026 15:06:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1767628352
+- current timestamp: 1767971095
+
+## Description
+
+currentRequiredStake increased from 0.4 ETH to 0.6 ETH.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "400000000000000000"
++        "600000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x544febecd14f3a71822856a77590eb74b7cfaf1c
+
+# Diff at Mon, 05 Jan 2026 17:44:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1765971533
+- current timestamp: 1767628352
+
+## Description
+
+Stake requirement increased.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "400000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765971533 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x98c858e5c43359fb5d5d2280dca07c26c6510750
+
+# Diff at Wed, 17 Dec 2025 11:40:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0e43b045f2f2dc56ab95b950dfe6e135b5d703bc block: 1765795165
+- current timestamp: 1765971533
+
+## Description
+
+Increased the validator stake.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "600000000000000000"
++        "100000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x95248c99230aac1170c1b865dc57c61eb8222f51
+
+# Diff at Mon, 15 Dec 2025 10:40:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fd14f4ee9b75848e73e6bb3839620bb1517c84c0 block: 1765368769
+- current timestamp: 1765795165
+
+## Description
+
+Increased the validator stake.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "300000000000000000"
++        "600000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x09ff2cf1ead3c1bf19bc30c1b6a0280ac4dd33cb
+
+# Diff at Wed, 10 Dec 2025 12:14:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1762880622
+- current timestamp: 1765368769
+
+## Description
+
+Required stake increase.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x60A85a4C9F8Bdb92FAaFdb4eC98Ce4F4173e213A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "100000000000000000"
++        "300000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xb214d0b3621f985f1ad4cba206daaf2b808ea188
 
 # Diff at Tue, 11 Nov 2025 17:05:25 GMT:

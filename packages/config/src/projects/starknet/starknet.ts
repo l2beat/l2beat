@@ -20,9 +20,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -105,12 +105,6 @@ const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
-const escrowWBTCMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'WBTC',
-  discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
-  8,
-)
-
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
   discovery.getContractValue<number>('USDCBridge', 'maxTotalBalance'),
@@ -148,7 +142,7 @@ const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FRAX',
+  'FRAX (prev. FXS)',
   discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
@@ -409,7 +403,7 @@ export const starknet: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
-    zkProgramHashes: starknetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: starknetProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   upgradesAndGovernance: `
 The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 
@@ -419,6 +413,14 @@ The Operator role in the Starknet contract is permissioned to update the state o
 All bridge escrows allow enabling a withdrawal throttle of 5% of the locked funds per 24h period. Enabling it is permissioned to a Multisig while disabling it in the core bridge escrows (STRKBridge, ETHBridge) can be done by a ${discovery.getMultisigStats('Starkware SCMinority Multisig')} minority of the Security Council.
 `,
   milestones: [
+    {
+      title: 'Starknet reverts 18mins of history',
+      url: 'https://www.starknet.io/blog/starknet-incident-report-january-5-2026/',
+      date: '2026-01-05T00:00:00.00Z',
+      description:
+        'Starknet experienced an outage during which block production was halted.',
+      type: 'incident',
+    },
     {
       title: 'Starknet upgrades its proving system to Stwo',
       url: 'https://etherscan.io/tx/0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797',
@@ -515,9 +517,10 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_WBTC_ADDRESS),
         sinceTimestamp: UnixTime(1657137600),
+        untilTimestamp: UnixTime(1768848455),
         tokens: ['WBTC'],
         description:
-          'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
+          'StarkGate bridge for WBTC. The bridge is halted and WBTC migrated to external OFT bridging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_USDC_ADDRESS),
@@ -566,7 +569,9 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FRAX'],
         description:
-          'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
+          'StarkGate bridge for FRAX (prev. FXS).' +
+          ' ' +
+          escrowFXSMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
@@ -601,8 +606,10 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_SOLVBTC_ADDRESS),
+        untilTimestamp: UnixTime(1768848971),
         tokens: ['SolvBTC'],
-        description: 'StarkGate bridge for SolvBTC.',
+        description:
+          'StarkGate bridge for SolvBTC. The bridge is halted and SolvBTC migrated to external OFT bridging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LBTC_ADDRESS),
@@ -801,8 +808,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '918745833886511857768061986591752808672496300091957204265383861063635175685', // Starknet OS (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,
@@ -845,8 +867,23 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
+          untilTimestamp: UnixTime(1765378643),
           programHashes: [
             '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator (since Starknet v0.14.0)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
+          programHashes: [
+            '1701025211190912681772481128523426351562426117847395998223683709327746845867', // Aggregator (version not found on gh)
           ],
         },
         _hackCostMultiplier: 0.17,

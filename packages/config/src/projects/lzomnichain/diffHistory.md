@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x65425454db7e98b4a83fae5de7b48d625bdd18f2
+Generated with discovered.json: 0xb0a6ac67a0233dcdaecc0f31f94efa08d5f2a123
+
+# Diff at Wed, 21 Jan 2026 12:40:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1761552123
+- current timestamp: 1768999132
+
+## Description
+
+nethermind dvn signerSize +1. works like a 1/5 multisig.
+
+## Watched changes
+
+```diff
+    contract DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      values.signerSize:
+-        4
++        5
+    }
+```
+
+Generated with discovered.json: 0x1f1d561a3da836113f68ee05f18ebecf38610442
 
 # Diff at Mon, 27 Oct 2025 08:03:45 GMT:
 

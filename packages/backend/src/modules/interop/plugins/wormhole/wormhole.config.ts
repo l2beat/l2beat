@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { CallParameters, HttpClient, RpcClient } from '@l2beat/shared'
+import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import * as cheerio from 'cheerio'
 import {
@@ -21,6 +21,8 @@ export interface WormholeNetwork {
   chainId?: number
   wormholeChainId: number
   coreContract?: EthereumAddress
+  relayer?: EthereumAddress
+  tokenBridge?: EthereumAddress
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
@@ -40,6 +42,15 @@ const OVERRIDES: WormholeNetwork[] = [
   },
 ]
 
+// Map our chain names to Wormhole docs chain names
+const CHAIN_NAME_TO_DOCS: Record<string, string> = {
+  polygonpos: 'polygon',
+}
+
+function toDocsChainName(chainName: string): string {
+  return CHAIN_NAME_TO_DOCS[chainName] ?? chainName
+}
+
 export class WormholeConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
@@ -51,7 +62,7 @@ export class WormholeConfigPlugin
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
-    private rpcs: Map<string, RpcClient>,
+    private rpcs: Map<string, IRpcClient>,
   ) {
     super({ intervalMs: 20 * 60 * 1000 })
     this.logger = logger.for(this)
@@ -84,11 +95,12 @@ export class WormholeConfigPlugin
     const html = await response.text()
     const $ = cheerio.load(html)
 
-    const mainnetTable = $('.tabbed-block').first().find('table').first()
+    // Parse Core Contracts (first tabbed-block, first table = mainnet)
+    const coreContractsTable = $('.tabbed-block').first().find('table').first()
 
     const evmContracts: EthereumAddress[] = []
 
-    mainnetTable.find('tbody tr').each((_, row) => {
+    coreContractsTable.find('tbody tr').each((_, row) => {
       const cells = $(row).find('td')
       if (cells.length === 2) {
         const chain = $(cells[0]).text().trim()
@@ -102,6 +114,55 @@ export class WormholeConfigPlugin
         ) {
           evmContracts.push(EthereumAddress(address))
         }
+      }
+    })
+
+    // Parse addresses from sections by finding h2 headers and the tables after them
+    const relayerByChain = new Map<string, EthereumAddress>()
+    const tokenBridgeByChain = new Map<string, EthereumAddress>()
+
+    $('h2').each((_, h2) => {
+      const headerText = $(h2).text()
+      const table = $(h2).nextAll('div').find('table').first()
+
+      // Parse Wormhole Relayer addresses
+      if (headerText.includes('Wormhole Relayer')) {
+        table.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
+
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              relayerByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
+      }
+
+      // Parse Token Bridge (WTT) addresses
+      if (headerText.includes('Wrapped Token Transfers')) {
+        table.find('tbody tr').each((__, row) => {
+          const cells = $(row).find('td')
+          if (cells.length === 2) {
+            const chain = $(cells[0]).text().trim().toLowerCase()
+            const address = $(cells[1]).find('code').text().trim()
+
+            if (
+              chain &&
+              address &&
+              address.startsWith('0x') &&
+              address.length === 42
+            ) {
+              tokenBridgeByChain.set(chain, EthereumAddress(address))
+            }
+          }
+        })
       }
     })
 
@@ -123,6 +184,11 @@ export class WormholeConfigPlugin
         const block = await rpc.getBlock('latest', false)
         const results = await rpc.multicall(calls, block.number)
 
+        const validContracts: {
+          wormholeChainId: number
+          coreContract: EthereumAddress
+        }[] = []
+
         for (let i = 0; i < results.length; i++) {
           const result = results[i]
           if (!result || result.success === false) continue
@@ -135,16 +201,34 @@ export class WormholeConfigPlugin
                 data: result.data.toString() as Hex,
               })
 
-              return {
-                chain: chain.name,
-                chainId: chain.id,
+              validContracts.push({
                 wormholeChainId: Number(decoded),
                 coreContract: evmContracts[i],
-              }
+              })
             }
           } catch {
             // Failed to decode, skip this contract
           }
+        }
+
+        // Filter out contracts that return chainId 0 (invalid/uninitialized)
+        // Some contract addresses exist on multiple chains but return 0 if not the real wormhole core
+        const validNonZero = validContracts.filter(
+          (c) => c.wormholeChainId !== 0,
+        )
+
+        // Pick the first contract with a valid (non-zero) wormhole chain ID
+        const selected = validNonZero[0]
+        if (!selected) return undefined
+
+        const docsChainName = toDocsChainName(chain.name.toLowerCase())
+        return {
+          chain: chain.name,
+          chainId: chain.id,
+          wormholeChainId: selected.wormholeChainId,
+          coreContract: selected.coreContract,
+          relayer: relayerByChain.get(docsChainName),
+          tokenBridge: tokenBridgeByChain.get(docsChainName),
         }
       } catch (error) {
         this.logger.debug('Failed to multicall for chain', {

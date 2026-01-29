@@ -1,5 +1,6 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -13,8 +14,8 @@ export const phala: ScalingProject = opStackL2({
   display: {
     name: 'Phala',
     slug: 'phala',
-    description: `Phala is cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
-      Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
+    description: `Phala is a cloud computing protocol aiming to offer developers a secure and efficient platform for deploying AI-ready applications in a trusted environment (TEE).
+      Phala uses the OP Stack. Originally deployed with OPSuccinct (SP1 ZK proofs), it currently operates with standard PermissionedDisputeGame (optimistic).`,
     links: {
       websites: ['https://phala.network/'],
       bridges: ['https://subbridge.io'],
@@ -47,10 +48,6 @@ export const phala: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
-  },
-  nonTemplateProofSystem: {
-    type: 'Validity',
-    zkCatalogId: ProjectId('sp1'),
   },
   nonTemplateTrackedTxs: [
     {
@@ -121,6 +118,7 @@ export const phala: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
         sinceTimestamp: UnixTime(1746606971),
+        untilTimestamp: UnixTime(1768923887), // switched to PermissionedDisputeGame
       },
     },
     {
@@ -140,12 +138,38 @@ export const phala: ScalingProject = opStackL2({
           '0xa7aaf2512769da4e444e3de247be2564225c2e7a8f74cfe528e46e17d24868e2', // OutputProposed (for anomaly detection support)
         ],
         sinceTimestamp: UnixTime(1757405447),
+        untilTimestamp: UnixTime(1768923887), // switched to PermissionedDisputeGame
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1768923887), // switched to PermissionedDisputeGame
       },
     },
   ],
   associatedTokens: ['PHA', 'vPHA'],
-  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPSuccinct],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  additionalBadges: [BADGES.RaaS.Conduit],
   milestones: [
+    {
+      title: 'Switched to Optimistic Proofs',
+      url: 'https://etherscan.io/tx/0x72fd82354124671e3b28d78e70d9eec692ae7f119281ab473aa75f394f1b52ab',
+      date: '2026-01-20T00:00:00Z',
+      description:
+        'Phala switched from OPSuccinct (SP1 ZK proofs) to PermissionedDisputeGame (optimistic fault proofs).',
+      type: 'general',
+    },
     {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',

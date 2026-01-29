@@ -9,6 +9,7 @@ import type {
   Badge,
   BridgeCategory,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectBridgeRisks,
@@ -77,7 +78,7 @@ export interface ScalingProject {
   customDa?: ProjectCustomDa
   /** Risk view values for this project */
   riskView: ProjectScalingRiskView
-  /** Stacked risk view values for this project and it's base chain - only applicable to layer3s */
+  /** Stacked risk view values for this project and its base chain - only applicable to layer3s */
   stackedRiskView?: ProjectScalingRiskView
   /** Rollup stage */
   stage: ProjectScalingStage
@@ -103,6 +104,8 @@ export interface ScalingProject {
   discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
+  /** Interop configuration */
+  interopConfig?: InteropConfig
 }
 
 export interface ProjectScalingConfig {
@@ -125,7 +128,7 @@ export interface ProjectScalingDisplay {
   name: string
   /** Short name of the scaling project, will be used in some places on the website as a display name */
   shortName?: string
-  /** Url friendly scaling project name, will be used in website urls */
+  /** URL-friendly scaling project name, will be used in website URLs */
   slug: string
   /** Technological stacks */
   stacks?: ProjectScalingStack[]
@@ -135,7 +138,7 @@ export interface ProjectScalingDisplay {
   tvsWarning?: WarningWithSentiment
   /** A warning displayed above the description of the project */
   warning?: string
-  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+  /** Project row with red warning will turn red, and there will be a red warning icon with this message */
   redWarning?: string
   /** Emergency warning for the project. If present project will be displayed as in emergency mode. */
   emergencyWarning?: string
@@ -249,6 +252,7 @@ export interface Bridge {
   archivedAt?: UnixTime
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
+  interopConfig?: InteropConfig
   display: BridgeDisplay
   colors?: ProjectCustomColors
   config: BridgeConfig

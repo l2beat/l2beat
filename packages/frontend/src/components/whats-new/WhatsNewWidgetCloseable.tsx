@@ -1,5 +1,5 @@
+import { useDevice } from '~/hooks/useDevice'
 import { useIsClient } from '~/hooks/useIsClient'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { usePathname } from '~/hooks/usePathname'
 import { useTracking } from '~/hooks/useTracking'
@@ -12,7 +12,7 @@ export function WhatsNewWidgetCloseable({
   whatsNew: WhatsNewWidget
 }) {
   const isClient = useIsClient()
-  const isMobile = useIsMobile()
+  const { isDesktop } = useDevice()
   const { track } = useTracking()
   const [isClosed, setIsClosed] = useLocalStorage(
     `whats-new-${whatsNew.id}`,
@@ -39,7 +39,7 @@ export function WhatsNewWidgetCloseable({
         onClick={() => {
           track('whatsNewClicked', {
             props: {
-              device: isMobile ? 'mobile' : 'desktop',
+              device: isDesktop ? 'desktop' : 'mobile',
               action: 'close',
             },
           })

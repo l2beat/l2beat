@@ -1,3 +1,267 @@
+Generated with discovered.json: 0xbf84bce0fbb32ef36d0e3f0de05a66704fbf99bb
+
+# Diff at Mon, 26 Jan 2026 09:08:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048259
+- current timestamp: 1769272178
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/optimism/.flat/SaferSafes.sol     | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
+Generated with discovered.json: 0xa03ebfc1bb647cbeab14e20d631ff43ca0bb721f
+
+# Diff at Thu, 18 Dec 2025 08:59:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765550762
+- current timestamp: 1766048259
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.domainSeparator:
+-        "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890"
++        "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76"
+      values.getModules:
+-        []
+      values.NAME:
+-        "Gnosis Safe"
+      values.VERSION:
+-        "1.1.1"
++        "1.4.1"
+      values.getChainId:
++        1
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  959 -----------------
+ .../OpFoundationOperationsSafe/Safe.sol}           |  685 +++++++-----
+ .../.flat/OpFoundationUpgradeSafe/Safe.sol         | 1088 ++++++++++++++++++++
+ 3 files changed, 1498 insertions(+), 1234 deletions(-)
+```
+
+Generated with discovered.json: 0x21f60af39038e29b1723bc8cc46e04330e2f0cec
+
+# Diff at Fri, 12 Dec 2025 16:20:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765362353
+- current timestamp: 1765550762
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362353 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xdd45fa001a5c2f9a087a498bf29e1df56a4c7bc6
+
+# Diff at Thu, 11 Dec 2025 14:23:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1765362353
+- current timestamp: 1765362353
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362353 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x473300df21D047806A082244b417f96b32f13A33) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf","role":".challenger"}]
+    }
+```
+
+Generated with discovered.json: 0x29f8a08284e18dde534461cd079a1388405895b3
+
+# Diff at Wed, 10 Dec 2025 10:26:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764322695
+- current timestamp: 1765362353
+
+## Description
+
+L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+Gas price oracle - isJovian fork for new gas calculation (getOperatorFee())
+https://disco.l2beat.com/diff/oeth:0x93e57A196454CB919193fa9946f14943cf733845/oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (oeth:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
++        "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15"
+      values.$implementation:
+-        "oeth:0x93e57A196454CB919193fa9946f14943cf733845"
++        "oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      values.$pastUpgrades.3:
++        ["2025-12-02T16:00:01.000Z","0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",["oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.4.0"
++        "1.6.0"
+      values.isJovian:
++        true
+      implementationNames.oeth:0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.oeth:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L1Block (oeth:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+      values.$implementation:
+-        "oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.2:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.daFootprintGasScalar:
++        400
+      implementationNames.oeth:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.oeth:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        "L1Block"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              | 64 ++++++++++++++++---
+ .../L1Block/L1Block.sol                            | 73 +++++++++++-----------
+ 2 files changed, 93 insertions(+), 44 deletions(-)
+```
+
 Generated with discovered.json: 0xd20557c2da5fa1b7eb8731c5317d8e7c82d56310
 
 # Diff at Fri, 28 Nov 2025 09:39:21 GMT:

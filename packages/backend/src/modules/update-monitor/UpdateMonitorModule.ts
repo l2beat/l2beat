@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
@@ -16,8 +15,9 @@ import { UpdateNotifier } from './UpdateNotifier'
 export function createUpdateMonitorModule({
   config,
   logger,
-  peripherals,
+  db,
   clock,
+  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.updateMonitor) {
     logger.info('UpdateMonitor module disabled')
@@ -29,12 +29,8 @@ export function createUpdateMonitorModule({
   const paths = config.updateMonitor.paths
   const configReader = config.updateMonitor.configReader
 
-  const discordClient = config.updateMonitor.discord
-    ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
-    : undefined
-
   const updateMessagesService = new UpdateMessagesService(
-    peripherals.database,
+    db,
     config.updateMonitor.updateMessagesRetentionPeriodDays,
   )
 
@@ -42,19 +38,14 @@ export function createUpdateMonitorModule({
   const projectService = new ProjectService()
 
   const updateNotifier = new UpdateNotifier(
-    peripherals.database,
-    discordClient,
+    db,
+    providers.clients.discord,
     logger,
     updateMessagesService,
     projectService,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
-    ? new UpdateDiffer(
-        configReader,
-        peripherals.database,
-        discoveryOutputCache,
-        logger,
-      )
+    ? new UpdateDiffer(configReader, db, discoveryOutputCache, logger)
     : undefined
 
   // TODO: get rid of that once we achieve full library separation
@@ -64,7 +55,7 @@ export function createUpdateMonitorModule({
   const runner = createDiscoveryRunner(
     paths,
     http,
-    peripherals,
+    db,
     Logger.SILENT,
     chains,
     !!cacheEnabled,
@@ -83,7 +74,7 @@ export function createUpdateMonitorModule({
     updateNotifier,
     updateDiffer,
     configReader,
-    peripherals.database,
+    db,
     clock,
     discoveryOutputCache,
     logger,
@@ -93,7 +84,7 @@ export function createUpdateMonitorModule({
   )
 
   const updateMonitorController = new UpdateMonitorController(
-    peripherals.database,
+    db,
     configReader,
     projectService,
   )

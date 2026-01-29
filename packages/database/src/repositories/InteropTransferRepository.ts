@@ -7,13 +7,13 @@ export interface InteropTransferRecord {
   plugin: string
   transferId: string
   type: string
-  duration: number | undefined
+  duration: number
   timestamp: UnixTime
-  srcTime: UnixTime | undefined
-  srcChain: string | undefined
-  srcTxHash: string | undefined
-  srcLogIndex: number | undefined
-  srcEventId: string | undefined
+  srcTime: UnixTime
+  srcChain: string
+  srcTxHash: string
+  srcLogIndex: number
+  srcEventId: string
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
   srcWasBurned: boolean | undefined
@@ -22,11 +22,11 @@ export interface InteropTransferRecord {
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
-  dstTime: UnixTime | undefined
-  dstChain: string | undefined
-  dstTxHash: string | undefined
-  dstLogIndex: number | undefined
-  dstEventId: string | undefined
+  dstTime: UnixTime
+  dstChain: string
+  dstTxHash: string
+  dstLogIndex: number
+  dstEventId: string
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
   dstWasMinted: boolean | undefined
@@ -65,13 +65,13 @@ export function toRecord(
     plugin: row.plugin,
     transferId: row.transferId,
     type: row.type,
-    duration: row.duration ?? undefined,
+    duration: row.duration,
     timestamp: UnixTime.fromDate(row.timestamp),
-    srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
-    srcChain: row.srcChain ?? undefined,
-    srcTxHash: row.srcTxHash ?? undefined,
-    srcLogIndex: row.srcLogIndex ?? undefined,
-    srcEventId: row.srcEventId ?? undefined,
+    srcTime: UnixTime.fromDate(row.srcTime),
+    srcChain: row.srcChain,
+    srcTxHash: row.srcTxHash,
+    srcLogIndex: row.srcLogIndex,
+    srcEventId: row.srcEventId,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcWasBurned: row.srcWasBurned ?? undefined,
@@ -80,11 +80,11 @@ export function toRecord(
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
-    dstTime: row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
-    dstChain: row.dstChain ?? undefined,
-    dstTxHash: row.dstTxHash ?? undefined,
-    dstLogIndex: row.dstLogIndex ?? undefined,
-    dstEventId: row.dstEventId ?? undefined,
+    dstTime: UnixTime.fromDate(row.dstTime),
+    dstChain: row.dstChain,
+    dstTxHash: row.dstTxHash,
+    dstLogIndex: row.dstLogIndex,
+    dstEventId: row.dstEventId,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstWasMinted: row.dstWasMinted ?? undefined,
@@ -106,8 +106,7 @@ export function toRow(
     type: record.type,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
-    srcTime:
-      record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
+    srcTime: UnixTime.toDate(record.srcTime),
     srcChain: record.srcChain,
     srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
@@ -120,8 +119,7 @@ export function toRow(
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
-    dstTime:
-      record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
+    dstTime: UnixTime.toDate(record.dstTime),
     dstChain: record.dstChain,
     dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
@@ -139,6 +137,7 @@ export function toRow(
 }
 
 export interface InteropTransfersStatsRecord {
+  plugin: string
   type: string
   count: number
   avgDuration: number
@@ -147,6 +146,7 @@ export interface InteropTransfersStatsRecord {
 }
 
 export interface InteropTransfersDetailedStatsRecord {
+  plugin: string
   type: string
   srcChain: string
   dstChain: string
@@ -170,6 +170,20 @@ export class InteropTransferRepository extends BaseRepository {
   async getAll(): Promise<InteropTransferRecord[]> {
     const rows = await this.db
       .selectFrom('InteropTransfer')
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByRange(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<InteropTransferRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .selectAll()
       .execute()
 
@@ -223,16 +237,18 @@ export class InteropTransferRepository extends BaseRepository {
     const overallStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy('type')
+      .groupBy(['plugin', 'type'])
       .execute()
 
     return overallStats.map((overall) => ({
+      plugin: overall.plugin,
       type: overall.type,
       count: Number(overall.count),
       avgDuration: Number(overall.avgDuration),
@@ -245,6 +261,7 @@ export class InteropTransferRepository extends BaseRepository {
     const chainStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         'srcChain',
         'dstChain',
@@ -255,12 +272,13 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
-      .groupBy(['type', 'srcChain', 'dstChain'])
+      .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
     return chainStats.map((chain) => {
       assert(chain.srcChain && chain.dstChain)
       return {
+        plugin: chain.plugin,
         type: chain.type,
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,
@@ -292,6 +310,14 @@ export class InteropTransferRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('InteropTransfer')
       .where('timestamp', '<', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropTransfer')
+      .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

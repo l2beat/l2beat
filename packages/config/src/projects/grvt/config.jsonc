@@ -8,7 +8,7 @@
   ],
   "sharedModules": ["shared-zk-stack"],
   "names": {
-    "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E": "GrvtZkEvm",
+    "eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E": "Diamond",
     "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": "GrvtZkEvmAdmin",
     "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5": "GrvtChainAdminMultisig",
     "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a": "GRVTTransactionFilterer",

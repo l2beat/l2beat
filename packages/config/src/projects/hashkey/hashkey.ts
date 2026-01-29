@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -11,6 +6,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('hashkey')
 
 const genesisTimestamp = UnixTime(1734347135)
+const sequencerStartTimestamp = UnixTime(1744273223)
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const sequencerInbox = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
@@ -75,22 +71,9 @@ export const hashkey = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: EthereumAddress('0x9391791f7CB74F8BFDA65edc0749efd964311b55'), // old sequencer
-        to: sequencerInbox,
-        sinceTimestamp: genesisTimestamp,
-        untilTimestamp: UnixTime(1734347135),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'transfer',
         from: sequencerAddress,
         to: sequencerInbox,
-        sinceTimestamp: UnixTime(1734347135),
+        sinceTimestamp: sequencerStartTimestamp,
       },
     },
     {
@@ -104,7 +87,7 @@ export const hashkey = opStackL2({
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-        sinceTimestamp: genesisTimestamp,
+        sinceTimestamp: sequencerStartTimestamp,
       },
     },
   ],

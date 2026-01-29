@@ -1,7 +1,7 @@
 {
   "name": "amarok",
-  "timestamp": 1764757760,
-  "configHash": "0x6d8b6fca8f4e4789884fc36a519ea0374131483213f5f108bf31d952a9280cf7",
+  "timestamp": 1768999088,
+  "configHash": "0x54681c2e07bc927379e00d3227845fab3f49adb055e4c51ac13f87e842349dbc",
   "entries": [
     {
       "address": "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -34,7 +34,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 980420,
+        "getLastCompletedSnapshotId": 982777,
         "getSnapshotDuration": 1800,
         "home": "eth:0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -159,11 +159,6 @@
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
-      "address": "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
       "type": "EOA",
       "proxyType": "EOA"
@@ -197,6 +192,11 @@
       "implementationNames": {
         "eth:0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "OptimismHubConnector"
       }
+    },
+    {
+      "address": "eth:0x26DAF0983C66A09715158514f44729fA80d76e3b",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "xLayerZkHubConnector",
@@ -606,13 +606,13 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
+          "eth:0x54Dc97261383530A789dA4Bb3B7d8dc53F83dd52",
           "eth:0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06",
           "eth:0x334CE923420ff1aA4f272e92BF68013D092aE7B4",
           "eth:0x8D09e20b835009E5320cC11E6a6F00aF451aD669",
-          "eth:0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933",
+          "eth:0x26DAF0983C66A09715158514f44729fA80d76e3b",
           "eth:0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5",
-          "eth:0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1",
+          "eth:0xf2553FfC26DF716e67b3B334Ed357B2E11BE8a54",
           "eth:0x2eEd1440842990Fa61F0c396f981375Fa6004131",
           "eth:0xDbDcFbA39D6ace2DaC9Cf5E8fc0Fe80a074FD81b"
         ],
@@ -623,7 +623,7 @@
           "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"
         ],
         "multisigThreshold": "7 of 9 (78%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -662,7 +662,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1764757751,
+        "getCurrentTime": 1768999079,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -756,6 +756,11 @@
       "implementationNames": {
         "eth:0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": "RootManager"
       }
+    },
+    {
+      "address": "eth:0x54Dc97261383530A789dA4Bb3B7d8dc53F83dd52",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Store",
@@ -977,6 +982,11 @@
       ]
     },
     {
+      "address": "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Relayer10",
       "address": "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
       "type": "Contract",
@@ -1074,11 +1084,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7AE8b0D6353F0931EB9FaC0A3562fA9e4C6Ff933",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GovernorV2",
       "address": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
       "type": "Contract",
@@ -1156,7 +1161,7 @@
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 215,
+        "numProposals": 217,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "proposer": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
       },
@@ -1311,7 +1316,7 @@
         "$members": [
           "eth:0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
           "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-          "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
+          "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766",
           "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "$threshold": 2,
@@ -1319,7 +1324,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 909,
+        "nonce": 924,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1698,11 +1703,6 @@
       }
     },
     {
-      "address": "eth:0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x8cb19CE8EEDF740389D428879a876A3B030B9170",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1978,45 +1978,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GnosisSafe",
-      "address": "eth:0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1668987047,
-      "sinceBlock": 16014519,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba",
-          "eth:0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xdd36ef1d1be1948ff409df66d0d8b2846dbecbfe577e22362e58f66a6ac3ccbc",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 12,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
       "address": "eth:0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xbe8109517300c78f2bbdC00d9EA8Cf597160017E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2354,11 +2316,11 @@
           "DXY",
           "uSPAC10g",
           "DECENTRA-LIST",
-          "ASSERT_TRUTH",
           "SHERLOCK_CLAIM",
           "ROPU_ETHx",
           "MULTIPLE_CHOICE_QUERY",
-          "MULTIPLE_VALUES"
+          "MULTIPLE_VALUES",
+          "0x4153534552545f54525554483200000000000000000000000000000000000000"
         ]
       },
       "implementationNames": {
@@ -2730,11 +2692,6 @@
       }
     },
     {
-      "address": "eth:0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Relayer6",
       "address": "eth:0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
       "type": "EOA",
@@ -2847,7 +2804,7 @@
           "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
         ],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 217,
+        "nonce": 218,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2923,6 +2880,11 @@
       "implementationNames": {
         "eth:0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector"
       }
+    },
+    {
+      "address": "eth:0xf2553FfC26DF716e67b3B334Ed357B2E11BE8a54",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c",
@@ -4622,9 +4584,6 @@
       "function gelato() view returns (address)",
       "function sponsoredCall(tuple(uint256 chainId, address target, bytes data) _call, address _sponsor, address _feeToken, uint256 _oneBalanceChainId, uint256 _nativeToFeeTokenXRateNumerator, uint256 _nativeToFeeTokenXRateDenominator, bytes32 _correlationId)"
     ],
-    "eth:0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D": [
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
       "error AssetLogic__handleIncomingAsset_nativeAssetNotSupported()",
@@ -5188,6 +5147,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 23932327 },
-  "permissionsConfigHash": "0x1f65175eee74f89730960922270976ad86c37fc92cf1eb9717dff90f4e8ce774"
+  "usedBlockNumbers": { "ethereum": 24283212 },
+  "permissionsConfigHash": "0x3476e0aaaf509606c0ed1e8309e4cd6bc5a1511ba2a1fce754deacc22b14c65c"
 }

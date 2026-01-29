@@ -7,7 +7,7 @@ import type {
 import { assert } from '@l2beat/shared-pure'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
-  BigQueryFunctionCallResult,
+  DuneFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { calculateCalldataGasUsed } from './calculateCalldataGasUsed'
@@ -24,7 +24,7 @@ export function transformFunctionCallsQueryResult(
   sharedBridgesConfig: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >[],
-  queryResults: BigQueryFunctionCallResult[],
+  queryResults: DuneFunctionCallResult[],
 ): TrackedTxFunctionCallResult[] {
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
@@ -32,19 +32,19 @@ export function transformFunctionCallsQueryResult(
     const matchingCalls = functionCalls.filter(
       (c) =>
         c.properties.params.selector === selector &&
-        c.properties.params.address === r.to_address,
+        c.properties.params.address === r.to,
     )
 
     const matchingSubmissions = sharpSubmissions.filter(
       (c) =>
         c.properties.params.selector === selector &&
-        c.properties.params.address === r.to_address,
+        c.properties.params.address === r.to,
     )
 
     const matchingSharedBridgeCalls = sharedBridgesConfig.filter(
       (c) =>
         c.properties.params.selector === selector &&
-        c.properties.params.address === r.to_address,
+        c.properties.params.address === r.to,
     )
 
     assert(
@@ -76,20 +76,19 @@ export function transformFunctionCallsQueryResult(
           type: config.properties.type,
           subtype: config.properties.subtype,
           blockNumber: r.block_number,
-          blockTimestamp: r.block_timestamp,
-          toAddress: r.to_address,
+          blockTimestamp: r.block_time,
+          toAddress: r.to,
           input: r.input,
-          receiptGasUsed: r.receipt_gas_used,
+          gasUsed: r.gas_used,
           gasPrice: r.gas_price,
           dataLength: r.data_length,
           calldataGasUsed: calculateCalldataGasUsed(
             r.block_number,
             r.data_length,
             r.non_zero_bytes,
-            r.receipt_gas_used,
+            r.gas_used,
           ),
-          receiptBlobGasUsed: r.receipt_blob_gas_used,
-          receiptBlobGasPrice: r.receipt_blob_gas_price,
+          blobVersionedHashes: r.blob_versioned_hashes,
         }) as const,
     )
 

@@ -53,6 +53,10 @@ function main() {
         description: 'Endpoints for retrieving activity data',
       },
     ],
+    externalDocs: {
+      description: 'Changelog',
+      url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
+    },
     components: {
       securitySchemes: {
         apiKeyAuth: {
@@ -97,8 +101,8 @@ function main() {
   }
   app.use(loggerMiddleware(logger))
 
-  addProjectsRoutes(openapi, ps)
-  addTvsRoutes(openapi, ps, queryExecutor, cache)
+  addProjectsRoutes(openapi, ps, db, cache)
+  addTvsRoutes(openapi, ps, db, queryExecutor, cache)
   addActivityRoutes(openapi, ps, db, cache)
 
   app.use(errorHandler(logger))

@@ -21,8 +21,10 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
+import { formatDelay } from '../common/formatDelays'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -73,7 +75,10 @@ export interface DAProvider {
   bridge: TableReadyValue
 }
 
-type AgglayerVariant = 'validium' | 'pessimistic'
+type AgglayerVariant =
+  | 'cdk-erigon-validium'
+  | 'cdk-erigon-sovereign'
+  | 'cdk-opgeth-sovereign'
 
 interface AgglayerBaseConfig {
   variant?: AgglayerVariant
@@ -114,27 +119,36 @@ interface AgglayerBaseConfig {
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
-interface AgglayerValidiumConfig extends AgglayerBaseConfig {
-  variant: 'validium'
+interface AgglayerCdkErigonValidiumConfig extends AgglayerBaseConfig {
+  variant: 'cdk-erigon-validium'
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
 }
 
-interface AgglayerPessimisticConfig extends AgglayerBaseConfig {
-  variant: 'pessimistic'
+interface AgglayerCdkErigonSovereignConfig extends AgglayerBaseConfig {
+  variant: 'cdk-erigon-sovereign'
+  customDa?: ProjectCustomDa
+}
+
+interface AgglayerCdkOpgethSovereignConfig extends AgglayerBaseConfig {
+  variant: 'cdk-opgeth-sovereign'
   customDa?: ProjectCustomDa
 }
 
 type AgglayerConfigInput =
-  | AgglayerValidiumConfig
-  | AgglayerPessimisticConfig
+  | AgglayerCdkErigonValidiumConfig
+  | AgglayerCdkErigonSovereignConfig
+  | AgglayerCdkOpgethSovereignConfig
   | (AgglayerBaseConfig & {
       variant?: undefined
       daProvider?: DAProvider
       customDa?: ProjectCustomDa
     })
 
-type AgglayerConfig = AgglayerValidiumConfig | AgglayerPessimisticConfig
+type AgglayerConfig =
+  | AgglayerCdkErigonValidiumConfig
+  | AgglayerCdkErigonSovereignConfig
+  | AgglayerCdkOpgethSovereignConfig
 
 interface SharedContext {
   variant: AgglayerVariant
@@ -163,7 +177,7 @@ interface VariantSections {
   customDa?: ProjectCustomDa
   badges: Badge[]
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  zkProgramHashes?: ReturnType<typeof ZK_PROGRAM_HASHES>[]
+  programHashes?: ReturnType<typeof PROGRAM_HASHES>[]
   architectureImage?: string
 }
 
@@ -223,10 +237,17 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
   const config = normalizeConfig(templateInput)
   const context = buildSharedContext(config)
 
-  const variantSections =
-    config.variant === 'validium'
-      ? buildValidiumSections(config, context)
-      : buildPessimisticSections(config, context)
+  const variantSections = (() => {
+    switch (config.variant) {
+      case 'cdk-erigon-validium':
+        return buildValidiumSections(config, context)
+      case 'cdk-opgeth-sovereign':
+        return buildOpstackClosedSections(config, context)
+      case 'cdk-erigon-sovereign':
+      default:
+        return buildPessimisticSections(config, context)
+    }
+  })()
 
   const permissions = mergePermissions(
     generateDiscoveryDrivenPermissions([config.discovery]),
@@ -234,8 +255,19 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
   )
 
   const upgradesAndGovernance =
-    config.upgradesAndGovernance ??
-    buildUpgradesAndGovernance(context, config.variant)
+    config.upgradesAndGovernance ?? buildUpgradesAndGovernance(context)
+
+  const fallbackActivityConfig =
+    config.variant === 'cdk-opgeth-sovereign'
+      ? {
+          type: 'block' as const,
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' as const },
+        }
+      : {
+          type: 'block' as const,
+          startBlock: 1,
+        }
 
   return {
     type: 'layer2',
@@ -247,7 +279,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     ecosystemInfo: { id: ProjectId('agglayer') },
     display: {
       ...config.display,
-      upgradesAndGovernanceImage: 'polygoncdk',
+      upgradesAndGovernanceImage: 'agglayer',
       purposes: config.overridingPurposes ?? [
         'Universal',
         ...(config.additionalPurposes ?? []),
@@ -263,10 +295,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       activityConfig: getActivityConfig(
         config.activityConfig,
         config.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-        },
+        fallbackActivityConfig,
       ),
       daTracking: config.nonTemplateDaTracking,
       trackedTxs: config.nonTemplateTrackedTxs,
@@ -285,8 +314,8 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     contracts: {
       addresses: generateDiscoveryDrivenContracts([config.discovery]),
       risks: variantSections.contractsRisks,
-      ...(variantSections.zkProgramHashes?.length
-        ? { zkProgramHashes: variantSections.zkProgramHashes }
+      ...(variantSections.programHashes?.length
+        ? { programHashes: variantSections.programHashes }
         : {}),
     },
     upgradesAndGovernance,
@@ -302,12 +331,16 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
 function normalizeConfig(input: AgglayerConfigInput): AgglayerConfig {
   const variant = resolveVariant(input)
 
-  if (variant === 'pessimistic') {
+  if (
+    variant === 'cdk-erigon-sovereign' ||
+    variant === 'cdk-opgeth-sovereign'
+  ) {
     const hasDaProvider =
-      'daProvider' in input && (input as AgglayerValidiumConfig).daProvider
+      'daProvider' in input &&
+      (input as AgglayerCdkErigonValidiumConfig).daProvider
     assert(
       !hasDaProvider,
-      'Agglayer pessimistic variant ignores DA providers; remove daProvider or set variant to validium.',
+      'Agglayer cdk-erigon-sovereign and cdk-opgeth-sovereign variants ignore DA providers; remove daProvider or set variant to cdk-erigon-validium.',
     )
   }
 
@@ -322,18 +355,37 @@ function resolveVariant(input: AgglayerConfigInput): AgglayerVariant {
     return input.variant
   }
 
-  return input.discovery.hasContract('AggchainECDSAMultisig')
-    ? 'pessimistic'
-    : 'validium'
+  if (input.discovery.hasContract('PolygonDataCommittee'))
+    return 'cdk-erigon-validium'
+
+  if (input.discovery.hasContract('AggchainECDSAMultisig')) {
+    if (input.discovery.hasContract('SystemConfig'))
+      return 'cdk-opgeth-sovereign'
+    return 'cdk-erigon-sovereign'
+  }
+
+  return 'cdk-erigon-sovereign' // fallback to worst
+
+  // const hasAggchainFEPValidity =
+  //   Number(
+  //     input.discovery.getContractValueOrUndefined(
+  //       'AggchainFEP',
+  //       'CONSENSUS_TYPE',
+  //     ),
+  //   ) === 1
+
+  // if (hasAggchainFEPValidity) {
+  //   return 'cdk-opgeth-zkrollup'
+  // }
 }
 
 function buildSharedContext(config: AgglayerConfig): SharedContext {
   const explorerUrl = EXPLORER_URLS['ethereum']
   const sharedDiscovery = new ProjectDiscovery('shared-polygon-cdk')
   const rollupModule =
-    config.variant === 'pessimistic'
-      ? config.discovery.getContract('AggchainECDSAMultisig')
-      : config.discovery.getContract('Validium')
+    config.variant === 'cdk-erigon-validium'
+      ? config.discovery.getContract('Validium')
+      : config.discovery.getContract('AggchainECDSAMultisig')
 
   const forcedBatchAddress = rollupModule.values?.forceBatchAddress
   assert(
@@ -379,11 +431,11 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
 }
 
 function buildValidiumSections(
-  config: AgglayerValidiumConfig,
+  config: AgglayerCdkErigonValidiumConfig,
   context: SharedContext,
 ): VariantSections {
   const dacInfo = getDacInfo(config.discovery)
-  const provider = resolveValidiumDaProvider(config, context, dacInfo)
+  const provider = resolveValidiumDaProvider(config, dacInfo)
 
   const customDa =
     config.customDa ??
@@ -420,7 +472,7 @@ function buildValidiumSections(
       buildOperatorTechnology(context),
     forceTransactions:
       config.nonTemplateTechnology?.forceTransactions ??
-      buildForceTransactions(context, 'validium'),
+      buildForceTransactions(context, 'cdk-erigon-validium'),
     exitMechanisms:
       config.nonTemplateTechnology?.exitMechanisms ??
       buildExitMechanisms(context),
@@ -514,11 +566,10 @@ function buildValidiumSections(
   }
 }
 
-function buildPessimisticSections(
-  config: AgglayerPessimisticConfig,
+function buildPessimisticRiskView(
   context: SharedContext,
-): VariantSections {
-  const riskView = {
+): ScalingProject['riskView'] {
+  return {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       description:
@@ -529,6 +580,13 @@ function buildPessimisticSections(
     sequencerFailure: SEQUENCER_NO_MECHANISM(context.isForcedBatchDisallowed),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }
+}
+
+function buildPessimisticSections(
+  config: AgglayerCdkErigonSovereignConfig,
+  context: SharedContext,
+): VariantSections {
+  const riskView = buildPessimisticRiskView(context)
 
   const dataAvailability = {
     layer: DA_LAYERS.NONE,
@@ -559,7 +617,7 @@ function buildPessimisticSections(
 
   const contractsRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
-    ZK_PROGRAM_HASHES(el),
+    PROGRAM_HASHES(el),
   )
 
   const badges = mergeBadges(
@@ -582,14 +640,94 @@ function buildPessimisticSections(
       REASON_FOR_BEING_OTHER.NO_PROOFS,
       ...(config.reasonsForBeingOther ?? []),
     ],
-    zkProgramHashes,
+    programHashes: zkProgramHashes,
     architectureImage: config.architectureImage ?? 'agglayer-pessimistic',
   }
 }
 
-function resolveValidiumDaProvider(
-  config: AgglayerValidiumConfig,
+function buildOpstackClosedSections(
+  config: AgglayerCdkOpgethSovereignConfig,
   context: SharedContext,
+): VariantSections {
+  const baseRiskView = buildPessimisticRiskView(context)
+  const riskView = {
+    ...baseRiskView,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    sequencerFailure: config.discovery.hasContract('OptimismPortal2_neutered')
+      ? RISK_VIEW.SEQUENCER_NO_MECHANISM(true)
+      : {
+          ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+            HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+          ),
+          secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+        },
+  }
+
+  const usesBlobs = config.usesEthereumBlobs ?? false
+  const dataAvailability = {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
+
+  const technology: ProjectScalingTechnology = {
+    dataAvailability: config.nonTemplateTechnology?.dataAvailability ?? {
+      name: 'Data is posted on Ethereum',
+      description:
+        'Transaction data is posted to Ethereum L1 as compressed calldata or blobs through the OP Stack batch inbox.',
+      risks: [],
+      references: [],
+    },
+    operator: config.nonTemplateTechnology?.operator,
+    forceTransactions:
+      (config.nonTemplateTechnology?.forceTransactions ??
+      config.discovery.hasContract('OptimismPortal2_neutered'))
+        ? FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM
+        : FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+    exitMechanisms:
+      config.nonTemplateTechnology?.exitMechanisms ??
+      buildExitMechanisms(context),
+    sequencing: config.nonTemplateTechnology?.sequencing,
+    otherConsiderations:
+      config.nonTemplateTechnology?.otherConsiderations ??
+      buildSharedBridgeConsiderations(context),
+  }
+
+  const contractsRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
+  const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
+    PROGRAM_HASHES(el),
+  )
+
+  const badges = mergeBadges(
+    [
+      usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata,
+      BADGES.VM.EVM,
+      BADGES.Stack.OPStack,
+    ],
+    config.additionalBadges ?? [],
+  )
+
+  return {
+    dataAvailability,
+    riskView,
+    technology,
+    stateDerivation: config.stateDerivation,
+    stateValidation: config.stateValidation,
+    proofSystem: config.nonTemplateProofSystem,
+    contractsRisks,
+    customDa: config.customDa,
+    badges,
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      ...(config.reasonsForBeingOther ?? []),
+    ],
+    programHashes: zkProgramHashes,
+    architectureImage: config.architectureImage ?? 'agglayer-opstack_closed',
+  }
+}
+
+function resolveValidiumDaProvider(
+  config: AgglayerCdkErigonValidiumConfig,
   dacInfo?: DacInfo,
 ): DAProvider {
   if (config.daProvider !== undefined) {
@@ -601,7 +739,7 @@ function resolveValidiumDaProvider(
   }
 
   throw new Error(
-    'Agglayer validium variant requires a daProvider or the PolygonDataCommittee contract in discovery.',
+    'Agglayer cdk-erigon-validium variant requires a daProvider or the PolygonDataCommittee contract in discovery.',
   )
 }
 
@@ -667,7 +805,7 @@ function buildForceTransactions(
   return {
     ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     references:
-      variant === 'validium'
+      variant === 'cdk-erigon-validium'
         ? [
             {
               title: `${context.rollupModule.name}.sol - source code, forceBatchAddress address`,
@@ -701,13 +839,14 @@ function buildSharedBridgeConsiderations(
     {
       name: 'Shared bridge and Pessimistic Proofs',
       description:
-        "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum are able to share the bridge with the zkEVM Agglayer projects.",
+        "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains (cdk-erigon-sovereign and cdk-opgeth-sovereign variants). Using the SP1 zkVM by Succinct, even projects without a full proof system on Ethereum are able to share the bridge with any other Aggchain without adding additional trust assumptions.",
       risks: [
         {
           category: 'Funds can be lost if' as const,
           text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
         },
-        ...(context.variant === 'pessimistic'
+        ...(context.variant === 'cdk-erigon-sovereign' ||
+        context.variant === 'cdk-opgeth-sovereign'
           ? [
               {
                 category: 'Funds can be stolen if' as const,
@@ -732,18 +871,13 @@ function buildSharedBridgeConsiderations(
   ]
 }
 
-function buildUpgradesAndGovernance(
-  context: SharedContext,
-  variant: AgglayerVariant,
-): string {
+function buildUpgradesAndGovernance(context: SharedContext): string {
   return `
 The regular upgrade process for shared system contracts and L2-specific validium contracts starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${context.upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific validium contract requires first adding a new rollupType through the Timelock and the AgglayerManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it. Chains using pessimistic proofs often have completely sovereign upgrade paths from the ones described here, but the shared contracts still remain relevant to them because they use them as escrow.
 
 The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the AgglayerManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${context.emergencyActivatedCount} time(s) since inception.
 
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific ${
-    variant === 'validium' ? 'Validium' : 'Aggchain'
-  } can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. For sovereign chains using pessimistic proofs they can manage any proof logic that might be used on top of the minimal pessimistic one. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rollupTypes and manage operational parameters and fees in the AgglayerManager directly. The local admin of a specific Aggchain can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. For sovereign chains using pessimistic proofs they can manage any proof logic that might be used on top of the minimal pessimistic one. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`
 }
 
 function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {

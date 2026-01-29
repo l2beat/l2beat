@@ -35,6 +35,7 @@ export const superposition: ScalingProject = orbitStackL3({
       socialMedia: [
         'https://x.com/Superpositionso',
         'https://medium.com/@Superpositionso',
+        'https://discord.gg/sT5WYjCuAz',
       ],
     },
   },

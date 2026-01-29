@@ -8,7 +8,7 @@ import {
 import { TokenReceived, TokenSent } from './relay.indexer'
 
 export class RelayPlugin implements InteropPlugin {
-  name = 'relay'
+  readonly name = 'relay'
 
   matchTypes = [TokenReceived]
   match(

@@ -1,3 +1,146 @@
+Generated with discovered.json: 0xe8d5c6c3975773a85616b167715001c83f9af8e8
+
+# Diff at Wed, 21 Jan 2026 12:43:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768371339
+- current timestamp: 1768999360
+
+## Description
+
+nethermind dvn signerSize +1. works like a 1/5 multisig.
+
+## Watched changes
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        4
++        5
+    }
+```
+
+Generated with discovered.json: 0xc5531b542687d6a4f7833fa9b5888de4138dc2be
+
+# Diff at Wed, 14 Jan 2026 06:16:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1766407778
+- current timestamp: 1768371339
+
+## Description
+
+DVN change on ETH, now 2/2 Nethermind, Layerzero (No stargate).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Stargate DVN (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+      values.getUlnConfig.requiredDVNCount:
+-        1
++        2
+      values.getUlnConfig.optionalDVNCount:
+-        2
++        0
+      values.getUlnConfig.optionalDVNThreshold:
+-        1
++        0
+      values.getUlnConfig.requiredDVNs.0:
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.getUlnConfig.optionalDVNs.0:
+-        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.getUlnConfig.optionalDVNs.1:
+-        "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@1766407778/Stargate DVN.sol => /dev/null | 2116 --------------------
+ 1 file changed, 2116 deletions(-)
+```
+
+Generated with discovered.json: 0x2253dd442ef01a177451b97d1fa1026334db293c
+
+# Diff at Mon, 22 Dec 2025 13:09:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1762264464
+- current timestamp: 1766407778
+
+## Description
+
+Stargate DVN changes. now 1 required and 1/2 optional.
+
+## Watched changes
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+      values.getUlnConfig.requiredDVNCount:
+-        2
++        1
+      values.getUlnConfig.optionalDVNCount:
+-        0
++        2
+      values.getUlnConfig.optionalDVNThreshold:
+-        0
++        1
+      values.getUlnConfig.requiredDVNs.0:
+-        "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18"
+      values.getUlnConfig.optionalDVNs.0:
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.getUlnConfig.optionalDVNs.1:
++        "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+## Source code changes
+
+```diff
+.../projects/stargatev2/.flat/LayerZero DVN.sol    | 2116 ++++++++++++++++++++
+ 1 file changed, 2116 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264464 (main branch discovery), not current.
+
+```diff
+    contract Stargate DVN (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      name:
+-        "Stargate Verifier"
++        "Stargate DVN"
+    }
+```
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      name:
+-        "Nethermind Verifier"
++        "Nethermind DVN"
+    }
+```
+
 Generated with discovered.json: 0x29c4176ac2b7e091451927bd4994dd69290a2dff
 
 # Diff at Tue, 04 Nov 2025 13:55:49 GMT:

@@ -31,6 +31,7 @@ export const publicColumns = () => [
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    enableHiding: false,
   }),
   columnHelper.display({
     id: 'bridge',
@@ -147,7 +148,7 @@ export const publicColumns = () => [
         return null
       }
 
-      if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
+      if (env.CLIENT_SIDE_TRACKED_TXS_OUTAGE) {
         return <NoDataBadge />
       }
 
@@ -163,7 +164,7 @@ export const publicColumns = () => [
         'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
       additionalRows: (ctx) => {
         return ctx.row.original.bridges.slice(1).map((bridge) => {
-          if (env.CLIENT_SIDE_BIG_QUERY_OUTAGE) {
+          if (env.CLIENT_SIDE_TRACKED_TXS_OUTAGE) {
             return <NoDataBadge />
           }
 

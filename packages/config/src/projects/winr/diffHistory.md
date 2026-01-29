@@ -1,3 +1,118 @@
+Generated with discovered.json: 0xfd9818cc3e94c3e677db5401b91255dc9bc3d5e1
+
+# Diff at Wed, 21 Jan 2026 08:43:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1767971493
+- current timestamp: 1768984927
+
+## Description
+
+New member conduit msig2.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.$members.1:
++        "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.$members.5:
+-        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0x487fb70F28cEb4f320f2D72ed859cEEdC1B8C648"
+      values.executors.1:
++        "arb1:0x487fb70F28cEb4f320f2D72ed859cEEdC1B8C648"
+    }
+```
+
+Generated with discovered.json: 0x2fc072826ee51d7ebcf20c64b383c0efd16ee42c
+
+# Diff at Fri, 09 Jan 2026 15:12:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1765379816
+- current timestamp: 1767971493
+
+## Description
+
+stakerCount decreased from 1 to 0, no active validators on the chain.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
+Generated with discovered.json: 0x36bb3f077bb8ab0b9ec2a87ee38a29105b4364ab
+
+# Diff at Mon, 05 Jan 2026 17:45:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1765379816
+- current timestamp: 1765379816
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765379816 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x427b87a231899ad4a8e78ef94f0082160dada995
+
+# Diff at Wed, 10 Dec 2025 15:18:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1763555139
+- current timestamp: 1765379816
+
+## Description
+
+Conduit multisig added member.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0x8278b010cd73b06e0bf406e49194305cf6c03b3b
 
 # Diff at Wed, 19 Nov 2025 12:26:44 GMT:
@@ -3594,7 +3709,7 @@ Generated with discovered.json: 0x22efdea3d60bcbda8329bb4b1bd96720a6048916
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+stakerCount decreased from 1 to 0, indicating no active validators on the chain.
 
 ## Config/verification related changes
 

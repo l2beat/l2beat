@@ -1,3 +1,104 @@
+Generated with discovered.json: 0xec0ec15b908b9b5b55adc6caf9879bb509f8491b
+
+# Diff at Tue, 27 Jan 2026 11:50:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768984447
+- current timestamp: 1769514452
+
+## Description
+
+New member added to Conduit Multisig 1, increasing from 4 of 12 to 4 of 13 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
+Generated with discovered.json: 0x38e4652def507f5fcf42e618224490c588a786a8
+
+# Diff at Wed, 21 Jan 2026 08:35:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768566203
+- current timestamp: 1768984447
+
+## Description
+
+New member conduit msig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x991816bebc8139ed240cbb6b8494d192ac16f246
+
+# Diff at Fri, 16 Jan 2026 12:24:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1764933784
+- current timestamp: 1768566203
+
+## Description
+
+Conduit Multisig 1 added a new signer, increasing members from 10 to 11 (threshold remains 4).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0xdfcefaa50eacc789557ab5a10f611297d6f743e0
+
+# Diff at Mon, 05 Jan 2026 17:44:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1764933784
+- current timestamp: 1764933784
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764933784 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xf8b75AB2df57bB2d1EfC90dD218821E0314f5143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x3b6c82afc5aa11afb11f3eabf03f2467b24d1db3
 
 # Diff at Fri, 05 Dec 2025 11:24:18 GMT:

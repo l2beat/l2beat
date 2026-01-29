@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -82,6 +82,7 @@ export const brine: ScalingProject = {
       websites: ['https://tanx.fi/'],
       bridges: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
+      repositories: ['https://github.com/tanx-libs'],
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',
@@ -161,7 +162,7 @@ export const brine: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: tanxProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: tanxProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

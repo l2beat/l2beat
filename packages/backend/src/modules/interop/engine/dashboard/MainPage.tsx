@@ -1,3 +1,4 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type {
   InteropEventStatsRecord,
   InteropMessageDetailedStatsRecord,
@@ -10,10 +11,12 @@ import type { InteropMissingTokenInfo } from '@l2beat/database/dist/repositories
 import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { getInteropChains } from '../../../../config/makeConfig'
+import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
+import { LiveTransfers } from './LiveTransfers'
+import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
@@ -76,13 +79,14 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
   )
 }
 
-const NETWORKS = generateNetworkPairs(getInteropChains())
+const NETWORKS = generateNetworkPairs(INTEROP_CHAINS)
 
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -112,7 +116,8 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/messages/${t.type}`}>{t.count}</a>
@@ -127,27 +132,23 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
               }
               {NETWORKS.map((n, idx) => {
                 const srcDstCount = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                  (tt) => tt.srcChain === n[0].id && tt.dstChain === n[1].id,
                 )?.count
                 const srcDstDuration = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                  (tt) => tt.srcChain === n[0].id && tt.dstChain === n[1].id,
                 )?.avgDuration
                 const dstSrcCount = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                  (tt) => tt.srcChain === n[1].id && tt.dstChain === n[0].id,
                 )?.count
                 const dstSrcDuration = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                  (tt) => tt.srcChain === n[1].id && tt.dstChain === n[0].id,
                 )?.avgDuration
                 return (
                   <React.Fragment key={`${t.type}-${idx}`}>
                     <td>
                       {srcDstCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                          href={`/interop/messages/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
                         >
                           {srcDstCount}
                         </a>
@@ -159,7 +160,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {dstSrcCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                          href={`/interop/messages/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
                         >
                           {dstSrcCount}
                         </a>
@@ -184,6 +185,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -221,7 +223,8 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
@@ -231,12 +234,10 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <td data-order={t.dstValueSum}>{formatDollars(t.dstValueSum)}</td>
               {NETWORKS.map((n, idx) => {
                 const forwardStats = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[0].name && tt.dstChain === n[1].name,
+                  (tt) => tt.srcChain === n[0].id && tt.dstChain === n[1].id,
                 )
                 const backwardStats = t.chains.find(
-                  (tt) =>
-                    tt.srcChain === n[1].name && tt.dstChain === n[0].name,
+                  (tt) => tt.srcChain === n[1].id && tt.dstChain === n[0].id,
                 )
 
                 const forwardCount = forwardStats?.count
@@ -252,7 +253,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[0].name}&dstChain=${n[1].name}`}
+                          href={`/interop/transfers/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
                         >
                           {forwardCount}
                         </a>
@@ -270,7 +271,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[1].name}&dstChain=${n[0].name}`}
+                          href={`/interop/transfers/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
                         >
                           {backwardCount}
                         </a>
@@ -309,6 +310,7 @@ function MissingTokensTable(props: {
           <th>Address</th>
           <th>Count</th>
           <th>Plugins</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -334,6 +336,14 @@ function MissingTokensTable(props: {
               </td>
               <td>{t.count}</td>
               <td>{t.plugins.join(', ')}</td>
+              <td>
+                <a
+                  target="_blank"
+                  href={`https://tokens.l2beat.com/tokens/new?tab=deployed&chain=${encodeURIComponent(t.chain)}&address=${t.tokenAddress === 'native' || t.tokenAddress === Address32.ZERO ? 'native' : encodeURIComponent(address)}`}
+                >
+                  Add token
+                </a>
+              </td>
             </tr>
           )
         })}
@@ -349,6 +359,7 @@ function MainPageLayout(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  pluginSyncStatuses: PluginSyncStatus[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   const eventsTable = <EventsTable {...props} />
@@ -371,6 +382,7 @@ function MainPageLayout(props: {
       <a href="/interop/configs" target="_blank">
         Automated configs
       </a>
+      <LiveTransfers />
       <DataTablePage
         showHome={false}
         tables={[
@@ -422,6 +434,7 @@ function MainPageLayout(props: {
               </div>
             ))}
             <ProcessorsStatusTable processors={props.status} />
+            <PluginsStatusTable pluginSyncStatuses={props.pluginSyncStatuses} />
           </>
         }
       />
@@ -436,6 +449,7 @@ export function renderMainPage(props: {
   status: ProcessorsStatus[]
   missingTokens: InteropMissingTokenInfo[]
   uniqueApps: InteropMessageUniqueAppsRecord[]
+  pluginSyncStatuses: PluginSyncStatus[]
   getExplorerUrl: (chain: string) => string | undefined
 }) {
   return '<!DOCTYPE html>' + renderToStaticMarkup(<MainPageLayout {...props} />)

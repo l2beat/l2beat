@@ -1,4 +1,140 @@
-Generated with discovered.json: 0x9b3a51c7465635ee6071eade7df5bbdd98a56542
+Generated with discovered.json: 0xb1d7780019c7ad102561ede8aa41a920c8bda071
+
+# Diff at Tue, 27 Jan 2026 11:38:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769272413
+- current timestamp: 1769513822
+
+## Description
+
+Gas limit increased from 100M to 130M on L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        100000000
++        130000000
+    }
+```
+
+Generated with discovered.json: 0xea5f902802b2e63bd2098f0e85ed2ed6ee505c42
+
+# Diff at Mon, 26 Jan 2026 09:08:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048460
+- current timestamp: 1769272413
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/worldchain/.flat/SaferSafes.sol   | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
+Generated with discovered.json: 0xc1a658593bbdf29374d6c193e445d5cf482ecf75
+
+# Diff at Thu, 18 Dec 2025 09:02:23 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765551356
+- current timestamp: 1766048460
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x42eb78ad4f661a3a26a68f1b3c1626c957cbeb0a
+
+# Diff at Fri, 12 Dec 2025 16:20:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764325163
+- current timestamp: 1765551356
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764325163 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x892ad524a939c3662b0aec7877aaf52690519c01
 
 # Diff at Fri, 28 Nov 2025 10:20:36 GMT:
 

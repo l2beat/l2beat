@@ -1,7 +1,7 @@
 {
   "name": "wirex",
-  "timestamp": 1762264409,
-  "configHash": "0x86c94ed57598879374e70b30a0dc75d7714d8b9df0e8d0f1018018fd178fc6e1",
+  "timestamp": 1768370794,
+  "configHash": "0x3cc6505dd2478330715d4ae245440009ce769601c645e86de4d4dde4fd4aa5e7",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -169,7 +169,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xceb8816ffb6c9827109061301e56c75e96ac6c477ed3b531d610de6210a70af2",
+        "lastAccInputHash": "0xc2d4db11ab818aee665bacd7e8476317ec14f51118f474cf978c7100c4a169e3",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",
@@ -180,7 +180,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1",
+        "trustedSequencer": "eth:0xdF1384abe257F41569cC20bc9d7C4f022d2a4826",
         "trustedSequencerURL": "https://rpc.wirexpaychain.com"
       },
       "fieldMeta": {
@@ -219,7 +219,7 @@
       ]
     },
     {
-      "address": "eth:0xc303511902D613b6Cd4635Ccf5E40066B4bde1B1",
+      "address": "eth:0xdF1384abe257F41569cC20bc9d7C4f022d2a4826",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -452,6 +452,6 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23726377 },
-  "permissionsConfigHash": "0x044ee653664f6350b5077b8d6bcec4a3916742b8f313015119ba6c8e2c3eac28"
+  "usedBlockNumbers": { "ethereum": 24231042 },
+  "permissionsConfigHash": "0x4c5a0e1dea1e38d2db4e4be187fa3661ce843a4915939e7def73074c4e5ac3a7"
 }

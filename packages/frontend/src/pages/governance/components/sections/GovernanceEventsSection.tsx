@@ -1,5 +1,5 @@
 import { Button } from '~/components/core/Button'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { cn } from '~/utils/cn'
 import type { GovernanceEventEntry } from '../../utils/getGovernanceEventEntries'
 import { GovernanceCard } from '../GovernanceCard'
@@ -25,7 +25,7 @@ export function GovernanceEventsSection({ events, className }: Props) {
 }
 
 function Event({ event }: { event: GovernanceEventEntry }) {
-  const isMobile = useIsMobile()
+  const isMobile = useDevice()
 
   return (
     <GovernanceCard

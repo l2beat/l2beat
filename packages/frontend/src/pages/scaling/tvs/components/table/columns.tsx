@@ -19,7 +19,7 @@ const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 export const getScalingTvsColumns = (
   opts: CommonProjectColumnsOptions & {
     breakdownType: 'bridgeType' | 'assetCategory'
-    includeRwaRestrictedTokens: boolean
+    excludeRwaRestrictedTokens?: boolean
     isTvsLoading?: boolean
   },
 ) => [
@@ -175,7 +175,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
 }
 
 const getTokenAssetCategoryColumns = (opts: {
-  includeRwaRestrictedTokens: boolean
+  excludeRwaRestrictedTokens?: boolean
   isTvsLoading?: boolean
 }) =>
   compact([
@@ -264,7 +264,7 @@ const getTokenAssetCategoryColumns = (opts: {
         headClassName: getColumnHeaderUnderline('before:bg-lime-650 last:pr-3'),
       },
     }),
-    opts.includeRwaRestrictedTokens &&
+    !opts.excludeRwaRestrictedTokens &&
       columnHelper.accessor('tvs.data.breakdown.rwaRestricted', {
         id: 'rwaRestricted',
         header: 'Restricted RWAs',

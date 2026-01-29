@@ -1,3 +1,409 @@
+Generated with discovered.json: 0xa7c63c79aaaf5525b3fbb58e5c4f2e82582efac3
+
+# Diff at Mon, 26 Jan 2026 09:08:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1768990397
+- current timestamp: 1769272161
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/unichain/.flat/SaferSafes.sol     | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
+Generated with discovered.json: 0x0013e1a8ec14d6eeb6c289df3a6d0a11bbe719ec
+
+# Diff at Wed, 21 Jan 2026 10:14:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1767970592
+- current timestamp: 1768990397
+
+## Description
+
+SystemConfig minBaseFee changed from 0 to 500000 (0.0005 gwei).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        500000
+    }
+```
+
+Generated with discovered.json: 0x744e88dee42613259a38b995040082731330f7b8
+
+# Diff at Fri, 09 Jan 2026 14:57:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b754c9ace0114437cb2ec9cc6a5807b88e22835e block: 1767802030
+- current timestamp: 1767970592
+
+## Description
+
+SystemConfig updated: gas limit doubled from 30M to 60M, and EIP-1559 parameters configured (denominator: 250, elasticity: 12).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        12
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
+Generated with discovered.json: 0xa92dd7e64fcb119f6131ff31ddf1da55586d9397
+
+# Diff at Wed, 07 Jan 2026 16:08:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b319218f320edec871f10dbd490519684995e58e block: 1766048397
+- current timestamp: 1767802030
+
+## Description
+
+L1Splitter recipient changed to a Drippie contract as part of the UNIfication proposal, routing sequencer fees to the UNI burn mechanism instead of treasury.
+
+## Watched changes
+
+```diff
+    contract L1Splitter (unichain:0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003) {
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15).
+      description:
+-        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd)."
++        "Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15)."
+      values.l1Recipient:
+-        "unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"
++        "unichain:0x7078c4537C04c2b2E52ddBa06074dBdACF23cA15"
+    }
+```
+
+Generated with discovered.json: 0x9d872a25e5a734abc3fdca8c047dfbfcb27bc75a
+
+# Diff at Thu, 18 Dec 2025 09:01:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765551322
+- current timestamp: 1766048397
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.domainSeparator:
+-        "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890"
++        "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76"
+      values.getModules:
+-        []
+      values.NAME:
+-        "Gnosis Safe"
+      values.VERSION:
+-        "1.1.1"
++        "1.4.1"
+      values.getChainId:
++        1
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    |  959 -----------------
+ .../OpFoundationOperationsSafe/Safe.sol}           |  685 +++++++-----
+ .../.flat/OpFoundationUpgradeSafe/Safe.sol         | 1088 ++++++++++++++++++++
+ 3 files changed, 1498 insertions(+), 1234 deletions(-)
+```
+
+Generated with discovered.json: 0x3929cf1de162a1ebc5a04efb60f07b2b3b61004d
+
+# Diff at Fri, 12 Dec 2025 16:20:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1765362369
+- current timestamp: 1765551322
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362369 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xda8f0f7f2bb04b273a24d39db6d877e9ab746281
+
+# Diff at Thu, 11 Dec 2025 14:25:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1765362369
+- current timestamp: 1765362369
+
+## Description
+
+Config: remove challenger from template and move to config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765362369 (main branch discovery), not current.
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xD5F0E2912C70771C589CD8bB087EDE0Dab4AFA9A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0xFc38CE38042f7eA61001DE8815ef8825E277fe02","role":".proposer"}]
+    }
+```
+
+Generated with discovered.json: 0x33077078f3871a082357679f9efe068152ddc652
+
+# Diff at Wed, 10 Dec 2025 10:27:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@04275b546f812ce77c24c8dee6392da7b07741e9 block: 1764324881
+- current timestamp: 1765362369
+
+## Description
+
+L1Block contract from Jovian. Starting in Jovian, every non-deposit L2 tx gets a DA usage estimate and the block sums those up into a new resource called DA footprint. Each non-deposit tx compute daUsageEstimate using the Fjord linear model using the tx fastlzSize, and then multiply by the scalar (daFootprintGasScalar). The scalar essentially is a bytes-to-gas conversion factor, e.g. higher daFootprintGasScalar -> each estimated DA byte costs more footprint-gas -> stricter DA-per-block cap. In practice:
+- blocks can become “DA-full” before they are “gas-full” (daFootprint(block) <= gasLimit)
+- base fee now responds to DA-heavy blocks - base fee update uses gasMetered := max(gasUsed, blobGasUsed)
+and Jovian repurposes blobGasUsed to store daFootprint
+- DA-heavy transactions become pricier to include (DA-heavy blocks push gasMetered up, which pushes EIP-1559 base fee up, which feeds back into tx pricing)
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      template:
+-        "opstack/Layer2/GasPriceOracle"
+      sourceHashes.1:
+-        "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f"
++        "0x29ddf164485b42ede998cb6aa971e4178dffbc3247ff52a55177ef43123c2e70"
+      description:
+-        "Provides the current gas price for L2 transactions."
+      values.$implementation:
+-        "unichain:0x93e57A196454CB919193fa9946f14943cf733845"
++        "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xc7c01d75d0b6950fcd30b448cba848e9841ab9ebb6b46eed9ecde4ba05ad0fd9",["unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.baseFee:
+-        0
+      values.baseFeeScalar:
+-        2000
+      values.blobBaseFee:
+-        1
+      values.blobBaseFeeScalar:
+-        900000
+      values.decimals:
+-        6
+      values.DECIMALS:
+-        6
+      values.gasPrice:
+-        0
+      values.isEcotone:
+-        true
+      values.isFjord:
+-        true
+      values.isIsthmus:
+-        true
+      values.l1BaseFee:
+-        50173681
+      values.version:
+-        "1.4.0"
+      implementationNames.unichain:0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
++        ""
+      references:
++        [{"text":"Source Code","href":"https://unichain.blockscout.com/address/0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1"}]
+    }
+```
+
+```diff
+    contract L1Block (unichain:0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      template:
+-        "opstack/Layer2/L1Block"
+      sourceHashes.1:
+-        "0xb3745d52050d9a2c6bfa6e6e091bdfa43e7c87a22542aa276d323a29431ec108"
++        "0xd8671cf61a7da63a2d77c745e213afbd37a88260d4ff2b5121e5e3c0b4711c93"
+      description:
+-        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+      values.$implementation:
+-        "unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"
+      values.$pastUpgrades.1:
++        ["2025-12-02T16:00:01.000Z","0xcd60191626fa3124e7031235c52f0adf6be545ebbd7cf55641bd9dabcbedaf6a",["unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.basefee:
+-        50173681
+      values.baseFeeScalar:
+-        2000
+      values.batcherHash:
+-        "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd"
+      values.blobBaseFee:
+-        1
+      values.blobBaseFeeScalar:
+-        900000
+      values.DEPOSITOR_ACCOUNT:
+-        "unichain:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
+-        {"addr_":"unichain:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.hash:
+-        "0xc866d5b728164337e8302b6d5d0fedeadd05939d021640d1b58a824aa2a69162"
+      values.isCustomGasToken:
+-        false
+      values.l1FeeOverhead:
+-        0
+      values.l1FeeScalar:
+-        0
+      values.number:
+-        23896506
+      values.operatorFeeConstant:
+-        0
+      values.operatorFeeScalar:
+-        0
+      values.sequenceNumber:
+-        7
+      values.timestamp:
+-        1764324815
+      values.version:
+-        "1.6.0"
+      implementationNames.unichain:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.unichain:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C:
++        ""
+      references:
++        [{"text":"Source Code","href":"https://unichain.blockscout.com/address/0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol => /dev/null | 1187 --------------------
+ .../L1Block/L1Block.sol => /dev/null               |  255 -----
+ 2 files changed, 1442 deletions(-)
+```
+
 Generated with discovered.json: 0x1c04ec7e1555302a69050f3612c25114ba51ae0f
 
 # Diff at Fri, 28 Nov 2025 10:16:25 GMT:

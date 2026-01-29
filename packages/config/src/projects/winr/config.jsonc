@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "winr",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "maxDepth": 33,
   "initialAddresses": ["arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA"],

@@ -17,7 +17,11 @@ export const liftchain: ScalingProject = upcomingL2({
       websites: ['https://liftdata.ai/'],
       documentation: ['https://docs.liftdata.ai/'],
       repositories: ['https://github.com/PlayFi-Labs'],
-      socialMedia: ['https://liftdata.ai'],
+      socialMedia: [
+        'https://liftdata.ai',
+        'https://x.com/liftdataAI',
+        'https://t.me/LiftData',
+      ],
     },
   },
   ecosystemInfo: {

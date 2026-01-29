@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xce81568bc5900b14edde7fc8df35fd30f8bfbde1
+Generated with discovered.json: 0x05db4c2dc65e309133d8e619e043357ed5b031e6
+
+# Diff at Wed, 21 Jan 2026 08:34:36 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1764933659
+- current timestamp: 1768984413
+
+## Description
+
+New member conduit msig.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.$members.1:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x8ed8bc801eb637de91c3283c1b4bd917452bf593
 
 # Diff at Fri, 05 Dec 2025 11:22:16 GMT:
 

@@ -31,6 +31,17 @@ export class FieldConfigModel {
     return this.patch({ severity })
   }
 
+  setDescription(description: FieldConfigSchema['description']) {
+    const trimmed = description?.trim()
+    return this.patch({
+      description: trimmed?.length === 0 ? undefined : trimmed,
+    })
+  }
+
+  setHandler(handler: FieldConfigSchema['handler']) {
+    return this.patch({ handler })
+  }
+
   hasDefinition(key: string) {
     return this.config[key as keyof FieldConfigSchema] !== undefined
   }
@@ -43,5 +54,13 @@ export class FieldConfigModel {
 
   get severity() {
     return this.config.severity
+  }
+
+  get description() {
+    return this.config.description
+  }
+
+  get handler() {
+    return this.config.handler
   }
 }

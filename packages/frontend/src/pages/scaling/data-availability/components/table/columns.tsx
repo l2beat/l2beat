@@ -30,11 +30,10 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
       meta: {
         tooltip:
           'The data availability layer where the data (transaction data or state diffs) is published.',
-        cellClassName: 'pl-3',
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell
                 key={da.layer.value}
                 value={da.layer}
@@ -61,7 +60,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell
                 key={da.layer.value}
                 value={da.bridge}
@@ -124,7 +123,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell key={da.layer.value} value={da.mode} />
             ))
         },

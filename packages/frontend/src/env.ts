@@ -21,7 +21,8 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
-  CLIENT_SIDE_BIG_QUERY_OUTAGE: featureFlag.default(false),
+  CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
+  CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -31,15 +32,19 @@ const SERVER_CONFIG = {
     .string()
     .check((v) => !!new URL(v))
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+  TOKENS_DATABASE_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default(false),
+  TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
   REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
-
-  // Heroku specific (available only on previews)
-  HEROKU_APP_NAME: z.string().optional(),
+  COOLIFY_URL: z.string().optional(),
+  COOLIFY_RESOURCE_UUID: z.string().optional(),
 
   LOG_LEVEL: z
     .enum(['NONE', 'CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
@@ -99,11 +104,14 @@ function getRawEnv(): Record<
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
+    TOKENS_DATABASE_URL: process.env.TOKENS_DATABASE_URL,
     DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
+    TOKENS_DATABASE_LOG_ENABLED: process.env.TOKENS_DATABASE_LOG_ENABLED,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
-    HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
+    COOLIFY_URL: process.env.COOLIFY_URL,
+    COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
     REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
@@ -119,6 +127,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
-    CLIENT_SIDE_BIG_QUERY_OUTAGE: process.env.CLIENT_SIDE_BIG_QUERY_OUTAGE,
+    CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
+    CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
   }
 }

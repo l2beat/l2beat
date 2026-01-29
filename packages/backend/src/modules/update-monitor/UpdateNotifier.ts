@@ -3,6 +3,11 @@ import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
+  DISCORD_MAX_MESSAGE_LENGTH,
+  type DiscordChannelType,
+  type DiscordClient,
+} from '@l2beat/shared'
+import {
   assert,
   type ChainSpecificAddress,
   formatAsAsciiTable,
@@ -10,11 +15,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import {
-  type Channel,
-  type DiscordClient,
-  MAX_MESSAGE_LENGTH,
-} from '../../peripherals/discord/DiscordClient'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import { diffToMessage } from './utils/diffToMessage'
@@ -33,6 +33,8 @@ const OCCURRENCE_LIMIT = 3
 const HOUR_RANGE = 12
 
 export class UpdateNotifier {
+  private loggedDiscordClientMissing = false
+
   constructor(
     private readonly db: Database,
     private readonly discordClient: DiscordClient | undefined,
@@ -132,12 +134,17 @@ export class UpdateNotifier {
     return latestId + 1
   }
 
-  private async notify(messages: string | string[], channel: Channel) {
+  private async notify(
+    messages: string | string[],
+    channel: DiscordChannelType,
+  ) {
     if (!this.discordClient) {
-      // TODO: maybe only once? rethink
-      this.logger.info(
-        'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
-      )
+      if (!this.loggedDiscordClientMissing) {
+        this.logger.info(
+          'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
+        )
+        this.loggedDiscordClientMissing = true
+      }
       return
     }
 
@@ -179,7 +186,8 @@ export class UpdateNotifier {
     if (!isEmpty(reminders)) {
       const monospaceBlockFence = '```'
       const safetyMargin = 10
-      const maxLength = MAX_MESSAGE_LENGTH - header.length - safetyMargin
+      const maxLength =
+        DISCORD_MAX_MESSAGE_LENGTH - header.length - safetyMargin
       const table = formatRemindersAsTable(reminders)
       internals = handleOverflow(
         `\`\`\`\n${table}\n`,

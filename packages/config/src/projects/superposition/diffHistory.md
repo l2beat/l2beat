@@ -1,3 +1,156 @@
+Generated with discovered.json: 0xe3ae1d6bf40485194d1a278fdccb3775f630af5d
+
+# Diff at Tue, 27 Jan 2026 11:53:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768984920
+- current timestamp: 1769514673
+
+## Description
+
+New member added to Conduit Multisig 2, increasing from 4 of 11 to 4 of 12 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xd4d71babf6d3a2dc5b59df934279b677785a2cf0
+
+# Diff at Wed, 21 Jan 2026 08:43:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768566204
+- current timestamp: 1768984920
+
+## Description
+
+New member conduit msig2.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0x852a51213f9ef1e34bc3fa7b3913a3d08ff988df
+
+# Diff at Fri, 16 Jan 2026 12:24:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1768216345
+- current timestamp: 1768566204
+
+## Description
+
+Conduit Multisig 2 added a new signer, increasing members from 9 to 10 (threshold remains 4).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x44829ee9c392d88cfee5a6809537dfd2a21ab668
+
+# Diff at Mon, 12 Jan 2026 11:22:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1765379730
+- current timestamp: 1768216345
+
+## Description
+
+Conduit Multisig 2 member removed (10 → 9 members).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.5:
+-        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 9 (44%)"
+    }
+```
+
+Generated with discovered.json: 0xd3450add6479ca477928df82b6da795f57ba5522
+
+# Diff at Mon, 05 Jan 2026 17:45:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1765379730
+- current timestamp: 1765379730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765379730 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xd8706021cb41e0b5e88d8b83db0d73468fba9fe9
+
+# Diff at Wed, 10 Dec 2025 15:16:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1759481287
+- current timestamp: 1765379730
+
+## Description
+
+Conduit multisig added member.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0x6a55101c8739110a45468ee24c22701e15aeefce
 
 # Diff at Fri, 03 Oct 2025 08:49:22 GMT:

@@ -3,6 +3,7 @@ import {
   AllProviders,
   asStructured,
   codeIsEOA,
+  findLeadingCommentStart,
   flattenStartingFrom,
   getChainConfigs,
   getChainFullName,
@@ -152,7 +153,8 @@ function splitFlatSolidity(flat: string): Record<string, string> {
     assert(childName !== undefined)
     assert(child.range !== undefined)
 
-    const childContent = flat.substring(child.range[0], child.range[1] + 1)
+    const left = findLeadingCommentStart(flat, child.range[0])
+    const childContent = flat.substring(left, child.range[1] + 1)
     result[childName] = childContent
   }
 

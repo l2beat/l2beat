@@ -2,6 +2,8 @@ import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
+import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
+import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
 import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepository'
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
 import { AnomaliesRepository } from './repositories/AnomaliesRepository'
@@ -18,6 +20,8 @@ import { IndexerStateRepository } from './repositories/IndexerStateRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
+import { InteropPluginSyncedRangeRepository } from './repositories/InteropPluginSyncedRangeRepository'
+import { InteropPluginSyncStateRepository } from './repositories/InteropPluginSyncStateRepository'
 import { InteropRecentPricesRepository } from './repositories/InteropRecentPricesRepository'
 import { InteropTransferRepository } from './repositories/InteropTransferRepository'
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
@@ -59,7 +63,11 @@ export function createDatabase(
     interopEvent: new InteropEventRepository(db),
     interopMessage: new InteropMessageRepository(db),
     interopTransfer: new InteropTransferRepository(db),
+    aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
+    aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
+    interopPluginSyncState: new InteropPluginSyncStateRepository(db),
+    interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),
     // #endregion
 
     // #region DA BEAT

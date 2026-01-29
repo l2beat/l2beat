@@ -1,8 +1,8 @@
-import type { SvgIconProps } from './SvgIcon'
+import { SvgIcon, type SvgIconProps } from './SvgIcon'
 
 export function ThreeHorizontalDotsIcon(props: SvgIconProps) {
   return (
-    <svg
+    <SvgIcon
       xmlns="http://www.w3.org/2000/svg"
       width="16"
       height="16"
@@ -10,6 +10,6 @@ export function ThreeHorizontalDotsIcon(props: SvgIconProps) {
       {...props}
     >
       <path d="M3 9.5a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3" />
-    </svg>
+    </SvgIcon>
   )
 }

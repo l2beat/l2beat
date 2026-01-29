@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
-  "timestamp": 1760536727,
-  "configHash": "0xedebc2935c0d4811bd1ac3aaaa305606e15365ed50d2b6584e71ae6c05ec90a1",
+  "timestamp": 1769674846,
+  "configHash": "0xe5f21efa4cbe01905122f3eab80b8c68449e061203ad343a8cbbcfd9a842f4d1",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -307,7 +307,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41747,
+        "counter": 41855,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -514,18 +514,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 29725,
+        "currentEpoch": 32887,
         "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "14688703782434353185474018",
+        "currentValidatorSetTotalStake": "11849279623317376114908460",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "115609194928767903183",
-          "209339271444059377588",
-          "143520671028053612673",
-          "156478352309327357348"
+          "308310923277696774983",
+          "1063764248967526638042",
+          "749835942349605860841",
+          "108993899135463130425"
         ],
         "dynasty": 30,
-        "epoch": 29725,
+        "epoch": 32887,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -552,7 +552,7 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1746462834810577004982608",
+        "rewardPerStake": "1868038240758016846817555",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
@@ -562,7 +562,7 @@
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "14688703782434353185474018",
+          "amount": "11849279623317376114908460",
           "stakerCount": 12
         },
         "validatorThreshold": 15,
@@ -1078,7 +1078,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 297220000,
+        "_nextHeaderBlock": 328840000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1087,8 +1087,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 297210000,
-        "getLastChildBlock": 13582364,
+        "currentHeaderBlock": 328830000,
+        "getLastChildBlock": 15404572,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -1142,7 +1142,8 @@
         "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
       ],
       "proxyType": "immutable",
-      "description": "Maintains the addresses of the contracts used in the system.",
+      "description": "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.",
+      "ignoreInWatchMode": ["tokensMapped"],
       "sinceTimestamp": 1691243735,
       "sinceBlock": 17849201,
       "values": {
@@ -1159,7 +1160,10 @@
         "getValidatorShareAddress": "eth:0xaB8FB5E1A9777f2A98E86004980A4fCdcd655a04",
         "getWethTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "getWithdrawManagerAddress": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
-        "governance": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06"
+        "governance": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+        "tokensMapped": {
+          "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9": "eth:0x0000000000000000000000000000000000001010"
+        }
       },
       "implementationNames": {
         "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB": "Registry"
@@ -2011,7 +2015,7 @@
     "polygonposbridge/Governance": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0x15319e6e8947d37c32a6ecf4e3356cfe7300b2e28d7a48036dabb989f6d98ca7",
-    "polygonposbridge/Registry": "0x740dd1c9a6f29e9a794b82248a0b4db07a11d3016347bb97a121b714a5018529",
+    "polygonposbridge/Registry": "0x5c5fe510503231c55babf2ac08b7e9cec266f6131495611ee1af5bd4a215c7a1",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
@@ -2024,6 +2028,6 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23583539 },
+  "usedBlockNumbers": { "ethereum": 24339275 },
   "permissionsConfigHash": "0xb9418c456962c038809bed5d65324ce350af667a66cb600e40fbb5e9ba9eb525"
 }

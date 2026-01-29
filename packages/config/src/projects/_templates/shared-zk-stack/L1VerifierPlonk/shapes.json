@@ -18,5 +18,23 @@
     "hash": "0x4e306eb2936a09bd91390a0b661bfd8eda46b873600b8c7b4fb9be3cc3867a8d",
     "address": "gateway:0xfA7c56B328bEb5deB9218f3a4b60ADc59Bb6Ad8d",
     "blockNumber": 75862
+  },
+  "L1VerifierPlonk_Airbender": {
+    "hash": "0x9fcab13afddb5d3eab2fff3a4f5df75281d1d9019bace6f64c13b210e1550958",
+    "address": "eth:0x8F870CF6621AEaF6026dFfc77f484FdAb370c4Ba",
+    "chain": "ethereum",
+    "blockNumber": 24038982
+  },
+  "ZKsyncOSVerifierPlonk_v30_0_ADI": {
+    "hash": "0x369b284860edc23e3dc04a83d43fa393d45f1c0ebe6122e70b08550e27d1ecec",
+    "address": "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D",
+    "chain": "ethereum",
+    "blockNumber": 24275768
+  },
+  "L1VerifierPlonk_v29_3": {
+    "hash": "0xe8a7e33cfb1a360c71df97e37b905283f19c3fe03faa2e0ddc14cfad7ccb4bd2",
+    "address": "eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026",
+    "chain": "ethereum",
+    "blockNumber": 24318608
   }
 }

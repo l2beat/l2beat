@@ -55,8 +55,8 @@ export class BlipRuntime {
         return xs.some((e) => x !== e)
       }
       case 'and': {
-        const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
-        return xs.every((e) => x && e)
+        const values = blip.slice(1).map((b) => this.executeBlip(v, b))
+        return values.every((e) => e)
       }
       case 'pipe': {
         return blip.slice(1).reduce((acc, fn) => this.executeBlip(acc, fn), v)

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "alephzero",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",

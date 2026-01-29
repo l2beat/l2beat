@@ -57,7 +57,7 @@ const AoriSettleSent = createInteropEventType<{
 // }>('aori.Settle')
 
 export class AoriPlugin implements InteropPlugin {
-  name = 'aori'
+  readonly name = 'aori'
 
   capture(input: LogToCapture) {
     const network = AORI_NETWORKS.find((x) => x.chain === input.chain)

@@ -1,3 +1,427 @@
+Generated with discovered.json: 0xab5a1c06e16c207961f4d125d45da63d22ed8d40
+
+# Diff at Wed, 14 Jan 2026 06:34:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767796932
+- current timestamp: 1768372202
+
+## Description
+
+cctp fee recipient change. new stakingvault in Lido.
+
+## Watched changes
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      values.feeRecipient:
+-        "base:0xDB03303F417A5eF98680FECde60c1e0701F3b6f3"
++        "base:0xBEA3621Ef88850E062cF4baCCaD72877E2c3e4Eb"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      values.vaultByIndex.3:
++        "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../PinnedBeaconProxy.p.sol                        |  586 ++++++
+ .../StakingVault.sol                               | 2000 ++++++++++++++++++++
+ 2 files changed, 2586 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796932 (main branch discovery), not current.
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      template:
++        "tokens/Lido/VaultHub"
+    }
+```
+
+Generated with discovered.json: 0x0c75c322e68ce0ce05e748e92e4ca56912a3488c
+
+# Diff at Wed, 07 Jan 2026 15:13:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1765784441
+- current timestamp: 1767796932
+
+## Description
+
+major upgrade targeting many different lido contracts.
+
+## Watched changes
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","role":"admin"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x23ED611be0e1a820978875C0122F92260804cdDf","role":"admin"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8","role":"admin"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","role":"admin"}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428","role":"admin"}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","role":"admin"}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711","role":"admin"}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","role":"admin"}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LegacyOracle (eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OracleReportSanityChecker (eth:0x6232397ebac4f5772e53285B26c47914E9461E75)
+    +++ description: None
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b"
++        "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869"
+      values.$implementation:
+-        "eth:0xE9906E543274cebcd335d2C560094089e9547e8d"
++        "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
+      values.$pastUpgrades.4:
++        ["2025-12-24T14:35:47.000Z","0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",["eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getConsensusVersion:
+-        4
++        5
+      values.getContractVersion:
+-        3
++        4
+      values.LEGACY_ORACLE:
+-        "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+      values.LIDO:
+-        "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+      values.proxy__getImplementation:
+-        "eth:0xE9906E543274cebcd335d2C560094089e9547e8d"
++        "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
+      implementationNames.eth:0xE9906E543274cebcd335d2C560094089e9547e8d:
+-        "AccountingOracle"
+      implementationNames.eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c:
++        "AccountingOracle"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xdc88f413a8e8c93a3ee2d7f0ca94090b4b1feb8393663061d7bccedc81812975"
++        "0x9edb5ea402771070d36f4e553ed8055f5114e26d2b0511b5f3688f8dfd8e1ef5"
+      values.$implementation:
+-        "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb"
++        "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
+      values.getContractVersion:
+-        2
++        3
+      values.getOracle:
+-        "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+      values.implementation:
+-        "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb"
++        "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
+      values.getMaxExternalRatioBP:
++        300
+      implementationNames.eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb:
+-        "Lido"
+      implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600:
++        "Lido"
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd9bec8b380e332257d788916e194c7e66df309019cb2e5a19afa74e31d6a1890"
++        "0x6c381d08f81d8ee374fd642f9db4a93a697a4e8d8feb28b1a269e11b3329190c"
+      values.$implementation:
+-        "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"
++        "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
+      values.$pastUpgrades.9:
++        ["2025-12-24T14:35:47.000Z","0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",["eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.burner:
+-        "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3"
++        "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a"
+      values.coreComponents.1:
+-        "eth:0x6232397ebac4f5772e53285B26c47914E9461E75"
++        "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
+      values.legacyOracle:
+-        "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+      values.oracleReportComponentsForLido:
+-        ["eth:0x852deD011285fe67063a08005c71a85690503Cee","eth:0x388C818CA8B9251b393131C08a736A67ccB19297","eth:0x6232397ebac4f5772e53285B26c47914E9461E75","eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3","eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823"]
+      values.oracleReportSanityChecker:
+-        "eth:0x6232397ebac4f5772e53285B26c47914E9461E75"
++        "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
+      values.postTokenRebaseReceiver:
+-        "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823"
++        "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9"
+      values.proxy__getImplementation:
+-        "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"
++        "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
+      values.accounting:
++        "eth:0x23ED611be0e1a820978875C0122F92260804cdDf"
+      values.lazyOracle:
++        "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c"
+      values.operatorGrid:
++        "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d"
+      values.oracleReportComponents:
++        ["eth:0x852deD011285fe67063a08005c71a85690503Cee","eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129","eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9","eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"]
+      values.predepositGuarantee:
++        "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3"
+      values.vaultFactory:
++        "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A"
+      values.vaultHub:
++        "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"
+      values.wstETH:
++        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      implementationNames.eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf:
+-        "LidoLocator"
+      implementationNames.eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d:
++        "LidoLocator"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Burner (eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenRateNotifier (eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VaultFactory (eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0x06A56487494aa080deC7Bf69128EdA9225784553)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Accounting (eth:0x23ED611be0e1a820978875C0122F92260804cdDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Dashboard (eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OracleReportSanityChecker (eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../tokens/.flat/Accounting/Accounting.sol         |  506 +++
+ .../tokens/.flat/Accounting/OssifiableProxy.p.sol  |  619 +++
+ .../AccountingOracle/AccountingOracle.sol          |  227 +-
+ .../{.flat@1765784441 => .flat/Burner}/Burner.sol  |  508 ++-
+ .../tokens/.flat/Burner/OssifiableProxy.p.sol      |  619 +++
+ .../src/projects/tokens/.flat/Dashboard.sol        | 4278 ++++++++++++++++++++
+ .../GnosisSafe.sol                                 |    0
+ .../GnosisSafeProxy.p.sol                          |    0
+ .../GnosisSafe.sol                                 |  953 +++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../tokens/.flat/LazyOracle/LazyOracle.sol         | 2235 ++++++++++
+ .../tokens/.flat/LazyOracle/OssifiableProxy.p.sol  |  619 +++
+ .../AppProxyUpgradeable.p.sol => /dev/null         |  241 --
+ .../LegacyOracle/LegacyOracle.sol => /dev/null     | 1114 -----
+ .../LidoLocator/LidoLocator.sol                    |   60 +-
+ .../Liquid staked Ether 2.0 Token/Lido.sol         | 1842 +++++----
+ .../tokens/.flat/OperatorGrid/OperatorGrid.sol     | 3235 +++++++++++++++
+ .../.flat/OperatorGrid/OssifiableProxy.p.sol       |  619 +++
+ .../OracleReportSanityChecker.sol                  |   92 +-
+ .../PredepositGuarantee/OssifiableProxy.p.sol      |  619 +++
+ .../PredepositGuarantee/PredepositGuarantee.sol    | 3075 ++++++++++++++
+ .../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1088 +++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 +++++
+ .../SafeProxy.p.sol                                |   37 +
+ ...:0x06A56487494aa080deC7Bf69128EdA9225784553.sol | 2000 +++++++++
+ .../PinnedBeaconProxy.p.sol                        |  586 +++
+ .../StakingVault.sol                               | 2000 +++++++++
+ .../PinnedBeaconProxy.p.sol                        |  586 +++
+ .../StakingVault.sol                               | 2000 +++++++++
+ .../PinnedBeaconProxy.p.sol                        |  586 +++
+ .../StakingVault.sol                               | 2000 +++++++++
+ .../TokenRateNotifier.sol                          |   24 +-
+ .../projects/tokens/.flat/UpgradeableBeacon.sol    |  164 +
+ .../src/projects/tokens/.flat/VaultFactory.sol     |  512 +++
+ .../tokens/.flat/VaultHub/OssifiableProxy.p.sol    |  619 +++
+ .../projects/tokens/.flat/VaultHub/VaultHub.sol    | 4193 +++++++++++++++++++
+ 39 files changed, 36406 insertions(+), 2610 deletions(-)
+```
+
+Generated with discovered.json: 0x9a9ee83c44e410f78addac559b69f23dc8db36cf
+
+# Diff at Mon, 15 Dec 2025 07:47:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@01bd5cf49d2c730434200bf3da519a23d7ab0c66 block: 1761643706
+- current timestamp: 1765784441
+
+## Description
+
+ignore in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761643706 (main branch discovery), not current.
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      template:
++        "tokens/Lido/TriggerableWithdrawalsGateway"
+    }
+```
+
 Generated with discovered.json: 0xe2e25b60ce7c849d7415fa8a81c84b21615028da
 
 # Diff at Wed, 05 Nov 2025 12:48:10 GMT:

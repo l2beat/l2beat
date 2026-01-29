@@ -272,8 +272,34 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "starknet-SolvBTC",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x0593e034dda23eea82d2ba9a30960ed42cf4a01502cc2351dc9b9881f9931a68",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1768848971
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-SolvBTC-old",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
@@ -284,7 +310,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
         "decimals": 18,
-        "sinceTimestamp": 1750859519
+        "sinceTimestamp": 1750859519,
+        "untilTimestamp": 1768848971
       },
       "category": "btc",
       "source": "canonical",
@@ -308,6 +335,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-sUSN",
+      "priceId": "staked-usn",
+      "symbol": "sUSN",
+      "name": "Staked USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54924/large/sUSN_Logo.png?1742538935",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02411565EF1A14DeCFBe83d2e987ccEd918cD752508a3d9c55DEb67148d14D17",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586104
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -404,6 +457,32 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-USN",
+      "priceId": "noon-usn",
+      "symbol": "USN",
+      "name": "Noon USN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53948/large/image_%289%29.png?1737788246",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x01e6545Cab7BA4ac866768ba5e1Bd540893762286ED3feA7f9C02bFa147e135B",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1758586433
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "starknet-USTBL",
       "priceId": "spiko-us-t-bills-money-market-fund",
       "symbol": "USTBL",
@@ -421,8 +500,34 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "starknet-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x03fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac",
+        "chain": "starknet",
+        "decimals": 8,
+        "sinceTimestamp": 1768848455
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-WBTC-old",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -433,7 +538,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
         "decimals": 8,
-        "sinceTimestamp": 1657137600
+        "sinceTimestamp": 1657137600,
+        "untilTimestamp": 1768848455
       },
       "category": "btc",
       "source": "canonical",

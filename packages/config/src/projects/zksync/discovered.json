@@ -1,7 +1,7 @@
 {
   "name": "zksync",
-  "timestamp": 1759932670,
-  "configHash": "0xaffa6238252a00c9bae2594462bdfbf4af0fbd9a8287642b89b3272a024e35e0",
+  "timestamp": 1767007984,
+  "configHash": "0x624070f84d32564193d229c0cb17f1701a2a589695e7dcfc040d889a516fb0bd",
   "entries": [
     {
       "name": "Multisig 1",
@@ -31,7 +31,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
         "NAME": "Gnosis Safe",
-        "nonce": 32,
+        "nonce": 34,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -46,11 +46,6 @@
     },
     {
       "address": "eth:0x0C6E6F8bb16846a0E9E866F3B9b8ec071f885Df5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x0d4E989c7620C8749c9417d2BF218896C767B606",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -113,13 +108,18 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Multisig 3",
       "address": "eth:0x225d3822De44E58eE935440E0c0B829C4232086e",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -127,23 +127,24 @@
       "sinceBlock": 9907020,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e",
+          "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
           "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863",
-          "eth:0x0d4E989c7620C8749c9417d2BF218896C767B606",
           "eth:0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x8c5e6abcda42210fa2b28fcb8c59671ec835bf9c06954d07036009a0c6646557",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 434,
-        "VERSION": "1.3.0"
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 439,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x225d3822De44E58eE935440E0c0B829C4232086e": "Proxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -345,7 +346,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18798
+        "totalSupply": 18851
       },
       "implementationNames": {
         "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "ZkSyncNFTFactory"
@@ -470,6 +471,11 @@
     },
     {
       "address": "eth:0xD804aB3355a634aEBd45e1252d6208807defD554",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -714,6 +720,54 @@
       "function validateTokenAddress(address _tokenAddr) view returns (uint16)",
       "function validators(address) view returns (bool)"
     ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -839,55 +893,6 @@
     "eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6": [
       "constructor(address _masterCopy)"
     ],
-    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99": [
       "constructor(address _masterCopy)"
     ]
@@ -895,6 +900,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23533538 },
-  "permissionsConfigHash": "0x7417a17180636f40c31154f88ab1522e66183fab432008beb6593ece3b210f7f"
+  "usedBlockNumbers": { "ethereum": 24118027 },
+  "permissionsConfigHash": "0x8024868228a5c66576f2d9f40983d30f5cb74580abf325382a25aafbffa5386d"
 }

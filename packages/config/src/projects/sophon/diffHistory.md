@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x34bce81cbc123d0abc7470354d214684d10d5d6f
+
+# Diff at Wed, 28 Jan 2026 11:04:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f3a771bee255d769c9ede9d03ff728859c8fd040 block: 1768823225
+- current timestamp: 1769598194
+
+## Description
+
+Upgraded boojum verifier to the latest version.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.8:
++        ["2026-01-27T18:02:59.000Z","0x02b9e48f0f8550fe61d750085088df57ec084a55468a6b259bc600b2d9f9a8de",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        8
++        9
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051586
++        124554051587
+      values.getSemverProtocolVersion.2:
+-        2
++        3
+      values.getVerifier:
+-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3"
++        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../sophon/{.flat@1768823225 => .flat}/L1VerifierFflonk.sol       | 4 ++--
+ .../sophon/{.flat@1768823225 => .flat}/L1VerifierPlonk.sol        | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xd6307ad559703e526c659b42154c1db4ed562205
+
+# Diff at Mon, 19 Jan 2026 11:48:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7fd8e6c42f2f1cc03bcf6ecae4818cfa02672b07 block: 1763548305
+- current timestamp: 1768823225
+
+## Description
+
+Removed one multisig member.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x90E10C37d8d9e854e7775B0069728642A1F88610"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 7 (57%)"
+    }
+```
+
+Generated with discovered.json: 0x9424a9e46415cc034a8962180558247705c2e6a6
+
+# Diff at Wed, 17 Dec 2025 14:34:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1763548305
+- current timestamp: 1763548305
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763548305 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "SophonZkEvm"
++        "Diamond"
+    }
+```
+
 Generated with discovered.json: 0x37f1c2f8543bfefd210eb1c7db07e240425bedf3
 
 # Diff at Wed, 19 Nov 2025 10:32:54 GMT:

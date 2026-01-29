@@ -60,7 +60,7 @@ const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   l2Token: Address32
   amount: bigint
 }>('orbitstack-standardgateway.L2ToL1TxWithdrawalInitiated', {
-  ttl: 14 * UnixTime.DAY,
+  ttl: 30 * UnixTime.DAY,
 })
 
 const parseWithdrawalInitiated = createEventParser(
@@ -80,7 +80,7 @@ const parseWithdrawalFinalized = createEventParser(
 )
 
 export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
-  name = 'orbitstack-standardgateway'
+  readonly name = 'orbitstack-standardgateway'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
@@ -264,9 +264,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -305,9 +307,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: depositInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }

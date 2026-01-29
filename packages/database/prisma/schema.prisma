@@ -342,6 +342,7 @@ model InteropEvent {
   direction   String?
 
   @@id([eventId])
+  @@index([timestamp, plugin, chain])
   @@index([type, matched, unsupported, timestamp])
 }
 
@@ -379,15 +380,15 @@ model InteropTransfer {
   type       String   @db.VarChar(64)
   timestamp  DateTime @db.Timestamp(6)
 
-  duration Int?
+  duration Int
 
-  srcTime         DateTime? @db.Timestamp(6)
-  srcChain        String?   @db.VarChar(32)
-  srcTxHash       String?   @db.VarChar(66)
-  srcLogIndex     Int?
-  srcEventId      String?   @db.VarChar(40)
-  srcTokenAddress String?   @db.VarChar(66)
-  srcRawAmount    Decimal?  @db.Decimal(80, 0)
+  srcTime         DateTime @db.Timestamp(6)
+  srcChain        String   @db.VarChar(32)
+  srcTxHash       String   @db.VarChar(66)
+  srcLogIndex     Int
+  srcEventId      String   @db.VarChar(40)
+  srcTokenAddress String?  @db.VarChar(66)
+  srcRawAmount    Decimal? @db.Decimal(80, 0)
 
   srcAbstractTokenId String?  @db.VarChar(66)
   srcSymbol          String?  @db.VarChar(66)
@@ -396,13 +397,13 @@ model InteropTransfer {
   srcValueUsd        Float?   @db.Real
   srcWasBurned       Boolean?
 
-  dstTime         DateTime? @db.Timestamp(6)
-  dstChain        String?   @db.VarChar(32)
-  dstTxHash       String?   @db.VarChar(66)
-  dstLogIndex     Int?
-  dstEventId      String?   @db.VarChar(40)
-  dstTokenAddress String?   @db.VarChar(66)
-  dstRawAmount    Decimal?  @db.Decimal(80, 0)
+  dstTime         DateTime @db.Timestamp(6)
+  dstChain        String   @db.VarChar(32)
+  dstTxHash       String   @db.VarChar(66)
+  dstLogIndex     Int
+  dstEventId      String   @db.VarChar(40)
+  dstTokenAddress String?  @db.VarChar(66)
+  dstRawAmount    Decimal? @db.Decimal(80, 0)
 
   dstAbstractTokenId String?  @db.VarChar(66)
   dstSymbol          String?  @db.VarChar(66)
@@ -514,4 +515,56 @@ model Chain {
   apis        Json?
 
   deployedTokens DeployedToken[]
+}
+
+model InteropPluginSyncState {
+  pluginName          String    @db.VarChar(255)
+  chain               String    @db.VarChar(255)
+  lastError           String?   @db.Text
+  resyncRequestedFrom DateTime? @db.Timestamp(6)
+  wipeRequired        Boolean   @default(false)
+
+  @@id([pluginName, chain])
+}
+
+model InteropPluginSyncedRange {
+  pluginName    String   @db.VarChar(255)
+  chain         String   @db.VarChar(255)
+  fromBlock     BigInt
+  fromTimestamp DateTime @db.Timestamp(6)
+  toBlock       BigInt
+  toTimestamp   DateTime @db.Timestamp(6)
+
+  @@id([pluginName, chain])
+}
+
+model AggregatedInteropTransfer {
+  timestamp        DateTime @db.Timestamp(6)
+  id               String   @db.VarChar(255)
+  srcChain         String   @db.VarChar(255)
+  dstChain         String   @db.VarChar(255)
+  transferCount    Int
+  totalDurationSum Int
+  srcValueUsd      Float?   @db.Real
+  dstValueUsd      Float?   @db.Real
+  countUnder100    Int      @default(0)
+  count100To1K     Int      @default(0)
+  count1KTo10K     Int      @default(0)
+  count10KTo100K   Int      @default(0)
+  countOver100K    Int      @default(0)
+
+  @@id([timestamp, srcChain, dstChain, id])
+}
+
+model AggregatedInteropToken {
+  timestamp        DateTime @db.Timestamp(6)
+  id               String   @db.VarChar(255)
+  srcChain         String   @db.VarChar(255)
+  dstChain         String   @db.VarChar(255)
+  abstractTokenId  String   @db.VarChar(6)
+  transferCount    Int
+  totalDurationSum Int
+  volume           Float    @db.Real
+
+  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
 }

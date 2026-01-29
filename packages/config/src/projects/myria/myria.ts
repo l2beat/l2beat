@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -87,7 +87,7 @@ export const myria: ScalingProject = {
       socialMedia: [
         'https://medium.com/@myriagames',
         'https://twitter.com/myria',
-        'https://discord.gg/myria',
+        'https://discord.com/invite/yCU3aXTxM6',
         'https://t.me/myriaofficialgroup',
         'https://instagram.com/myriagames',
       ],
@@ -164,7 +164,7 @@ export const myria: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: myriaProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: myriaProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

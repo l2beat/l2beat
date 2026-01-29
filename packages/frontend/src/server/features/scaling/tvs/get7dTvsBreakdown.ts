@@ -36,7 +36,7 @@ interface BreakdownSplit {
 
 const TvsAdditionalProps = {
   excludeAssociatedTokens: v.boolean().optional(),
-  includeRwaRestrictedTokens: v.boolean().optional(),
+  excludeRwaRestrictedTokens: v.boolean().optional(),
   customTarget: v.number().optional(),
 }
 
@@ -78,7 +78,7 @@ export async function get7dTvsBreakdown(
         target - 7 * UnixTime.DAY,
         target,
         props.excludeAssociatedTokens ?? false,
-        props.includeRwaRestrictedTokens ?? false,
+        props.excludeRwaRestrictedTokens ?? true,
       ],
     }),
   ])

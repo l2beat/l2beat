@@ -1,19 +1,40 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { agglayer } from '../../templates/agglayer'
 
 const discovery = new ProjectDiscovery('xlayer')
 const bridge = discovery.getContract('AgglayerBridge')
+const opgenesisTimestamp = UnixTime(1761304367)
+
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+
+const inboxStartBlock =
+  discovery.getContractValueOrUndefined<number>('SystemConfig', 'startBlock') ??
+  0
+
+const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
+
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
 export const xlayer: ScalingProject = agglayer({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
-  reviewStatus: 'inReview',
   display: {
     name: 'X Layer',
     slug: 'xlayer',
     description:
-      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
+      'X Layer is a Layer 2 by OKX with seamless integration with OKX products. It is powered by the Agglayer CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
       documentation: [
@@ -26,6 +47,7 @@ export const xlayer: ScalingProject = agglayer({
     },
   },
   discovery,
+  usesEthereumBlobs: true,
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -41,6 +63,66 @@ export const xlayer: ScalingProject = agglayer({
         tokensToAssignFromL1: ['OKB'],
       },
     }),
+  ],
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d'),
+        to: ChainSpecificAddress.address(sequencerInbox),
+        sinceTimestamp: opgenesisTimestamp,
+        untilTimestamp: 1766565023,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: ChainSpecificAddress.address(sequencer),
+        to: ChainSpecificAddress.address(sequencerInbox),
+        sinceTimestamp: 1766565023,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: opgenesisTimestamp,
+      },
+    },
+  ],
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: inboxStartBlock,
+      untilBlock: 24081293,
+      inbox: ChainSpecificAddress.address(sequencerInbox),
+      sequencers: [
+        EthereumAddress('0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 24081293,
+      inbox: ChainSpecificAddress.address(sequencerInbox),
+      sequencers: [ChainSpecificAddress.address(sequencer)],
+    },
   ],
   chainConfig: {
     name: 'xlayer',

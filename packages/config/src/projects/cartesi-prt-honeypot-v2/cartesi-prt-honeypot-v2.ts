@@ -18,6 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -37,6 +38,11 @@ const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
 const topLevelTournamentBond = discovery.getContractValue<number>(
   'TopTournament_example',
   'bondValue',
+)
+
+const cartesiProgramHash = discovery.getContractValue<string>(
+  'Application',
+  'getTemplateHash',
 )
 
 export const cartesiprthoneypotv2: ScalingProject = {
@@ -115,7 +121,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0xfddf68726a28e418fa0c2a52c3134904a8c3e998',
         ),
-        tokens: '*',
+        tokens: ['CTSI'],
         description: 'Contract storing bounty funds.',
       }),
     ],
@@ -289,6 +295,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    programHashes: [PROGRAM_HASHES(cartesiProgramHash)],
   },
   milestones: [
     {

@@ -2,16 +2,14 @@ import type { ColumnHelper } from '@tanstack/react-table'
 import { TableLink } from '~/components/table/TableLink'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { ProjectNameCell } from '../../cells/ProjectNameCell'
-import type { CommonProjectColumnsOptions } from './CommonProjectColumns'
 import { getCommonProjectColumns } from './CommonProjectColumns'
 
 export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,
   getHref: (row: T) => string,
-  opts?: CommonProjectColumnsOptions,
 ) {
   return [
-    ...getCommonProjectColumns(columnHelper, getHref, opts),
+    ...getCommonProjectColumns(columnHelper, getHref),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => (
@@ -19,6 +17,7 @@ export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(
           <ProjectNameCell project={ctx.row.original} />
         </TableLink>
       ),
+      enableHiding: false,
     }),
   ]
 }

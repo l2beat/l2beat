@@ -147,6 +147,14 @@ export const acrossV3: Bridge = {
       // },
     ],
   },
+  interopConfig: {
+    bridgeType: 'nonMinting',
+    plugins: [
+      {
+        plugin: 'across',
+      },
+    ],
+  },
   riskView: {
     validatedBy: {
       value: 'Optimistically',

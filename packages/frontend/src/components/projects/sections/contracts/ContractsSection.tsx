@@ -9,8 +9,8 @@ import {
   technologyContractKey,
 } from '../ContractEntry'
 import { ProjectSection } from '../ProjectSection'
-import type { StateValidationZkProgramHashData } from '../program-hashes/ProgramHashesSection'
-import { ZkProgramHashesTable } from '../program-hashes/table/ZkProgramHashesTable'
+import type { StateValidationProgramHashData } from '../program-hashes/ProgramHashesSection'
+import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
 import type { ProjectSectionId } from '../types'
@@ -26,8 +26,11 @@ export interface ContractsSectionProps {
   risks: TechnologyRisk[]
   diagram?: DiagramParams
   isUnderReview?: boolean
-  discoUiHref?: string
-  zkProgramHashes?: StateValidationZkProgramHashData[]
+  discoUi?: {
+    href: string
+    images: { desktop: string; mobile: string }
+  }
+  programHashes?: StateValidationProgramHashData[]
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -62,7 +65,12 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
-      {props.discoUiHref && <DiscoUiBanner href={props.discoUiHref} />}
+      {props.discoUi && (
+        <DiscoUiBanner
+          href={props.discoUi.href}
+          images={props.discoUi.images}
+        />
+      )}
       {hasContractsChanged && <ContractsUpdated />}
       {props.diagram && (
         <figure className="mt-4 mb-8 text-center">
@@ -129,13 +137,13 @@ export function ContractsSection(props: ContractsSectionProps) {
           <RiskList risks={props.risks} />
         </>
       )}
-      {props.zkProgramHashes && props.zkProgramHashes.length > 0 && (
+      {props.programHashes && props.programHashes.length > 0 && (
         <div className="mt-4 space-y-2 md:mt-6">
           <div className="flex items-baseline gap-3">
             <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
             <div className="w-full border-divider border-b-2" />
           </div>
-          <ZkProgramHashesTable entries={props.zkProgramHashes} />
+          <ProgramHashesTable entries={props.programHashes} />
         </div>
       )}
     </ProjectSection>

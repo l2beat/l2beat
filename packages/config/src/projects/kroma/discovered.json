@@ -1,8 +1,10 @@
 {
   "name": "kroma",
   "timestamp": 1752575723,
-  "configHash": "0x34c3e68f4248eedaa1f00759033807cfd3cb6dd1b0e11bec8d370ba3e93ae22b",
-  "sharedModules": ["shared-sp1"],
+  "configHash": "0x1a6c9b30b2c24283d241d0bcb763d9f24505dd9b95de9cef41c9e5e16b8f3ac1",
+  "sharedModules": [
+    "shared-sp1"
+  ],
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -27,7 +29,9 @@
           [
             "2025-02-10T04:48:23.000Z",
             "0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",
-            ["eth:0x9f2Ec7196596581806218D3D183581b00e5a444E"]
+            [
+              "eth:0x9f2Ec7196596581806218D3D183581b00e5a444E"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -89,12 +93,16 @@
           [
             "2023-09-05T02:26:47.000Z",
             "0xf1ce5facb5ac6b858552c8af4867797e1c69ad89629f1c836b7f489770683783",
-            ["eth:0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"]
+            [
+              "eth:0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"
+            ]
           ],
           [
             "2024-10-24T04:28:47.000Z",
             "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
-            ["eth:0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"]
+            [
+              "eth:0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -170,12 +178,16 @@
           [
             "2023-09-05T02:30:35.000Z",
             "0xc92251d7f8a454b533f0e272ba324cb7572ca4142aabf17cd29821e1d8ebfe1b",
-            ["eth:0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"]
+            [
+              "eth:0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"
+            ]
           ],
           [
             "2023-11-22T07:31:11.000Z",
             "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff",
-            ["eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"]
+            [
+              "eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -193,26 +205,38 @@
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+            "members": [
+              "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+            "members": [
+              "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+            "members": [
+              "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            ]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
-        "cancellerAC": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
+        "cancellerAC": [
+          "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executorAC": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
+        "executorAC": [
+          "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+        ],
         "getMinDelay": 0,
         "minDelayFormatted": "0s",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "proposerAC": ["eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"],
+        "proposerAC": [
+          "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+        ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": [
           "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
@@ -249,12 +273,16 @@
           [
             "2024-10-24T04:28:47.000Z",
             "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
-            ["eth:0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"]
+            [
+              "eth:0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"
+            ]
           ],
           [
             "2025-02-10T04:48:23.000Z",
             "0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",
-            ["eth:0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"]
+            [
+              "eth:0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -308,7 +336,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": [
+        "params"
+      ],
       "sinceTimestamp": 1693880555,
       "sinceBlock": 18067269,
       "values": {
@@ -318,12 +348,16 @@
           [
             "2023-09-05T02:27:59.000Z",
             "0x3166f6173eb630e96f74c5c9d6765cd93e39566dc592a423fddae11eb09f8d17",
-            ["eth:0x381F53695230BAF83a39D1a08304D233A35730Fa"]
+            [
+              "eth:0x381F53695230BAF83a39D1a08304D233A35730Fa"
+            ]
           ],
           [
             "2025-02-10T04:48:23.000Z",
             "0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",
-            ["eth:0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"]
+            [
+              "eth:0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -376,7 +410,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
-      "ignoreInWatchMode": ["scalar", "overhead"],
+      "ignoreInWatchMode": [
+        "scalar",
+        "overhead"
+      ],
       "sinceTimestamp": 1693880543,
       "sinceBlock": 18067268,
       "values": {
@@ -386,7 +423,9 @@
           [
             "2023-09-05T02:28:23.000Z",
             "0x3dcaff162fff51f2f6ba6264967bb5a3e6e9aefeb290b159109038ae38455e10",
-            ["eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5"]
+            [
+              "eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -429,7 +468,10 @@
         "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "Proxy",
         "eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5": "SystemConfig"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "eth:0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
@@ -503,12 +545,16 @@
           [
             "2023-09-05T02:27:35.000Z",
             "0x7aed5f7b2d0d4843ead380d9f809554d9d3f379d81ca91a8645fcd4873e4d4bf",
-            ["eth:0x2BB1c629c46a4018fBe2538a98da7162F8355583"]
+            [
+              "eth:0x2BB1c629c46a4018fBe2538a98da7162F8355583"
+            ]
           ],
           [
             "2023-11-22T07:31:11.000Z",
             "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff",
-            ["eth:0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"]
+            [
+              "eth:0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -577,7 +623,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "ignoreInWatchMode": ["messageNonce"],
+      "ignoreInWatchMode": [
+        "messageNonce"
+      ],
       "sinceTimestamp": 1693880591,
       "sinceBlock": 18067272,
       "values": {
@@ -587,7 +635,9 @@
           [
             "2023-09-05T02:24:47.000Z",
             "0xc077167cfc27b631ad397c64fd72bcaf2c8fcc7c9f08498eb247abc0094354a5",
-            ["eth:0x675924D68200F2C967Ba12349d5d510676C7214c"]
+            [
+              "eth:0x675924D68200F2C967Ba12349d5d510676C7214c"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -609,7 +659,10 @@
         "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746": "Proxy",
         "eth:0x675924D68200F2C967Ba12349d5d510676C7214c": "L1CrossDomainMessenger"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -631,12 +684,16 @@
           [
             "2023-08-29T05:48:11.000Z",
             "0xb5f090dda7636b95e017de8e0619fc4d6f706b7b4a2a9bbd07996bd85ef70bad",
-            ["eth:0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"]
+            [
+              "eth:0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"
+            ]
           ],
           [
             "2023-09-05T02:25:35.000Z",
             "0x2aaca06bcfebdfe7511fe20033c1af5dd9c4cae053340995621ce10da29392ec",
-            ["eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"]
+            [
+              "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -648,7 +705,10 @@
         "eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9": "Proxy",
         "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9": "L1ERC721Bridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "eth:0x547fc089E9f2971d27b9780214ED891F6d154faa",
@@ -802,17 +862,23 @@
           [
             "2023-08-29T05:49:23.000Z",
             "0x6ab34004b7846a1d1406bc53825ee386d905f8499c72ab9bfe07f4721d773ae9",
-            ["eth:0xD3b1D396330EA8dd79615f12433B856160d7D8B4"]
+            [
+              "eth:0xD3b1D396330EA8dd79615f12433B856160d7D8B4"
+            ]
           ],
           [
             "2023-09-01T03:41:59.000Z",
             "0x66fecb7dffc867d91d6f840e65fc28f81ad1301204cfca38b3bbb22146ffa361",
-            ["eth:0x7E79726560B140fd6e089547bD049509F5423BFf"]
+            [
+              "eth:0x7E79726560B140fd6e089547bD049509F5423BFf"
+            ]
           ],
           [
             "2024-06-21T06:13:11.000Z",
             "0xe56ba658fc810d727438e3bb124aa2e8ef1c25e5c21cbfe9715983ba5ce65a63",
-            ["eth:0x4cd05aB629055a449617a28E3466660403eA7126"]
+            [
+              "eth:0x4cd05aB629055a449617a28E3466660403eA7126"
+            ]
           ]
         ],
         "$upgradeCount": 3,
@@ -842,27 +908,37 @@
           [
             "2023-09-05T02:27:11.000Z",
             "0x70494d42df3a5668be6ac9bd1a46cdcfebe8980cae31dddcb7ec86c97200d60f",
-            ["eth:0x7526F997ea040B3949415c3a44e708273863AA2b"]
+            [
+              "eth:0x7526F997ea040B3949415c3a44e708273863AA2b"
+            ]
           ],
           [
             "2024-04-05T08:14:59.000Z",
             "0xd420f3a8af8254ca1095409b3c4c2a3a1faa26fbe50c0477663e1bcb39727dfc",
-            ["eth:0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"]
+            [
+              "eth:0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
+            ]
           ],
           [
             "2024-04-25T08:09:11.000Z",
             "0x0fb2eca6483b1d042af562bf0e8e804c1356df56d7b8094e9d6edd4b63edf715",
-            ["eth:0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"]
+            [
+              "eth:0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+            ]
           ],
           [
             "2024-10-24T04:28:47.000Z",
             "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
-            ["eth:0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"]
+            [
+              "eth:0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"
+            ]
           ],
           [
             "2025-02-10T04:48:23.000Z",
             "0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",
-            ["eth:0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"]
+            [
+              "eth:0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
+            ]
           ]
         ],
         "$upgradeCount": 5,
@@ -873,7 +949,11 @@
           }
         },
         "BISECTION_TIMEOUT": 3600,
-        "challengedRoots": [4062, 4540, 5017],
+        "challengedRoots": [
+          4062,
+          4540,
+          5017
+        ],
         "CREATION_PERIOD_SECONDS": 518400,
         "L2_ORACLE": "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "L2_ORACLE_SUBMISSION_INTERVAL": 1800,
@@ -924,7 +1004,9 @@
           [
             "2023-11-16T08:17:11.000Z",
             "0x04a7ec0dad1a7a0ebf4cb2bd1f983b19d43e57972e91c4e73aabf2bff3530014",
-            ["eth:0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"]
+            [
+              "eth:0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -957,7 +1039,9 @@
           [
             "2023-09-05T02:25:11.000Z",
             "0xe67e8f042d304b70f1fd718343378219e0be9c49ed4a8242f8f96ea9ced2c0fd",
-            ["eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"]
+            [
+              "eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -969,7 +1053,10 @@
         "eth:0x827962404D7104202C5aaa6b929115C8211d9596": "Proxy",
         "eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4": "L1StandardBridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": {
+        "name": "Canonical Bridges",
+        "priority": 2
+      }
     },
     {
       "address": "eth:0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
@@ -1008,7 +1095,9 @@
           [
             "2024-10-24T04:28:47.000Z",
             "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
-            ["eth:0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"]
+            [
+              "eth:0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"
+            ]
           ]
         ],
         "$upgradeCount": 1,
@@ -1070,7 +1159,9 @@
           "role": ".proposerAC"
         }
       ],
-      "ignoreInWatchMode": ["clock"],
+      "ignoreInWatchMode": [
+        "clock"
+      ],
       "sinceTimestamp": 1693880663,
       "sinceBlock": 18067278,
       "values": {
@@ -1080,12 +1171,16 @@
           [
             "2023-09-05T02:30:59.000Z",
             "0x1474ff104cbd078775403ee9b33a18394d045e5e00e03e94586e73a3596cbde0",
-            ["eth:0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"]
+            [
+              "eth:0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"
+            ]
           ],
           [
             "2023-11-22T07:31:11.000Z",
             "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff",
-            ["eth:0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"]
+            [
+              "eth:0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1154,7 +1249,9 @@
           "description": "cancel queued transactions.",
           "role": ".cancellerAC",
           "via": [
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1163,7 +1260,9 @@
           "description": "execute transactions that are ready.",
           "role": ".executorAC",
           "via": [
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1172,8 +1271,12 @@
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1182,7 +1285,9 @@
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1191,7 +1296,9 @@
           "description": "propose transactions.",
           "role": ".proposerAC",
           "via": [
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1200,8 +1307,12 @@
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner",
           "via": [
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1209,9 +1320,15 @@
           "from": "eth:0x005DDC466C804c79adB079c120347dDE48132105",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1219,9 +1336,15 @@
           "from": "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1229,9 +1352,15 @@
           "from": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1239,9 +1368,15 @@
           "from": "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1249,9 +1384,15 @@
           "from": "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1259,9 +1400,15 @@
           "from": "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1269,9 +1416,15 @@
           "from": "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1279,9 +1432,15 @@
           "from": "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1289,9 +1448,15 @@
           "from": "eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1299,9 +1464,15 @@
           "from": "eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1309,9 +1480,15 @@
           "from": "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1319,8 +1496,12 @@
           "from": "eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
           "role": "admin",
           "via": [
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1329,9 +1510,15 @@
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1339,9 +1526,15 @@
           "from": "eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1349,9 +1542,15 @@
           "from": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1359,9 +1558,15 @@
           "from": "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         },
         {
@@ -1369,9 +1574,15 @@
           "from": "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103",
           "role": "admin",
           "via": [
-            { "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd" },
-            { "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1" },
-            { "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537" }
+            {
+              "address": "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+            },
+            {
+              "address": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+            },
+            {
+              "address": "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+            }
           ]
         }
       ],
@@ -1382,7 +1593,10 @@
           "role": ".token"
         }
       ],
-      "ignoreInWatchMode": ["clock", "ownerOf"],
+      "ignoreInWatchMode": [
+        "clock",
+        "ownerOf"
+      ],
       "sinceTimestamp": 1693880639,
       "sinceBlock": 18067276,
       "values": {
@@ -1392,12 +1606,16 @@
           [
             "2023-09-05T02:28:47.000Z",
             "0xa1a5d4f87ba3ebc2951c5f2d521882061eaf5ee68bc8c6179ba1dfc0ed6b8a7b",
-            ["eth:0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"]
+            [
+              "eth:0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"
+            ]
           ],
           [
             "2023-11-22T07:31:11.000Z",
             "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff",
-            ["eth:0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"]
+            [
+              "eth:0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"
+            ]
           ]
         ],
         "$upgradeCount": 2,
@@ -1417,7 +1635,10 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
-        "locked": [true, true],
+        "locked": [
+          true,
+          true
+        ],
         "name": "KromaSecurityCouncil",
         "owner": "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
         "ownerOf": [
@@ -1438,7 +1659,18 @@
           "eth:0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
           "eth:0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
         ],
-        "tokens": [0, 11, 4, 10, 13, 7, 14, 9, 12, 16],
+        "tokens": [
+          0,
+          11,
+          4,
+          10,
+          13,
+          7,
+          14,
+          9,
+          12,
+          16
+        ],
         "tokenURI": [
           "https://nft.kroma.network/sc/1.png",
           "https://nft.kroma.network/sc/3.png"
@@ -1462,7 +1694,9 @@
       ],
       "proxyType": "gnosis safe",
       "description": "Escrows a pool of KRO used as validator rewards by the AssetManager.",
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "sinceTimestamp": 1722386411,
       "sinceBlock": 20423009,
       "values": {
@@ -1508,7 +1742,10 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.",
-      "ignoreInWatchMode": ["nextValidator", "validatorCount"],
+      "ignoreInWatchMode": [
+        "nextValidator",
+        "validatorCount"
+      ],
       "sinceTimestamp": 1693880567,
       "sinceBlock": 18067270,
       "values": {
@@ -1518,22 +1755,30 @@
           [
             "2023-09-05T02:26:23.000Z",
             "0x31c5282eb4cc1bcf3b3a3fbbbb0116c0ee335b4ccabd497f02b2761b0bc65dbd",
-            ["eth:0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"]
+            [
+              "eth:0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"
+            ]
           ],
           [
             "2023-11-22T07:31:11.000Z",
             "0xf4e23f51e23f9549e6bed354f5330524c65d5796b765bd38fdacdb6758e7f8ff",
-            ["eth:0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"]
+            [
+              "eth:0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"
+            ]
           ],
           [
             "2024-04-05T08:14:59.000Z",
             "0xd420f3a8af8254ca1095409b3c4c2a3a1faa26fbe50c0477663e1bcb39727dfc",
-            ["eth:0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"]
+            [
+              "eth:0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
+            ]
           ],
           [
             "2024-10-24T04:28:47.000Z",
             "0xb2a500d332d7b3348b8ffa91aba9b8a5a3bc018b44225a1b6e99605c56c6564e",
-            ["eth:0xE36776FFA20a9206dcD742C981402a3f3d81938d"]
+            [
+              "eth:0xE36776FFA20a9206dcD742C981402a3f3d81938d"
+            ]
           ]
         ],
         "$upgradeCount": 4,
@@ -2426,6 +2671,8 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22924020 },
+  "usedBlockNumbers": {
+    "ethereum": 22924020
+  },
   "permissionsConfigHash": "0xac6e384d69bb8d752a5f1c06e948131fe962cd26688913cdb528e3daf12ad7cd"
 }

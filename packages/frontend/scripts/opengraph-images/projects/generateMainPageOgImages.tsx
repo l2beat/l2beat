@@ -43,6 +43,22 @@ const mainPages: MainPage[] = [
     title: 'Archived',
   },
   {
+    type: 'interop',
+    title: 'Summary',
+  },
+  {
+    type: 'interop',
+    title: 'Non-minting',
+  },
+  {
+    type: 'interop',
+    title: 'Lock & Mint',
+  },
+  {
+    type: 'interop',
+    title: 'Omnichain',
+  },
+  {
     type: 'bridges',
     title: 'Summary',
   },

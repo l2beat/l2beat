@@ -1,4 +1,66 @@
-Generated with discovered.json: 0xe189cfe8d3efade0413bf73a9d5f2fa8cb6c92d3
+Generated with discovered.json: 0x2e49a358ceac669737803c14c9c48c60a0ca71bc
+
+# Diff at Wed, 28 Jan 2026 12:02:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1768391906
+- current timestamp: 1769601687
+
+## Description
+
+Discovery rerun after cache override.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768391906 (main branch discovery), not current.
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.0:
+-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a"
++        "0x702c17f55cd06de3274ea8306900257e19dc09f5ffeb15cd67a6efb43a2354b6"
+    }
+```
+
+Generated with discovered.json: 0xdfede5fbc20b528757dcdbb1dee395cf6882af37
+
+# Diff at Fri, 09 Jan 2026 13:09:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dd6e980809c2759dbed94d65285ec8dc56d0e9c9 block: 1767717465
+- current timestamp: 1767717465
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767717465 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x615452db5467849689E98a8C5C242A96cF768a94) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout."
+    }
+```
+
+```diff
+    contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      description:
+-        "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system."
++        "Core rollup contract that manages the state of the rollup and its ZK fault proof system."
+    }
+```
+
+Generated with discovered.json: 0x03fdb537b5c34b130611311a139a3f72c06f05c7
 
 # Diff at Mon, 24 Nov 2025 11:36:54 GMT:
 

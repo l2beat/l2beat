@@ -1,4 +1,115 @@
-Generated with discovered.json: 0x9a1b89a190a9d2a13bde9d4a77025b1408703679
+Generated with discovered.json: 0xe2b1e4ff2e6002b46dce9bcb6d31930376563032
+
+# Diff at Mon, 26 Jan 2026 09:08:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048095
+- current timestamp: 1769272322
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/cyber/.flat/SaferSafes.sol        | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
+Generated with discovered.json: 0xbff0f61ea9fcd83a76fc6847e3f51bca3e3a8e97
+
+# Diff at Thu, 18 Dec 2025 08:56:22 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6cd29a835d734750c830e20a8c0a6b2f1cef086b block: 1765550447
+- current timestamp: 1766048095
+
+## Description
+
+upgrade to safe 1.4.1
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OpFoundationUpgradeSafe/Safe.sol}              | 685 ++++++++++++---------
+ 1 file changed, 410 insertions(+), 275 deletions(-)
+```
+
+Generated with discovered.json: 0x100cb465c5fbea8fa4e020430020ecd2ee5afb7d
+
+# Diff at Fri, 12 Dec 2025 16:19:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d2235ef7f5c90cb4a3a617fea7d52a655dc22fa1 block: 1764757255
+- current timestamp: 1765550447
+
+## Description
+
+Added game 42 to template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764757255 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game2000:
++        "eth:0x0000000000000000000000000000000000000000"
++++ severity: HIGH
+      values.game42:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initBondGame42:
++        0
+      fieldMeta.game2000:
++        {"severity":"HIGH"}
+      fieldMeta.game42:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x9d61aa72f957ff7b272aa292a2c5bc075937c7ba
 
 # Diff at Fri, 28 Nov 2025 09:49:22 GMT:
 

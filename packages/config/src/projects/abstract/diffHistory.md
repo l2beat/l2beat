@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x5685ca99aaa33357e47f7e6c0e2176ab45cbddf2
+
+# Diff at Tue, 27 Jan 2026 10:42:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ff7d808b2d664b70015c8fab467386a14a164e23 block: 1767003412
+- current timestamp: 1769510461
+
+## Description
+
+Upgraded the verifier to the latest version.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.9:
++        ["2026-01-26T21:45:23.000Z","0x8dacb39adb60b416058d5965b00fc4c83ec955ba60c160b0c766840b08584453",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        9
++        10
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051586
++        124554051587
+      values.getSemverProtocolVersion.2:
+-        2
++        3
+      values.getVerifier:
+-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3"
++        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../abstract/{.flat@1767003412 => .flat}/L1VerifierFflonk.sol     | 4 ++--
+ .../abstract/{.flat@1767003412 => .flat}/L1VerifierPlonk.sol      | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xeadf7381cbfdb0332860cfead19b5c235a8d5a56
+
+# Diff at Mon, 29 Dec 2025 10:17:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@515d3131558dba4f5723e3914cca96f65c2d38d1 block: 1763546038
+- current timestamp: 1767003412
+
+## Description
+
+EOA upgraded to Metamask 7702 Delegator.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x277D26a45Add5775F21256159F089769892CEa5B) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x277D26a45Add5775F21256159F089769892CEa5B","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x0c280748f58a36c72c3712dc2b0ca44220e01b7e3ce53a9439b40060839f257e","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0x05a2a658e91c49414c4db61fe9a3207654eb3d9d
+
+# Diff at Wed, 17 Dec 2025 14:34:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4d3bbb7da99046f2b087d4f716df0daccb09382b block: 1763546038
+- current timestamp: 1763546038
+
+## Description
+
+Config: Rename diamond.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763546038 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      name:
+-        "AbstractZkEvm"
++        "Diamond"
+    }
+```
+
 Generated with discovered.json: 0x96a6a301eadd93003cfcff11e51c8b1850962089
 
 # Diff at Wed, 19 Nov 2025 10:28:26 GMT:

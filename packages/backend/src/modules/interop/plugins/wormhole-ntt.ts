@@ -79,6 +79,10 @@ const parseReceivedRelayedMessage = createEventParser(
   'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)',
 )
 
+const parseReceivedMessage = createEventParser(
+  'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)',
+)
+
 export const TransceiverMessage = createInteropEventType<{
   sourceNttManagerAddress: string
   recipientNttManagerAddress: string
@@ -92,8 +96,16 @@ export const ReceivedRelayedMessage = createInteropEventType<{
   $srcChain: string
 }>('wormhole-ntt.ReceivedRelayedMessage')
 
+export const ReceivedMessage = createInteropEventType<{
+  digest: `0x${string}`
+  sourceChainId: number
+  sourceNttManagerAddress: `0x${string}`
+  sequence: bigint
+  $srcChain: string
+}>('wormhole-ntt.ReceivedMessage')
+
 export class WormholeNTTPlugin implements InteropPlugin {
-  name = 'wormhole-ntt'
+  readonly name = 'wormhole-ntt'
 
   constructor(private configs: InteropConfigStore) {}
 
@@ -131,21 +143,48 @@ export class WormholeNTTPlugin implements InteropPlugin {
         }),
       ]
     }
+
+    const receivedCore = parseReceivedMessage(input.log, null)
+    if (receivedCore) {
+      return [
+        ReceivedMessage.create(input, {
+          digest: receivedCore.digest,
+          sourceChainId: Number(receivedCore.sourceChainId),
+          sourceNttManagerAddress: receivedCore.sourceNttManagerAddress,
+          sequence: receivedCore.sequence,
+          $srcChain: findChain(
+            wormholeNetworks,
+            (x) => x.wormholeChainId,
+            Number(receivedCore.sourceChainId),
+          ),
+        }),
+      ]
+    }
   }
 
-  matchTypes = [ReceivedRelayedMessage]
+  matchTypes = [ReceivedRelayedMessage, ReceivedMessage]
   match(received: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    // Relayer path
     if (ReceivedRelayedMessage.checkType(received)) {
-      // find on DST WormholeRelayer.Delivery with the same digest, extract sequenceId
       const delivery = db.find(Delivery, {
         deliveryVaaHash: received.args.digest,
       })
       if (!delivery) return
 
       // find on SRC WormholeCore.LogMessagePublished and WormholeRelayer.SendEvent with the same sequenceId
+      const wormholeNetworks = this.configs.get(WormholeConfig)
+      if (!wormholeNetworks) return
+
+      // Find the relayer address for the source chain
+      const srcNetwork = wormholeNetworks.find(
+        (n) => n.wormholeChainId === delivery.args.sourceChain,
+      )
+      if (!srcNetwork?.relayer) return
+
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: delivery.args.sequence,
         wormholeChainId: delivery.args.sourceChain,
+        sender: srcNetwork.relayer,
       })
       if (!logMessagePublished) return
 
@@ -162,6 +201,22 @@ export class WormholeNTTPlugin implements InteropPlugin {
       })
       if (!sentTransceiverMessage) return
 
+      // Check if this is an M^0 Protocol index propagation message (not a token transfer)
+      const payloadPrefix = getPayloadPrefix(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )
+      if (payloadPrefix === M0IT_PREFIX) {
+        // M^0 Index messages are system state updates, not token transfers
+        return [
+          Result.Message('wormhole.Message', {
+            app: 'm0-index',
+            srcEvent: logMessagePublished,
+            dstEvent: delivery,
+          }),
+        ]
+      }
+
+      // Standard NTT token transfer
       const srcTokenAddress = decodeNTTManagerPayload(
         sentTransceiverMessage.args.nttManagerPayload,
       )?.sourceToken
@@ -176,7 +231,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
 
       return [
         Result.Message('wormhole.Message', {
-          app: 'wormhole-ntt', // NOTE: This isn't a real app, it's a mechanism for apps to use
+          app: 'wormhole-ntt-relayer',
           srcEvent: logMessagePublished,
           dstEvent: delivery,
         }),
@@ -195,6 +250,96 @@ export class WormholeNTTPlugin implements InteropPlugin {
         }),
       ]
     }
+
+    // Core path (without Wormhole Relayer)
+    if (ReceivedMessage.checkType(received)) {
+      const wormholeNetworks = this.configs.get(WormholeConfig)
+      if (!wormholeNetworks) return
+
+      const logMessagePublished = db.find(LogMessagePublished, {
+        sequence: received.args.sequence,
+        wormholeChainId: received.args.sourceChainId,
+      })
+      if (!logMessagePublished) return
+
+      const sentTransceiverMessage = db.find(TransceiverMessage, {
+        sameTxAfter: logMessagePublished,
+      })
+      if (!sentTransceiverMessage) return
+
+      // sourceNttManagerAddress in ReceivedMessage is actually the Transceiver address
+      const receivedTransceiverAddress = Address32.cropToEthereumAddress(
+        Address32.from(received.args.sourceNttManagerAddress),
+      ).toLowerCase()
+      const logMessageSender = logMessagePublished.args.sender.toLowerCase()
+      if (receivedTransceiverAddress !== logMessageSender) return
+
+      const payloadPrefix = getPayloadPrefix(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )
+      if (payloadPrefix === M0IT_PREFIX) {
+        return [
+          Result.Message('wormhole.Message', {
+            app: 'm0-index',
+            srcEvent: logMessagePublished,
+            dstEvent: received,
+          }),
+        ]
+      }
+
+      const srcTokenAddress = decodeNTTManagerPayload(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )?.sourceToken
+      const dstNTTAddress = Address32.cropToEthereumAddress(
+        Address32.from(sentTransceiverMessage.args.recipientNttManagerAddress),
+      ).toLowerCase()
+      const dstTokenAddress =
+        NTT_MANAGERS[sentTransceiverMessage.args.$dstChain]?.[dstNTTAddress]
+      const amount = decodeNTTManagerPayload(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )?.amount
+
+      return [
+        Result.Message('wormhole.Message', {
+          app: 'wormhole-ntt-core',
+          srcEvent: logMessagePublished,
+          dstEvent: received,
+        }),
+        Result.Transfer('wormhole-ntt.Transfer', {
+          extraEvents: [logMessagePublished],
+          srcEvent: sentTransceiverMessage,
+          dstEvent: received,
+          srcTokenAddress: srcTokenAddress
+            ? Address32.from(srcTokenAddress)
+            : undefined,
+          srcAmount: amount,
+          dstTokenAddress: dstTokenAddress
+            ? Address32.from(dstTokenAddress)
+            : undefined,
+          dstAmount: amount,
+        }),
+      ]
+    }
+  }
+}
+
+// M^0 Protocol uses the same Wormhole Transceiver to broadcast M Earning Index updates.
+// These have a different payload format (M0IT prefix) and are not token transfers.
+// See: https://docs.m0.org/home/technical-documentations/m-portal/overview/
+const M0IT_PREFIX = '4d304954' // "M0IT" in hex
+
+function getPayloadPrefix(payload: string): string | undefined {
+  try {
+    const reader = new BinaryReader(payload)
+    reader.readBytes(32) // id
+    reader.readBytes(32) // sender
+    const payloadLength = reader.readUint16()
+    if (payloadLength < 4) return undefined
+    const payloadData = reader.readBytes(payloadLength)
+    // First 4 bytes of inner payload is the prefix
+    return payloadData.slice(2, 10) // skip "0x", take 8 hex chars (4 bytes)
+  } catch {
+    return undefined
   }
 }
 

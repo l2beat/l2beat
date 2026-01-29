@@ -32,6 +32,8 @@ const upgradeDelay = discovery.getContractValue<number>(
   'approvedUpgradeNoticePeriod',
 )
 
+const finalizationPeriod = 0 // state root immediately finalized when proven
+
 export const lighter: ScalingProject = {
   id: ProjectId('lighter'),
   type: 'layer2',
@@ -40,7 +42,7 @@ export const lighter: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
     warning:
-      'Oct 8 2025: at the moment of writing, the circuits source code is not publicly available and therefore it is not possible to fully verify the business logic of the protocol. The team communicated to us that they plan to release them in the next 1-2 weeks.',
+      'Jan 5 2026: at the moment of writing, the desert mode circuits source code is not publicly available and therefore it is not possible to fully verify the escape hatch logic.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -77,12 +79,13 @@ export const lighter: ScalingProject = {
     apis: [],
   },
   config: {
+    associatedTokens: ['LIT'],
     escrows: [
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC'],
+        tokens: ['USDC', 'ETH', 'LIT', 'LINK', 'AAVE', 'UNI', 'SKY', 'LDO'],
       }),
     ],
     daTracking: [
@@ -90,12 +93,24 @@ export const lighter: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 21642011, // https://etherscan.io/tx/0x228496195e6c4a6cdbf9fc3c153cce0fb652e5aeee5a4f0a966b16257ebb34b9
+        untilBlock: 24040916,
         inbox: EthereumAddress('0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7'),
         sequencers: [
           EthereumAddress('0xfDb36C132fA19f7774d72fA39c89272D1B954A41'),
           EthereumAddress('0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa'),
           EthereumAddress('0xfcB73F6405F6B9be91013d9477d81833a69C9c0D'),
           EthereumAddress('0x1c0F4f6daf0E0f32C5482672fa5342784915df21'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 24040917, // https://etherscan.io/tx/0x61f50fb26d996bc13b8f528e2d29e723b29e80f5ae11358ac7bded4f735611d3
+        inbox: EthereumAddress('0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7'),
+        sequencers: [
+          EthereumAddress('0x191fF0EC830F83916A427d169a234c33e48aA79f'),
+          EthereumAddress('0x750bdb90AC72A78308d21eAC78999bBAE31cd63d'),
+          EthereumAddress('0xC0D2853e06F1E145177D5ef08Ab065a76e14354C'),
         ],
       },
     ],
@@ -152,7 +167,10 @@ export const lighter: ScalingProject = {
     },
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, priorityExpiration),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
@@ -225,6 +243,37 @@ export const lighter: ScalingProject = {
           {
             title: 'Lighter docs - Fair Price Marking',
             url: 'https://docs.lighter.xyz/perpetual-futures/fair-price-marking',
+          },
+        ],
+      },
+    ],
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid transactions to the previous state. This includes user transactions originating from L1 and L2, as well as internal transactions created by L2 operators. In the desert mode, valid proofs of exit must be generated. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          '[This repo](https://github.com/elliottech/lighter-prover/tree/main) contains the circuits and prover code for normal (i.e. non-desert) operation mode of Lighter. It includes the logic to generate and verify proofs of valid state transition according to the Lighter [matching engine](https://github.com/elliottech/lighter-prover/blob/d0ff2304aea516b22f3a5223881006b6a9af1cc9/circuit/src/matching_engine.rs).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'Lighter transition is proven with custom Plonky2 circuits, compiled into ZK Lighter Verifier and Desert Verifier. ZK Lighter verifier implements the perp DEX and spot trading logic and could be found in this [prover repo](https://github.com/elliottech/lighter-prover/tree/main/circuit/src). Desert verifier consists of circuits proving valid L2 -> L1 withdrawals in the desert mode. More details in [ZK Catalog](https://l2beat.com/zk-catalog/lighterprover#proof-system).',
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'Lighter wraps its validity proof into a Plonk-based proof system which requires a trusted setup. The verification keys are hardcoded in the verifier contract on-chain. Lighter prover repo contains a [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) that regenerates circuits and verification keys.',
+        references: [
+          {
+            title: 'ZK Lighter verifier verification keys',
+            url: 'https://etherscan.io/address/0x023B02ad3b8f9045595Ac7139FdBA643b562cfe3#code#F1#L54',
+          },
+          {
+            title: 'Desert verifier verification keys',
+            url: 'https://etherscan.io/address/0xd4460475F00307845082d3a146f36661354FBc67#code#F1#L39',
           },
         ],
       },

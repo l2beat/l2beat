@@ -77,9 +77,9 @@ const chartContainerClassNames = cn(
 
 export interface ChartProject {
   id: ProjectId
-  slug: string
   name: string
   shortName: string | undefined
+  iconUrl: string
 }
 
 function ChartContainer<T extends { timestamp: number }>({
@@ -197,17 +197,21 @@ function SimpleChartContainer({
   className,
   children,
   meta,
+  width,
+  height,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
+  width?: string | number | undefined
+  height?: string | number | undefined
 }) {
   return (
     <ChartContext.Provider value={{ meta }}>
       <div className={cn(chartContainerClassNames, className)} {...props}>
-        <RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer width={width} height={height}>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>

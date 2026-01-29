@@ -1,17 +1,16 @@
 import {
   assert,
-  type Block,
   Bytes,
   type EthereumAddress,
   type json,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import type { BlockClient, LogsClient } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import {
   type CallParameters,
@@ -21,6 +20,8 @@ import {
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  type EVMFeeHistory,
+  EVMFeeHistoryResponse,
   type EVMLog,
   EVMLogsResponse,
   EVMTransactionReceiptResponse,
@@ -35,6 +36,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  timeout?: number
 }
 
 type Param =
@@ -42,8 +44,9 @@ type Param =
   | number
   | boolean
   | Record<string, string | string[] | string[][]>
+  | number[]
 
-export class RpcClient extends ClientCore implements BlockClient, LogsClient {
+export class RpcClient extends ClientCore implements IRpcClient {
   multicallClient?: MulticallV3Client
 
   constructor(private readonly $: Dependencies) {
@@ -59,7 +62,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
-  ): Promise<Block> {
+  ): Promise<EVMBlockWithTransactions> {
     return await this.getBlock(blockNumber, true)
   }
 
@@ -205,6 +208,31 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
     return logsResponse.data.result
   }
 
+  async getFeeHistory(
+    blockCount: number,
+    newestBlock: number,
+    rewardPercentiles: number[],
+  ): Promise<EVMFeeHistory> {
+    const response = await this.query('eth_feeHistory', [
+      Quantity.encode(BigInt(blockCount)),
+      encodeBlockNumber(newestBlock),
+      rewardPercentiles,
+    ])
+
+    const feeHistory = EVMFeeHistoryResponse.safeParse(response)
+    if (!feeHistory.success) {
+      this.$.logger.warn('Invalid response', {
+        blockCount,
+        newestBlock,
+        rewardPercentiles,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing')
+    }
+
+    return feeHistory.data.result
+  }
+
   async call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
@@ -291,7 +319,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
         jsonrpc: '2.0',
       }),
       redirect: 'follow',
-      timeout: 10_000,
+      timeout: this.$.timeout ?? 10_000,
     })
   }
 
@@ -309,7 +337,7 @@ export class RpcClient extends ClientCore implements BlockClient, LogsClient {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(queries),
       redirect: 'follow',
-      timeout: 10_000, // Most RPCs respond in ~2s during regular conditions
+      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
     })
 
     const results = new Map(

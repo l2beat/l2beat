@@ -13,6 +13,21 @@ export function Page({ title, children, headerRight }: PageProps) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
+        <style>
+          {`
+            .group-summary::-webkit-details-marker {
+              display: none;
+            }
+            .group-details[open] .collapse-arrow {
+              transform: rotate(0deg);
+              transition: transform 0.2s;
+            }
+            .group-details:not([open]) .collapse-arrow {
+              transform: rotate(-90deg);
+              transition: transform 0.2s;
+            }
+          `}
+        </style>
       </head>
       <body
         style={{

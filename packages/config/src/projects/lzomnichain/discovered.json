@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
-  "timestamp": 1761552123,
-  "configHash": "0x820fc157b961cd2d0fa0f233b4915ff5b212924d4f49826643ad707decaaf35d",
+  "timestamp": 1768999132,
+  "configHash": "0xf26a1ee499e57c116f8d63faeca52556b1df9b81e4e590325ead9f1649437bc7",
   "entries": [
     {
       "name": "FPValidator",
@@ -333,7 +333,10 @@
           "367": 20,
           "370": 20,
           "377": 20,
-          "383": 20
+          "383": 20,
+          "390": 20,
+          "396": 20,
+          "398": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -705,6 +708,18 @@
           "383": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "390": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "396": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "398": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
         },
         "defaultAppConfig": {
@@ -918,7 +933,7 @@
           },
           "158": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 22499,
+            "inboundBlockConfirm": 22498,
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "eth:0x5a54fe5234E811466D5366846283323c954310B2",
@@ -1451,6 +1466,30 @@
             "outboundBlockConfirm": 15,
             "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
             "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "390": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 4,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "eth:0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "396": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 3,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "398": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 300,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+            "relayer": "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
           }
         },
         "endpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -1808,6 +1847,18 @@
           "383": [
             "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "390": [
+            "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "396": [
+            "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "398": [
+            "eth:0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
         },
         "layerZeroToken": "eth:0x0000000000000000000000000000000000000000",
@@ -1907,7 +1958,10 @@
           "367": [2],
           "370": [2],
           "377": [2],
-          "383": [2]
+          "383": [2],
+          "390": [2],
+          "396": [2],
+          "398": [2]
         },
         "treasuryContract": "eth:0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -2002,7 +2056,10 @@
           "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
           "370": "0x000000000000000000000000fd76d9cb0bac839725ab79127e7411fe71b1e3ca",
           "377": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "383": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "383": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "390": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "396": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "398": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "implementationNames": {
@@ -2022,7 +2079,7 @@
       "sinceBlock": 15719673,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "51075884258501360",
+        "circulatingSupply": "52059312473957556",
         "lzEndpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "eth:0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -2155,7 +2212,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1037,
+        "nonce": 1099,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2248,7 +2305,7 @@
       "values": {
         "$immutable": true,
         "cap": "100000000000000000000000",
-        "circulatingSupply": "8499047232244314743883",
+        "circulatingSupply": "5788303883453658960805",
         "DAY_INTERVAL": 86400,
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
@@ -2266,7 +2323,7 @@
         "PT_SET_ENABLE": 2,
         "symbol": "STONE",
         "token": "eth:0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "totalSupply": "14067892766868690733156",
+        "totalSupply": "10841203482496991309488",
         "useCustomAdapterParams": false
       },
       "implementationNames": {
@@ -2387,7 +2444,7 @@
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "273498849746357671133721348",
+        "circulatingSupply": "270992374494011098382371431",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2456,7 +2513,7 @@
         "paused": false,
         "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 1,
-        "signerSize": 4,
+        "signerSize": 5,
         "vid": 101,
         "workerFeeLib": "eth:0xa7b5189bcA84Cd304D8553977c7C614329750d99"
       },
@@ -2576,7 +2633,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 17,
+        "nonce": 202,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -2649,7 +2706,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 163,
+        "nonce": 164,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2710,7 +2767,7 @@
       "sinceBlock": 15584943,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "999976341290951924759741263",
+        "circulatingSupply": "999976343414999868722441263",
         "lzEndpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "eth:0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -3562,9 +3619,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "layerzero/DVN": "0x84673697f9119e45f3f6da142095c117a1b3326d2590baa81bb173042dacfe52",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
-  "usedBlockNumbers": { "ethereum": 23667461 },
+  "usedBlockNumbers": { "ethereum": 24283216 },
   "permissionsConfigHash": "0x426773a82f1f7d171763b8a3a331831f85ddaa8709c87eb1296b6597b8086dc6"
 }

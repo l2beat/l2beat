@@ -44,15 +44,13 @@ export function Head({ manifest, metadata }: HeadProps) {
       {env.DEPLOYMENT_ENV === 'production' && (
         <>
           <script
-            defer
-            data-domain="l2beat.com"
-            data-api="/plausible/event"
-            src="/plausible/script.js"
+            async
+            src="https://plausible.devops-035.workers.dev/static/processing/script.js"
           />
           <script
             dangerouslySetInnerHTML={{
               __html:
-                'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }',
+                'window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}}; plausible.init({ endpoint: "https://plausible.devops-035.workers.dev/api/processing/event" })',
             }}
           />
         </>

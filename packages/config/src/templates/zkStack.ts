@@ -22,9 +22,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -77,7 +77,6 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
-  diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -92,6 +91,7 @@ export interface ZkStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
+  chainId: number
   isUnderReview?: boolean
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
@@ -154,9 +154,32 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'ProtocolTimelockController',
     'getMinDelay',
   )
+
+  const diamondContract = templateVars.discovery.getContract('Diamond')
+
+  // chainid diamond address sanity check
+  const zkChainsChainIdArr = templateVars.discovery.getContractValue<number[]>(
+    'BridgeHub',
+    'getAllZKChainChainIDs',
+  )
+  const zkChainsAddressArr = templateVars.discovery.getContractValue<
+    ChainSpecificAddress[]
+  >('BridgeHub', 'getAllZKChains')
+
+  // Map chainId <-> diamond address
+  const chainIdToDiamondAddress: Record<number, ChainSpecificAddress> = {}
+  for (let i = 0; i < zkChainsChainIdArr.length; i++) {
+    chainIdToDiamondAddress[zkChainsChainIdArr[i]] = zkChainsAddressArr[i]
+  }
+
+  assert(
+    chainIdToDiamondAddress[templateVars.chainId] === diamondContract.address,
+    `Diamond address ${chainIdToDiamondAddress[templateVars.chainId]} does not match for the given chainId ${templateVars.chainId} in project ${templateVars.discovery.projectName}`,
+  )
+
   const settlesOnGateway =
     templateVars.discovery.getContractValue<string>(
-      templateVars.diamondContract.name ?? 'ZKsync',
+      diamondContract.name ?? 'ZKsync',
       'getSettlementLayer',
     ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
   let executionDelayS = templateVars.discovery.getContractValue<number>(
@@ -253,7 +276,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   )
 
   const l2BootloaderHash = templateVars.discovery.getContractValue<string>(
-    templateVars.diamondContract.address,
+    diamondContract.address,
     'getL2BootloaderBytecodeHash',
   )
 
@@ -526,7 +549,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           'EmergencyUpgradeBoard',
         ),
       ],
-      zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],
+      programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
     },
     stateDerivation:
       daProvider !== undefined

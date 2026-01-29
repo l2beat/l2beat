@@ -15,7 +15,6 @@ import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
-import { createPlausibleRouter } from './routers/PlausibleRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -48,7 +47,6 @@ export function createServer(logger: Logger) {
   app.use('/api/trpc', createTrpcRouter())
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
-  app.use('/plausible', createPlausibleRouter())
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')

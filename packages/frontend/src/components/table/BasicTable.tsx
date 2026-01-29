@@ -50,6 +50,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
    */
   insideMainPageCard?: boolean
   getHighlightId?: (ctx: T) => string
+  tableWrapperClassName?: string
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
@@ -71,7 +72,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   }
 
   return (
-    <Table>
+    <Table tableWrapperClassName={props.tableWrapperClassName}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader &&
@@ -284,6 +285,7 @@ export function BasicTableRow<T extends BasicTableRow>({
           <TableRow
             key={`additional-row-${additionalRowIndex}`}
             highlightId={highlightId}
+            className={getRowClassNames(row.original.backgroundColor)}
           >
             {row.getVisibleCells().map((cell, index) => {
               const additionalRows =
@@ -311,7 +313,11 @@ export function BasicTableRow<T extends BasicTableRow>({
                   {prevCell && prevCell.isLastInGroup && (
                     <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
                   )}
-                  <TableCell rowSpan={rowSpan} {...cellData?.props}>
+                  <TableCell
+                    rowSpan={rowSpan}
+                    {...cellData?.props}
+                    className={cn(cellData?.props.className, 'first:pl-0')}
+                  >
                     {additionalRow}
                   </TableCell>
                 </React.Fragment>
@@ -397,7 +403,9 @@ function BasicTableColumnFiller({
 export function getBasicTableGroupParams<T>(column: Column<T>) {
   if (!column.parent) return undefined
 
-  const leafColumns = column.parent.getLeafColumns()
+  const leafColumns = column.parent
+    .getLeafColumns()
+    .filter((c) => c.getIsVisible())
   const index = leafColumns.findIndex((c) => c.id === column.id)
   const isFirstInGroup = index !== undefined ? index === 0 : undefined
   const isLastInGroup = leafColumns

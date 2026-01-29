@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x42e38188f930bc5588a5ccbe498fe791beac5416
+
+# Diff at Wed, 14 Jan 2026 12:44:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e7f517859f6f313e4c82beba4300d1738b863a5d block: 1760538476
+- current timestamp: 1768394426
+
+## Description
+
+Ownership of the three Espresso TEE verifier contracts (EspressoSGXTEEVerifier, EspressoTEEVerifier, EspressoNitroTEEVerifier) was transferred from an EOA to a Safe multisig. 
+
+## Watched changes
+
+```diff
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.owner:
+-        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
++        "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/appchain/.flat/Safe/Safe.sol      | 1088 ++++++++++++++++++++
+ .../projects/appchain/.flat/Safe/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0xe26da9cf2a4225beb0fcf45d4b0ce609285c2a52
+
+# Diff at Mon, 05 Jan 2026 17:44:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1760538476
+- current timestamp: 1760538476
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760538476 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x27006db10506824c759f5f7fe7749667dbb41374
 
 # Diff at Tue, 04 Nov 2025 11:32:21 GMT:

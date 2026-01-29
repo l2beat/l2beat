@@ -1,7 +1,29 @@
-import type { Project } from '@l2beat/config'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
-import type { SearchBarProject } from '../types'
+import type {
+  Project,
+  ProjectContracts,
+  ProjectPermissions,
+} from '@l2beat/config'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { manifest } from '~/utils/Manifest'
+import type { SearchBarProjectEntry } from '../types'
 import { getSearchBarProjectKind } from './getSearchBarProjectKind'
+
+function extractProjectAddresses(
+  contracts: ProjectContracts | undefined,
+  permissions: Record<string, ProjectPermissions> | undefined,
+): EthereumAddress[] {
+  const contractAddresses = Object.values(contracts?.addresses ?? {})
+    .flat()
+    .map((c) => ChainSpecificAddress.address(c.address))
+
+  const permissionAddresses = Object.values(permissions ?? {})
+    .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
+    .flatMap((p) =>
+      p.accounts.map((a) => ChainSpecificAddress.address(a.address)),
+    )
+
+  return [...contractAddresses, ...permissionAddresses]
+}
 
 export function getSearchBarProjectEntries<
   T extends Project<
@@ -14,9 +36,11 @@ export function getSearchBarProjectEntries<
     | 'isBridge'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
+    | 'contracts'
+    | 'permissions'
   >,
->(project: T, allProjects: T[]) {
-  const results: SearchBarProject[] = []
+>(project: T, allProjects: T[]): SearchBarProjectEntry[] {
+  const results: SearchBarProjectEntry[] = []
   if (
     !project.isScaling &&
     !project.isBridge &&
@@ -32,11 +56,15 @@ export function getSearchBarProjectEntries<
     type: 'project',
     id: project.id,
     name: project.name,
-    iconUrl: getProjectIcon(project.slug),
+    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     kind: getSearchBarProjectKind(project),
     isUpcoming: false,
+    projectAddresses: extractProjectAddresses(
+      project.contracts,
+      project.permissions,
+    ),
     tags: [project.slug],
-  } satisfies Partial<SearchBarProject>
+  } satisfies Partial<SearchBarProjectEntry>
 
   if (project.isScaling) {
     results.push({

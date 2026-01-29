@@ -30,6 +30,7 @@ import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -42,6 +43,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectCustomDa,
@@ -183,6 +185,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
+  interopConfig?: InteropConfig
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -528,6 +531,7 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -821,6 +825,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
+    interopConfig: templateVars.interopConfig,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -946,10 +951,14 @@ function getRiskView(
       'validatorWhitelistDisabled',
     )
 
-  const theLeastRiskyDaProvider = daProviders.sort((dap1, dap2) =>
-    compareRisk(dap2.riskViewDA, dap1.riskViewDA),
-  )[0]
-  assert(theLeastRiskyDaProvider)
+  // For risk rosette, use the DA risk based on current sequencer commitment
+  // If posting to DAC (0x88), find DAC provider; otherwise use least risky
+  const currentDaProvider = postsToDAC(templateVars)
+    ? (daProviders.find((p) => p.layer === DA_LAYERS.DAC) ?? daProviders[0])
+    : daProviders.sort((dap1, dap2) =>
+        compareRisk(dap2.riskViewDA, dap1.riskViewDA),
+      )[0]
+  assert(currentDaProvider)
 
   return {
     stateValidation:
@@ -1002,10 +1011,10 @@ function getRiskView(
       })(),
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ??
-      theLeastRiskyDaProvider.riskViewDA,
+      currentDaProvider.riskViewDA,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      theLeastRiskyDaProvider.riskViewExitWindow,
+      currentDaProvider.riskViewExitWindow,
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -1110,35 +1119,29 @@ function getDAProviders(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  // Only add Celestia if NOT posting to DAC (sequencerVersion !== 0x88)
-  if (isUsingValidBlobstreamWmr && !postsToDAC(templateVars)) {
-    if (templateVars.celestiaProofSystemInactive) {
-      result.push({
-        riskViewDA: RISK_VIEW.DATA_CELESTIA(false),
-        riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(
-          0,
-          selfSequencingDelaySeconds,
-        ),
-        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-        layer: DA_LAYERS.CELESTIA,
-        bridge: DA_BRIDGES.NONE,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        badge: BADGES.DA.Celestia,
-      })
-    } else {
-      result.push({
-        riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
-        riskViewExitWindow: pickWorseRisk(
-          RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-          RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-        ),
-        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
-        layer: DA_LAYERS.CELESTIA,
-        bridge: DA_BRIDGES.BLOBSTREAM,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        badge: BADGES.DA.CelestiaBlobstream,
-      })
-    }
+  // Add Celestia if using valid Blobstream WMR (regardless of current sequencer commitment)
+  if (isUsingValidBlobstreamWmr) {
+    // Blobstream is only actively used when NOT posting to DAC (sequencerVersion !== 0x88)
+    // When posting to DAC, data goes to Celestia but commitment is through DAC, not Blobstream
+    const isUsingBlobstream =
+      !templateVars.celestiaProofSystemInactive && !postsToDAC(templateVars)
+    result.push({
+      riskViewDA: RISK_VIEW.DATA_CELESTIA(isUsingBlobstream),
+      riskViewExitWindow: isUsingBlobstream
+        ? pickWorseRisk(
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology:
+        TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(isUsingBlobstream),
+      layer: DA_LAYERS.CELESTIA,
+      bridge: isUsingBlobstream ? DA_BRIDGES.BLOBSTREAM : DA_BRIDGES.NONE,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: isUsingBlobstream
+        ? BADGES.DA.CelestiaBlobstream
+        : BADGES.DA.Celestia,
+    })
   }
 
   const isUsingEspressoSequencer =
@@ -1151,9 +1154,6 @@ function getDAProviders(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO &&
     !templateVars.discovery.hasContract('EspressoNitroTEEVerifier_neutered') // this one is here because of apechain, who deployed a backdoored TEE verifier
-
-  const isUsingEspressonAndDac =
-    isUsingEspressoSequencer && postsToDAC(templateVars)
 
   if (isUsingEspressoSequencer) {
     const isUsingLightClient = false
@@ -1174,24 +1174,42 @@ function getDAProviders(
     })
   }
 
-  if (result.length > 0 && !isUsingEspressonAndDac) {
-    return result
+  // Always add DAC if customDa is configured (for projects using multiple DA layers)
+  if (templateVars.customDa !== undefined) {
+    const DAC = templateVars.discovery.getContractValue<{
+      membersCount: number
+      requiredSignatures: number
+    }>('SequencerInbox', 'dacKeyset')
+
+    result.push({
+      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+      layer: DA_LAYERS.DAC,
+      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.DAC,
+    })
   }
 
-  const DAC = templateVars.discovery.getContractValue<{
-    membersCount: number
-    requiredSignatures: number
-  }>('SequencerInbox', 'dacKeyset')
+  // If no DA providers found yet, check for DAC as fallback
+  if (result.length === 0) {
+    const DAC = templateVars.discovery.getContractValue<{
+      membersCount: number
+      requiredSignatures: number
+    }>('SequencerInbox', 'dacKeyset')
 
-  result.push({
-    riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
-    riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-    technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
-    layer: DA_LAYERS.DAC,
-    bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    badge: BADGES.DA.DAC,
-  })
+    result.push({
+      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+      layer: DA_LAYERS.DAC,
+      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.DAC,
+    })
+  }
+
   return result
 }
 

@@ -1,23 +1,34 @@
 {
   "name": "sxt",
-  "timestamp": 1761642957,
-  "configHash": "0x7e16d62ce9530ec9600be56f0d3da1f5cd5fa7ada13b327d5d191513243df5db",
+  "timestamp": 1768995818,
+  "configHash": "0x3eca59a74aa7ade3900a85788b27002c317b0d4701cfd389c359a6f298d6c4d0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
-      "address": "eth:0x00A74411DDBC50C04353543d5D3f4296936DA645",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x067823401127CA6647481C68011805B90D42231E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x23ceC92F92bde95e401f0a2b50b072A6069dFBd5",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "L1VerifierFflonk",
+      "address": "eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911",
+      "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierFflonk",
+      "sourceHashes": [
+        "0xbdb60551820d621f81243ecaf8ec52d6fb937ab843ab674a3529b2bdefae7154"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "sinceTimestamp": 1754036951,
+      "sinceBlock": 23045043,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911": "L1VerifierFflonk"
+      }
     },
     {
       "address": "eth:0x2526B437560CF8dC1a706A87494996D48eDFb701",
@@ -32,17 +43,86 @@
       ]
     },
     {
-      "address": "eth:0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd",
-      "type": "EOA",
-      "proxyType": "EOA",
+      "name": "Caldera Multisig 3",
+      "address": "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-          "description": "set the conversion factor for gas token deposits.",
-          "role": ".tokenMultiplierSetter"
+          "from": "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680" }
+          ]
         }
-      ]
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1721713139,
+      "sinceBlock": 20367195,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+          "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+          "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
+          "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+          "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
+          "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
+          "eth:0x356000Cec4fC967f8FC372381D983426760A0391"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 48,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "L1VerifierPlonk",
+      "address": "eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6",
+      "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierPlonk",
+      "sourceHashes": [
+        "0xec6ace0c70a65bb3a520b16f88be2f013354490bc29572255ece332c9dbe2d14"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "sinceTimestamp": 1754036963,
+      "sinceBlock": 23045044,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
+      },
+      "implementationNames": {
+        "eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6": "L1VerifierPlonk"
+      }
     },
     {
       "name": "BridgeHub",
@@ -52,83 +132,14 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "address": "eth:0x34b6Ca118e1e665Ff4583c39615d864aD2C19c7A",
+      "name": "Caldera",
+      "address": "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "DualVerifier",
-      "address": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
-      "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
-      "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
-      ],
-      "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
-      "sinceTimestamp": 1747357991,
-      "sinceBlock": 22492297,
-      "values": {
-        "$immutable": true,
-        "FFLONK_VERIFIER": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
-        "PLONK_VERIFIER": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
-      },
-      "implementationNames": {
-        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": "DualVerifier"
-      }
-    },
-    {
-      "address": "eth:0x5b72e13f78FEB8f5b44392f2e32940D4f37FA313",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "L1VerifierPlonk",
-      "address": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
-      "sourceHashes": [
-        "0x4307e17da28c7b2fe29ba4658f25dec8e6611161bb60270d2ad04feb38988dc2"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "sinceTimestamp": 1747357979,
-      "sinceBlock": 22492296,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": "L1VerifierPlonk"
-      }
-    },
-    {
-      "address": "eth:0x5CA3F8EEBa12D83408fc097c2dAd79212456F20F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "RollupL1DAValidator",
-      "address": "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-      "type": "Reference",
-      "targetType": "Contract",
-      "targetProject": "shared-zk-stack"
-    },
-    {
-      "name": "zkVmDiamond",
-      "address": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
+      "name": "Diamond",
+      "address": "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
@@ -152,8 +163,8 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
-      "sinceTimestamp": 1744397327,
-      "sinceBlock": 22247594,
+      "sinceTimestamp": 1743800207,
+      "sinceBlock": 22198088,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -164,8 +175,8 @@
         ],
         "$pastUpgrades": [
           [
-            "2025-04-11T18:48:47.000Z",
-            "0xe2beab76f0b037d55d5bb75beca94db53fce7655340bf463e2f884aa600780fd",
+            "2025-04-04T20:56:47.000Z",
+            "0x16d2c7f565c946c7e7b8893092fe21693ee610a540d8e48d50ef672f94924dd0",
             [
               "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
               "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
@@ -174,8 +185,8 @@
             ]
           ],
           [
-            "2025-04-11T18:48:47.000Z",
-            "0xe2beab76f0b037d55d5bb75beca94db53fce7655340bf463e2f884aa600780fd",
+            "2025-04-04T20:56:47.000Z",
+            "0x16d2c7f565c946c7e7b8893092fe21693ee610a540d8e48d50ef672f94924dd0",
             [
               "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
               "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
@@ -184,8 +195,8 @@
             ]
           ],
           [
-            "2025-04-11T18:48:47.000Z",
-            "0xe2beab76f0b037d55d5bb75beca94db53fce7655340bf463e2f884aa600780fd",
+            "2025-04-04T20:56:47.000Z",
+            "0x16d2c7f565c946c7e7b8893092fe21693ee610a540d8e48d50ef672f94924dd0",
             [
               "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
               "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
@@ -194,8 +205,8 @@
             ]
           ],
           [
-            "2025-05-27T14:50:35.000Z",
-            "0x41608f3a9087d7437d7bfd8ef533217782493c95d5fa43762e45e4498bd05e21",
+            "2025-05-29T00:16:35.000Z",
+            "0xa7c0bbce514c44dc6dda571c09f6529ab28adde2b3e8274661b26d111b70a69a",
             [
               "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
               "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
@@ -204,8 +215,18 @@
             ]
           ],
           [
-            "2025-07-12T18:52:59.000Z",
-            "0x36697c871bb555b46ae5ca1aff3370b229c719fe883cf56edd1749c8ca4b3913",
+            "2025-09-25T21:09:59.000Z",
+            "0x300d4d863ea7ccc4d22738184d8aa72ce3a61125bf960d9dd658020b85a2471a",
+            [
+              "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
+              "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
+              "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
+              "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+            ]
+          ],
+          [
+            "2025-09-25T21:09:59.000Z",
+            "0x300d4d863ea7ccc4d22738184d8aa72ce3a61125bf960d9dd658020b85a2471a",
             [
               "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
               "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
@@ -214,9 +235,9 @@
             ]
           ]
         ],
-        "$upgradeCount": 5,
-        "baseTokenGasPriceMultiplierDenominator": 457,
-        "baseTokenGasPriceMultiplierNominator": 100000000,
+        "$upgradeCount": 6,
+        "baseTokenGasPriceMultiplierDenominator": 1,
+        "baseTokenGasPriceMultiplierNominator": 1,
         "facetAddresses": [
           "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
           "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
@@ -317,17 +338,17 @@
             "executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"
           ]
         },
-        "getAdmin": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-        "getBaseToken": "eth:0x0Df3a853e4B604fC2ac0881E9Dc92db27fF7f51b",
-        "getBaseTokenAssetId": "0x92267979499d1a2707827f9033b1cb3cb29a2580e94945942f6fdcfd44a6d836",
+        "getAdmin": "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680",
+        "getBaseToken": "eth:0x0000000000000000000000000000000000000001",
+        "getBaseTokenAssetId": "0x05e1c3ae4b9732444ae25217ac7666e46fa365fee1768de00c9fcb65532b7609",
         "getBridgehub": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getChainId": 2904,
+        "getChainId": 1217,
         "getChainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getDAValidatorPair": [
-          "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-          "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
+          "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
+          "eth:0xE2d2AFe5956F3bdA5514B46D8655aD7c744da780"
         ],
-        "getFirstUnprocessedPriorityTx": 14,
+        "getFirstUnprocessedPriorityTx": 8,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -336,22 +357,22 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x1bad31b0a3ce1e1fd3ba54afe97565fa73a3225a2f61492c822e00315c77dd71",
+        "getPriorityTreeRoot": "0x4b4d08da3da247bd81b591e40bd7b5fde085086c0688fac1511f714e6083a610",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 120259084288,
-        "getPubdataPricingMode": 0,
-        "getSemverProtocolVersion": [0, 28, 0],
+        "getProtocolVersion": 120259084289,
+        "getPubdataPricingMode": 1,
+        "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 38,
-        "getTotalBatchesExecuted": 38,
-        "getTotalBatchesVerified": 38,
-        "getTotalBlocksCommitted": 38,
-        "getTotalBlocksExecuted": 38,
-        "getTotalBlocksVerified": 38,
-        "getTotalPriorityTxs": 14,
+        "getTotalBatchesCommitted": 357,
+        "getTotalBatchesExecuted": 357,
+        "getTotalBatchesVerified": 357,
+        "getTotalBlocksCommitted": 357,
+        "getTotalBlocksExecuted": 357,
+        "getTotalBlocksVerified": 357,
+        "getTotalPriorityTxs": 8,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
-        "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
+        "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "recursionLeafLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -396,7 +417,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": "DiamondProxy",
+        "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24": "DiamondProxy",
         "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": "AdminFacet",
         "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": "GettersFacet",
         "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": "MailboxFacet",
@@ -414,6 +435,51 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ChainAdminOwnable",
+      "address": "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680",
+      "type": "Contract",
+      "template": "shared-zk-stack/ChainAdmin",
+      "sourceHashes": [
+        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
+      ],
+      "proxyType": "immutable",
+      "description": "A governance proxy that lets eth:0x2bf43034b9559643e986A2fE3cE015a18247b904 act through it.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        }
+      ],
+      "sinceTimestamp": 1743669035,
+      "sinceBlock": 22187207,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "tokenMultiplierSetter": "eth:0x0000000000000000000000000000000000000000",
+        "upgradeTimestamps": [
+          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 0 },
+          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 1758140714 }
+        ]
+      },
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
+      },
+      "implementationNames": {
+        "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680": "ChainAdminOwnable"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -426,7 +492,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
+          "from": "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -453,63 +519,29 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "Safe",
-      "address": "eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE",
+      "name": "AvailL1DAValidator",
+      "address": "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
       "type": "Contract",
-      "template": "GnosisSafe",
+      "template": "shared-zk-stack/AvailL1DAValidator",
       "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
       ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin",
-          "via": [
-            { "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1744030667,
-      "sinceBlock": 22217169,
+      "proxyType": "immutable",
+      "description": "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "sinceTimestamp": 1743696419,
+      "sinceBlock": 22189472,
       "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x067823401127CA6647481C68011805B90D42231E",
-          "eth:0x5CA3F8EEBa12D83408fc097c2dAd79212456F20F",
-          "eth:0x5b72e13f78FEB8f5b44392f2e32940D4f37FA313",
-          "eth:0x23ceC92F92bde95e401f0a2b50b072A6069dFBd5",
-          "eth:0x9850b4F631F1cae37bb1C42C8004ffc2Cd31DcBe",
-          "eth:0x00A74411DDBC50C04353543d5D3f4296936DA645",
-          "eth:0x34b6Ca118e1e665Ff4583c39615d864aD2C19c7A"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x7feed20eef486b77ad10a90cc0b7f8ccc7575ab46b6b56250fe65e3626a0fef1",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 7,
-        "VERSION": "1.4.1"
+        "$immutable": true,
+        "bridge": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+        "vectorx": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
       },
       "implementationNames": {
-        "eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+        "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": "AvailL1DAValidator"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "eth:0x9850b4F631F1cae37bb1C42C8004ffc2Cd31DcBe",
+      "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -521,70 +553,35 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "ChainAdminOwnable",
-      "address": "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD",
-      "type": "Contract",
-      "template": "shared-zk-stack/ChainAdmin",
-      "sourceHashes": [
-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
-      ],
-      "proxyType": "immutable",
-      "description": "A governance proxy that lets eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE act through it.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x742A28e22277945BBAAa34810393bf6e8512576C",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin"
-        }
-      ],
-      "sinceTimestamp": 1743708059,
-      "sinceBlock": 22190436,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "eth:0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd",
-        "upgradeTimestamps": [
-          { "_protocolVersion": 27, "_upgradeTimestamp": 1748264400 },
-          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1748264400 },
-          { "_protocolVersion": 120259084288, "_upgradeTimestamp": 1752159600 }
-        ]
-      },
-      "fieldMeta": {
-        "upgradeTimestamps": {
-          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        }
-      },
-      "implementationNames": {
-        "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD": "ChainAdminOwnable"
-      },
-      "category": { "name": "Governance", "priority": 3 }
+      "address": "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "L1VerifierFflonk",
-      "address": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
+      "name": "DualVerifier",
+      "address": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
       "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
+      "template": "shared-zk-stack/DualVerifier",
       "sourceHashes": [
-        "0xb5da71a3ae0b3e2d792830222a0478c730acc075103b898ec899436fcc04323b"
+        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
       ],
       "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "sinceTimestamp": 1747323275,
-      "sinceBlock": 22489437,
+      "description": "A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.",
+      "sinceTimestamp": 1754056487,
+      "sinceBlock": 23046660,
       "values": {
         "$immutable": true,
-        "verificationKeyHash": "0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7"
+        "FFLONK_VERIFIER": "eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911",
+        "PLONK_VERIFIER": "eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6",
+        "verificationKeyHash": "0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1"
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
         }
       },
       "implementationNames": {
-        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
+        "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A": "DualVerifier"
       }
     },
     {
@@ -600,6 +597,11 @@
       ]
     },
     {
+      "address": "eth:0xE2d2AFe5956F3bdA5514B46D8655aD7c744da780",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProtocolUpgradeHandler",
       "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "type": "Reference",
@@ -607,12 +609,33 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "address": "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
+      "address": "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
+    "eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
+    "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
     "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
@@ -717,53 +740,19 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    "eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24": [
+      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "error AddressHasNoCode(address)",
+      "error DelegateCallFailed(bytes returnData)",
+      "error FacetExists(bytes4 selector, address)",
+      "error NoFunctionsForDiamondCut()",
+      "error NonEmptyCalldata()",
+      "error RemoveFunctionFacetAddressNotZero(address facet)",
+      "error RemoveFunctionFacetAddressZero()",
+      "error ReplaceFunctionFacetAddressZero()",
+      "error SelectorsMustAllHaveSameFreezability()",
+      "error UndefinedDiamondCutAction()",
+      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
     "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
@@ -850,33 +839,27 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
-    ],
-    "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
-    "eth:0x742A28e22277945BBAAa34810393bf6e8512576C": [
-      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "error AddressHasNoCode(address)",
-      "error DelegateCallFailed(bytes returnData)",
-      "error FacetExists(bytes4 selector, address)",
-      "error NoFunctionsForDiamondCut()",
-      "error NonEmptyCalldata()",
-      "error RemoveFunctionFacetAddressNotZero(address facet)",
-      "error RemoveFunctionFacetAddressZero()",
-      "error ReplaceFunctionFacetAddressZero()",
-      "error SelectorsMustAllHaveSameFreezability()",
-      "error UndefinedDiamondCutAction()",
-      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
+    "eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680": [
+      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
+      "error NoCallsProvided()",
+      "error Unauthorized(address caller)",
+      "error ZeroAddress()",
+      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
+      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
+      "function acceptOwnership()",
+      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
+      "function renounceOwnership()",
+      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
+      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
+      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
+      "function tokenMultiplierSetter() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
@@ -913,8 +896,14 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "eth:0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE": [
-      "constructor(address _singleton)"
+    "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
+      "constructor(address _availBridge)",
+      "error InvalidAttestationProof()",
+      "error InvalidValidatorOutputHash()",
+      "function attestations(bytes32) view returns (address attester, uint32 blockNumber, uint128 leafIndex)",
+      "function bridge() view returns (address)",
+      "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function vectorx() view returns (address)"
     ],
     "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
@@ -967,35 +956,69 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
-    "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD": [
-      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
-      "error NoCallsProvided()",
-      "error Unauthorized(address caller)",
-      "error ZeroAddress()",
-      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
-      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
-      "function acceptOwnership()",
-      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
-      "function renounceOwnership()",
-      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
-      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
-      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
-      "function tokenMultiplierSetter() view returns (address)",
-      "function transferOwnership(address newOwner)"
+    "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A": [
+      "constructor(address _fflonkVerifier, address _plonkVerifier)",
+      "error EmptyProofLength()",
+      "error UnknownVerifierType()",
+      "function FFLONK_VERIFIER() view returns (address)",
+      "function PLONK_VERIFIER() view returns (address)",
+      "function verificationKeyHash() view returns (bytes32)",
+      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
+      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
     ],
-    "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
@@ -1003,6 +1026,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23674968 },
-  "permissionsConfigHash": "0x0e808c2cdda85c33c7c1b5772eed63df6fcf8ac3ef19ee587834fe5c1bc2daaa"
+  "usedBlockNumbers": { "ethereum": 24282940 },
+  "permissionsConfigHash": "0xf77143f235f40fd63a0709f9fb69ab931a3837dba8d3f3e89189129a53d14e89"
 }

@@ -8,6 +8,26 @@ import {
   type ProcessorsStatus,
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
+import { ShortenedHash } from './ShortenedHash'
+
+function BooleanCell({
+  value,
+  trueLabel,
+  falseLabel,
+}: {
+  value: boolean | undefined
+  trueLabel: string
+  falseLabel: string
+}) {
+  if (value === undefined) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+  return (
+    <span style={{ color: value ? '#e67e22' : '#3498db' }}>
+      {value ? trueLabel : falseLabel}
+    </span>
+  )
+}
 
 function TransfersTable(props: {
   transfers: InteropTransferRecord[]
@@ -17,12 +37,15 @@ function TransfersTable(props: {
     <table id="myTable" className="display">
       <thead>
         <tr>
+          <th>Plugin</th>
           <th>Timestamp UTC</th>
           <th>Duration</th>
           <th>srcToken</th>
           <th>srcValue</th>
+          <th>srcBurned</th>
           <th>dstToken</th>
           <th>dstValue</th>
+          <th>dstMinted</th>
           <th>srcChain</th>
           <th>srcTx</th>
           <th>srcToken</th>
@@ -40,6 +63,7 @@ function TransfersTable(props: {
             <tr
               key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
             >
+              <td>{e.plugin}</td>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
@@ -49,9 +73,23 @@ function TransfersTable(props: {
               </td>
               <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
               <td>
+                <BooleanCell
+                  value={e.srcWasBurned}
+                  trueLabel="burned"
+                  falseLabel="locked"
+                />
+              </td>
+              <td>
                 {e.dstAmount} {e.dstSymbol}
               </td>
               <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
+              <td>
+                <BooleanCell
+                  value={e.dstWasMinted}
+                  trueLabel="minted"
+                  falseLabel="released"
+                />
+              </td>
               <td>{e.srcChain}</td>
               <td>
                 {srcExplorerUrl ? (
@@ -59,10 +97,10 @@ function TransfersTable(props: {
                     target="_blank"
                     href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
                   >
-                    {e.srcTxHash}
+                    <ShortenedHash hash={e.srcTxHash} />
                   </a>
                 ) : (
-                  e.srcTxHash
+                  <ShortenedHash hash={e.srcTxHash} />
                 )}
               </td>
               <td>
@@ -78,10 +116,10 @@ function TransfersTable(props: {
                     target="_blank"
                     href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
                   >
-                    {e.dstTxHash}
+                    <ShortenedHash hash={e.dstTxHash} />
                   </a>
                 ) : (
-                  e.dstTxHash
+                  <ShortenedHash hash={e.dstTxHash} />
                 )}
               </td>
               <td>
@@ -117,12 +155,10 @@ function TokenAddress({
   if (!explorerUrl) {
     return null
   }
+  const ethAddress = Address32.cropToEthereumAddress(Address32(address))
   return (
-    <a
-      target="_blank"
-      href={`${explorerUrl}/address/${Address32.cropToEthereumAddress(Address32(address))}`}
-    >
-      {Address32.cropToEthereumAddress(Address32(address))}
+    <a target="_blank" href={`${explorerUrl}/address/${ethAddress}`}>
+      <ShortenedHash hash={ethAddress} />
     </a>
   )
 }

@@ -52,7 +52,7 @@ export function LivenessChartStats({
     ),
     !isArchived && (
       <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
-        {env.CLIENT_SIDE_BIG_QUERY_OUTAGE ? (
+        {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE ? (
           <NoDataBadge />
         ) : (
           <AnomalyIndicator

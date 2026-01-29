@@ -1,39 +1,37 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  DA_BRIDGES,
-  DA_LAYERS,
-  DA_MODES,
-  REASON_FOR_BEING_OTHER,
-  RISK_VIEW,
-} from '../../common'
-import { BADGES } from '../../common/badges'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import {
-  generateDiscoveryDrivenContracts,
-  generateDiscoveryDrivenPermissions,
-} from '../../templates/generateDiscoveryDrivenSections'
-import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { agglayer } from '../../templates/agglayer'
 
 const discovery = new ProjectDiscovery('forknet')
 const bridge = discovery.getContract('AgglayerBridge')
 
-export const forknet: ScalingProject = {
+const opgenesisTimestamp = UnixTime(1756159379)
+
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+
+const inboxStartBlock =
+  discovery.getContractValueOrUndefined<number>('SystemConfig', 'startBlock') ??
+  0
+
+const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
+
+// const disputeGameFactory = discovery.getContract('DisputeGameFactory')
+
+export const forknet: ScalingProject = agglayer({
   capability: 'universal',
   addedAt: UnixTime(1756724480), // 2025-09-01T12:01:20Z
-  proofSystem: undefined,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  badges: [BADGES.DA.CustomDA, BADGES.Infra.Agglayer],
-  id: ProjectId('forknet'),
-  type: 'layer2',
   display: {
     name: 'Forknet',
     slug: 'forknet',
     description:
       'An onchain order book DEX for spot and perpetuals, built on CDK OP Stack and natively integrated with Agglayer for unified liquidity.',
-    purposes: ['Universal'],
     stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://forknet.io/'],
@@ -41,9 +39,6 @@ export const forknet: ScalingProject = {
       explorers: ['https://forkscan.org'],
       socialMedia: ['https://x.com/forknet_io'],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('agglayer'),
   },
   chainConfig: {
     name: 'forknet',
@@ -58,82 +53,19 @@ export const forknet: ScalingProject = {
       },
     ],
   },
-  config: {
-    escrows: [
-      discovery.getEscrowDetails({
-        address: bridge.address,
-        tokens: '*',
-        sinceTimestamp: UnixTime(1756893611),
-        sharedEscrow: {
-          type: 'AggLayer',
-          nativeAsset: 'etherPreminted',
-          premintedAmount: '340282366920938463463374607431768211455',
-        },
-      }),
-    ],
-    activityConfig: {
-      type: 'block',
-      startBlock: 1,
-      adjustCount: { type: 'SubtractOne' },
-    },
-  },
-  dataAvailability: {
-    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  },
-  riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
-      description:
-        "Currently the system permits invalid state roots. 'Pessimistic' proofs only validate the bridge accounting.",
-    },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-  },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  technology: {
-    otherConsiderations: [
-      {
-        name: 'Shared bridge and Pessimistic Proofs',
-        description:
-          "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign' and aggchains). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum or custom proof systems are able to share the bridge with the zkEVM Agglayer projects.",
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
-          },
-          {
-            category: 'Funds can be stolen if',
-            text: 'the operator manipulates the L2 state, which is not validated on Ethereum.',
-            isCritical: true,
-          },
-        ],
-        references: [
-          {
-            title: 'Pessimistic Proof - Polygon Knowledge Layer',
-            url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
-          },
-          {
-            title:
-              'Etherscan: AgglayerManager.sol - verifyPessimisticTrustedAggregator() function',
-            url: 'https://etherscan.io/address/0x15cAF18dEd768e3620E0f656221Bf6B400ad2618#code#F1#L1300',
-          },
-        ],
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: bridge.address,
+      tokens: '*',
+      sinceTimestamp: UnixTime(1756893611),
+      sharedEscrow: {
+        type: 'AggLayer',
+        nativeAsset: 'etherPreminted',
+        premintedAmount: '340282366920938463463374607431768211455',
       },
-    ],
-  },
-  permissions: generateDiscoveryDrivenPermissions([discovery]),
-  contracts: {
-    addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: getPessimisticVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
-  },
-  discoveryInfo: getDiscoveryInfo([discovery]),
+    }),
+  ],
+  usesEthereumBlobs: true,
   milestones: [
     {
       title: 'Forknet Launch',
@@ -143,15 +75,43 @@ export const forknet: ScalingProject = {
       type: 'general',
     },
   ],
-}
-function getPessimisticVKeys(): string[] {
-  type ProgramHashDict = Record<string, Record<string, string>[]>
-  const pessimisticVKeyDict = discovery.getContractValue<ProgramHashDict>(
-    'AgglayerGateway',
-    'routes',
-  )
-  // Iterate over all selectors, each of the selectors could be used as it is set in calldata
-  return Object.values(pessimisticVKeyDict).flatMap((arr) =>
-    arr.map((el) => el['pessimisticVKey']),
-  )
-}
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: ChainSpecificAddress.address(sequencer),
+        to: ChainSpecificAddress.address(sequencerInbox),
+        sinceTimestamp: opgenesisTimestamp,
+      },
+    },
+    // does not post state updates for whatever reason
+    // {
+    //   uses: [
+    //     { type: 'liveness', subtype: 'stateUpdates' },
+    //     { type: 'l2costs', subtype: 'stateUpdates' },
+    //   ],
+    //   query: {
+    //     formula: 'functionCall',
+    //     address: ChainSpecificAddress.address(disputeGameFactory.address),
+    //     selector: '0x82ecf2f6',
+    //     functionSignature:
+    //       'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+    //     sinceTimestamp: opgenesisTimestamp,
+    //   },
+    // },
+  ],
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: inboxStartBlock,
+      inbox: ChainSpecificAddress.address(sequencerInbox),
+      sequencers: [ChainSpecificAddress.address(sequencer)],
+    },
+  ],
+  discovery,
+})

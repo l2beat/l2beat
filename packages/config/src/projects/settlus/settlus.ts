@@ -32,7 +32,7 @@ export const settlus: ScalingProject = opStackL2({
       repositories: ['https://github.com/settlus'],
       socialMedia: [
         'https://x.com/Settlusofficial',
-        'https://github.com/settlus',
+        'https://medium.com/@settlus_official',
       ],
     },
   },

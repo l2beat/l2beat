@@ -5,7 +5,7 @@ import type {
 } from '../../engine/compare/InteropCompareLoop'
 
 export class AcrossComparePlugin implements InteropComparePlugin {
-  name = 'across'
+  readonly name = 'across'
 
   async getExternalItems(): Promise<InteropExternalItem[]> {
     const http = new HttpClient()

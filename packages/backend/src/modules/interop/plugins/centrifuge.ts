@@ -71,7 +71,7 @@ export const HandleProof = createInteropEventType<{
 }>('centrifuge.HandleProof')
 
 export class CentriFugePlugin implements InteropPlugin {
-  name = 'centrifuge'
+  readonly name = 'centrifuge'
 
   capture(input: LogToCapture) {
     const parsedSendPayload = parseSendPayload(input.log, null)
@@ -158,7 +158,7 @@ export class CentriFugePlugin implements InteropPlugin {
       if (!contractCall) return
 
       return [
-        Result.Message('axelar.ContractCallMessage', {
+        Result.Message('axelar.Message', {
           app: 'centrifuge',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,

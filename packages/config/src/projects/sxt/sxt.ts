@@ -1,4 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -7,10 +13,11 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1744071776) // 2025-04-07T19:22:56Z
 const chainId = 1217
 const discovery = new ProjectDiscovery('sxt')
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.AvailVector],
   display: {
     name: 'Space and Time',
     slug: 'sxt',
@@ -23,7 +30,7 @@ export const sxt: ScalingProject = zkStackL2({
       explorers: ['https://spaceandtime.calderaexplorer.xyz'],
       repositories: ['https://github.com/spaceandtimelabs'],
       socialMedia: [
-        'https://x.com/SpaceandTimeDB',
+        'https://x.com/spaceandtime',
         'https://discord.com/invite/spaceandtimeDB',
         'https://linkedin.com/company/space-and-time-db/',
         'https://youtube.com/channel/UCXJyE7ahmqCH11aO7L76PBA',
@@ -35,6 +42,24 @@ export const sxt: ScalingProject = zkStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
+  },
+  daProvider: {
+    layer: DA_LAYERS.AVAIL,
+    riskView: RISK_VIEW.DATA_AVAIL(true),
+    technology: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
+      references: [
+        {
+          title: 'AvailL1DAValidator - checkDA() function',
+          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
+        },
+      ],
+    },
+    bridge: DA_BRIDGES.VECTOR,
+  },
+  availDa: {
+    appIds: ['34'],
+    sinceBlock: 1185587,
   },
   nonTemplateTrackedTxs: [
     {
@@ -80,6 +105,7 @@ export const sxt: ScalingProject = zkStackL2({
       },
     },
   ],
+  chainId,
   chainConfig: {
     name: 'sxt',
     chainId,
@@ -93,8 +119,26 @@ export const sxt: ScalingProject = zkStackL2({
       },
     ],
   },
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: bridge.address,
+      tokens: ['ETH'], // ran the generate script with '*' and it only found ETH, which looks correct
+      description:
+        'Shared bridge for depositing tokens to various ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChain',
+        // their explorer shows this as EOA but i took 1h to get it from tenderly traces on L1
+        // and it is the only address that works so far for a post-gateway deployed chain
+        l2BridgeAddress: EthereumAddress(
+          '0x0000000000000000000000000000000000010003',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x000000000000000000000000000000000000800A',
+        ),
+      },
+    }),
+  ],
   discovery,
-  diamondContract: discovery.getContract('zkVmDiamond'),
   milestones: [
     {
       title: 'Mainnet Launch',

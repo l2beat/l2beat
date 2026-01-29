@@ -23,7 +23,11 @@ export const socket: Bridge = {
         'https://github.com/SocketDotTech/socket-plugs/tree/main/contracts/bridge',
       ],
       documentation: ['https://developer.socket.tech/Learn/protocol-design'],
-      socialMedia: ['https://twitter.com/SocketProtocol'],
+      socialMedia: [
+        'https://twitter.com/SocketProtocol',
+        'https://discord.com/invite/rJRdqEtN4P',
+        'https://t.me/TheSocketProtocol',
+      ],
     },
     description:
       'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol.',
@@ -47,7 +51,18 @@ export const socket: Bridge = {
     },
   },
   technology: {
-    destination: ['Ethereum', 'Reya', 'Lyra', 'Kinto', 'Polynomial', 'Blast'],
+    // tracking superbrigde destinations https://github.com/SocketDotTech/socket-plugs/tree/main/deployments/superbridge
+    destination: [
+      'Ethereum',
+      'Reya',
+      'Lyra',
+      'Kinto',
+      'Polynomial',
+      'Blast',
+      'Winr',
+      'Aevo',
+      'SX Network',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description:

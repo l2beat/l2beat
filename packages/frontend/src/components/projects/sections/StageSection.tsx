@@ -25,6 +25,8 @@ import { MissingIcon } from '~/icons/Missing'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import { UnderReviewIcon } from '~/icons/UnderReview'
+import { WalkAwayNotPassedIcon } from '~/icons/WalkAwayNotPassed'
+import { WalkAwayPassedIcon } from '~/icons/WalkAwayPassed'
 import { ChevronIcon } from '../../../icons/Chevron'
 import { StageBadge } from '../../badge/StageBadge'
 import { Callout } from '../../Callout'
@@ -48,6 +50,7 @@ export interface StageSectionProps extends ProjectSectionProps {
       }
     | undefined
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  walkAway?: 'passed' | 'not-passed'
 }
 
 export function StageSection({
@@ -59,6 +62,7 @@ export function StageSection({
   additionalConsiderations,
   scopeOfAssessment,
   emergencyWarning,
+  walkAway,
   ...sectionProps
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
@@ -92,7 +96,7 @@ export function StageSection({
         <Callout
           color="yellow"
           body={emergencyWarning}
-          icon={<EmergencyIcon className="mt-0.5 size-5" />}
+          icon={<EmergencyIcon className="mt-px size-5" />}
           className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
         />
       )}
@@ -116,6 +120,36 @@ export function StageSection({
           <span> {notEvenAStage0 ? 'project' : type}</span>.
         </div>
       </span>
+      {walkAway === 'passed' && (
+        <Callout
+          color="green"
+          body={
+            <>
+              <strong>The project passes the walkaway test</strong>: users can
+              exit in the presence of malicious operators even if the Security
+              Council disappears.
+            </>
+          }
+          icon={<WalkAwayPassedIcon className="mt-px size-5 fill-positive" />}
+          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
+        />
+      )}
+      {walkAway === 'not-passed' && (
+        <Callout
+          color="red"
+          body={
+            <>
+              <strong>The project does not pass the walkaway test</strong>:{' '}
+              users are not able to exit in the presence of malicious operators
+              if the Security Council disappears.
+            </>
+          }
+          icon={
+            <WalkAwayNotPassedIcon className="mt-0.5 size-5 fill-negative" />
+          }
+          className="mb-2 p-3 font-medium text-paragraph-14 md:p-4 md:text-paragraph-16"
+        />
+      )}
       {scopeOfAssessment && (
         <ScopeOfAssessment
           className="mb-2"

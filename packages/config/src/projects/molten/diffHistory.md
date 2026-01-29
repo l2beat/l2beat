@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x417d6417b4c745649bad67a94722a087747b62ee
+
+# Diff at Mon, 05 Jan 2026 17:44:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c679543996c33dd4145a38ea0d7fccd3b24d8951 block: 1765368962
+- current timestamp: 1765368962
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765368962 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xcb61c2e515c7f98f5a7b7b06a94d3342edd3fbe0
+
+# Diff at Wed, 10 Dec 2025 12:17:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87479478fee0d2fb1eb3c2a36f88a2ceeb4087df block: 1763554833
+- current timestamp: 1765368962
+
+## Description
+
+Added EOA to manage permissions (in addition to Caldera multisig).
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13"
+      values.executors.1:
++        "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13"
+    }
+```
+
 Generated with discovered.json: 0x3a93605e0b4c4911948c277c64c4e436c714525e
 
 # Diff at Wed, 19 Nov 2025 12:21:38 GMT:

@@ -15,6 +15,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { scroll } from '../scroll/scroll'
 
 const discovery = new ProjectDiscovery('intmax')
+const finalizationPeriod = 0 // state root immediately finalized when proven
 
 export const intmax: ScalingProject = {
   type: 'layer3',
@@ -38,7 +39,10 @@ export const intmax: ScalingProject = {
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
       ],
       repositories: ['https://github.com/InternetMaximalism'],
-      socialMedia: ['https://twitter.com/intmaxIO'],
+      socialMedia: [
+        'https://twitter.com/intmaxIO',
+        'https://discord.com/invite/TGMctchPR6',
+      ],
       bridges: ['https://app.intmax.io/bridge'],
     },
   },
@@ -140,7 +144,10 @@ export const intmax: ScalingProject = {
   },
 
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:
@@ -152,7 +159,10 @@ export const intmax: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stackedRiskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_SN,
+      executionDelay: finalizationPeriod,
+    },
     dataAvailability: {
       value: 'Self custodied',
       description:

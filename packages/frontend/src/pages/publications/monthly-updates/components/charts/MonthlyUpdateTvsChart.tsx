@@ -37,7 +37,7 @@ export function MonthlyUpdateTvsChart({
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: [from, to],
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens: true,
     filter: {
       type: 'projects',
       projectIds: entries,

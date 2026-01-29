@@ -17,8 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -59,7 +59,7 @@ export const katana: ScalingProject = {
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
     stacks: ['Agglayer CDK', 'OP Stack'],
-    upgradesAndGovernanceImage: 'agglayer-algateway',
+    upgradesAndGovernanceImage: 'agglayer',
     links: {
       websites: ['https://katana.network/'],
       bridges: [
@@ -355,7 +355,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         text: 'the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
-    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [

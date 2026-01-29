@@ -296,7 +296,7 @@ export function DATA_EIGENDA(
     description:
       'Proof construction and state derivation fully rely on data that is posted on EigenDA.' +
       additional,
-    sentiment: 'bad',
+    sentiment: isUsingDACertVerifier ? 'warning' : 'bad',
   }
 }
 

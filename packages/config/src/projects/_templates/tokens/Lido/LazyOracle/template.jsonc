@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "latestReportData",
+    "latestReportTimestamp",
+    "vaultsCount"
+  ]
+}

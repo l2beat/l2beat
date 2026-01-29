@@ -1,7 +1,7 @@
 {
   "name": "soneium",
-  "timestamp": 1764933869,
-  "configHash": "0xdaebced3259ad88018897cb3ac758939cdf92adc9dae611e2122ee0433559585",
+  "timestamp": 1769272398,
+  "configHash": "0x47dfa3bebf46f1dcd9bc8146be175446998b617fdae230997a42f72142568732",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -424,7 +424,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 84,
+        "nonce": 93,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -602,7 +602,9 @@
         ],
         "$upgradeCount": 5,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 4441,
+        "game2000": "eth:0x0000000000000000000000000000000000000000",
+        "game42": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 5043,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0ddf929eeda8949CfE77b7e7e46e426E15A2D8f1",
@@ -612,17 +614,20 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
+        "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 4441,
+        "permissionedGamesTotal": 5043,
         "proxyAdmin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "1.3.0"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
-        "game1337": { "severity": "HIGH" }
+        "game1337": { "severity": "HIGH" },
+        "game2000": { "severity": "HIGH" },
+        "game42": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0": "Proxy",
@@ -1220,7 +1225,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1252,7 +1257,7 @@
       "sinceBlock": 19185544,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -1265,14 +1270,16 @@
         "$threshold": 5,
         "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
         "getChainId": 1,
-        "GnosisSafe_modules": [],
+        "GnosisSafe_modules": [
+          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+        ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 47,
-        "VERSION": "1.3.0"
+        "nonce": 49,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -1334,8 +1341,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 23946400
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 24305724
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1533,7 +1540,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1548,7 +1555,7 @@
       "sinceBlock": 11670007,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
           "eth:0x3041BA32f451F5850c147805F5521AC206421623",
@@ -1559,17 +1566,18 @@
           "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "$threshold": 5,
-        "domainSeparator": "0x4e6a6554de0308f5ece8ff736beed8a1b876d16f5c27cac8e466d7de0c703890",
-        "getModules": [],
-        "GnosisSafe_modules": [],
+        "domainSeparator": "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76",
+        "getChainId": 1,
+        "GnosisSafe_modules": [
+          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+        ],
         "multisigThreshold": "5 of 7 (71%)",
-        "NAME": "Gnosis Safe",
-        "nonce": 112,
-        "VERSION": "1.1.1"
+        "nonce": 114,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "Proxy",
-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -1632,7 +1640,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292682690",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292685223",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1659,6 +1667,59 @@
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "SaferSafes",
+      "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
+      "type": "Contract",
+      "template": "gnosisSafeModules/SaferSafes",
+      "sourceHashes": [
+        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
+      ],
+      "proxyType": "immutable",
+      "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x0ddf929eeda8949CfE77b7e7e46e426E15A2D8f1",
+          "role": ".challenger",
+          "via": [
+            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            },
+            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "role": ".GnosisSafe_modules"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1764596735,
+      "sinceBlock": 23919014,
+      "values": { "$immutable": true, "version": "1.10.1" },
+      "implementationNames": {
+        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": "SaferSafes"
+      }
     },
     {
       "address": "eth:0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
@@ -2243,51 +2304,6 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedMasterCopy(address masterCopy)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeMasterCopy(address _masterCopy)",
-      "function changeThreshold(uint256 _threshold)",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getMessageHash(bytes message) view returns (bytes32)",
-      "function getModules() view returns (address[])",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isOwner(address owner) view returns (bool)",
-      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signMessage(bytes _data)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -2750,6 +2766,66 @@
     "eth:0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f": [
       "constructor(address _addressManager, string _implementationName)"
     ],
+    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": [
+      "error LivenessModule2_ChallengeAlreadyExists()",
+      "error LivenessModule2_ChallengeDoesNotExist()",
+      "error LivenessModule2_InvalidFallbackOwner()",
+      "error LivenessModule2_InvalidResponsePeriod()",
+      "error LivenessModule2_InvalidVersion()",
+      "error LivenessModule2_ModuleNotConfigured()",
+      "error LivenessModule2_ModuleNotEnabled()",
+      "error LivenessModule2_ModuleStillEnabled()",
+      "error LivenessModule2_OwnershipTransferFailed()",
+      "error LivenessModule2_ResponsePeriodActive()",
+      "error LivenessModule2_ResponsePeriodEnded()",
+      "error LivenessModule2_UnauthorizedCaller()",
+      "error SaferSafes_InsufficientLivenessResponsePeriod()",
+      "error SemverComp_InvalidSemverParts()",
+      "error TimelockGuard_GuardNotConfigured()",
+      "error TimelockGuard_GuardNotEnabled()",
+      "error TimelockGuard_GuardStillEnabled()",
+      "error TimelockGuard_InvalidTimelockDelay()",
+      "error TimelockGuard_InvalidVersion()",
+      "error TimelockGuard_NotOwner()",
+      "error TimelockGuard_TransactionAlreadyCancelled()",
+      "error TimelockGuard_TransactionAlreadyExecuted()",
+      "error TimelockGuard_TransactionAlreadyScheduled()",
+      "error TimelockGuard_TransactionNotReady()",
+      "error TimelockGuard_TransactionNotScheduled()",
+      "event CancellationThresholdUpdated(address indexed safe, uint256 oldThreshold, uint256 newThreshold)",
+      "event ChallengeCancelled(address indexed safe)",
+      "event ChallengeStarted(address indexed safe, uint256 challengeStartTime)",
+      "event ChallengeSucceeded(address indexed safe, address fallbackOwner)",
+      "event GuardConfigured(address indexed safe, uint256 timelockDelay)",
+      "event Message(string message)",
+      "event ModuleCleared(address indexed safe)",
+      "event ModuleConfigured(address indexed safe, uint256 livenessResponsePeriod, address fallbackOwner)",
+      "event TransactionCancelled(address indexed safe, bytes32 indexed txHash)",
+      "event TransactionExecuted(address indexed safe, bytes32 indexed txHash)",
+      "event TransactionScheduled(address indexed safe, bytes32 indexed txHash, uint256 executionTime)",
+      "function cancelTransaction(address _safe, bytes32 _txHash, uint256 _nonce, bytes _signatures)",
+      "function cancellationThreshold(address _safe) view returns (uint256)",
+      "function challenge(address _safe)",
+      "function challengeStartTime(address) view returns (uint256)",
+      "function changeOwnershipToFallback(address _safe)",
+      "function checkAfterExecution(bytes32 _txHash, bool _success)",
+      "function checkTransaction(address _to, uint256 _value, bytes _data, uint8 _operation, uint256 _safeTxGas, uint256 _baseGas, uint256 _gasPrice, address _gasToken, address _refundReceiver, bytes, address _msgSender)",
+      "function clearLivenessModule()",
+      "function clearTimelockGuard()",
+      "function configureLivenessModule(tuple(uint256 livenessResponsePeriod, address fallbackOwner) _config)",
+      "function configureTimelockGuard(uint256 _timelockDelay)",
+      "function getChallengePeriodEnd(address _safe) view returns (uint256)",
+      "function livenessSafeConfiguration(address _safe) view returns (tuple(uint256 livenessResponsePeriod, address fallbackOwner))",
+      "function maxCancellationThreshold(address _safe) view returns (uint256)",
+      "function pendingTransactions(address _safe) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce)[])",
+      "function respond()",
+      "function scheduleTransaction(address _safe, uint256 _nonce, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) _params, bytes _signatures)",
+      "function scheduledTransaction(address _safe, bytes32 _txHash) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce))",
+      "function signCancellation(bytes32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function timelockDelay(address _safe) view returns (uint256)",
+      "function version() view returns (string)"
+    ],
     "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -3120,12 +3196,13 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
+    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0xe9d9d84be84533dfde77d87e1af95889eb95f6bf254630733231f6789d4e48fe",
+    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/ETHLockbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
@@ -3133,11 +3210,11 @@
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
-    "opstack/PermissionedDisputeGame": "0xe39c1284ebcc867153d8d9bf8d32a6ab7daf95dde76ad7e13a040bb64d98b985",
+    "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23946434 },
-  "permissionsConfigHash": "0xc1027928df38f6a79dae1a653ffd0eafa3a6b388e4dea034a1891e8e0813cdcd"
+  "usedBlockNumbers": { "ethereum": 24305872 },
+  "permissionsConfigHash": "0xf1b2d9fa7496ddc88a2b02962b9a46b718f64abb5b7d9f4dfc81c09b7c1c33e3"
 }

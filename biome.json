@@ -25,7 +25,13 @@
     "defaultBranch": "main",
     "useIgnoreFile": true
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -45,6 +51,7 @@
           "level": "error",
           "fix": "safe"
         },
+        "noUnusedFunctionParameters": "error",
         "noConstAssign": "error",
         "noConstantCondition": "off",
         "noEmptyCharacterClassInRegex": "error",
@@ -162,8 +169,13 @@
       "includes": ["**/test/**/*.ts", "**/*.test.ts"],
       "linter": {
         "rules": {
-          "style": { "noNonNullAssertion": "off" },
-          "suspicious": { "noExplicitAny": "off", "useAwait": "off" }
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off",
+            "useAwait": "off"
+          }
         }
       }
     },

@@ -4,6 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
+  type InteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -102,6 +103,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // interop data
+  interopConfig?: InteropConfig
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -124,6 +128,7 @@ export interface BaseProject {
   isBridge?: true
   isScaling?: true
   isZkCatalog?: true
+  isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
@@ -291,6 +296,7 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+  customUrl?: string
 }
 
 export interface SourcifyApi {
@@ -581,7 +587,7 @@ export interface ProjectScalingStateValidationCategory {
   isIncomplete?: boolean
 }
 
-export interface ProjectScalingContractsZkProgramHash {
+export interface ProjectScalingContractsProgramHash {
   hash: string
   proverSystemProject?: ProjectId
   title: string
@@ -1077,7 +1083,7 @@ export interface ProjectContracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
-  zkProgramHashes?: ProjectScalingContractsZkProgramHash[]
+  programHashes?: ProjectScalingContractsProgramHash[]
 }
 
 export interface ProjectContract {
@@ -1178,6 +1184,100 @@ export interface ProjectDiscoveryInfo {
   baseTimestamp: number | undefined
   hasDiscoUi: boolean
 }
+
+export type InteropPluginName =
+  | 'across'
+  | 'across-settlement'
+  | 'across-settlement-op'
+  | 'across-settlement-orbit'
+  | 'allbridge'
+  | 'aori'
+  | 'axelar'
+  | 'axelar-its'
+  | 'beefy-bridge'
+  | 'ccip'
+  | 'cctp-v1'
+  | 'cctp-v2'
+  | 'celer'
+  | 'centrifuge'
+  | 'circle-gateway'
+  | 'debridge'
+  | 'debridge-dln'
+  | 'gaszip'
+  | 'hyperlane'
+  | 'hyperlane-eco'
+  | 'hyperlane-hwr'
+  | 'hyperlane-merkly-tokenbridge'
+  | 'hyperlane-simple-apps'
+  | 'layerzero-v1'
+  | 'layerzero-v2'
+  | 'layerzero-v2-ofts'
+  | 'lido-wsteth'
+  | 'maker-bridge'
+  | 'mayan-forwarder'
+  | 'mayan-mctp'
+  | 'mayan-mctp-fast'
+  | 'mayan-swift'
+  | 'mayan-swift-settlement'
+  | 'oneinch-fusion-plus'
+  | 'opstack'
+  | 'opstack-standardbridge'
+  | 'orbitstack'
+  | 'orbitstack-customgateway'
+  | 'orbitstack-standardgateway'
+  | 'orbitstack-wethgateway'
+  | 'polygon'
+  | 'relay'
+  | 'sky-bridge'
+  | 'sorare-base'
+  | 'squid-coral'
+  | 'stargate'
+  | 'superform'
+  | 'world-id'
+  | 'wormhole'
+  | 'wormhole-ntt'
+  | 'wormhole-relayer'
+  | 'wormhole-token-bridge'
+  | 'zkstack'
+  | 'zklink-nova'
+
+export interface InteropConfig {
+  name?: string
+  bridgeType: InteropBridgeType
+  plugins: InteropPlugin[]
+  /** If true we show `Aggregated` as second line in table under project name. Should be configured
+   * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
+   * which is a separate project)
+   */
+  isAggregate?: boolean
+  /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
+   * so layerzero id should be configured in usdt0 config) */
+  subgroupId?: ProjectId
+  /** If configured avg. duration it able will be split into two parts, depending on the config.
+   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  durationSplit?: {
+    in: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+    out: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+  }
+}
+
+export type InteropPlugin = {
+  plugin: InteropPluginName
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
+}
+
 // #endregion
 
 // #region TVS

@@ -1,5 +1,6 @@
 import { Address32, assert } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findParsedAround } from '../hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -42,7 +43,8 @@ const OFTSentPacketSent = createInteropEventType<{
   oappAddress: Address32
   srcTokenAddress?: Address32
   srcAmount?: bigint
-}>('layerzero-v2.PacketOFTSent')
+  burned?: boolean
+}>('layerzero-v2.PacketOFTSent', { direction: 'outgoing' })
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
@@ -51,10 +53,11 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   oappAddress: Address32
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('layerzero-v2.PacketOFTDelivered')
+  minted?: boolean
+}>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
-  name = 'layerzero-v2-ofts'
+  readonly name = 'layerzero-v2-ofts'
 
   constructor(private configs: InteropConfigStore) {}
 
@@ -81,66 +84,57 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               amountReceivedLD: oftSentRaw.amountLD, // fallback
             }
 
-      const previousLog = input.txLogs.find(
+      // try preceding log but fallback to any log in the same tx
+      let packetSentLog = input.txLogs.find(
         // biome-ignore lint/style/noNonNullAssertion: It's there
         (x) => x.logIndex === input.log.logIndex! - 1,
       )
-      if (previousLog) {
-        const packetSent = parsePacketSent(previousLog, [network.endpointV2])
-        if (packetSent) {
-          const packet = decodePacket(packetSent.encodedPayload)
-          if (packet) {
-            const guid = createLayerZeroGuid(
-              packet.header.nonce,
-              packet.header.srcEid,
-              packet.header.sender,
-              packet.header.dstEid,
-              packet.header.receiver,
-            )
-            const $dstChain = findChain(
-              networks,
-              (x) => x.eid,
-              packet.header.dstEid,
-            )
+      if (!packetSentLog) return
+      let packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
+      if (!packetSent)
+        packetSentLog = input.txLogs.find((l) => parsePacketSent(l, null))
+      if (!packetSentLog) return
+      packetSent = parsePacketSent(packetSentLog, [network.endpointV2])
+      if (!packetSent) return
+      const packet = decodePacket(packetSent.encodedPayload)
+      if (!packet) return
+      const guid = createLayerZeroGuid(
+        packet.header.nonce,
+        packet.header.srcEid,
+        packet.header.sender,
+        packet.header.dstEid,
+        packet.header.receiver,
+      )
+      const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
 
-            // Find Transfer event before OFTSent by searching through all preceding logs in the worst case
-            let srcTokenAddress: Address32 | undefined
-            let srcAmount: bigint | undefined
-
-            for (
-              let offset = 1;
-              // biome-ignore lint/style/noNonNullAssertion: It's there
-              offset <= input.log.logIndex!;
-              offset++
-            ) {
-              const precedingLog = input.txLogs.find(
-                // biome-ignore lint/style/noNonNullAssertion: It's there
-                (x) => x.logIndex === input.log.logIndex! - offset,
-              )
-              if (!precedingLog) break
-
-              const transfer = parseTransfer(precedingLog, null)
-              if (transfer) {
-                srcTokenAddress = Address32.from(precedingLog.address)
-                srcAmount = transfer.value
-                break
-              }
-            }
-
-            return [
-              OFTSentPacketSent.create(input, {
-                $dstChain,
-                guid,
-                amountSentLD: normalized.amountSentLD,
-                amountReceivedLD: normalized.amountReceivedLD,
-                oappAddress: Address32.from(input.log.address),
-                srcTokenAddress,
-                srcAmount,
-              }),
-            ]
+      const matchingTransferData = findParsedAround(
+        input.txLogs,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+        (log, _index) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer) return
+          // compare amount to not match a rogue Transfer event
+          if (transfer.value !== normalized.amountSentLD) return
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
           }
-        }
-      }
+        },
+      )
+
+      return [
+        OFTSentPacketSent.create(input, {
+          $dstChain,
+          guid,
+          amountSentLD: normalized.amountSentLD,
+          amountReceivedLD: normalized.amountReceivedLD,
+          oappAddress: Address32.from(input.log.address),
+          srcTokenAddress: matchingTransferData?.address,
+          srcAmount: normalized.amountSentLD,
+          burned: matchingTransferData?.burned,
+        }),
+      ]
     }
 
     const oftReceived = parseOFTReceived(input.log, null)
@@ -166,23 +160,32 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
             (x) => x.eid,
             packetDelivered.origin.srcEid,
           )
-          // use erc20 transfer event instead (fragile because it might not be 1 log before)
-          const previousLog = input.txLogs.find(
+
+          const matchingTransferData = findParsedAround(
+            input.txLogs,
             // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === input.log.logIndex! - 1,
+            input.log.logIndex!,
+            (log, _index) => {
+              const transfer = parseTransfer(log, null)
+              if (!transfer) return
+              // compare amount to not match a rogue Transfer event
+              if (transfer.value !== oftReceived.amountReceivedLD) return
+              return {
+                address: Address32.from(log.address),
+                minted: Address32.from(transfer.from) === Address32.ZERO,
+              }
+            },
           )
-          const transfer = previousLog && parseTransfer(previousLog, null)
+
           return [
             OFTReceivedPacketDelivered.create(input, {
               $srcChain,
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
-              // TODO: OFT log emitter is not always the token contract (needs effects)
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: previousLog
-                ? Address32.from(previousLog.address)
-                : undefined,
-              dstAmount: transfer?.value ?? undefined,
+              dstTokenAddress: matchingTransferData?.address,
+              dstAmount: oftReceived.amountReceivedLD,
+              minted: matchingTransferData?.minted,
             }),
           ]
         }
@@ -217,11 +220,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       }),
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
-        srcAmount: oftSentPacketSent.args.amountSentLD, // we also have oftSentPacketSent.args.srcAmount
+        srcAmount: oftSentPacketSent.args.amountSentLD, // same as oftSentPacketSent.args.srcAmount
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
-        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // we also have oftReceivedPacketDelivered.args.dstAmount
+        dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
         dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
+        srcWasBurned: oftSentPacketSent.args.burned,
+        dstWasMinted: oftReceivedPacketDelivered.args.minted,
       }),
     ]
   }

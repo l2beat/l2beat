@@ -6,9 +6,12 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
+  DiscordClient,
+  DuneClient,
   EigenApiClient,
   FuelClient,
   HttpClient,
+  type IRpcClient,
   LighterClient,
   type LogsClient,
   LoopringClient,
@@ -16,11 +19,14 @@ import {
   NearClient,
   PolkadotRpcClient,
   RpcClient,
+  RpcClientCompat,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
   SvmRpcClient,
+  toRetryOptions,
   VoyagerClient,
+  withRetries,
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
@@ -43,11 +49,13 @@ export interface Clients {
   avail: PolkadotRpcClient | undefined
   availWs: AvailWsClient | undefined
   eigen: EigenApiClient | undefined
-  getRpcClient: (chain: string) => RpcClient
+  getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
-  rpcClients: RpcClient[]
+  rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
+  dune: DuneClient | undefined
+  discord: DiscordClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -57,7 +65,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
-  let ethereumClient: RpcClient | undefined
+  let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let celestiaDaBeat: CelestiaRpcClient | undefined
@@ -65,13 +73,15 @@ export function initClients(config: Config, logger: Logger): Clients {
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
   let eigen: EigenApiClient | undefined
+  let dune: DuneClient | undefined
+  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
   const logsClients: LogsClient[] = []
   const svmBlockClients: SvmBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
-  const rpcClients: RpcClient[] = []
+  const rpcClients: IRpcClient[] = []
 
   for (const chain of config.chainConfig) {
     for (const indexerApi of chain.indexerApis) {
@@ -96,15 +106,27 @@ export function initClients(config: Config, logger: Logger): Clients {
                 500,
               )
             : undefined
-          const rpcClient = new RpcClient({
-            chain: chain.name,
-            url: blockApi.url,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-            multicallClient,
-          })
+          const rpcClient = config.newClientsEnabled
+            ? RpcClientCompat.create({
+                chain: chain.name,
+                url: blockApi.url,
+                http,
+                callsPerMinute: blockApi.callsPerMinute,
+                retryStrategy: blockApi.retryStrategy,
+                logger,
+                multicallClient,
+                timeout: blockApi.timeout,
+              })
+            : new RpcClient({
+                chain: chain.name,
+                url: blockApi.url,
+                http,
+                callsPerMinute: blockApi.callsPerMinute,
+                retryStrategy: blockApi.retryStrategy,
+                logger,
+                multicallClient,
+                timeout: blockApi.timeout,
+              })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -249,6 +271,22 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
+  if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
+    const retryOptions = toRetryOptions('RELIABLE')
+    dune = withRetries(
+      new DuneClient({
+        http: http,
+        apiKey: config.trackedTxsConfig.duneApiKey,
+      }),
+      {
+        initialTimeoutMs: retryOptions.initialRetryDelayMs,
+        maxAttempts: retryOptions.maxRetries,
+        maxTimeoutMs: retryOptions.maxRetryDelayMs,
+        logger,
+      },
+    )
+  }
+
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
@@ -321,6 +359,10 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
+  if (config.updateMonitor && config.updateMonitor.discord) {
+    discord = new DiscordClient(http, config.updateMonitor.discord)
+  }
+
   return {
     block: blockClients,
     logs: logsClients,
@@ -343,5 +385,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,
+    dune,
+    discord,
   }
 }

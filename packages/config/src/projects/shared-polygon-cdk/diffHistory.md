@@ -1,4 +1,29 @@
-Generated with discovered.json: 0x2b801b777679168b35a15086f2dce04b4438cc26
+Generated with discovered.json: 0x79328f020fe41a4b01047e81e232ec182aaa90da
+
+# Diff at Mon, 26 Jan 2026 12:47:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768997932
+- current timestamp: 1769431545
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x51f76d9f3bf4ab56fefde9641b8f474fa8ddd7fa
 
 # Diff at Tue, 09 Dec 2025 11:50:41 GMT:
 

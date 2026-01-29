@@ -1,7 +1,7 @@
 import { CoingeckoQueryService } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
@@ -11,13 +11,14 @@ import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
   deps: ModuleDependencies,
 ): ApplicationModule | undefined {
-  let { config, logger, peripherals, providers, clock } = deps
+  let { config, logger, db, providers, clock } = deps
 
   if (!config.trackedTxsConfig) {
     logger.info('TrackedTxsModule disabled')
@@ -26,13 +27,17 @@ export function createTrackedTxsModule(
 
   logger = logger.tag({ module: 'tracked-txs' })
 
-  const indexerService = new IndexerService(peripherals.database)
-  const bigQueryClient = peripherals.getClient(
-    BigQueryClient,
-    config.trackedTxsConfig.bigQuery,
-  )
+  const indexerService = new IndexerService(db)
 
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient, logger)
+  const duneClient = providers.clients.dune
+  assert(duneClient, 'Dune client is required')
+
+  const duneQueryService = new DuneQueryService({
+    logger,
+    duneClient,
+  })
+
+  const trackedTxsClient = new TrackedTxsClient(duneQueryService, logger)
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )
@@ -43,7 +48,7 @@ export function createTrackedTxsModule(
         runtimeConfigurations,
         (c) => c.type === 'l2costs',
       )
-      await peripherals.database.syncMetadata.upsertMany([
+      await db.syncMetadata.upsertMany([
         // There might be multiple configurations for the same project
         // so we need to uniq them
         ...uniqBy(l2CostsConfigs, (c) => c.projectId).map((c) => ({
@@ -87,7 +92,7 @@ export function createTrackedTxsModule(
       id: c.id,
     })),
     updaters,
-    db: peripherals.database,
+    db,
     projects: config.trackedTxsConfig.projects,
   })
 
@@ -106,7 +111,7 @@ export function createTrackedTxsModule(
 
     l2CostPricesIndexer = new L2CostsPricesIndexer({
       coingeckoQueryService,
-      db: peripherals.database,
+      db,
       parents: [hourlyIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp,
@@ -114,7 +119,7 @@ export function createTrackedTxsModule(
     })
 
     l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
-      db: peripherals.database,
+      db,
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp,
@@ -128,7 +133,7 @@ export function createTrackedTxsModule(
 
   if (config.trackedTxsConfig.uses.liveness) {
     livenessAggregatingIndexer = new LivenessAggregatingIndexer({
-      db: peripherals.database,
+      db,
       projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
@@ -137,7 +142,7 @@ export function createTrackedTxsModule(
     })
 
     anomaliesIndexer = new AnomaliesIndexer({
-      db: peripherals.database,
+      db,
       projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,

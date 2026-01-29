@@ -12,6 +12,7 @@ import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -27,12 +28,10 @@ import {
   get7dTvsBreakdown,
   type ProjectSevenDayTvsBreakdown,
 } from '../scaling/tvs/get7dTvsBreakdown'
-import { compareTvs } from '../scaling/tvs/utils/compareTvs'
 import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
 } from '../scaling/upcoming/getScalingUpcomingEntries'
-import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
 import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
@@ -61,13 +60,17 @@ export interface EcosystemEntry {
     width: number
     height: number
   }
+  hasRwaRestrictedTvs: boolean
   badges: BadgeWithParams[]
   colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
   upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
-    tvs: number
+    tvs: {
+      withRwaRestricted: number
+      withoutRwaRestricted: number
+    }
     uops: number
   }
   banners: {
@@ -80,8 +83,14 @@ export interface EcosystemEntry {
       mainText?: string
     }
   }
-  tvsByStage: TvsByStage
-  tvsByTokenType: TvsByTokenType
+  tvsByStage: {
+    withRwaRestricted: TvsByStage
+    withoutRwaRestricted: TvsByStage
+  }
+  tvsByTokenType: {
+    withRwaRestricted: TvsByTokenType
+    withoutRwaRestricted: TvsByTokenType
+  }
   projectsByDaLayer: ProjectsByDaLayer
   blobsData: BlobsData
   projectsByRaas: ProjectByRaas
@@ -104,7 +113,10 @@ export interface EcosystemEntry {
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
   gasTokens?: string[]
-  tvsData: ProjectSevenDayTvsBreakdown | undefined
+  tvsData: {
+    withRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
+    withoutRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
+  }
 }
 
 export async function getEcosystemEntry(
@@ -165,6 +177,7 @@ export async function getEcosystemEntry(
   const [
     projectsChangeReport,
     tvs,
+    tvsWithRwasRestricted,
     projectsActivity,
     projectsOngoingAnomalies,
     blobsData,
@@ -172,6 +185,7 @@ export async function getEcosystemEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({ type: 'layer2', excludeRwaRestrictedTokens: false }),
     getActivityLatestUops(allScalingProjects),
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
@@ -184,6 +198,12 @@ export async function getEcosystemEntry(
       },
     }),
   ])
+
+  const hasRwaRestrictedTvs = liveProjects.some(
+    (project) =>
+      (tvsWithRwasRestricted.projects[project.id]?.breakdown.rwaRestricted ??
+        0) > 0,
+  )
 
   const allScalingProjectsUops = allScalingProjects.reduce(
     (acc, curr) =>
@@ -205,12 +225,22 @@ export async function getEcosystemEntry(
       governance: getGovernanceLinks(ecosystem),
       ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
+    hasRwaRestrictedTvs,
     allScalingProjects: {
-      tvs: tvs.total,
+      tvs: {
+        withoutRwaRestricted: tvs.total,
+        withRwaRestricted: tvsWithRwasRestricted.total,
+      },
       uops: allScalingProjectsUops,
     },
-    tvsByStage: getTvsByStage(liveProjects, tvs),
-    tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
+    tvsByStage: {
+      withoutRwaRestricted: getTvsByStage(liveProjects, tvs),
+      withRwaRestricted: getTvsByStage(liveProjects, tvsWithRwasRestricted),
+    },
+    tvsByTokenType: {
+      withoutRwaRestricted: getTvsByTokenType(liveProjects, tvs),
+      withRwaRestricted: getTvsByTokenType(liveProjects, tvsWithRwasRestricted),
+    },
     projectsByDaLayer: getProjectsByDaLayer(liveProjects),
     blobsData,
     projectsByRaas: getProjectsByRaas(liveProjects),
@@ -226,43 +256,45 @@ export async function getEcosystemEntry(
       firstBanner: ecosystem.ecosystemConfig.firstBanner,
       secondBanner: ecosystem.ecosystemConfig.secondBanner,
     },
-    liveProjects: liveProjects
-      .map((project) => {
-        const entry = getScalingSummaryEntry(
-          project,
-          projectsChangeReport.getChanges(project.id),
-          tvs.projects[project.id.toString()],
-          projectsActivity[project.id.toString()],
-          !!projectsOngoingAnomalies[project.id.toString()],
-          zkCatalogProjects,
-        )
+    liveProjects: liveProjects.map((project) => {
+      const entry = getScalingSummaryEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvs.projects[project.id.toString()],
+        projectsActivity[project.id.toString()],
+        !!projectsOngoingAnomalies[project.id.toString()],
+        zkCatalogProjects,
+      )
 
-        const result: EcosystemProjectEntry = {
-          ...entry,
-          gasTokens: project.chainConfig?.gasTokens,
-          ecosystemInfo: project.ecosystemInfo,
-          filterable: compact([
-            ecosystem.id === 'superchain' && {
-              id: 'isPartOfSuperchain',
-              value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
-            },
-            ...(entry.filterable?.filter(
-              (f) => !EXCLUDED_FILTERS.includes(f.id),
-            ) ?? []),
-          ]),
-          tvsData: tvs.projects[project.id.toString()],
-        }
-        return result
-      })
-      .sort(compareTvs),
+      const result: EcosystemProjectEntry = {
+        ...entry,
+        gasTokens: project.chainConfig?.gasTokens,
+        ecosystemInfo: project.ecosystemInfo,
+        filterable: compact([
+          ecosystem.id === 'superchain' && {
+            id: 'isPartOfSuperchain',
+            value: project.ecosystemInfo.isPartOfSuperchain ? 'Yes' : 'No',
+          },
+          ...(entry.filterable?.filter(
+            (f) => !EXCLUDED_FILTERS.includes(f.id),
+          ) ?? []),
+        ]),
+        tvsData: {
+          withoutRwaRestricted: tvs.projects[project.id.toString()],
+          withRwaRestricted:
+            tvsWithRwasRestricted.projects[project.id.toString()],
+        },
+      }
+      return result
+    }),
     upcomingProjects: upcomingProjects.map((p) =>
       getScalingUpcomingEntry(p, zkCatalogProjects),
     ),
     allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
     ecosystemMilestones: getMilestones([ecosystem]),
     images: {
-      buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
-      delegateToL2BEAT: getStaticAsset(
+      buildOn: manifest.getUrl(`/partners/${slug}/build-on.png`),
+      delegateToL2BEAT: manifest.getUrl(
         '/partners/governance-delegate-to-l2beat.png',
       ),
     },

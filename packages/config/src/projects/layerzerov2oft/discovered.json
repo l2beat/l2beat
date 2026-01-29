@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "timestamp": 1761550307,
-  "configHash": "0xdba920db01b02320ad7bbefd8d1622cefa88b67c9178084aad115e05d0a03faa",
+  "configHash": "0xe78a3b5c89ec83758a8c58ac6ca0ac7992e3c0e555e4cf4affcf8e4fa1ac870e",
   "entries": [
     {
       "address": "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
@@ -3757,7 +3757,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "layerzero/DVN": "0x84673697f9119e45f3f6da142095c117a1b3326d2590baa81bb173042dacfe52",
+    "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
     "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",

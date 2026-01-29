@@ -103,6 +103,25 @@ export class InteropEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getOldestEventForPluginAndChain(
+    plugins: string[],
+    chain: string,
+  ): Promise<InteropEventRecord | undefined> {
+    if (plugins.length === 0) {
+      return undefined
+    }
+    const row = await this.db
+      .selectFrom('InteropEvent')
+      .where('plugin', 'in', plugins)
+      .where('chain', '=', chain)
+      .selectAll()
+      .orderBy('timestamp', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getByType(
     type: string,
     options: {
@@ -208,6 +227,14 @@ export class InteropEventRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('InteropEvent')
       .where('expiresAt', '<=', UnixTime.toDate(currentTime))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteAllForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropEvent')
+      .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

@@ -21,7 +21,8 @@ export const synapse: Bridge = {
       explorers: ['https://analytics.synapseprotocol.com/'],
       socialMedia: [
         'https://twitter.com/SynapseProtocol',
-        'https://discord.gg/synapseprotocol',
+        'https://discord.com/invite/4rMzuEnKqe',
+        'https://t.me/synapseprotocol',
         'https://forum.synapseprotocol.com/',
         'https://synapse.mirror.xyz/',
       ],
@@ -68,7 +69,6 @@ export const synapse: Bridge = {
       'DFK Chain',
       'Optimism',
       'Polygon',
-      'Aurora',
       'Boba Network',
       'Fantom',
       'Metis',

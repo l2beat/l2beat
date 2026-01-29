@@ -13,97 +13,21 @@ on:
       - main
 
 jobs:
-  cache-warmup:
-    name: Run cache warmup
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
+  check-changes:
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/frontend'
+
+  deploy:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-deploy-coolify.yml
+    with:
+      project: frontend
+      environment: production
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_FRONTEND_PROD_ID }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      TURBO_REMOTE_CACHE_UPLOAD_TIMEOUT: 10
-      HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-  
-          
-      - name: Install dependencies
-        run: pnpm install
-        
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install.sh | sh
-          
-      - name: Pull frontend configuration
-        run: heroku config -a l2beat-website-prod --shell > .env
-        working-directory: packages/frontend
-      
-      - name: Fill PORT variable
-        run: echo "PORT=3000" >> .env
-        working-directory: packages/frontend
-
-      - name: Build frontend dependencies
-        run: pnpm build:frontend
-
-      - name: Run hot cache
-        run: pnpm hot-cache
-        working-directory: packages/frontend
-
-  deploy-frontend:
-    name: Deploy frontend
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
-        with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
-        with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish containers
-        run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${HEROKU_TAG} -t ${GH_TAG_LATEST} -t ${GH_TAG_SHA} \
-            -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: Dockerfile.frontend
-          HEROKU_TAG: registry.heroku.com/${{ secrets.HEROKU_FRONTEND_PROD }}/web
-          GH_TAG_LATEST: ghcr.io/${{ github.repository }}/frontend:latest
-          GH_TAG_SHA: ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published container
-        run: |
-          heroku container:release -a ${{ secrets.HEROKU_FRONTEND_PROD }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}

@@ -2,15 +2,16 @@ import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { TvsDisplayControlsContextProvider } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { ScalingAssociatedTokensContextProvider } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import { ScalingTvsTabs } from '~/pages/scaling/tvs/components/ScalingTvsTabs'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { ScalingRwaRestrictedTokensContextProvider } from '../components/ScalingRwaRestrictedTokensContext'
+import { ScalingTvsTimeRangeContextProvider } from './components/ScalingTvsTimeRangeContext'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingTvsEntry>
@@ -30,11 +31,16 @@ export function ScalingTvsPage({
         <SideNavLayout>
           <MainPageHeader>Value Secured</MainPageHeader>
           <TableFilterContextProvider>
-            <ScalingRwaRestrictedTokensContextProvider>
-              <ScalingAssociatedTokensContextProvider>
+            <TvsDisplayControlsContextProvider
+              initialValues={{
+                excludeAssociatedTokens: false,
+                excludeRwaRestrictedTokens: true,
+              }}
+            >
+              <ScalingTvsTimeRangeContextProvider>
                 <ScalingTvsTabs {...entries} milestones={milestones} />
-              </ScalingAssociatedTokensContextProvider>
-            </ScalingRwaRestrictedTokensContextProvider>
+              </ScalingTvsTimeRangeContextProvider>
+            </TvsDisplayControlsContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>
       </HydrationBoundary>

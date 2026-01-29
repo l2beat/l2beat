@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x578acfb87cfeb40ea44a32d4a6f964d5de36fc81
+Generated with discovered.json: 0x12113ee3c5d50d1583102ba45f791eb33ee1e607
+
+# Diff at Mon, 26 Jan 2026 13:11:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768372744
+- current timestamp: 1769433017
+
+## Description
+
+new access control role members.
+
+## Watched changes
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) {
+    +++ description: None
+      values.accessControl.MANAGER.members.0:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+      values.accessControl.0x8554e4c9634c3022983cc2156859c8a963fefd7f46d6eae4e74af237818da178:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]}
+      values.accessControl.0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]}
+    }
+```
+
+Generated with discovered.json: 0xac901111ad13f517a437249f2ffb49bb60bfe895
+
+# Diff at Wed, 14 Jan 2026 06:40:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1762265442
+- current timestamp: 1768372744
+
+## Description
+
+MANAGER address removed.
+
+## Watched changes
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) {
+    +++ description: None
+      values.accessControl.MANAGER.members.0:
+-        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+Generated with discovered.json: 0xf25eeafae2c35a605ddcf3f66b439034b7fd0a27
 
 # Diff at Wed, 05 Nov 2025 12:48:34 GMT:
 

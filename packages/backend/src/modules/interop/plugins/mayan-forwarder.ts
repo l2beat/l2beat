@@ -2,6 +2,17 @@
 Mayan Forwarder
 - chooses one of the Mayan protocol
 - emits Event that will allow further matching
+
+ETH Amount Detection for ForwardedEth:
+When tx.value is 0 (e.g., aggregator transactions via LiFi, 1inch, etc.),
+we look for WETH Withdrawal events before ForwardedEth to determine the ETH amount.
+This is because aggregators unwrap WETH to ETH before forwarding to Mayan.
+
+Alternative approach (not implemented):
+Look for aggregator-specific swap events with toAssetAddress=0x0 (native):
+- MagpieRouter Swap(address,address,address,address,uint256,uint256) - amountOut field
+- LiFi AssetSwapped(bytes32,address,address,address,uint256,uint256,uint256) - toAmount field
+These are more direct but require handling multiple aggregator event formats.
 */
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
@@ -15,6 +26,20 @@ import {
   type LogToCapture,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
+
+// WETH Withdrawal event - used to find ETH amount when tx.value is 0
+const parseWethWithdrawal = createEventParser(
+  'event Withdrawal(address indexed src, uint256 wad)',
+)
+
+// WETH/WMATIC addresses by chain
+const WRAPPED_NATIVE_ADDRESSES: Record<string, EthereumAddress> = {
+  ethereum: EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+  base: EthereumAddress('0x4200000000000000000000000000000000000006'),
+  arbitrum: EthereumAddress('0x82aF49447D8a07e3bd95BD0d56f35241523fBab1'),
+  optimism: EthereumAddress('0x4200000000000000000000000000000000000006'),
+  polygonpos: EthereumAddress('0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'), // WMATIC
+}
 
 const MAYAN_PROTOCOLS = [
   {
@@ -80,7 +105,7 @@ export const MayanForwarded = createInteropEventType<{
 }>('mayan-forwarder.MayanForwarded')
 
 export class MayanForwarderPlugin implements InteropPlugin {
-  name = 'mayan-forwarder'
+  readonly name = 'mayan-forwarder'
 
   constructor(private configs: InteropConfigStore) {}
 
@@ -95,6 +120,27 @@ export class MayanForwarderPlugin implements InteropPlugin {
         wormholeNetworks,
       )
       if (!decodedData) return
+
+      // When tx.value is 0 (e.g., aggregator transactions via LiFi),
+      // look for WETH Withdrawal event before ForwardedEth to get the ETH amount
+      let amountIn = decodedData.amountIn ?? input.tx.value
+      if (amountIn === 0n) {
+        const wrappedNative = WRAPPED_NATIVE_ADDRESSES[input.chain]
+        if (wrappedNative && input.log.logIndex !== null) {
+          for (let i = input.log.logIndex - 1; i >= 0; i--) {
+            const candidateLog = input.txLogs.find((log) => log.logIndex === i)
+            if (!candidateLog) continue
+            if (EthereumAddress(candidateLog.address) !== wrappedNative)
+              continue
+            const withdrawal = parseWethWithdrawal(candidateLog, null)
+            if (withdrawal) {
+              amountIn = withdrawal.wad
+              break
+            }
+          }
+        }
+      }
+
       return [
         MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
@@ -103,7 +149,7 @@ export class MayanForwarderPlugin implements InteropPlugin {
           ),
           methodSignature: decodedData.methodSignature,
           tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
-          amountIn: decodedData.amountIn ?? input.tx.value,
+          amountIn,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -134,6 +180,8 @@ export class MayanForwarderPlugin implements InteropPlugin {
       ]
     }
 
+    // For SwapAndForwarded events, use tokenIn/amountIn from the event (user's actual tokens)
+    // The protocolData contains the intermediate bridged token info, not the user's original tokens
     const swapAndForwardedEth = parseSwapAndForwardedEth(input.log, null)
     if (swapAndForwardedEth) {
       const decodedData = decodeProtocolData(
@@ -148,8 +196,8 @@ export class MayanForwarderPlugin implements InteropPlugin {
             swapAndForwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-          amountIn: decodedData.amountIn,
+          tokenIn: Address32.NATIVE,
+          amountIn: swapAndForwardedEth.amountIn,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -171,8 +219,8 @@ export class MayanForwarderPlugin implements InteropPlugin {
             swapAndForwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: decodedData.tokenIn ?? Address32.ZERO,
-          amountIn: decodedData.amountIn,
+          tokenIn: Address32.from(swapAndForwardedERC20.tokenIn),
+          amountIn: swapAndForwardedERC20.amountIn,
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -190,11 +238,31 @@ export function logToProtocolData(
   if (parsed1) {
     return decodeProtocolData(parsed1.protocolData, wormholeNetworks)
   }
-  const parsed2 =
-    parseSwapAndForwardedERC20(log, null) ?? parseSwapAndForwardedEth(log, null)
-  if (parsed2) {
-    return decodeProtocolData(parsed2.mayanData, wormholeNetworks)
+  // For SwapAndForwarded events, use tokenIn/amountIn from the event (user's actual tokens)
+  const swapERC20 = parseSwapAndForwardedERC20(log, null)
+  if (swapERC20) {
+    const decoded = decodeProtocolData(swapERC20.mayanData, wormholeNetworks)
+    if (decoded) {
+      decoded.tokenIn = Address32.from(swapERC20.tokenIn)
+      decoded.amountIn = swapERC20.amountIn
+    }
+    return decoded
   }
+  const swapEth = parseSwapAndForwardedEth(log, null)
+  if (swapEth) {
+    const decoded = decodeProtocolData(swapEth.mayanData, wormholeNetworks)
+    if (decoded) {
+      decoded.tokenIn = Address32.NATIVE
+      decoded.amountIn = swapEth.amountIn
+    }
+    return decoded
+  }
+}
+
+// Zero tokenOut means native token on destination
+function tokenOutOrNative(tokenOut: string): Address32 {
+  const addr = Address32.from(tokenOut)
+  return addr === Address32.ZERO ? Address32.NATIVE : addr
 }
 
 function decodeMayanProtocol(chain: string, protocolAddress: string) {
@@ -272,7 +340,7 @@ function decodeProtocolData(
     )
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
-    decoded.tokenOut = Address32.from(res.args[2].tokenOut)
+    decoded.tokenOut = tokenOutOrNative(res.args[2].tokenOut)
     decoded.minAmountOut = res.args[2].minAmountOut
   } else if (res.functionName === 'createOrderWithEth') {
     decoded.dstChain = getChainFromWormholeId(
@@ -280,10 +348,7 @@ function decodeProtocolData(
       res.args[0].destChainId,
     )
     decoded.tokenIn = Address32.NATIVE
-    decoded.tokenOut =
-      Address32.from(res.args[0].tokenOut) === Address32.ZERO
-        ? Address32.NATIVE
-        : Address32.from(res.args[0].tokenOut)
+    decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
     decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
     if (res.args.length === 1) {
@@ -293,13 +358,13 @@ function decodeProtocolData(
       )
       decoded.tokenIn = Address32.from(res.args[0].tokenIn)
       decoded.amountIn = res.args[0].amountIn
-      decoded.tokenOut = Address32.from(res.args[0].tokenOut)
+      decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
       decoded.minAmountOut = res.args[0].minAmountOut
     } else {
       decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
       decoded.tokenIn = Address32.from(res.args[0])
       decoded.amountIn = res.args[1]
-      decoded.tokenOut = Address32.from(res.args[5].tokenOut)
+      decoded.tokenOut = tokenOutOrNative(res.args[5].tokenOut)
       decoded.minAmountOut = res.args[5].amountOutMin
     }
   } else if (res.functionName === 'bridgeWithFee') {
@@ -318,12 +383,12 @@ function decodeProtocolData(
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.from(res.args[5])
     decoded.amountIn = res.args[6]
-    decoded.tokenOut = Address32.from(res.args[2])
+    decoded.tokenOut = tokenOutOrNative(res.args[2])
     decoded.minAmountOut = res.args[4].amountOutMin
   } else if (res.functionName === 'wrapAndSwapETH') {
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.NATIVE
-    decoded.tokenOut = Address32.from(res.args[2])
+    decoded.tokenOut = tokenOutOrNative(res.args[2])
     decoded.minAmountOut = res.args[4].amountOutMin
   }
   return decoded

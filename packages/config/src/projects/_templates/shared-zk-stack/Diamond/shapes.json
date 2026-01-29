@@ -28,5 +28,27 @@
       "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
     ],
     "blockNumber": 23638783
+  },
+  "Diamond_ADI": {
+    "hash": "0x76fff5526d80b9fe957c75fa758aa5c38311d3267060edefc11f4b9aac8c5c34",
+    "address": [
+      "eth:0x8C653b99f18Eb3bAb927519990bfC281500b0De6",
+      "eth:0x1807f10E686E5Cd6A655cF7343f093a7372cAf34",
+      "eth:0x3Be4B380F277Cb02dF56712667f7F8FA1Ca1536d",
+      "eth:0x6fB87A1dd4DE3bDbB96f2FA9ac7FCb74b7d4C792"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24038982
+  },
+  "Diamond_v30_0_ADI": {
+    "hash": "0x33ec87bcda0bcb30b842846b09d0c7c222129732c34db1ae495d82f3daccadb0",
+    "address": [
+      "eth:0xf9DD56364E3878056654C756cEBA692e577f8466",
+      "eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07",
+      "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
+      "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24275768
   }
 }

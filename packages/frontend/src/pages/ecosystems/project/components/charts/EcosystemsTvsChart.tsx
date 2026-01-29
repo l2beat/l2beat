@@ -17,6 +17,7 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -41,17 +42,20 @@ export function EcosystemsTvsChart({
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsTvs: number
+  allScalingProjectsTvs: EcosystemEntry['allScalingProjects']['tvs']
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range,
     excludeAssociatedTokens: false,
-    includeRwaRestrictedTokens: false,
+    excludeRwaRestrictedTokens,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),
@@ -85,7 +89,11 @@ export function EcosystemsTvsChart({
     } satisfies ChartMeta
   }, [name])
 
-  const stats = getStats(chartData, allScalingProjectsTvs)
+  const { withRwaRestricted, withoutRwaRestricted } = allScalingProjectsTvs
+  const stats = getStats(
+    chartData,
+    excludeRwaRestrictedTokens ? withoutRwaRestricted : withRwaRestricted,
+  )
   const timeRange = getChartTimeRangeFromData(chartData)
 
   return (

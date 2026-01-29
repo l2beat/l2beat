@@ -1,11 +1,17 @@
 import { HttpClient } from '@l2beat/shared'
+import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
-import { createInteropPlugins } from '../plugins'
+import {
+  createInteropPlugins,
+  flattenClusters,
+  pluginsAsClusters,
+} from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
+import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -15,6 +21,8 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
+import { InteropTransferStream } from './stream/InteropTransferStream'
+import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
   config,
@@ -32,24 +40,44 @@ export function createInteropModule({
 
   const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   const configStore = new InteropConfigStore(db)
+  const tokenDbClient = getTokenDbClient({
+    apiUrl: config.interop.financials.tokenDbApiUrl,
+    authToken: config.interop.financials.tokenDbAuthToken,
+    callSource: 'interop',
+  })
   const plugins = createInteropPlugins({
     configs: configStore,
     chains: config.interop.config.chains,
     httpClient: new HttpClient(),
     logger,
     rpcClients: providers.clients.rpcClients,
+    tokenDbClient,
   })
+
+  const syncersManager = new InteropSyncersManager(
+    pluginsAsClusters(plugins.eventPlugins),
+    config.interop.capture.chains.map((c) => c.id as LongChainName),
+    config.chainConfig,
+    eventStore,
+    db,
+    logger,
+  )
+
+  const transferStream = new InteropTransferStream()
 
   const processors = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
-        chain.name,
-        plugins.eventPlugins,
+        chain.id,
+        flattenClusters(plugins.eventPlugins),
         eventStore,
         logger,
       )
       blockProcessors.push(processor)
+      blockProcessors.push(
+        syncersManager.getBlockProcessor(chain.id as LongChainName),
+      )
       processors.push(processor)
     }
   }
@@ -57,16 +85,19 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
-    plugins.eventPlugins,
-    config.interop.capture.chains.map((c) => c.name),
+    flattenClusters(plugins.eventPlugins),
+    config.interop.capture.chains.map((c) => c.id),
     logger,
+    transferStream,
   )
 
   const router = createInteropRouter(
     db,
     config.interop,
     processors,
+    syncersManager,
     logger.for('InteropRouter'),
+    transferStream,
   )
 
   const compareLoops = plugins.comparePlugins.map(
@@ -86,12 +117,6 @@ export function createInteropModule({
     indexerService,
   })
 
-  const tokenDbClient = getTokenDbClient({
-    apiUrl: config.interop.financials.tokenDbApiUrl,
-    authToken: config.interop.financials.tokenDbAuthToken,
-    callSource: 'interop',
-  })
-
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
     db,
@@ -103,7 +128,7 @@ export function createInteropModule({
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
-    config.interop.capture.chains.map((c) => c.name),
+    config.interop.capture.chains.map((c) => c.id),
     relayApiClient,
     db,
     eventStore,
@@ -112,11 +137,25 @@ export function createInteropModule({
     logger,
   )
 
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
+  if (config.interop.aggregation) {
+    interopAggregatingIndexer = new InteropAggregatingIndexer({
+      db,
+      configs: config.interop.aggregation.configs,
+      logger,
+      indexerService,
+      parents: [hourlyIndexer],
+      minHeight: 1,
+    })
+  }
+
   const start = async () => {
     logger = logger.for('InteropModule')
     logger.info('Starting')
+
+    await eventStore.start()
+
     if (config.interop && config.interop.matching) {
-      await eventStore.start()
       matcher.start()
       await relayRootIndexer.start()
       await relayIndexer.start()
@@ -129,8 +168,11 @@ export function createInteropModule({
     if (config.interop && config.interop.cleaner) {
       cleaner.start()
     }
+    await hourlyIndexer.start()
+    if (config.interop && config.interop.aggregation) {
+      await interopAggregatingIndexer?.start()
+    }
     if (config.interop && config.interop.financials.enabled) {
-      await hourlyIndexer.start()
       await recentPricesIndexer.start()
       financialsService.start()
     }
@@ -143,8 +185,12 @@ export function createInteropModule({
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
-      eventPlugins: plugins.eventPlugins.length,
+      eventPlugins: flattenClusters(plugins.eventPlugins).length,
     })
+
+    if (config.interop && config.interop.capture.enabled) {
+      syncersManager.start()
+    }
   }
 
   return { routers: [router], start }

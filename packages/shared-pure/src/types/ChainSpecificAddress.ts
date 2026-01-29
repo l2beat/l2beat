@@ -13,6 +13,7 @@ import { EthereumAddress } from './EthereumAddress.js'
 // list of all chains with their short names. But currently I don't know how to achieve that.
 const SHORT_TO_LONG_CHAIN_NAMES = {
   eth: 'ethereum',
+  abstract: 'abstract',
   arb1: 'arbitrum',
   'arb-nova': 'nova',
   oeth: 'optimism',
@@ -45,6 +46,15 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   gateway: 'gateway',
   ethereal: 'ethereal',
   jovay: 'jovay',
+  ethscr: 'ethscriptions',
+  lens: 'lens',
+  lisk: 'lisk',
+  redstone: 'redstone',
+  soneium: 'soneium',
+  wc: 'worldchain',
+  'hype-evm': 'hyperevm',
+  megaeth: 'megaeth',
+  polygon: 'polygon',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
@@ -52,10 +62,10 @@ const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
     long,
     short,
   ]),
-) as Record<LONG_CHAIN_NAME, SHORT_CHAIN_NAME>
+) as Record<LongChainName, ShortChainName>
 
-type SHORT_CHAIN_NAME = keyof typeof SHORT_TO_LONG_CHAIN_NAMES
-type LONG_CHAIN_NAME =
+type ShortChainName = keyof typeof SHORT_TO_LONG_CHAIN_NAMES
+export type LongChainName =
   (typeof SHORT_TO_LONG_CHAIN_NAMES)[keyof typeof SHORT_TO_LONG_CHAIN_NAMES]
 
 const SHORT_CHAIN_NAMES = new Set(Object.keys(SHORT_TO_LONG_CHAIN_NAMES))
@@ -75,7 +85,7 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
     throw new TypeError(`Invalid ChainSpecificAddress: ${value}`)
   }
 
-  if (!SHORT_CHAIN_NAMES.has(chain as SHORT_CHAIN_NAME)) {
+  if (!SHORT_CHAIN_NAMES.has(chain as ShortChainName)) {
     throw new TypeError(`Unknown chain name: ${chain}`)
   }
 
@@ -92,7 +102,7 @@ ChainSpecificAddress.check = function check(
   }
 }
 
-ChainSpecificAddress.random = function random(chain: SHORT_CHAIN_NAME = 'eth') {
+ChainSpecificAddress.random = function random(chain: ShortChainName = 'eth') {
   return ChainSpecificAddress.from(chain, EthereumAddress.random())
 }
 
@@ -109,7 +119,12 @@ ChainSpecificAddress.fromLong = function from(
   pureAddress: string | EthereumAddress,
 ) {
   const shortChainName =
-    LONG_TO_SHORT_CHAIN_NAMES[longChainName as LONG_CHAIN_NAME]
+    LONG_TO_SHORT_CHAIN_NAMES[longChainName as LongChainName]
+
+  if (!shortChainName) {
+    throw new TypeError(`Unknown long chain name: ${longChainName}`)
+  }
+
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
 }
 
@@ -121,13 +136,13 @@ ChainSpecificAddress.address = function address(
 
 ChainSpecificAddress.chain = function chain(
   value: ChainSpecificAddress,
-): SHORT_CHAIN_NAME {
-  return value.slice(0, value.indexOf(':')) as unknown as SHORT_CHAIN_NAME
+): ShortChainName {
+  return value.slice(0, value.indexOf(':')) as unknown as ShortChainName
 }
 
 ChainSpecificAddress.longChain = function longChain(
   value: ChainSpecificAddress,
-): LONG_CHAIN_NAME {
+): LongChainName {
   const short = ChainSpecificAddress.chain(value)
   return SHORT_TO_LONG_CHAIN_NAMES[short]
 }

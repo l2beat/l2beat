@@ -37,7 +37,7 @@ function buildCacheKey(dbUrl: string, envs?: Record<string, unknown>) {
     'utf8',
   )
 
-  const env = envs ? envHash(envs)?.slice(0, 12) : undefined
+  const env = envs ? envHash(envs) : undefined
   const dbHash = sha256Hex(dbUrl).slice(0, 12)
 
   const parts = compact([

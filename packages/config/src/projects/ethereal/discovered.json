@@ -1,7 +1,7 @@
 {
   "name": "ethereal",
-  "timestamp": 1761222332,
-  "configHash": "0x7c5dd716a2882b25314bac83271b22d979a340784cf9adf62ab8d16f123adfe8",
+  "timestamp": 1769514148,
+  "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -103,7 +103,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 618,
+        "batchCount": 2907,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -133,7 +133,7 @@
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 36,
+        "totalDelayedMessagesRead": 81,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -163,6 +163,11 @@
     },
     {
       "address": "arb1:0x18d32B1AB042b5E9a3430e77fDE8B4783A019234",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -252,6 +257,11 @@
       "implementationNames": {
         "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14": "ERC20MigrationOutbox"
       }
+    },
+    {
+      "address": "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -417,13 +427,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 50,
+        "firstUnresolvedNode": 241,
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23421301,
-        "latestConfirmed": 49,
-        "latestNodeCreated": 60,
+        "latestConfirmed": 240,
+        "latestNodeCreated": 252,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -497,6 +507,7 @@
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
+            "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -506,12 +517,22 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x66892C66711B2640360C3123E6C23C0cFa50550F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "arb1:0x690d1E0fac0599874b849EE88AeA27F7b348e1f2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -621,12 +642,14 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
+          "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
+          "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
+          "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
+          "arb1:0x2103c69696CB2D3779f5445393808239034E911c",
+          "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
           "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-          "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -636,8 +659,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 105,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 122,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -742,7 +765,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+      "address": "arb1:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -845,7 +868,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 36,
+        "delayedMessageCount": 81,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -858,8 +881,8 @@
         ],
         "rollup": "arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 618,
-        "sequencerReportedSubMessageCount": 38704
+        "sequencerMessageCount": 2907,
+        "sequencerReportedSubMessageCount": 2212628
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -973,22 +996,12 @@
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "arb1:0xFBE49A82CB2BFF6Fa4C2B1F0d165A5E1175Aac83",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1044,7 +1057,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 11 (45%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1096,7 +1109,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 7,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2634,6 +2647,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 392552859, "ethereal": 38804 },
-  "permissionsConfigHash": "0x81abfb206c956e59ae79f036c49b8e1ef2abb644f1980cc9b1489d539db36ec9"
+  "usedBlockNumbers": { "arbitrum": 425750134, "ethereal": 2212978 },
+  "permissionsConfigHash": "0xfe0af195f4f70d0b04f9ccfc465a6469fc51b3c877753d76587eaea2b13851ea"
 }

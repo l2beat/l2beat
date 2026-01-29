@@ -1,4 +1,93 @@
-Generated with discovered.json: 0x3ea4deaebcddbae6183925cc598bf3e427ba185c
+Generated with discovered.json: 0x6cec070374a46a40f6ac8ab7d7c592786593ce46
+
+# Diff at Mon, 26 Jan 2026 12:06:03 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8d5c5874ec83baaee41660f05b90f99eba936384 block: 1762182733
+- current timestamp: 1769425708
+
+## Description
+
+Upgraded both plonk and fflonk verifiers for gateway settlement on L1, these versions are not known to us. Upgrade tx: https://tools.l2beat.com/decoder-new/?hash=0xc9048b16ff7cbc8c194fb4b1394d2377b2a9932a34af4e46214bae8bcea5044b&data=AwA.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.$pastUpgrades.6:
++        ["2026-01-23T12:39:59.000Z","0xc9048b16ff7cbc8c194fb4b1394d2377b2a9932a34af4e46214bae8bcea5044b",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        6
++        7
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051586
++        124554051587
+      values.getSemverProtocolVersion.2:
+-        2
++        3
+      values.getVerifier:
+-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3"
++        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../gateway/{.flat@1762182733 => .flat}/L1VerifierFflonk.sol      | 4 ++--
+ .../gateway/{.flat@1762182733 => .flat}/L1VerifierPlonk.sol       | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xcb5cb215fc46933aecd5d5cba9e25d3544adb74c
 
 # Diff at Wed, 19 Nov 2025 10:32:24 GMT:
 

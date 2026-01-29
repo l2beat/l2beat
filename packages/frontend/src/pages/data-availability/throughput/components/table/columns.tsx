@@ -33,6 +33,7 @@ export const publicSystemsColumns = [
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
     },
+    enableHiding: false,
   }),
   columnHelper.group({
     header: 'Throughput',
@@ -41,7 +42,7 @@ export const publicSystemsColumns = [
         (e) => e.data?.pastDayData?.avgThroughputPerSecond,
         {
           id: 'pastDayAvgThroughputPerSecond',
-          header: 'PAST DAY AVG',
+          header: 'Past day avg',
           cell: (ctx) => (
             <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
               <TableValueCell
@@ -73,7 +74,7 @@ export const publicSystemsColumns = [
         },
       ),
       columnHelper.accessor((e) => e.data?.maxThroughputPerSecond, {
-        header: 'MAX CAPACITY',
+        header: 'Max capacity',
         cell: (ctx) => {
           const maxThroughputPerSecond =
             ctx.row.original.data?.maxThroughputPerSecond
@@ -108,7 +109,7 @@ export const publicSystemsColumns = [
         },
       }),
       columnHelper.accessor((e) => e.data?.maxRegistered, {
-        header: 'MAX REGISTERED',
+        header: 'Max registered',
         cell: (ctx) => {
           const maxRegisteredThroughput = ctx.row.original.data?.maxRegistered
           return (

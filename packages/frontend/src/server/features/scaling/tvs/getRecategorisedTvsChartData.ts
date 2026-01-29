@@ -75,17 +75,17 @@ export async function getRecategorisedTvsChart({
       getSummedTvsValues(rollups, range, {
         forSummary: true,
         excludeAssociatedTokens: false,
-        includeRwaRestrictedTokens: false,
+        excludeRwaRestrictedTokens: true,
       }),
       getSummedTvsValues(validiumsAndOptimiums, range, {
         forSummary: true,
         excludeAssociatedTokens: false,
-        includeRwaRestrictedTokens: false,
+        excludeRwaRestrictedTokens: true,
       }),
       getSummedTvsValues(others, range, {
         forSummary: true,
         excludeAssociatedTokens: false,
-        includeRwaRestrictedTokens: false,
+        excludeRwaRestrictedTokens: true,
       }),
     ])
 

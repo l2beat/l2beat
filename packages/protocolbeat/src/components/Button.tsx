@@ -13,6 +13,7 @@ const buttonVariants = cva(
         default: '',
         solid: 'bg-coffee-400/50 hover:bg-coffee-400/70',
         icon: 'border-none bg-transparent hover:bg-transparent',
+        destructive: '!border-aux-red !bg-aux-red/10 hover:!bg-aux-red/20',
       },
       size: {
         default: 'px-4 py-1',

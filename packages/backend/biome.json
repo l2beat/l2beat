@@ -6,7 +6,8 @@
   "linter": {
     "rules": {
       "nursery": {
-        "useSortedClasses": "off"
+        "useSortedClasses": "off",
+        "noFloatingPromises": "error"
       },
       "style": {
         "useAsConstAssertion": "error",

@@ -9,18 +9,16 @@ import {
 import {
   CONTRACTS,
   DA_BRIDGES,
-  DA_LAYERS,
   DA_MODES,
   EXITS,
   OPERATOR,
-  TECHNOLOGY_DATA_AVAILABILITY,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { RISK_VIEW } from '../../common/riskView'
-import { getStage } from '../../common/stages/getStage'
 import { STATE_VALIDATION } from '../../common/stateValidation'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -30,6 +28,11 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('paradex')
+
+const privacyCouncil = {
+  membersCount: 3,
+  requiredSignatures: 3, // workaroud to say that it acts as a 1 of N model where any can disclose
+}
 
 const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Paradex',
@@ -81,16 +84,17 @@ export const paradex: ScalingProject = {
   addedAt: UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     BADGES.VM.CairoVM,
-    BADGES.DA.EthereumBlobs,
+    BADGES.DA.DAC,
     BADGES.Stack.SNStack,
     BADGES.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Paradex',
     slug: 'paradex',
     stacks: ['SN Stack'],
     description:
-      'Paradex is a high-performance crypto-derivatives exchange offering Zero Fee Perpetuals.',
+      'Paradex is a high-performance crypto-derivatives exchange offering zero fee and private perpetuals.',
     purposes: ['Universal', 'Exchange'],
     links: {
       websites: ['https://paradex.trade/'],
@@ -261,6 +265,7 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1763997779),
+          untilTimestamp: UnixTime(1765809011),
           programHashes: [
             '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS, overlaps with starknet
           ],
@@ -271,8 +276,29 @@ export const paradex: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1763997779),
+          untilTimestamp: UnixTime(1765809011),
           programHashes: [
             '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator, overlaps with starknet
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765809011),
+          programHashes: [
+            '918745833886511857768061986591752808672496300091957204265383861063635175685', // Starknet OS, overlaps with starknet
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1765809011),
+          programHashes: [
+            '1701025211190912681772481128523426351562426117847395998223683709327746845867', // Aggregator, overlaps with starknet
           ],
         },
       },
@@ -319,8 +345,15 @@ export const paradex: ScalingProject = {
     ],
   },
   dataAvailability: {
-    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
+    layer: {
+      value: 'Privacy council',
+      sentiment: 'warning',
+      description: `Encrypted data is posted on Ethereum as blobs, and a privacy council of ${privacyCouncil.membersCount} members holds the decryption keys. Users are not able to independetly reconstruct the L2 state without relying on the council members.`,
+    },
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      membersCount: privacyCouncil.membersCount,
+      requiredSignatures: privacyCouncil.requiredSignatures,
+    }),
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
@@ -328,38 +361,21 @@ export const paradex: ScalingProject = {
       ...RISK_VIEW.STATE_ZKP_ST,
       executionDelay: finalizationPeriod,
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    // dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+    dataAvailability: {
+      value: 'External',
+      description: `Encrypted data is posted on Ethereum as blobs, and a privacy council of ${privacyCouncil.membersCount} members holds the decryption keys. Users are not able to independetly reconstruct the L2 state without relying on the council members.`,
+      sentiment: 'bad',
+      orderHint:
+        privacyCouncil.requiredSignatures / privacyCouncil.membersCount,
+    },
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://docs.paradex.trade/documentation/paradex-chain/node-setup',
-    },
-  ),
+  stage: {
+    stage: 'NotApplicable',
+  },
   stateDerivation: {
     nodeSoftware:
       'SN stack-compatible node software can be used, please find the Paradex-specific node setup guide [in their docs](https://docs.paradex.trade/documentation/paradex-chain/node-setup).The [Juno](https://github.com/NethermindEth/juno) node software can be used to reconstruct the L2 state entirely from L1. The feature has not been released yet, but can be found in this [PR](https://github.com/NethermindEth/juno/pull/1335).',
@@ -373,7 +389,22 @@ export const paradex: ScalingProject = {
     categories: [STATE_VALIDATION.VALIDITY_PROOFS],
   },
   technology: {
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
+    dataAvailability: {
+      name: 'Encrypted blobs via privacy council',
+      description: `Data is posted as encrypted blobs on Ethereum using a random symmetric key per state update. Such symmetric key is also posted, but encrypted to the privacy council members public keys. Each member can recover the symmetric key and decrypt the data. The council has ${privacyCouncil.membersCount} members and at least one is required to disclose the decryption keys to reconstruct the L2 state. Users cannot independently reconstruct the L2 state without relying on the council members.`,
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'no privacy council member discloses the decryption keys.',
+        },
+      ],
+      references: [
+        {
+          title: 'Privacy Perps - Paradex docs',
+          url: 'https://docs.paradex.trade/trading/privacy',
+        },
+      ],
+    },
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
@@ -389,7 +420,7 @@ export const paradex: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
-    zkProgramHashes: paradexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: paradexProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
@@ -435,6 +466,14 @@ export const paradex: ScalingProject = {
       date: '2025-11-25T00:00:00.00Z',
       description:
         'Paradex switches from Stone zk prover to Stwo to prove its blocks.',
+      type: 'general',
+    },
+    {
+      title: 'Paradex introduces privacy perps',
+      url: 'https://x.com/paradex/status/2000680628329812320',
+      date: '2025-12-15T00:00:00Z',
+      description:
+        'Paradex introduces a privacy council to manage decryption keys for encrypted data availability.',
       type: 'general',
     },
   ],

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -62,12 +62,48 @@ export const airbender: BaseProject = {
     Airbender targets proving batches of size 2**22 (~4 M) clock cycles. The proofs of such batches are pairwise recursively aggregated using zkVM in recursion mode. For onchain verification, the final Airbender STARK is [compressed using Boojum compressor](https://github.com/matter-labs/zkos-wrapper) and then wrapped into a Fflonk SNARK with KZG. The KZG commitment is done over BN254 curve and it uses Aztec Ignition trusted setup ceremony, see [below](#trusted-setups) for more details.
     `,
     trustedSetups: [
-      // I am assuming that Airbender will only have the FFLONK final wrap as their docs indicate
+      {
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        ...TRUSTED_SETUPS.AztecIgnition,
+      },
       {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
-    verifierHashes: [],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('adi'),
+        sinceTimestamp: UnixTime(1764107759),
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+    ],
   },
 }

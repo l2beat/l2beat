@@ -71,6 +71,7 @@ export function toRow(
 }
 
 export interface InteropMessageStatsRecord {
+  plugin: string
   type: string
   count: number
   avgDuration: number
@@ -78,6 +79,7 @@ export interface InteropMessageStatsRecord {
 }
 
 export interface InteropMessageDetailedStatsRecord {
+  plugin: string
   type: string
   srcChain: string
   dstChain: string
@@ -136,6 +138,7 @@ export class InteropMessageRepository extends BaseRepository {
     const overallStats = await this.db
       .selectFrom('InteropMessage')
       .select((eb) => [
+        'plugin',
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
@@ -155,10 +158,11 @@ export class InteropMessageRepository extends BaseRepository {
           )
           .as('knownAppCount'),
       ])
-      .groupBy('type')
+      .groupBy(['plugin', 'type'])
       .execute()
 
     return overallStats.map((overall) => ({
+      plugin: overall.plugin,
       type: overall.type,
       count: Number(overall.count),
       avgDuration: Number(overall.avgDuration),
@@ -186,6 +190,7 @@ export class InteropMessageRepository extends BaseRepository {
     const chainStats = await this.db
       .selectFrom('InteropMessage')
       .select((eb) => [
+        'plugin',
         'type',
         'srcChain',
         'dstChain',
@@ -194,12 +199,13 @@ export class InteropMessageRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
-      .groupBy(['type', 'srcChain', 'dstChain'])
+      .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
     return chainStats.map((chain) => {
       assert(chain.srcChain && chain.dstChain)
       return {
+        plugin: chain.plugin,
         type: chain.type,
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,
@@ -219,6 +225,14 @@ export class InteropMessageRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('InteropMessage').executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropMessage')
+      .where('plugin', '=', plugin)
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 

@@ -3,5 +3,11 @@
     "hash": "0x0263b95787fe6ebe249551cab6ff08d057990595ea3c2b43e358be265760caf4",
     "address": "eth:0x9BC70c62823BabFed57698d458833da55D0c88A4",
     "blockNumber": 23670593
+  },
+  "DesertVerifierWithSpot.sol": {
+    "hash": "0xf3aa389c9a9baa3aedecfc297456525988552a3bc0ab49859f8c679d110a92de",
+    "address": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
+    "chain": "ethereum",
+    "blockNumber": 23981955
   }
 }

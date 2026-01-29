@@ -13,5 +13,11 @@
     "hash": "0x2a749098cea7b9243019ffc1193ad519dbadc55c43cf610962f7ba13beba3f21",
     "address": "eth:0xc89423b4909080fB8F8A43dF5E1C27001e55C24B",
     "blockNumber": 23588465
+  },
+  "BridgeHub_v29_ADI": {
+    "hash": "0x9899b4cd60a43768bafab09e097eb4c2b02875f309b7503d71018eccdc3b6cb8",
+    "address": "eth:0xcf1c73439c85f7eB9d4439dAf398Fd6392d176E6",
+    "chain": "ethereum",
+    "blockNumber": 24038982
   }
 }

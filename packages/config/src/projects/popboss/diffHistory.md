@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xe00b4ada8cc2790f86aeb20257b517cb0b2abb13
+Generated with discovered.json: 0x40ab6e64f0b1bed5d40a2be14937fa563de58a84
+
+# Diff at Wed, 21 Jan 2026 08:43:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1760975747
+- current timestamp: 1768984798
+
+## Description
+
+New member conduit msig2.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.$members.1:
++        "arb1:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.$members.2:
++        "arb1:0x2103c69696CB2D3779f5445393808239034E911c"
+      values.$members.0:
+-        "arb1:0xFe0ab87ebE03DD0bF52DaF34Dfda6639c335e2d4"
++        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.3:
+-        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.5:
+-        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760975747 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x330F8fEB25f3427cABA32446728C36ae67f2135b) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xceb9f493c838bab518b7329361f12e2354a7e980
 
 # Diff at Mon, 20 Oct 2025 15:58:09 GMT:
 

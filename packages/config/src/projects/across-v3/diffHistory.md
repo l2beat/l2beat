@@ -1,3 +1,169 @@
+Generated with discovered.json: 0x758791ddb7ad54da9864519ecbc5ea873154a269
+
+# Diff at Mon, 26 Jan 2026 12:50:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999073
+- current timestamp: 1769431719
+
+## Description
+
+Upgrade Ink adapter (cctp v2 support):
+https://disco.l2beat.com/diff/eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2/eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.57073:
+-        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
++        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Ink_Adapter.sol}                               |   0
+ .../OP_Adapter.sol}                                | 124 +++++++++++++++------
+ 2 files changed, 93 insertions(+), 31 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768999073 (main branch discovery), not current.
+
+```diff
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "Ink_Adapter"
++        "OP_Adapter"
+    }
+```
+
+Generated with discovered.json: 0x17dd3740d04ee41c971654c4b477ba031e228eab
+
+# Diff at Wed, 21 Jan 2026 12:39:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768816709
+- current timestamp: 1768999073
+
+## Description
+
+UMA Multisig change.
+
+## Watched changes
+
+```diff
+    contract UMA Multisig (eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766"
+    }
+```
+
+Generated with discovered.json: 0x5f5ffe9d52db6f5941dd2818d9f8b7d9b6acbc73
+
+# Diff at Mon, 19 Jan 2026 10:09:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1766407632
+- current timestamp: 1768816709
+
+## Description
+
+add megaeth adapter.
+
+diff to another op stack adapter (soneium): https://disco.l2beat.com/diff/eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2/eth:0xE1f04404b74F996A311F13aE291849fC153578Ac
+- cctpv2 support, so substantial changes
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.4326:
++        "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac"
+      values.CrossChainContracts.4326:
++        "eth:0x3Db06DA8F0a24A525f314eeC954fC5c6a973d40E"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OP_Adapter (eth:0xE1f04404b74F996A311F13aE291849fC153578Ac)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/across-v3/.flat/OP_Adapter.sol    | 658 +++++++++++++++++++++
+ 1 file changed, 658 insertions(+)
+```
+
+Generated with discovered.json: 0x61851209fba119531f164ca1d4ba295b8a9e53b8
+
+# Diff at Mon, 22 Dec 2025 12:48:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ec298bd11932360ded4da7b1d8484fb988e7cc02 block: 1765464119
+- current timestamp: 1766407632
+
+## Description
+
+UMA related changes (not affecting across).
+
+## Watched changes
+
+```diff
+    contract IdentifierWhitelist (eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570) {
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+      values.whitelistedIdentifiers.265:
+-        "ASSERT_TRUTH"
+    }
+```
+
+Generated with discovered.json: 0xdbde8201080b3ee7a8ec50c99be45ca53769bb8a
+
+# Diff at Thu, 11 Dec 2025 14:43:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33847f925c13483ce2ffd9595b070f8d1c55730 block: 1763977586
+- current timestamp: 1765464119
+
+## Description
+
+UMA whitelist changes.
+
+## Watched changes
+
+```diff
+    contract IdentifierWhitelist (eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570) {
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+      values.whitelistedIdentifiers.270:
++        "0x4153534552545f54525554483200000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xe14899ad67375505474d7ddd77ed32649b5e0104
 
 # Diff at Mon, 24 Nov 2025 09:54:16 GMT:

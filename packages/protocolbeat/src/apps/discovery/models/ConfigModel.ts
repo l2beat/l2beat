@@ -1,6 +1,7 @@
 import type {
   ContractConfigSchema,
   DiscoveryConfigSchema,
+  FieldConfigSchema,
 } from '@l2beat/discovery'
 import { assign, parse, stringify } from 'comment-json'
 import { ContractConfigModel } from './ContractConfigModel'
@@ -67,6 +68,12 @@ export class ConfigModel {
     )
   }
 
+  setContractDescription(id: string, description: string | undefined) {
+    return this.patchOverride(id, (override) =>
+      override.setDescription(description),
+    )
+  }
+
   setFieldSeverity(
     id: string,
     fieldName: string,
@@ -79,6 +86,38 @@ export class ConfigModel {
 
   getFieldSeverity(id: string, fieldName: string) {
     return this.overrides[id]?.getFieldSeverity(fieldName)
+  }
+
+  setFieldDescription(
+    id: string,
+    fieldName: string,
+    description: FieldConfigSchema['description'],
+  ) {
+    return this.patchOverride(id, (override) =>
+      override.setFieldDescription(fieldName, description),
+    )
+  }
+
+  getFieldDescription(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldDescription(fieldName)
+  }
+
+  setFieldHandler(
+    id: string,
+    fieldName: string,
+    handler: FieldConfigSchema['handler'],
+  ) {
+    return this.patchOverride(id, (override) =>
+      override.setFieldHandler(fieldName, handler),
+    )
+  }
+
+  getFieldHandler(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldHandler(fieldName)
+  }
+
+  getFieldHandlerString(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldHandlerString(fieldName)
   }
 
   setCategory(id: string, category: ContractConfigSchema['category']) {
@@ -114,6 +153,10 @@ export class ConfigModel {
 
   getCategory(id: string) {
     return this.overrides[id]?.category
+  }
+
+  getDescription(id: string) {
+    return this.overrides[id]?.description
   }
 
   private getOverride(id: string) {
