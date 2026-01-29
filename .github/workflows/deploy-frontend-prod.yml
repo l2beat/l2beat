@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/build-deploy-coolify.yml
     with:
       project: frontend
-      environment: production
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
