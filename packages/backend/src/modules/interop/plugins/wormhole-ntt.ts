@@ -24,16 +24,17 @@ Note that (TODO: )
 
 */
 
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -71,17 +72,17 @@ const NTT_MANAGERS: { [chain: string]: { [manager: string]: string } } = {
   },
 }
 
-const parseSendTransceiverMessage = createEventParser(
-  'event SendTransceiverMessage(uint16 recipientChain, (bytes32 sourceNttManagerAddress, bytes32 recipientNttManagerAddress, bytes nttManagerPayload, bytes transceiverPayload) message)',
-)
+const sendTransceiverMessageLog =
+  'event SendTransceiverMessage(uint16 recipientChain, (bytes32 sourceNttManagerAddress, bytes32 recipientNttManagerAddress, bytes nttManagerPayload, bytes transceiverPayload) message)'
+const parseSendTransceiverMessage = createEventParser(sendTransceiverMessageLog)
 
-const parseReceivedRelayedMessage = createEventParser(
-  'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)',
-)
+const receivedRelayedMessageLog =
+  'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)'
+const parseReceivedRelayedMessage = createEventParser(receivedRelayedMessageLog)
 
-const parseReceivedMessage = createEventParser(
-  'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)',
-)
+const receivedMessageLog =
+  'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)'
+const parseReceivedMessage = createEventParser(receivedMessageLog)
 
 export const TransceiverMessage = createInteropEventType<{
   sourceNttManagerAddress: string
@@ -104,10 +105,45 @@ export const ReceivedMessage = createInteropEventType<{
   $srcChain: string
 }>('wormhole-ntt.ReceivedMessage')
 
-export class WormholeNTTPlugin implements InteropPlugin {
+export class WormholeNTTPlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-ntt'
 
   constructor(private configs: InteropConfigStore) {}
+
+  // TODO: NTT transceivers are per-token, this uses hardcoded addresses for now
+  // Needs config plugin for proper dynamic address support
+  getDataRequests(): DataRequest[] {
+    const addresses: ChainSpecificAddress[] = []
+    for (const [chain, managers] of Object.entries(NTT_MANAGERS)) {
+      for (const manager of Object.keys(managers)) {
+        try {
+          addresses.push(ChainSpecificAddress.fromLong(chain, manager))
+        } catch {
+          // Chain not supported by ChainSpecificAddress, skip
+        }
+      }
+    }
+
+    if (addresses.length === 0) return []
+
+    return [
+      {
+        type: 'event',
+        signature: sendTransceiverMessageLog,
+        addresses,
+      },
+      {
+        type: 'event',
+        signature: receivedRelayedMessageLog,
+        addresses,
+      },
+      {
+        type: 'event',
+        signature: receivedMessageLog,
+        addresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
