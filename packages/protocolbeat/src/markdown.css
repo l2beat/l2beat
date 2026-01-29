@@ -73,7 +73,7 @@
 }
 
 .mdc pre {
-  @apply overflow-auto rounded bg-coffee-600 px-4 py-2 font-mono;
+  @apply overflow-auto rounded bg-coffee-600 px-2 py-1 font-mono;
 }
 
 .mdc pre code {
