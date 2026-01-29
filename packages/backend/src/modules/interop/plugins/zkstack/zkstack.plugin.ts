@@ -563,10 +563,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
     // WITHDRAWAL
     if (BridgeMintL1.checkType(event)) {
-      const gasWithdrawal = db.find(Withdrawal, {
+      const gasWithdrawals = db.findAll(Withdrawal, {
         matchId: event.args.matchId,
       })
-      if (gasWithdrawal) {
+      if (gasWithdrawals.length > 0) {
+        // pick earliest, more deterministic for spam cases
+        const gasWithdrawal = gasWithdrawals.sort(
+          (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+        )[0]
         const l1MessageSent = db.find(L1MessageSent, {
           sameTxBefore: gasWithdrawal,
         })
