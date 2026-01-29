@@ -110,7 +110,7 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
-    transferSizeChartData: getTransferSizeChartData(records),
+    transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
@@ -194,6 +194,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const transferSizeChartData: TransferSizeChartData = {
     arbitrum: {
+      name: 'Arbitrum Canonical',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       countUnder100: 10,
       count100To1K: 12,
@@ -202,6 +203,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       countOver100K: 1,
     },
     optimism: {
+      name: 'Optimism Canonical',
       iconUrl: manifest.getUrl('/icons/optimism.png'),
       countUnder100: 5,
       count100To1K: 8,
@@ -210,6 +212,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       countOver100K: 0,
     },
     base: {
+      name: 'Base Canonical',
       iconUrl: manifest.getUrl('/icons/base.png'),
       countUnder100: 5,
       count100To1K: 8,

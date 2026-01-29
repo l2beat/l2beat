@@ -12,7 +12,7 @@ export function TransferSizeChartCard({
   isLoading: boolean
 }) {
   const chartData = useMemo(() => {
-    return Object.entries(transferSizeChartData ?? {}).map(([key, data]) => {
+    return Object.values(transferSizeChartData ?? {}).map((data) => {
       const total =
         data.countUnder100 +
         data.count100To1K +
@@ -21,7 +21,7 @@ export function TransferSizeChartCard({
         data.countOver100K
 
       return {
-        name: key,
+        name: data.name,
         iconUrl: data.iconUrl,
         countUnder100: data.countUnder100,
         percentageUnder100: round((data.countUnder100 / total) * 100, 2),

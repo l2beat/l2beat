@@ -1,9 +1,12 @@
+import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 
 export type TransferSizeChartData = Record<string, TransferSizeData>
 
 type TransferSizeData = {
+  name: string
   iconUrl: string
   countUnder100: number
   count100To1K: number
@@ -14,6 +17,7 @@ type TransferSizeData = {
 
 export function getTransferSizeChartData(
   records: AggregatedInteropTransferRecord[],
+  interopProjects: Project<'interopConfig'>[],
 ): TransferSizeChartData | undefined {
   const data = new Map<string, TransferSizeData>()
 
@@ -22,7 +26,10 @@ export function getTransferSizeChartData(
   }
 
   for (const record of records) {
+    const project = interopProjects.find((p) => p.id === record.id)
+    assert(project, `Project not found: ${record.id}`)
     const current = data.get(record.id) || {
+      name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${record.id}.png`),
       countUnder100: 0,
       count100To1K: 0,
