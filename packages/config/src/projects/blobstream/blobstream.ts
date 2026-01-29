@@ -35,7 +35,7 @@ export const blobstream: BaseProject = {
       'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
     links: {
       documentation: [
-        'https://docs.celestia.org/how-to-guides/blobstream',
+        'https://docs.celestia.org/operate/blobstream/install-binary/#how-to-run',
         'https://hackmd.io/@succinctlabs/HJE7XRrup',
       ],
       repositories: [
