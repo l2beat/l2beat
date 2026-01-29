@@ -144,7 +144,10 @@ export const omniChainColumns = [
   tokensByVolumeColumn,
 ]
 
-export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
+export function getAllProtocolsColumns(
+  hideTypeColumn?: boolean,
+  showAverageValueAtRiskColumn?: boolean,
+) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
@@ -193,6 +196,7 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         </span>
       ),
     }),
+    showAverageValueAtRiskColumn && averageValueAtRiskColumn,
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
