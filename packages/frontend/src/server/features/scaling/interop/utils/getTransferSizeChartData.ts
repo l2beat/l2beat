@@ -63,6 +63,7 @@ export function getTransferSizeChartData(
           count10KTo100K: value.count10KTo100K,
           countOver100K: value.countOver100K,
         },
-      ]),
+      ])
+      .slice(0, 15),
   )
 }
