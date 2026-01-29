@@ -41,6 +41,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   everclear: 'everclear',
   zircuit: 'zircuit',
   katana: 'katana',
+  forknet: 'forknet',
   taiko: 'taiko',
   facet: 'facet',
   gateway: 'gateway',
