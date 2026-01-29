@@ -278,10 +278,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
     if (withdraw) {
       const config = this.configs.get(PolygonConfig)
       const childToken = Address32.from(input.log.address)
-      const mappedRootToken = config?.childToRoot?.[childToken]
-      const rawRootToken = Address32.from(withdraw.token)
-      const rootToken =
-        rawRootToken !== Address32.ZERO ? rawRootToken : mappedRootToken
+      const rootToken = config?.childToRoot?.[childToken]
       if (!rootToken) return
 
       const recipient = EthereumAddress(withdraw.from)
