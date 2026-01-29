@@ -227,6 +227,19 @@ Convert hex logIndex to decimal and calculate offset.
 - `EthereumAddress(value)` for receiver/sender EOA-like fields (validates checksum).
 - Prefer `defineNetworks()` + chain-specific filtering if the plugin supports multiple networks.
 
+### Transfer Token Mechanism
+
+Transfers support `srcWasBurned` and `dstWasMinted` booleans to track how tokens move:
+
+| Pattern | srcWasBurned | dstWasMinted | Example |
+|---------|--------------|--------------|---------|
+| lock/mint | `false` | `true` | L1→L2 canonical bridges |
+| burn/unlock | `true` | `false` | L2→L1 canonical bridges |
+| burn/mint | `true` | `true` | CCIP, native USDC |
+| lock/release | `false` | `false` | Liquidity pools |
+
+For dynamic detection (e.g., CCIP), check `Transfer` events: `to == 0x0` or `0xdead` = burned, `from == 0x0` = minted.
+
 ## Troubleshooting
 
 ### Event Not Captured

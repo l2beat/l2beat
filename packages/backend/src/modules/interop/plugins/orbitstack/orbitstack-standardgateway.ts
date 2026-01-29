@@ -264,9 +264,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -305,9 +307,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: depositInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }

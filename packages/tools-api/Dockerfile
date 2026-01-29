@@ -12,7 +12,7 @@ RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY . .
 RUN pnpm add -g turbo
-RUN turbo prune --docker @l2beat/frontend
+RUN turbo prune --docker @l2beat/tools-api
 
 FROM node:22.22.0 AS builder
 ARG TURBO_TEAM
@@ -24,17 +24,21 @@ COPY --from=pruner /src/out/json/ .
 RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
-RUN pnpm build:frontend
+RUN pnpm build:tools-api
 
 FROM node:22.22.0-slim AS release
 
-# Security: Run as non-root user
-RUN groupadd -r appgroup && useradd -r -g appgroup -m appuser
+# Install curl for healthcheck and create non-root user
+RUN apt update && \
+  apt install -y curl && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/
 COPY --from=builder --chown=appuser:appgroup /src/ .
-WORKDIR /app/packages/frontend/
+WORKDIR /app/packages/tools-api/
 
 USER appuser
 
-CMD node ./dist/server/index.js
+CMD NODE_ENV=production node ./build/index.js
