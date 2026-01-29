@@ -475,9 +475,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       })
       if (!l2LogSent) return
 
-      const baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
+      let baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
         sameTxBefore: event,
       })
+      if (!baseTokenDeposit) {
+        baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
+          sameTxAfter: event,
+        })
+      }
       if (!baseTokenDeposit) return
 
       const depositInitiated = db.find(BridgehubDepositInitiated, {
