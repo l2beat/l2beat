@@ -31,6 +31,9 @@ import { getStarknetConfig } from './chains/starknet'
 import { getZkStackConfig } from './chains/zkStack'
 import { getPolygonCdkConfig } from './chains/polygonCdk'
 import { getFacetConfig } from './chains/facet'
+import { getLineaConfig } from './chains/linea'
+import { getScrollConfig } from './chains/scroll'
+import { getMorphConfig } from './chains/morph'
 
 import type {
   BridgeType,
@@ -704,6 +707,12 @@ async function analyzeChain(chainInfo: ChainInfo): Promise<EscrowReport | null> 
     stackConfig = getPolygonCdkConfig(chainInfo)
   } else if (stack === 'facet') {
     stackConfig = getFacetConfig(chainInfo)
+  } else if (stack === 'linea') {
+    stackConfig = getLineaConfig(chainInfo)
+  } else if (stack === 'scroll') {
+    stackConfig = getScrollConfig(chainInfo)
+  } else if (stack === 'morph') {
+    stackConfig = getMorphConfig(chainInfo)
   } else {
     console.log(chalk.yellow(`  Stack '${stack}' not fully supported yet, using auto-detection`))
     stackConfig = {
@@ -964,6 +973,11 @@ const DEFAULT_CHAINS = [
   'starknet',
   'zksync2',
   'facet',
+  'linea',
+  'bob',
+  'scroll',
+  'abstract',
+  'morph',
 ]
 
 async function main(): Promise<void> {

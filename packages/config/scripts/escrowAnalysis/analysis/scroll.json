@@ -1,0 +1,437 @@
+{
+  "projectId": "scroll",
+  "timestamp": 1769622839687,
+  "escrows": [
+    {
+      "address": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+      "name": "L1StandardERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Scroll Governance",
+      "admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "adminName": "Scroll Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 45539992,
+          "amount": 15145.92,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDC",
+          "valueUsd": 34099792,
+          "amount": 34106820,
+          "issuer": "Circle",
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 9012289,
+          "amount": 9022855,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 994016.6,
+          "amount": 11.17,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 72215.98,
+          "amount": 72232.96,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "rETH",
+          "valueUsd": 32955.62,
+          "amount": 9.49,
+          "issuer": "Rocket Pool",
+          "source": "canonical"
+        },
+        {
+          "symbol": "DODO",
+          "valueUsd": 15285.44,
+          "amount": 820865.9,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "KNC",
+          "valueUsd": 12838.23,
+          "amount": 61412.06,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SIS",
+          "valueUsd": 11377.98,
+          "amount": 500557.25,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 8535.18,
+          "amount": 2.61,
+          "issuer": "EtherFi",
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 7920.63,
+          "amount": 1644.77,
+          "issuer": "Uniswap",
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 4624.2,
+          "amount": 28.81,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "STONE",
+          "valueUsd": 2208.92,
+          "amount": 0.7,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "cSTONE",
+          "valueUsd": 939.26,
+          "amount": 0.3,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 713.16,
+          "amount": 712.54,
+          "issuer": "Liquity",
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 193.18,
+          "amount": 10,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CRV",
+          "valueUsd": 146.08,
+          "amount": 419.2,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 76.09,
+          "amount": 152.9,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "CHZ",
+          "valueUsd": 16.1,
+          "amount": 284.44,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "OKB",
+          "valueUsd": 6.94,
+          "amount": 0.06,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 89816142.59000002,
+      "source": "canonical",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+    },
+    {
+      "address": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+      "name": "L1ScrollMessenger",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Scroll Governance",
+      "admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "adminName": "Scroll Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
+    },
+    {
+      "address": "eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+      "name": "L1CustomERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Scroll Governance",
+      "admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "adminName": "Scroll Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings."
+    },
+    {
+      "address": "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+      "name": "L1USDCGateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Scroll Governance",
+      "admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "adminName": "Scroll Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": "Contract used to bridge USDC tokens from L1 to L2."
+    },
+    {
+      "address": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+      "name": "wstETHescrowLido",
+      "category": "issuer-secured",
+      "bridgeType": "external",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
+      "admin": "eth:0xCC2C53556Bc75217cf698721b29071d6f12628A9",
+      "adminName": "Lido DAO",
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "wstETH",
+          "valueUsd": 1163760.4,
+          "amount": 315.83,
+          "issuer": "Lido DAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1163760.4,
+      "source": "external",
+      "description": null
+    },
+    {
+      "address": "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
+      "name": "pufETHEscrow",
+      "category": "third-party-secured",
+      "bridgeType": "external",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": "eth:0x9eBf2f33526CD571f8b2ad312492cb650870CFd6",
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "pufETH",
+          "valueUsd": 202042.31,
+          "amount": 63.14,
+          "issuer": null,
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 202042.31,
+      "source": "external",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings."
+    },
+    {
+      "address": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+      "name": "DaiEscrow",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Scroll Governance",
+      "admin": "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+      "adminName": "Scroll Governance",
+      "isRollupControlled": true,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "canonical",
+      "description": null
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+      "valueUsd": 17957064,
+      "amount": 5496.12,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "EtherFi",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "l2Address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "valueUsd": 5109122.5,
+      "amount": 1610.27,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "l2Address": "0x65421ba909200b81640d98B979d07487C9781B66",
+      "valueUsd": 1058342.1,
+      "amount": 331.23,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Kelp DAO",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDe",
+      "name": "USDe",
+      "l2Address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "valueUsd": 128585.87,
+      "amount": 128736.46,
+      "bridgeProtocol": "Layer Zero v2",
+      "issuer": "Ethena",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 129686782.16000003,
+    "nativeTvl": 14207792,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 89816142.59000002,
+      "canonicalAdditionalTrust": 0,
+      "external": 25618917.180000003
+    },
+    "externalBreakdown": {
+      "issuerSecured": 1163760.4,
+      "additionalTrust": 24455156.78
+    },
+    "canonicalTvl": 89816142.59000002,
+    "externalTvl": 25618917.180000003,
+    "apiCanonicalTvl": 89816142.59000002,
+    "apiExternalTvl": 25662847.57
+  },
+  "externalTokensSummary": {
+    "totalCount": 4,
+    "totalValue": 24253114.470000003,
+    "byProtocol": {
+      "Layer Zero": {
+        "count": 2,
+        "value": 23066186.5
+      },
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 1058342.1
+      },
+      "Layer Zero v2": {
+        "count": 1,
+        "value": 128585.87
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 4,
+        "value": 24253114.470000003
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
 import { readdirSync, readFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
-export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'starknet' | 'facet' | 'unknown'
+export type ChainStack = 'orbit' | 'opstack' | 'zkstack' | 'polygon' | 'starknet' | 'facet' | 'linea' | 'scroll' | 'morph' | 'unknown'
 export type ChainType = 'layer2' | 'layer3'
 
 export interface ChainInfo {
@@ -84,6 +84,27 @@ const FACET_TEMPLATES = [
   'facet/FacetEtherBridge',
 ]
 
+// Templates that identify Linea
+const LINEA_TEMPLATES = [
+  'linea/LineaRollup',
+  'linea/L1TokenBridge',
+  'linea/L2MessageService',
+]
+
+// Templates that identify Scroll
+const SCROLL_TEMPLATES = [
+  'scroll/ScrollChain',
+  'scroll/L1ScrollMessenger',
+  'scroll/ScrollOwner',
+]
+
+// Templates that identify Morph
+const MORPH_TEMPLATES = [
+  'morph/MorphRollup',
+  'morph/L1CrossDomainMessenger',
+  'morph/L1StandardERC20Gateway',
+]
+
 /**
  * Detect the chain stack from discovery.json templates
  */
@@ -116,6 +137,15 @@ function detectStack(discovery: DiscoveryJson): ChainStack {
   }
   if (FACET_TEMPLATES.some((t) => templates.has(t))) {
     return 'facet'
+  }
+  if (LINEA_TEMPLATES.some((t) => templates.has(t))) {
+    return 'linea'
+  }
+  if (SCROLL_TEMPLATES.some((t) => templates.has(t))) {
+    return 'scroll'
+  }
+  if (MORPH_TEMPLATES.some((t) => templates.has(t))) {
+    return 'morph'
   }
 
   return 'unknown'

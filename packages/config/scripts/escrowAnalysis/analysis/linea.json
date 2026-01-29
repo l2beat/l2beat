@@ -1,0 +1,462 @@
+{
+  "projectId": "linea",
+  "timestamp": 1769622681846,
+  "escrows": [
+    {
+      "address": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "name": "LineaRollup",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Linea/Consensys Governance",
+      "admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+      "adminName": "Linea/Consensys Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 199890740,
+          "amount": 66480.65,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 199890740,
+      "source": "canonical",
+      "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
+    },
+    {
+      "address": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "name": "TokenBridge",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Linea/Consensys Governance",
+      "admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+      "adminName": "Linea/Consensys Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "LINEA",
+          "valueUsd": 111811344,
+          "amount": 17774000000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 12282466,
+          "amount": 12296867,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 9127561,
+          "amount": 102.55,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "wstETH",
+          "valueUsd": 6291379.5,
+          "amount": 1707.38,
+          "issuer": "Lido DAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 196558.52,
+          "amount": 196604.72,
+          "issuer": "MakerDAO",
+          "source": "canonical"
+        },
+        {
+          "symbol": "COMP",
+          "valueUsd": 78044.3,
+          "amount": 3275.03,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LDO",
+          "valueUsd": 9903.91,
+          "amount": 19113,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SIS",
+          "valueUsd": 9039.4,
+          "amount": 397674.94,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "UNI",
+          "valueUsd": 7755.86,
+          "amount": 1610.55,
+          "issuer": "Uniswap",
+          "source": "canonical"
+        },
+        {
+          "symbol": "KNC",
+          "valueUsd": 6556.36,
+          "amount": 31362.53,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SHIB",
+          "valueUsd": 6148.37,
+          "amount": 793739140,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LUSD",
+          "valueUsd": 6071.52,
+          "amount": 6066.23,
+          "issuer": "Liquity",
+          "source": "canonical"
+        },
+        {
+          "symbol": "FRAX",
+          "valueUsd": 4689.58,
+          "amount": 4703.01,
+          "issuer": "Frax",
+          "source": "canonical"
+        },
+        {
+          "symbol": "MKR",
+          "valueUsd": 2387.74,
+          "amount": 1.56,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDP",
+          "valueUsd": 2368.81,
+          "amount": 2369.31,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "GNO",
+          "valueUsd": 1758.35,
+          "amount": 12.44,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "PEPE",
+          "valueUsd": 1692.17,
+          "amount": 341992220,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TRB",
+          "valueUsd": 1062.48,
+          "amount": 55,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "RUNE",
+          "valueUsd": 862.8,
+          "amount": 1538.05,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "LINK",
+          "valueUsd": 759.79,
+          "amount": 64.63,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "EURA",
+          "valueUsd": 612.68,
+          "amount": 513.1,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SOL",
+          "valueUsd": 412.44,
+          "amount": 3.28,
+          "issuer": "Solana/Wormhole",
+          "source": "canonical"
+        },
+        {
+          "symbol": "CHZ",
+          "valueUsd": 223.93,
+          "amount": 3955.76,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BabyDoge",
+          "valueUsd": 168.56,
+          "amount": 284698970000,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BADGER",
+          "valueUsd": 145.29,
+          "amount": 273.2,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "SUSHI",
+          "valueUsd": 124.2,
+          "amount": 417.68,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "TONCOIN",
+          "valueUsd": 121.5,
+          "amount": 80,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "ELON",
+          "valueUsd": 99.92,
+          "amount": 2379704300,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BEAM",
+          "valueUsd": 71.13,
+          "amount": 22749.13,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "FOX",
+          "valueUsd": 52.94,
+          "amount": 5244.66,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "DODO",
+          "valueUsd": 45.78,
+          "amount": 2458.33,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "AAVE",
+          "valueUsd": 14.1,
+          "amount": 0.09,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "BAL",
+          "valueUsd": 10.45,
+          "amount": 21,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "APE",
+          "valueUsd": 5.17,
+          "amount": 28.94,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "weETH",
+          "valueUsd": 3.27,
+          "amount": 0,
+          "issuer": "EtherFi",
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 139850521.82000002,
+      "source": "canonical",
+      "description": "Contract used to bridge and escrow ERC-20 tokens."
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "l2Address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
+      "valueUsd": 182661540,
+      "amount": 55907.28,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "EtherFi",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    },
+    {
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "l2Address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "valueUsd": 80389256,
+      "amount": 25002.05,
+      "bridgeProtocol": "Connext (xERC20)",
+      "issuer": "Renzo",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Connext (xERC20) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC",
+      "name": "USDC",
+      "l2Address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "valueUsd": 34581380,
+      "amount": 34539816,
+      "bridgeProtocol": "Circle CCTP",
+      "issuer": "Circle",
+      "category": "issuer-secured",
+      "nameCategory": "external",
+      "additionalTrust": false,
+      "categoryReason": "Circle operates both the token and the bridge",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "Circle",
+          "role": "Token Issuer & Bridge Operator",
+          "powers": [
+            "mint/burn tokens",
+            "control bridge"
+          ],
+          "riskDescription": "Full control over USDC - no additional trust beyond holding the token"
+        }
+      ]
+    },
+    {
+      "symbol": "SolvBTC.m",
+      "name": "Free Bridged SolvBTC",
+      "l2Address": "0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c",
+      "valueUsd": 936243.4,
+      "amount": 10.49,
+      "bridgeProtocol": "Free.tech Bridge (Meson)",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Free.tech Bridge (Meson) (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "l2Address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
+      "valueUsd": 104773.51,
+      "amount": 33.02,
+      "bridgeProtocol": "Layer Zero",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero",
+      "formulaType": "totalSupply",
+      "trustedParties": [
+        {
+          "name": "LayerZero Labs",
+          "role": "Protocol Operator",
+          "powers": [
+            "change default DVNs",
+            "upgrade MessageLib",
+            "control endpoint config"
+          ],
+          "riskDescription": "Can redirect validation to malicious DVNs"
+        },
+        {
+          "name": "LayerZero DVN",
+          "role": "Message Validator",
+          "powers": [
+            "validate cross-chain messages",
+            "approve minting"
+          ],
+          "riskDescription": "Can approve fraudulent mints or censor transfers"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalTvl": 644177244.8899995,
+    "nativeTvl": 5581338.390000001,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 339741261.82000005,
+      "canonicalAdditionalTrust": 0,
+      "external": 298673192.90999997
+    },
+    "externalBreakdown": {
+      "issuerSecured": 34581380,
+      "additionalTrust": 264091812.91
+    },
+    "canonicalTvl": 339741261.82000005,
+    "externalTvl": 298673192.90999997,
+    "apiCanonicalTvl": 339741261.8200001,
+    "apiExternalTvl": 298854644.67999995
+  },
+  "externalTokensSummary": {
+    "totalCount": 5,
+    "totalValue": 298673192.90999997,
+    "byProtocol": {
+      "Layer Zero": {
+        "count": 2,
+        "value": 182766313.51
+      },
+      "Connext (xERC20)": {
+        "count": 1,
+        "value": 80389256
+      },
+      "Circle CCTP": {
+        "count": 1,
+        "value": 34581380
+      },
+      "Free.tech Bridge (Meson)": {
+        "count": 1,
+        "value": 936243.4
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 5,
+        "value": 298673192.90999997
+      }
+    }
+  }
+}

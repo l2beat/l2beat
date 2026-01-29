@@ -1,6 +1,6 @@
 {
   "projectId": "bob",
-  "timestamp": 1769460549749,
+  "timestamp": 1769622515610,
   "escrows": [
     {
       "address": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -16,13 +16,13 @@
       "tokens": [
         {
           "symbol": "ETH",
-          "valueUsd": 2842064.2,
-          "amount": 969.81,
+          "valueUsd": 2916020.2,
+          "amount": 969.82,
           "issuer": null,
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 2842064.2,
+      "totalValueUsd": 2916020.2,
       "source": "canonical",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
     },
@@ -40,97 +40,97 @@
       "tokens": [
         {
           "symbol": "WBTC",
-          "valueUsd": 1637258.9,
+          "valueUsd": 1654442.6,
           "amount": 18.59,
           "issuer": "BitGo",
           "source": "canonical"
         },
         {
           "symbol": "STONE",
-          "valueUsd": 601484.25,
+          "valueUsd": 621998.2,
           "amount": 196.04,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "tBTC",
-          "valueUsd": 400613.34,
+          "valueUsd": 406399.75,
           "amount": 4.57,
-          "issuer": null,
+          "issuer": "Threshold",
           "source": "canonical"
         },
         {
           "symbol": "USDT",
-          "valueUsd": 337362.72,
+          "valueUsd": 337290.06,
           "amount": 337685.53,
           "issuer": "Tether",
           "source": "canonical"
         },
         {
           "symbol": "eSOV",
-          "valueUsd": 167532.62,
+          "valueUsd": 167176.66,
           "amount": 2686437,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "LBTC",
-          "valueUsd": 74707.15,
+          "valueUsd": 75713.75,
           "amount": 0.85,
-          "issuer": null,
+          "issuer": "Lombard Finance",
           "source": "canonical"
         },
         {
           "symbol": "DAI",
-          "valueUsd": 13968.03,
+          "valueUsd": 13969.29,
           "amount": 13972.57,
           "issuer": "MakerDAO",
           "source": "canonical"
         },
         {
           "symbol": "rETH",
-          "valueUsd": 10944.29,
+          "valueUsd": 11220.39,
           "amount": 3.23,
-          "issuer": null,
+          "issuer": "Rocket Pool",
           "source": "canonical"
         },
         {
           "symbol": "TRB",
-          "valueUsd": 6906.04,
+          "valueUsd": 6761.24,
           "amount": 350,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "eDLLR",
-          "valueUsd": 1552.59,
+          "valueUsd": 1514.23,
           "amount": 1571.09,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "ALEX",
-          "valueUsd": 1512.23,
+          "valueUsd": 1492.76,
           "amount": 1394112.8,
           "issuer": null,
           "source": "canonical"
         },
         {
           "symbol": "FRAX",
-          "valueUsd": 24.07,
+          "valueUsd": 29.75,
           "amount": 29.83,
-          "issuer": null,
+          "issuer": "Frax",
           "source": "canonical"
         },
         {
           "symbol": "UNI",
           "valueUsd": 0.15,
           "amount": 0.03,
-          "issuer": null,
+          "issuer": "Uniswap",
           "source": "canonical"
         }
       ],
-      "totalValueUsd": 3253866.3799999994,
+      "totalValueUsd": 3298008.83,
       "source": "canonical",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain."
     },
@@ -138,8 +138,8 @@
       "address": "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72",
       "name": "L1ERC20TokenBridge",
       "category": "issuer-secured",
-      "bridgeType": "canonical",
-      "nameCategory": "canonical-trust-minimized",
+      "bridgeType": "external",
+      "nameCategory": "external",
       "additionalTrust": false,
       "categoryReason": "Escrow controlled by token issuer (Lido DAO)",
       "admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -148,14 +148,14 @@
       "tokens": [
         {
           "symbol": "wstETH",
-          "valueUsd": 261966.38,
+          "valueUsd": 269007.25,
           "amount": 73,
           "issuer": "Lido DAO",
           "source": "external"
         }
       ],
-      "totalValueUsd": 261966.38,
-      "source": "canonical",
+      "totalValueUsd": 269007.25,
+      "source": "external",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
     }
   ],
@@ -164,7 +164,7 @@
       "symbol": "uniBTC",
       "name": "uniBTC",
       "l2Address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
-      "valueUsd": 74568610,
+      "valueUsd": 75448856,
       "amount": 850.96,
       "bridgeProtocol": "Unknown Bridge",
       "issuer": "Unknown",
@@ -178,10 +178,10 @@
       "symbol": "SolvBTC",
       "name": "Solv BTC",
       "l2Address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
-      "valueUsd": 50039520,
+      "valueUsd": 50649560,
       "amount": 567.38,
       "bridgeProtocol": "Unknown Bridge",
-      "issuer": "Unknown",
+      "issuer": "Solv Protocol",
       "category": "third-party-secured",
       "nameCategory": "external",
       "additionalTrust": true,
@@ -192,8 +192,8 @@
       "symbol": "SolvBTC.BBN",
       "name": "SolvBTC Babylon",
       "l2Address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
-      "valueUsd": 16840884,
-      "amount": 191.23,
+      "valueUsd": 17057818,
+      "amount": 191.22,
       "bridgeProtocol": "Unknown Bridge",
       "issuer": "Unknown",
       "category": "third-party-secured",
@@ -206,8 +206,8 @@
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "l2Address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
-      "valueUsd": 3632320.8,
-      "amount": 41.24,
+      "valueUsd": 3598012.5,
+      "amount": 40.42,
       "bridgeProtocol": "Layer Zero v2 OFT",
       "issuer": "BitGo",
       "category": "third-party-secured",
@@ -220,8 +220,8 @@
       "symbol": "USDC",
       "name": "Bridged USDC (BOB)",
       "l2Address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
-      "valueUsd": 286920.1,
-      "amount": 287005.3,
+      "valueUsd": 279947.62,
+      "amount": 280005.3,
       "bridgeProtocol": "Chainlink CCIP",
       "issuer": "Circle",
       "category": "third-party-secured",
@@ -244,7 +244,7 @@
       "symbol": "FBTC",
       "name": "Fire Bitcoin",
       "l2Address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
-      "valueUsd": 118246.87,
+      "valueUsd": 118770.85,
       "amount": 1.33,
       "bridgeProtocol": "FBTC FireBridge",
       "issuer": "Unknown",
@@ -256,47 +256,47 @@
     }
   ],
   "summary": {
-    "totalTvl": 174497595,
-    "nativeTvl": 22542622,
+    "totalTvl": 174933534.62999994,
+    "nativeTvl": 21186508,
     "byNameCategory": {
-      "canonicalTrustMinimized": 6357896.96,
+      "canonicalTrustMinimized": 6214029.03,
       "canonicalAdditionalTrust": 0,
-      "external": 145486501.77
+      "external": 147421972.22
     },
     "externalBreakdown": {
-      "issuerSecured": 0,
-      "additionalTrust": 145486501.77
+      "issuerSecured": 269007.25,
+      "additionalTrust": 147152964.97
     },
-    "canonicalTvl": 6357896.96,
-    "externalTvl": 145486501.77,
-    "apiCanonicalTvl": 6095930.580000001,
-    "apiExternalTvl": 145859042.42000002
+    "canonicalTvl": 6214029.03,
+    "externalTvl": 147421972.22,
+    "apiCanonicalTvl": 6214029.030000001,
+    "apiExternalTvl": 147532997.6
   },
   "externalTokensSummary": {
     "totalCount": 6,
-    "totalValue": 145486501.77,
+    "totalValue": 147152964.97,
     "byProtocol": {
       "Unknown Bridge": {
         "count": 3,
-        "value": 141449014
+        "value": 143156234
       },
       "Layer Zero v2 OFT": {
         "count": 1,
-        "value": 3632320.8
+        "value": 3598012.5
       },
       "Chainlink CCIP": {
         "count": 1,
-        "value": 286920.1
+        "value": 279947.62
       },
       "FBTC FireBridge": {
         "count": 1,
-        "value": 118246.87
+        "value": 118770.85
       }
     },
     "byNameCategory": {
       "external": {
         "count": 6,
-        "value": 145486501.77
+        "value": 147152964.97
       }
     }
   }

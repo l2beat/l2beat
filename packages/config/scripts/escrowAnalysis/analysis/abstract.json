@@ -1,0 +1,104 @@
+{
+  "projectId": "abstract",
+  "timestamp": 1769622518027,
+  "escrows": [],
+  "externalTokens": [
+    {
+      "symbol": "PENGU",
+      "name": "Pudgy Penguins",
+      "l2Address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+      "valueUsd": 28648600,
+      "amount": 2824164000,
+      "bridgeProtocol": "Layer Zero v2 OFT",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Layer Zero v2 OFT (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "l2Address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "valueUsd": 14536774,
+      "amount": 14539771,
+      "bridgeProtocol": "Stargate v2",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Stargate v2 (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "USDT",
+      "name": "USDT",
+      "l2Address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "valueUsd": 4516505,
+      "amount": 4521800.5,
+      "bridgeProtocol": "Stargate v2",
+      "issuer": "Tether",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Bridged via Stargate v2 (trust model not analyzed)",
+      "formulaType": "totalSupply"
+    },
+    {
+      "symbol": "gtBTC",
+      "name": "Gate Wrapped BTC",
+      "l2Address": "0x0035b877C3aB50cFFA9eD52bA05282c7045f78dd",
+      "valueUsd": 2414905,
+      "amount": 27.02,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "totalSupply"
+    }
+  ],
+  "summary": {
+    "totalTvl": 108362247.66,
+    "nativeTvl": 6124327.46,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 0,
+      "canonicalAdditionalTrust": 0,
+      "external": 50116784
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 50116784
+    },
+    "canonicalTvl": 0,
+    "externalTvl": 50116784,
+    "apiCanonicalTvl": 52121136.2,
+    "apiExternalTvl": 50116784
+  },
+  "externalTokensSummary": {
+    "totalCount": 4,
+    "totalValue": 50116784,
+    "byProtocol": {
+      "Layer Zero v2 OFT": {
+        "count": 1,
+        "value": 28648600
+      },
+      "Stargate v2": {
+        "count": 2,
+        "value": 19053279
+      },
+      "Unknown Bridge": {
+        "count": 1,
+        "value": 2414905
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 4,
+        "value": 50116784
+      }
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "projectId": "morph",
+  "timestamp": 1769623002244,
+  "escrows": [
+    {
+      "address": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+      "name": "L1StandardERC20Gateway",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Morph Governance",
+      "admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "adminName": "Morph Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "BGB",
+          "valueUsd": 11647730,
+          "amount": 3246256.8,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "USDT",
+          "valueUsd": 4506578.5,
+          "amount": 4511862.5,
+          "issuer": "Tether",
+          "source": "canonical"
+        },
+        {
+          "symbol": "WBTC",
+          "valueUsd": 21357.69,
+          "amount": 0.24,
+          "issuer": "BitGo",
+          "source": "canonical"
+        },
+        {
+          "symbol": "HT",
+          "valueUsd": 18.21,
+          "amount": 92.79,
+          "issuer": null,
+          "source": "canonical"
+        },
+        {
+          "symbol": "GT",
+          "valueUsd": 2.82,
+          "amount": 0.28,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 16175687.22,
+      "source": "canonical",
+      "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list."
+    },
+    {
+      "address": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "name": "L1CrossDomainMessenger",
+      "category": "rollup-secured",
+      "bridgeType": "canonical",
+      "nameCategory": "canonical-trust-minimized",
+      "additionalTrust": false,
+      "categoryReason": "Escrow controlled by Morph Governance",
+      "admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "adminName": "Morph Governance",
+      "isRollupControlled": true,
+      "tokens": [
+        {
+          "symbol": "ETH",
+          "valueUsd": 7557228.5,
+          "amount": 2513.42,
+          "issuer": null,
+          "source": "canonical"
+        }
+      ],
+      "totalValueUsd": 7557228.5,
+      "source": "canonical",
+      "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender."
+    },
+    {
+      "address": "0xa534badd09b4c62b7b1c32c41df310aa17b52ef1",
+      "name": "Escrow 0xa534badd...",
+      "category": "third-party-secured",
+      "bridgeType": "external",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Escrow holds tokens from multiple issuers",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [
+        {
+          "symbol": "USDC",
+          "valueUsd": 1541162.4,
+          "amount": 1541480.1,
+          "issuer": "Circle",
+          "source": "external"
+        },
+        {
+          "symbol": "DAI",
+          "valueUsd": 178.37,
+          "amount": 178.41,
+          "issuer": "MakerDAO",
+          "source": "external"
+        }
+      ],
+      "totalValueUsd": 1541340.77,
+      "source": "external",
+      "description": null
+    },
+    {
+      "address": "0xc9045350712a1dcc3a74eca18bc985424bbe7535",
+      "name": "Escrow 0xc9045350...",
+      "category": "third-party-secured",
+      "bridgeType": "external",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "external",
+      "description": null
+    },
+    {
+      "address": "0x2c8314f5aada5d7a9d32eefebfc43accabe1b289",
+      "name": "Escrow 0x2c8314f5...",
+      "category": "third-party-secured",
+      "bridgeType": "external",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Token issuers unknown",
+      "admin": null,
+      "adminName": null,
+      "isRollupControlled": false,
+      "tokens": [],
+      "totalValueUsd": 0,
+      "source": "external",
+      "description": null
+    }
+  ],
+  "externalTokens": [
+    {
+      "symbol": "pumpBTC",
+      "name": "pumpBTC",
+      "l2Address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+      "valueUsd": 1314167.8,
+      "amount": 15.03,
+      "bridgeProtocol": "Unknown Bridge",
+      "issuer": "Unknown",
+      "category": "third-party-secured",
+      "nameCategory": "external",
+      "additionalTrust": true,
+      "categoryReason": "Unknown bridge protocol",
+      "formulaType": "calculation"
+    }
+  ],
+  "summary": {
+    "totalTvl": 26677665.930000003,
+    "nativeTvl": 0,
+    "byNameCategory": {
+      "canonicalTrustMinimized": 23732915.72,
+      "canonicalAdditionalTrust": 0,
+      "external": 2855508.5700000003
+    },
+    "externalBreakdown": {
+      "issuerSecured": 0,
+      "additionalTrust": 2855508.5700000003
+    },
+    "canonicalTvl": 23732915.72,
+    "externalTvl": 2855508.5700000003,
+    "apiCanonicalTvl": 23732915.720000003,
+    "apiExternalTvl": 2944750.2100000004
+  },
+  "externalTokensSummary": {
+    "totalCount": 1,
+    "totalValue": 1314167.8,
+    "byProtocol": {
+      "Unknown Bridge": {
+        "count": 1,
+        "value": 1314167.8
+      }
+    },
+    "byNameCategory": {
+      "external": {
+        "count": 1,
+        "value": 1314167.8
+      }
+    }
+  }
+}
