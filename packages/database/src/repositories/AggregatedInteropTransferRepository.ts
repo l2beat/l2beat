@@ -9,6 +9,7 @@ export interface AggregatedInteropTransferRecord {
   srcChain: string
   dstChain: string
   transferCount: number
+  identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
@@ -29,6 +30,7 @@ export function toRecord(
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     transferCount: row.transferCount,
+    identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
@@ -50,6 +52,7 @@ export function toRow(
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     transferCount: record.transferCount,
+    identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
