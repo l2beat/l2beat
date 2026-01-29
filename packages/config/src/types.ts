@@ -1226,6 +1226,7 @@ export type InteropPluginName =
   | 'orbitstack-customgateway'
   | 'orbitstack-standardgateway'
   | 'orbitstack-wethgateway'
+  | 'polygon'
   | 'relay'
   | 'sky-bridge'
   | 'sorare-base'

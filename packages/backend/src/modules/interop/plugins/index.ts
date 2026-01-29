@@ -50,6 +50,8 @@ import { OrbitStackPlugin } from './orbitstack/orbitstack'
 import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgateway'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
+import { PolygonConfigPlugin } from './polygon/polygon.config'
+import { PolygonPlugin } from './polygon/polygon.plugin'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
@@ -128,6 +130,7 @@ export function createInteropPlugins(
         rpcs,
         deps.tokenDbClient,
       ),
+      new PolygonConfigPlugin(deps.configs, deps.logger, rpcs),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
@@ -214,6 +217,7 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new GasZipPlugin(deps.logger),
+      new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
     ],
   }

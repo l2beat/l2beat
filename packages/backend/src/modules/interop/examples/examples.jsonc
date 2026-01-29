@@ -2416,6 +2416,74 @@
     ],
     "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
   },
+  "polygon-deposit": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x8a93efe609b9ad991dc70b152b6a575a8f601650cf9c73c1bda2bce4477d288f"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x7a29792add2a082c18c35a758fe823368a34537eb7f980fc6722489a949cc914"
+      },
+      // PoS bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xa374c8585cb595df46b23b5cf2aa20aac14fc66a78eacf8bbe45323b36e12c36"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      }
+    ],
+    "events": [
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+  },
+  "polygon-withdrawal": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x2161831d33d492d84c84bc81c1b821ec24a8460a56718e0828a374439a348280"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6d5463530e31301203093cf3cbd4a2b58750a91e068b648e6c81a21f6bd9a2d5"
+      },
+      // PoS bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0xf0ff5f2c0297fe741751ae507fa8517a7642405554753e853ca5a20b638b8fc2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      }
+    ],
+    "events": [
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+  },
   "sky-bridge": {
     "txs": [
       // L1 -> L2 deposit
