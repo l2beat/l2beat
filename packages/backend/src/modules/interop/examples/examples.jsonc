@@ -1878,7 +1878,7 @@
   },
   "hwr": {
     // 4 hwr transfers, one is USDC via cctp
-    "loadConfigs": ["cctp-v2"],
+    // "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1911,6 +1911,15 @@
       {
         "chain": "base",
         "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
+      },
+      // smolcoin
+      {
+        "chain": "arbitrum",
+        "tx": "0xf32c41db9377c65d3c542b8cc6b1575fe2b539fac640ae2bfc65929970f65adb"
+      },
+      {
+        "chain": "base",
+        "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
       }
     ]
   },
