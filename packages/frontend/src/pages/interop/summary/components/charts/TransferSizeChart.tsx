@@ -63,7 +63,7 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   )
 
   return (
-    <SimpleChartContainer meta={chartMeta}>
+    <SimpleChartContainer meta={chartMeta} className="h-full">
       <BarChart
         accessibilityLayer
         data={data}
@@ -113,7 +113,6 @@ export function TransferSizeChart({ data, isLoading }: Props) {
 }
 
 const IMAGE_SIZE = 20
-
 function XAxisTick({
   x,
   y,
