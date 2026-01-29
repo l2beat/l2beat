@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6c2253374ff25d8456927b5135e21ba2ddacef56
+
+# Diff at Thu, 29 Jan 2026 08:21:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1760536727
+- current timestamp: 1769674846
+
+## Description
+
+Add comment about plasma bridge.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760536727 (main branch discovery), not current.
+
+```diff
+    contract Registry (eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      description:
+-        "Maintains the addresses of the contracts used in the system."
++        "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'."
+    }
+```
+
 Generated with discovered.json: 0xaa1bae773635ee31aeefbee378b1b4e993a5ff7a
 
 # Diff at Wed, 15 Oct 2025 14:11:53 GMT:
