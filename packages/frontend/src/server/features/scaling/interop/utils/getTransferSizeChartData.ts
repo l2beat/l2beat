@@ -19,7 +19,7 @@ export function getTransferSizeChartData(
   records: AggregatedInteropTransferRecord[],
   interopProjects: Project<'interopConfig'>[],
 ): TransferSizeChartData | undefined {
-  const data = new Map<string, TransferSizeData>()
+  const data = new Map<string, TransferSizeData & { volume: number }>()
 
   if (records.length === 0) {
     return undefined
@@ -36,9 +36,11 @@ export function getTransferSizeChartData(
       count1KTo10K: 0,
       count10KTo100K: 0,
       countOver100K: 0,
+      volume: 0,
     }
     data.set(record.id, {
       ...current,
+      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       countUnder100: current.countUnder100 + record.countUnder100,
       count100To1K: current.count100To1K + record.count100To1K,
       count1KTo10K: current.count1KTo10K + record.count1KTo10K,
@@ -47,5 +49,20 @@ export function getTransferSizeChartData(
     })
   }
 
-  return Object.fromEntries(data.entries())
+  return Object.fromEntries(
+    Array.from(data.entries())
+      .sort((a, b) => b[1].volume - a[1].volume)
+      .map(([key, value]) => [
+        key,
+        {
+          name: value.name,
+          iconUrl: value.iconUrl,
+          countUnder100: value.countUnder100,
+          count100To1K: value.count100To1K,
+          count1KTo10K: value.count1KTo10K,
+          count10KTo100K: value.count10KTo100K,
+          countOver100K: value.countOver100K,
+        },
+      ]),
+  )
 }
