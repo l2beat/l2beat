@@ -2436,7 +2436,18 @@
         "chain": "polygonpos",
         "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
       }
-    ]
+    ],
+    "events": [
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
   },
   "polygon-withdrawal": {
     "loadConfigs": ["polygon"],
@@ -2459,7 +2470,18 @@
         "chain": "ethereum",
         "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
       }
-    ]
+    ],
+    "events": [
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
   },
   "sky-bridge": {
     "txs": [
