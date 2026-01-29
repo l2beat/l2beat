@@ -44,7 +44,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
           timestamp: to,
           id: config.id,
           ...getAggregatedTransfer(group, {
-            calculateValueAtRisk: config.bridgeType === 'nonMinting',
+            calculateValueInFlight: config.bridgeType === 'nonMinting',
           }),
         })
 

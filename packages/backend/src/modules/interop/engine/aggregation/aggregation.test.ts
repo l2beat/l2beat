@@ -28,7 +28,7 @@ describe('aggregation', () => {
         totalDurationSum: 5000,
         srcValueUsd: 2000,
         dstValueUsd: 2000,
-        avgValueAtRisk: undefined,
+        avgValueInFlight: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -74,7 +74,7 @@ describe('aggregation', () => {
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
-        avgValueAtRisk: undefined,
+        avgValueInFlight: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 3,
@@ -112,7 +112,7 @@ describe('aggregation', () => {
         totalDurationSum: 11000,
         srcValueUsd: 3000,
         dstValueUsd: undefined,
-        avgValueAtRisk: undefined,
+        avgValueInFlight: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -208,7 +208,7 @@ describe('aggregation', () => {
         totalDurationSum: 20000,
         srcValueUsd: 255050,
         dstValueUsd: 255550,
-        avgValueAtRisk: undefined,
+        avgValueInFlight: undefined,
         countUnder100: 1,
         count100To1K: 1,
         count1KTo10K: 1,
@@ -246,14 +246,14 @@ describe('aggregation', () => {
       ]
 
       const result = getAggregatedTransfer(transfers, {
-        calculateValueAtRisk: true,
+        calculateValueInFlight: true,
       })
 
-      // valueAtRisk = (2000 * 5000) + (3000 * 6000) + (1500 * 4000)
+      // valueInFlight = (2000 * 5000) + (3000 * 6000) + (1500 * 4000)
       //             = 10,000,000 + 18,000,000 + 6,000,000
       //             = 34,000,000
-      // avgValueAtRisk = 34,000,000 / 86,400 ≈ 393.52
-      expect(result.avgValueAtRisk).toEqual(393.52)
+      // avgValueInFlight = 34,000,000 / 86,400 ≈ 393.52
+      expect(result.avgValueInFlight).toEqual(393.52)
     })
 
     it('calculates average value at risk using dstValueUsd when srcValueUsd is undefined', () => {
@@ -277,14 +277,14 @@ describe('aggregation', () => {
       ]
 
       const result = getAggregatedTransfer(transfers, {
-        calculateValueAtRisk: true,
+        calculateValueInFlight: true,
       })
 
-      // valueAtRisk = (2000 * 5000) + (3000 * 6000)
+      // valueInFlight = (2000 * 5000) + (3000 * 6000)
       //             = 10,000,000 + 18,000,000
       //             = 28,000,000
-      // avgValueAtRisk = 28,000,000 / 86,400 ≈ 324.07
-      expect(result.avgValueAtRisk).toEqual(324.07)
+      // avgValueInFlight = 28,000,000 / 86,400 ≈ 324.07
+      expect(result.avgValueInFlight).toEqual(324.07)
     })
 
     it('throws error when group is empty', () => {

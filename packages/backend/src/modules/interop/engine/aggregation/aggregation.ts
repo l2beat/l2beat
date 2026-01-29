@@ -24,7 +24,7 @@ function getBucket(valueUsd: number | undefined): Bucket {
 export function getAggregatedTransfer(
   group: InteropTransferRecord[],
   options?: {
-    calculateValueAtRisk?: boolean
+    calculateValueInFlight?: boolean
   },
 ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
   const first = group[0]
@@ -33,7 +33,7 @@ export function getAggregatedTransfer(
   let totalDurationSum = 0
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
-  let valueAtRisk: number | undefined = undefined
+  let valueInFlight: number | undefined = undefined
   let countUnder100 = 0
   let count100To1K = 0
   let count1KTo10K = 0
@@ -78,16 +78,10 @@ export function getAggregatedTransfer(
         assertUnreachable(bucket)
     }
 
-    if (options?.calculateValueAtRisk) {
-      if (valueAtRisk === undefined) {
-        valueAtRisk =
-          (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) *
-          transfer.duration
-      } else {
-        valueAtRisk +=
-          (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) *
-          transfer.duration
-      }
+    if (options?.calculateValueInFlight) {
+      valueInFlight =
+        (valueInFlight ?? 0) +
+        (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
     }
   }
 
@@ -98,8 +92,8 @@ export function getAggregatedTransfer(
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
-    avgValueAtRisk: valueAtRisk
-      ? Math.round((valueAtRisk / UnixTime.DAY) * 100) / 100
+    avgValueInFlight: valueInFlight
+      ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
       : undefined,
     countUnder100,
     count100To1K,
