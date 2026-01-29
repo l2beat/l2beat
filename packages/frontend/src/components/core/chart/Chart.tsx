@@ -264,7 +264,7 @@ function ChartLegendContent({
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&
           'mb-3',
-        verticalAlign === 'top' && 'pb-8',
+        verticalAlign === 'top' && 'pb-4 md:pb-8',
       )}
     >
       <div

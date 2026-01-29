@@ -130,7 +130,6 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   )
 }
 
-const IMAGE_SIZE = 20
 function XAxisTick({
   x,
   y,
@@ -146,10 +145,9 @@ function XAxisTick({
   assert(item, 'Item not found')
   return (
     <image
-      x={x - IMAGE_SIZE / 2}
+      x={x}
       y={y}
-      width={IMAGE_SIZE}
-      height={IMAGE_SIZE}
+      className="-translate-x-1.5 sm:-translate-x-2.5 xs:-translate-x-2 size-3 xs:size-4 sm:size-5"
       href={item.iconUrl}
     >
       <title>{item.name}</title>
